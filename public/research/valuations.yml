@@ -1,0 +1,552 @@
+schema: stripe-history/valuations/v1
+observations:
+  - id: valuation-2026-02-employee-tender
+    effective_date: 2026-02-24
+    date_precision: day
+    title: Signed employee tender agreements value Stripe at $159 billion
+    mechanism: company-tender
+    status: agreements-signed
+    confidence: confirmed
+    valuation:
+      currency: USD
+      display: $159 billion
+      qualifier: exact
+      value_usd: 159000000000
+      precision: exact-stated
+      basis: transaction-implied
+    event_id: employee-tender-159-billion-valuation
+    source_ids:
+      - source-bd6516ac551f19c37d33
+  - id: valuation-2025-09-internal-409a
+    effective_date: 2025-09
+    date_precision: month
+    reported_at: 2025-09-23
+    title: Stripe's latest 409A mark is reported at $106.7 billion
+    mechanism: internal-409a
+    status: reported
+    confidence: reported
+    valuation:
+      currency: USD
+      display: $106.7 billion
+      qualifier: exact
+      value_usd: 106700000000
+      precision: exact-stated
+      basis: common-stock-409a
+    notes: The source identified this as Stripe's latest 409A mark while reporting talks about a company share repurchase.
+    source_ids:
+      - source-049dfcb3b15c61d71dfe
+  - id: valuation-2025-02-employee-tender
+    effective_date: 2025-02-27
+    date_precision: day
+    title: Signed employee tender agreements value Stripe at $91.5 billion
+    mechanism: company-tender
+    status: agreements-signed
+    confidence: confirmed
+    valuation:
+      currency: USD
+      display: $91.5 billion
+      qualifier: exact
+      value_usd: 91500000000
+      precision: exact-stated
+      basis: transaction-implied
+    event_id: employee-tender-91-5-billion-valuation
+    source_ids:
+      - source-0e881dc1ffda930a1841
+  - id: valuation-2024-09-sequoia-secondary
+    effective_date: 2024-09
+    date_precision: month
+    reported_at: 2024-09-09
+    title: Sequoia secondary transaction implies a $70 billion valuation
+    mechanism: investor-secondary
+    status: completed
+    confidence: reported
+    valuation:
+      currency: USD
+      display: $70 billion
+      qualifier: exact
+      value_usd: 70000000000
+      precision: exact-stated
+      basis: transaction-implied
+    share_price:
+      currency: USD
+      display: $27.51
+      qualifier: exact
+      value_usd: 27.51
+    capital_transacted:
+      currency: USD
+      display: $861 million
+      qualifier: exact
+      value_usd: 861000000
+    event_id: sequoia-secondary-purchase-70-billion-valuation
+    source_ids:
+      - source-93f3d70eb5fc195f2ed2
+  - id: valuation-2024-02-employee-tender
+    effective_date: 2024-02-28
+    date_precision: day
+    title: Signed employee tender agreements value Stripe at $65 billion
+    mechanism: company-tender
+    status: agreements-signed
+    confidence: confirmed
+    valuation:
+      currency: USD
+      display: $65 billion
+      qualifier: exact
+      value_usd: 65000000000
+      precision: exact-stated
+      basis: transaction-implied
+    event_id: employee-tender-65-billion-valuation
+    source_ids:
+      - source-5116ff7a7f3246d58e2a
+  - id: valuation-2024-01-closed-secondary
+    effective_date: 2024-01-02
+    date_precision: day
+    reported_at: 2024-01-06
+    title: Closed secondary trade implies a $53.65 billion valuation
+    mechanism: investor-secondary
+    status: completed
+    confidence: reported
+    valuation:
+      currency: USD
+      display: $53.65 billion
+      qualifier: exact
+      value_usd: 53650000000
+      precision: exact-stated
+      basis: transaction-implied
+    share_price:
+      currency: USD
+      display: $21.06
+      qualifier: exact
+      value_usd: 21.06
+    notes: Caplight supplied the closed-transaction data; Stripe declined to comment.
+    source_ids:
+      - source-4b4de85478f5981d6494
+  - id: valuation-2023-03-series-i
+    effective_date: 2023-03-15
+    date_precision: day
+    title: Signed Series I agreements value Stripe at $50 billion
+    mechanism: primary-financing
+    status: agreements-signed
+    confidence: confirmed
+    valuation:
+      currency: USD
+      display: $50 billion
+      qualifier: exact
+      value_usd: 50000000000
+      precision: exact-stated
+      basis: unspecified
+    financing_amount:
+      stage: agreements-signed
+      currency: USD
+      display: more than $6.5 billion
+      qualifier: lower-bound
+      value_usd: 6500000000
+    event_id: series-i-employee-liquidity-round
+    source_ids:
+      - source-1a020b6076d17a8aecd2
+  - id: valuation-2023-01-internal-409a
+    effective_date: 2023-01-11
+    date_precision: day
+    title: Internal 409A mark values Stripe at $63 billion
+    mechanism: internal-409a
+    status: reported
+    confidence: reported
+    valuation:
+      currency: USD
+      display: $63 billion
+      qualifier: exact
+      value_usd: 63000000000
+      precision: exact-stated
+      basis: common-stock-409a
+    share_price:
+      currency: USD
+      display: $24.71
+      qualifier: exact
+      value_usd: 24.71
+    source_ids:
+      - source-67de5aa3b7009ba5ed83
+      - source-be63a33e896357893bf6
+  - id: valuation-2022-10-internal-409a
+    effective_date: 2022-10
+    date_precision: month
+    reported_at: 2023-01-12
+    title: October 409A share price implies about $70.8 billion
+    mechanism: internal-409a
+    status: retrospective
+    confidence: reported
+    valuation:
+      currency: USD
+      display: ~$70.8 billion
+      qualifier: approximate
+      value_usd: 70800000000
+      precision: inferred
+      basis: common-stock-409a
+    share_price:
+      currency: USD
+      display: $27.73
+      qualifier: exact
+      value_usd: 27.73
+    derivation:
+      formula: $74 billion × $27.73 ÷ $29, rounded to one decimal billion
+      inputs:
+        - label: July 2022 internal valuation
+          value: $74 billion
+        - label: July 2022 share price
+          value: $29
+        - label: October 2022 share price
+          value: $27.73
+    notes: The estimate assumes the diluted share count did not change between the July and October 409A marks.
+    source_ids:
+      - source-03f4b7ce98afc255b0ba
+      - source-67de5aa3b7009ba5ed83
+      - source-be63a33e896357893bf6
+  - id: valuation-2022-07-internal-409a
+    effective_date: 2022-07-14
+    date_precision: day
+    title: Internal 409A mark values Stripe at about $74 billion
+    mechanism: internal-409a
+    status: reported
+    confidence: reported
+    valuation:
+      currency: USD
+      display: ~$74 billion
+      qualifier: approximate
+      value_usd: 74000000000
+      precision: approximate-stated
+      basis: common-stock-409a
+    share_price:
+      currency: USD
+      display: $29
+      qualifier: exact
+      value_usd: 29
+    source_ids:
+      - source-03f4b7ce98afc255b0ba
+      - source-67de5aa3b7009ba5ed83
+  - id: valuation-2022-01-secondary-market-peak
+    effective_date: 2022-01
+    date_precision: month
+    reported_at: 2023-07-19
+    title: Secondary-market data later shows a peak near $200 billion
+    mechanism: secondary-market
+    status: retrospective
+    confidence: indicative
+    valuation:
+      currency: USD
+      display: ~$200 billion
+      qualifier: approximate
+      value_usd: 200000000000
+      precision: approximate-stated
+      basis: market-indication
+    notes: Notice supplied the retrospective secondary-market series; this was not a company financing or tender.
+    source_ids:
+      - source-7f1e28293e44b7e2b09c
+  - id: valuation-2021-03-series-h
+    effective_date: 2021-03-14
+    date_precision: day
+    title: Series H financing values Stripe at $95 billion
+    mechanism: primary-financing
+    status: completed
+    confidence: confirmed
+    valuation:
+      currency: USD
+      display: $95 billion
+      qualifier: exact
+      value_usd: 95000000000
+      precision: exact-stated
+      basis: unspecified
+    financing_amount:
+      stage: completed
+      currency: USD
+      display: $600 million
+      qualifier: exact
+      value_usd: 600000000
+    event_id: series-h-600-million-round
+    source_ids:
+      - source-ebcb0307692f731ceeb8
+  - id: valuation-2021-02-secondary-market
+    effective_date: 2021-02-17
+    date_precision: day
+    title: Secondary transactions value Stripe at $115 billion
+    mechanism: secondary-market
+    status: reported
+    confidence: indicative
+    valuation:
+      currency: USD
+      display: $115 billion
+      qualifier: exact
+      value_usd: 115000000000
+      precision: exact-stated
+      basis: market-indication
+    notes: The report described private secondary transactions, not a Stripe-priced financing.
+    source_ids:
+      - source-03373a611af0c9e92786
+  - id: valuation-2021-secondary-market-pitchbook
+    effective_date: "2021"
+    date_precision: year
+    reported_at: 2021-09-10
+    title: Private trades are reported at a $152 billion implied value
+    mechanism: secondary-market
+    status: reported
+    confidence: indicative
+    valuation:
+      currency: USD
+      display: $152 billion
+      qualifier: exact
+      value_usd: 152000000000
+      precision: exact-stated
+      basis: market-indication
+    notes: PitchBook data described investor sales in the months after the March financing; the exact trade dates were not disclosed.
+    source_ids:
+      - source-05c9e0722cf8a6d3e9ef
+  - id: valuation-2020-04-series-g-extension
+    effective_date: 2020-04-16
+    date_precision: day
+    title: Series G extension values Stripe at nearly $36 billion
+    mechanism: primary-financing
+    status: completed
+    confidence: reported
+    valuation:
+      currency: USD
+      display: ~$36 billion
+      qualifier: approximate
+      value_usd: 36000000000
+      precision: approximate-stated
+      basis: unspecified
+    financing_amount:
+      stage: completed
+      currency: USD
+      display: $600 million
+      qualifier: exact
+      value_usd: 600000000
+    notes: Stripe said the extension used the same terms as the September 2019 Series G; contemporaneous reporting described the resulting valuation as nearly $36 billion.
+    event_id: series-g-extension-600-million
+    source_ids:
+      - source-e7a9d45ba8cc599f5d4d
+      - source-2cca70fe5628f59eba33
+  - id: valuation-2019-09-series-g
+    effective_date: 2019-09-19
+    date_precision: day
+    title: Series G financing values Stripe at $35 billion pre-money
+    mechanism: primary-financing
+    status: completed
+    confidence: confirmed
+    valuation:
+      currency: USD
+      display: $35 billion
+      qualifier: exact
+      value_usd: 35000000000
+      precision: exact-stated
+      basis: pre-money
+    financing_amount:
+      stage: completed
+      currency: USD
+      display: $250 million
+      qualifier: exact
+      value_usd: 250000000
+    event_id: series-g-250-million-round
+    source_ids:
+      - source-ea53245454672afea5c5
+  - id: valuation-2019-01-tiger-follow-on
+    effective_date: 2019-01-30
+    date_precision: day
+    title: Tiger Global follow-on values Stripe at $22.5 billion
+    mechanism: primary-financing
+    status: completed
+    confidence: reported
+    valuation:
+      currency: USD
+      display: $22.5 billion
+      qualifier: exact
+      value_usd: 22500000000
+      precision: exact-stated
+      basis: unspecified
+    financing_amount:
+      stage: completed
+      currency: USD
+      display: $100 million
+      qualifier: exact
+      value_usd: 100000000
+    event_id: tiger-global-follow-on-100-million
+    source_ids:
+      - source-d1ea05ba12bb2d5bf626
+      - source-8d6599ea85d8f5f485b7
+  - id: valuation-2018-09-growth-financing
+    effective_date: 2018-09-26
+    date_precision: day
+    title: Growth financing values Stripe at $20 billion
+    mechanism: primary-financing
+    status: completed
+    confidence: reported
+    valuation:
+      currency: USD
+      display: $20 billion
+      qualifier: exact
+      value_usd: 20000000000
+      precision: exact-stated
+      basis: unspecified
+    financing_amount:
+      stage: completed
+      currency: USD
+      display: $245 million
+      qualifier: exact
+      value_usd: 245000000
+    event_id: growth-financing-245-million
+    source_ids:
+      - source-313d5f90eb90dc44a09e
+  - id: valuation-2016-11-series-d
+    effective_date: 2016-11-25
+    date_precision: day
+    title: Series D financing values Stripe at about $9.2 billion post-money
+    mechanism: primary-financing
+    status: completed
+    confidence: reported
+    valuation:
+      currency: USD
+      display: ~$9.2 billion
+      qualifier: approximate
+      value_usd: 9200000000
+      precision: approximate-stated
+      basis: post-money
+    financing_amount:
+      stage: completed
+      currency: USD
+      display: $150 million
+      qualifier: exact
+      value_usd: 150000000
+    event_id: series-d-150-million-round
+    source_ids:
+      - source-dcf72971de10c76a0dd9
+  - id: valuation-2015-07-visa-financing
+    effective_date: 2015-07-28
+    date_precision: day
+    title: Strategic financing values Stripe at about $5 billion
+    mechanism: primary-financing
+    status: completed
+    confidence: reported
+    valuation:
+      currency: USD
+      display: ~$5 billion
+      qualifier: approximate
+      value_usd: 5000000000
+      precision: approximate-stated
+      basis: unspecified
+    event_id: visa-strategic-financing-5-billion-valuation
+    source_ids:
+      - source-9a3a3ccb578db86eecac
+  - id: valuation-2014-12-series-c-extension
+    effective_date: 2014-12-02
+    date_precision: day
+    title: Series C extension values Stripe at about $3.5 billion
+    mechanism: primary-financing
+    status: completed
+    confidence: reported
+    valuation:
+      currency: USD
+      display: ~$3.5 billion
+      qualifier: approximate
+      value_usd: 3500000000
+      precision: approximate-stated
+      basis: unspecified
+    financing_amount:
+      stage: completed
+      currency: USD
+      display: $70 million
+      qualifier: exact
+      value_usd: 70000000
+    event_id: series-c-extension-70-million
+    source_ids:
+      - source-3bb6c45b8d6f9c1124b4
+  - id: valuation-2014-01-series-c
+    effective_date: 2014-01-22
+    date_precision: day
+    title: Series C financing values Stripe at about $1.75 billion
+    mechanism: primary-financing
+    status: completed
+    confidence: reported
+    valuation:
+      currency: USD
+      display: ~$1.75 billion
+      qualifier: approximate
+      value_usd: 1750000000
+      precision: approximate-stated
+      basis: unspecified
+    financing_amount:
+      stage: completed
+      currency: USD
+      display: more than $80 million
+      qualifier: lower-bound
+      value_usd: 80000000
+    event_id: series-c-80-million-round
+    source_ids:
+      - source-f9691bfff6a0b221be9c
+  - id: valuation-2012-07-series-b
+    effective_date: 2012-07-09
+    date_precision: day
+    title: Series B reporting places Stripe's valuation as high as $500 million
+    mechanism: primary-financing
+    status: completed
+    confidence: indicative
+    valuation:
+      currency: USD
+      display: up to $500 million
+      qualifier: upper-bound
+      value_usd: 500000000
+      precision: exact-stated
+      basis: unspecified
+    financing_amount:
+      stage: completed
+      currency: USD
+      display: $20 million
+      qualifier: exact
+      value_usd: 20000000
+    notes: The contemporaneous source described a range in the hundreds of millions up to half a billion and did not distinguish pre-money from post-money.
+    event_id: series-b-20-million-round
+    source_ids:
+      - source-c8d385ed972041177ac8
+  - id: valuation-2012-02-series-a
+    effective_date: 2012-02-09
+    date_precision: day
+    title: Reported Series A terms value Stripe at about $100 million
+    mechanism: primary-financing
+    status: reported
+    confidence: reported
+    valuation:
+      currency: USD
+      display: ~$100 million
+      qualifier: approximate
+      value_usd: 100000000
+      precision: approximate-stated
+      basis: unspecified
+    financing_amount:
+      stage: reported-terms
+      currency: USD
+      display: $18 million
+      qualifier: exact
+      value_usd: 18000000
+    notes: The contemporaneous report said the financing had not been finalized; this observation records the reported terms, not a completed transaction.
+    event_id: series-a-18-million-round
+    source_ids:
+      - source-f8ada5ba377789f7909f
+  - id: valuation-2011-03-seed
+    effective_date: 2011-03-28
+    date_precision: day
+    title: Early seed financing reportedly values Stripe at about $20 million
+    mechanism: seed-financing
+    status: reported
+    confidence: indicative
+    valuation:
+      currency: USD
+      display: ~$20 million
+      qualifier: approximate
+      value_usd: 20000000
+      precision: approximate-stated
+      basis: unspecified
+    financing_amount:
+      stage: reported-terms
+      currency: USD
+      display: ~$2 million
+      qualifier: approximate
+      value_usd: 2000000
+    notes: The contemporaneous report described the valuation as heard but unconfirmed.
+    event_id: early-seed-financing-2-million
+    source_ids:
+      - source-b2dd612bb76ab78c5e49

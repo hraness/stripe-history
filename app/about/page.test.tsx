@@ -14,10 +14,13 @@ describe("stripehistory.com about page", () => {
     expect(html).toContain("<h1 id=\"about-heading\">About stripehistory.com</h1>");
     expect(html).toContain('aria-label="Breadcrumb"');
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
-    expect(html).toContain("anonymous, cookieless product analytics");
-    expect(html).toContain("diagnose bounded software errors");
-    expect(html).toContain("exclude query strings, form input, identity");
+    expect(html).toContain("does not run product analytics or session replay");
+    expect(html).toContain("no user accounts or authentication");
+    expect(html).toContain("ordinary logs and security controls of the hosting provider");
+    expect(html).toContain("founder side projects and aesthetics programs");
     expect(html).toContain("timeline and its focused category views stay aligned");
+    expect(html).toContain('aria-current="page" href="/about">about</a>');
+    expect(html).toContain('aria-label="Appearance: light"');
     expect(html).toContain('href="https://hraness.com/"');
     expect(html).toContain('href="https://github.com/hraness/stripe-history"');
     expect(html).not.toContain("Atom feed");

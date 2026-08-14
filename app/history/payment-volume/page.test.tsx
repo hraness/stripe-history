@@ -19,10 +19,7 @@ describe("stripehistory.com payment volume history", () => {
   test("renders five source-linked annual observations and methodology", async () => {
     const html = renderToStaticMarkup(await PaymentVolumePage());
 
-    expect(html).toContain("Stripe Payment and Total Volume by Year");
-    expect(html).toContain('aria-label="Breadcrumb"');
-    expect(html).toContain('<a href="/">history</a>');
-    expect(html).toContain("5 annual disclosures");
+    expect(html).toContain('<h1 class="stripe-history-visually-hidden" id="payment-volume-heading">Stripe Payment and Total Volume by Year</h1>');
     expect(html.match(/class="history-volume-chart-track"/gu)?.length).toBe(5);
     expect(html.match(/<tr(?:\s|>)/gu)?.length).toBe(6);
     expect(html).toContain("$640 billion+");
@@ -31,8 +28,17 @@ describe("stripehistory.com payment volume history", () => {
     expect(html).toContain("2021 and 2022 figures are lower bounds");
     expect(html).toContain('data-analytics-event="source link opened"');
     expect(html).toContain('id="stripe-guide-payment-volume-structured-data"');
-    expect(html).toContain('aria-current="page" data-analytics-event="history filter selected" data-analytics-id="payment-volume"');
+    expect(html).toContain('aria-current="true" aria-label="annual volume: 5 annual disclosures, selected; activate to show all history" data-analytics-event="history filter selected" data-analytics-id="all"');
+    expect(html).toMatch(/data-filter-id="payment-volume"[^>]* href="\/"/u);
+    expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
+      html.indexOf('data-filter-id="payment-volume"'),
+    );
     expect(html).not.toContain('class="stripe-guide-selector"');
+    expect(html).toContain('class="stripe-guide-header"');
+    expect(html).toContain('href="/about">about</a>');
+    expect(html).toContain('class="hraness-brand stripe-guide-footer-hraness"');
+    expect(html).not.toContain('class="stripe-guide-breadcrumbs"');
+    expect(html).not.toContain('class="stripe-guide-section-heading"');
     expect(html).not.toContain("$400 billion");
   });
 });

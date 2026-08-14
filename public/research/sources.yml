@@ -1,0 +1,2024 @@
+schema: stripe-history/sources/v1
+sources:
+  - kind: primary
+    publisher: Stripe
+    published_at: 2024-04-24
+    title: AMA with Patrick and John Collison
+    url: https://stripe.com/sessions/2024/ama-with-patrick-and-john-collison
+    id: source-001e51b689b259d0b4e3
+    language: en
+    media_type: transcript
+    native_id: stripe-sessions:2024:ama-with-patrick-and-john-collison
+  - kind: reporting
+    publisher: Forbes
+    published_at: 2026-06-25
+    title: How This New Fintech Billionaire Is Cashing In On Cross-Border Payments
+    url: https://www.forbes.com/sites/jeffkauflin/2026/06/25/how-this-new-fintech-billionaire-is-cashing-in-on-cross-border-payments/
+    id: source-004d97f1d873b1f8afcc
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2017-07-26
+    title: Stripe acquires Payable
+    url: https://techcrunch.com/2017/07/26/stripe-acquires-payable/
+    id: source-0056f18e050920188e0c
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: High Growth Handbook
+    url: https://press.stripe.com/high-growth-handbook
+    id: source-005a0d1ceb2b1514026f
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2018-04-05
+    title: Stripe launches Stripe Billing to accelerate boom in subscription-based businesses
+    url: https://stripe.com/in/newsroom/news/stripe-launches-billing
+    id: source-0161b2f7d12f39a735ec
+    media_type: article
+  - kind: interview
+    publisher: 20VC
+    published_at: 2025-05-26
+    title: "Airwallex CEO & Co-Founder, Jack Zhang: The Angel That Turned $1M into $1BN"
+    url: https://www.youtube.com/watch?v=-srgTgUgCgw
+    id: source-017ccc0342e03126244e
+    media_type: video
+  - kind: primary
+    publisher: Stripe
+    published_at: 2023-02-21
+    title: Stripe launches Enhanced Issuer Network to help businesses reduce fraud and boost authorization rates
+    url: https://stripe.com/newsroom/news/enhanced-issuer-network
+    id: source-01a50d4dfa8bd99af9b8
+    media_type: article
+  - kind: primary
+    publisher: Paystack
+    title: About Paystack
+    url: https://paystack.com/about
+    id: source-0270e48f213958f85c53
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: Where Is My Flying Car?
+    url: https://press.stripe.com/where-is-my-flying-car
+    id: source-031c156e70030822874d
+    media_type: article
+  - id: source-03373a611af0c9e92786
+    kind: reporting
+    publisher: Forbes
+    published_at: 2021-02-17
+    title: Investors Are Now Valuing Stripe At $115 Billion
+    url: https://www.forbes.com/sites/jeffkauflin/2021/02/17/investors-are-now-valuing-stripe-at-115-billion/
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    published_at: 2025-10-14
+    title: The Origins of Efficiency is out now
+    url: https://stripepress.substack.com/p/the-origins-of-efficiency-is-out
+    id: source-0366916b6be55183514a
+    media_type: article
+  - id: source-03f4b7ce98afc255b0ba
+    kind: reporting
+    publisher: TechCrunch
+    published_at: 2022-07-14
+    title: Stripe is the latest fintech to falter, taking a 28% internal valuation cut
+    url: https://techcrunch.com/2022/07/14/stripe-fintech-payments-valuation-cut-28/
+    media_type: article
+  - id: source-049dfcb3b15c61d71dfe
+    kind: reporting
+    publisher: Axios
+    published_at: 2025-09-23
+    title: Stripe in talks to buy back stock from investors
+    url: https://www.axios.com/2025/09/23/stripe-buy-back-stock-vc
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2021-05-25
+    title: Stripe launches Payment Links to enable online sales in minutes without any code
+    url: https://stripe.com/newsroom/news/stripe-launches-payment-links
+    id: source-054ed926fdf9b32db3db
+    media_type: article
+  - id: source-05c9e0722cf8a6d3e9ef
+    kind: reporting
+    publisher: The Irish Times
+    published_at: 2021-09-10
+    title: Stripe in early discussions with investment banks about going public
+    url: https://www.irishtimes.com/business/technology/stripe-in-early-discussions-with-investment-banks-about-going-public-1.4670863
+    media_type: article
+  - kind: archive
+    publisher: RTÉ Archives
+    published_at: 2005-01-14
+    title: Science Talent 2005
+    url: https://www.rte.ie/archives/2025/0526/1515001-patrick-collison-young-scientist/
+    id: source-06b6e9f657f78edfcf84
+    media_type: article
+  - kind: archive
+    publisher: Open Library
+    published_at: 2021-11-30
+    title: Where Is My Flying Car?
+    url: https://openlibrary.org/isbn/9781953953186
+    id: source-0b75f814a22078c9d80c
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-02-27
+    title: Stripe announces employee liquidity at a $91.5B valuation
+    url: https://stripe.com/newsroom/news/employee-liquidity-feb-2025
+    id: source-0e881dc1ffda930a1841
+    media_type: article
+  - kind: primary
+    publisher: Ben Southwood
+    published_at: 2025-09-18
+    title: Subscribe to the new print edition of Works in Progress
+    url: https://www.bensouthwood.co.uk/p/subscribe-to-the-new-print-edition
+    id: source-0f2ee84b2a249276fb50
+    media_type: article
+  - kind: primary
+    publisher: Ómós
+    title: Ómós
+    url: https://www.omos.co/en
+    id: source-1002e320dafb67950005
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2026-04-29
+    title: Giving agents the ability to pay
+    url: https://stripe.com/blog/giving-agents-the-ability-to-pay
+    id: source-10f2721c9aa4fdff57df
+    media_type: article
+  - kind: interview
+    publisher: Colossus
+    published_at: 2023-10-17
+    title: A Business State of Mind
+    url: https://colossus.com/episode/collison-a-business-state-of-mind/
+    id: source-1278271efc6181fee94f
+    language: en
+    media_type: transcript
+    native_id: colossus:collison-a-business-state-of-mind
+  - kind: primary
+    publisher: Stripe
+    published_at: 2018-09-17
+    title: Stripe announces Stripe Terminal, a programmable point of sale for in-person payments
+    url: https://stripe.com/newsroom/news/stripe-launches-terminal
+    id: source-161de3543c1120684455
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2016-10-27
+    title: A primer on machine learning for fraud detection
+    url: https://stripe.com/blog/a-primer-on-machine-learning-for-fraud-detection
+    id: source-170ce598057aeb518fa4
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2016-09-19
+    title: Instant Payouts for Marketplaces
+    url: https://stripe.com/blog/instant-payouts-for-marketplaces
+    id: source-18baf7220d99412849c0
+    media_type: article
+  - kind: primary
+    publisher: United States Congress
+    published_at: 2025-03-11
+    title: Navigating the Digital Payments Ecosystem
+    url: https://www.congress.gov/event/119th-congress/house-event/117994
+    id: source-18cef128fcb5c9083568
+    language: en
+    media_type: webpage
+    native_id: congress:house-event:117994
+  - kind: archive
+    publisher: Increment
+    published_at: 2021-11
+    title: About Increment
+    url: https://increment.com/about/
+    id: source-18d7b036f7b18496f3db
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2023-03-15
+    title: Stripe announces Series I employee liquidity
+    url: https://stripe.com/en-ch/newsroom/news/stripe-series-i-employee-liquidity
+    id: source-1a020b6076d17a8aecd2
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2022-10-26
+    title: Stripe launches in Thailand
+    url: https://stripe.com/newsroom/news/thailand
+    id: source-1aab2bfe3819545eece2
+    media_type: article
+  - kind: filing
+    publisher: Federal Trade Commission
+    published_at: 2026-03-26
+    title: Warning Letter to Stripe, Inc.
+    url: https://www.ftc.gov/system/files/ftc_gov/pdf/stripe-debanking-letter.pdf
+    id: source-1aceab1f7585dbec2798
+    media_type: pdf
+  - kind: reporting
+    publisher: The Irish Times
+    published_at: 2026-06-05
+    title: First look - Cúán Greene's hotly anticipated high-end restaurant and guest house in Co Laois
+    url: https://www.irishtimes.com/food/2026/06/05/first-look-cuan-greenes-hotly-anticipated-high-end-restaurant-and-guest-house-in-co-laois/
+    id: source-1c6adfe53072cdc63578
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-05-07
+    title: Our top product updates from Sessions 2025
+    url: https://stripe.com/blog/top-product-updates-sessions-2025
+    id: source-1ca2f3ea0dde6422966d
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2022-04-22
+    title: Stripe introduces global crypto payouts
+    url: https://stripe.com/en-ca/newsroom/news/crypto-payouts
+    id: source-1dbfface471790a565ff
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2023-09-18
+    title: Stripe marks ten years in Ireland
+    url: https://stripe.com/ie/newsroom/news/ten-years-in-ireland
+    id: source-1dc28b327abe613f5533
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-02-27
+    title: Stripe's total payment volume reaches $1.4T, fueled by long-standing investments in AI
+    url: https://stripe.com/newsroom/news/stripe-2024-update
+    id: source-1dc5f19b6950b5352d21
+    media_type: article
+  - kind: reporting
+    publisher: Fortune
+    published_at: 2016-06-08
+    title: Stripe launches in France
+    url: https://fortune.com/2016/06/08/stripe-payments-france/
+    id: source-201cc307eb07ce58a998
+    media_type: article
+  - kind: reporting
+    publisher: Cushman & Wakefield
+    published_at: "2016"
+    title: San Francisco office market report
+    url: https://cushman517.rssing.com/chan-63281234/all_p2.html
+    id: source-20724c660b7ccbf46f3f
+    media_type: article
+  - kind: primary
+    publisher: Greg Brockman
+    published_at: 2014-10-27
+    title: "#define CTO"
+    url: https://blog.gregbrockman.com/figuring-out-the-cto-role-at-stripe
+    id: source-20fbb1f159a9c5331084
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2019-10-24
+    title: Stripe launches in Mexico
+    url: https://stripe.com/en-br/newsroom/news/stripe-launches-mexico
+    id: source-214ae4b52e75f2641f5a
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2024-08-22
+    title: Stripe marks ten years in Australia
+    url: https://stripe.com/gb/newsroom/news/australia-10th-anniversary
+    id: source-2182067dd5431f9081a9
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2023-06
+    title: "Stripe changelog: June 2023"
+    url: https://stripe.com/blog/changelog
+    id: source-2186a9fb2e4e200518a1
+    media_type: article
+  - kind: reporting
+    publisher: Silicon Valley Business Journal
+    published_at: 2011-09-02
+    title: Stealth startup Stripe aims for Q4 launch
+    url: https://www.bizjournals.com/sanjose/print-edition/2011/09/02/stealth-startup-stripe-aims-for-q4.html
+    id: source-22c2cfbb3748446e2ba6
+    media_type: article
+  - kind: reporting
+    publisher: Axios
+    published_at: 2017-12-01
+    title: Scoop - Stripe hires new engineering chief from Google
+    url: https://www.axios.com/2017/12/15/scoop-stripe-hires-new-engineering-chief-from-google-1513307306
+    id: source-23174e14d53e9b8b0ff0
+    media_type: article
+  - kind: reporting
+    publisher: Bloomberg Law
+    published_at: 2023-02-02
+    title: Stripe CFO Suryadevara to Depart Firm to Handle Family Matters
+    url: https://news.bloomberglaw.com/mergers-and-acquisitions/stripe-cfo-suryadevara-to-depart-firm-to-handle-family-matters
+    id: source-2492e9cbea9cef718468
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2019-03-21
+    title: Stripe's Dublin engineering office
+    url: https://stripe.com/blog/dublin-eng-office
+    id: source-25286dd6c88449e379b9
+    media_type: article
+  - kind: interview
+    publisher: Airbrake
+    title: How Stripe Builds Software, with Greg Brockman
+    url: https://docs.airbrake.io/blog/devops/how-stripe-builds-software-an-interview-with-cto-greg-brockman/
+    id: source-2629159f9f734d48436a
+    media_type: article
+  - kind: interview
+    publisher: CBS News
+    published_at: 2016-05-01
+    title: "Fintech: Shaking up the financial industry"
+    url: https://www.cbsnews.com/news/fintech-shaking-up-the-financial-industry/
+    id: source-26410b426525f71187bb
+    language: en
+    media_type: transcript
+    native_id: cbs-60-minutes:fintech:2016-05-01
+  - kind: primary
+    publisher: Lemon Squeezy
+    published_at: 2024-07-26
+    title: Stripe acquires Lemon Squeezy
+    url: https://www.lemonsqueezy.com/blog/stripe-acquires-lemon-squeezy
+    id: source-268854c30a2fade4c280
+    media_type: article
+  - kind: archive
+    publisher: Officelovin
+    published_at: 2014-04
+    title: Stripe's new San Francisco office
+    url: https://www.officelovin.com/2014/04/stripes-new-san-francisco-office/
+    id: source-2690fda1a320fcf7938b
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: Boom
+    url: https://press.stripe.com/boom
+    id: source-26d0fe3a25115e526465
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2019-09-26
+    title: Stripe's fourth engineering hub is in Singapore
+    url: https://stripe.com/blog/singapore-eng-office
+    id: source-2770509db6a3e2e2cabd
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2026-04-29
+    title: Everything we announced at Sessions 2026
+    url: https://stripe.com/blog/everything-we-announced-at-sessions-2026
+    id: source-28eaa414dc9531c6df9d
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2011-09-30
+    title: Sequoia-backed Stripe launches to disrupt the online payments industry with a developer-friendly platform
+    url: https://techcrunch.com/2011/09/30/sequoia-backed-stripe-launches-to-disrupt-the-online-payments-industry-with-a-developer-friendly-platform/
+    id: source-2b1a43a0b359958b4059
+    media_type: article
+  - kind: reporting
+    publisher: Inc.
+    title: Stripe - 2015 Company of the Year Nominee
+    url: https://www.inc.com/jeremy-quittner/stripe-2015-company-of-the-year-nominee.html
+    id: source-2b28eaace5a0b7d68b9f
+    media_type: article
+  - kind: primary
+    publisher: Apple Podcasts
+    published_at: 2025-06-16
+    title: Cheeky Pint
+    url: https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332
+    id: source-2b9798bb1521325a716a
+    media_type: podcast
+  - id: source-2cca70fe5628f59eba33
+    kind: reporting
+    publisher: Axios
+    published_at: 2020-04-16
+    title: Stripe raises $600 million
+    url: https://www.axios.com/2020/04/16/stripe-fundraising-600-million
+    media_type: article
+  - kind: primary
+    publisher: Recko
+    title: About Recko
+    url: https://www.recko.io/company/
+    id: source-2d56ebbcddbc67a32ada
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2021-12-06
+    title: OpenChannel is joining Stripe
+    url: https://stripe.com/newsroom/news/openchannel
+    id: source-2d5b5463c7b9bca3aaac
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-10-09
+    title: Stripe opens new Dublin headquarters
+    url: https://stripe.com/newsroom/news/stripe-opens-new-dublin-hq
+    id: source-2e2e43c6e36373cd6d89
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2021-07-14
+    title: Stripe launches Stripe Identity, an identity verification tool to increase trust online
+    url: https://stripe.com/newsroom/news/stripe-launches-identity
+    id: source-2e4a9b448f3053b54cc4
+    media_type: article
+  - kind: reporting
+    publisher: The Org
+    title: Robert McIntosh - Chief People Officer and Head of Corporate Development at Stripe
+    url: https://theorg.com/org/stripe/org-chart/robert-mcintosh
+    id: source-2ea091d27b73089c7e1b
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: The Dream Machine
+    url: https://press.stripe.com/the-dream-machine
+    id: source-2ec15e8f0c45bec3dcef
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2021-06-10
+    title: Stripe launches Stripe Tax to simplify global tax compliance for businesses
+    url: https://stripe.com/newsroom/news/stripe-launches-stripe-tax
+    id: source-2f087de909d4c677e57c
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2022-05-04
+    title: Stripe introduces Financial Connections to help businesses connect to their customers' bank accounts
+    url: https://stripe.com/newsroom/news/financial-connections
+    id: source-2f82649e562cc60b1c81
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2020-10-28
+    title: Stripe launches world's first large-scale carbon removal purchase tool
+    url: https://stripe.com/gb/newsroom/news/climate-launch
+    id: source-2fcd7ee2a315cbde53b4
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2026-06-22
+    title: Eileen O'Mara named vice chair of Stripe; Tyler Bryson appointed chief revenue officer
+    url: https://stripe.com/newsroom/news/eileen-omara-named-vice-chair-of-stripe-tyler-bryson-appointed-chief-revenue-officer
+    id: source-2fd62540f30c44c011bd
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: Poor Charlie's Almanack
+    url: https://press.stripe.com/poor-charlies-almanack
+    id: source-309d768b99fde62a31ae
+    media_type: article
+  - kind: reporting
+    publisher: Axios
+    published_at: 2018-09-26
+    title: Stripe is now worth $20 billion
+    url: https://www.axios.com/2018/09/26/stripe-is-now-worth-20-billion-1537984799
+    id: source-313d5f90eb90dc44a09e
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2019-06-10
+    title: Stripe Sessions
+    url: https://stripe.com/blog/stripe-sessions
+    id: source-330c0283f9520625a5ec
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2022-01-21
+    title: Stripe Terminal accelerates global momentum
+    url: https://stripe.com/en-ca/newsroom/news/stripe-terminal-accelerates-global-momentum
+    id: source-34734b9c0fe2092013a9
+    media_type: article
+  - kind: reporting
+    publisher: TechCentral.ie
+    published_at: 2013-09-03
+    title: Stripe arrives in Ireland
+    url: https://www.techcentral.ie/stripe-arrives-in-ireland/
+    id: source-350a8c5b412070719319
+    media_type: article
+  - kind: reporting
+    publisher: San Francisco Chronicle
+    published_at: 2019-09-20
+    title: $35 billion startup Stripe considers move out of San Francisco
+    url: https://www.sfchronicle.com/business/article/35-billion-startup-Stripe-considers-move-out-of-14453688.php
+    id: source-350eef5f59c0a3464809
+    media_type: article
+  - kind: primary
+    publisher: The Atlantic
+    published_at: 2019-07-30
+    title: We Need a New Science of Progress
+    url: https://www.theatlantic.com/science/archive/2019/07/we-need-new-science-progress/594717/
+    id: source-370244a2efb2cfe025e5
+    media_type: article
+  - kind: primary
+    publisher: Stripe via iPressLIVE
+    published_at: 2019-01-29
+    title: Da oggi tutte le imprese italiane possono utilizzare Stripe per gestire pagamenti e tesoreria
+    url: https://www.ipresslive.it/en/ipress/comunicati/view/25948/
+    id: source-378c5b5a29e1f2462355
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2020-03-02
+    title: COVID-19 precautions for Stripe employees and customers
+    url: https://stripe.com/newsroom/news/covid-19
+    id: source-3884ba13c1dbeb603dae
+    media_type: article
+  - kind: reporting
+    publisher: Irish Independent
+    published_at: 2009-08-14
+    title: Harvard have made terrible mistake by allowing me in
+    url: https://www.independent.ie/irish-news/harvard-have-made-terrible-mistake-by-allowing-me-in/26558355.html
+    id: source-389cb567ecd0c7e4fb0a
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: The Scaling Era
+    url: https://press.stripe.com/scaling
+    id: source-391821de004fb1a8d195
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2014-12-02
+    title: Stripe raises $70M at a $3.5B valuation
+    url: https://techcrunch.com/2014/12/02/stripe-3-5-billion/
+    id: source-3bb6c45b8d6f9c1124b4
+    media_type: article
+  - kind: reporting
+    publisher: Axios
+    published_at: 2018-07-17
+    title: Payments company Stripe is getting into book publishing
+    url: https://www.axios.com/2018/07/17/payments-company-stripe-is-getting-into-book-publishing
+    id: source-3bdf6f55cfb6d97a591c
+    media_type: article
+  - kind: reporting
+    publisher: Bloomberg Law
+    title: Riding Record Valuations, Fintech Companies Keep Hiring Lawyers
+    url: https://news.bloomberglaw.com/coronavirus/riding-record-valuations-fintech-companies-keep-hiring-lawyers
+    id: source-3d6c52f0fa2137ac7a41
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: Working in Public
+    url: https://press.stripe.com/working-in-public
+    id: source-423ad9bb88f1960b97f7
+    media_type: article
+  - kind: interview
+    publisher: Alliance for Innovative Regulation
+    title: Full Transcript - Darragh Buckley
+    url: https://regulationinnovation.org/wp-content/uploads/2024/04/Full-Transcript-Darragh-Buckley.docx.pdf
+    id: source-4403a949bb07bcfb06e7
+    media_type: pdf
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-12-11
+    title: Stripe launches the Agentic Commerce Suite to help every business thrive in the AI-enabled commerce era
+    url: https://stripe.com/newsroom/news/agentic-commerce-suite
+    id: source-4519a665c1d7940b43ec
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: Scaling People
+    url: https://press.stripe.com/scaling-people
+    id: source-46bb338c33a88fca0929
+    media_type: article
+  - kind: primary
+    publisher: Meta
+    published_at: 2025-04-11
+    title: Patrick Collison and Dina Powell McCormick to Join Meta Board of Directors
+    url: https://about.fb.com/news/2025/04/patrick-collison-and-dina-powell-mccormick-to-join-meta-board-of-directors/
+    id: source-475e9973e4ee494147aa
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2016-09-20
+    title: Stripe in Singapore!
+    url: https://stripe.com/blog/stripe-in-singapore
+    id: source-486a6154c40f850ea690
+    media_type: article
+  - kind: reporting
+    publisher: Bisnow
+    published_at: 2015-04-28
+    title: "Behind the deal: Stripe's mega-lease"
+    url: https://www.bisnow.com/san-francisco/news/office/behind-the-deal-stripes-mega-lease-45440
+    id: source-48c97cf06044babe5a36
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2013-08-15
+    title: Stripe now open for business in UK, other countries and currencies coming soon
+    url: https://techcrunch.com/2013/08/15/stripe-now-open-for-business-in-uk-other-countries-and-currencies-coming-soon/
+    id: source-4b1e9dcf5163ebb8555b
+    media_type: article
+  - id: source-4b4de85478f5981d6494
+    kind: reporting
+    publisher: TechCrunch
+    published_at: 2024-01-06
+    title: "Deal Dive: A Stripe secondary deal worth paying attention to"
+    url: https://techcrunch.com/2024/01/06/stripe-secondary-deal-ipo/
+    media_type: article
+  - kind: primary
+    publisher: Marginal Revolution
+    published_at: 2026-05-25
+    title: New Aesthetics awards
+    url: https://marginalrevolution.com/marginalrevolution/2026/05/new-aesthetics-awards.html
+    id: source-4c240f420fc0534fe6af
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2023-04-05
+    title: Stripe 2022 annual update
+    url: https://assets.ctfassets.net/fzn2n1nzq965/5Qj1NdQFtWO3rIE4WhAVl9/102082e311fc26462207a8ebb89eef25/stripe-2022-annual-update.pdf
+    id: source-4c2b6be236dc25d35aff
+    media_type: pdf
+  - kind: primary
+    publisher: Paystack
+    title: Paystack and Stripe
+    url: https://paystack.com/stripe
+    id: source-4cba29dde5bde54884d6
+    media_type: article
+  - kind: interview
+    publisher: Colossus
+    published_at: 2020-06-16
+    title: Growing the Internet Economy
+    url: https://colossus.com/episode/collison-growing-the-internet-economy/
+    id: source-4d80199395399e9e47d8
+    language: en
+    media_type: transcript
+    native_id: colossus:collison-growing-the-internet-economy
+  - kind: primary
+    publisher: Stripe
+    published_at: 2020-08-11
+    title: Dhivya Suryadevara to join Stripe as Chief Financial Officer
+    url: https://stripe.com/newsroom/news/dhivya-suryadevara
+    id: source-4dbd7744d6f91d4890ff
+    media_type: article
+  - kind: filing
+    publisher: U.S. Securities and Exchange Commission
+    published_at: 2017-07-31
+    title: Stripe Form D filing listing 185 Berry Street
+    url: https://www.sec.gov/Archives/edgar/data/1691342/000169134217000002/0001691342-17-000002-index.html
+    id: source-501daba037df1c1e5432
+    media_type: filing
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2024-03-29
+    title: How a tiny 4-person startup, Supaglue, caught Stripe's eye
+    url: https://techcrunch.com/2024/03/29/supaglue-stripe-acquire-acquisition/
+    id: source-5026cf90e1d1c99b4ed0
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2024-02-28
+    title: Stripe announces employee liquidity at a $65B valuation
+    url: https://stripe.com/newsroom/news/employee-liquidity-feb-2024
+    id: source-5116ff7a7f3246d58e2a
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-12-20
+    title: Stripe Service Providers, Sub-Processors and Affiliates
+    url: https://stripe.com/legal/service-providers
+    id: source-519ba3de493a815c1243
+    media_type: article
+  - kind: interview
+    publisher: Dwarkesh Patel
+    published_at: 2024-02-21
+    title: Patrick Collison — Why Silicon Valley's most talented should leave
+    url: https://www.dwarkesh.com/p/patrick-collison
+    id: source-51a0e1edbe8fc1ce9d5a
+    media_type: transcript
+  - kind: interview
+    publisher: Storied San Francisco
+    title: Saikat Chakrabarti
+    url: https://www.storiedsf.com/episodes/saikat-chakrabarti
+    id: source-543cf8a3b64e5b5522b4
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    title: Stripe Newsroom - Information and assets
+    url: https://stripe.com/newsroom/information
+    id: source-543d9c2bdd12031667b2
+    media_type: article
+  - kind: archive
+    publisher: Open Library
+    published_at: 2021-07-20
+    title: The Big Score
+    url: https://openlibrary.org/isbn/9781953953162
+    id: source-544128bb24b7d24104da
+    media_type: article
+  - kind: primary
+    publisher: Works in Progress
+    published_at: 2022-02-17
+    title: Works in Progress has joined Stripe
+    url: https://www.worksinprogress.news/p/works-in-progress-has-joined-stripe
+    id: source-54483c6f0408dcb374f0
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2021-09-28
+    title: Stripe opens first Canadian office in Toronto
+    url: https://stripe.com/en-cy/newsroom/news/toronto
+    id: source-56f670931dbb37ef809e
+    media_type: article
+  - kind: interview
+    publisher: Wharton FinTech Podcast
+    published_at: 2026-01-14
+    title: Stripe's First Employee on Building Modern Banking Infrastructure
+    url: https://podcasts.apple.com/us/podcast/stripes-first-employee-on-building-modern-banking-infrastructure/id1042827113?i=1000745150435
+    id: source-59856a48d46794d4ecff
+    media_type: podcast
+  - kind: primary
+    publisher: Stripe
+    published_at: 2020-10-15
+    title: Paystack is joining Stripe
+    url: https://stripe.com/in/newsroom/news/paystack-joining-stripe
+    id: source-5a23bc6e25af01d7594d
+    media_type: article
+  - kind: primary
+    publisher: New Aesthetics
+    title: New Aesthetics Grants
+    url: https://newaesthetics.art/grants
+    id: source-5a2e0ef3c00b4019656f
+    media_type: webpage
+  - kind: reporting
+    publisher: SFGATE
+    published_at: 2022-11-03
+    title: Stripe lays off 1,000 employees
+    url: https://www.sfgate.com/tech/article/stripe-lays-off-1000-employees-17556389.php
+    id: source-5a48b33330f710b1c700
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: An Elegant Puzzle
+    url: https://press.stripe.com/an-elegant-puzzle
+    id: source-5ae7e6ba83780e12c659
+    media_type: article
+  - kind: primary
+    publisher: Ómós
+    published_at: 2026-07-19
+    title: Ómós Digest
+    url: https://omos.substack.com/p/omos-digest-226-in-full-swing
+    id: source-5cce599c4b7c9144e3cb
+    media_type: article
+  - kind: filing
+    publisher: California Department of Financial Protection and Innovation
+    title: Stripe Payments Company regulated entity record
+    url: https://dfpi.ca.gov/regulated_entity/stripe-payments-company/
+    id: source-5d278320d7e0662046c0
+    media_type: filing
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2017-04-11
+    title: Stripe acquires Indie Hackers
+    url: https://techcrunch.com/2017/04/11/stripe-acquires-indie-hackers-a-knowledge-sharing-community-for-entrepreneurs/
+    id: source-600517ef1c307d86cf25
+    media_type: article
+  - kind: reporting
+    publisher: Forbes
+    title: Amber Feng
+    url: https://www.forbes.com/profile/amber-feng/
+    id: source-602d1868713f23b88f2c
+    media_type: article
+  - kind: filing
+    publisher: Central Bank of Ireland
+    published_at: 2019-03-22
+    title: "Financial Service Provider Register Data: Stripe Technology Europe, Limited"
+    url: https://registers.centralbank.ie/firmregisterdatapage.aspx?firmreferencenumber=c187865&register=63
+    id: source-618a6c3ce25fc7419a80
+    media_type: filing
+  - kind: primary
+    publisher: Stripe
+    published_at: 2018-01-23
+    title: Ending Bitcoin support
+    url: https://stripe.com/blog/ending-bitcoin-support
+    id: source-61963e80f78f63567415
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2020-12-03
+    title: Stripe launches Stripe Treasury in major expansion of financial services offering for platform partners
+    url: https://stripe.com/newsroom/news/treasury
+    id: source-642ae265859bee92a254
+    media_type: article
+  - kind: primary
+    publisher: Anthropic
+    published_at: 2025-10-07
+    title: Rahul Patil joins Anthropic as Chief Technology Officer
+    url: https://www.anthropic.com/news/rahul-patil-joins-anthropic
+    id: source-669b3a2f6e0c3fc4ddcc
+    media_type: article
+  - kind: primary
+    publisher: Dwarkesh Patel
+    published_at: 2025-03-25
+    title: The Scaling Era is out now on Stripe Press
+    url: https://www.dwarkesh.com/p/scaling-ama
+    id: source-66b82449fa2a80e4c027
+    media_type: article
+  - id: source-67de5aa3b7009ba5ed83
+    kind: reporting
+    publisher: TechCrunch
+    published_at: 2023-01-11
+    title: Stripe internal valuation gets cut to $63 billion
+    url: https://techcrunch.com/2023/01/11/stripe-internal-valuation-63-billion-409a/
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2020-01-07
+    title: Increment subscriptions
+    url: https://stripe.com/blog/increment-subscriptions
+    id: source-68ef23b66125c4fd22f9
+    media_type: article
+  - kind: primary
+    publisher: Valora
+    published_at: 2025-12-10
+    title: Valora's next chapter
+    url: https://valora.xyz/blog/valoras-next-chapter
+    id: source-697130054848d78fea4f
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2026-02-24
+    title: Stripe's 2025 annual letter
+    url: https://stripe.com/annual-updates/2025
+    id: source-6a0d2f89102ce3fbce2c
+    media_type: article
+  - kind: primary
+    publisher: Roots of Progress
+    title: About the Roots of Progress Institute
+    url: https://rootsofprogress.org/about/
+    id: source-6a70e99c09c187ea49b2
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2017-04-13
+    title: Introducing Increment
+    url: https://stripe.com/en-lt/blog/increment
+    id: source-6dff7671fdc80ed92ead
+    media_type: article
+  - kind: reporting
+    publisher: Upstarts Media
+    published_at: 2025-12-02
+    title: Stripe pays $1 billion for Metronome
+    url: https://www.upstartsmedia.com/p/scoop-stripe-pays-1-billion-for-metronome
+    id: source-6e7455b09494678f92f8
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2020-08-05
+    title: Mike Clayville joins Stripe as Chief Revenue Officer
+    url: https://stripe.com/in/newsroom/news/mike-clayville
+    id: source-6eadd4468bd0d9d7a98f
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2020-05-28
+    title: Stripe's remote engineering hub, one year in
+    url: https://stripe.com/blog/remote-hub-one-year
+    id: source-6fa2526817c31490953f
+    media_type: article
+  - kind: archive
+    publisher: Open Library
+    published_at: 2023-03-07
+    title: Scaling People
+    url: https://openlibrary.org/isbn/9781953953216
+    id: source-6fc719eb40c62a9a55fd
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-09-29
+    title: Stripe powers Instant Checkout in ChatGPT and releases Agentic Commerce Protocol codeveloped with OpenAI
+    url: https://stripe.com/newsroom/news/stripe-openai-instant-checkout
+    id: source-717a6265588eea28b44d
+    media_type: article
+  - kind: primary
+    publisher: Stripe Support
+    published_at: 2025-11-18
+    title: Stripe User Terms Update - 18 November 2025
+    url: https://support.stripe.com/questions/stripe-user-terms-update-november-18-2025?locale=en-GB
+    id: source-7209b823727c000ddf0c
+    media_type: article
+  - kind: reporting
+    publisher: GeekWire
+    published_at: 2016-10-20
+    title: Online payments powerhouse Stripe is the latest tech giant to plan engineering outpost in Seattle
+    url: https://www.geekwire.com/2016/online-payments-powerhouse-stripe-latest-tech-giant-plan-engineering-outpost-seattle/
+    id: source-72498f5bf7ab97e0d852
+    media_type: article
+  - kind: reporting
+    publisher: The Harvard Crimson
+    published_at: 2011-04-08
+    title: Young Entrepreneurs Put College on Hold
+    url: https://www.thecrimson.com/article/2011/4/8/harvard-time-company-out/
+    id: source-72bfa2c375357439c9a6
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2023-04-24
+    title: Improving Instant Payouts
+    url: https://stripe.com/blog/improving-instant-payouts
+    id: source-734d64a5afd49a77f847
+    media_type: article
+  - kind: interview
+    publisher: The Tim Ferriss Show
+    published_at: 2018-12-24
+    title: The Tim Ferriss Show Transcripts - Patrick Collison (#353)
+    url: https://tim.blog/2018/12/24/the-tim-ferriss-show-patrick-collison/
+    id: source-7365200928b2c76a48b7
+    language: en
+    media_type: transcript
+    native_id: tim-ferriss:episode-353
+  - kind: primary
+    publisher: Stripe
+    published_at: 2019-04-05
+    title: Stripe Technology Europe terms
+    url: https://stripe.com/de/legal/stel
+    id: source-749f533b264cd161b60f
+    media_type: article
+  - kind: archive
+    publisher: Open Library
+    published_at: 2024-11-19
+    title: "Boom: Bubbles and the End of Stagnation"
+    url: https://openlibrary.org/works/OL37938070W/Boom?edition=key%3A%2Fbooks%2FOL59520721M
+    id: source-74ec7e63f0ae7f279004
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2024-05-21
+    title: Stripe Tour London 2024
+    url: https://stripe.com/en-fr/newsroom/news/tour-london-2024
+    id: source-751ebcf4673eda978d92
+    media_type: article
+  - kind: filing
+    publisher: City of South San Francisco
+    published_at: "2022"
+    title: Oyster Point public financing statement
+    url: https://www.ssfca.gov/files/assets/public/v/1/finance/documents/19685000-city-of-south-san-francisco-cfd-special-tax-bonds-oyster-point-series-2022.pdf
+    id: source-7860f9a75865fa56af11
+    media_type: pdf
+  - kind: primary
+    publisher: Stripe
+    published_at: 2019-09-10
+    title: Stripe introduces the Stripe Corporate Card and activates payouts to 45 countries
+    url: https://stripe.com/en-sg/newsroom/news/stripe-introduces-corporate-card
+    id: source-78a8b3ca1214ea861514
+    media_type: article
+  - kind: primary
+    publisher: Alex MacCaw
+    published_at: 2012-08-28
+    title: What it's like to work for Stripe
+    url: https://blog.alexmaccaw.com/what-its-like-to-work-for-stripe/
+    id: source-78f711a329821d29d9b8
+    media_type: article
+  - kind: primary
+    publisher: Metronome
+    published_at: 2026-01-13
+    title: "Our next chapter: Metronome is now part of Stripe"
+    url: https://metronome.com/blog/our-next-chapter-metronome-is-now-part-of-stripe
+    id: source-796cdb4df88d6b0d4e78
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2022-11-03
+    title: CEO Patrick Collison's email to Stripe employees
+    url: https://stripe.com/it/newsroom/news/ceo-patrick-collisons-email-to-stripe-employees
+    id: source-7974addf5e18ced26551
+    media_type: article
+  - kind: archive
+    publisher: Listen Notes
+    published_at: 2022-04-27
+    title: "Beneath the Surface: An Infrastructure Podcast"
+    url: https://www.listennotes.com/podcasts/beneath-the-surface-an-infrastructure-svhQJPVBwpW/
+    id: source-79b0f9a2bc894c5e34ba
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2022-04
+    title: Stripe 2021 business update
+    url: https://stripe.com/files/stripe-2021-update.pdf
+    id: source-7aebf381a98587d0d180
+    media_type: pdf
+  - kind: filing
+    publisher: U.S. Securities and Exchange Commission
+    published_at: "2023"
+    title: Getty Images Holdings 2023 proxy statement
+    url: https://www.sec.gov/Archives/edgar/data/1898496/000110465923059740/tm2310765-1_def14a.htm
+    id: source-7c2526ca8051f9cf2471
+    media_type: filing
+  - kind: primary
+    publisher: TaxJar
+    title: About TaxJar
+    url: https://www.taxjar.com/about
+    id: source-7ce1b3c72bdb24dd6010
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    title: AMA with Patrick and John Collison
+    url: https://stripe.com/sessions/2025/ama-with-patrick-and-john-collison
+    id: source-7db75f16638fc07f166c
+    language: en
+    media_type: transcript
+    native_id: stripe-sessions:2025:ama-with-patrick-and-john-collison
+  - kind: primary
+    publisher: Stripe
+    published_at: 2022-05-24
+    title: Sessions 2022 and product highlights from the year
+    url: https://stripe.com/blog/stripe-sessions-2022
+    id: source-7e1ac4944f2e99511681
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2024-07-18
+    title: Stripe accelerates growth in Japan with new solutions for ambitious enterprises
+    url: https://stripe.com/newsroom/news/tour-tokyo-2024
+    id: source-7eedf151286d54e1e53d
+    media_type: article
+  - id: source-7f1e28293e44b7e2b09c
+    kind: reporting
+    publisher: TechCrunch
+    published_at: 2023-07-19
+    title: Fintech valuations have fallen. Where do they go from here?
+    url: https://techcrunch.com/2023/07/19/fintech-valuations-down-2023/
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: The Revolt of the Public
+    url: https://press.stripe.com/revolt-of-the-public
+    id: source-7f3656858147bb5d1d05
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-12-15
+    title: PayTo Service Terms and Conditions
+    url: https://stripe.com/au/legal/payto
+    id: source-80c945967e9e1f521afb
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: Stubborn Attachments
+    url: https://press.stripe.com/stubborn-attachments
+    id: source-81437bb4554785e28054
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2017-10-03
+    title: Stripe unveils Stripe Elements to help businesses streamline checkout flows and increase conversions
+    url: https://stripe.com/us/newsroom/news/stripe-launches-elements
+    id: source-82a1deff0820ceb706ac
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2013-03-11
+    title: Payments company Stripe acquires team task management and collaboration app Kickoff
+    url: https://techcrunch.com/2013/03/11/payments-company-stripe-acquires-team-task-management-and-collaboration-app-kickoff/
+    id: source-8335c39a9a30da274705
+    media_type: article
+  - kind: reporting
+    publisher: Forbes
+    published_at: 2022-06-14
+    title: Claire Hughes Johnson
+    url: https://www.forbes.com/profile/claire-hughes-johnson/
+    id: source-8421431556029a2eaf89
+    media_type: article
+  - kind: primary
+    publisher: Marginal Revolution
+    published_at: 2021-06-16
+    title: What we learned doing Fast Grants
+    url: https://marginalrevolution.com/marginalrevolution/2021/06/what-we-learned-doing-fast-grants.html
+    id: source-85375dadecbd272a21c7
+    media_type: article
+  - kind: reporting
+    publisher: The Information
+    title: The People With Power at Stripe After COO Steps Back
+    url: https://www.theinformation.com/articles/the-people-with-power-at-stripe-after-coo-steps-back
+    id: source-85b1d0e6c404677bfd35
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2018-04-18
+    title: Improved fraud prevention with Radar 2.0
+    url: https://stripe.com/us/blog/radar-2018
+    id: source-878b4090e00bd1f955ce
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2021-05-14
+    title: Bouncer is joining Stripe
+    url: https://stripe.com/newsroom/news/bouncer
+    id: source-87dbe8f2a19c4579de12
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2022-05-24
+    title: Stripe launches Stripe Apps to help businesses build or discover tools that work seamlessly with Stripe
+    url: https://stripe.com/newsroom/news/stripe-apps
+    id: source-896f1fa818466438409c
+    media_type: article
+  - kind: reporting
+    publisher: Nature
+    published_at: 2021-08-03
+    title: COVID Fast Grants sped up pandemic science
+    url: https://www.nature.com/articles/d41586-021-02111-7
+    id: source-89af64bf0e530b9961f2
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2024-03-13
+    title: Stripe's 2023 annual letter
+    url: https://stripe.com/en-ca/annual-updates/2023
+    id: source-8a7b0b685a7ceb93b864
+    media_type: article
+  - kind: reporting
+    publisher: Payments Dive
+    published_at: 2019-01-30
+    title: Stripe raises $100M from Tiger Global for international expansion, operations
+    url: https://www.paymentsdive.com/ex/mpt/news/stripe-raises-100m-from-tiger-global-for-international-expansion-operations/
+    id: source-8d6599ea85d8f5f485b7
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2026-02-24
+    title: Stripe is reportedly eyeing a deal to buy some or all of PayPal
+    url: https://techcrunch.com/2026/02/24/stripe-is-reportedly-eyeing-deal-to-buy-some-or-all-of-paypal/
+    id: source-8e3a72ba39c49c012923
+    media_type: article
+  - kind: primary
+    publisher: RethinkDB
+    published_at: 2016-10-05
+    title: RethinkDB is shutting down
+    url: https://rethinkdb.com/blog/rethinkdb-shutdown/
+    id: source-8e85a9534567ebb62542
+    media_type: article
+  - kind: primary
+    publisher: Stripe Documentation
+    title: Next-day settlement
+    url: https://docs.stripe.com/payouts/next-day-settlement
+    id: source-8ecce31f6690c205d2c0
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2019-05-02
+    title: Stripe's fifth engineering hub is Remote
+    url: https://stripe.com/blog/remote-hub
+    id: source-90f07d388464369c2b51
+    media_type: article
+  - kind: primary
+    publisher: Metronome
+    published_at: 2025-12-02
+    title: Important company update
+    url: https://metronome.com/blog/important-company-update
+    id: source-9137103ae91044e460d7
+    media_type: article
+  - kind: primary
+    publisher: Structure Films and Stripe Press
+    published_at: "2022"
+    title: We Are As Gods press notes
+    url: https://static1.squarespace.com/static/5cb7622d840b16da4eb63d08/t/63445e124c6cbd5fed52b4ec/1665424918538/final_gods_press_notes_8_3_22_REDUCED.pdf
+    id: source-919b997e5edbf0d1258d
+    media_type: pdf
+  - kind: primary
+    publisher: Stripe
+    published_at: 2023-05-04
+    title: Stripe expands access to its crypto onramp with a new hosted option
+    url: https://stripe.com/en-gb/newsroom/news/fiat-to-crypto-onramp
+    id: source-91d49dbf8eb4dc2fe25b
+    media_type: article
+  - kind: reporting
+    publisher: Axios
+    published_at: 2024-09-09
+    title: Sequoia Capital buys Stripe shares from its own investors
+    url: https://www.axios.com/2024/09/09/sequoia-capital-stripe
+    id: source-93f3d70eb5fc195f2ed2
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2022-06
+    title: "Stripe changelog: June 2022"
+    url: https://stripe.com/blog/changelog
+    id: source-95839ee4456a7ec1910e
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-12-03
+    title: Stripe Next-Day Settlement terms
+    url: https://stripe.com/legal/ssa-services-terms#stripe-next-day-settlement
+    id: source-97444be68e85216131c3
+    media_type: article
+  - kind: reporting
+    publisher: Axios
+    published_at: 2026-07-24
+    title: Stripe-OpenRouter merger talks signal AI currency push
+    url: https://www.axios.com/2026/07/24/stripe-openrouter-merger-ai-currency
+    id: source-990ab773c6c0913272f7
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2018-07-26
+    title: Stripe launches Stripe Issuing to help businesses create their own credit and debit cards
+    url: https://stripe.com/gb/newsroom/news/stripe-launches-issuing
+    id: source-990db0e5c6cad55bb8ee
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2015-07-28
+    title: Stripe is now valued at $5B after a Visa investment
+    url: https://techcrunch.com/2015/07/28/stripe-5-billion/
+    id: source-9a3a3ccb578db86eecac
+    media_type: article
+  - kind: reporting
+    publisher: Nenagh Guardian
+    published_at: 2024-01-13
+    title: Collison backs new restaurant
+    url: https://www.nenaghguardian.ie/2024/01/13/collison-backs-new-restaurant/
+    id: source-9ad888e73adc937b1c29
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2019-09-09
+    title: Stripe launches in eight more European countries
+    url: https://stripe.com/en-dk/newsroom/news/central-and-eastern-europe-expansion
+    id: source-9d1b53c101f5abfa85af
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2017-07-10
+    title: Stripe launches in Hong Kong, announces new global partnerships with Alipay and WeChat Pay
+    url: https://stripe.com/newsroom/news/stripe-launches-hong-kong
+    id: source-9d75ce0719b59e106ddb
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: We Are As Gods
+    url: https://press.stripe.com/we-are-as-gods
+    id: source-9dc6403512fc204f5744
+    media_type: article
+  - kind: reporting
+    publisher: VentureBeat
+    published_at: 2017-06-22
+    title: Stripe refocuses European effort with 6 new markets and expanded payments platform
+    url: https://venturebeat.com/ai/stripe-launches-in-6-new-european-markets-and-expands-its-connect-payments-platform-for-marketplaces
+    id: source-9f557af8a0a37092e873
+    media_type: article
+  - kind: reporting
+    publisher: Silicon Valley Business Journal
+    published_at: 2015-10-09
+    title: Stripe hires Thrive Capital investor with software background as CFO
+    url: https://www.bizjournals.com/sanjose/blog/techflash/2015/10/stripe-hires-thrive-capitalinvestor-with-software.html
+    id: source-9f852c1069797500c94f
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2019-04-17
+    title: Stripe acquires Touchtech, updates APIs for Strong Customer Authentication in Europe
+    url: https://techcrunch.com/2019/04/17/stripe-acquires-touchtech-updates-apis-to-prep-for-strong-customer-authentication-in-europe/
+    id: source-a2e28913a8773ba035c0
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2014-03-05
+    title: Stripe debuts a new Checkout experience with one-click payments for mobile and web
+    url: https://techcrunch.com/2014/03/05/stripe-debuts-a-new-checkout-experience-with-one-click-payments-for-mobile-and-web/
+    id: source-a38d21043bcbea4662ca
+    media_type: article
+  - kind: reporting
+    publisher: Bankless
+    published_at: 2026-02-12
+    title: Payments Processor Stripe Acquihires PartyDAO Team
+    url: https://www.bankless.com/read/news/payments-processor-stripe-acquihires-partydao-team
+    id: source-a4ec681ae567502b002c
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2022-09
+    title: "Stripe changelog: September 2022"
+    url: https://stripe.com/blog/changelog
+    id: source-a5244f067a61333806ae
+    media_type: article
+  - kind: primary
+    publisher: Orum
+    published_at: 2025-07-18
+    title: Orum joins Stripe
+    url: https://www.orum.io/blog/orum-joins-stripe
+    id: source-a57c4c8a77e5bed9da3c
+    media_type: article
+  - kind: interview
+    publisher: Stanford Technology Ventures Program
+    published_at: 2015-02-17
+    title: Putting Startup Success in Perspective
+    url: https://stvp.stanford.edu/av/putting-startup-success-perspective-entire-talk
+    id: source-a5d1d621862fa7f1cac0
+    language: en
+    media_type: transcript
+    native_id: stvp:talk:55511
+  - kind: primary
+    publisher: Stripe Press
+    title: Get Together
+    url: https://press.stripe.com/get-together
+    id: source-a67403a0dfe10525868f
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: Scientific Freedom
+    url: https://press.stripe.com/scientific-freedom
+    id: source-a7eb7465e8205b255271
+    media_type: article
+  - kind: reporting
+    publisher: The Guardian
+    published_at: 2014-07-22
+    title: Stripe steps up PayPal rivalry with Australian launch
+    url: https://www.theguardian.com/technology/2014/jul/22/stripe-steps-up-paypal-rivalry-with-australian-launch
+    id: source-a7f01b8f3120c54b2b6b
+    media_type: article
+  - kind: filing
+    publisher: U.S. Securities and Exchange Commission
+    published_at: 2025-04-11
+    title: Meta Platforms current report announcing board appointments
+    url: https://www.sec.gov/Archives/edgar/data/1326801/000132680125000027/meta-20250411.htm
+    id: source-aa36e7f93ba3a24269dd
+    media_type: filing
+  - kind: reporting
+    publisher: The Irish Times
+    published_at: 2017-06-22
+    title: Online payments firm Stripe launches in six more European countries
+    url: https://www.irishtimes.com/business/technology/online-payments-firm-stripe-launches-in-six-more-european-countries-1.3129274
+    id: source-aa4776c0eb2453cd72de
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2026-04-29
+    title: Stripe builds out the economic infrastructure for AI with 288 launches
+    url: https://stripe.com/en-be/newsroom/news/sessions-2026
+    id: source-aee875a73e3c1d937190
+    media_type: article
+  - kind: primary
+    publisher: Federal Trade Commission
+    published_at: 2026-03-26
+    title: FTC chairman issues warning letters to CEOs of PayPal, Stripe, Visa and Mastercard about debanking American consumers
+    url: https://www.ftc.gov/legal-library/browse/warning-letters/330171
+    id: source-af73a183fc7223ea0d57
+    media_type: article
+  - kind: primary
+    publisher: Arc Institute
+    title: About Arc Institute
+    url: https://arcinstitute.org/about
+    id: source-af73c6bed56faf7ea27e
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2011-03-28
+    title: Stealth payment startup Stripe backed by PayPal founders
+    url: https://techcrunch.com/2011/03/28/stealth-payment-startup-stripe-paypal/
+    id: source-b2dd612bb76ab78c5e49
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2023-05-03
+    title: "Sessions 2023: Powering growth for the internet economy"
+    url: https://stripe.com/blog/stripe-sessions-2023
+    id: source-b4131d403cf76f5180f6
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2022-04-15
+    title: Stripe launches Konbini and Furikomi, deepening investment in Japan
+    url: https://stripe.com/en-it/newsroom/news/japan-local-payments
+    id: source-b4f71bd8265a210ddc48
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2017-06-01
+    title: Stripe launches Sigma, a new analytics tool to help businesses track payments data
+    url: https://techcrunch.com/2017/06/01/stripe-sigma-data-analytics/
+    id: source-b51fb51f19c22188d7b9
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2012-10-10
+    title: Stripe's new payments product could be a boon for collaborative consumption, ecommerce startups
+    url: https://techcrunch.com/2012/10/10/stripe-connect/
+    id: source-b541414b3e2510a4a100
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-02-04
+    title: Stripe completes Bridge acquisition
+    url: https://stripe.com/en-br/newsroom/news/stripe-completes-bridge-acquisition
+    id: source-b5f3dd49770d38d3cc50
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2023-08-02
+    title: Steffan Tomlinson joins Stripe as chief financial officer
+    url: https://stripe.com/newsroom/news/steffan-tomlinson
+    id: source-b947eefa88f90b4893bf
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: Pieces of the Action
+    url: https://press.stripe.com/pieces-of-the-action
+    id: source-ba35b739c70ba7868444
+    media_type: article
+  - kind: reporting
+    publisher: Ecommerce News
+    published_at: 2016-10-06
+    title: Stripe continúa su rápida expansión con el lanzamiento de su plataforma para negocios online en España
+    url: https://ecommerce-news.es/stripe-continua-rapida-expansion-lanzamiento-plataforma-negocios-online-espana/
+    id: source-bbcfef066cc192eac39c
+    media_type: article
+  - kind: primary
+    publisher: United States Congress
+    published_at: 2025-03-11
+    title: Written Testimony of Patrick Collison
+    url: https://www.congress.gov/119/meeting/house/117994/witnesses/HHRG-119-BA00-Wstate-CollisonP-20250311.pdf
+    id: source-bbf6b0fb0b8942bc569f
+    language: en
+    media_type: pdf
+    native_id: HHRG-119-BA00-Wstate-CollisonP-20250311
+  - kind: primary
+    publisher: Stripe
+    published_at: 2026-02-24
+    title: Stripe publishes 2025 annual letter and announces tender offer to provide liquidity to current and former employees
+    url: https://stripe.com/newsroom/news/stripe-2025-update
+    id: source-bd6516ac551f19c37d33
+    media_type: article
+  - kind: interview
+    publisher: Startup Grind
+    published_at: 2013-02-20
+    title: Startup Grind Hosts Patrick Collison of Stripe, 6 Months In - Full Interview
+    url: https://www.startupgrind.com/blog/from-the-vault-patrick-collison-stripe-full-startup-grind-interview-2012/
+    id: source-bda69e86e22cf8e2c66f
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2021-08-31
+    title: UnionPay International partners with Stripe, widening access to the global Chinese consumer market for businesses
+    url: https://stripe.com/br/newsroom/news/stripe-unionpay
+    id: source-bde4a28ea5bbb0351031
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2017-12-12
+    title: Kicking off Stripe's private beta in India
+    url: https://stripe.com/jp/blog/india-private-beta
+    id: source-be4a882fc54182757d5a
+    media_type: article
+  - id: source-be63a33e896357893bf6
+    kind: reporting
+    publisher: Bloomberg Law
+    published_at: 2023-01-12
+    title: Stripe Cuts Valuation 11% to $63 Billion, The Information Says
+    url: https://news.bloomberglaw.com/mergers-and-acquisitions/stripe-cuts-valuation-11-to-63-billion-the-information-says
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2026-03
+    title: "Stripe changelog: March 2026"
+    url: https://stripe.com/blog/changelog
+    id: source-bebcca96578a064a18b0
+    media_type: article
+  - kind: reporting
+    publisher: The Information
+    title: Top Stripe Executive Clayville Departs, Is Helping Secretive Startup Omniva Hire
+    url: https://www.theinformation.com/articles/top-stripe-executive-clayville-departs-is-helping-secretive-startup-omniva-hire
+    id: source-bf929613bb5894a9b823
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2017-08-22
+    title: Stripe in New Zealand
+    url: https://stripe.com/blog/new-zealand
+    id: source-c188c475916f55ddd247
+    media_type: article
+  - kind: reporting
+    publisher: Futurezone
+    published_at: 2017-06-22
+    title: Bezahlservice Stripe kommt nach Österreich und Deutschland
+    url: https://futurezone.at/b2b/bezahlservice-stripe-kommt-nach-oesterreich-und-deutschland/271.196.432
+    id: source-c2c5a30a6dcfb2eb547c
+    media_type: article
+  - kind: interview
+    publisher: The New Yorker
+    published_at: 2026-02-04
+    title: Stewart Brand on how progress happens
+    url: https://www.newyorker.com/books/book-currents/stewart-brand-on-how-progress-happens
+    id: source-c2ef8de7976b0a3817a5
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-04-22
+    title: Stripe launches new features for businesses in Japan, including PayPay integration
+    url: https://stripe.com/newsroom/news/japan-payments-moment-2025
+    id: source-c3597cdbd36e6aaec4ed
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2023-04-05
+    title: Stripe publishes 2022 annual letter
+    url: https://stripe.com/newsroom/news/stripe-2022-update
+    id: source-c368358c8a9f73e7acf1
+    media_type: article
+  - kind: primary
+    publisher: Tempo
+    published_at: 2025-09-04
+    title: Introducing Tempo, the payments-first blockchain
+    url: https://tempo.xyz/blog/introducing-tempo
+    id: source-c3730e9fc55ad7e43559
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2023-05-02
+    title: Stripe launches Stripe Reader S700, a customizable smart reader
+    url: https://stripe.com/newsroom/news/stripe-reader-s700
+    id: source-c48b9240dbf0de0474aa
+    media_type: article
+  - kind: primary
+    publisher: Indie Hackers
+    published_at: 2017-04-11
+    title: Acquired by Stripe
+    url: https://www.indiehackers.com/product/indie-hackers/acquired-by-stripe-37d569fd70
+    id: source-c4f4aea986f46f12cfc1
+    media_type: article
+  - kind: reporting
+    publisher: VentureBeat
+    published_at: 2016-09-13
+    title: Stripe acquires app prototyping startup Tonic
+    url: https://venturebeat.com/technology/stripe-acquires-app-prototyping-startup-tonic
+    id: source-c5845822be2fe26f4d98
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2019-09-05
+    title: Stripe launches Stripe Capital to make it faster and easier for internet companies to access the funds they need
+    url: https://stripe.com/en-ca/newsroom/news/stripe-capital
+    id: source-c5c46de8097c01eba667
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2021-04-27
+    title: TaxJar is joining Stripe
+    url: https://stripe.com/en-fr/newsroom/news/taxjar
+    id: source-c87c7df4d40a29c6f83b
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2012-07-09
+    title: Payments startup Stripe swipes $20M from General Catalyst, Sequoia, Thiel and more
+    url: https://techcrunch.com/2012/07/09/payments-startup-stripe-swipes-20m-from-general-catalyst-sequoia-thiel-and-more/
+    id: source-c8d385ed972041177ac8
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2012-09-19
+    title: Stripe launches developer-friendly online payments processing in Canada
+    url: https://techcrunch.com/2012/09/19/stripe-launches-developer-friendly-online-payments-processing-in-canada/
+    id: source-c97b98ece076ef61a82d
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2024-04-24
+    title: "Stripe Sessions: 50+ announcements, including AI-powered payments, major upgrades to Connect, interoperability, and more"
+    url: https://stripe.com/newsroom/news/sessions-2024
+    id: source-ca257159d5fc6d64bd7a
+    media_type: article
+  - kind: interview
+    publisher: UC Berkeley Haas News
+    published_at: 2024-04-30
+    title: Stripe co-founder and CEO Patrick Collison on founding a company that should have already existed
+    url: https://newsroom.haas.berkeley.edu/stripe-co-founder-and-ceo-patrick-collison-on-founding-a-company-that-should-have-already-existed/
+    id: source-ca9f69ba263dbc27bda3
+    media_type: article
+  - kind: interview
+    publisher: ChartMogul
+    title: Clearbit founder Alex MacCaw on the path from engineer to CEO
+    url: https://chartmogul.com/blog/clearbit-alex-maccaw/
+    id: source-cb7d5be89b692350409e
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2008-03-26
+    title: Communicate Acquires Y Combinator Startup Auctomatic, Unveils New Business Strategy
+    url: https://techcrunch.com/2008/03/26/communicate-acquires-y-combinator-startup-auctomatic-unveils-new-business-strategy/
+    id: source-cc05ac81f510b0f6ce86
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2012-05-20
+    title: The Story Behind Payment Disruptor Stripe.com And Its Founder Patrick Collison
+    url: https://techcrunch.com/2012/05/20/the-story-behind-payment-disruptor-stripe-com-and-its-founder-patrick-collison/
+    id: source-cf3b5899ad304dbe9128
+    media_type: article
+  - kind: reporting
+    publisher: The Information
+    published_at: 2026-07-24
+    title: Stripe in Talks to Buy Startup OpenRouter
+    url: https://www.theinformation.com/briefings/stripe-talks-buy-startup-openrouter/
+    id: source-cf513568945a043b22bf
+    media_type: article
+  - kind: primary
+    publisher: Works in Progress
+    title: About Works in Progress
+    url: https://worksinprogress.co/about/
+    id: source-cf848b7deddba3534073
+    media_type: article
+  - kind: interview
+    publisher: alphalist.CTO Podcast
+    published_at: 2026-06-18
+    title: From Stripe's fifth engineer to serving millions of devs with Render
+    url: https://podcasts.apple.com/za/podcast/140-from-stripes-fifth-engineer-to-serving-millions/id1512227295?i=1000773198342
+    id: source-cf93160c4967b70fc148
+    media_type: podcast
+  - kind: reporting
+    publisher: Reuters
+    published_at: 2024-10-21
+    title: Fintech giant Stripe to buy crypto startup Bridge
+    url: https://www.investing.com/news/stock-market-news/fintech-giant-stripe-to-buy-crypto-startup-bridge-3673791
+    id: source-d11e76117c5e0a03a1f2
+    media_type: article
+  - kind: reporting
+    publisher: San Francisco Chronicle
+    published_at: 2019-10-23
+    title: Stripe to leave San Francisco for South San Francisco
+    url: https://www.sfchronicle.com/business/article/2nd-most-valuable-U-S-startup-to-leave-SF-as-14558067.php
+    id: source-d130c7fcd1bc48801c50
+    media_type: article
+  - kind: interview
+    publisher: Compound Manual
+    title: Interview with Benjamin De Cock, early designer at Stripe
+    url: https://manual.compoundplanning.com/chapters/interview-with-benjamin-de-cock-early-designer-at-stripe
+    id: source-d1d03c9bef74f9e9f1a4
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2019-01-30
+    title: Diane Greene joins Stripe's board of directors
+    url: https://stripe.com/gb/newsroom/news/diane-greene-joins-stripe-board
+    id: source-d1ea05ba12bb2d5bf626
+    media_type: article
+  - kind: archive
+    publisher: Office Snapshots
+    published_at: 2014-01-27
+    title: Inside Stripe's San Francisco headquarters
+    url: https://officesnapshots.com/2014/01/27/inside-stripes-san-francisco-headquarters/
+    id: source-d42d62980f527eaf87a5
+    media_type: article
+  - kind: reporting
+    publisher: The Irish Times
+    published_at: 2009-09-15
+    title: Harvard next on menu for knowledge-hungry dot.com high flyer
+    url: https://www.irishtimes.com/life-and-style/people/harvard-next-on-menu-for-knowledge-hungry-dot-com-high-flyer-1.738348
+    id: source-d506d7eb5c4011f06d96
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2016-02-24
+    title: Announcing Stripe Atlas—helping entrepreneurs start a global business from anywhere
+    url: https://stripe.com/au/newsroom/news/stripe-launches-atlas
+    id: source-d79693d4fba98ad307df
+    media_type: article
+  - kind: reporting
+    publisher: Reuters
+    published_at: 2026-07-15
+    title: "Exclusive: Stripe, Advent offer to buy PayPal for more than $53 billion, sources say"
+    url: https://live.euronext.com/en/financial-news/exclusive-stripe-advent-offer-buy-paypal-more-53-billion-sources-say
+    id: source-d7cf2394464d8451acf0
+    media_type: article
+  - kind: interview
+    publisher: Yale School of Management
+    title: Alumni profile - Claire Hughes Johnson '01
+    url: https://som.yale.edu/profile/alumni/claire-hughes-johnson-01
+    id: source-d803d4a16b3a102cb23d
+    media_type: article
+  - kind: interview
+    publisher: Spotify
+    published_at: 2023-11-14
+    title: Patrick & John Collison, Co-Founders of Stripe
+    url: https://open.spotify.com/episode/0oAdGlr0csZMMqzRrO6kWb
+    id: source-d8e4c6cb20568d496b94
+    media_type: podcast
+    native_id: spotify:episode:0oAdGlr0csZMMqzRrO6kWb
+  - kind: primary
+    publisher: Stripe
+    published_at: 2022-05-18
+    title: Stripe introduces Data Pipeline to help users sync their data with Amazon Redshift and Snowflake Data Cloud
+    url: https://stripe.com/newsroom/news/stripe-data-pipeline
+    id: source-d91521c20750f10315df
+    media_type: article
+  - kind: reporting
+    publisher: Payments Dive
+    published_at: 2025-12-11
+    title: Stripe digs deeper into crypto
+    url: https://www.paymentsdive.com/news/stripe-digs-deeper-into-crypto/807678/
+    id: source-d9f90ac2db539a45e974
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2021-06-17
+    title: Stripe Sessions 2021
+    url: https://stripe.com/blog/sessions-keynote-2021
+    id: source-da5bc3eea46cefe0be5e
+    media_type: article
+  - kind: primary
+    publisher: Arc Institute
+    published_at: 2021-12-15
+    title: Introducing Arc Institute
+    url: https://arcinstitute.org/news/introducing-arc-institute
+    id: source-dc2f070f6effb7cceff3
+    media_type: article
+  - kind: primary
+    publisher: Stripe Documentation
+    published_at: 2025-12-15
+    title: Adds support for the PayTo payment method
+    url: https://docs.stripe.com/changelog/clover/2025-12-15/payto
+    id: source-dc366266f745a0c70823
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: The Art of Doing Science and Engineering
+    url: https://press.stripe.com/the-art-of-doing-science-and-engineering
+    id: source-dca09adf3ca00a50d008
+    media_type: article
+  - kind: primary
+    publisher: Indie Hackers
+    published_at: 2023-04-11
+    title: Indie Hackers is indie again
+    url: https://www.indiehackers.com/product/indie-hackers/indie-hackers-is-indie-again--NSIAlb7LggSjzTavQZb
+    id: source-dce3e584b843eb876619
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2016-11-25
+    title: Payments provider Stripe has raised another $150M at a $9B valuation
+    url: https://techcrunch.com/2016/11/25/payments-provider-stripe-has-raised-another-150-at-a-9b-valuation/
+    id: source-dcf72971de10c76a0dd9
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2019-10-07
+    title: Stripe launches in Malaysia
+    url: https://stripe.com/newsroom/news/malaysia-launch
+    id: source-dd0229386b763c4470a2
+    media_type: article
+  - kind: reporting
+    publisher: Bloomberg Law
+    published_at: 2024-10-22
+    title: Stripe Confirms Plans to Acquire Stablecoin Platform Bridge
+    url: https://news.bloomberglaw.com/crypto/stripe-confirms-plans-to-acquire-stablecoin-platform-bridge
+    id: source-dd3581c945230bf4eb86
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: The Big Score
+    url: https://press.stripe.com/the-big-score
+    id: source-dda978fa29fb0e3f1ddd
+    media_type: article
+  - kind: primary
+    publisher: George Xing
+    title: Supaglue is joining Stripe
+    url: https://www.linkedin.com/posts/georgexing_supaglue-is-joining-stripe-supaglue-activity-7179502946332659712--2HD
+    id: source-df395fc3ea62abc206fa
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2026-01-14
+    title: Stripe completes Metronome acquisition
+    url: https://stripe.com/en-gi/newsroom/news/stripe-completes-metronome-acquisition
+    id: source-df868a6dadc87913946e
+    media_type: article
+  - kind: primary
+    publisher: Stripe Support
+    title: Stripe accounts are invite-only in India
+    url: https://support.stripe.com/questions/stripe-accounts-are-invite-only-in-india
+    id: source-e03f5b645f6566354327
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: The Making of Prince of Persia
+    url: https://press.stripe.com/the-making-of-prince-of-persia
+    id: source-e16e1affbf6a4f7fc8ff
+    media_type: article
+  - kind: reporting
+    publisher: PYMNTS
+    published_at: 2015-10-09
+    title: Stripe Snags Will Gaybrick As First CFO
+    url: https://www.pymnts.com/news/2015/stripe-snags-will-gaybrick-as-first-cfo/
+    id: source-e46d573a8df57cd33620
+    media_type: article
+  - kind: reporting
+    publisher: Finance Magnates
+    published_at: 2024-08-27
+    title: Stripe Promotes Rahul Patil to Chief Technology Officer; David Singleton Departs
+    url: https://www.financemagnates.com/executives/stripe-promotes-rahul-patil-to-chief-technology-officer-david-singleton-departs/
+    id: source-e4fb11716a2dc5d77acc
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2014-03-27
+    title: Stripe starts testing Bitcoin payments
+    url: https://techcrunch.com/2014/03/27/stripe-bitcoin/
+    id: source-e56ddbbfb4857c47f84e
+    media_type: article
+  - kind: filing
+    publisher: California Department of Business Oversight
+    published_at: 2019-05
+    title: PRO 07:17 - Stripe submission
+    url: https://dfpi.ca.gov/wp-content/uploads/sites/337/2019/05/PRO-07-17-Stripe.pdf
+    id: source-e651876aba816022517a
+    media_type: pdf
+  - kind: primary
+    publisher: Stripe
+    published_at: 2020-04-16
+    title: Stripe extends Series G funding round
+    url: https://stripe.com/en-ca/newsroom/news/stripe-extends-series-g-funding-round
+    id: source-e7a9d45ba8cc599f5d4d
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2020-10-15
+    title: Stripe acquires Nigeria's Paystack for $200M+
+    url: https://techcrunch.com/2020/10/15/stripe-acquires-nigerias-paystack-for-200m-to-expand-into-the-african-continent/
+    id: source-e7d509a0e61e558e9117
+    media_type: article
+  - kind: reporting
+    publisher: Daring Fireball
+    published_at: 2023-12-29
+    title: Poor Charlie's Almanack
+    url: https://daringfireball.net/linked/2023/12/29/poor-charlies-almanack
+    id: source-e86271de9096463a5ac3
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2023-05
+    title: "Stripe changelog: May 2023"
+    url: https://stripe.com/blog/changelog
+    id: source-e8c3c01525fe68d64c99
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2019-09-19
+    title: Stripe expands global infrastructure with new funding
+    url: https://stripe.com/newsroom/news/stripe-expands-global-infrastructure-with-new-funding
+    id: source-ea53245454672afea5c5
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2020-05-27
+    title: Stripe launches in five more European countries
+    url: https://stripe.com/blog/stripe-launches-in-five-more-european-countries
+    id: source-eb1faca03f538a946e19
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2021-03-14
+    title: Stripe raises $600 million to accelerate growth in Europe and reinforce enterprise leadership
+    url: https://stripe.com/es-us/newsroom/news/stripe-series-h
+    id: source-ebcb0307692f731ceeb8
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: Maintenance
+    url: https://press.stripe.com/maintenance
+    id: source-ec08d50c1141dbc46e6d
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-05-07
+    title: Stripe accelerates the utility of AI and stablecoins with major launches
+    url: https://stripe.com/newsroom/news/sessions-2025
+    id: source-ec41ec00724370badaa6
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2024-03-13
+    title: Stripe 2023 annual letter
+    url: https://assets.ctfassets.net/fzn2n1nzq965/1gMd12owbzJaSe4Y560OEJ/0e7a27759e1b3070c5179ded5b94f525/Stripe_2023_annual_letter_enGB.pdf
+    id: source-ed092678fc3313192a56
+    media_type: pdf
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2026-04-17
+    title: Once close enough for an acquisition, Stripe and Airwallex are now going after each other
+    url: https://techcrunch.com/2026/04/17/once-close-enough-for-an-acquisition-stripe-and-airwallex-are-now-going-after-each-other/
+    id: source-ee8d68525578975d8f67
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2020-05-26
+    title: Stripe announces an industry-first partnership with JCB and doubles down on its Japanese operations
+    url: https://stripe.com/newsroom/news/accelerating-in-japan
+    id: source-f17a2b853f634d5f9ad4
+    media_type: article
+  - kind: primary
+    publisher: Privy
+    published_at: 2025-06-11
+    title: Announcing our acquisition by Stripe
+    url: https://privy.io/blog/announcing-our-acquisition-by-stripe
+    id: source-f224d5f90223923cfaf7
+    media_type: article
+  - kind: reporting
+    publisher: Ehandel.se
+    published_at: 2015-06-15
+    title: Nu kommer betaltjänsten Stripe till Norden
+    url: https://www.ehandel.se/nu-kommer-betaltjansten-stripe-till-norden_5651-html
+    id: source-f2af93b0482368a3f84f
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: The Origins of Efficiency
+    url: https://press.stripe.com/origins-of-efficiency
+    id: source-f33b2898dbb601f635b3
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2021-10-20
+    title: Recko is joining Stripe
+    url: https://stripe.com/newsroom/news/recko
+    id: source-f3752724710cc37c8ce1
+    media_type: article
+  - kind: interview
+    publisher: The Irish Times
+    published_at: 2008-04-30
+    title: Getting right down to business in TY
+    url: https://www.irishtimes.com/culture/getting-right-down-to-business-in-ty-1.918545
+    id: source-f3f1b0eef7f81e0dafb0
+    media_type: article
+  - kind: primary
+    publisher: Stripe Press
+    title: Beneath the Surface
+    url: https://press.stripe.com/public-transit-transcript
+    id: source-f4b8c7ffa11d6fb5df68
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2026-05-28
+    title: Stripe marks ten years in France
+    url: https://stripe.com/in/newsroom/news/ten-years-in-france
+    id: source-f5689d602e8153898382
+    media_type: article
+  - kind: reporting
+    publisher: VentureBeat
+    published_at: 2012-02-09
+    title: Stripe scores $18M at a $100M valuation
+    url: https://venturebeat.com/ai/stripe-funding-valuation
+    id: source-f8ada5ba377789f7909f
+    media_type: article
+  - kind: reporting
+    publisher: Reuters
+    published_at: 2026-07-17
+    title: PayPal board sees Stripe-Advent offer as inadequate, sources say
+    url: https://live.euronext.com/en/financial-news/paypal-board-sees-stripe-advent-offer-inadequate-sources-say
+    id: source-f9148b5ae819e1e22054
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2014-01-22
+    title: With an eye to international growth, Stripe raises $80M
+    url: https://techcrunch.com/2014/01/22/with-an-eye-to-international-growth-payments-company-stripe-raises-80m-from-peter-thiel-khosla-and-sequoia-at-a-1-25b-valuation/
+    id: source-f9691bfff6a0b221be9c
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2023-05-31
+    title: Okay, which analyzes engineers' productivity, sells to Stripe
+    url: https://techcrunch.com/2023/05/31/okay-which-analyzes-engineers-productivity-sells-to-stripe/
+    id: source-f9f2213f752388778543
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2021-09-21
+    title: Stripe launches Revenue Recognition to simplify accounting and automate financial reporting
+    url: https://stripe.com/newsroom/news/revenue-recognition
+    id: source-fa19ecc8fec979878ca9
+    media_type: article
+  - kind: reporting
+    publisher: Axios
+    published_at: 2024-10-24
+    title: Inside Stripe's TaxJar deal
+    url: https://www.axios.com/2024/10/24/inside-stripe-taxjar-deal
+    id: source-fbc1c21181e56c57a806
+    media_type: article
+  - kind: reporting
+    publisher: El Pais
+    published_at: 2016-10-05
+    title: El revolucionario método de pagos Stripe llega a España
+    url: https://elpais.com/economia/2016/10/04/actualidad/1475618340_735986.html
+    id: source-fbf3334cd29c236b7bd5
+    media_type: article
+  - kind: reporting
+    publisher: Axios
+    published_at: 2023-02-03
+    title: Stripe CFO Dhivya Suryadevara to step down
+    url: https://www.axios.com/2023/02/03/stripe-cfo-suryadevara-step-down
+    id: source-fd18a61ea8f9acdbc7fd
+    media_type: article
+  - kind: reporting
+    publisher: PYMNTS
+    published_at: 2018-03-09
+    title: Stripe Acquires POS Software Startup Index
+    url: https://www.pymnts.com/partnerships/2018/stripe-pos-software-startup-index-acquisition/
+    id: source-feac6eb0d463593e4ca2
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2021-04-05
+    title: Stripe launches in the United Arab Emirates
+    url: https://stripe.com/newsroom/news/stripe-launches-uae
+    id: source-ff627c78180e70f274cb
+    media_type: article

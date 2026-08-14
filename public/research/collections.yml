@@ -1,0 +1,215 @@
+schema: stripe-history/research-collections/v1
+mutable_sources:
+  - canonical_url: https://stripe.com/blog/changelog
+    capture_evidence:
+      capture_slug: stripe-changelog-snapshot-2026-08-12
+      captured_on: 2026-08-12
+      evidence_path: evidence/source.html
+      sha256: e76e5b49f491c89aacc88ff4feb135568d06769e81b82c5dbdf2c7e19f0a2505
+      status: complete
+    policy: date-stamped-snapshots
+    rationale: The changelog URL is mutable, so each historical claim is keyed to its stated month and retained as a separate dated snapshot.
+    source_ids:
+      - source-2186a9fb2e4e200518a1
+      - source-95839ee4456a7ec1910e
+      - source-a5244f067a61333806ae
+      - source-bebcca96578a064a18b0
+      - source-e8c3c01525fe68d64c99
+collections:
+  - id: founder-appearances
+    dataset: appearances
+    scope: Reviewed public appearances by Patrick Collison or John Collison that contain first-person evidence about Stripe, its predecessors, or its operating history.
+    coverage:
+      basis: occurred-at
+      from: '2008'
+      through: 2026-08-12
+    output_files:
+      - research/appearances.yml
+    input_source_ids:
+      - source-001e51b689b259d0b4e3
+      - source-1278271efc6181fee94f
+      - source-18cef128fcb5c9083568
+      - source-26410b426525f71187bb
+      - source-4d80199395399e9e47d8
+      - source-51a0e1edbe8fc1ce9d5a
+      - source-7365200928b2c76a48b7
+      - source-7db75f16638fc07f166c
+      - source-a5d1d621862fa7f1cac0
+      - source-bbf6b0fb0b8942bc569f
+      - source-bda69e86e22cf8e2c66f
+      - source-ca9f69ba263dbc27bda3
+      - source-d8e4c6cb20568d496b94
+    supporting_source_ids: []
+    discovery_sources:
+      - https://www.youtube.com/@stripe
+      - https://www.youtube.com/@ycombinator
+      - https://www.dwarkeshpatel.com/p/patrick-collison
+      - https://stripe.com/sessions
+    query_families:
+      - 'site:youtube.com Patrick Collison interview Stripe'
+      - 'site:youtube.com John Collison interview Stripe'
+      - 'Patrick Collison transcript Stripe founding Auctomatic'
+      - 'John Collison transcript Stripe early employees product history'
+      - 'Patrick Collison testimony Stripe transcript'
+      - 'Stripe Sessions Patrick Collison John Collison keynote AMA'
+    authority_order: [primary, interview, reporting, archive]
+    dedupe_keys:
+      - native-id
+      - canonical-url-published-at
+      - appearance-participants-venue-occurred-at
+      - semantic-claim
+    capture_policy: primary-and-claim-critical
+    refresh:
+      cadence: quarterly
+      mode: incremental-discovery
+      lookback_days: 120
+      minimum_request_interval_ms: 1000
+  - id: founder-side-projects
+    dataset: history-events
+    history_output_coverage: complete-output
+    scope: Complete reviewed public record of Patrick Collison and John Collison projects outside Stripe, including grants, philanthropy, research institutions, governance, investments, writing, and hospitality.
+    coverage:
+      basis: event-date
+      from: 2019-07-30
+      through: 2026-08-13
+    output_files:
+      - history/side-quests.yml
+    input_source_ids:
+      - source-1002e320dafb67950005
+      - source-1c6adfe53072cdc63578
+      - source-370244a2efb2cfe025e5
+      - source-475e9973e4ee494147aa
+      - source-4c240f420fc0534fe6af
+      - source-5a2e0ef3c00b4019656f
+      - source-5cce599c4b7c9144e3cb
+      - source-6a70e99c09c187ea49b2
+      - source-85375dadecbd272a21c7
+      - source-89af64bf0e530b9961f2
+      - source-9ad888e73adc937b1c29
+      - source-aa36e7f93ba3a24269dd
+      - source-af73c6bed56faf7ea27e
+      - source-dc2f070f6effb7cceff3
+    supporting_source_ids: []
+    discovery_sources:
+      - https://johncollison.ie/
+      - https://patrickcollison.com/
+      - https://x.com/collision
+      - https://x.com/patrickc
+      - https://marginalrevolution.com/
+    query_families:
+      - 'Patrick Collison project outside Stripe'
+      - 'John Collison project outside Stripe'
+      - 'Patrick Collison grant philanthropy institute board arts science'
+      - 'John Collison investment philanthropy hospitality restoration'
+      - 'site:patrickcollison.com project grant institute'
+      - 'site:marginalrevolution.com Patrick Collison grant project'
+    authority_order: [primary, filing, reporting, interview, archive]
+    dedupe_keys:
+      - canonical-url-published-at
+      - event-id
+      - semantic-claim
+    capture_policy: primary-and-claim-critical
+    refresh:
+      cadence: monthly
+      mode: incremental-discovery
+      lookback_days: 45
+      minimum_request_interval_ms: 1000
+  - id: sessions-product-launches
+    dataset: history-events
+    history_output_coverage: selected-inputs
+    scope: Material launches, public previews, availability changes, and product expansions announced at Stripe Sessions.
+    coverage:
+      basis: event-date
+      from: 2019-06-10
+      through: 2026-04-29
+    output_files:
+      - history/product-launches.yml
+    input_source_ids:
+      - source-28eaa414dc9531c6df9d
+      - source-7e1ac4944f2e99511681
+      - source-b4131d403cf76f5180f6
+      - source-ca257159d5fc6d64bd7a
+      - source-ec41ec00724370badaa6
+    supporting_source_ids:
+      - source-330c0283f9520625a5ec
+      - source-da5bc3eea46cefe0be5e
+    discovery_sources:
+      - https://stripe.com/sessions
+      - https://stripe.com/blog
+      - https://stripe.com/newsroom
+    query_families:
+      - 'site:stripe.com Sessions announcements products Stripe'
+      - 'site:stripe.com/blog Stripe Sessions keynote product highlights'
+      - 'site:stripe.com/newsroom/news Sessions launches Stripe'
+    authority_order: [primary, reporting, archive]
+    dedupe_keys:
+      - canonical-url-published-at
+      - event-id
+      - semantic-claim
+    capture_policy: all-accepted
+    refresh:
+      cadence: annual
+      mode: fixed-source-refetch
+      lookback_days: 0
+      minimum_request_interval_ms: 1000
+  - id: valuation-history
+    dataset: valuations
+    scope: Publicly reported Stripe valuation observations, preserving financing, tender, 409A, investor-secondary, and secondary-market mechanisms as separate claims.
+    coverage:
+      basis: effective-date
+      from: '2011'
+      through: 2026-08-12
+    output_files:
+      - research/valuations.yml
+    input_source_ids:
+      - source-03373a611af0c9e92786
+      - source-03f4b7ce98afc255b0ba
+      - source-049dfcb3b15c61d71dfe
+      - source-05c9e0722cf8a6d3e9ef
+      - source-0e881dc1ffda930a1841
+      - source-1a020b6076d17a8aecd2
+      - source-2cca70fe5628f59eba33
+      - source-313d5f90eb90dc44a09e
+      - source-3bb6c45b8d6f9c1124b4
+      - source-4b4de85478f5981d6494
+      - source-5116ff7a7f3246d58e2a
+      - source-67de5aa3b7009ba5ed83
+      - source-7f1e28293e44b7e2b09c
+      - source-8d6599ea85d8f5f485b7
+      - source-93f3d70eb5fc195f2ed2
+      - source-9a3a3ccb578db86eecac
+      - source-b2dd612bb76ab78c5e49
+      - source-bd6516ac551f19c37d33
+      - source-be63a33e896357893bf6
+      - source-c8d385ed972041177ac8
+      - source-d1ea05ba12bb2d5bf626
+      - source-dcf72971de10c76a0dd9
+      - source-e7a9d45ba8cc599f5d4d
+      - source-ea53245454672afea5c5
+      - source-ebcb0307692f731ceeb8
+      - source-f8ada5ba377789f7909f
+      - source-f9691bfff6a0b221be9c
+    supporting_source_ids: []
+    discovery_sources:
+      - https://stripe.com/newsroom
+      - https://techcrunch.com/tag/stripe/
+      - https://www.axios.com/company/stripe
+      - https://www.forbes.com/companies/stripe/
+    query_families:
+      - 'Stripe valuation financing funding round post-money pre-money'
+      - 'Stripe employee tender liquidity valuation share price'
+      - 'Stripe 409A internal valuation common stock'
+      - 'Stripe secondary transaction valuation investor purchase'
+      - 'Stripe secondary market valuation indication'
+      - 'site:stripe.com/newsroom Stripe valuation employee liquidity'
+    authority_order: [primary, filing, reporting, interview, archive]
+    dedupe_keys:
+      - canonical-url-published-at
+      - valuation-mechanism-effective-date
+      - semantic-claim
+    capture_policy: primary-and-claim-critical
+    refresh:
+      cadence: monthly
+      mode: incremental-discovery
+      lookback_days: 45
+      minimum_request_interval_ms: 1000

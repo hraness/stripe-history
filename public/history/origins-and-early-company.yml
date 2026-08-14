@@ -1,4 +1,3 @@
-schema: stripe-guide/history/v1
 category:
   id: origins-and-early-company
   label: Origins and early company
@@ -9,7 +8,7 @@ events:
     date: "2012"
     date_precision: year
     title: Early employees broaden Stripe's engineering and operating bench
-    summary: "Stripe continued to recruit unusually hands-on generalists after launch. Alex MacCaw joined after meeting John Collison through San Francisco's startup community, while Amber Feng joined as one of the company's first ten employees and went on to write much of the original Stripe Connect implementation."
+    summary: Stripe continued to recruit unusually hands-on generalists after launch. Alex MacCaw joined after meeting John Collison through San Francisco's startup community, while Amber Feng joined as one of the company's first ten employees and went on to write much of the original Stripe Connect implementation.
     confidence: confirmed
     people:
       - Alex MacCaw
@@ -19,42 +18,27 @@ events:
       - Stripe
     details:
       - label: Alex MacCaw
-        value: "Former Twitter engineer and technical author; he later described meeting John at a housewarming party before joining Stripe."
+        value: Former Twitter engineer and technical author; he later described meeting John at a housewarming party before joining Stripe.
       - label: Amber Feng
-        value: "Joined as one of Stripe's first ten employees and became an early builder of Stripe Connect and financial infrastructure."
+        value: Joined as one of Stripe's first ten employees and became an early builder of Stripe Connect and financial infrastructure.
     metrics:
       - label: Team size six months after launch
-        value: "23 people"
-        context: "Patrick Collison's 2012 Startup Grind interview compared this with roughly eight people at launch."
+        value: 23 people
+        context: Patrick Collison's 2012 Startup Grind interview compared this with roughly eight people at launch.
     tags:
       - early-employees
       - engineering
       - team
-    sources:
-      - kind: primary
-        publisher: Alex MacCaw
-        published_at: "2012-08-28"
-        title: What it's like to work for Stripe
-        url: https://blog.alexmaccaw.com/what-its-like-to-work-for-stripe/
-      - kind: interview
-        publisher: ChartMogul
-        title: Clearbit founder Alex MacCaw on the path from engineer to CEO
-        url: https://chartmogul.com/blog/clearbit-alex-maccaw/
-      - kind: reporting
-        publisher: Forbes
-        title: Amber Feng
-        url: https://www.forbes.com/profile/amber-feng/
-      - kind: interview
-        publisher: Startup Grind
-        published_at: "2013-02-20"
-        title: Startup Grind Hosts Patrick Collison of Stripe, 6 Months In - Full Interview
-        url: https://www.startupgrind.com/blog/from-the-vault-patrick-collison-stripe-full-startup-grind-interview-2012/
-
+    source_ids:
+      - source-78f711a329821d29d9b8
+      - source-cb7d5be89b692350409e
+      - source-602d1868713f23b88f2c
+      - source-bda69e86e22cf8e2c66f
   - id: origins-first-design-cohort
-    date: "2011-11"
+    date: 2011-11
     date_precision: month
     title: Stripe's first design cohort takes shape
-    summary: "Ludwig Pettersson became Stripe's first designer as the company prepared and refined its public product. In November 2011 he contacted Belgian designer Benjamin De Cock, beginning a long-running collaboration that helped establish Stripe's visual and product-design language."
+    summary: Ludwig Pettersson became Stripe's first designer as the company prepared and refined its public product. In November 2011 he contacted Belgian designer Benjamin De Cock, beginning a long-running collaboration that helped establish Stripe's visual and product-design language.
     confidence: confirmed
     people:
       - Ludwig Pettersson
@@ -65,29 +49,21 @@ events:
       - Stripe
     details:
       - label: Ludwig Pettersson
-        value: "Stripe's first designer and an early teammate of Patrick and John Collison."
+        value: Stripe's first designer and an early teammate of Patrick and John Collison.
       - label: Benjamin De Cock
-        value: "Began contributing remotely after Ludwig contacted him in November 2011; the relationship eventually lasted eight years."
+        value: Began contributing remotely after Ludwig contacted him in November 2011; the relationship eventually lasted eight years.
     tags:
       - design
       - early-employees
       - team
-    sources:
-      - kind: interview
-        publisher: Compound Manual
-        title: Interview with Benjamin De Cock, early designer at Stripe
-        url: https://manual.compoundplanning.com/chapters/interview-with-benjamin-de-cock-early-designer-at-stripe
-      - kind: reporting
-        publisher: Silicon Valley Business Journal
-        published_at: "2011-09-02"
-        title: Stealth startup Stripe aims for Q4 launch
-        url: https://www.bizjournals.com/sanjose/print-edition/2011/09/02/stealth-startup-stripe-aims-for-q4.html
-
+    source_ids:
+      - source-d1d03c9bef74f9e9f1a4
+      - source-22c2cfbb3748446e2ba6
   - id: origins-stripe-public-launch
-    date: "2011-09-30"
+    date: 2011-09-30
     date_precision: day
     title: Stripe launches publicly
-    summary: "After roughly a year spent rebuilding the infrastructure behind its prototype, Stripe opened its developer-focused payments product to the public. The launch team was about eight people, and Patrick Collison later said four or five had first encountered Stripe as users."
+    summary: After roughly a year spent rebuilding the infrastructure behind its prototype, Stripe opened its developer-focused payments product to the public. The launch team was about eight people, and Patrick Collison later said four or five had first encountered Stripe as users.
     confidence: confirmed
     people:
       - Patrick Collison
@@ -100,35 +76,26 @@ events:
       - product-2011-payments-api-public-launch
     metrics:
       - label: Approximate launch team
-        value: "8 people"
+        value: 8 people
       - label: User-to-employee hires
-        value: "4-5 people"
-        context: "Patrick Collison's recollection in a 2012 interview."
+        value: 4-5 people
+        context: Patrick Collison's recollection in a 2012 interview.
     tags:
       - launch
       - payments
       - early-company
-    sources:
-      - kind: reporting
-        publisher: TechCrunch
-        published_at: "2011-09-30"
-        title: Sequoia-Backed Stripe Wants To Disrupt The Online Payments Space
-        url: https://techcrunch.com/2011/09/30/sequoia-backed-stripe-launches-to-disrupt-the-online-payments-industry-with-a-developer-friendly-platform/
-      - kind: interview
-        publisher: Startup Grind
-        published_at: "2013-02-20"
-        title: Startup Grind Hosts Patrick Collison of Stripe, 6 Months In - Full Interview
-        url: https://www.startupgrind.com/blog/from-the-vault-patrick-collison-stripe-full-startup-grind-interview-2012/
-
+    source_ids:
+      - source-2b1a43a0b359958b4059
+      - source-bda69e86e22cf8e2c66f
   - id: origins-devpayments-becomes-stripe
-    date: "2011-01"
+    date: 2011-01
     date_precision: month
     title: DevPayments becomes Stripe
-    summary: "The company initially incorporated as SlashDevSlashFinance and called its product SlashDevSlashPayments at devpayments.com. With only about five customers, the founders adopted the short name Stripe and bought stripe.com for an amount Patrick Collison later recalled as between $10,000 and $20,000."
+    summary: The company initially incorporated as SlashDevSlashFinance and called its product SlashDevSlashPayments at devpayments.com. With only about five customers, the founders adopted the short name Stripe and bought stripe.com for an amount Patrick Collison later recalled as between $10,000 and $20,000.
     confidence: confirmed
     amount:
       currency: USD
-      display: "$10,000-$20,000 for stripe.com"
+      display: $10,000-$20,000 for stripe.com
     people:
       - Patrick Collison
       - John Collison
@@ -137,23 +104,18 @@ events:
       - Stripe
     metrics:
       - label: Customers at rename
-        value: "About 5"
+        value: About 5
     tags:
       - branding
       - domain
       - early-company
-    sources:
-      - kind: interview
-        publisher: The Tim Ferriss Show
-        published_at: "2018-12-24"
-        title: The Tim Ferriss Show Transcripts - Patrick Collison (#353)
-        url: https://tim.blog/2018/12/24/the-tim-ferriss-show-patrick-collison/
-
+    source_ids:
+      - source-7365200928b2c76a48b7
   - id: origins-users-become-early-engineers
     date: "2011"
     date_precision: year
     title: Product users become early engineers
-    summary: "Several early contributors arrived through the product itself or the founders' technical network. Ross Boucher, Stripe's first production user, and Saikat Chakrabarti pushed the API toward a RESTful design; Anurag Goel joined as the fifth engineer and later led risk."
+    summary: Several early contributors arrived through the product itself or the founders' technical network. Ross Boucher, Stripe's first production user, and Saikat Chakrabarti pushed the API toward a RESTful design; Anurag Goel joined as the fifth engineer and later led risk.
     confidence: confirmed
     people:
       - Ross Boucher
@@ -165,41 +127,26 @@ events:
       - 280 North
     details:
       - label: Ross Boucher
-        value: "An engineer at 280 North whose application became Stripe's first production integration; he later joined the team."
+        value: An engineer at 280 North whose application became Stripe's first production integration; he later joined the team.
       - label: Saikat Chakrabarti
-        value: "A startup builder hired as Stripe's second engineer after meeting people involved with the young company."
+        value: A startup builder hired as Stripe's second engineer after meeting people involved with the young company.
       - label: Anurag Goel
-        value: "Joined as Stripe's fifth engineer, helped launch the product, and later became Head of Risk."
+        value: Joined as Stripe's fifth engineer, helped launch the product, and later became Head of Risk.
     tags:
       - early-employees
       - engineering
       - api
-    sources:
-      - kind: interview
-        publisher: Airbrake
-        title: How Stripe Builds Software, with Greg Brockman
-        url: https://docs.airbrake.io/blog/devops/how-stripe-builds-software-an-interview-with-cto-greg-brockman/
-      - kind: interview
-        publisher: Storied San Francisco
-        title: Saikat Chakrabarti
-        url: https://www.storiedsf.com/episodes/saikat-chakrabarti
-      - kind: interview
-        publisher: alphalist.CTO Podcast
-        published_at: "2026-06-18"
-        title: From Stripe's fifth engineer to serving millions of devs with Render
-        url: https://podcasts.apple.com/za/podcast/140-from-stripes-fifth-engineer-to-serving-millions/id1512227295?i=1000773198342
-      - kind: interview
-        publisher: Startup Grind
-        published_at: "2013-02-20"
-        title: Startup Grind Hosts Patrick Collison of Stripe, 6 Months In - Full Interview
-        url: https://www.startupgrind.com/blog/from-the-vault-patrick-collison-stripe-full-startup-grind-interview-2012/
-
+    source_ids:
+      - source-2629159f9f734d48436a
+      - source-543cf8a3b64e5b5522b4
+      - source-cf93160c4967b70fc148
+      - source-bda69e86e22cf8e2c66f
   - id: origins-founders-go-full-time-and-first-hires-arrive
-    date: "2010-09"
+    date: 2010-09
     date_precision: month
     title: The founders go full time and the first hires arrive
     status: Approximate date, fall 2010
-    summary: "John Collison took leave from Harvard in fall 2010 to work on Stripe full time, joining Patrick Collison after his return to the project that summer. Darragh Buckley, a family friend from Limerick, became Stripe's first employee, while Harvard student Greg Brockman joined as an engineer and built foundational backend systems."
+    summary: John Collison took leave from Harvard in fall 2010 to work on Stripe full time, joining Patrick Collison after his return to the project that summer. Darragh Buckley, a family friend from Limerick, became Stripe's first employee, while Harvard student Greg Brockman joined as an engineer and built foundational backend systems.
     confidence: reported
     people:
       - Patrick Collison
@@ -212,44 +159,24 @@ events:
       - Massachusetts Institute of Technology
     details:
       - label: Darragh Buckley
-        value: "Stripe's first employee; he grew up in Limerick, his parents were friends with the Collisons, and he reconnected with them while studying in Boston."
+        value: Stripe's first employee; he grew up in Limerick, his parents were friends with the Collisons, and he reconnected with them while studying in Boston.
       - label: Greg Brockman
-        value: "A Harvard student planning to transfer to MIT; he joined in 2010 and worked on Stripe's servers, card vault, recruiting, and engineering culture."
+        value: A Harvard student planning to transfer to MIT; he joined in 2010 and worked on Stripe's servers, card vault, recruiting, and engineering culture.
     tags:
       - founders
       - early-employees
       - college
-    sources:
-      - kind: reporting
-        publisher: The Harvard Crimson
-        published_at: "2011-04-08"
-        title: Young Entrepreneurs Put College on Hold
-        url: https://www.thecrimson.com/article/2011/4/8/harvard-time-company-out/
-      - kind: primary
-        publisher: Greg Brockman
-        published_at: "2014-10-27"
-        title: '#define CTO'
-        url: https://blog.gregbrockman.com/figuring-out-the-cto-role-at-stripe
-      - kind: interview
-        publisher: Alliance for Innovative Regulation
-        title: Full Transcript - Darragh Buckley
-        url: https://regulationinnovation.org/wp-content/uploads/2024/04/Full-Transcript-Darragh-Buckley.docx.pdf
-      - kind: interview
-        publisher: Wharton FinTech Podcast
-        published_at: "2026-01-14"
-        title: Stripe's First Employee on Building Modern Banking Infrastructure
-        url: https://podcasts.apple.com/us/podcast/stripes-first-employee-on-building-modern-banking-infrastructure/id1042827113?i=1000745150435
-      - kind: interview
-        publisher: Startup Grind
-        published_at: "2013-02-20"
-        title: Startup Grind Hosts Patrick Collison of Stripe, 6 Months In - Full Interview
-        url: https://www.startupgrind.com/blog/from-the-vault-patrick-collison-stripe-full-startup-grind-interview-2012/
-
+    source_ids:
+      - source-72bfa2c375357439c9a6
+      - source-20fbb1f159a9c5331084
+      - source-4403a949bb07bcfb06e7
+      - source-59856a48d46794d4ecff
+      - source-bda69e86e22cf8e2c66f
   - id: origins-buenos-aires-prototype
-    date: "2010-01"
+    date: 2010-01
     date_precision: month
     title: A month in Buenos Aires produces Stripe's first working prototype
-    summary: "Patrick and John Collison spent the winter break in Buenos Aires building the prototype in cafés. Within roughly a week they had a production user, Ross Boucher at 280 North, even though the founders were still completing parts of the payment flow manually behind the scenes."
+    summary: Patrick and John Collison spent the winter break in Buenos Aires building the prototype in cafés. Within roughly a week they had a production user, Ross Boucher at 280 North, even though the founders were still completing parts of the payment flow manually behind the scenes.
     confidence: confirmed
     people:
       - Patrick Collison
@@ -262,28 +189,19 @@ events:
       - Buenos Aires, Argentina
     metrics:
       - label: Time to first production user
-        value: "About 1 week"
+        value: About 1 week
     tags:
       - prototype
       - founders
       - first-customer
-    sources:
-      - kind: interview
-        publisher: Startup Grind
-        published_at: "2013-02-20"
-        title: Startup Grind Hosts Patrick Collison of Stripe, 6 Months In - Full Interview
-        url: https://www.startupgrind.com/blog/from-the-vault-patrick-collison-stripe-full-startup-grind-interview-2012/
-      - kind: reporting
-        publisher: TechCrunch
-        published_at: "2012-05-20"
-        title: The Story Behind Payment Disruptor Stripe.com And Its Founder Patrick Collison
-        url: https://techcrunch.com/2012/05/20/the-story-behind-payment-disruptor-stripe-com-and-its-founder-patrick-collison/
-
+    source_ids:
+      - source-bda69e86e22cf8e2c66f
+      - source-cf3b5899ad304dbe9128
   - id: origins-startup-school-decision
-    date: "2009-10"
+    date: 2009-10
     date_precision: month
     title: YC Startup School prompts the decision to build payments infrastructure
-    summary: "After attending Y Combinator's Startup School in Berkeley, Patrick and John Collison discussed the difficulty of accepting payments online. On the walk back from dinner, John argued that they should build a prototype themselves, turning Patrick's 'SliceHost for payments' idea into a concrete project."
+    summary: After attending Y Combinator's Startup School in Berkeley, Patrick and John Collison discussed the difficulty of accepting payments online. On the walk back from dinner, John argued that they should build a prototype themselves, turning Patrick's 'SliceHost for payments' idea into a concrete project.
     confidence: confirmed
     people:
       - Patrick Collison
@@ -297,23 +215,14 @@ events:
       - founders
       - origin
       - payments
-    sources:
-      - kind: interview
-        publisher: UC Berkeley Haas
-        published_at: "2024-04-30"
-        title: Stripe co-founder and CEO Patrick Collison on prizing the small details
-        url: https://newsroom.haas.berkeley.edu/stripe-co-founder-and-ceo-patrick-collison-on-founding-a-company-that-should-have-already-existed/
-      - kind: interview
-        publisher: Startup Grind
-        published_at: "2013-02-20"
-        title: Startup Grind Hosts Patrick Collison of Stripe, 6 Months In - Full Interview
-        url: https://www.startupgrind.com/blog/from-the-vault-patrick-collison-stripe-full-startup-grind-interview-2012/
-
+    source_ids:
+      - source-ca9f69ba263dbc27bda3
+      - source-bda69e86e22cf8e2c66f
   - id: origins-brothers-enter-us-colleges
-    date: "2009-09"
+    date: 2009-09
     date_precision: month
     title: John begins at Harvard as Patrick returns to MIT
-    summary: "John Collison entered Harvard after completing Ireland's Leaving Certificate with top marks, while Patrick Collison returned to MIT after his post-acquisition period with Auctomatic in Vancouver. Their overlapping time in Cambridge set the stage for the payments project they began that academic year."
+    summary: John Collison entered Harvard after completing Ireland's Leaving Certificate with top marks, while Patrick Collison returned to MIT after his post-acquisition period with Auctomatic in Vancouver. Their overlapping time in Cambridge set the stage for the payments project they began that academic year.
     confidence: reported
     people:
       - John Collison
@@ -329,32 +238,19 @@ events:
       - founders
       - college
       - pre-stripe
-    sources:
-      - kind: reporting
-        publisher: Irish Independent
-        published_at: "2009-08-14"
-        title: Harvard have made terrible mistake by allowing me in
-        url: https://www.independent.ie/irish-news/harvard-have-made-terrible-mistake-by-allowing-me-in/26558355.html
-      - kind: reporting
-        publisher: The Irish Times
-        published_at: "2009-09-15"
-        title: Harvard next on menu for knowledge-hungry dot.com high flyer
-        url: https://www.irishtimes.com/life-and-style/people/harvard-next-on-menu-for-knowledge-hungry-dot-com-high-flyer-1.738348
-      - kind: interview
-        publisher: Startup Grind
-        published_at: "2013-02-20"
-        title: Startup Grind Hosts Patrick Collison of Stripe, 6 Months In - Full Interview
-        url: https://www.startupgrind.com/blog/from-the-vault-patrick-collison-stripe-full-startup-grind-interview-2012/
-
+    source_ids:
+      - source-389cb567ecd0c7e4fb0a
+      - source-d506d7eb5c4011f06d96
+      - source-bda69e86e22cf8e2c66f
   - id: origins-auctomatic-acquired
-    date: "2008-03-26"
+    date: 2008-03-26
     date_precision: day
     title: Live Current Media acquires Auctomatic
-    summary: "Live Current Media, then named Communicate.com, acquired Auctomatic about ten months after the company was formed. The reported consideration was $5 million in cash and stock, giving Patrick and John Collison an early exit before either had completed college."
+    summary: Live Current Media, then named Communicate.com, acquired Auctomatic about ten months after the company was formed. The reported consideration was $5 million in cash and stock, giving Patrick and John Collison an early exit before either had completed college.
     confidence: reported
     amount:
       currency: USD
-      display: "$5 million in cash and stock"
+      display: $5 million in cash and stock
       value: 5000000
     people:
       - Patrick Collison
@@ -370,24 +266,15 @@ events:
       - acquisition
       - pre-stripe
       - founders
-    sources:
-      - kind: reporting
-        publisher: TechCrunch
-        published_at: "2008-03-26"
-        title: Communicate Acquires Y Combinator Startup Auctomatic, Unveils New Business Strategy
-        url: https://techcrunch.com/2008/03/26/communicate-acquires-y-combinator-startup-auctomatic-unveils-new-business-strategy/
-      - kind: interview
-        publisher: The Irish Times
-        published_at: "2008-04-30"
-        title: Getting right down to business in TY
-        url: https://www.irishtimes.com/culture/getting-right-down-to-business-in-ty-1.918545
-
+    source_ids:
+      - source-cc05ac81f510b0f6ce86
+      - source-f3f1b0eef7f81e0dafb0
   - id: origins-offline-wikipedia-project
-    date: "2007-12"
+    date: 2007-12
     date_precision: month
     title: Patrick and a future Stripe colleague build offline Wikipedia for the iPhone
     status: Approximate month; collaborator's surname is not established in the source
-    summary: "During the Auctomatic period, Patrick Collison and a collaborator identified only as Brian built an early toolchain for jailbroken iPhones and an offline Wikipedia application. Patrick later said the app reached hundreds of thousands of installations and that Brian subsequently worked at Stripe."
+    summary: During the Auctomatic period, Patrick Collison and a collaborator identified only as Brian built an early toolchain for jailbroken iPhones and an offline Wikipedia application. Patrick later said the app reached hundreds of thousands of installations and that Brian subsequently worked at Stripe.
     confidence: reported
     people:
       - Patrick Collison
@@ -397,23 +284,18 @@ events:
       - Stripe
     metrics:
       - label: Reported installations
-        value: "Hundreds of thousands"
+        value: Hundreds of thousands
     tags:
       - pre-stripe
       - engineering
       - early-employees
-    sources:
-      - kind: interview
-        publisher: Startup Grind
-        published_at: "2013-02-20"
-        title: Startup Grind Hosts Patrick Collison of Stripe, 6 Months In - Full Interview
-        url: https://www.startupgrind.com/blog/from-the-vault-patrick-collison-stripe-full-startup-grind-interview-2012/
-
+    source_ids:
+      - source-bda69e86e22cf8e2c66f
   - id: origins-shuppa-merges-into-auctomatic
-    date: "2007-05"
+    date: 2007-05
     date_precision: month
     title: Shuppa merges with another YC team to form Auctomatic
-    summary: "Patrick and John Collison entered Y Combinator with Shuppa, an idea for easier online selling. At Paul Graham's suggestion they combined forces with Harjeet and Kulveer Taggar, forming Auctomatic to build tools for high-volume eBay sellers."
+    summary: Patrick and John Collison entered Y Combinator with Shuppa, an idea for easier online selling. At Paul Graham's suggestion they combined forces with Harjeet and Kulveer Taggar, forming Auctomatic to build tools for high-volume eBay sellers.
     confidence: confirmed
     people:
       - Patrick Collison
@@ -430,23 +312,14 @@ events:
       - pre-stripe
       - founders
       - y-combinator
-    sources:
-      - kind: interview
-        publisher: Startup Grind
-        published_at: "2013-02-20"
-        title: Startup Grind Hosts Patrick Collison of Stripe, 6 Months In - Full Interview
-        url: https://www.startupgrind.com/blog/from-the-vault-patrick-collison-stripe-full-startup-grind-interview-2012/
-      - kind: interview
-        publisher: The Irish Times
-        published_at: "2008-04-30"
-        title: Getting right down to business in TY
-        url: https://www.irishtimes.com/culture/getting-right-down-to-business-in-ty-1.918545
-
+    source_ids:
+      - source-bda69e86e22cf8e2c66f
+      - source-f3f1b0eef7f81e0dafb0
   - id: origins-brothers-create-time-for-first-startup
     date: "2006"
     date_precision: year
     title: Patrick starts at MIT as John uses transition year to build with him
-    summary: "Patrick Collison began studying at MIT at 17. John Collison, then 16, used Ireland's transition year to align his schedule with Patrick's and work on internet-business ideas, creating the opening that led to their first startup together."
+    summary: Patrick Collison began studying at MIT at 17. John Collison, then 16, used Ireland's transition year to align his schedule with Patrick's and work on internet-business ideas, creating the opening that led to their first startup together.
     confidence: confirmed
     people:
       - Patrick Collison
@@ -460,19 +333,14 @@ events:
       - founders
       - college
       - pre-stripe
-    sources:
-      - kind: interview
-        publisher: Startup Grind
-        published_at: "2013-02-20"
-        title: Startup Grind Hosts Patrick Collison of Stripe, 6 Months In - Full Interview
-        url: https://www.startupgrind.com/blog/from-the-vault-patrick-collison-stripe-full-startup-grind-interview-2012/
-
+    source_ids:
+      - source-bda69e86e22cf8e2c66f
   - id: origins-patrick-attends-lisp-conference
-    date: "2005-06"
+    date: 2005-06
     date_precision: month
     title: Patrick makes his first US trip for a Lisp conference
     status: Approximate month based on the conference season
-    summary: "As a teenager, Patrick Collison traveled to Stanford for the International Lisp Conference after emailing the organizers to explain that he could not afford the trip. The visit connected his self-taught programming interests in rural Ireland with the wider software community."
+    summary: As a teenager, Patrick Collison traveled to Stanford for the International Lisp Conference after emailing the organizers to explain that he could not afford the trip. The visit connected his self-taught programming interests in rural Ireland with the wider software community.
     confidence: reported
     people:
       - Patrick Collison
@@ -486,18 +354,13 @@ events:
       - founders
       - programming
       - pre-stripe
-    sources:
-      - kind: interview
-        publisher: Startup Grind
-        published_at: "2013-02-20"
-        title: Startup Grind Hosts Patrick Collison of Stripe, 6 Months In - Full Interview
-        url: https://www.startupgrind.com/blog/from-the-vault-patrick-collison-stripe-full-startup-grind-interview-2012/
-
+    source_ids:
+      - source-bda69e86e22cf8e2c66f
   - id: origins-patrick-wins-young-scientist
-    date: "2005-01-14"
+    date: 2005-01-14
     date_precision: day
     title: Patrick wins Ireland's Young Scientist competition
-    summary: "At 16, Patrick Collison won the Esat BT Young Scientist and Technology Exhibition with CROMA, a Lisp-like programming language he designed. The award is the clearest public milestone in his technical work before college and his first startups."
+    summary: At 16, Patrick Collison won the Esat BT Young Scientist and Technology Exhibition with CROMA, a Lisp-like programming language he designed. The award is the clearest public milestone in his technical work before college and his first startups.
     confidence: confirmed
     people:
       - Patrick Collison
@@ -511,9 +374,6 @@ events:
       - founders
       - programming
       - pre-stripe
-    sources:
-      - kind: archive
-        publisher: RTÉ Archives
-        published_at: "2005-01-14"
-        title: Science Talent 2005
-        url: https://www.rte.ie/archives/2025/0526/1515001-patrick-collison-young-scientist/
+    source_ids:
+      - source-06b6e9f657f78edfcf84
+schema: stripe-history/history/v2

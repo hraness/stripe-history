@@ -38,14 +38,21 @@ describe("stripehistory.com category history", () => {
 
     expect(eventCount).toBe(31);
     expect(categorizedEventCount).toBe(eventCount);
-    expect(html).toContain("Stripe acquisitions history");
-    expect(html).toContain('aria-label="Breadcrumb"');
-    expect(html).toContain('<a href="/">history</a>');
-    expect(html).toContain("31 of 230 events");
-    expect(html).toContain('aria-current="page" data-analytics-event="history filter selected" data-analytics-id="acquisitions"');
+    expect(html).toContain('<h1 class="stripe-history-visually-hidden" id="history-heading">Stripe acquisitions history</h1>');
+    expect(html).toContain('aria-current="true" aria-label="acquisitions: 31 events, selected; activate to show all history" data-analytics-event="history filter selected" data-analytics-id="all"');
+    expect(html).toMatch(/data-filter-id="acquisitions"[^>]* href="\/"/u);
+    expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
+      html.indexOf('data-filter-id="acquisitions"'),
+    );
     expect(html).toContain("Stripe reportedly discusses acquiring OpenRouter");
     expect(html).toContain('id="stripe-guide-history-category-structured-data"');
     expect(html).not.toContain('class="stripe-guide-selector"');
+    expect(html).toContain('class="stripe-guide-header"');
+    expect(html).toContain('href="/about">about</a>');
+    expect(html).toContain('class="hraness-brand stripe-guide-footer-hraness"');
+    expect(html).not.toContain('class="stripe-guide-breadcrumbs"');
+    expect(html).not.toContain('class="stripe-guide-section-heading"');
+    expect(html).not.toMatch(/31 of \d+ events/u);
     expect(html).not.toContain("A month in Buenos Aires");
   });
 });

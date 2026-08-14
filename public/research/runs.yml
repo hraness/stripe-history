@@ -1,0 +1,86 @@
+schema: stripe-history/research-runs/v1
+runs:
+  - kind: baseline-import
+    collection: founder-appearances
+    status: complete
+    target_through: 2026-08-12
+    completed_on: 2026-08-12
+    plan_sha256: c954e3f97ef273bb89bf2745b01eee2081a939f29ae8930163c54a506778b4d8
+    accepted_input_sha256: a622fe5922701b9b018c139ef2fd208cdd61dcbc4a1667c73b63f87b8cc56982
+    candidate_history: not-reconstructible-pre-ledger
+    import_note: Baseline import of the reviewed appearance corpus; pre-ledger negative and duplicate candidate decisions were not reconstructed.
+    imported_source_ids:
+      - source-001e51b689b259d0b4e3
+      - source-1278271efc6181fee94f
+      - source-18cef128fcb5c9083568
+      - source-26410b426525f71187bb
+      - source-4d80199395399e9e47d8
+      - source-51a0e1edbe8fc1ce9d5a
+      - source-7365200928b2c76a48b7
+      - source-7db75f16638fc07f166c
+      - source-a5d1d621862fa7f1cac0
+      - source-bbf6b0fb0b8942bc569f
+      - source-bda69e86e22cf8e2c66f
+      - source-ca9f69ba263dbc27bda3
+      - source-d8e4c6cb20568d496b94
+  - kind: baseline-import
+    collection: founder-side-projects
+    status: complete
+    target_through: 2026-08-13
+    completed_on: 2026-08-13
+    plan_sha256: e1e93a1277a6d88a3478189cc3d44740f3e8d4070124e3422f199c54044b3b1c
+    accepted_input_sha256: f7c559bbcec758837fb0a6fdb506c004da2591019858ebd5b65ca495632f5cdf
+    candidate_history: not-reconstructible-pre-ledger
+    import_note: Baseline import of the complete founder side-project corpus; pre-ledger negative and duplicate candidate decisions were not reconstructed.
+    imported_source_ids:
+      - source-1002e320dafb67950005
+      - source-1c6adfe53072cdc63578
+      - source-370244a2efb2cfe025e5
+      - source-475e9973e4ee494147aa
+      - source-4c240f420fc0534fe6af
+      - source-5a2e0ef3c00b4019656f
+      - source-5cce599c4b7c9144e3cb
+      - source-6a70e99c09c187ea49b2
+      - source-85375dadecbd272a21c7
+      - source-89af64bf0e530b9961f2
+      - source-9ad888e73adc937b1c29
+      - source-aa36e7f93ba3a24269dd
+      - source-af73c6bed56faf7ea27e
+      - source-dc2f070f6effb7cceff3
+  - kind: baseline-import
+    collection: valuation-history
+    status: complete
+    target_through: 2026-08-12
+    completed_on: 2026-08-12
+    plan_sha256: 0f28c27eefaef317aa19e402873af3923007bcac5d77cce37470c2807bb30c8f
+    accepted_input_sha256: 4223d1874c7d9e7136d47c9338c16c9add7ee0e65a4fc4800f0dec317775bbb1
+    candidate_history: not-reconstructible-pre-ledger
+    import_note: Baseline import of the reviewed valuation corpus; pre-ledger negative and duplicate candidate decisions were not reconstructed.
+    imported_source_ids:
+      - source-03373a611af0c9e92786
+      - source-03f4b7ce98afc255b0ba
+      - source-049dfcb3b15c61d71dfe
+      - source-05c9e0722cf8a6d3e9ef
+      - source-0e881dc1ffda930a1841
+      - source-1a020b6076d17a8aecd2
+      - source-2cca70fe5628f59eba33
+      - source-313d5f90eb90dc44a09e
+      - source-3bb6c45b8d6f9c1124b4
+      - source-4b4de85478f5981d6494
+      - source-5116ff7a7f3246d58e2a
+      - source-67de5aa3b7009ba5ed83
+      - source-7f1e28293e44b7e2b09c
+      - source-8d6599ea85d8f5f485b7
+      - source-93f3d70eb5fc195f2ed2
+      - source-9a3a3ccb578db86eecac
+      - source-b2dd612bb76ab78c5e49
+      - source-bd6516ac551f19c37d33
+      - source-be63a33e896357893bf6
+      - source-c8d385ed972041177ac8
+      - source-d1ea05ba12bb2d5bf626
+      - source-dcf72971de10c76a0dd9
+      - source-e7a9d45ba8cc599f5d4d
+      - source-ea53245454672afea5c5
+      - source-ebcb0307692f731ceeb8
+      - source-f8ada5ba377789f7909f
+      - source-f9691bfff6a0b221be9c

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-export const STRIPE_GUIDE_HISTORY_SCHEMA_VERSION =
-  "stripe-guide/history/v1" as const;
+export const STRIPE_HISTORY_HISTORY_SCHEMA_VERSION =
+  "stripe-history/history/v2" as const;
 
 export const historyCategoryIds = [
   "origins-and-early-company",
@@ -34,12 +34,12 @@ function isRealPartialDate(value: string): boolean {
     && date.getUTCDate() === day;
 }
 
-const partialDateSchema = z.string().refine(
+export const PartialDateSchema = z.string().refine(
   isRealPartialDate,
   "Date must be a real calendar date using YYYY, YYYY-MM, or YYYY-MM-DD",
 );
 
-const httpsUrlSchema = z.string().max(2_048).url().refine((value) => {
+export const HttpsUrlSchema = z.string().max(2_048).url().refine((value) => {
   try {
     const url = new URL(value);
     return url.protocol === "https:" && url.username === "" && url.password === "";
@@ -48,7 +48,7 @@ const httpsUrlSchema = z.string().max(2_048).url().refine((value) => {
   }
 }, "Source URL must use HTTPS without embedded credentials");
 
-const compactTextSchema = z.string().trim().min(1).max(500).refine(
+export const CompactTextSchema = z.string().trim().min(1).max(500).refine(
   (value) => !/[\r\n]/u.test(value),
   "Text must fit on one line",
 );
@@ -76,46 +76,48 @@ function annualVolumeDisplayValue(
 
 export const HistorySourceSchema = z.strictObject({
   kind: z.enum(["primary", "filing", "reporting", "interview", "archive"]),
-  publisher: compactTextSchema.max(120),
-  published_at: partialDateSchema.optional(),
-  title: compactTextSchema,
-  url: httpsUrlSchema,
+  publisher: CompactTextSchema.max(120),
+  published_at: PartialDateSchema.optional(),
+  title: CompactTextSchema,
+  url: HttpsUrlSchema,
 });
 
 export const HistoryEventSchema = z.strictObject({
   amount: z.strictObject({
     currency: z.string().regex(/^[A-Z]{3}$/u).optional(),
-    display: compactTextSchema.max(120),
+    display: CompactTextSchema.max(120),
     value: z.number().finite().nonnegative().optional(),
   }).optional(),
   annual_volume: z.strictObject({
     calendar_year: z.number().int().min(2000).max(2100),
-    display: compactTextSchema.max(80),
+    display: CompactTextSchema.max(80),
     kind: z.enum(["payment-volume", "total-volume"]),
     qualifier: z.enum(["lower-bound", "published-value"]),
     value_usd: z.number().int().safe().positive(),
   }).optional(),
   confidence: z.enum(["confirmed", "reported", "disputed"]),
-  date: partialDateSchema,
+  date: PartialDateSchema,
   date_precision: z.enum(["day", "month", "year"]),
   details: z.array(z.strictObject({
-    label: compactTextSchema.max(80),
-    value: compactTextSchema,
+    label: CompactTextSchema.max(80),
+    value: CompactTextSchema,
   })).max(16).optional(),
   id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u).max(120),
-  locations: z.array(compactTextSchema.max(120)).max(16).optional(),
+  locations: z.array(CompactTextSchema.max(120)).max(16).optional(),
   metrics: z.array(z.strictObject({
-    context: compactTextSchema.optional(),
-    label: compactTextSchema.max(100),
-    value: compactTextSchema.max(120),
+    context: CompactTextSchema.optional(),
+    label: CompactTextSchema.max(100),
+    value: CompactTextSchema.max(120),
   })).max(16).optional(),
-  organizations: z.array(compactTextSchema.max(120)).max(20).optional(),
-  people: z.array(compactTextSchema.max(120)).max(30).optional(),
+  organizations: z.array(CompactTextSchema.max(120)).max(20).optional(),
+  people: z.array(CompactTextSchema.max(120)).max(30).optional(),
   related_events: z.array(
     z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u).max(120),
   ).max(20).optional(),
-  sources: z.array(HistorySourceSchema).min(1).max(12),
-  status: compactTextSchema.max(80).optional(),
+  source_ids: z.array(
+    z.string().regex(/^source-[a-f0-9]{20}$/u),
+  ).min(1).max(12),
+  status: CompactTextSchema.max(80).optional(),
   summary: z.string().trim().min(30).max(900).refine(
     (value) => !/[\r\n]/u.test(value),
     "Summary must be one paragraph",
@@ -123,7 +125,7 @@ export const HistoryEventSchema = z.strictObject({
   tags: z.array(
     z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u).max(60),
   ).max(12).optional(),
-  title: compactTextSchema.max(180),
+  title: CompactTextSchema.max(180),
 }).superRefine((event, context) => {
   const expectedPrecision = event.date.length === 4
     ? "year"
@@ -192,13 +194,6 @@ export const HistoryEventSchema = z.strictObject({
         path: ["confidence"],
       });
     }
-    if (!event.sources.some(({ kind }) => kind === "primary")) {
-      context.addIssue({
-        code: "custom",
-        message: "annual_volume requires at least one primary source",
-        path: ["sources"],
-      });
-    }
     if (event.tags?.includes("payment-volume") !== true) {
       context.addIssue({
         code: "custom",
@@ -217,7 +212,7 @@ export const HistoryEventSchema = z.strictObject({
   for (const [field, values] of [
     ["details", event.details?.map(({ label }) => label)],
     ["metrics", event.metrics?.map(({ label }) => label)],
-    ["sources", event.sources.map(({ url }) => url)],
+    ["source_ids", event.source_ids],
   ] as const) {
     if (values !== undefined && new Set(values).size !== values.length) {
       context.addIssue({
@@ -231,13 +226,13 @@ export const HistoryEventSchema = z.strictObject({
 
 export const HistoryFileSchema = z.strictObject({
   category: z.strictObject({
-    description: compactTextSchema,
+    description: CompactTextSchema,
     id: z.enum(historyCategoryIds),
-    label: compactTextSchema.max(80),
+    label: CompactTextSchema.max(80),
     order: z.number().int().min(1).max(100),
   }),
   events: z.array(HistoryEventSchema).min(1).max(300),
-  schema: z.literal(STRIPE_GUIDE_HISTORY_SCHEMA_VERSION),
+  schema: z.literal(STRIPE_HISTORY_HISTORY_SCHEMA_VERSION),
 }).superRefine((file, context) => {
   const ids = file.events.map((event) => event.id);
   if (new Set(ids).size !== ids.length) {
@@ -259,3 +254,4 @@ export const HistoryFileSchema = z.strictObject({
 
 export type HistoryEvent = z.infer<typeof HistoryEventSchema>;
 export type HistoryFile = z.infer<typeof HistoryFileSchema>;
+export type HistorySource = z.infer<typeof HistorySourceSchema>;

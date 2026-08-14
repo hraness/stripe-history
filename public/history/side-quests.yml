@@ -1,15 +1,14 @@
-schema: stripe-guide/history/v1
 category:
   id: side-quests
   label: Side quests
-  description: Patrick and John Collison's notable projects outside Stripe, spanning science funding, progress studies, governance, and hospitality.
+  description: Patrick and John Collison's notable projects outside Stripe, spanning science and arts funding, progress studies, governance, and hospitality.
   order: 10
 events:
   - id: side-quest-omos-opens-at-millbrook-house
-    date: "2026-07-07"
+    date: 2026-07-07
     date_precision: day
     title: Ómós begins service at Millbrook House
-    summary: "Ómós opened its restaurant and guesthouse in Abbeyleix with chef Cúán Greene as majority owner and executive chef and John Collison as an investor. The restored property combines a 40-seat restaurant with 16 guest rooms; current reporting does not establish Patrick Collison as an investor in the operating business."
+    summary: Ómós opened its restaurant and guesthouse in Abbeyleix with chef Cúán Greene as majority owner and executive chef and John Collison as an investor. The restored property combines a 40-seat restaurant with 16 guest rooms; current reporting does not establish Patrick Collison as an investor in the operating business.
     confidence: confirmed
     people:
       - Cúán Greene
@@ -22,7 +21,7 @@ events:
       - Abbeyleix, County Laois, Ireland
     metrics:
       - label: Restaurant capacity
-        value: "40 seats"
+        value: 40 seats
       - label: Guest rooms
         value: "16"
     status: Open
@@ -32,27 +31,38 @@ events:
       - hospitality
       - ireland
       - investment
-    sources:
-      - kind: primary
-        publisher: Ómós
-        published_at: "2026-07-19"
-        title: Ómós Digest #226 - From Soft Opening to Full Swing
-        url: https://omos.substack.com/p/omos-digest-226-in-full-swing
-      - kind: primary
-        publisher: Ómós
-        title: Ómós
-        url: https://www.omos.co/en
-      - kind: reporting
-        publisher: The Irish Times
-        published_at: "2026-06-05"
-        title: First look - Cúán Greene's hotly anticipated high-end restaurant and guest house in Co Laois
-        url: https://www.irishtimes.com/food/2026/06/05/first-look-cuan-greenes-hotly-anticipated-high-end-restaurant-and-guest-house-in-co-laois/
-
+    source_ids:
+      - source-5cce599c4b7c9144e3cb
+      - source-1002e320dafb67950005
+      - source-1c6adfe53072cdc63578
+  - id: side-quest-new-aesthetics-grants
+    date: 2026-05-25
+    date_precision: day
+    title: Patrick Collison and Tyler Cowen award 28 New Aesthetics grants
+    summary: Patrick Collison and Tyler Cowen published the recipients of their New Aesthetics grants after receiving more applications than expected. They funded 28 artists and projects spanning architecture, publishing, craft, software, film, furniture, public art, and experimental technology.
+    confidence: confirmed
+    people:
+      - Patrick Collison
+      - Tyler Cowen
+    organizations:
+      - New Aesthetics
+    metrics:
+      - label: Grantees funded
+        value: "28"
+    status: Recipients announced
+    tags:
+      - art
+      - grants
+      - philanthropy
+      - aesthetics
+    source_ids:
+      - source-4c240f420fc0534fe6af
+      - source-5a2e0ef3c00b4019656f
   - id: side-quest-patrick-collison-joins-meta-board
-    date: "2025-04-15"
+    date: 2025-04-15
     date_precision: day
     title: Patrick Collison joins Meta's board of directors
-    summary: "Meta appointed Patrick Collison and Dina Powell McCormick to its board, with both appointments effective April 15. The role added public-company governance at one of the world's largest technology platforms to Collison's work outside Stripe."
+    summary: Meta appointed Patrick Collison and Dina Powell McCormick to its board, with both appointments effective April 15. The role added public-company governance at one of the world's largest technology platforms to Collison's work outside Stripe.
     confidence: confirmed
     people:
       - Patrick Collison
@@ -65,27 +75,18 @@ events:
       - board
       - governance
       - technology
-    sources:
-      - kind: primary
-        publisher: Meta
-        published_at: "2025-04-11"
-        title: Patrick Collison and Dina Powell McCormick to Join Meta Board of Directors
-        url: https://about.fb.com/news/2025/04/patrick-collison-and-dina-powell-mccormick-to-join-meta-board-of-directors/
-      - kind: filing
-        publisher: U.S. Securities and Exchange Commission
-        published_at: "2025-04-11"
-        title: Meta Platforms current report announcing board appointments
-        url: https://www.sec.gov/Archives/edgar/data/1326801/000132680125000027/meta-20250411.htm
-
+    source_ids:
+      - source-475e9973e4ee494147aa
+      - source-aa36e7f93ba3a24269dd
   - id: side-quest-collisons-acquire-millbrook-house
     date: "2022"
     date_precision: year
     title: The Collison brothers acquire Millbrook House for restoration
-    summary: "Local reporting said Patrick and John Collison acquired the derelict Millbrook House in Abbeyleix for about €400,000. The restoration later became the setting for Cúán Greene and John Collison's Ómós restaurant and guesthouse project."
+    summary: Local reporting said Patrick and John Collison acquired the derelict Millbrook House in Abbeyleix for about €400,000. The restoration later became the setting for Cúán Greene and John Collison's Ómós restaurant and guesthouse project.
     confidence: reported
     amount:
       currency: EUR
-      display: "About €400,000"
+      display: About €400,000
       value: 400000
     people:
       - Patrick Collison
@@ -103,23 +104,14 @@ events:
       - restoration
       - ireland
       - hospitality
-    sources:
-      - kind: reporting
-        publisher: Nenagh Guardian
-        published_at: "2024-01-13"
-        title: Collison backs new restaurant
-        url: https://www.nenaghguardian.ie/2024/01/13/collison-backs-new-restaurant/
-      - kind: reporting
-        publisher: The Irish Times
-        published_at: "2026-06-05"
-        title: First look - Cúán Greene's hotly anticipated high-end restaurant and guest house in Co Laois
-        url: https://www.irishtimes.com/food/2026/06/05/first-look-cuan-greenes-hotly-anticipated-high-end-restaurant-and-guest-house-in-co-laois/
-
+    source_ids:
+      - source-9ad888e73adc937b1c29
+      - source-1c6adfe53072cdc63578
   - id: side-quest-arc-institute-launches
-    date: "2021-12-15"
+    date: 2021-12-15
     date_precision: day
     title: Patrick Collison co-founds Arc Institute
-    summary: "Patrick Collison, Patrick Hsu, and Silvana Konermann launched Arc Institute as an independent biomedical research organization focused on complex human disease. Its model gives core investigators renewable eight-year funding, while Patrick and John Collison are listed among the institute's founding donors."
+    summary: Patrick Collison, Patrick Hsu, and Silvana Konermann launched Arc Institute as an independent biomedical research organization focused on complex human disease. Its model gives core investigators renewable eight-year funding, while Patrick and John Collison are listed among the institute's founding donors.
     confidence: confirmed
     people:
       - Patrick Collison
@@ -133,27 +125,19 @@ events:
       - Palo Alto, California
     metrics:
       - label: Core investigator funding term
-        value: "Renewable 8-year terms"
+        value: Renewable 8-year terms
     tags:
       - science
       - biomedical-research
       - philanthropy
-    sources:
-      - kind: primary
-        publisher: Arc Institute
-        published_at: "2021-12-15"
-        title: Introducing Arc Institute
-        url: https://arcinstitute.org/news/introducing-arc-institute
-      - kind: primary
-        publisher: Arc Institute
-        title: About Arc Institute
-        url: https://arcinstitute.org/about
-
+    source_ids:
+      - source-dc2f070f6effb7cceff3
+      - source-af73c6bed56faf7ea27e
   - id: side-quest-fast-grants-launches
-    date: "2020-04"
+    date: 2020-04
     date_precision: month
     title: Fast Grants launches an accelerated model for COVID-19 research funding
-    summary: "Patrick Collison, Tyler Cowen, and Patrick Hsu organized Fast Grants as the pandemic exposed the speed limits of conventional research funding. The program made many decisions within 48 hours and aimed to deliver funds within a week, drawing roughly 4,000 applications in its first week."
+    summary: Patrick Collison, Tyler Cowen, and Patrick Hsu organized Fast Grants as the pandemic exposed the speed limits of conventional research funding. The program made many decisions within 48 hours and aimed to deliver funds within a week, drawing roughly 4,000 applications in its first week.
     confidence: confirmed
     people:
       - Patrick Collison
@@ -164,33 +148,24 @@ events:
       - Emergent Ventures
     metrics:
       - label: Target decision time
-        value: "48 hours"
+        value: 48 hours
       - label: Target time to funding
-        value: "Within 1 week"
+        value: Within 1 week
       - label: First-week applications
-        value: "About 4,000"
+        value: About 4,000
     tags:
       - science
       - covid-19
       - research-funding
       - philanthropy
-    sources:
-      - kind: reporting
-        publisher: Nature
-        published_at: "2021-08-03"
-        title: COVID Fast Grants sped up pandemic science
-        url: https://www.nature.com/articles/d41586-021-02111-7
-      - kind: primary
-        publisher: Marginal Revolution
-        published_at: "2021-06-16"
-        title: What we learned doing Fast Grants
-        url: https://marginalrevolution.com/marginalrevolution/2021/06/what-we-learned-doing-fast-grants.html
-
+    source_ids:
+      - source-89af64bf0e530b9961f2
+      - source-85375dadecbd272a21c7
   - id: side-quest-progress-studies-proposal
-    date: "2019-07-30"
+    date: 2019-07-30
     date_precision: day
     title: Patrick Collison and Tyler Cowen propose progress studies
-    summary: "Patrick Collison and economist Tyler Cowen argued for a focused discipline studying how economic, technological, scientific, cultural, and organizational progress happens. The essay supplied a name and research agenda for a broader movement concerned with increasing society's capacity to produce useful advances."
+    summary: Patrick Collison and economist Tyler Cowen argued for a focused discipline studying how economic, technological, scientific, cultural, and organizational progress happens. The essay supplied a name and research agenda for a broader movement concerned with increasing society's capacity to produce useful advances.
     confidence: confirmed
     people:
       - Patrick Collison
@@ -201,13 +176,7 @@ events:
       - progress-studies
       - research
       - writing
-    sources:
-      - kind: primary
-        publisher: The Atlantic
-        published_at: "2019-07-30"
-        title: We Need a New Science of Progress
-        url: https://www.theatlantic.com/science/archive/2019/07/we-need-new-science-progress/594717/
-      - kind: primary
-        publisher: Roots of Progress
-        title: About the Roots of Progress Institute
-        url: https://rootsofprogress.org/about/
+    source_ids:
+      - source-370244a2efb2cfe025e5
+      - source-6a70e99c09c187ea49b2
+schema: stripe-history/history/v2

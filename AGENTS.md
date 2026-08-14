@@ -1,9 +1,10 @@
 # Contents
 
-- `app/` – the public timeline, category and annual-volume pages, methodology, crawl metadata, social image, and framework shell.
-- `lib/` – strict History YAML contracts and validated content loading.
+- `app/` – the public timeline, category, annual-volume, valuation, data, and methodology pages, plus crawl metadata, social image, and framework shell.
+- `lib/` – strict history and research YAML contracts with validated content loading.
 - `public/history/` – the authored, source-linked Stripe history records.
-- `scripts/` – bounded Stripe Sessions extraction and structured-output helpers.
+- `public/research/` – the canonical source catalog, valuations, founder appearances, collection definitions, and research-run ledger.
+- `scripts/` – bounded Stripe Sessions extraction, research audit and planning, legacy-source migration, and structured-output helpers.
 - `assets/` – the Hraness README lockup.
 - `.github/workflows/` – standalone repository validation.
 - `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `CITATION.cff`, and `LICENSE` – project documentation, citation metadata, policy, and terms.
@@ -13,8 +14,8 @@
 
 - Use Bun 1.3.14 for installs, scripts, and checks.
 - Keep the canonical public identity at `https://stripehistory.com`. Preserve former hosts only as direct permanent redirects to the matching canonical path.
-- Keep History server-rendered, crawlable, and available as reviewable YAML. Preserve durable category and annual-volume URLs.
-- Require at least one source for every event. Prefer primary evidence, preserve uncertainty, and distinguish proposed, reported, announced, and completed events.
+- Keep history server-rendered, crawlable, and available as reviewable YAML. Preserve durable category, annual-volume, valuation, and data URLs.
+- Require at least one canonical source ID for every event and valuation observation. Prefer primary evidence, preserve uncertainty, and distinguish proposed, reported, announced, and completed events.
 - Parse every provider response and YAML file from `unknown`. Preserve reverse chronology, globally unique IDs, bounded text, and deterministic source provenance.
 - Keep the site independent of Stripe, Inc. Do not imply endorsement, ownership, or official status.
 - Keep the Hraness Ra lockup linked to `https://hraness.com/` in the website footer and README.

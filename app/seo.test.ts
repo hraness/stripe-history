@@ -43,12 +43,22 @@ describe("stripehistory.com structured discovery", () => {
       name: "Stripe Company History Dataset",
       temporalCoverage: "2005/2026",
     });
-    expect(dataset.distribution).toHaveLength(11);
+    expect(dataset.variableMeasured).toEqual(expect.arrayContaining([
+      expect.objectContaining({ name: "Valuation observations", value: 25 }),
+      expect.objectContaining({ name: "Annual volume disclosures", value: 5 }),
+    ]));
+    expect(dataset.distribution).toHaveLength(16);
     expect(dataset.distribution).toContainEqual({
       "@type": "DataDownload",
       contentUrl: "https://stripehistory.com/history/acquisitions.yml",
       encodingFormat: "application/yaml",
       name: "Acquisitions history records",
+    });
+    expect(dataset.distribution).toContainEqual({
+      "@type": "DataDownload",
+      contentUrl: "https://stripehistory.com/research/valuations.yml",
+      encodingFormat: "application/yaml",
+      name: "Stripe valuation observations",
     });
   });
 

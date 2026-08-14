@@ -41,7 +41,7 @@ export default function AboutPage() {
         ]}
         id="stripe-guide-about-structured-data"
       />
-      <SiteHeader />
+      <SiteHeader aboutSelected />
       <nav aria-label="Breadcrumb" className="stripe-guide-breadcrumbs">
         <Link href="/">history</Link>
         <span aria-hidden="true"> / </span>
@@ -60,8 +60,9 @@ export default function AboutPage() {
         <p>
           {site.domain} is an independent, sourced guide to Stripe. It publishes
           a reverse-chronological company timeline covering acquisitions,
-          products, leadership, funding, expansion, offices, publishing
-          projects, early history, and annual volume.
+          products, leadership, funding, valuation, expansion, offices,
+          publishing projects, founder side projects and aesthetics programs,
+          early history, and annual volume.
         </p>
 
         <h2>Sources and review</h2>
@@ -90,11 +91,9 @@ export default function AboutPage() {
 
         <h2>Privacy</h2>
         <p>
-          The canonical site at {site.domain} uses anonymous, cookieless
-          product analytics to understand aggregate page use, improve
-          navigation, and diagnose bounded software errors. Analytics exclude
-          query strings, form input, identity, session replay, and personal
-          profiles. The site has no user accounts or authentication.
+          The site does not run product analytics or session replay, and it has
+          no user accounts or authentication. Requests are still subject to the
+          ordinary logs and security controls of the hosting provider.
         </p>
       </section>
       <SiteFooter />

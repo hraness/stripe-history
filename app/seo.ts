@@ -136,6 +136,28 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
     ...(earliestYear === undefined || latestYear === undefined
       ? {}
       : { temporalCoverage: `${earliestYear}/${latestYear}` }),
+    variableMeasured: [
+      {
+        "@type": "PropertyValue",
+        name: "Sourced history events",
+        value: history.events.length,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Valuation observations",
+        value: history.valuations.length,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Annual volume disclosures",
+        value: history.annualVolumes.length,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Canonical research sources",
+        value: history.sources.length,
+      },
+    ],
     keywords: [
       "Stripe history",
       "company history",
@@ -145,12 +167,47 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
       "funding",
       "product launches",
       "annual payment volume",
+      "private company valuation",
+      "founder appearances",
+      "research provenance",
     ],
-    distribution: history.categories.map((category) => ({
-      "@type": "DataDownload",
-      name: `${category.label} history records`,
-      contentUrl: `${SITE_ORIGIN}/history/${category.id}.yml`,
-      encodingFormat: "application/yaml",
-    })),
+    distribution: [
+      ...history.categories.map((category) => ({
+        "@type": "DataDownload" as const,
+        name: `${category.label} history records`,
+        contentUrl: `${SITE_ORIGIN}/history/${category.id}.yml`,
+        encodingFormat: "application/yaml",
+      })),
+      {
+        "@type": "DataDownload" as const,
+        name: "Research source catalog",
+        contentUrl: `${SITE_ORIGIN}/research/sources.yml`,
+        encodingFormat: "application/yaml",
+      },
+      {
+        "@type": "DataDownload" as const,
+        name: "Stripe valuation observations",
+        contentUrl: `${SITE_ORIGIN}/research/valuations.yml`,
+        encodingFormat: "application/yaml",
+      },
+      {
+        "@type": "DataDownload" as const,
+        name: "Founder appearances",
+        contentUrl: `${SITE_ORIGIN}/research/appearances.yml`,
+        encodingFormat: "application/yaml",
+      },
+      {
+        "@type": "DataDownload" as const,
+        name: "Research collection definitions",
+        contentUrl: `${SITE_ORIGIN}/research/collections.yml`,
+        encodingFormat: "application/yaml",
+      },
+      {
+        "@type": "DataDownload" as const,
+        name: "Research run ledger",
+        contentUrl: `${SITE_ORIGIN}/research/runs.yml`,
+        encodingFormat: "application/yaml",
+      },
+    ],
   } as const;
 }

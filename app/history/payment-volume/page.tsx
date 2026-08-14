@@ -1,12 +1,11 @@
 import { loadHistory } from "@/lib/content";
 import { JsonLdScript } from "@/support/json-ld";
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { breadcrumbJsonLd, historyCollectionJsonLd } from "../../seo";
-import { SiteHeader } from "../../site-header";
 import { site, socialMetadata } from "../../site";
 import { SiteFooter } from "../../site-footer";
+import { SiteHeader } from "../../site-header";
 import { HistoryFilters } from "../history-view";
 
 export const dynamic = "force-static";
@@ -24,7 +23,6 @@ export const metadata: Metadata = {
     paymentVolumeSocialTitle,
     paymentVolumeDescription,
     "/history/payment-volume",
-    { alt: `Stripe annual payment and total volume from ${site.domain}` },
   ),
 };
 
@@ -67,19 +65,13 @@ export default async function PaymentVolumePage() {
         id="main-content"
       >
         <SiteHeader />
-        <nav aria-label="Breadcrumb" className="stripe-guide-breadcrumbs">
-          <Link href="/">history</Link>
-          <span aria-hidden="true"> / </span>
-          <span>annual volume</span>
-        </nav>
         <section
           aria-labelledby="payment-volume-heading"
           className="stripe-guide-section history-volume-page"
         >
-        <div className="stripe-guide-section-heading">
-          <h1 id="payment-volume-heading">{paymentVolumeTitle}</h1>
-          <span>{records.length} annual disclosures</span>
-        </div>
+        <h1 className="stripe-history-visually-hidden" id="payment-volume-heading">
+          {paymentVolumeTitle}
+        </h1>
         <HistoryFilters history={history} paymentVolumeSelected />
         <p className="history-volume-intro">
           Stripe reported annual payment volume from 2021 through 2024 and
@@ -148,7 +140,7 @@ export default async function PaymentVolumePage() {
                             data-analytics-kind="history"
                             href={source.url}
                           >
-                            {source.publisher}: {source.title}
+                            {source.publisher}
                           </a>
                         </span>
                       ))}

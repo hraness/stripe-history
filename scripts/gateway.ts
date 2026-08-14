@@ -19,7 +19,7 @@ export function resolveGatewayCredential(
   environment: Readonly<Record<string, string | undefined>> = process.env,
 ): GatewayCredential | null {
   for (const value of [
-    environment.STRIPE_GUIDE_LLM_API_KEY,
+    environment.STRIPE_HISTORY_LLM_API_KEY,
     environment.AI_GATEWAY_API_KEY,
   ]) {
     if (configuredCredential(value)) return { kind: "api-key", value };
@@ -35,14 +35,14 @@ export function gatewayOptionsForCredential(
 }
 
 export function resolveGatewayModel(
-  value: unknown = process.env.STRIPE_GUIDE_MODEL,
+  value: unknown = process.env.STRIPE_HISTORY_MODEL,
 ): string {
   if (value === undefined) return DEFAULT_MODEL;
   if (
     typeof value !== "string"
     || !/^[a-z0-9][a-z0-9._-]*\/[a-z0-9][a-z0-9._-]*$/u.test(value)
   ) {
-    throw new Error("STRIPE_GUIDE_MODEL must be a gateway provider/model identifier");
+    throw new Error("STRIPE_HISTORY_MODEL must be a gateway provider/model identifier");
   }
   return value;
 }

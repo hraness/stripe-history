@@ -1,544 +1,574 @@
-schema: "stripe-guide/history/v1"
 category:
-  id: "payment-and-payout-expansion"
-  label: "Payment and payout expansion"
-  description: "Material additions and contractions in the payment methods, settlement rails, and payout reach available through Stripe."
+  id: payment-and-payout-expansion
+  label: Payment and payout expansion
+  description: Material additions and contractions in the payment methods, settlement rails, and payout reach available through Stripe.
   order: 6
 events:
-  - id: "payment-2026-global-payouts-expanded-preview"
-    title: "Stripe previews major Global Payouts reach expansion"
-    date: "2026-04-29"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "preview"
-    summary: "At Sessions 2026, Stripe previewed a large expansion of Global Payouts spanning fiat and stablecoin recipient countries, while stopping short of claiming general availability."
+  - id: payment-2026-global-payouts-expanded-preview
+    title: Stripe previews major Global Payouts reach expansion
+    date: 2026-04-29
+    date_precision: day
+    confidence: confirmed
+    status: preview
+    summary: At Sessions 2026, Stripe previewed a large expansion of Global Payouts spanning fiat and stablecoin recipient countries, while stopping short of claiming general availability.
     details:
-      - label: "Fiat reach"
-        value: "Previewed for recipients in more than 100 countries"
-      - label: "Stablecoin reach"
-        value: "Previewed for recipients in 160 countries"
-      - label: "Availability"
-        value: "Preview; the figures should not be read as fully launched coverage"
+      - label: Fiat reach
+        value: Previewed for recipients in more than 100 countries
+      - label: Stablecoin reach
+        value: Previewed for recipients in 160 countries
+      - label: Availability
+        value: Preview; the figures should not be read as fully launched coverage
     metrics:
-      - label: "Fiat recipient countries"
-        value: "100+"
-        context: "Previewed reach at Sessions 2026"
-      - label: "Stablecoin recipient countries"
+      - label: Fiat recipient countries
+        value: 100+
+        context: Previewed reach at Sessions 2026
+      - label: Stablecoin recipient countries
         value: "160"
-        context: "Previewed reach at Sessions 2026"
-    organizations: ["Stripe"]
-    related_events: ["product-2025-global-payouts"]
-    tags: ["payouts", "global-payouts", "stablecoins", "preview", "sessions"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2026-04-29"
-        title: "Everything we announced at Sessions 2026"
-        url: "https://stripe.com/blog/everything-we-announced-at-sessions-2026"
-  - id: "payment-2026-pix-upi-blik-cross-border"
-    title: "Stripe broadens cross-border access to Pix, UPI, and BLIK"
-    date: "2026-03"
-    date_precision: "month"
-    confidence: "confirmed"
-    status: "available with market-specific scope"
-    summary: "Stripe expanded three major domestic payment methods to businesses outside their home markets and added recurring UPI, with each method carrying a different geographic footprint."
+        context: Previewed reach at Sessions 2026
+    organizations:
+      - Stripe
+    related_events:
+      - product-2025-global-payouts
+    tags:
+      - payouts
+      - global-payouts
+      - stablecoins
+      - preview
+      - sessions
+    source_ids:
+      - source-28eaa414dc9531c6df9d
+  - id: payment-2026-pix-upi-blik-cross-border
+    title: Stripe broadens cross-border access to Pix, UPI, and BLIK
+    date: 2026-03
+    date_precision: month
+    confidence: confirmed
+    status: available with market-specific scope
+    summary: Stripe expanded three major domestic payment methods to businesses outside their home markets and added recurring UPI, with each method carrying a different geographic footprint.
     details:
-      - label: "Pix"
-        value: "Available to businesses in the UK, Europe, Canada, Australia, and Singapore"
-      - label: "UPI"
-        value: "Available in the UK, Europe, Canada, Australia, Singapore, and Switzerland; recurring payments also supported"
-      - label: "BLIK"
-        value: "Available in the US, UK, Europe, Canada, Australia, Singapore, and Switzerland"
-    organizations: ["Stripe"]
-    tags: ["payment-methods", "cross-border", "pix", "upi", "blik"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2026-03"
-        title: "Stripe changelog: March 2026"
-        url: "https://stripe.com/blog/changelog"
-  - id: "payment-2025-payto-australia"
-    title: "Stripe adds PayTo direct debits in Australia"
-    date: "2025-12-15"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "available"
-    summary: "Stripe made PayTo available to Australian businesses for one-off and recurring real-time direct debits with immediate payment confirmation and balance availability."
+      - label: Pix
+        value: Available to businesses in the UK, Europe, Canada, Australia, and Singapore
+      - label: UPI
+        value: Available in the UK, Europe, Canada, Australia, Singapore, and Switzerland; recurring payments also supported
+      - label: BLIK
+        value: Available in the US, UK, Europe, Canada, Australia, Singapore, and Switzerland
+    organizations:
+      - Stripe
+    tags:
+      - payment-methods
+      - cross-border
+      - pix
+      - upi
+      - blik
+    source_ids:
+      - source-bebcca96578a064a18b0
+  - id: payment-2025-payto-australia
+    title: Stripe adds PayTo direct debits in Australia
+    date: 2025-12-15
+    date_precision: day
+    confidence: confirmed
+    status: available
+    summary: Stripe made PayTo available to Australian businesses for one-off and recurring real-time direct debits with immediate payment confirmation and balance availability.
     details:
-      - label: "Payment types"
-        value: "One-off and recurring direct debits"
-      - label: "Operating window"
-        value: "Real-time service available continuously, subject to participating financial institutions"
-      - label: "Network gap"
-        value: "Not all financial institutions offer PayTo"
-    locations: ["Australia"]
-    organizations: ["Stripe", "NPP Australia"]
-    tags: ["payment-methods", "bank-debits", "payto", "australia"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe Documentation"
-        published_at: "2025-12-15"
-        title: "Adds support for the PayTo payment method"
-        url: "https://docs.stripe.com/changelog/clover/2025-12-15/payto"
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2025-12-15"
-        title: "PayTo Service Terms and Conditions"
-        url: "https://stripe.com/au/legal/payto"
-  - id: "payment-2025-next-day-settlement"
-    title: "Stripe introduces next-day settlement"
-    date: "2025-12"
-    date_precision: "month"
-    confidence: "confirmed"
-    status: "available to eligible users"
-    summary: "Stripe introduced an automatic next-business-day settlement option for eligible domestic transactions, shortening access to earnings without requiring an instant payout request."
+      - label: Payment types
+        value: One-off and recurring direct debits
+      - label: Operating window
+        value: Real-time service available continuously, subject to participating financial institutions
+      - label: Network gap
+        value: Not all financial institutions offer PayTo
+    locations:
+      - Australia
+    organizations:
+      - Stripe
+      - NPP Australia
+    tags:
+      - payment-methods
+      - bank-debits
+      - payto
+      - australia
+    source_ids:
+      - source-dc366266f745a0c70823
+      - source-80c945967e9e1f521afb
+  - id: payment-2025-next-day-settlement
+    title: Stripe introduces next-day settlement
+    date: 2025-12
+    date_precision: month
+    confidence: confirmed
+    status: available to eligible users
+    summary: Stripe introduced an automatic next-business-day settlement option for eligible domestic transactions, shortening access to earnings without requiring an instant payout request.
     details:
-      - label: "Timing"
-        value: "Eligible funds become available in the Stripe balance on the next business day"
-      - label: "Exclusion"
-        value: "Direct debits and, in some regions, international card payments remain on standard settlement timing"
-      - label: "Eligibility"
-        value: "Availability is eligibility-based rather than universal"
-    organizations: ["Stripe"]
-    tags: ["settlement", "payouts", "cash-flow"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2025-12-03"
-        title: "Stripe Next-Day Settlement terms"
-        url: "https://stripe.com/legal/ssa-services-terms#stripe-next-day-settlement"
-      - kind: "primary"
-        publisher: "Stripe Documentation"
-        title: "Next-day settlement"
-        url: "https://docs.stripe.com/payouts/next-day-settlement"
-  - id: "payment-2025-method-total-over-125"
-    title: "Stripe adds 25 methods and passes 125 supported methods"
-    date: "2025-05-07"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "launched"
-    summary: "Stripe announced support for 25 additional payment methods, including Pix and UPI, taking its stated global method catalog above 125."
+      - label: Timing
+        value: Eligible funds become available in the Stripe balance on the next business day
+      - label: Exclusion
+        value: Direct debits and, in some regions, international card payments remain on standard settlement timing
+      - label: Eligibility
+        value: Availability is eligibility-based rather than universal
+    organizations:
+      - Stripe
+    tags:
+      - settlement
+      - payouts
+      - cash-flow
+    source_ids:
+      - source-97444be68e85216131c3
+      - source-8ecce31f6690c205d2c0
+  - id: payment-2025-method-total-over-125
+    title: Stripe adds 25 methods and passes 125 supported methods
+    date: 2025-05-07
+    date_precision: day
+    confidence: confirmed
+    status: launched
+    summary: Stripe announced support for 25 additional payment methods, including Pix and UPI, taking its stated global method catalog above 125.
     details:
-      - label: "Examples"
-        value: "Pix, UPI, stablecoins, and other real-time and local methods"
-      - label: "Count basis"
-        value: "Stripe's global catalog count; individual methods still vary by business and buyer location"
+      - label: Examples
+        value: Pix, UPI, stablecoins, and other real-time and local methods
+      - label: Count basis
+        value: Stripe's global catalog count; individual methods still vary by business and buyer location
     metrics:
-      - label: "New payment methods"
+      - label: New payment methods
         value: "25"
-      - label: "Total payment methods"
-        value: "125+"
-    organizations: ["Stripe"]
-    tags: ["payment-methods", "global-payments", "sessions"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2025-05-07"
-        title: "Stripe accelerates the utility of AI and stablecoins with major launches"
-        url: "https://stripe.com/newsroom/news/sessions-2025"
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2025-05-07"
-        title: "Our top product updates from Sessions 2025"
-        url: "https://stripe.com/blog/top-product-updates-sessions-2025"
-  - id: "payment-2025-paypay-japan"
-    title: "Stripe adds PayPay and card installments in Japan"
-    date: "2025-04-22"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "available in Japan"
-    summary: "Stripe enabled Japanese businesses to accept PayPay online and added card installments, pairing local acceptance with faster PayPay payout timing."
+      - label: Total payment methods
+        value: 125+
+    organizations:
+      - Stripe
+    tags:
+      - payment-methods
+      - global-payments
+      - sessions
+    source_ids:
+      - source-ec41ec00724370badaa6
+      - source-1ca2f3ea0dde6422966d
+  - id: payment-2025-paypay-japan
+    title: Stripe adds PayPay and card installments in Japan
+    date: 2025-04-22
+    date_precision: day
+    confidence: confirmed
+    status: available in Japan
+    summary: Stripe enabled Japanese businesses to accept PayPay online and added card installments, pairing local acceptance with faster PayPay payout timing.
     details:
-      - label: "PayPay"
-        value: "Online QR-code payments for businesses in Japan"
-      - label: "Payout timing"
-        value: "PayPay transaction payouts in as few as four business days"
-      - label: "Additional method"
-        value: "Card installment payments"
+      - label: PayPay
+        value: Online QR-code payments for businesses in Japan
+      - label: Payout timing
+        value: PayPay transaction payouts in as few as four business days
+      - label: Additional method
+        value: Card installment payments
     metrics:
-      - label: "PayPay users"
-        value: "68 million+"
-        context: "Stripe's stated PayPay user base at announcement"
-    locations: ["Japan"]
-    organizations: ["Stripe", "PayPay"]
-    tags: ["payment-methods", "paypay", "installments", "japan"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2025-04-22"
-        title: "Stripe launches new features for businesses in Japan, including PayPay integration"
-        url: "https://stripe.com/newsroom/news/japan-payments-moment-2025"
-  - id: "payment-2024-optimized-checkout-over-100-methods"
-    title: "Optimized Checkout Suite doubles to more than 100 methods"
-    date: "2024-04-24"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "launched"
-    summary: "Stripe said its Optimized Checkout Suite had doubled from 50 to more than 100 supported payment methods within months, adding several prominent regional options."
+      - label: PayPay users
+        value: 68 million+
+        context: Stripe's stated PayPay user base at announcement
+    locations:
+      - Japan
+    organizations:
+      - Stripe
+      - PayPay
+    tags:
+      - payment-methods
+      - paypay
+      - installments
+      - japan
+    source_ids:
+      - source-c3597cdbd36e6aaec4ed
+  - id: payment-2024-optimized-checkout-over-100-methods
+    title: Optimized Checkout Suite doubles to more than 100 methods
+    date: 2024-04-24
+    date_precision: day
+    confidence: confirmed
+    status: launched
+    summary: Stripe said its Optimized Checkout Suite had doubled from 50 to more than 100 supported payment methods within months, adding several prominent regional options.
     details:
-      - label: "Examples"
-        value: "Amazon Pay, Revolut Pay, Swish, Twint, and Zip"
-      - label: "Presentation"
-        value: "AI selects relevant methods for a given customer; the full catalog is not shown universally"
+      - label: Examples
+        value: Amazon Pay, Revolut Pay, Swish, Twint, and Zip
+      - label: Presentation
+        value: AI selects relevant methods for a given customer; the full catalog is not shown universally
     metrics:
-      - label: "Previous method count"
+      - label: Previous method count
         value: "50"
-      - label: "New method count"
-        value: "100+"
-    organizations: ["Stripe"]
-    tags: ["payment-methods", "checkout", "sessions"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2024-04-24"
-        title: "Stripe Sessions: 50+ announcements, including AI-powered payments, major upgrades to Connect, interoperability, and more"
-        url: "https://stripe.com/gb/newsroom/news/sessions-2024"
-  - id: "payment-2023-cash-app-pay"
-    title: "Stripe adds Cash App Pay for US businesses"
-    date: "2023-06"
-    date_precision: "month"
-    confidence: "confirmed"
-    status: "available in the United States"
-    summary: "Stripe enabled US businesses to accept Cash App Pay for both one-time and recurring transactions through its payments platform."
+      - label: New method count
+        value: 100+
+    organizations:
+      - Stripe
+    tags:
+      - payment-methods
+      - checkout
+      - sessions
+    source_ids:
+      - source-ca257159d5fc6d64bd7a
+  - id: payment-2023-cash-app-pay
+    title: Stripe adds Cash App Pay for US businesses
+    date: 2023-06
+    date_precision: month
+    confidence: confirmed
+    status: available in the United States
+    summary: Stripe enabled US businesses to accept Cash App Pay for both one-time and recurring transactions through its payments platform.
     details:
-      - label: "Payment types"
-        value: "Single-use and recurring payments"
-      - label: "Merchant scope"
-        value: "US businesses"
-    locations: ["United States"]
-    organizations: ["Stripe", "Cash App"]
-    tags: ["payment-methods", "wallets", "cash-app-pay"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2023-06"
-        title: "Stripe changelog: June 2023"
-        url: "https://stripe.com/blog/changelog"
-  - id: "payment-2023-paypal-europe"
-    title: "Stripe adds PayPal for European businesses and marketplaces"
-    date: "2023-05"
-    date_precision: "month"
-    confidence: "confirmed"
-    status: "available in specified European markets"
-    summary: "Stripe added PayPal acceptance for B2C businesses and online marketplaces in the European Union, United Kingdom, and Switzerland."
+      - label: Payment types
+        value: Single-use and recurring payments
+      - label: Merchant scope
+        value: US businesses
+    locations:
+      - United States
+    organizations:
+      - Stripe
+      - Cash App
+    tags:
+      - payment-methods
+      - wallets
+      - cash-app-pay
+    source_ids:
+      - source-2186a9fb2e4e200518a1
+  - id: payment-2023-paypal-europe
+    title: Stripe adds PayPal for European businesses and marketplaces
+    date: 2023-05
+    date_precision: month
+    confidence: confirmed
+    status: available in specified European markets
+    summary: Stripe added PayPal acceptance for B2C businesses and online marketplaces in the European Union, United Kingdom, and Switzerland.
     details:
-      - label: "Business models"
-        value: "Direct B2C merchants and online marketplaces"
-      - label: "Geography"
-        value: "European Union, United Kingdom, and Switzerland"
-    locations: ["European Union", "United Kingdom", "Switzerland"]
-    organizations: ["Stripe", "PayPal"]
-    tags: ["payment-methods", "wallets", "paypal", "europe"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2023-05"
-        title: "Stripe changelog: May 2023"
-        url: "https://stripe.com/blog/changelog"
-  - id: "payment-2023-instant-payouts-bank-accounts"
-    title: "Stripe extends Instant Payouts to eligible US bank accounts"
-    date: "2023-04-24"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "staged rollout"
-    summary: "Stripe expanded Instant Payouts beyond debit cards to eligible US bank accounts and added no-code and embedded controls for Connect platforms."
+      - label: Business models
+        value: Direct B2C merchants and online marketplaces
+      - label: Geography
+        value: European Union, United Kingdom, and Switzerland
+    locations:
+      - European Union
+      - United Kingdom
+      - Switzerland
+    organizations:
+      - Stripe
+      - PayPal
+    tags:
+      - payment-methods
+      - wallets
+      - paypal
+      - europe
+    source_ids:
+      - source-e8c3c01525fe68d64c99
+  - id: payment-2023-instant-payouts-bank-accounts
+    title: Stripe extends Instant Payouts to eligible US bank accounts
+    date: 2023-04-24
+    date_precision: day
+    confidence: confirmed
+    status: staged rollout
+    summary: Stripe expanded Instant Payouts beyond debit cards to eligible US bank accounts and added no-code and embedded controls for Connect platforms.
     details:
-      - label: "Earlier limitation"
-        value: "A debit card had previously been required for US Instant Payouts"
-      - label: "Rollout"
-        value: "Bank-account support was rolling out, with broad eligible-US availability targeted for that summer"
-      - label: "Platform tooling"
-        value: "No-code, embedded UI, pricing, and reconciliation improvements"
+      - label: Earlier limitation
+        value: A debit card had previously been required for US Instant Payouts
+      - label: Rollout
+        value: Bank-account support was rolling out, with broad eligible-US availability targeted for that summer
+      - label: Platform tooling
+        value: No-code, embedded UI, pricing, and reconciliation improvements
     metrics:
-      - label: "Supported banks"
-        value: "1,000+"
-        context: "Eligible US institutions described by Stripe"
-    locations: ["United States"]
-    organizations: ["Stripe"]
-    tags: ["instant-payouts", "bank-accounts", "connect", "staged-rollout"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2023-04-24"
-        title: "Improving Instant Payouts"
-        url: "https://stripe.com/blog/improving-instant-payouts"
-  - id: "payment-2022-cross-border-payouts-over-100-countries"
-    title: "Connect cross-border payouts pass 100 countries"
-    date: "2022-09"
-    date_precision: "month"
-    confidence: "confirmed"
-    status: "available to eligible US platforms"
-    summary: "Stripe expanded cross-border payouts so eligible US platforms could send funds to connected accounts in more than 100 countries."
+      - label: Supported banks
+        value: 1,000+
+        context: Eligible US institutions described by Stripe
+    locations:
+      - United States
+    organizations:
+      - Stripe
+    tags:
+      - instant-payouts
+      - bank-accounts
+      - connect
+      - staged-rollout
+    source_ids:
+      - source-734d64a5afd49a77f847
+  - id: payment-2022-cross-border-payouts-over-100-countries
+    title: Connect cross-border payouts pass 100 countries
+    date: 2022-09
+    date_precision: month
+    confidence: confirmed
+    status: available to eligible US platforms
+    summary: Stripe expanded cross-border payouts so eligible US platforms could send funds to connected accounts in more than 100 countries.
     details:
-      - label: "Origin scope"
-        value: "US platforms"
-      - label: "Recipient scope"
-        value: "Connected accounts in more than 100 countries"
+      - label: Origin scope
+        value: US platforms
+      - label: Recipient scope
+        value: Connected accounts in more than 100 countries
     metrics:
-      - label: "Recipient countries"
-        value: "100+"
-    locations: ["United States"]
-    organizations: ["Stripe"]
-    tags: ["payouts", "cross-border", "connect"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2022-09"
-        title: "Stripe changelog: September 2022"
-        url: "https://stripe.com/blog/changelog"
-  - id: "payment-2022-payment-element-over-20-methods"
-    title: "Payment Element reaches more than 20 methods"
-    date: "2022-05-24"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "available with regional variation"
-    summary: "At Sessions 2022, Stripe said one Payment Element integration could expose more than 20 payment methods, with new Asia-Pacific rails also on its roadmap."
+      - label: Recipient countries
+        value: 100+
+    locations:
+      - United States
+    organizations:
+      - Stripe
+    tags:
+      - payouts
+      - cross-border
+      - connect
+    source_ids:
+      - source-a5244f067a61333806ae
+  - id: payment-2022-payment-element-over-20-methods
+    title: Payment Element reaches more than 20 methods
+    date: 2022-05-24
+    date_precision: day
+    confidence: confirmed
+    status: available with regional variation
+    summary: At Sessions 2022, Stripe said one Payment Element integration could expose more than 20 payment methods, with new Asia-Pacific rails also on its roadmap.
     details:
-      - label: "Available examples"
-        value: "UnionPay, WeChat Pay, Konbini, and GrabPay"
-      - label: "Roadmap examples"
-        value: "PayNow, PromptPay, UPI, and PayTo were described as upcoming rather than launched"
-      - label: "Availability caution"
-        value: "Method eligibility depended on merchant and buyer location"
+      - label: Available examples
+        value: UnionPay, WeChat Pay, Konbini, and GrabPay
+      - label: Roadmap examples
+        value: PayNow, PromptPay, UPI, and PayTo were described as upcoming rather than launched
+      - label: Availability caution
+        value: Method eligibility depended on merchant and buyer location
     metrics:
-      - label: "Payment methods"
-        value: "20+"
-    organizations: ["Stripe"]
-    tags: ["payment-methods", "payment-element", "sessions"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2022-05-24"
-        title: "Sessions 2022 and product highlights from the year"
-        url: "https://stripe.com/blog/stripe-sessions-2022"
-  - id: "payment-2022-global-crypto-payouts"
-    title: "Stripe introduces USDC payouts on Polygon"
-    date: "2022-04-22"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "limited initial rollout"
-    summary: "Stripe introduced crypto payouts for Connect platforms, beginning with USDC on Polygon and a limited rollout to selected US Twitter creators."
+      - label: Payment methods
+        value: 20+
+    organizations:
+      - Stripe
+    tags:
+      - payment-methods
+      - payment-element
+      - sessions
+    source_ids:
+      - source-7e1ac4944f2e99511681
+  - id: payment-2022-global-crypto-payouts
+    title: Stripe introduces USDC payouts on Polygon
+    date: 2022-04-22
+    date_precision: day
+    confidence: confirmed
+    status: limited initial rollout
+    summary: Stripe introduced crypto payouts for Connect platforms, beginning with USDC on Polygon and a limited rollout to selected US Twitter creators.
     details:
-      - label: "Initial asset"
-        value: "USD Coin (USDC)"
-      - label: "Initial network"
-        value: "Polygon-compatible wallets"
-      - label: "Initial access"
-        value: "Selected US Twitter creators, with additional assets and networks planned"
+      - label: Initial asset
+        value: USD Coin (USDC)
+      - label: Initial network
+        value: Polygon-compatible wallets
+      - label: Initial access
+        value: Selected US Twitter creators, with additional assets and networks planned
     metrics:
-      - label: "Existing fiat payout reach"
-        value: "70+ countries"
-        context: "Stripe's Connect payout reach stated in the announcement"
-    locations: ["United States"]
-    organizations: ["Stripe", "Twitter"]
-    tags: ["payouts", "crypto", "usdc", "polygon", "limited-rollout"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2022-04-22"
-        title: "Stripe introduces global crypto payouts"
-        url: "https://stripe.com/en-ca/newsroom/news/crypto-payouts"
-  - id: "payment-2022-konbini-furikomi-japan"
-    title: "Stripe launches Konbini and Furikomi in Japan"
-    date: "2022-04-15"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "available in Japan"
-    summary: "Stripe enabled Japanese businesses to accept convenience-store Konbini payments and automated Furikomi bank transfers through one integration."
+      - label: Existing fiat payout reach
+        value: 70+ countries
+        context: Stripe's Connect payout reach stated in the announcement
+    locations:
+      - United States
+    organizations:
+      - Stripe
+      - Twitter
+    tags:
+      - payouts
+      - crypto
+      - usdc
+      - polygon
+      - limited-rollout
+    source_ids:
+      - source-1dbfface471790a565ff
+  - id: payment-2022-konbini-furikomi-japan
+    title: Stripe launches Konbini and Furikomi in Japan
+    date: 2022-04-15
+    date_precision: day
+    confidence: confirmed
+    status: available in Japan
+    summary: Stripe enabled Japanese businesses to accept convenience-store Konbini payments and automated Furikomi bank transfers through one integration.
     details:
-      - label: "Konbini"
-        value: "Cash-style payment acceptance through participating convenience stores"
-      - label: "Furikomi"
-        value: "Automated reconciliation for domestic bank transfers"
+      - label: Konbini
+        value: Cash-style payment acceptance through participating convenience stores
+      - label: Furikomi
+        value: Automated reconciliation for domestic bank transfers
     metrics:
-      - label: "Konbini locations"
-        value: "34,000"
-        context: "Convenience stores covered at launch"
-    locations: ["Japan"]
-    organizations: ["Stripe"]
-    tags: ["payment-methods", "konbini", "furikomi", "japan"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2022-04-15"
-        title: "Stripe launches Konbini and Furikomi, deepening investment in Japan"
-        url: "https://stripe.com/en-it/newsroom/news/japan-local-payments"
-  - id: "payment-2021-unionpay-over-30-markets"
-    title: "Stripe broadens UnionPay acceptance across more than 30 markets"
-    date: "2021-08-31"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "available in specified markets"
-    summary: "Stripe deepened its UnionPay integration so businesses in more than 30 markets could reach the network's global base of Chinese cardholders."
+      - label: Konbini locations
+        value: 34,000
+        context: Convenience stores covered at launch
+    locations:
+      - Japan
+    organizations:
+      - Stripe
+    tags:
+      - payment-methods
+      - konbini
+      - furikomi
+      - japan
+    source_ids:
+      - source-b4f71bd8265a210ddc48
+  - id: payment-2021-unionpay-over-30-markets
+    title: Stripe broadens UnionPay acceptance across more than 30 markets
+    date: 2021-08-31
+    date_precision: day
+    confidence: confirmed
+    status: available in specified markets
+    summary: Stripe deepened its UnionPay integration so businesses in more than 30 markets could reach the network's global base of Chinese cardholders.
     details:
-      - label: "Example merchant markets"
-        value: "Australia, Canada, Singapore, United States, Hong Kong, United Kingdom, and the European Union"
-      - label: "Availability caution"
-        value: "The announcement named more than 30 merchant markets rather than universal availability"
+      - label: Example merchant markets
+        value: Australia, Canada, Singapore, United States, Hong Kong, United Kingdom, and the European Union
+      - label: Availability caution
+        value: The announcement named more than 30 merchant markets rather than universal availability
     metrics:
-      - label: "Merchant markets"
-        value: "30+"
-      - label: "UnionPay cardholders"
-        value: "Billions"
-        context: "Audience described by Stripe and UnionPay at launch"
-    organizations: ["Stripe", "UnionPay International"]
-    tags: ["payment-methods", "unionpay", "cross-border", "china"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2021-08-31"
-        title: "UnionPay International partners with Stripe, widening access to the global Chinese consumer market for businesses"
-        url: "https://stripe.com/br/newsroom/news/stripe-unionpay"
-  - id: "payment-2021-methods-and-payouts-expansion"
-    title: "Stripe expands local methods, Instant Payouts, and cross-border payouts"
-    date: "2021-06-17"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "mixed general and market-specific availability"
-    summary: "Stripe's Sessions recap grouped a broad international expansion of payment and payout rails, including seven European methods and wider payout access."
+      - label: Merchant markets
+        value: 30+
+      - label: UnionPay cardholders
+        value: Billions
+        context: Audience described by Stripe and UnionPay at launch
+    organizations:
+      - Stripe
+      - UnionPay International
+    tags:
+      - payment-methods
+      - unionpay
+      - cross-border
+      - china
+    source_ids:
+      - source-bde4a28ea5bbb0351031
+  - id: payment-2021-methods-and-payouts-expansion
+    title: Stripe expands local methods, Instant Payouts, and cross-border payouts
+    date: 2021-06-17
+    date_precision: day
+    confidence: confirmed
+    status: mixed general and market-specific availability
+    summary: Stripe's Sessions recap grouped a broad international expansion of payment and payout rails, including seven European methods and wider payout access.
     details:
-      - label: "European methods"
-        value: "Seven methods made available to businesses without local incorporation or bank accounts"
-      - label: "Instant Payouts"
-        value: "Expanded to Canada, Singapore, and the United Kingdom"
-      - label: "Cross-border payouts"
-        value: "US platforms could send local-currency payouts to 50 countries"
-      - label: "Method examples"
-        value: "Cartes Bancaires, JCB, UnionPay, Discover, Alipay, WeChat Pay, GrabPay, Konbini, OXXO, and Boleto"
+      - label: European methods
+        value: Seven methods made available to businesses without local incorporation or bank accounts
+      - label: Instant Payouts
+        value: Expanded to Canada, Singapore, and the United Kingdom
+      - label: Cross-border payouts
+        value: US platforms could send local-currency payouts to 50 countries
+      - label: Method examples
+        value: Cartes Bancaires, JCB, UnionPay, Discover, Alipay, WeChat Pay, GrabPay, Konbini, OXXO, and Boleto
     metrics:
-      - label: "Cross-border payout countries"
+      - label: Cross-border payout countries
         value: "50"
-    organizations: ["Stripe"]
-    tags: ["payment-methods", "payouts", "cross-border", "instant-payouts", "sessions"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2021-06-17"
-        title: "Stripe Sessions 2021"
-        url: "https://stripe.com/blog/sessions-keynote-2021"
-  - id: "payment-2019-payouts-45-countries"
-    title: "Stripe activates payouts to 45 countries"
-    date: "2019-09-10"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "available to US businesses and platforms"
-    summary: "Stripe enabled US businesses and platforms to pay recipients in 45 countries over local bank networks and also broadened Instant Payouts for US businesses."
+    organizations:
+      - Stripe
+    tags:
+      - payment-methods
+      - payouts
+      - cross-border
+      - instant-payouts
+      - sessions
+    source_ids:
+      - source-da5bc3eea46cefe0be5e
+  - id: payment-2019-payouts-45-countries
+    title: Stripe activates payouts to 45 countries
+    date: 2019-09-10
+    date_precision: day
+    confidence: confirmed
+    status: available to US businesses and platforms
+    summary: Stripe enabled US businesses and platforms to pay recipients in 45 countries over local bank networks and also broadened Instant Payouts for US businesses.
     details:
-      - label: "Origin scope"
-        value: "US businesses and platforms"
-      - label: "Delivery"
-        value: "Local currencies over local bank networks"
-      - label: "Instant Payouts"
-        value: "US businesses could choose to receive eligible funds within minutes"
+      - label: Origin scope
+        value: US businesses and platforms
+      - label: Delivery
+        value: Local currencies over local bank networks
+      - label: Instant Payouts
+        value: US businesses could choose to receive eligible funds within minutes
     metrics:
-      - label: "Recipient countries"
+      - label: Recipient countries
         value: "45"
-    locations: ["United States"]
-    organizations: ["Stripe"]
-    related_events: ["product-2019-corporate-card"]
-    tags: ["payouts", "cross-border", "instant-payouts", "sessions"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2019-09-10"
-        title: "Stripe introduces the Stripe Corporate Card and activates payouts to 45 countries"
-        url: "https://stripe.com/en-sg/newsroom/news/stripe-introduces-corporate-card"
-  - id: "payment-2018-bitcoin-support-ended"
-    title: "Stripe ends Bitcoin payment support"
-    date: "2018-01-23"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "deprecation announced"
-    summary: "Stripe announced it would stop processing Bitcoin payments after transaction time, fees, and volatility made the asset poorly suited to ordinary checkout."
+    locations:
+      - United States
+    organizations:
+      - Stripe
+    related_events:
+      - product-2019-corporate-card
+    tags:
+      - payouts
+      - cross-border
+      - instant-payouts
+      - sessions
+    source_ids:
+      - source-78a8b3ca1214ea861514
+  - id: payment-2018-bitcoin-support-ended
+    title: Stripe ends Bitcoin payment support
+    date: 2018-01-23
+    date_precision: day
+    confidence: confirmed
+    status: deprecation announced
+    summary: Stripe announced it would stop processing Bitcoin payments after transaction time, fees, and volatility made the asset poorly suited to ordinary checkout.
     details:
-      - label: "Announcement"
-        value: "Support winding down over a three-month transition"
-      - label: "Final processing date"
-        value: "April 23, 2018"
-      - label: "Reason"
-        value: "Long confirmation times, rising fees, and payment-value volatility"
-    organizations: ["Stripe"]
-    related_events: ["payment-2014-bitcoin-private-beta"]
-    tags: ["payment-methods", "bitcoin", "deprecation", "crypto"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2018-01-23"
-        title: "Ending Bitcoin support"
-        url: "https://stripe.com/blog/ending-bitcoin-support"
-  - id: "payment-2017-alipay-wechat-global-partnerships"
-    title: "Stripe expands Alipay and introduces WeChat Pay support"
-    date: "2017-07-10"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "mixed general availability and private beta"
-    summary: "Stripe made one-time Alipay payments generally available to users globally while keeping recurring Alipay payments and WeChat Pay in private beta."
+      - label: Announcement
+        value: Support winding down over a three-month transition
+      - label: Final processing date
+        value: April 23, 2018
+      - label: Reason
+        value: Long confirmation times, rising fees, and payment-value volatility
+    organizations:
+      - Stripe
+    related_events:
+      - payment-2014-bitcoin-private-beta
+    tags:
+      - payment-methods
+      - bitcoin
+      - deprecation
+      - crypto
+    source_ids:
+      - source-61963e80f78f63567415
+  - id: payment-2017-alipay-wechat-global-partnerships
+    title: Stripe expands Alipay and introduces WeChat Pay support
+    date: 2017-07-10
+    date_precision: day
+    confidence: confirmed
+    status: mixed general availability and private beta
+    summary: Stripe made one-time Alipay payments generally available to users globally while keeping recurring Alipay payments and WeChat Pay in private beta.
     details:
-      - label: "Alipay one-time"
-        value: "Generally available to Stripe users globally"
-      - label: "Alipay recurring"
-        value: "Private beta"
-      - label: "WeChat Pay"
-        value: "Private beta"
-    organizations: ["Stripe", "Alipay", "WeChat Pay"]
-    related_events: ["country-2017-hong-kong-launch"]
-    tags: ["payment-methods", "alipay", "wechat-pay", "staged-rollout"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2017-07-10"
-        title: "Stripe launches in Hong Kong, announces new global partnerships with Alipay and WeChat Pay"
-        url: "https://stripe.com/newsroom/news/stripe-launches-hong-kong"
-  - id: "payment-2016-instant-payouts-marketplaces"
-    title: "Stripe launches Instant Payouts for US marketplaces"
-    date: "2016-09-19"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "limited initial availability"
-    summary: "Stripe launched Instant Payouts for US Connect marketplaces using Managed Accounts, sending earnings to service providers' debit cards within minutes."
+      - label: Alipay one-time
+        value: Generally available to Stripe users globally
+      - label: Alipay recurring
+        value: Private beta
+      - label: WeChat Pay
+        value: Private beta
+    organizations:
+      - Stripe
+      - Alipay
+      - WeChat Pay
+    related_events:
+      - country-2017-hong-kong-launch
+    tags:
+      - payment-methods
+      - alipay
+      - wechat-pay
+      - staged-rollout
+    source_ids:
+      - source-9d75ce0719b59e106ddb
+  - id: payment-2016-instant-payouts-marketplaces
+    title: Stripe launches Instant Payouts for US marketplaces
+    date: 2016-09-19
+    date_precision: day
+    confidence: confirmed
+    status: limited initial availability
+    summary: Stripe launched Instant Payouts for US Connect marketplaces using Managed Accounts, sending earnings to service providers' debit cards within minutes.
     details:
-      - label: "Initial scope"
-        value: "US marketplaces using Managed Accounts"
-      - label: "Rail"
-        value: "Eligible debit cards linked to recipients' bank accounts"
-      - label: "Speed"
-        value: "Funds generally deposited within minutes"
+      - label: Initial scope
+        value: US marketplaces using Managed Accounts
+      - label: Rail
+        value: Eligible debit cards linked to recipients' bank accounts
+      - label: Speed
+        value: Funds generally deposited within minutes
     metrics:
-      - label: "Lyft beta payouts"
-        value: "$500 million+"
-        context: "Instant payouts Stripe said Lyft had sent before general launch"
-    locations: ["United States"]
-    organizations: ["Stripe", "Lyft"]
-    tags: ["instant-payouts", "connect", "marketplaces", "limited-rollout"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2016-09-19"
-        title: "Instant Payouts for Marketplaces"
-        url: "https://stripe.com/blog/instant-payouts-for-marketplaces"
-  - id: "payment-2014-bitcoin-private-beta"
-    title: "Stripe begins testing Bitcoin payments"
-    date: "2014-03-27"
-    date_precision: "day"
-    confidence: "reported"
-    status: "select-user beta"
-    summary: "Stripe began testing Bitcoin payment acceptance with a small group of users, an early experiment that it later moved beyond beta before ending support in 2018."
+      - label: Lyft beta payouts
+        value: $500 million+
+        context: Instant payouts Stripe said Lyft had sent before general launch
+    locations:
+      - United States
+    organizations:
+      - Stripe
+      - Lyft
+    tags:
+      - instant-payouts
+      - connect
+      - marketplaces
+      - limited-rollout
+    source_ids:
+      - source-18baf7220d99412849c0
+  - id: payment-2014-bitcoin-private-beta
+    title: Stripe begins testing Bitcoin payments
+    date: 2014-03-27
+    date_precision: day
+    confidence: reported
+    status: select-user beta
+    summary: Stripe began testing Bitcoin payment acceptance with a small group of users, an early experiment that it later moved beyond beta before ending support in 2018.
     details:
-      - label: "Access"
-        value: "Select users in an early beta"
-      - label: "Lifecycle"
-        value: "The method later launched and was then discontinued in April 2018"
-    organizations: ["Stripe"]
-    related_events: ["payment-2018-bitcoin-support-ended"]
-    tags: ["payment-methods", "bitcoin", "crypto", "beta"]
-    sources:
-      - kind: "reporting"
-        publisher: "TechCrunch"
-        published_at: "2014-03-27"
-        title: "Stripe starts testing Bitcoin payments"
-        url: "https://techcrunch.com/2014/03/27/stripe-bitcoin/"
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2018-01-23"
-        title: "Ending Bitcoin support"
-        url: "https://stripe.com/blog/ending-bitcoin-support"
+      - label: Access
+        value: Select users in an early beta
+      - label: Lifecycle
+        value: The method later launched and was then discontinued in April 2018
+    organizations:
+      - Stripe
+    related_events:
+      - payment-2018-bitcoin-support-ended
+    tags:
+      - payment-methods
+      - bitcoin
+      - crypto
+      - beta
+    source_ids:
+      - source-e56ddbbfb4857c47f84e
+      - source-61963e80f78f63567415
+schema: stripe-history/history/v2

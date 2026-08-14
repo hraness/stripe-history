@@ -20,13 +20,13 @@ const SOURCE_RESPONSE_BYTE_LIMIT = 4 * 1024 * 1024;
 const SOURCE_TEXT_LIMIT = 120_000;
 
 export const sessionSources = [
-  { date: "2019-06-10", title: "Stripe Sessions", url: "https://stripe.com/blog/stripe-sessions" },
-  { date: "2021-06-16", title: "Sessions keynote 2021", url: "https://stripe.com/blog/sessions-keynote-2021" },
-  { date: "2022-05-24", title: "Sessions 2022 and product highlights", url: "https://stripe.com/blog/stripe-sessions-2022" },
-  { date: "2023-05-03", title: "Stripe Sessions 2023", url: "https://stripe.com/blog/stripe-sessions-2023" },
-  { date: "2024-04-24", title: "Sessions 2024 announcements", url: "https://stripe.com/newsroom/news/sessions-2024" },
-  { date: "2025-05-07", title: "Sessions 2025 announcements", url: "https://stripe.com/newsroom/news/sessions-2025" },
-  { date: "2026-04-29", title: "Everything announced at Sessions 2026", url: "https://stripe.com/blog/everything-we-announced-at-sessions-2026" },
+  { date: "2019-06-10", sourceId: "source-330c0283f9520625a5ec", title: "Stripe Sessions", url: "https://stripe.com/blog/stripe-sessions" },
+  { date: "2021-06-16", sourceId: "source-da5bc3eea46cefe0be5e", title: "Sessions keynote 2021", url: "https://stripe.com/blog/sessions-keynote-2021" },
+  { date: "2022-05-24", sourceId: "source-7e1ac4944f2e99511681", title: "Sessions 2022 and product highlights", url: "https://stripe.com/blog/stripe-sessions-2022" },
+  { date: "2023-05-03", sourceId: "source-b4131d403cf76f5180f6", title: "Stripe Sessions 2023", url: "https://stripe.com/blog/stripe-sessions-2023" },
+  { date: "2024-04-24", sourceId: "source-ca257159d5fc6d64bd7a", title: "Sessions 2024 announcements", url: "https://stripe.com/newsroom/news/sessions-2024" },
+  { date: "2025-05-07", sourceId: "source-ec41ec00724370badaa6", title: "Sessions 2025 announcements", url: "https://stripe.com/newsroom/news/sessions-2025" },
+  { date: "2026-04-29", sourceId: "source-28eaa414dc9531c6df9d", title: "Everything announced at Sessions 2026", url: "https://stripe.com/blog/everything-we-announced-at-sessions-2026" },
 ] as const;
 
 const extractedEventSchema = z.strictObject({
@@ -75,11 +75,10 @@ export function coalesceHistoryEvents(
       byId.set(event.id, event);
       continue;
     }
-    const sources = [...existing.sources, ...event.sources].filter(
-      (source, index, values) =>
-        values.findIndex((candidate) => candidate.url === source.url) === index,
+    const sourceIds = [...existing.source_ids, ...event.source_ids].filter(
+      (sourceId, index, values) => values.indexOf(sourceId) === index,
     );
-    byId.set(event.id, HistoryEventSchema.parse({ ...existing, sources }));
+    byId.set(event.id, HistoryEventSchema.parse({ ...existing, source_ids: sourceIds }));
   }
   return [...byId.values()];
 }
@@ -166,7 +165,7 @@ async function extractSource(
     }),
     schema: extractionSchema,
     system: EXTRACTION_SYSTEM,
-    tags: ["stripe-guide", "history", "sessions", "v1"],
+    tags: ["stripe-history", "history", "sessions", "v1"],
   });
   return output.events.map((event) => HistoryEventSchema.parse({
     confidence: "confirmed",
@@ -177,13 +176,7 @@ async function extractSource(
     ...(event.metrics.length === 0 ? {} : { metrics: event.metrics }),
     ...(event.organizations.length === 0 ? {} : { organizations: event.organizations }),
     ...(event.people.length === 0 ? {} : { people: event.people }),
-    sources: [{
-      kind: "primary",
-      publisher: "Stripe",
-      published_at: source.date,
-      title: source.title,
-      url: source.url,
-    }],
+    source_ids: [source.sourceId],
     status: event.status,
     summary: event.summary,
     ...(event.tags.length === 0 ? {} : { tags: event.tags }),
@@ -210,7 +203,7 @@ async function semanticDuplicateIds(
     }),
     schema: duplicateSchema,
     system: DEDUP_SYSTEM,
-    tags: ["stripe-guide", "history", "deduplication", "v1"],
+    tags: ["stripe-history", "history", "deduplication", "v1"],
   });
   const proposedIds = new Set(proposed.map((event) => event.id));
   return validateHistoryDuplicateOutput(

@@ -10,7 +10,7 @@ describe("gateway configuration", () => {
   test("prefers the project-specific credential", () => {
     expect(resolveGatewayCredential({
       AI_GATEWAY_API_KEY: "generic-gateway-credential",
-      STRIPE_GUIDE_LLM_API_KEY: "project-gateway-credential",
+      STRIPE_HISTORY_LLM_API_KEY: "project-gateway-credential",
       VERCEL_OIDC_TOKEN: "vercel-oidc-credential",
     })).toEqual({ kind: "api-key", value: "project-gateway-credential" });
   });

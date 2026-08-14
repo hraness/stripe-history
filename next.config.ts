@@ -2,10 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   async headers() {
-    return [{
-      headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
-      source: "/history/:category.yml",
-    }];
+    const noindexHeaders = [{ key: "X-Robots-Tag", value: "noindex, follow" }];
+    return [
+      { headers: noindexHeaders, source: "/history/:category.yml" },
+      { headers: noindexHeaders, source: "/research/:path*" },
+    ];
   },
   reactStrictMode: true,
   async redirects() {
@@ -29,6 +30,13 @@ const nextConfig: NextConfig = {
         },
       ];
     });
+  },
+  webpack(config) {
+    config.resolve.extensionAlias = {
+      ...config.resolve.extensionAlias,
+      ".js": [".ts", ".tsx", ".js"],
+    };
+    return config;
   },
 };
 

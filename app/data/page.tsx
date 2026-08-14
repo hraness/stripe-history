@@ -10,7 +10,7 @@ import { GITHUB_REPOSITORY_URL, site, socialMetadata } from "../site";
 
 const dataTitle = "Stripe Company History Dataset";
 const dataDescription =
-  "Download the open, source-linked YAML records behind the Stripe company history timeline, organized by canonical category.";
+  "Download the open, source-linked history and research YAML behind the Stripe timeline, valuation record, source catalog, appearances, collections, and research runs.";
 
 export const dynamic = "force-static";
 
@@ -56,10 +56,12 @@ export default async function DataPage() {
           <span>{history.events.length} sourced events</span>
         </div>
         <p className="stripe-guide-data-intro">
-          These reviewable YAML files power the public timeline. Each record
-          includes its chronology, category, summary, confidence, status, and
-          source provenance. The dataset and website code are available under
-          the MIT License in the{" "}
+          These reviewable YAML files power the public timeline and valuation
+          record. History entries preserve chronology, category, summary,
+          confidence, and status when applicable; the research files preserve
+          canonical source identities, valuation observations, founder
+          appearances, collection scope, and review runs. The dataset and
+          website code are available under the MIT License in the{" "}
           <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>.
         </p>
         <ul className="stripe-guide-data-list">
@@ -76,6 +78,34 @@ export default async function DataPage() {
             </li>
           ))}
         </ul>
+        <section
+          aria-labelledby="research-data-heading"
+          className="stripe-guide-data-research"
+        >
+          <h2 id="research-data-heading">Research and provenance</h2>
+          <p>
+            Browse the <Link href="/history/valuation">valuation history</Link> or
+            inspect the machine-readable research records directly.
+          </p>
+          <ul>
+            <li>
+              <a href="/research/sources.yml">source catalog YAML</a> ·{" "}
+              {history.sources.length} canonical sources
+            </li>
+            <li>
+              <a href="/research/valuations.yml">valuation observations YAML</a> ·{" "}
+              {history.valuations.length} observations
+            </li>
+            <li>
+              <a href="/research/appearances.yml">founder appearances YAML</a> ·{" "}
+              {history.appearances.length} appearances
+            </li>
+            <li>
+              <a href="/research/collections.yml">research collections YAML</a>
+            </li>
+            <li><a href="/research/runs.yml">research run ledger YAML</a></li>
+          </ul>
+        </section>
       </section>
       <SiteFooter />
     </main>

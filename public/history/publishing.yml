@@ -1,715 +1,549 @@
-schema: 'stripe-guide/history/v1'
 category:
-  id: 'publishing'
-  label: 'Publishing'
-  description: 'Stripe editorial projects across books, magazines, film, podcasts, and other formats, including an event for each documented Stripe Press title.'
+  id: publishing
+  label: Publishing
+  description: Stripe editorial projects across books, magazines, film, podcasts, and other formats, including an event for each documented Stripe Press title.
   order: 9
 events:
-  - id: 'maintenance-published'
-    date: '2026-02'
-    date_precision: 'month'
-    title: 'Stripe Press publishes Maintenance'
-    summary: 'Stripe Press published Stewart Brand''s Maintenance: Of Everything, Part One, an argument that maintenance is a central civilizational practice spanning buildings, infrastructure, software, and institutions.'
-    confidence: 'confirmed'
-    status: 'Book published'
+  - id: maintenance-published
+    date: 2026-02
+    date_precision: month
+    title: Stripe Press publishes Maintenance
+    summary: "Stripe Press published Stewart Brand's Maintenance: Of Everything, Part One, an argument that maintenance is a central civilizational practice spanning buildings, infrastructure, software, and institutions."
+    confidence: confirmed
+    status: Book published
     people:
-      - 'Stewart Brand'
+      - Stewart Brand
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'maintenance'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'Maintenance'
-        url: 'https://press.stripe.com/maintenance'
-      - kind: 'interview'
-        publisher: 'The New Yorker'
-        published_at: '2026-02-04'
-        title: 'Stewart Brand on how progress happens'
-        url: 'https://www.newyorker.com/books/book-currents/stewart-brand-on-how-progress-happens'
-
-  - id: 'origins-of-efficiency-published'
-    date: '2025-10-14'
-    date_precision: 'day'
-    title: 'Stripe Press publishes The Origins of Efficiency'
-    summary: 'Stripe Press published Brian Potter''s The Origins of Efficiency, a study of the mechanisms by which production processes become faster, cheaper, and more reliable across industries.'
-    confidence: 'confirmed'
-    status: 'Book published'
+      - stripe-press
+      - book
+      - maintenance
+    source_ids:
+      - source-ec08d50c1141dbc46e6d
+      - source-c2ef8de7976b0a3817a5
+  - id: origins-of-efficiency-published
+    date: 2025-10-14
+    date_precision: day
+    title: Stripe Press publishes The Origins of Efficiency
+    summary: Stripe Press published Brian Potter's The Origins of Efficiency, a study of the mechanisms by which production processes become faster, cheaper, and more reliable across industries.
+    confidence: confirmed
+    status: Book published
     people:
-      - 'Brian Potter'
+      - Brian Potter
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'industrial-progress'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        published_at: '2025-10-14'
-        title: 'The Origins of Efficiency is out now'
-        url: 'https://stripepress.substack.com/p/the-origins-of-efficiency-is-out'
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'The Origins of Efficiency'
-        url: 'https://press.stripe.com/origins-of-efficiency'
-
-  - id: 'works-in-progress-print-edition-launched'
-    date: '2025-09-18'
-    date_precision: 'day'
-    title: 'Works in Progress launches a print edition'
-    summary: 'Works in Progress opened subscriptions for a recurring print edition, adding a physical magazine to its freely available online essays. The publication retained its focus on economic growth, technology, policy, and human progress.'
-    confidence: 'confirmed'
-    status: 'Print subscription launched'
+      - stripe-press
+      - book
+      - industrial-progress
+    source_ids:
+      - source-0366916b6be55183514a
+      - source-f33b2898dbb601f635b3
+  - id: works-in-progress-print-edition-launched
+    date: 2025-09-18
+    date_precision: day
+    title: Works in Progress launches a print edition
+    summary: Works in Progress opened subscriptions for a recurring print edition, adding a physical magazine to its freely available online essays. The publication retained its focus on economic growth, technology, policy, and human progress.
+    confidence: confirmed
+    status: Print subscription launched
     organizations:
-      - 'Works in Progress'
-      - 'Stripe'
+      - Works in Progress
+      - Stripe
     related_events:
-      - 'works-in-progress-founded'
+      - works-in-progress-founded
     tags:
-      - 'works-in-progress'
-      - 'magazine'
-      - 'print'
-    sources:
-      - kind: 'primary'
-        publisher: 'Ben Southwood'
-        published_at: '2025-09-18'
-        title: 'Subscribe to the new print edition of Works in Progress'
-        url: 'https://www.bensouthwood.co.uk/p/subscribe-to-the-new-print-edition'
-
-  - id: 'cheeky-pint-podcast-launches'
-    date: '2025-06-16'
-    date_precision: 'day'
-    title: 'Stripe launches the Cheeky Pint podcast'
-    summary: 'Stripe released the trailer for Cheeky Pint, a long-form technology interview podcast hosted by John Collison. The show extended Stripe''s editorial work into a conversational audio and video format.'
-    confidence: 'confirmed'
-    status: 'Podcast launched'
+      - works-in-progress
+      - magazine
+      - print
+    source_ids:
+      - source-0f2ee84b2a249276fb50
+  - id: cheeky-pint-podcast-launches
+    date: 2025-06-16
+    date_precision: day
+    title: Stripe launches the Cheeky Pint podcast
+    summary: Stripe released the trailer for Cheeky Pint, a long-form technology interview podcast hosted by John Collison. The show extended Stripe's editorial work into a conversational audio and video format.
+    confidence: confirmed
+    status: Podcast launched
     people:
-      - 'John Collison'
+      - John Collison
     organizations:
-      - 'Stripe'
+      - Stripe
     tags:
-      - 'cheeky-pint'
-      - 'podcast'
-      - 'interviews'
-    sources:
-      - kind: 'primary'
-        publisher: 'Apple Podcasts'
-        published_at: '2025-06-16'
-        title: 'Cheeky Pint'
-        url: 'https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332'
-
-  - id: 'scaling-era-published'
-    date: '2025-03-25'
-    date_precision: 'day'
-    title: 'Stripe Press publishes The Scaling Era'
-    summary: 'Stripe Press published The Scaling Era: An Oral History of AI, 2019-2025 by Dwarkesh Patel with Gavin Leech, assembling interviews, essays, definitions, and visual explanations of modern artificial intelligence.'
-    confidence: 'confirmed'
-    status: 'Digital edition published; print preorders opened'
+      - cheeky-pint
+      - podcast
+      - interviews
+    source_ids:
+      - source-2b9798bb1521325a716a
+  - id: scaling-era-published
+    date: 2025-03-25
+    date_precision: day
+    title: Stripe Press publishes The Scaling Era
+    summary: "Stripe Press published The Scaling Era: An Oral History of AI, 2019-2025 by Dwarkesh Patel with Gavin Leech, assembling interviews, essays, definitions, and visual explanations of modern artificial intelligence."
+    confidence: confirmed
+    status: Digital edition published; print preorders opened
     people:
-      - 'Dwarkesh Patel'
-      - 'Gavin Leech'
+      - Dwarkesh Patel
+      - Gavin Leech
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'artificial-intelligence'
-    sources:
-      - kind: 'primary'
-        publisher: 'Dwarkesh Patel'
-        published_at: '2025-03-25'
-        title: 'The Scaling Era is out now on Stripe Press'
-        url: 'https://www.dwarkesh.com/p/scaling-ama'
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'The Scaling Era'
-        url: 'https://press.stripe.com/scaling'
-
-  - id: 'boom-published'
-    date: '2024-11-19'
-    date_precision: 'day'
-    title: 'Stripe Press publishes Boom'
-    summary: 'Stripe Press published Boom: Bubbles and the End of Stagnation by Byrne Hobart and Tobias Huber, arguing that speculative bubbles can coordinate capital and accelerate adoption of frontier technologies.'
-    confidence: 'confirmed'
-    status: 'Book published'
+      - stripe-press
+      - book
+      - artificial-intelligence
+    source_ids:
+      - source-66b82449fa2a80e4c027
+      - source-391821de004fb1a8d195
+  - id: boom-published
+    date: 2024-11-19
+    date_precision: day
+    title: Stripe Press publishes Boom
+    summary: "Stripe Press published Boom: Bubbles and the End of Stagnation by Byrne Hobart and Tobias Huber, arguing that speculative bubbles can coordinate capital and accelerate adoption of frontier technologies."
+    confidence: confirmed
+    status: Book published
     people:
-      - 'Byrne Hobart'
-      - 'Tobias Huber'
+      - Byrne Hobart
+      - Tobias Huber
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'economics'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'Boom'
-        url: 'https://press.stripe.com/boom'
-      - kind: 'archive'
-        publisher: 'Open Library'
-        published_at: '2024-11-19'
-        title: 'Boom: Bubbles and the End of Stagnation'
-        url: 'https://openlibrary.org/works/OL37938070W/Boom?edition=key%3A%2Fbooks%2FOL59520721M'
-
-  - id: 'poor-charlies-almanack-published'
-    date: '2023-12'
-    date_precision: 'month'
-    title: 'Stripe Press publishes its edition of Poor Charlie''s Almanack'
-    summary: 'Stripe Press published an abridged edition of Poor Charlie''s Almanack, Peter D. Kaufman''s collection of Charles T. Munger''s talks and ideas, with a new foreword by John Collison.'
-    confidence: 'confirmed'
-    status: 'Book edition published'
+      - stripe-press
+      - book
+      - economics
+    source_ids:
+      - source-26d0fe3a25115e526465
+      - source-74ec7e63f0ae7f279004
+  - id: poor-charlies-almanack-published
+    date: 2023-12
+    date_precision: month
+    title: Stripe Press publishes its edition of Poor Charlie's Almanack
+    summary: Stripe Press published an abridged edition of Poor Charlie's Almanack, Peter D. Kaufman's collection of Charles T. Munger's talks and ideas, with a new foreword by John Collison.
+    confidence: confirmed
+    status: Book edition published
     people:
-      - 'Charles T. Munger'
-      - 'Peter D. Kaufman'
-      - 'John Collison'
+      - Charles T. Munger
+      - Peter D. Kaufman
+      - John Collison
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'republication'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'Poor Charlie''s Almanack'
-        url: 'https://press.stripe.com/poor-charlies-almanack'
-      - kind: 'reporting'
-        publisher: 'Daring Fireball'
-        published_at: '2023-12-29'
-        title: 'Poor Charlie''s Almanack'
-        url: 'https://daringfireball.net/linked/2023/12/29/poor-charlies-almanack'
-
-  - id: 'scaling-people-published'
-    date: '2023-03-07'
-    date_precision: 'day'
-    title: 'Stripe Press publishes Scaling People'
-    summary: 'Stripe Press published Scaling People by former Stripe COO Claire Hughes Johnson, a practical operating guide to management systems, organizational design, hiring, and company communication.'
-    confidence: 'confirmed'
-    status: 'Book published'
+      - stripe-press
+      - book
+      - republication
+    source_ids:
+      - source-309d768b99fde62a31ae
+      - source-e86271de9096463a5ac3
+  - id: scaling-people-published
+    date: 2023-03-07
+    date_precision: day
+    title: Stripe Press publishes Scaling People
+    summary: Stripe Press published Scaling People by former Stripe COO Claire Hughes Johnson, a practical operating guide to management systems, organizational design, hiring, and company communication.
+    confidence: confirmed
+    status: Book published
     people:
-      - 'Claire Hughes Johnson'
+      - Claire Hughes Johnson
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'management'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'Scaling People'
-        url: 'https://press.stripe.com/scaling-people'
-      - kind: 'archive'
-        publisher: 'Open Library'
-        published_at: '2023-03-07'
-        title: 'Scaling People'
-        url: 'https://openlibrary.org/isbn/9781953953216'
-
-  - id: 'we-are-as-gods-wide-release'
-    date: '2022-09-06'
-    date_precision: 'day'
-    title: 'Stripe Press releases We Are As Gods'
-    summary: 'Stripe Press and Structure Films released We Are As Gods, a feature documentary about Stewart Brand, after its planned 2020 SXSW debut was disrupted by the pandemic. It was Stripe Press''s first feature documentary release.'
-    confidence: 'confirmed'
-    status: 'Digital release'
+      - stripe-press
+      - book
+      - management
+    source_ids:
+      - source-46bb338c33a88fca0929
+      - source-6fc719eb40c62a9a55fd
+  - id: we-are-as-gods-wide-release
+    date: 2022-09-06
+    date_precision: day
+    title: Stripe Press releases We Are As Gods
+    summary: Stripe Press and Structure Films released We Are As Gods, a feature documentary about Stewart Brand, after its planned 2020 SXSW debut was disrupted by the pandemic. It was Stripe Press's first feature documentary release.
+    confidence: confirmed
+    status: Digital release
     people:
-      - 'Stewart Brand'
-      - 'David Alvarado'
-      - 'Jason Sussberg'
+      - Stewart Brand
+      - David Alvarado
+      - Jason Sussberg
     organizations:
-      - 'Stripe Press'
-      - 'Structure Films'
+      - Stripe Press
+      - Structure Films
     tags:
-      - 'stripe-press'
-      - 'documentary'
-      - 'film'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'We Are As Gods'
-        url: 'https://press.stripe.com/we-are-as-gods'
-      - kind: 'primary'
-        publisher: 'Structure Films and Stripe Press'
-        published_at: '2022'
-        title: 'We Are As Gods press notes'
-        url: 'https://static1.squarespace.com/static/5cb7622d840b16da4eb63d08/t/63445e124c6cbd5fed52b4ec/1665424918538/final_gods_press_notes_8_3_22_REDUCED.pdf'
-
-  - id: 'beneath-the-surface-podcast-launches'
-    date: '2022-04-27'
-    date_precision: 'day'
-    title: 'Stripe Press launches Beneath the Surface'
-    summary: 'Stripe Press launched Beneath the Surface, a documentary podcast hosted by Tamara Winter about infrastructure, cities, energy, transport, housing, and the people building responses to those systems.'
-    confidence: 'confirmed'
-    status: 'Podcast launched'
+      - stripe-press
+      - documentary
+      - film
+    source_ids:
+      - source-9dc6403512fc204f5744
+      - source-919b997e5edbf0d1258d
+  - id: beneath-the-surface-podcast-launches
+    date: 2022-04-27
+    date_precision: day
+    title: Stripe Press launches Beneath the Surface
+    summary: Stripe Press launched Beneath the Surface, a documentary podcast hosted by Tamara Winter about infrastructure, cities, energy, transport, housing, and the people building responses to those systems.
+    confidence: confirmed
+    status: Podcast launched
     people:
-      - 'Tamara Winter'
+      - Tamara Winter
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'podcast'
-      - 'infrastructure'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'Beneath the Surface'
-        url: 'https://press.stripe.com/public-transit-transcript'
-      - kind: 'archive'
-        publisher: 'Listen Notes'
-        published_at: '2022-04-27'
-        title: 'Beneath the Surface: An Infrastructure Podcast'
-        url: 'https://www.listennotes.com/podcasts/beneath-the-surface-an-infrastructure-svhQJPVBwpW/'
-
-  - id: 'works-in-progress-joins-stripe'
-    date: '2022-02-17'
-    date_precision: 'day'
-    title: 'Works in Progress joins Stripe'
-    summary: 'Works in Progress announced that it had joined Stripe, allowing its editorial team to work on the publication full-time. The editors said Stripe would fund the magazine while preserving editorial independence and free online access.'
-    confidence: 'confirmed'
-    status: 'Publication acquired and funded by Stripe'
+      - stripe-press
+      - podcast
+      - infrastructure
+    source_ids:
+      - source-f4b8c7ffa11d6fb5df68
+      - source-79b0f9a2bc894c5e34ba
+  - id: works-in-progress-joins-stripe
+    date: 2022-02-17
+    date_precision: day
+    title: Works in Progress joins Stripe
+    summary: Works in Progress announced that it had joined Stripe, allowing its editorial team to work on the publication full-time. The editors said Stripe would fund the magazine while preserving editorial independence and free online access.
+    confidence: confirmed
+    status: Publication acquired and funded by Stripe
     organizations:
-      - 'Works in Progress'
-      - 'Stripe'
+      - Works in Progress
+      - Stripe
     related_events:
-      - 'works-in-progress-founded'
+      - works-in-progress-founded
     tags:
-      - 'works-in-progress'
-      - 'magazine'
-      - 'editorial-independence'
-    sources:
-      - kind: 'primary'
-        publisher: 'Works in Progress'
-        published_at: '2022-02-17'
-        title: 'Works in Progress has joined Stripe'
-        url: 'https://www.worksinprogress.news/p/works-in-progress-has-joined-stripe'
-
-  - id: 'pieces-of-the-action-published'
-    date: '2022'
-    date_precision: 'year'
-    title: 'Stripe Press republishes Pieces of the Action'
-    summary: 'Stripe Press published an updated edition of Vannevar Bush''s Pieces of the Action, his memoir of coordinating scientific research, government, and industry, with a new foreword by Ben Reinhardt.'
-    confidence: 'confirmed'
-    status: 'Book edition published'
+      - works-in-progress
+      - magazine
+      - editorial-independence
+    source_ids:
+      - source-54483c6f0408dcb374f0
+  - id: pieces-of-the-action-published
+    date: "2022"
+    date_precision: year
+    title: Stripe Press republishes Pieces of the Action
+    summary: Stripe Press published an updated edition of Vannevar Bush's Pieces of the Action, his memoir of coordinating scientific research, government, and industry, with a new foreword by Ben Reinhardt.
+    confidence: confirmed
+    status: Book edition published
     people:
-      - 'Vannevar Bush'
-      - 'Ben Reinhardt'
+      - Vannevar Bush
+      - Ben Reinhardt
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'republication'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'Pieces of the Action'
-        url: 'https://press.stripe.com/pieces-of-the-action'
-
-  - id: 'where-is-my-flying-car-published'
-    date: '2021-11-30'
-    date_precision: 'day'
-    title: 'Stripe Press publishes Where Is My Flying Car?'
-    summary: 'Stripe Press published J. Storrs Hall''s Where Is My Flying Car?, an investigation of technological stagnation and a case for renewed progress in energy, transportation, and physical technology.'
-    confidence: 'confirmed'
-    status: 'Book published'
+      - stripe-press
+      - book
+      - republication
+    source_ids:
+      - source-ba35b739c70ba7868444
+  - id: where-is-my-flying-car-published
+    date: 2021-11-30
+    date_precision: day
+    title: Stripe Press publishes Where Is My Flying Car?
+    summary: Stripe Press published J. Storrs Hall's Where Is My Flying Car?, an investigation of technological stagnation and a case for renewed progress in energy, transportation, and physical technology.
+    confidence: confirmed
+    status: Book published
     people:
-      - 'J. Storrs Hall'
+      - J. Storrs Hall
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'technological-progress'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'Where Is My Flying Car?'
-        url: 'https://press.stripe.com/where-is-my-flying-car'
-      - kind: 'archive'
-        publisher: 'Open Library'
-        published_at: '2021-11-30'
-        title: 'Where Is My Flying Car?'
-        url: 'https://openlibrary.org/isbn/9781953953186'
-
-  - id: 'increment-final-issue'
-    date: '2021-11'
-    date_precision: 'month'
-    title: 'Increment publishes its final issue'
-    summary: 'Increment ended its run after 19 issues and more than 250 stories published between April 2017 and November 2021. Stripe preserved the magazine online as an archive of writing about software systems and engineering culture.'
-    confidence: 'confirmed'
-    status: 'Publication ended; archive retained'
+      - stripe-press
+      - book
+      - technological-progress
+    source_ids:
+      - source-031c156e70030822874d
+      - source-0b75f814a22078c9d80c
+  - id: increment-final-issue
+    date: 2021-11
+    date_precision: month
+    title: Increment publishes its final issue
+    summary: Increment ended its run after 19 issues and more than 250 stories published between April 2017 and November 2021. Stripe preserved the magazine online as an archive of writing about software systems and engineering culture.
+    confidence: confirmed
+    status: Publication ended; archive retained
     organizations:
-      - 'Increment'
-      - 'Stripe'
+      - Increment
+      - Stripe
     metrics:
-      - label: 'Issues published'
-        value: '19'
-      - label: 'Stories published'
-        value: 'More than 250'
-      - label: 'Contributors'
-        value: 'More than 400'
+      - label: Issues published
+        value: "19"
+      - label: Stories published
+        value: More than 250
+      - label: Contributors
+        value: More than 400
     related_events:
-      - 'increment-launches'
-      - 'increment-print-subscriptions-launch'
+      - increment-launches
+      - increment-print-subscriptions-launch
     tags:
-      - 'increment'
-      - 'magazine'
-      - 'final-issue'
-    sources:
-      - kind: 'archive'
-        publisher: 'Increment'
-        published_at: '2021-11'
-        title: 'About Increment'
-        url: 'https://increment.com/about/'
-
-  - id: 'the-big-score-published'
-    date: '2021-07-20'
-    date_precision: 'day'
-    title: 'Stripe Press republishes The Big Score'
-    summary: 'Stripe Press published a new edition of Michael S. Malone''s The Big Score, a contemporaneous history of Silicon Valley''s semiconductor, computer, venture-capital, and startup industries.'
-    confidence: 'confirmed'
-    status: 'Book edition published'
+      - increment
+      - magazine
+      - final-issue
+    source_ids:
+      - source-18d7b036f7b18496f3db
+  - id: the-big-score-published
+    date: 2021-07-20
+    date_precision: day
+    title: Stripe Press republishes The Big Score
+    summary: Stripe Press published a new edition of Michael S. Malone's The Big Score, a contemporaneous history of Silicon Valley's semiconductor, computer, venture-capital, and startup industries.
+    confidence: confirmed
+    status: Book edition published
     people:
-      - 'Michael S. Malone'
+      - Michael S. Malone
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'republication'
-      - 'silicon-valley'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'The Big Score'
-        url: 'https://press.stripe.com/the-big-score'
-      - kind: 'archive'
-        publisher: 'Open Library'
-        published_at: '2021-07-20'
-        title: 'The Big Score'
-        url: 'https://openlibrary.org/isbn/9781953953162'
-
-  - id: 'scientific-freedom-published'
-    date: '2020'
-    date_precision: 'year'
-    title: 'Stripe Press republishes Scientific Freedom'
-    summary: 'Stripe Press published a new edition of Donald W. Braben''s Scientific Freedom, which argues for funding high-potential researchers without conventional peer-review and short-term justification constraints.'
-    confidence: 'confirmed'
-    status: 'Book edition published'
+      - stripe-press
+      - book
+      - republication
+      - silicon-valley
+    source_ids:
+      - source-dda978fa29fb0e3f1ddd
+      - source-544128bb24b7d24104da
+  - id: scientific-freedom-published
+    date: "2020"
+    date_precision: year
+    title: Stripe Press republishes Scientific Freedom
+    summary: Stripe Press published a new edition of Donald W. Braben's Scientific Freedom, which argues for funding high-potential researchers without conventional peer-review and short-term justification constraints.
+    confidence: confirmed
+    status: Book edition published
     people:
-      - 'Donald W. Braben'
+      - Donald W. Braben
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'republication'
-      - 'science'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'Scientific Freedom'
-        url: 'https://press.stripe.com/scientific-freedom'
-
-  - id: 'working-in-public-published'
-    date: '2020'
-    date_precision: 'year'
-    title: 'Stripe Press publishes Working in Public'
-    summary: 'Stripe Press published Nadia Eghbal''s Working in Public, an analysis of modern open-source software production, maintainer labor, online communities, and the shift toward creator-centered internet work.'
-    confidence: 'confirmed'
-    status: 'Book published'
+      - stripe-press
+      - book
+      - republication
+      - science
+    source_ids:
+      - source-a7eb7465e8205b255271
+  - id: working-in-public-published
+    date: "2020"
+    date_precision: year
+    title: Stripe Press publishes Working in Public
+    summary: Stripe Press published Nadia Eghbal's Working in Public, an analysis of modern open-source software production, maintainer labor, online communities, and the shift toward creator-centered internet work.
+    confidence: confirmed
+    status: Book published
     people:
-      - 'Nadia Eghbal'
+      - Nadia Eghbal
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'open-source'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'Working in Public'
-        url: 'https://press.stripe.com/working-in-public'
-
-  - id: 'art-of-doing-science-and-engineering-published'
-    date: '2020'
-    date_precision: 'year'
-    title: 'Stripe Press republishes The Art of Doing Science and Engineering'
-    summary: 'Stripe Press published a redesigned edition of Richard W. Hamming''s lectures on research, taste, learning, and ambitious technical work, with a new foreword by Bret Victor and redrawn figures.'
-    confidence: 'confirmed'
-    status: 'Book edition published'
+      - stripe-press
+      - book
+      - open-source
+    source_ids:
+      - source-423ad9bb88f1960b97f7
+  - id: art-of-doing-science-and-engineering-published
+    date: "2020"
+    date_precision: year
+    title: Stripe Press republishes The Art of Doing Science and Engineering
+    summary: Stripe Press published a redesigned edition of Richard W. Hamming's lectures on research, taste, learning, and ambitious technical work, with a new foreword by Bret Victor and redrawn figures.
+    confidence: confirmed
+    status: Book edition published
     people:
-      - 'Richard W. Hamming'
-      - 'Bret Victor'
+      - Richard W. Hamming
+      - Bret Victor
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'republication'
-      - 'science'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'The Art of Doing Science and Engineering'
-        url: 'https://press.stripe.com/the-art-of-doing-science-and-engineering'
-
-  - id: 'making-of-prince-of-persia-published'
-    date: '2020'
-    date_precision: 'year'
-    title: 'Stripe Press publishes The Making of Prince of Persia'
-    summary: 'Stripe Press published an illustrated edition of Jordan Mechner''s development journals from the creation of Prince of Persia, documenting the creative and technical process behind an early landmark game.'
-    confidence: 'confirmed'
-    status: 'Book published'
+      - stripe-press
+      - book
+      - republication
+      - science
+    source_ids:
+      - source-dca09adf3ca00a50d008
+  - id: making-of-prince-of-persia-published
+    date: "2020"
+    date_precision: year
+    title: Stripe Press publishes The Making of Prince of Persia
+    summary: Stripe Press published an illustrated edition of Jordan Mechner's development journals from the creation of Prince of Persia, documenting the creative and technical process behind an early landmark game.
+    confidence: confirmed
+    status: Book published
     people:
-      - 'Jordan Mechner'
+      - Jordan Mechner
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'games'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'The Making of Prince of Persia'
-        url: 'https://press.stripe.com/the-making-of-prince-of-persia'
-
-  - id: 'works-in-progress-founded'
-    date: '2020'
-    date_precision: 'year'
-    title: 'Works in Progress begins publishing'
-    summary: 'Works in Progress began as an online magazine covering economic growth, technology, policy, and practical improvements to human welfare. It initially operated independently before joining Stripe in 2022.'
-    confidence: 'confirmed'
-    status: 'Online publication founded'
+      - stripe-press
+      - book
+      - games
+    source_ids:
+      - source-e16e1affbf6a4f7fc8ff
+  - id: works-in-progress-founded
+    date: "2020"
+    date_precision: year
+    title: Works in Progress begins publishing
+    summary: Works in Progress began as an online magazine covering economic growth, technology, policy, and practical improvements to human welfare. It initially operated independently before joining Stripe in 2022.
+    confidence: confirmed
+    status: Online publication founded
     organizations:
-      - 'Works in Progress'
+      - Works in Progress
     related_events:
-      - 'works-in-progress-joins-stripe'
-      - 'works-in-progress-print-edition-launched'
+      - works-in-progress-joins-stripe
+      - works-in-progress-print-edition-launched
     tags:
-      - 'works-in-progress'
-      - 'magazine'
-      - 'launch'
-    sources:
-      - kind: 'primary'
-        publisher: 'Works in Progress'
-        title: 'About Works in Progress'
-        url: 'https://worksinprogress.co/about/'
-
-  - id: 'increment-print-subscriptions-launch'
-    date: '2020'
-    date_precision: 'year'
-    title: 'Increment launches print subscriptions'
-    summary: 'Increment made annual print subscriptions available after previously distributing issues through selected channels. The move gave Stripe''s software magazine a direct, recurring physical-publication model.'
-    confidence: 'confirmed'
-    status: 'Print subscription launched'
+      - works-in-progress
+      - magazine
+      - launch
+    source_ids:
+      - source-cf848b7deddba3534073
+  - id: increment-print-subscriptions-launch
+    date: "2020"
+    date_precision: year
+    title: Increment launches print subscriptions
+    summary: Increment made annual print subscriptions available after previously distributing issues through selected channels. The move gave Stripe's software magazine a direct, recurring physical-publication model.
+    confidence: confirmed
+    status: Print subscription launched
     organizations:
-      - 'Increment'
-      - 'Stripe'
+      - Increment
+      - Stripe
     related_events:
-      - 'increment-launches'
-      - 'increment-final-issue'
+      - increment-launches
+      - increment-final-issue
     tags:
-      - 'increment'
-      - 'magazine'
-      - 'print'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe'
-        published_at: '2020-01-07'
-        title: 'Increment subscriptions'
-        url: 'https://stripe.com/blog/increment-subscriptions'
-
-  - id: 'get-together-published'
-    date: '2019'
-    date_precision: 'year'
-    title: 'Stripe Press publishes Get Together'
-    summary: 'Stripe Press published Get Together by Bailey Richardson, Kevin Huynh, and Kai Elmer Sotto, a practical guide to building durable communities around shared purpose and participation.'
-    confidence: 'confirmed'
-    status: 'Book published'
+      - increment
+      - magazine
+      - print
+    source_ids:
+      - source-68ef23b66125c4fd22f9
+  - id: get-together-published
+    date: "2019"
+    date_precision: year
+    title: Stripe Press publishes Get Together
+    summary: Stripe Press published Get Together by Bailey Richardson, Kevin Huynh, and Kai Elmer Sotto, a practical guide to building durable communities around shared purpose and participation.
+    confidence: confirmed
+    status: Book published
     people:
-      - 'Bailey Richardson'
-      - 'Kevin Huynh'
-      - 'Kai Elmer Sotto'
+      - Bailey Richardson
+      - Kevin Huynh
+      - Kai Elmer Sotto
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'community'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'Get Together'
-        url: 'https://press.stripe.com/get-together'
-
-  - id: 'an-elegant-puzzle-published'
-    date: '2019'
-    date_precision: 'year'
-    title: 'Stripe Press publishes An Elegant Puzzle'
-    summary: 'Stripe Press published An Elegant Puzzle by Will Larson, a field guide to engineering management that addresses organizational design, team sizing, technical strategy, and managing managers.'
-    confidence: 'confirmed'
-    status: 'Book published'
+      - stripe-press
+      - book
+      - community
+    source_ids:
+      - source-a67403a0dfe10525868f
+  - id: an-elegant-puzzle-published
+    date: "2019"
+    date_precision: year
+    title: Stripe Press publishes An Elegant Puzzle
+    summary: Stripe Press published An Elegant Puzzle by Will Larson, a field guide to engineering management that addresses organizational design, team sizing, technical strategy, and managing managers.
+    confidence: confirmed
+    status: Book published
     people:
-      - 'Will Larson'
+      - Will Larson
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'engineering-management'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'An Elegant Puzzle'
-        url: 'https://press.stripe.com/an-elegant-puzzle'
-
-  - id: 'revolt-of-the-public-published'
-    date: '2018'
-    date_precision: 'year'
-    title: 'Stripe Press republishes The Revolt of the Public'
-    summary: 'Stripe Press published an updated edition of Martin Gurri''s The Revolt of the Public, extending his analysis of how networked publics challenge the authority of hierarchical institutions.'
-    confidence: 'confirmed'
-    status: 'Book edition published'
+      - stripe-press
+      - book
+      - engineering-management
+    source_ids:
+      - source-5ae7e6ba83780e12c659
+  - id: revolt-of-the-public-published
+    date: "2018"
+    date_precision: year
+    title: Stripe Press republishes The Revolt of the Public
+    summary: Stripe Press published an updated edition of Martin Gurri's The Revolt of the Public, extending his analysis of how networked publics challenge the authority of hierarchical institutions.
+    confidence: confirmed
+    status: Book edition published
     people:
-      - 'Martin Gurri'
+      - Martin Gurri
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'republication'
-      - 'institutions'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'The Revolt of the Public'
-        url: 'https://press.stripe.com/revolt-of-the-public'
-
-  - id: 'stubborn-attachments-published'
-    date: '2018'
-    date_precision: 'year'
-    title: 'Stripe Press publishes Stubborn Attachments'
-    summary: 'Stripe Press published Tyler Cowen''s Stubborn Attachments, a philosophical case for sustainable economic growth, broad human rights, and decision-making that gives future generations substantial moral weight.'
-    confidence: 'confirmed'
-    status: 'Book published'
+      - stripe-press
+      - book
+      - republication
+      - institutions
+    source_ids:
+      - source-7f3656858147bb5d1d05
+  - id: stubborn-attachments-published
+    date: "2018"
+    date_precision: year
+    title: Stripe Press publishes Stubborn Attachments
+    summary: Stripe Press published Tyler Cowen's Stubborn Attachments, a philosophical case for sustainable economic growth, broad human rights, and decision-making that gives future generations substantial moral weight.
+    confidence: confirmed
+    status: Book published
     people:
-      - 'Tyler Cowen'
+      - Tyler Cowen
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'economics'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'Stubborn Attachments'
-        url: 'https://press.stripe.com/stubborn-attachments'
-
-  - id: 'dream-machine-published'
-    date: '2018'
-    date_precision: 'year'
-    title: 'Stripe Press republishes The Dream Machine'
-    summary: 'Stripe Press published a new edition of M. Mitchell Waldrop''s The Dream Machine, a history of J. C. R. Licklider and the researchers who developed interactive and networked personal computing.'
-    confidence: 'confirmed'
-    status: 'Book edition published'
+      - stripe-press
+      - book
+      - economics
+    source_ids:
+      - source-81437bb4554785e28054
+  - id: dream-machine-published
+    date: "2018"
+    date_precision: year
+    title: Stripe Press republishes The Dream Machine
+    summary: Stripe Press published a new edition of M. Mitchell Waldrop's The Dream Machine, a history of J. C. R. Licklider and the researchers who developed interactive and networked personal computing.
+    confidence: confirmed
+    status: Book edition published
     people:
-      - 'M. Mitchell Waldrop'
-      - 'J. C. R. Licklider'
+      - M. Mitchell Waldrop
+      - J. C. R. Licklider
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'republication'
-      - 'computing-history'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'The Dream Machine'
-        url: 'https://press.stripe.com/the-dream-machine'
-
-  - id: 'high-growth-handbook-published'
-    date: '2018'
-    date_precision: 'year'
-    title: 'Stripe Press publishes High Growth Handbook'
-    summary: 'Stripe Press launched its book program with Elad Gil''s High Growth Handbook, a collection of operating advice and interviews for leaders scaling fast-growing technology companies.'
-    confidence: 'confirmed'
-    status: 'Book published'
+      - stripe-press
+      - book
+      - republication
+      - computing-history
+    source_ids:
+      - source-2ec15e8f0c45bec3dcef
+  - id: high-growth-handbook-published
+    date: "2018"
+    date_precision: year
+    title: Stripe Press publishes High Growth Handbook
+    summary: Stripe Press launched its book program with Elad Gil's High Growth Handbook, a collection of operating advice and interviews for leaders scaling fast-growing technology companies.
+    confidence: confirmed
+    status: Book published
     people:
-      - 'Elad Gil'
+      - Elad Gil
     organizations:
-      - 'Stripe Press'
+      - Stripe Press
     related_events:
-      - 'stripe-press-book-imprint-launches'
+      - stripe-press-book-imprint-launches
     tags:
-      - 'stripe-press'
-      - 'book'
-      - 'management'
-      - 'first-title'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe Press'
-        title: 'High Growth Handbook'
-        url: 'https://press.stripe.com/high-growth-handbook'
-      - kind: 'reporting'
-        publisher: 'Axios'
-        published_at: '2018-07-17'
-        title: 'Payments company Stripe is getting into book publishing'
-        url: 'https://www.axios.com/2018/07/17/payments-company-stripe-is-getting-into-book-publishing'
-
-  - id: 'stripe-press-book-imprint-launches'
-    date: '2018'
-    date_precision: 'year'
-    title: 'Stripe launches Stripe Press as a book imprint'
-    summary: 'Stripe introduced Stripe Press as a publishing imprint for books about technology, organizations, and progress. High Growth Handbook was its first release, with original works and revived editions planned for the early catalog.'
-    confidence: 'confirmed'
-    status: 'Book imprint launched'
+      - stripe-press
+      - book
+      - management
+      - first-title
+    source_ids:
+      - source-005a0d1ceb2b1514026f
+      - source-3bdf6f55cfb6d97a591c
+  - id: stripe-press-book-imprint-launches
+    date: "2018"
+    date_precision: year
+    title: Stripe launches Stripe Press as a book imprint
+    summary: Stripe introduced Stripe Press as a publishing imprint for books about technology, organizations, and progress. High Growth Handbook was its first release, with original works and revived editions planned for the early catalog.
+    confidence: confirmed
+    status: Book imprint launched
     organizations:
-      - 'Stripe'
-      - 'Stripe Press'
+      - Stripe
+      - Stripe Press
     related_events:
-      - 'high-growth-handbook-published'
+      - high-growth-handbook-published
     tags:
-      - 'stripe-press'
-      - 'imprint'
-      - 'launch'
-    sources:
-      - kind: 'reporting'
-        publisher: 'Axios'
-        published_at: '2018-07-17'
-        title: 'Payments company Stripe is getting into book publishing'
-        url: 'https://www.axios.com/2018/07/17/payments-company-stripe-is-getting-into-book-publishing'
-
-  - id: 'increment-launches'
-    date: '2017-04-13'
-    date_precision: 'day'
-    title: 'Stripe launches Increment magazine'
-    summary: 'Stripe launched Increment, a magazine about building and operating software systems, with an inaugural issue focused on on-call work. It mixed technical practice with reporting, essays, and illustration.'
-    confidence: 'confirmed'
-    status: 'Magazine launched'
+      - stripe-press
+      - imprint
+      - launch
+    source_ids:
+      - source-3bdf6f55cfb6d97a591c
+  - id: increment-launches
+    date: 2017-04-13
+    date_precision: day
+    title: Stripe launches Increment magazine
+    summary: Stripe launched Increment, a magazine about building and operating software systems, with an inaugural issue focused on on-call work. It mixed technical practice with reporting, essays, and illustration.
+    confidence: confirmed
+    status: Magazine launched
     organizations:
-      - 'Stripe'
-      - 'Increment'
+      - Stripe
+      - Increment
     related_events:
-      - 'increment-print-subscriptions-launch'
-      - 'increment-final-issue'
+      - increment-print-subscriptions-launch
+      - increment-final-issue
     tags:
-      - 'increment'
-      - 'magazine'
-      - 'launch'
-      - 'software-engineering'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe'
-        published_at: '2017-04-13'
-        title: 'Introducing Increment'
-        url: 'https://stripe.com/en-lt/blog/increment'
+      - increment
+      - magazine
+      - launch
+      - software-engineering
+    source_ids:
+      - source-6dff7671fdc80ed92ead
+schema: stripe-history/history/v2

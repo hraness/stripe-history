@@ -1,4 +1,3 @@
-schema: stripe-guide/history/v1
 category:
   id: executives-and-team
   label: Executives and team
@@ -6,10 +5,10 @@ category:
   order: 2
 events:
   - id: executives-omara-vice-chair-bryson-cro
-    date: "2026-06-22"
+    date: 2026-06-22
     date_precision: day
     title: Eileen O'Mara becomes vice chair and Tyler Bryson becomes chief revenue officer
-    summary: "Stripe moved Eileen O'Mara from chief revenue officer to vice chair, with a remit spanning long-range partnerships, strategic investments, and the company's global footprint. Tyler Bryson, who had joined Stripe in 2025 after more than two decades at Microsoft, succeeded her as chief revenue officer."
+    summary: Stripe moved Eileen O'Mara from chief revenue officer to vice chair, with a remit spanning long-range partnerships, strategic investments, and the company's global footprint. Tyler Bryson, who had joined Stripe in 2025 after more than two decades at Microsoft, succeeded her as chief revenue officer.
     confidence: confirmed
     people:
       - Eileen O'Mara
@@ -20,28 +19,20 @@ events:
       - Microsoft
     metrics:
       - label: Payment volume during O'Mara's CRO tenure
-        value: "$1.9 trillion"
-        context: "Stripe said annual payment volume had nearly doubled during her tenure as CRO."
+        value: $1.9 trillion
+        context: Stripe said annual payment volume had nearly doubled during her tenure as CRO.
     tags:
       - executive-appointment
       - revenue
       - leadership
-    sources:
-      - kind: primary
-        publisher: Stripe
-        published_at: "2026-06-22"
-        title: Eileen O'Mara named vice chair of Stripe; Tyler Bryson appointed chief revenue officer
-        url: https://stripe.com/newsroom/news/eileen-omara-named-vice-chair-of-stripe-tyler-bryson-appointed-chief-revenue-officer
-      - kind: primary
-        publisher: Stripe
-        title: Stripe Newsroom - Information and assets
-        url: https://stripe.com/newsroom/information
-
+    source_ids:
+      - source-2fd62540f30c44c011bd
+      - source-543d9c2bdd12031667b2
   - id: executives-rahul-patil-leaves-for-anthropic
-    date: "2025-10-07"
+    date: 2025-10-07
     date_precision: day
     title: Rahul Patil leaves Stripe to become Anthropic's chief technology officer
-    summary: "Anthropic appointed Rahul Patil as chief technology officer after his tenure in the same role at Stripe. His departure ended a five-year period at Stripe that included leading engineering and succeeding David Singleton as CTO in 2024."
+    summary: Anthropic appointed Rahul Patil as chief technology officer after his tenure in the same role at Stripe. His departure ended a five-year period at Stripe that included leading engineering and succeeding David Singleton as CTO in 2024.
     confidence: confirmed
     people:
       - Rahul Patil
@@ -53,18 +44,13 @@ events:
       - executive-departure
       - technology
       - leadership
-    sources:
-      - kind: primary
-        publisher: Anthropic
-        published_at: "2025-10-07"
-        title: Rahul Patil joins Anthropic as Chief Technology Officer
-        url: https://www.anthropic.com/news/rahul-patil-joins-anthropic
-
+    source_ids:
+      - source-669b3a2f6e0c3fc4ddcc
   - id: executives-patil-succeeds-singleton-as-cto
-    date: "2024-08-27"
+    date: 2024-08-27
     date_precision: day
     title: Rahul Patil succeeds David Singleton as chief technology officer
-    summary: "Stripe promoted Rahul Patil from head of engineering to chief technology officer. David Singleton, who had led engineering since 2017 and later served as CTO, left after seven years to start a new company."
+    summary: Stripe promoted Rahul Patil from head of engineering to chief technology officer. David Singleton, who had led engineering since 2017 and later served as CTO, left after seven years to start a new company.
     confidence: reported
     people:
       - Rahul Patil
@@ -75,23 +61,14 @@ events:
       - executive-appointment
       - executive-departure
       - technology
-    sources:
-      - kind: reporting
-        publisher: Finance Magnates
-        published_at: "2024-08-27"
-        title: Stripe Promotes Rahul Patil to Chief Technology Officer; David Singleton Departs
-        url: https://www.financemagnates.com/executives/stripe-promotes-rahul-patil-to-chief-technology-officer-david-singleton-departs/
-      - kind: primary
-        publisher: Anthropic
-        published_at: "2025-10-07"
-        title: Rahul Patil joins Anthropic as Chief Technology Officer
-        url: https://www.anthropic.com/news/rahul-patil-joins-anthropic
-
+    source_ids:
+      - source-e4fb11716a2dc5d77acc
+      - source-669b3a2f6e0c3fc4ddcc
   - id: executives-rob-mcintosh-becomes-chief-people-officer
     date: "2024"
     date_precision: year
     title: Rob McIntosh becomes chief people officer
-    summary: "After serving in the role on an interim basis, Rob McIntosh became Stripe's chief people officer while continuing to lead corporate development. The combined remit joined workforce leadership with the team responsible for acquisitions and strategic transactions."
+    summary: After serving in the role on an interim basis, Rob McIntosh became Stripe's chief people officer while continuing to lead corporate development. The combined remit joined workforce leadership with the team responsible for acquisitions and strategic transactions.
     confidence: reported
     people:
       - Rob McIntosh
@@ -99,26 +76,19 @@ events:
       - Stripe
     details:
       - label: Date basis
-        value: "The Org reports May 2024, but Stripe's leadership page confirms the role without an appointment month; this record therefore uses year precision."
+        value: The Org reports May 2024, but Stripe's leadership page confirms the role without an appointment month; this record therefore uses year precision.
     tags:
       - executive-appointment
       - people
       - corporate-development
-    sources:
-      - kind: reporting
-        publisher: The Org
-        title: Robert McIntosh - Chief People Officer and Head of Corporate Development at Stripe
-        url: https://theorg.com/org/stripe/org-chart/robert-mcintosh
-      - kind: primary
-        publisher: Stripe
-        title: Stripe Newsroom - Information and assets
-        url: https://stripe.com/newsroom/information
-
+    source_ids:
+      - source-2ea091d27b73089c7e1b
+      - source-543d9c2bdd12031667b2
   - id: executives-steffan-tomlinson-joins-as-cfo
-    date: "2023-08-02"
+    date: 2023-08-02
     date_precision: day
     title: Steffan Tomlinson joins as chief financial officer
-    summary: "Stripe appointed Steffan Tomlinson chief financial officer. He brought public-company finance experience from Confluent and Palo Alto Networks, along with earlier operating experience at Google Cloud."
+    summary: Stripe appointed Steffan Tomlinson chief financial officer. He brought public-company finance experience from Confluent and Palo Alto Networks, along with earlier operating experience at Google Cloud.
     confidence: confirmed
     people:
       - Steffan Tomlinson
@@ -132,22 +102,14 @@ events:
       - executive-appointment
       - finance
       - leadership
-    sources:
-      - kind: primary
-        publisher: Stripe
-        published_at: "2023-08-02"
-        title: Steffan Tomlinson joins Stripe as chief financial officer
-        url: https://stripe.com/newsroom/news/steffan-tomlinson
-      - kind: primary
-        publisher: Stripe
-        title: Stripe Newsroom - Information and assets
-        url: https://stripe.com/newsroom/information
-
+    source_ids:
+      - source-b947eefa88f90b4893bf
+      - source-543d9c2bdd12031667b2
   - id: executives-dhivya-suryadevara-steps-down
-    date: "2023-02-03"
+    date: 2023-02-03
     date_precision: day
     title: Dhivya Suryadevara steps down as Will Gaybrick takes a broader president role
-    summary: "Dhivya Suryadevara announced that she would leave the CFO role to attend to family matters, remaining through April for the transition. Stripe elevated Will Gaybrick to president of product and business, while John Collison assumed oversight of finance during the CFO search."
+    summary: Dhivya Suryadevara announced that she would leave the CFO role to attend to family matters, remaining through April for the transition. Stripe elevated Will Gaybrick to president of product and business, while John Collison assumed oversight of finance during the CFO search.
     confidence: confirmed
     people:
       - Dhivya Suryadevara
@@ -160,24 +122,15 @@ events:
       - executive-departure
       - executive-appointment
       - finance
-    sources:
-      - kind: reporting
-        publisher: Axios
-        published_at: "2023-02-03"
-        title: Stripe CFO Dhivya Suryadevara to step down
-        url: https://www.axios.com/2023/02/03/stripe-cfo-suryadevara-step-down
-      - kind: reporting
-        publisher: Bloomberg Law
-        published_at: "2023-02-02"
-        title: Stripe CFO Suryadevara to Depart Firm to Handle Family Matters
-        url: https://news.bloomberglaw.com/mergers-and-acquisitions/stripe-cfo-suryadevara-to-depart-firm-to-handle-family-matters
-
+    source_ids:
+      - source-fd18a61ea8f9acdbc7fd
+      - source-2492e9cbea9cef718468
   - id: executives-eileen-omara-succeeds-mike-clayville-as-cro
     date: "2023"
     date_precision: year
     title: Eileen O'Mara succeeds Mike Clayville as chief revenue officer
     status: Appointment reported as fall 2023
-    summary: "Stripe named Eileen O'Mara chief revenue officer after she had led international operations and served as head of EMEA. Mike Clayville moved from CRO into a short-lived chief customer officer role and departed Stripe in early 2024."
+    summary: Stripe named Eileen O'Mara chief revenue officer after she had led international operations and served as head of EMEA. Mike Clayville moved from CRO into a short-lived chief customer officer role and departed Stripe in early 2024.
     confidence: reported
     people:
       - Eileen O'Mara
@@ -188,22 +141,14 @@ events:
       - executive-appointment
       - executive-departure
       - revenue
-    sources:
-      - kind: reporting
-        publisher: The Information
-        title: Top Stripe Executive Clayville Departs, Is Helping Secretive Startup Omniva Hire
-        url: https://www.theinformation.com/articles/top-stripe-executive-clayville-departs-is-helping-secretive-startup-omniva-hire
-      - kind: primary
-        publisher: Stripe
-        published_at: "2026-06-22"
-        title: Eileen O'Mara named vice chair of Stripe; Tyler Bryson appointed chief revenue officer
-        url: https://stripe.com/newsroom/news/eileen-omara-named-vice-chair-of-stripe-tyler-bryson-appointed-chief-revenue-officer
-
+    source_ids:
+      - source-bf929613bb5894a9b823
+      - source-2fd62540f30c44c011bd
   - id: executives-jeff-titterton-becomes-cmo
-    date: "2022-11"
+    date: 2022-11
     date_precision: month
     title: Jeff Titterton becomes chief marketing officer
-    summary: "Stripe appointed Jeff Titterton chief marketing officer after his tenure as Zendesk's chief operating officer. His remit placed global marketing and brand leadership under an executive with prior product and operating experience."
+    summary: Stripe appointed Jeff Titterton chief marketing officer after his tenure as Zendesk's chief operating officer. His remit placed global marketing and brand leadership under an executive with prior product and operating experience.
     confidence: reported
     people:
       - Jeff Titterton
@@ -214,22 +159,14 @@ events:
       - executive-appointment
       - marketing
       - leadership
-    sources:
-      - kind: filing
-        publisher: U.S. Securities and Exchange Commission
-        published_at: "2023"
-        title: Getty Images Holdings 2023 proxy statement
-        url: https://www.sec.gov/Archives/edgar/data/1898496/000110465923059740/tm2310765-1_def14a.htm
-      - kind: primary
-        publisher: Stripe
-        title: Stripe Newsroom - Information and assets
-        url: https://stripe.com/newsroom/information
-
+    source_ids:
+      - source-7c2526ca8051f9cf2471
+      - source-543d9c2bdd12031667b2
   - id: executives-claire-hughes-johnson-steps-back
-    date: "2021-04"
+    date: 2021-04
     date_precision: month
     title: Claire Hughes Johnson steps back from the chief operating officer role
-    summary: "After more than six years as chief operating officer, Claire Hughes Johnson moved out of day-to-day operations and remained a corporate officer and adviser. The transition redistributed responsibilities across Stripe's expanding executive group rather than immediately naming a direct COO successor."
+    summary: After more than six years as chief operating officer, Claire Hughes Johnson moved out of day-to-day operations and remained a corporate officer and adviser. The transition redistributed responsibilities across Stripe's expanding executive group rather than immediately naming a direct COO successor.
     confidence: confirmed
     people:
       - Claire Hughes Johnson
@@ -241,26 +178,15 @@ events:
       - executive-transition
       - operations
       - leadership
-    sources:
-      - kind: reporting
-        publisher: Forbes
-        published_at: "2022-06-14"
-        title: Claire Hughes Johnson
-        url: https://www.forbes.com/profile/claire-hughes-johnson/
-      - kind: interview
-        publisher: Yale School of Management
-        title: Alumni profile - Claire Hughes Johnson '01
-        url: https://som.yale.edu/profile/alumni/claire-hughes-johnson-01
-      - kind: reporting
-        publisher: The Information
-        title: The People With Power at Stripe After COO Steps Back
-        url: https://www.theinformation.com/articles/the-people-with-power-at-stripe-after-coo-steps-back
-
+    source_ids:
+      - source-8421431556029a2eaf89
+      - source-d803d4a16b3a102cb23d
+      - source-85b1d0e6c404677bfd35
   - id: executives-csuite-adds-suryadevara-clayville-walsh
-    date: "2020-08-11"
+    date: 2020-08-11
     date_precision: day
     title: Stripe adds Dhivya Suryadevara, Mike Clayville, and Trish Walsh to senior leadership
-    summary: "Stripe recruited former General Motors CFO Dhivya Suryadevara as chief financial officer, former AWS executive Mike Clayville as chief revenue officer, and Trish Walsh as general counsel. The appointments added public-company finance, enterprise sales, and legal leadership as the workforce approached 2,800."
+    summary: Stripe recruited former General Motors CFO Dhivya Suryadevara as chief financial officer, former AWS executive Mike Clayville as chief revenue officer, and Trish Walsh as general counsel. The appointments added public-company finance, enterprise sales, and legal leadership as the workforce approached 2,800.
     confidence: confirmed
     people:
       - Dhivya Suryadevara
@@ -274,34 +200,22 @@ events:
       - Voya Financial
     metrics:
       - label: Stripe workforce
-        value: "About 2,800"
-        context: "Workforce figure disclosed in Stripe's CFO appointment announcement."
+        value: About 2,800
+        context: Workforce figure disclosed in Stripe's CFO appointment announcement.
     tags:
       - executive-appointment
       - finance
       - revenue
       - legal
-    sources:
-      - kind: primary
-        publisher: Stripe
-        published_at: "2020-08-11"
-        title: Dhivya Suryadevara to join Stripe as Chief Financial Officer
-        url: https://stripe.com/newsroom/news/dhivya-suryadevara
-      - kind: primary
-        publisher: Stripe
-        published_at: "2020-08-05"
-        title: Mike Clayville joins Stripe as Chief Revenue Officer
-        url: https://stripe.com/in/newsroom/news/mike-clayville
-      - kind: reporting
-        publisher: Bloomberg Law
-        title: Riding Record Valuations, Fintech Companies Keep Hiring Lawyers
-        url: https://news.bloomberglaw.com/coronavirus/riding-record-valuations-fintech-companies-keep-hiring-lawyers
-
+    source_ids:
+      - source-4dbd7744d6f91d4890ff
+      - source-6eadd4468bd0d9d7a98f
+      - source-3d6c52f0fa2137ac7a41
   - id: executives-david-singleton-leads-engineering
-    date: "2017-12-01"
+    date: 2017-12-01
     date_precision: day
     title: David Singleton joins to lead engineering
-    summary: "Stripe hired Google engineering vice president David Singleton to lead engineering. Singleton had overseen Android Wear and Google Fit, and joined as Stripe's headcount approached 1,000 and its engineering organization moved into a new stage of scale."
+    summary: Stripe hired Google engineering vice president David Singleton to lead engineering. Singleton had overseen Android Wear and Google Fit, and joined as Stripe's headcount approached 1,000 and its engineering organization moved into a new stage of scale.
     confidence: reported
     people:
       - David Singleton
@@ -311,23 +225,18 @@ events:
       - Google
     metrics:
       - label: Approximate workforce
-        value: "Nearly 1,000"
+        value: Nearly 1,000
     tags:
       - executive-appointment
       - engineering
       - technology
-    sources:
-      - kind: reporting
-        publisher: Axios
-        published_at: "2017-12-01"
-        title: Scoop - Stripe hires new engineering chief from Google
-        url: https://www.axios.com/2017/12/15/scoop-stripe-hires-new-engineering-chief-from-google-1513307306
-
+    source_ids:
+      - source-23174e14d53e9b8b0ff0
   - id: executives-will-gaybrick-first-cfo
-    date: "2015-10-09"
+    date: 2015-10-09
     date_precision: day
     title: Will Gaybrick becomes Stripe's first chief financial officer
-    summary: "Stripe hired Thrive Capital general partner Will Gaybrick as its first chief financial officer. His background combined software engineering, investing, and finance, and he later expanded into product and business leadership."
+    summary: Stripe hired Thrive Capital general partner Will Gaybrick as its first chief financial officer. His background combined software engineering, investing, and finance, and he later expanded into product and business leadership.
     confidence: reported
     people:
       - Will Gaybrick
@@ -337,29 +246,20 @@ events:
       - Thrive Capital
     metrics:
       - label: Finance team at appointment
-        value: "About 15 people"
-        context: "Contemporaneous reporting on the appointment."
+        value: About 15 people
+        context: Contemporaneous reporting on the appointment.
     tags:
       - executive-appointment
       - finance
       - leadership
-    sources:
-      - kind: reporting
-        publisher: Silicon Valley Business Journal
-        published_at: "2015-10-09"
-        title: Stripe hires Thrive Capital investor with software background as CFO
-        url: https://www.bizjournals.com/sanjose/blog/techflash/2015/10/stripe-hires-thrive-capitalinvestor-with-software.html
-      - kind: reporting
-        publisher: PYMNTS
-        published_at: "2015-10-09"
-        title: Stripe Snags Will Gaybrick As First CFO
-        url: https://www.pymnts.com/news/2015/stripe-snags-will-gaybrick-as-first-cfo/
-
+    source_ids:
+      - source-9f852c1069797500c94f
+      - source-e46d573a8df57cd33620
   - id: executives-claire-hughes-johnson-joins-as-coo
     date: "2014"
     date_precision: year
     title: Claire Hughes Johnson joins as chief operating officer
-    summary: "Stripe recruited longtime Google executive Claire Hughes Johnson as chief operating officer late in 2014. She became the principal operating leader alongside the Collison brothers and helped build the organizational systems for Stripe's international and workforce expansion."
+    summary: Stripe recruited longtime Google executive Claire Hughes Johnson as chief operating officer late in 2014. She became the principal operating leader alongside the Collison brothers and helped build the organizational systems for Stripe's international and workforce expansion.
     confidence: reported
     people:
       - Claire Hughes Johnson
@@ -372,21 +272,14 @@ events:
       - executive-appointment
       - operations
       - leadership
-    sources:
-      - kind: interview
-        publisher: Yale School of Management
-        title: Alumni profile - Claire Hughes Johnson '01
-        url: https://som.yale.edu/profile/alumni/claire-hughes-johnson-01
-      - kind: reporting
-        publisher: Inc.
-        title: Stripe - 2015 Company of the Year Nominee
-        url: https://www.inc.com/jeremy-quittner/stripe-2015-company-of-the-year-nominee.html
-
+    source_ids:
+      - source-d803d4a16b3a102cb23d
+      - source-2b28eaace5a0b7d68b9f
   - id: executives-first-cto-and-vp-engineering-roles
     date: "2014"
     date_precision: year
     title: Greg Brockman defines the CTO role and Marc Hedlund takes engineering management
-    summary: "Early engineer Greg Brockman had become Stripe's first chief technology officer by roughly 2013, but found that the title obscured several different jobs. By 2014 he had recruited Marc Hedlund as vice president of engineering and handed over line management while retaining responsibility for technical direction and key systems."
+    summary: Early engineer Greg Brockman had become Stripe's first chief technology officer by roughly 2013, but found that the title obscured several different jobs. By 2014 he had recruited Marc Hedlund as vice president of engineering and handed over line management while retaining responsibility for technical direction and key systems.
     confidence: confirmed
     people:
       - Greg Brockman
@@ -397,17 +290,14 @@ events:
       - Stripe
     details:
       - label: Greg Brockman's focus
-        value: "Technical direction, critical systems, recruiting, and organizational leverage rather than all engineering management."
+        value: Technical direction, critical systems, recruiting, and organizational leverage rather than all engineering management.
       - label: Marc Hedlund's focus
-        value: "Engineering line management, including one-to-ones and team execution."
+        value: Engineering line management, including one-to-ones and team execution.
     tags:
       - executive-appointment
       - engineering
       - technology
       - organization-design
-    sources:
-      - kind: primary
-        publisher: Greg Brockman
-        published_at: "2014-10-27"
-        title: '#define CTO'
-        url: https://blog.gregbrockman.com/figuring-out-the-cto-role-at-stripe
+    source_ids:
+      - source-20fbb1f159a9c5331084
+schema: stripe-history/history/v2

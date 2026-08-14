@@ -1,806 +1,593 @@
-schema: 'stripe-guide/history/v1'
 category:
-  id: 'acquisitions'
-  label: 'Acquisitions'
-  description: 'Completed acquisitions, talent acquisitions, announced agreements, and credibly reported deal discussions involving Stripe.'
+  id: acquisitions
+  label: Acquisitions
+  description: Completed acquisitions, talent acquisitions, announced agreements, and credibly reported deal discussions involving Stripe.
   order: 3
 events:
-  - id: 'openrouter-acquisition-talks-reported'
-    date: '2026-07-24'
-    date_precision: 'day'
-    title: 'Stripe reportedly discusses acquiring OpenRouter'
-    summary: 'Stripe held talks to acquire AI-model marketplace OpenRouter at a price near $10 billion, according to reporting that cautioned the discussions could still collapse. Neither company had announced an agreement.'
-    confidence: 'reported'
-    status: 'Reported talks; no agreement announced'
+  - id: openrouter-acquisition-talks-reported
+    date: 2026-07-24
+    date_precision: day
+    title: Stripe reportedly discusses acquiring OpenRouter
+    summary: Stripe held talks to acquire AI-model marketplace OpenRouter at a price near $10 billion, according to reporting that cautioned the discussions could still collapse. Neither company had announced an agreement.
+    confidence: reported
+    status: Reported talks; no agreement announced
     amount:
-      currency: 'USD'
-      display: 'About $10 billion (reported)'
+      currency: USD
+      display: About $10 billion (reported)
     organizations:
-      - 'Stripe'
-      - 'OpenRouter'
+      - Stripe
+      - OpenRouter
     tags:
-      - 'reported-talks'
-      - 'artificial-intelligence'
-    sources:
-      - kind: 'reporting'
-        publisher: 'Axios'
-        published_at: '2026-07-24'
-        title: 'Stripe-OpenRouter merger talks signal AI currency push'
-        url: 'https://www.axios.com/2026/07/24/stripe-openrouter-merger-ai-currency'
-      - kind: 'reporting'
-        publisher: 'The Information'
-        published_at: '2026-07-24'
-        title: 'Stripe in Talks to Buy Startup OpenRouter'
-        url: 'https://www.theinformation.com/briefings/stripe-talks-buy-startup-openrouter/'
-
-  - id: 'paypal-stripe-advent-offer-reported'
-    date: '2026-07-15'
-    date_precision: 'day'
-    title: 'Stripe and Advent reportedly offer more than $53 billion for PayPal'
-    summary: 'Stripe and Advent International submitted a joint $60.50-per-share offer for PayPal worth more than $53 billion, Reuters reported. PayPal had not accepted the proposal, and later reporting said its board considered the bid inadequate.'
-    confidence: 'reported'
-    status: 'Reported offer; not accepted'
+      - reported-talks
+      - artificial-intelligence
+    source_ids:
+      - source-990ab773c6c0913272f7
+      - source-cf513568945a043b22bf
+  - id: paypal-stripe-advent-offer-reported
+    date: 2026-07-15
+    date_precision: day
+    title: Stripe and Advent reportedly offer more than $53 billion for PayPal
+    summary: Stripe and Advent International submitted a joint $60.50-per-share offer for PayPal worth more than $53 billion, Reuters reported. PayPal had not accepted the proposal, and later reporting said its board considered the bid inadequate.
+    confidence: reported
+    status: Reported offer; not accepted
     amount:
-      currency: 'USD'
-      display: 'More than $53 billion (reported)'
+      currency: USD
+      display: More than $53 billion (reported)
       value: 53000000000
     details:
-      - label: 'Reported price per share'
-        value: '$60.50'
-      - label: 'Proposed ownership'
-        value: 'Stripe and Advent would own equal stakes'
+      - label: Reported price per share
+        value: $60.50
+      - label: Proposed ownership
+        value: Stripe and Advent would own equal stakes
     organizations:
-      - 'Stripe'
-      - 'Advent International'
-      - 'PayPal'
+      - Stripe
+      - Advent International
+      - PayPal
     related_events:
-      - 'paypal-preliminary-interest-reported'
+      - paypal-preliminary-interest-reported
     tags:
-      - 'reported-offer'
-      - 'payments'
-    sources:
-      - kind: 'reporting'
-        publisher: 'Reuters'
-        published_at: '2026-07-15'
-        title: 'Exclusive: Stripe, Advent offer to buy PayPal for more than $53 billion, sources say'
-        url: 'https://live.euronext.com/en/financial-news/exclusive-stripe-advent-offer-buy-paypal-more-53-billion-sources-say'
-      - kind: 'reporting'
-        publisher: 'Reuters'
-        published_at: '2026-07-17'
-        title: 'PayPal board sees Stripe-Advent offer as inadequate, sources say'
-        url: 'https://live.euronext.com/en/financial-news/paypal-board-sees-stripe-advent-offer-inadequate-sources-say'
-
-  - id: 'paypal-preliminary-interest-reported'
-    date: '2026-02-24'
-    date_precision: 'day'
-    title: 'Stripe reportedly explores buying all or part of PayPal'
-    summary: 'Before the later reported bid, Stripe was reported to be considering an acquisition of PayPal or selected PayPal assets. The inquiry was preliminary and did not constitute an announced transaction.'
-    confidence: 'reported'
-    status: 'Preliminary interest reported'
+      - reported-offer
+      - payments
+    source_ids:
+      - source-d7cf2394464d8451acf0
+      - source-f9148b5ae819e1e22054
+  - id: paypal-preliminary-interest-reported
+    date: 2026-02-24
+    date_precision: day
+    title: Stripe reportedly explores buying all or part of PayPal
+    summary: Before the later reported bid, Stripe was reported to be considering an acquisition of PayPal or selected PayPal assets. The inquiry was preliminary and did not constitute an announced transaction.
+    confidence: reported
+    status: Preliminary interest reported
     organizations:
-      - 'Stripe'
-      - 'PayPal'
+      - Stripe
+      - PayPal
     related_events:
-      - 'paypal-stripe-advent-offer-reported'
+      - paypal-stripe-advent-offer-reported
     tags:
-      - 'reported-talks'
-      - 'payments'
-    sources:
-      - kind: 'reporting'
-        publisher: 'TechCrunch'
-        published_at: '2026-02-24'
-        title: 'Stripe is reportedly eyeing a deal to buy some or all of PayPal'
-        url: 'https://techcrunch.com/2026/02/24/stripe-is-reportedly-eyeing-deal-to-buy-some-or-all-of-paypal/'
-
-  - id: 'partydao-team-joins-stripe'
-    date: '2026-02-12'
-    date_precision: 'day'
-    title: 'PartyDAO team joins Stripe'
-    summary: 'Stripe acquired the team behind PartyDAO, the organization that developed Party Protocol. Reporting described an acquihire rather than a purchase of the protocol, which was scheduled for deprecation.'
-    confidence: 'reported'
-    status: 'Talent acquisition completed'
+      - reported-talks
+      - payments
+    source_ids:
+      - source-8e3a72ba39c49c012923
+  - id: partydao-team-joins-stripe
+    date: 2026-02-12
+    date_precision: day
+    title: PartyDAO team joins Stripe
+    summary: Stripe acquired the team behind PartyDAO, the organization that developed Party Protocol. Reporting described an acquihire rather than a purchase of the protocol, which was scheduled for deprecation.
+    confidence: reported
+    status: Talent acquisition completed
     organizations:
-      - 'Stripe'
-      - 'PartyDAO'
-      - 'Party Protocol'
+      - Stripe
+      - PartyDAO
+      - Party Protocol
     tags:
-      - 'talent-acquisition'
-      - 'crypto'
-    sources:
-      - kind: 'reporting'
-        publisher: 'Bankless'
-        published_at: '2026-02-12'
-        title: 'Payments Processor Stripe Acquihires PartyDAO Team'
-        url: 'https://www.bankless.com/read/news/payments-processor-stripe-acquihires-partydao-team'
-
-  - id: 'metronome-acquisition-completed'
-    date: '2026-01-14'
-    date_precision: 'day'
-    title: 'Stripe completes Metronome acquisition'
-    summary: 'Stripe completed its acquisition of usage-based billing platform Metronome after announcing the agreement in December 2025. Stripe said Metronome would continue operating as a product and brand within Stripe.'
-    confidence: 'confirmed'
-    status: 'Completed'
+      - talent-acquisition
+      - crypto
+    source_ids:
+      - source-a4ec681ae567502b002c
+  - id: metronome-acquisition-completed
+    date: 2026-01-14
+    date_precision: day
+    title: Stripe completes Metronome acquisition
+    summary: Stripe completed its acquisition of usage-based billing platform Metronome after announcing the agreement in December 2025. Stripe said Metronome would continue operating as a product and brand within Stripe.
+    confidence: confirmed
+    status: Completed
     amount:
-      currency: 'USD'
-      display: 'About $1 billion (reported; terms not disclosed by Stripe)'
+      currency: USD
+      display: About $1 billion (reported; terms not disclosed by Stripe)
     organizations:
-      - 'Stripe'
-      - 'Metronome'
+      - Stripe
+      - Metronome
     related_events:
-      - 'metronome-acquisition-agreement'
+      - metronome-acquisition-agreement
     tags:
-      - 'completed'
-      - 'billing'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe'
-        published_at: '2026-01-14'
-        title: 'Stripe completes Metronome acquisition'
-        url: 'https://stripe.com/en-gi/newsroom/news/stripe-completes-metronome-acquisition'
-      - kind: 'primary'
-        publisher: 'Metronome'
-        published_at: '2026-01-13'
-        title: 'Our next chapter: Metronome is now part of Stripe'
-        url: 'https://metronome.com/blog/our-next-chapter-metronome-is-now-part-of-stripe'
-
-  - id: 'valora-team-joins-stripe'
-    date: '2025-12-10'
-    date_precision: 'day'
-    title: 'Valora team joins Stripe'
-    summary: 'The team behind mobile crypto wallet Valora joined Stripe to work on stablecoin products. Valora described the move as a team acquisition and said the existing wallet would transition to a new steward.'
-    confidence: 'confirmed'
-    status: 'Talent acquisition completed'
+      - completed
+      - billing
+    source_ids:
+      - source-df868a6dadc87913946e
+      - source-796cdb4df88d6b0d4e78
+  - id: valora-team-joins-stripe
+    date: 2025-12-10
+    date_precision: day
+    title: Valora team joins Stripe
+    summary: The team behind mobile crypto wallet Valora joined Stripe to work on stablecoin products. Valora described the move as a team acquisition and said the existing wallet would transition to a new steward.
+    confidence: confirmed
+    status: Talent acquisition completed
     organizations:
-      - 'Stripe'
-      - 'Valora'
+      - Stripe
+      - Valora
     tags:
-      - 'talent-acquisition'
-      - 'stablecoins'
-      - 'crypto'
-    sources:
-      - kind: 'primary'
-        publisher: 'Valora'
-        published_at: '2025-12-10'
-        title: 'Valora''s next chapter'
-        url: 'https://valora.xyz/blog/valoras-next-chapter'
-      - kind: 'reporting'
-        publisher: 'Payments Dive'
-        published_at: '2025-12-11'
-        title: 'Stripe digs deeper into crypto'
-        url: 'https://www.paymentsdive.com/news/stripe-digs-deeper-into-crypto/807678/'
-
-  - id: 'metronome-acquisition-agreement'
-    date: '2025-12-02'
-    date_precision: 'day'
-    title: 'Stripe agrees to acquire Metronome'
-    summary: 'Stripe and Metronome announced a definitive acquisition agreement intended to combine Metronome''s usage-based billing capabilities with Stripe Billing. The transaction remained subject to customary closing conditions.'
-    confidence: 'confirmed'
-    status: 'Agreement announced; later completed'
+      - talent-acquisition
+      - stablecoins
+      - crypto
+    source_ids:
+      - source-697130054848d78fea4f
+      - source-d9f90ac2db539a45e974
+  - id: metronome-acquisition-agreement
+    date: 2025-12-02
+    date_precision: day
+    title: Stripe agrees to acquire Metronome
+    summary: Stripe and Metronome announced a definitive acquisition agreement intended to combine Metronome's usage-based billing capabilities with Stripe Billing. The transaction remained subject to customary closing conditions.
+    confidence: confirmed
+    status: Agreement announced; later completed
     amount:
-      currency: 'USD'
-      display: 'About $1 billion (reported; official terms undisclosed)'
+      currency: USD
+      display: About $1 billion (reported; official terms undisclosed)
     organizations:
-      - 'Stripe'
-      - 'Metronome'
+      - Stripe
+      - Metronome
     related_events:
-      - 'metronome-acquisition-completed'
+      - metronome-acquisition-completed
     tags:
-      - 'agreement-announced'
-      - 'billing'
-    sources:
-      - kind: 'primary'
-        publisher: 'Metronome'
-        published_at: '2025-12-02'
-        title: 'Important company update'
-        url: 'https://metronome.com/blog/important-company-update'
-      - kind: 'reporting'
-        publisher: 'Upstarts Media'
-        published_at: '2025-12-02'
-        title: 'Stripe pays $1 billion for Metronome'
-        url: 'https://www.upstartsmedia.com/p/scoop-stripe-pays-1-billion-for-metronome'
-
-  - id: 'orum-team-joins-stripe'
-    date: '2025-07-18'
-    date_precision: 'day'
-    title: 'Orum team joins Stripe'
-    summary: 'Stripe acquired the team from instant bank-payment infrastructure company Orum. Orum said the team would join Stripe, while industry reporting characterized the transaction as an acquihire rather than a purchase of the full platform.'
-    confidence: 'confirmed'
-    status: 'Talent acquisition completed'
+      - agreement-announced
+      - billing
+    source_ids:
+      - source-9137103ae91044e460d7
+      - source-6e7455b09494678f92f8
+  - id: orum-team-joins-stripe
+    date: 2025-07-18
+    date_precision: day
+    title: Orum team joins Stripe
+    summary: Stripe acquired the team from instant bank-payment infrastructure company Orum. Orum said the team would join Stripe, while industry reporting characterized the transaction as an acquihire rather than a purchase of the full platform.
+    confidence: confirmed
+    status: Talent acquisition completed
     organizations:
-      - 'Stripe'
-      - 'Orum'
+      - Stripe
+      - Orum
     tags:
-      - 'talent-acquisition'
-      - 'bank-payments'
-    sources:
-      - kind: 'primary'
-        publisher: 'Orum'
-        published_at: '2025-07-18'
-        title: 'Orum joins Stripe'
-        url: 'https://www.orum.io/blog/orum-joins-stripe'
-
-  - id: 'privy-acquisition-completed'
-    date: '2025-07'
-    date_precision: 'month'
-    title: 'Stripe completes Privy acquisition'
-    summary: 'Stripe completed its acquisition of crypto-wallet infrastructure provider Privy in July 2025. Stripe later said Privy powered more than 110 million programmable wallets.'
-    confidence: 'confirmed'
-    status: 'Completed'
+      - talent-acquisition
+      - bank-payments
+    source_ids:
+      - source-a57c4c8a77e5bed9da3c
+  - id: privy-acquisition-completed
+    date: 2025-07
+    date_precision: month
+    title: Stripe completes Privy acquisition
+    summary: Stripe completed its acquisition of crypto-wallet infrastructure provider Privy in July 2025. Stripe later said Privy powered more than 110 million programmable wallets.
+    confidence: confirmed
+    status: Completed
     organizations:
-      - 'Stripe'
-      - 'Privy'
+      - Stripe
+      - Privy
     related_events:
-      - 'privy-acquisition-announced'
+      - privy-acquisition-announced
     tags:
-      - 'completed'
-      - 'crypto'
-      - 'wallets'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe'
-        published_at: '2026-02-24'
-        title: 'Stripe publishes 2025 annual letter and announces tender offer to provide liquidity to current and former employees'
-        url: 'https://stripe.com/newsroom/news/stripe-2025-update'
-
-  - id: 'privy-acquisition-announced'
-    date: '2025-06-11'
-    date_precision: 'day'
-    title: 'Stripe announces agreement to acquire Privy'
-    summary: 'Stripe agreed to acquire crypto-wallet infrastructure provider Privy. Privy said it would remain an independent product inside Stripe, and the announcement described the transaction as subject to customary closing conditions.'
-    confidence: 'confirmed'
-    status: 'Agreement announced; completed in July 2025'
+      - completed
+      - crypto
+      - wallets
+    source_ids:
+      - source-bd6516ac551f19c37d33
+  - id: privy-acquisition-announced
+    date: 2025-06-11
+    date_precision: day
+    title: Stripe announces agreement to acquire Privy
+    summary: Stripe agreed to acquire crypto-wallet infrastructure provider Privy. Privy said it would remain an independent product inside Stripe, and the announcement described the transaction as subject to customary closing conditions.
+    confidence: confirmed
+    status: Agreement announced; completed in July 2025
     organizations:
-      - 'Stripe'
-      - 'Privy'
+      - Stripe
+      - Privy
     related_events:
-      - 'privy-acquisition-completed'
+      - privy-acquisition-completed
     tags:
-      - 'agreement-announced'
-      - 'crypto'
-      - 'wallets'
-    sources:
-      - kind: 'primary'
-        publisher: 'Privy'
-        published_at: '2025-06-11'
-        title: 'Announcing our acquisition by Stripe'
-        url: 'https://privy.io/blog/announcing-our-acquisition-by-stripe'
-
-  - id: 'bridge-acquisition-completed'
-    date: '2025-02-04'
-    date_precision: 'day'
-    title: 'Stripe completes Bridge acquisition'
-    summary: 'Stripe completed its acquisition of stablecoin infrastructure company Bridge after receiving regulatory approvals. The transaction was widely reported at $1.1 billion, while Stripe''s completion notice did not disclose financial terms.'
-    confidence: 'confirmed'
-    status: 'Completed'
+      - agreement-announced
+      - crypto
+      - wallets
+    source_ids:
+      - source-f224d5f90223923cfaf7
+  - id: bridge-acquisition-completed
+    date: 2025-02-04
+    date_precision: day
+    title: Stripe completes Bridge acquisition
+    summary: Stripe completed its acquisition of stablecoin infrastructure company Bridge after receiving regulatory approvals. The transaction was widely reported at $1.1 billion, while Stripe's completion notice did not disclose financial terms.
+    confidence: confirmed
+    status: Completed
     amount:
-      currency: 'USD'
-      display: '$1.1 billion (reported)'
+      currency: USD
+      display: $1.1 billion (reported)
       value: 1100000000
     organizations:
-      - 'Stripe'
-      - 'Bridge'
+      - Stripe
+      - Bridge
     related_events:
-      - 'bridge-acquisition-announced'
+      - bridge-acquisition-announced
     tags:
-      - 'completed'
-      - 'stablecoins'
-      - 'crypto'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe'
-        published_at: '2025-02-04'
-        title: 'Stripe completes Bridge acquisition'
-        url: 'https://stripe.com/en-br/newsroom/news/stripe-completes-bridge-acquisition'
-
-  - id: 'bridge-acquisition-announced'
-    date: '2024-10-21'
-    date_precision: 'day'
-    title: 'Stripe agrees to acquire Bridge'
-    summary: 'Stripe confirmed plans to acquire stablecoin infrastructure platform Bridge in a transaction reported at $1.1 billion. The agreement was subject to regulatory approval and other customary closing conditions.'
-    confidence: 'confirmed'
-    status: 'Agreement announced; later completed'
+      - completed
+      - stablecoins
+      - crypto
+    source_ids:
+      - source-b5f3dd49770d38d3cc50
+  - id: bridge-acquisition-announced
+    date: 2024-10-21
+    date_precision: day
+    title: Stripe agrees to acquire Bridge
+    summary: Stripe confirmed plans to acquire stablecoin infrastructure platform Bridge in a transaction reported at $1.1 billion. The agreement was subject to regulatory approval and other customary closing conditions.
+    confidence: confirmed
+    status: Agreement announced; later completed
     amount:
-      currency: 'USD'
-      display: '$1.1 billion (reported)'
+      currency: USD
+      display: $1.1 billion (reported)
       value: 1100000000
     organizations:
-      - 'Stripe'
-      - 'Bridge'
+      - Stripe
+      - Bridge
     related_events:
-      - 'bridge-acquisition-completed'
+      - bridge-acquisition-completed
     tags:
-      - 'agreement-announced'
-      - 'stablecoins'
-      - 'crypto'
-    sources:
-      - kind: 'reporting'
-        publisher: 'Reuters'
-        published_at: '2024-10-21'
-        title: 'Fintech giant Stripe to buy crypto startup Bridge'
-        url: 'https://www.investing.com/news/stock-market-news/fintech-giant-stripe-to-buy-crypto-startup-bridge-3673791'
-      - kind: 'reporting'
-        publisher: 'Bloomberg Law'
-        published_at: '2024-10-22'
-        title: 'Stripe Confirms Plans to Acquire Stablecoin Platform Bridge'
-        url: 'https://news.bloomberglaw.com/crypto/stripe-confirms-plans-to-acquire-stablecoin-platform-bridge'
-
-  - id: 'lemon-squeezy-acquisition-completed'
-    date: '2024-07-26'
-    date_precision: 'day'
-    title: 'Stripe acquires Lemon Squeezy'
-    summary: 'Stripe completed its acquisition of merchant-of-record platform Lemon Squeezy. Lemon Squeezy said the companies would combine capabilities while continuing to support its software-business customers; terms were not disclosed.'
-    confidence: 'confirmed'
-    status: 'Completed'
+      - agreement-announced
+      - stablecoins
+      - crypto
+    source_ids:
+      - source-d11e76117c5e0a03a1f2
+      - source-dd3581c945230bf4eb86
+  - id: lemon-squeezy-acquisition-completed
+    date: 2024-07-26
+    date_precision: day
+    title: Stripe acquires Lemon Squeezy
+    summary: Stripe completed its acquisition of merchant-of-record platform Lemon Squeezy. Lemon Squeezy said the companies would combine capabilities while continuing to support its software-business customers; terms were not disclosed.
+    confidence: confirmed
+    status: Completed
     organizations:
-      - 'Stripe'
-      - 'Lemon Squeezy'
+      - Stripe
+      - Lemon Squeezy
     tags:
-      - 'completed'
-      - 'merchant-of-record'
-    sources:
-      - kind: 'primary'
-        publisher: 'Lemon Squeezy'
-        published_at: '2024-07-26'
-        title: 'Stripe acquires Lemon Squeezy'
-        url: 'https://www.lemonsqueezy.com/blog/stripe-acquires-lemon-squeezy'
-
-  - id: 'supaglue-team-joins-stripe'
-    date: '2024-03-29'
-    date_precision: 'day'
-    title: 'Supaglue team joins Stripe'
-    summary: 'Stripe completed an acquihire of Supaglue''s four-person team for an undisclosed sum. The team joined Stripe''s Revenue and Finance Automation group to work on its reporting platform, data services, and real-time analytics.'
-    confidence: 'confirmed'
-    status: 'Talent acquisition completed'
+      - completed
+      - merchant-of-record
+    source_ids:
+      - source-268854c30a2fade4c280
+  - id: supaglue-team-joins-stripe
+    date: 2024-03-29
+    date_precision: day
+    title: Supaglue team joins Stripe
+    summary: Stripe completed an acquihire of Supaglue's four-person team for an undisclosed sum. The team joined Stripe's Revenue and Finance Automation group to work on its reporting platform, data services, and real-time analytics.
+    confidence: confirmed
+    status: Talent acquisition completed
     people:
-      - 'George Xing'
-      - 'Thomas Chen'
+      - George Xing
+      - Thomas Chen
     organizations:
-      - 'Stripe'
-      - 'Supaglue'
+      - Stripe
+      - Supaglue
     metrics:
-      - label: 'Team members'
-        value: '4'
-        context: 'At acquisition'
+      - label: Team members
+        value: "4"
+        context: At acquisition
     tags:
-      - 'talent-acquisition'
-      - 'revenue-automation'
-      - 'developer-tools'
-    sources:
-      - kind: 'primary'
-        publisher: 'George Xing'
-        title: 'Supaglue is joining Stripe'
-        url: 'https://www.linkedin.com/posts/georgexing_supaglue-is-joining-stripe-supaglue-activity-7179502946332659712--2HD'
-      - kind: 'reporting'
-        publisher: 'TechCrunch'
-        published_at: '2024-03-29'
-        title: 'How a tiny 4-person startup, Supaglue, caught Stripe''s eye'
-        url: 'https://techcrunch.com/2024/03/29/supaglue-stripe-acquire-acquisition/'
-
-  - id: 'okay-acquisition-completed'
-    date: '2023-05-31'
-    date_precision: 'day'
-    title: 'Stripe acquires Okay'
-    summary: 'Stripe acquired Okay, a seven-person startup that built engineering-productivity analytics. Okay''s founders confirmed the transaction and said the team would join Stripe; financial terms were not disclosed.'
-    confidence: 'confirmed'
-    status: 'Completed'
+      - talent-acquisition
+      - revenue-automation
+      - developer-tools
+    source_ids:
+      - source-df395fc3ea62abc206fa
+      - source-5026cf90e1d1c99b4ed0
+  - id: okay-acquisition-completed
+    date: 2023-05-31
+    date_precision: day
+    title: Stripe acquires Okay
+    summary: Stripe acquired Okay, a seven-person startup that built engineering-productivity analytics. Okay's founders confirmed the transaction and said the team would join Stripe; financial terms were not disclosed.
+    confidence: confirmed
+    status: Completed
     organizations:
-      - 'Stripe'
-      - 'Okay'
+      - Stripe
+      - Okay
     tags:
-      - 'completed'
-      - 'developer-tools'
-    sources:
-      - kind: 'reporting'
-        publisher: 'TechCrunch'
-        published_at: '2023-05-31'
-        title: 'Okay, which analyzes engineers'' productivity, sells to Stripe'
-        url: 'https://techcrunch.com/2023/05/31/okay-which-analyzes-engineers-productivity-sells-to-stripe/'
-
-  - id: 'indie-hackers-spins-out-from-stripe'
-    date: '2023-04-11'
-    date_precision: 'day'
-    title: 'Indie Hackers becomes independent again'
-    summary: 'Six years after Stripe acquired Indie Hackers, founder Courtland Allen announced that he had bought it back. Stripe remained involved as a seed investor, making the event a reversal of the 2017 acquisition rather than another purchase.'
-    confidence: 'confirmed'
-    status: 'Divested to founder'
+      - completed
+      - developer-tools
+    source_ids:
+      - source-f9f2213f752388778543
+  - id: indie-hackers-spins-out-from-stripe
+    date: 2023-04-11
+    date_precision: day
+    title: Indie Hackers becomes independent again
+    summary: Six years after Stripe acquired Indie Hackers, founder Courtland Allen announced that he had bought it back. Stripe remained involved as a seed investor, making the event a reversal of the 2017 acquisition rather than another purchase.
+    confidence: confirmed
+    status: Divested to founder
     people:
-      - 'Courtland Allen'
+      - Courtland Allen
     organizations:
-      - 'Stripe'
-      - 'Indie Hackers'
+      - Stripe
+      - Indie Hackers
     related_events:
-      - 'indie-hackers-acquisition-completed'
+      - indie-hackers-acquisition-completed
     tags:
-      - 'divestiture'
-      - 'community'
-    sources:
-      - kind: 'primary'
-        publisher: 'Indie Hackers'
-        published_at: '2023-04-11'
-        title: 'Indie Hackers is indie again'
-        url: 'https://www.indiehackers.com/product/indie-hackers/indie-hackers-is-indie-again--NSIAlb7LggSjzTavQZb'
-
-  - id: 'bbpos-acquisition-announced'
-    date: '2022-01-21'
-    date_precision: 'day'
-    title: 'Stripe announces agreement to acquire BBPOS'
-    summary: 'Stripe announced an agreement to acquire card-reader manufacturer BBPOS, bringing more Terminal hardware development in-house. The agreement was subject to customary closing conditions; Stripe''s April 2022 business update later said it had acquired BBPOS.'
-    confidence: 'confirmed'
-    status: 'Agreement announced; completed by April 2022'
+      - divestiture
+      - community
+    source_ids:
+      - source-dce3e584b843eb876619
+  - id: bbpos-acquisition-announced
+    date: 2022-01-21
+    date_precision: day
+    title: Stripe announces agreement to acquire BBPOS
+    summary: Stripe announced an agreement to acquire card-reader manufacturer BBPOS, bringing more Terminal hardware development in-house. The agreement was subject to customary closing conditions; Stripe's April 2022 business update later said it had acquired BBPOS.
+    confidence: confirmed
+    status: Agreement announced; completed by April 2022
     organizations:
-      - 'Stripe'
-      - 'BBPOS'
+      - Stripe
+      - BBPOS
     tags:
-      - 'agreement-announced'
-      - 'terminal'
-      - 'hardware'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe'
-        published_at: '2022-01-21'
-        title: 'Stripe Terminal accelerates global momentum'
-        url: 'https://stripe.com/en-ca/newsroom/news/stripe-terminal-accelerates-global-momentum'
-      - kind: 'primary'
-        publisher: 'Stripe'
-        published_at: '2022-04'
-        title: 'Stripe 2021 business update'
-        url: 'https://stripe.com/files/stripe-2021-update.pdf'
-
-  - id: 'openchannel-acquisition-completed'
-    date: '2021-12-06'
-    date_precision: 'day'
-    title: 'Stripe acquires OpenChannel'
-    summary: 'Stripe acquired OpenChannel, software for building app marketplaces and developer ecosystems. The OpenChannel team joined Stripe to help expand Stripe App Marketplace capabilities; terms were not disclosed.'
-    confidence: 'confirmed'
-    status: 'Completed'
+      - agreement-announced
+      - terminal
+      - hardware
+    source_ids:
+      - source-34734b9c0fe2092013a9
+      - source-7aebf381a98587d0d180
+  - id: openchannel-acquisition-completed
+    date: 2021-12-06
+    date_precision: day
+    title: Stripe acquires OpenChannel
+    summary: Stripe acquired OpenChannel, software for building app marketplaces and developer ecosystems. The OpenChannel team joined Stripe to help expand Stripe App Marketplace capabilities; terms were not disclosed.
+    confidence: confirmed
+    status: Completed
     organizations:
-      - 'Stripe'
-      - 'OpenChannel'
+      - Stripe
+      - OpenChannel
     tags:
-      - 'completed'
-      - 'app-marketplace'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe'
-        published_at: '2021-12-06'
-        title: 'OpenChannel is joining Stripe'
-        url: 'https://stripe.com/newsroom/news/openchannel'
-
-  - id: 'recko-acquisition-agreement'
-    date: '2021-10-20'
-    date_precision: 'day'
-    title: 'Stripe agrees to acquire Recko'
-    summary: 'Stripe signed an agreement to acquire Bengaluru-based payments-reconciliation platform Recko. The announcement said the transaction was subject to customary closing conditions; Recko''s company history confirms Stripe completed the acquisition in 2021.'
-    confidence: 'confirmed'
-    status: 'Agreement announced; completed in 2021'
+      - completed
+      - app-marketplace
+    source_ids:
+      - source-2d5b5463c7b9bca3aaac
+  - id: recko-acquisition-agreement
+    date: 2021-10-20
+    date_precision: day
+    title: Stripe agrees to acquire Recko
+    summary: Stripe signed an agreement to acquire Bengaluru-based payments-reconciliation platform Recko. The announcement said the transaction was subject to customary closing conditions; Recko's company history confirms Stripe completed the acquisition in 2021.
+    confidence: confirmed
+    status: Agreement announced; completed in 2021
     organizations:
-      - 'Stripe'
-      - 'Recko'
+      - Stripe
+      - Recko
     locations:
-      - 'Bengaluru, India'
+      - Bengaluru, India
     tags:
-      - 'agreement-announced'
-      - 'reconciliation'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe'
-        published_at: '2021-10-20'
-        title: 'Recko is joining Stripe'
-        url: 'https://stripe.com/newsroom/news/recko'
-      - kind: 'primary'
-        publisher: 'Recko'
-        title: 'About Recko'
-        url: 'https://www.recko.io/company/'
-
-  - id: 'bouncer-acquisition-completed'
-    date: '2021-05-14'
-    date_precision: 'day'
-    title: 'Stripe acquires Bouncer'
-    summary: 'Stripe acquired Bouncer, whose card-scanning and verification technology was designed to reduce fraud during online transactions. Bouncer''s team joined Stripe, and financial terms were not disclosed.'
-    confidence: 'confirmed'
-    status: 'Completed'
+      - agreement-announced
+      - reconciliation
+    source_ids:
+      - source-f3752724710cc37c8ce1
+      - source-2d56ebbcddbc67a32ada
+  - id: bouncer-acquisition-completed
+    date: 2021-05-14
+    date_precision: day
+    title: Stripe acquires Bouncer
+    summary: Stripe acquired Bouncer, whose card-scanning and verification technology was designed to reduce fraud during online transactions. Bouncer's team joined Stripe, and financial terms were not disclosed.
+    confidence: confirmed
+    status: Completed
     organizations:
-      - 'Stripe'
-      - 'Bouncer'
+      - Stripe
+      - Bouncer
     tags:
-      - 'completed'
-      - 'fraud-prevention'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe'
-        published_at: '2021-05-14'
-        title: 'Bouncer is joining Stripe'
-        url: 'https://stripe.com/newsroom/news/bouncer'
-
-  - id: 'taxjar-acquisition-agreement'
-    date: '2021-04-27'
-    date_precision: 'day'
-    title: 'Stripe agrees to acquire TaxJar'
-    summary: 'Stripe signed an agreement to acquire sales-tax software company TaxJar and its approximately 200 employees, subject to standard closing conditions. TaxJar''s company history confirms Stripe completed the acquisition in 2021; later reporting placed the price between $850 million and $900 million.'
-    confidence: 'confirmed'
-    status: 'Agreement announced; completed in 2021'
+      - completed
+      - fraud-prevention
+    source_ids:
+      - source-87dbe8f2a19c4579de12
+  - id: taxjar-acquisition-agreement
+    date: 2021-04-27
+    date_precision: day
+    title: Stripe agrees to acquire TaxJar
+    summary: Stripe signed an agreement to acquire sales-tax software company TaxJar and its approximately 200 employees, subject to standard closing conditions. TaxJar's company history confirms Stripe completed the acquisition in 2021; later reporting placed the price between $850 million and $900 million.
+    confidence: confirmed
+    status: Agreement announced; completed in 2021
     amount:
-      currency: 'USD'
-      display: '$850 million to $900 million (reported later)'
+      currency: USD
+      display: $850 million to $900 million (reported later)
     organizations:
-      - 'Stripe'
-      - 'TaxJar'
+      - Stripe
+      - TaxJar
     metrics:
-      - label: 'TaxJar employees'
-        value: 'About 200'
-        context: 'At the agreement announcement'
+      - label: TaxJar employees
+        value: About 200
+        context: At the agreement announcement
     tags:
-      - 'agreement-announced'
-      - 'tax'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe'
-        published_at: '2021-04-27'
-        title: 'TaxJar is joining Stripe'
-        url: 'https://stripe.com/en-fr/newsroom/news/taxjar'
-      - kind: 'reporting'
-        publisher: 'Axios'
-        published_at: '2024-10-24'
-        title: 'Inside Stripe''s TaxJar deal'
-        url: 'https://www.axios.com/2024/10/24/inside-stripe-taxjar-deal'
-      - kind: 'primary'
-        publisher: 'TaxJar'
-        title: 'About TaxJar'
-        url: 'https://www.taxjar.com/about'
-
-  - id: 'paystack-acquisition-agreement'
-    date: '2020-10-15'
-    date_precision: 'day'
-    title: 'Stripe agrees to acquire Paystack'
-    summary: 'Stripe agreed to acquire Nigerian payments company Paystack, subject to standard closing conditions including regulatory approvals. Paystack served more than 60,000 businesses, and the transaction was reported at more than $200 million before completing later in October 2020.'
-    confidence: 'confirmed'
-    status: 'Agreement announced; completed in October 2020'
+      - agreement-announced
+      - tax
+    source_ids:
+      - source-c87c7df4d40a29c6f83b
+      - source-fbc1c21181e56c57a806
+      - source-7ce1b3c72bdb24dd6010
+  - id: paystack-acquisition-agreement
+    date: 2020-10-15
+    date_precision: day
+    title: Stripe agrees to acquire Paystack
+    summary: Stripe agreed to acquire Nigerian payments company Paystack, subject to standard closing conditions including regulatory approvals. Paystack served more than 60,000 businesses, and the transaction was reported at more than $200 million before completing later in October 2020.
+    confidence: confirmed
+    status: Agreement announced; completed in October 2020
     amount:
-      currency: 'USD'
-      display: 'More than $200 million (reported)'
+      currency: USD
+      display: More than $200 million (reported)
       value: 200000000
     organizations:
-      - 'Stripe'
-      - 'Paystack'
+      - Stripe
+      - Paystack
     locations:
-      - 'Nigeria'
-      - 'Africa'
+      - Nigeria
+      - Africa
     metrics:
-      - label: 'Businesses served'
-        value: 'More than 60,000'
-        context: 'At announcement'
+      - label: Businesses served
+        value: More than 60,000
+        context: At announcement
     related_events:
-      - 'paystack-acquisition-completed'
+      - paystack-acquisition-completed
     tags:
-      - 'agreement-announced'
-      - 'africa'
-      - 'payments'
-    sources:
-      - kind: 'primary'
-        publisher: 'Stripe'
-        published_at: '2020-10-15'
-        title: 'Paystack is joining Stripe'
-        url: 'https://stripe.com/in/newsroom/news/paystack-joining-stripe'
-      - kind: 'reporting'
-        publisher: 'TechCrunch'
-        published_at: '2020-10-15'
-        title: 'Stripe acquires Nigeria''s Paystack for $200M+'
-        url: 'https://techcrunch.com/2020/10/15/stripe-acquires-nigerias-paystack-for-200m-to-expand-into-the-african-continent/'
-
-  - id: 'paystack-acquisition-completed'
-    date: '2020-10'
-    date_precision: 'month'
-    title: 'Stripe completes Paystack acquisition'
-    summary: 'Stripe completed its acquisition of Nigerian payments company Paystack in October 2020. Paystack continued operating as a Stripe company focused on accelerating commerce across Africa.'
-    confidence: 'confirmed'
-    status: 'Completed'
+      - agreement-announced
+      - africa
+      - payments
+    source_ids:
+      - source-5a23bc6e25af01d7594d
+      - source-e7d509a0e61e558e9117
+  - id: paystack-acquisition-completed
+    date: 2020-10
+    date_precision: month
+    title: Stripe completes Paystack acquisition
+    summary: Stripe completed its acquisition of Nigerian payments company Paystack in October 2020. Paystack continued operating as a Stripe company focused on accelerating commerce across Africa.
+    confidence: confirmed
+    status: Completed
     organizations:
-      - 'Stripe'
-      - 'Paystack'
+      - Stripe
+      - Paystack
     locations:
-      - 'Nigeria'
-      - 'Africa'
+      - Nigeria
+      - Africa
     related_events:
-      - 'paystack-acquisition-agreement'
+      - paystack-acquisition-agreement
     tags:
-      - 'completed'
-      - 'africa'
-      - 'payments'
-    sources:
-      - kind: 'primary'
-        publisher: 'Paystack'
-        title: 'About Paystack'
-        url: 'https://paystack.com/about'
-      - kind: 'primary'
-        publisher: 'Paystack'
-        title: 'Paystack and Stripe'
-        url: 'https://paystack.com/stripe'
-
-  - id: 'touchtech-acquisition-completed'
-    date: '2019-04-17'
-    date_precision: 'day'
-    title: 'Stripe acquires Touchtech Payments'
-    summary: 'Stripe acquired Dublin-based Touchtech Payments, a specialist in strong customer authentication, as European merchants prepared for new authentication requirements. The purchase price was not disclosed.'
-    confidence: 'confirmed'
-    status: 'Completed'
+      - completed
+      - africa
+      - payments
+    source_ids:
+      - source-0270e48f213958f85c53
+      - source-4cba29dde5bde54884d6
+  - id: touchtech-acquisition-completed
+    date: 2019-04-17
+    date_precision: day
+    title: Stripe acquires Touchtech Payments
+    summary: Stripe acquired Dublin-based Touchtech Payments, a specialist in strong customer authentication, as European merchants prepared for new authentication requirements. The purchase price was not disclosed.
+    confidence: confirmed
+    status: Completed
     organizations:
-      - 'Stripe'
-      - 'Touchtech Payments'
+      - Stripe
+      - Touchtech Payments
     locations:
-      - 'Dublin, Ireland'
+      - Dublin, Ireland
     tags:
-      - 'completed'
-      - 'authentication'
-    sources:
-      - kind: 'reporting'
-        publisher: 'TechCrunch'
-        published_at: '2019-04-17'
-        title: 'Stripe acquires Touchtech, updates APIs for Strong Customer Authentication in Europe'
-        url: 'https://techcrunch.com/2019/04/17/stripe-acquires-touchtech-updates-apis-to-prep-for-strong-customer-authentication-in-europe/'
-
-  - id: 'airwallex-acquisition-offer-rejected'
-    date: '2018-10'
-    date_precision: 'month'
-    title: 'Airwallex rejects reported Stripe acquisition offer'
-    summary: 'Stripe offered about $1.2 billion to acquire cross-border payments company Airwallex in October 2018, according to Airwallex cofounder Jack Zhang and later reporting. Zhang initially leaned toward accepting, but he and his cofounders ultimately rejected the offer, and no agreement followed.'
-    confidence: 'reported'
-    status: 'Reported offer rejected; no agreement'
+      - completed
+      - authentication
+    source_ids:
+      - source-a2e28913a8773ba035c0
+  - id: airwallex-acquisition-offer-rejected
+    date: 2018-10
+    date_precision: month
+    title: Airwallex rejects reported Stripe acquisition offer
+    summary: Stripe offered about $1.2 billion to acquire cross-border payments company Airwallex in October 2018, according to Airwallex cofounder Jack Zhang and later reporting. Zhang initially leaned toward accepting, but he and his cofounders ultimately rejected the offer, and no agreement followed.
+    confidence: reported
+    status: Reported offer rejected; no agreement
     amount:
-      currency: 'USD'
-      display: 'About $1.2 billion (reported)'
+      currency: USD
+      display: About $1.2 billion (reported)
       value: 1200000000
     people:
-      - 'Jack Zhang'
+      - Jack Zhang
     organizations:
-      - 'Stripe'
-      - 'Airwallex'
+      - Stripe
+      - Airwallex
     tags:
-      - 'reported-offer'
-      - 'cross-border-payments'
-    sources:
-      - kind: 'interview'
-        publisher: '20VC'
-        published_at: '2025-05-26'
-        title: 'Airwallex CEO & Co-Founder, Jack Zhang: The Angel That Turned $1M into $1BN'
-        url: 'https://www.youtube.com/watch?v=-srgTgUgCgw'
-      - kind: 'reporting'
-        publisher: 'TechCrunch'
-        published_at: '2026-04-17'
-        title: 'Once close enough for an acquisition, Stripe and Airwallex are now going after each other'
-        url: 'https://techcrunch.com/2026/04/17/once-close-enough-for-an-acquisition-stripe-and-airwallex-are-now-going-after-each-other/'
-      - kind: 'reporting'
-        publisher: 'Forbes'
-        published_at: '2026-06-25'
-        title: 'How This New Fintech Billionaire Is Cashing In On Cross-Border Payments'
-        url: 'https://www.forbes.com/sites/jeffkauflin/2026/06/25/how-this-new-fintech-billionaire-is-cashing-in-on-cross-border-payments/'
-
-  - id: 'index-systems-acquisition-completed'
-    date: '2018-03-09'
-    date_precision: 'day'
-    title: 'Stripe acquires Index Systems'
-    summary: 'Stripe acquired point-of-sale software startup Index Systems as it expanded from online payments into in-person commerce. The companies did not disclose the transaction price.'
-    confidence: 'reported'
-    status: 'Completed'
+      - reported-offer
+      - cross-border-payments
+    source_ids:
+      - source-017ccc0342e03126244e
+      - source-ee8d68525578975d8f67
+      - source-004d97f1d873b1f8afcc
+  - id: index-systems-acquisition-completed
+    date: 2018-03-09
+    date_precision: day
+    title: Stripe acquires Index Systems
+    summary: Stripe acquired point-of-sale software startup Index Systems as it expanded from online payments into in-person commerce. The companies did not disclose the transaction price.
+    confidence: reported
+    status: Completed
     organizations:
-      - 'Stripe'
-      - 'Index Systems'
+      - Stripe
+      - Index Systems
     tags:
-      - 'completed'
-      - 'point-of-sale'
-    sources:
-      - kind: 'reporting'
-        publisher: 'PYMNTS'
-        published_at: '2018-03-09'
-        title: 'Stripe Acquires POS Software Startup Index'
-        url: 'https://www.pymnts.com/partnerships/2018/stripe-pos-software-startup-index-acquisition/'
-
-  - id: 'payable-acquisition-completed'
-    date: '2017-07-26'
-    date_precision: 'day'
-    title: 'Stripe acquires Payable'
-    summary: 'Stripe acquired Payable, which automated contractor onboarding and tax-form workflows for marketplace businesses. Payable''s team joined Stripe to improve tax reporting for Stripe Connect; terms were not disclosed.'
-    confidence: 'confirmed'
-    status: 'Completed'
+      - completed
+      - point-of-sale
+    source_ids:
+      - source-feac6eb0d463593e4ca2
+  - id: payable-acquisition-completed
+    date: 2017-07-26
+    date_precision: day
+    title: Stripe acquires Payable
+    summary: Stripe acquired Payable, which automated contractor onboarding and tax-form workflows for marketplace businesses. Payable's team joined Stripe to improve tax reporting for Stripe Connect; terms were not disclosed.
+    confidence: confirmed
+    status: Completed
     organizations:
-      - 'Stripe'
-      - 'Payable'
+      - Stripe
+      - Payable
     tags:
-      - 'completed'
-      - 'tax'
-      - 'connect'
-    sources:
-      - kind: 'reporting'
-        publisher: 'TechCrunch'
-        published_at: '2017-07-26'
-        title: 'Stripe acquires Payable'
-        url: 'https://techcrunch.com/2017/07/26/stripe-acquires-payable/'
-
-  - id: 'indie-hackers-acquisition-completed'
-    date: '2017-04-11'
-    date_precision: 'day'
-    title: 'Stripe acquires Indie Hackers'
-    summary: 'Stripe acquired Indie Hackers, Courtland Allen''s community and interview site for independent founders. Allen continued running the site at Stripe until buying it back six years later.'
-    confidence: 'confirmed'
-    status: 'Completed; later divested'
+      - completed
+      - tax
+      - connect
+    source_ids:
+      - source-0056f18e050920188e0c
+  - id: indie-hackers-acquisition-completed
+    date: 2017-04-11
+    date_precision: day
+    title: Stripe acquires Indie Hackers
+    summary: Stripe acquired Indie Hackers, Courtland Allen's community and interview site for independent founders. Allen continued running the site at Stripe until buying it back six years later.
+    confidence: confirmed
+    status: Completed; later divested
     people:
-      - 'Courtland Allen'
+      - Courtland Allen
     organizations:
-      - 'Stripe'
-      - 'Indie Hackers'
+      - Stripe
+      - Indie Hackers
     related_events:
-      - 'indie-hackers-spins-out-from-stripe'
+      - indie-hackers-spins-out-from-stripe
     tags:
-      - 'completed'
-      - 'community'
-    sources:
-      - kind: 'primary'
-        publisher: 'Indie Hackers'
-        published_at: '2017-04-11'
-        title: 'Acquired by Stripe'
-        url: 'https://www.indiehackers.com/product/indie-hackers/acquired-by-stripe-37d569fd70'
-      - kind: 'reporting'
-        publisher: 'TechCrunch'
-        published_at: '2017-04-11'
-        title: 'Stripe acquires Indie Hackers'
-        url: 'https://techcrunch.com/2017/04/11/stripe-acquires-indie-hackers-a-knowledge-sharing-community-for-entrepreneurs/'
-
-  - id: 'rethinkdb-team-joins-stripe'
-    date: '2016-10-05'
-    date_precision: 'day'
-    title: 'RethinkDB engineering team joins Stripe'
-    summary: 'The RethinkDB company shut down and its engineering team joined Stripe. Stripe did not acquire the database''s intellectual property or source code, so this was a talent acquisition rather than a purchase of the RethinkDB project.'
-    confidence: 'confirmed'
-    status: 'Talent acquisition; assets excluded'
+      - completed
+      - community
+    source_ids:
+      - source-c4f4aea986f46f12cfc1
+      - source-600517ef1c307d86cf25
+  - id: rethinkdb-team-joins-stripe
+    date: 2016-10-05
+    date_precision: day
+    title: RethinkDB engineering team joins Stripe
+    summary: The RethinkDB company shut down and its engineering team joined Stripe. Stripe did not acquire the database's intellectual property or source code, so this was a talent acquisition rather than a purchase of the RethinkDB project.
+    confidence: confirmed
+    status: Talent acquisition; assets excluded
     organizations:
-      - 'Stripe'
-      - 'RethinkDB'
+      - Stripe
+      - RethinkDB
     tags:
-      - 'talent-acquisition'
-      - 'developer-tools'
-    sources:
-      - kind: 'primary'
-        publisher: 'RethinkDB'
-        published_at: '2016-10-05'
-        title: 'RethinkDB is shutting down'
-        url: 'https://rethinkdb.com/blog/rethinkdb-shutdown/'
-
-  - id: 'tonic-runkit-acquisition-completed'
-    date: '2016-09-13'
-    date_precision: 'day'
-    title: 'Stripe acquires Tonic, later known as RunKit'
-    summary: 'Stripe acquired JavaScript prototyping startup Tonic and kept its notebook product operating as an independent subsidiary. The service later adopted the RunKit name; transaction terms were not disclosed.'
-    confidence: 'reported'
-    status: 'Completed'
+      - talent-acquisition
+      - developer-tools
+    source_ids:
+      - source-8e85a9534567ebb62542
+  - id: tonic-runkit-acquisition-completed
+    date: 2016-09-13
+    date_precision: day
+    title: Stripe acquires Tonic, later known as RunKit
+    summary: Stripe acquired JavaScript prototyping startup Tonic and kept its notebook product operating as an independent subsidiary. The service later adopted the RunKit name; transaction terms were not disclosed.
+    confidence: reported
+    status: Completed
     organizations:
-      - 'Stripe'
-      - 'Tonic'
-      - 'RunKit'
+      - Stripe
+      - Tonic
+      - RunKit
     tags:
-      - 'completed'
-      - 'developer-tools'
-    sources:
-      - kind: 'reporting'
-        publisher: 'VentureBeat'
-        published_at: '2016-09-13'
-        title: 'Stripe acquires app prototyping startup Tonic'
-        url: 'https://venturebeat.com/technology/stripe-acquires-app-prototyping-startup-tonic'
-
-  - id: 'kickoff-acquisition-completed'
-    date: '2013-03-11'
-    date_precision: 'day'
-    title: 'Stripe makes its first acquisition with Kickoff'
-    summary: 'Stripe acquired the team behind Kickoff, a task-management and collaboration app. The founders joined Stripe, the Kickoff product remained available at the time, and financial terms were not disclosed.'
-    confidence: 'reported'
-    status: 'Talent acquisition completed'
+      - completed
+      - developer-tools
+    source_ids:
+      - source-c5845822be2fe26f4d98
+  - id: kickoff-acquisition-completed
+    date: 2013-03-11
+    date_precision: day
+    title: Stripe makes its first acquisition with Kickoff
+    summary: Stripe acquired the team behind Kickoff, a task-management and collaboration app. The founders joined Stripe, the Kickoff product remained available at the time, and financial terms were not disclosed.
+    confidence: reported
+    status: Talent acquisition completed
     organizations:
-      - 'Stripe'
-      - 'Kickoff'
+      - Stripe
+      - Kickoff
     tags:
-      - 'talent-acquisition'
-      - 'first-acquisition'
-    sources:
-      - kind: 'reporting'
-        publisher: 'TechCrunch'
-        published_at: '2013-03-11'
-        title: 'Payments company Stripe acquires team task management and collaboration app Kickoff'
-        url: 'https://techcrunch.com/2013/03/11/payments-company-stripe-acquires-team-task-management-and-collaboration-app-kickoff/'
+      - talent-acquisition
+      - first-acquisition
+    source_ids:
+      - source-8335c39a9a30da274705
+schema: stripe-history/history/v2

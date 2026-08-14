@@ -21,13 +21,14 @@ describe("stripehistory.com public identity", () => {
     expect(site.description).toContain("independent, sourced timeline of Stripe");
   });
 
-  test("publishes only canonical history, category, volume, and editorial routes", async () => {
+  test("publishes only canonical history, category, scale, and editorial routes", async () => {
     const entries = await sitemap();
     const urls = entries.map(({ url }) => url);
 
     expect(urls).toEqual(expect.arrayContaining([
       SITE_ORIGIN,
       `${SITE_ORIGIN}/history/payment-volume`,
+      `${SITE_ORIGIN}/history/valuation`,
       `${SITE_ORIGIN}/about`,
       `${SITE_ORIGIN}/data`,
       ...historyCategoryIds.map((id) => `${SITE_ORIGIN}/history/${id}`),
@@ -69,10 +70,14 @@ describe("stripehistory.com public identity", () => {
     expect(socialImageAlt).toBe(site.socialImageAlt);
   });
 
-  test("keeps inspectable History YAML out of search results", async () => {
+  test("keeps inspectable history and research YAML out of search results", async () => {
     expect(await nextConfig.headers?.()).toContainEqual({
       headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
       source: "/history/:category.yml",
+    });
+    expect(await nextConfig.headers?.()).toContainEqual({
+      headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
+      source: "/research/:path*",
     });
   });
 

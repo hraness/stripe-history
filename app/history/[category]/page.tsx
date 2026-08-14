@@ -48,9 +48,7 @@ export async function generateMetadata({
     title,
     description,
     alternates: { canonical: path },
-    ...socialMetadata(`${title} | ${site.domain}`, description, path, {
-      alt: `${resolved.category.label} timeline from ${site.domain}`,
-    }),
+    ...socialMetadata(`${title} | ${site.domain}`, description, path),
   };
 }
 

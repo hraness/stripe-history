@@ -7,18 +7,13 @@ import {
   validateHistoryDuplicateOutput,
 } from "./update-sessions-history";
 
-function event(sourceUrl: string): HistoryEvent {
+function event(sourceId: string): HistoryEvent {
   return {
     confidence: "confirmed",
     date: "2026-04-29",
     date_precision: "day",
     id: "2026-04-29-example-product",
-    sources: [{
-      kind: "primary",
-      publisher: "Stripe",
-      title: "Sessions source",
-      url: sourceUrl,
-    }],
+    source_ids: [sourceId],
     status: "announced",
     summary: "Stripe announced a material product launch with enough concrete detail for the public history record.",
     title: "Stripe announces example product",
@@ -40,14 +35,14 @@ describe("Stripe Sessions source set", () => {
 
   test("coalesces deterministic IDs while retaining every source", () => {
     const events = coalesceHistoryEvents([
-      event("https://stripe.com/blog/source-one"),
-      event("https://stripe.com/blog/source-two"),
+      event("source-11111111111111111111"),
+      event("source-22222222222222222222"),
     ]);
 
     expect(events).toHaveLength(1);
-    expect(events[0]?.sources.map(({ url }) => url)).toEqual([
-      "https://stripe.com/blog/source-one",
-      "https://stripe.com/blog/source-two",
+    expect(events[0]?.source_ids).toEqual([
+      "source-11111111111111111111",
+      "source-22222222222222222222",
     ]);
   });
 

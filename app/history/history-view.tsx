@@ -2,12 +2,19 @@ import type {
   AnnualVolumePoint,
   CategorizedHistoryEvent,
   HistoryCollection,
+  ValuationHeadlinePoint,
 } from "@/lib/content";
 import type { HistoryCategoryId } from "@/lib/history-schema";
 import Link from "next/link";
 
-import { SiteHeader } from "../site-header";
+import { HistoryCategoryIcon } from "./category-icon";
+import {
+  historyFilterVisualStyle,
+  type HistoryFilterVisualId,
+} from "./category-visuals";
+import { HistoryStickyOffsetSync } from "./history-sticky-offset-sync";
 import { SiteFooter } from "../site-footer";
+import { SiteHeader } from "../site-header";
 import { site } from "../site";
 
 interface HistoryViewProps {
@@ -19,6 +26,15 @@ interface HistoryFiltersProps {
   readonly history: HistoryCollection;
   readonly paymentVolumeSelected?: boolean;
   readonly selectedCategoryId?: HistoryCategoryId;
+  readonly valuationSelected?: boolean;
+}
+
+interface HistoryFilterItem {
+  readonly count: number;
+  readonly href: "/" | `/history/${string}`;
+  readonly id: HistoryFilterVisualId;
+  readonly label: string;
+  readonly selected: boolean;
 }
 
 interface HistoryYear {
@@ -45,49 +61,126 @@ function groupEventsByYear(
   return [...years].map(([year, yearEvents]) => ({ events: yearEvents, year }));
 }
 
-function AnnualVolumeSidebar({
-  points,
-}: Readonly<{ points: readonly AnnualVolumePoint[] }>) {
-  if (points.length === 0) return null;
-  const maximumValue = Math.max(...points.map(({ valueUsd }) => valueUsd));
-  const usesTotalVolumeTerminology = points.some(
-    ({ kind }) => kind === "total-volume",
-  );
+export const valuationTierLabel: Readonly<Record<ValuationHeadlinePoint["tier"], string>> = {
+  "financing-tender": "financing / tender",
+  "internal-mark": "409A",
+  "market-signal": "market signal",
+  secondary: "secondary",
+};
 
+export function valuationBarPercent(
+  valueUsd: number,
+  maximumValueUsd: number,
+): number {
+  if (
+    !Number.isFinite(valueUsd)
+    || !Number.isFinite(maximumValueUsd)
+    || maximumValueUsd <= 0
+  ) {
+    return 0;
+  }
+  return Math.max(0, Math.min(100, (valueUsd / maximumValueUsd) * 100));
+}
+
+function HistoryMeasuresSidebar({
+  annualVolumes,
+  valuationHeadlines,
+}: Readonly<{
+  annualVolumes: readonly AnnualVolumePoint[];
+  valuationHeadlines: readonly ValuationHeadlinePoint[];
+}>) {
+  if (annualVolumes.length === 0 && valuationHeadlines.length === 0) return null;
+  const maximumVolume = Math.max(...annualVolumes.map(({ valueUsd }) => valueUsd));
+  const maximumValuation = Math.max(
+    ...valuationHeadlines.map(({ valueUsd }) => valueUsd),
+  );
   return (
-    <aside aria-labelledby="annual-volume-heading" className="history-volume">
-      <figure>
-        <figcaption>
-          <h2 id="annual-volume-heading">
-            <Link href="/history/payment-volume">annual volume</Link>
-          </h2>
-          <span>annual · USD</span>
-        </figcaption>
-        <ol className="history-volume-list" role="list">
-          {points.map((point) => (
-            <li key={point.calendarYear}>
-              <a
-                aria-label={`${point.calendarYear}: ${point.display} ${point.kind === "total-volume" ? "total volume" : "payment volume"}`}
-                href={`/history/${point.categoryId}#${point.eventId}`}
-              >
-                <span>{point.calendarYear}</span>
-                <strong>{point.display}</strong>
-                <span aria-hidden="true" className="history-volume-track">
-                  <span
-                    className="history-volume-fill"
-                    style={{ inlineSize: `${(point.valueUsd / maximumValue) * 100}%` }}
-                  />
-                </span>
-              </a>
-            </li>
-          ))}
-        </ol>
-        {usesTotalVolumeTerminology ? (
-          <p className="history-volume-note">
-            Stripe calls the 2025 figure “total volume.”
-          </p>
-        ) : null}
-      </figure>
+    <aside aria-label="Stripe scale over time" className="history-volume">
+      {annualVolumes.length === 0 ? null : (
+        <figure
+          data-measure="payment-volume"
+          style={historyFilterVisualStyle("payment-volume")}
+        >
+          <figcaption>
+            <h2 id="annual-volume-heading">
+              <Link href="/history/payment-volume">
+                <HistoryCategoryIcon filterId="payment-volume" />
+                <span>annual volume</span>
+              </Link>
+            </h2>
+            <span>annual · USD</span>
+          </figcaption>
+          <ol className="history-volume-list" role="list">
+            {annualVolumes.map((point) => (
+              <li key={point.calendarYear}>
+                <a
+                  aria-label={`${point.calendarYear}: ${point.display} ${point.kind === "total-volume" ? "total volume" : "payment volume"}`}
+                  href={`/history/${point.categoryId}#${point.eventId}`}
+                >
+                  <span>{point.calendarYear}</span>
+                  <strong>{point.display}</strong>
+                  <span aria-hidden="true" className="history-volume-track">
+                    <span
+                      className="history-volume-fill"
+                      style={{ inlineSize: `${(point.valueUsd / maximumVolume) * 100}%` }}
+                    />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </figure>
+      )}
+      {valuationHeadlines.length === 0 ? null : (
+        <figure
+          data-measure="valuation"
+          style={historyFilterVisualStyle("valuation")}
+        >
+          <figcaption>
+            <h2 id="valuation-heading">
+              <Link href="/history/valuation">
+                <HistoryCategoryIcon filterId="valuation" />
+                <span>valuation</span>
+              </Link>
+            </h2>
+            <span>annual headline · USD</span>
+          </figcaption>
+          <ol className="history-volume-list history-valuation-list" role="list">
+            {valuationHeadlines.map((point) => (
+              <li key={point.calendarYear}>
+                <a
+                  aria-label={`${point.calendarYear}: ${point.display}, ${valuationTierLabel[point.tier]}`}
+                  href={`/history/valuation#${point.observationId}`}
+                >
+                  <span>{point.calendarYear}</span>
+                  <strong>{point.display}</strong>
+                  {point.tier === "financing-tender"
+                    || point.tier === "market-signal"
+                    ? null
+                    : (
+                      <span
+                        className="history-valuation-badge"
+                        data-tier={point.tier}
+                      >
+                        {valuationTierLabel[point.tier]}
+                      </span>
+                    )}
+                  <span aria-hidden="true" className="history-volume-track">
+                    <span
+                      className="history-volume-fill history-valuation-fill"
+                      data-tier={point.tier}
+                      data-value-usd={point.valueUsd}
+                      style={{
+                        inlineSize: `${valuationBarPercent(point.valueUsd, maximumValuation)}%`,
+                      }}
+                    />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </figure>
+      )}
     </aside>
   );
 }
@@ -98,7 +191,11 @@ function HistoryEventItem({
   const categoryLabel = event.categoryLabel.toLocaleLowerCase("en-US");
 
   return (
-    <li className="history-event" data-category={event.categoryId}>
+    <li
+      className="history-event"
+      data-category={event.categoryId}
+      style={historyFilterVisualStyle(event.categoryId)}
+    >
       <article id={event.id}>
         <header>
           <p className="history-event-kicker">
@@ -110,7 +207,8 @@ function HistoryEventItem({
               data-analytics-kind="history-category"
               href={`${categoryHref(event.categoryId)}#${event.id}`}
             >
-              {categoryLabel}
+              <HistoryCategoryIcon filterId={event.categoryId} />
+              <span>{categoryLabel}</span>
             </Link>
             {event.status === undefined ? null : (
               <span className="history-event-status">{event.status}</span>
@@ -164,7 +262,7 @@ function HistoryEventItem({
                 data-analytics-kind="history"
                 href={source.url}
               >
-                {source.publisher}: {source.title}
+                {source.publisher}
               </a>
             </span>
           ))}
@@ -178,6 +276,7 @@ export function HistoryFilters({
   history,
   paymentVolumeSelected = false,
   selectedCategoryId,
+  valuationSelected = false,
 }: HistoryFiltersProps) {
   const eventCountByCategory = new Map(
     history.categories.map(({ id }) => [
@@ -185,51 +284,95 @@ export function HistoryFilters({
       history.events.filter(({ categoryId }) => categoryId === id).length,
     ]),
   );
-  const allSelected = selectedCategoryId === undefined && !paymentVolumeSelected;
+  const allSelected = selectedCategoryId === undefined
+    && !paymentVolumeSelected
+    && !valuationSelected;
+
+  const filterItems: readonly HistoryFilterItem[] = [
+    {
+      count: history.events.length,
+      href: "/",
+      id: "all",
+      label: "all",
+      selected: allSelected,
+    },
+    ...history.categories.map((category) => ({
+      count: eventCountByCategory.get(category.id) ?? 0,
+      href: categoryHref(category.id),
+      id: category.id,
+      label: category.label.toLocaleLowerCase("en-US"),
+      selected: selectedCategoryId === category.id,
+    })),
+    {
+      count: history.annualVolumes.length,
+      href: "/history/payment-volume",
+      id: "payment-volume",
+      label: "annual volume",
+      selected: paymentVolumeSelected,
+    },
+    {
+      count: history.valuations.length,
+      href: "/history/valuation",
+      id: "valuation",
+      label: "valuation",
+      selected: valuationSelected,
+    },
+  ];
+  const filterLink = (
+    filterId: HistoryFilterVisualId,
+    label: string,
+    count: number,
+    href: "/" | `/history/${string}`,
+    selected: boolean,
+  ) => {
+    const countNoun = filterId === "valuation"
+      ? "observations"
+      : filterId === "payment-volume"
+        ? "annual disclosures"
+        : count === 1
+          ? "event"
+          : "events";
+    const deselectsToAll = selected && filterId !== "all";
+    const accessibleLabel = deselectsToAll
+      ? `${label}: ${count} ${countNoun}, selected; activate to show all history`
+      : `${label}: ${count} ${countNoun}`;
+    return (
+      <Link
+        aria-current={selected ? "true" : undefined}
+        aria-label={accessibleLabel}
+        data-analytics-event="history filter selected"
+        data-analytics-id={deselectsToAll ? "all" : filterId}
+        data-analytics-kind="history-category"
+        data-filter-id={filterId}
+        href={deselectsToAll ? "/" : href}
+        style={historyFilterVisualStyle(filterId)}
+      >
+        <HistoryCategoryIcon filterId={filterId} />
+        <span className="history-filter-label">{label}</span>
+        <span className="history-filter-count">{count}</span>
+      </Link>
+    );
+  };
 
   return (
-    <nav aria-label="Filter Stripe history" className="history-filters">
-      <ul role="list">
-        <li>
-          <Link
-            aria-current={allSelected ? "page" : undefined}
-            data-analytics-event="history filter selected"
-            data-analytics-id="all"
-            data-analytics-kind="history-category"
-            href="/"
-          >
-            <span>all</span>
-            <span>{history.events.length}</span>
-          </Link>
-        </li>
-        {history.categories.map((category) => (
-          <li key={category.id}>
-            <Link
-              aria-current={selectedCategoryId === category.id ? "page" : undefined}
-              data-analytics-event="history filter selected"
-              data-analytics-id={category.id}
-              data-analytics-kind="history-category"
-              href={categoryHref(category.id)}
-            >
-              <span>{category.label.toLocaleLowerCase("en-US")}</span>
-              <span>{eventCountByCategory.get(category.id)}</span>
-            </Link>
-          </li>
-        ))}
-        <li>
-          <Link
-            aria-current={paymentVolumeSelected ? "page" : undefined}
-            data-analytics-event="history filter selected"
-            data-analytics-id="payment-volume"
-            data-analytics-kind="history-category"
-            href="/history/payment-volume"
-          >
-            <span>annual volume</span>
-            <span>{history.annualVolumes.length}</span>
-          </Link>
-        </li>
-      </ul>
-    </nav>
+    <>
+      <nav aria-label="Filter Stripe history" className="history-filters">
+        <ul role="list">
+          {filterItems.map((item) => (
+            <li key={item.id}>
+              {filterLink(
+                item.id,
+                item.label,
+                item.count,
+                item.href,
+                item.selected,
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <HistoryStickyOffsetSync />
+    </>
   );
 }
 
@@ -254,22 +397,10 @@ export function HistoryView({
       id="main-content"
     >
       <SiteHeader />
-      {selectedCategory === undefined ? null : (
-        <nav aria-label="Breadcrumb" className="stripe-guide-breadcrumbs">
-          <Link href="/">history</Link>
-          <span aria-hidden="true"> / </span>
-          <span>{selectedCategory.label.toLocaleLowerCase("en-US")}</span>
-        </nav>
-      )}
       <section aria-labelledby="history-heading" className="stripe-guide-section">
-        <div className="stripe-guide-section-heading">
-          <h1 id="history-heading">{historyHeading}</h1>
-          <span>
-            {selectedCategoryId === undefined
-              ? `${history.events.length} events`
-              : `${visibleEvents.length} of ${history.events.length} events`}
-          </span>
-        </div>
+        <h1 className="stripe-history-visually-hidden" id="history-heading">
+          {historyHeading}
+        </h1>
         {selectedCategoryId === undefined ? (
           <p className="stripe-guide-intro">{site.description}</p>
         ) : null}
@@ -281,6 +412,10 @@ export function HistoryView({
           <p className="history-filter-description">{selectedCategory.description}</p>
         )}
         <div className="history-layout">
+          <HistoryMeasuresSidebar
+            annualVolumes={history.annualVolumes}
+            valuationHeadlines={history.valuationHeadlines}
+          />
           <div className="history-years">
             {years.map(({ events, year }) => (
               <section
@@ -302,7 +437,6 @@ export function HistoryView({
               </section>
             ))}
           </div>
-          <AnnualVolumeSidebar points={history.annualVolumes} />
         </div>
       </section>
       <SiteFooter />

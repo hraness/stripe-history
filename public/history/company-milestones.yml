@@ -1,442 +1,449 @@
-schema: "stripe-guide/history/v1"
 category:
-  id: "company-milestones"
-  label: "Company milestones"
-  description: "Company-scale, legal, regulatory, operating-model, and other milestones that do not belong more naturally in Stripe's focused history categories."
+  id: company-milestones
+  label: Company milestones
+  description: Company-scale, legal, regulatory, operating-model, and other milestones that do not belong more naturally in Stripe's focused history categories.
   order: 11
 events:
-  - id: "milestone-2026-ftc-debanking-warning"
-    title: "FTC chairman sends Stripe a warning letter about potential debanking violations"
-    date: "2026-03-26"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "warning; no finding or enforcement action stated"
-    summary: "The Federal Trade Commission chairman warned Stripe and three other payment companies that denying lawful customers service inconsistently with their terms or reasonable expectations could violate the FTC Act."
+  - id: milestone-2026-ftc-debanking-warning
+    title: FTC chairman sends Stripe a warning letter about potential debanking violations
+    date: 2026-03-26
+    date_precision: day
+    confidence: confirmed
+    status: warning; no finding or enforcement action stated
+    summary: The Federal Trade Commission chairman warned Stripe and three other payment companies that denying lawful customers service inconsistently with their terms or reasonable expectations could violate the FTC Act.
     details:
-      - label: "Action type"
-        value: "Warning letter from the FTC chairman"
-      - label: "Legal framing"
-        value: "Potential violations related to debanking under Section 5 of the FTC Act"
-      - label: "Scope caution"
-        value: "The letter raised concerns and possible consequences; it did not announce a factual finding, investigation result, or penalty"
-      - label: "Other recipients"
-        value: "PayPal, Visa, and Mastercard"
-    people: ["Patrick Collison", "Andrew N. Ferguson"]
-    organizations: ["Stripe", "Federal Trade Commission", "PayPal", "Visa", "Mastercard"]
-    locations: ["United States"]
-    tags: ["regulation", "debanking", "warning-letter", "united-states"]
-    sources:
-      - kind: "filing"
-        publisher: "Federal Trade Commission"
-        published_at: "2026-03-26"
-        title: "Warning Letter to Stripe, Inc."
-        url: "https://www.ftc.gov/system/files/ftc_gov/pdf/stripe-debanking-letter.pdf"
-      - kind: "primary"
-        publisher: "Federal Trade Commission"
-        published_at: "2026-03-26"
-        title: "FTC chairman issues warning letters to CEOs of PayPal, Stripe, Visa and Mastercard about debanking American consumers"
-        url: "https://www.ftc.gov/legal-library/browse/warning-letters/330171"
-  - id: "milestone-2026-2025-volume-1-9-trillion"
-    title: "Stripe reports $1.9 trillion in 2025 total volume"
-    date: "2026-02-24"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "annual disclosure"
+      - label: Action type
+        value: Warning letter from the FTC chairman
+      - label: Legal framing
+        value: Potential violations related to debanking under Section 5 of the FTC Act
+      - label: Scope caution
+        value: The letter raised concerns and possible consequences; it did not announce a factual finding, investigation result, or penalty
+      - label: Other recipients
+        value: PayPal, Visa, and Mastercard
+    people:
+      - Patrick Collison
+      - Andrew N. Ferguson
+    organizations:
+      - Stripe
+      - Federal Trade Commission
+      - PayPal
+      - Visa
+      - Mastercard
+    locations:
+      - United States
+    tags:
+      - regulation
+      - debanking
+      - warning-letter
+      - united-states
+    source_ids:
+      - source-1aceab1f7585dbec2798
+      - source-af73a183fc7223ea0d57
+  - id: milestone-2026-2025-volume-1-9-trillion
+    title: Stripe reports $1.9 trillion in 2025 total volume
+    date: 2026-02-24
+    date_precision: day
+    confidence: confirmed
+    status: annual disclosure
     annual_volume:
       calendar_year: 2025
-      display: "$1.9 trillion"
-      kind: "total-volume"
-      qualifier: "published-value"
+      display: $1.9 trillion
+      kind: total-volume
+      qualifier: published-value
       value_usd: 1900000000000
-    summary: "Stripe's 2025 annual update reported $1.9 trillion in volume, more than five million businesses, broad blue-chip adoption, and continued profitability."
+    summary: Stripe's 2025 annual update reported $1.9 trillion in volume, more than five million businesses, broad blue-chip adoption, and continued profitability.
     details:
-      - label: "Growth"
-        value: "Total volume increased 34% from 2024"
-      - label: "Profitability"
-        value: "Stripe described itself as robustly profitable"
-      - label: "Product activity"
-        value: "More than 350 product updates during 2025"
+      - label: Growth
+        value: Total volume increased 34% from 2024
+      - label: Profitability
+        value: Stripe described itself as robustly profitable
+      - label: Product activity
+        value: More than 350 product updates during 2025
     metrics:
-      - label: "Total volume"
-        value: "$1.9 trillion"
-      - label: "Share of global GDP"
-        value: "1.6%"
-      - label: "Businesses powered"
-        value: "5 million+"
-        context: "Directly or through platforms"
-      - label: "Dow Jones Industrial Average adoption"
-        value: "90%"
-      - label: "Nasdaq 100 adoption"
-        value: "80%"
-      - label: "Revenue suite run-rate target"
-        value: "$1 billion"
-        context: "Stripe said the suite was on track to reach this annual run rate in 2026"
-    people: ["Patrick Collison", "John Collison"]
-    organizations: ["Stripe"]
-    tags: ["annual-letter", "company-scale", "payment-volume", "profitability"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2026-02-24"
-        title: "Stripe publishes 2025 annual letter and announces tender offer to provide liquidity to current and former employees"
-        url: "https://stripe.com/en-nl/newsroom/news/stripe-2025-update"
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2026-02-24"
-        title: "Stripe's 2025 annual letter"
-        url: "https://stripe.com/annual-updates/2025"
-  - id: "milestone-2026-us-entity-converts-to-llc"
-    title: "Stripe's US contracting entity converts from Inc. to LLC"
-    date: "2026-01"
-    date_precision: "month"
-    confidence: "confirmed"
-    status: "entity conversion"
-    summary: "Stripe disclosed that its US contracting entity converted from Stripe, Inc. to Stripe, LLC as part of a broader update to its global legal terms."
+      - label: Total volume
+        value: $1.9 trillion
+      - label: Share of global GDP
+        value: 1.6%
+      - label: Businesses powered
+        value: 5 million+
+        context: Directly or through platforms
+      - label: Dow Jones Industrial Average adoption
+        value: 90%
+      - label: Nasdaq 100 adoption
+        value: 80%
+      - label: Revenue suite run-rate target
+        value: $1 billion
+        context: Stripe said the suite was on track to reach this annual run rate in 2026
+    people:
+      - Patrick Collison
+      - John Collison
+    organizations:
+      - Stripe
+    tags:
+      - annual-letter
+      - company-scale
+      - payment-volume
+      - profitability
+    source_ids:
+      - source-bd6516ac551f19c37d33
+      - source-6a0d2f89102ce3fbce2c
+  - id: milestone-2026-us-entity-converts-to-llc
+    title: Stripe's US contracting entity converts from Inc. to LLC
+    date: 2026-01
+    date_precision: month
+    confidence: confirmed
+    status: entity conversion
+    summary: Stripe disclosed that its US contracting entity converted from Stripe, Inc. to Stripe, LLC as part of a broader update to its global legal terms.
     details:
-      - label: "Former entity"
-        value: "Stripe, Inc."
-      - label: "New entity"
-        value: "Stripe, LLC"
-      - label: "Scope"
-        value: "US contracting entity; this record does not imply a change to every Stripe affiliate worldwide"
-      - label: "Date discrepancy"
-        value: "Stripe's user-terms notice says January 5, while its service-provider list says January 3; month precision avoids choosing between them"
-    organizations: ["Stripe, Inc.", "Stripe, LLC"]
-    locations: ["United States"]
-    tags: ["legal-entity", "corporate-structure", "united-states"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe Support"
-        published_at: "2025-11-18"
-        title: "Stripe User Terms Update - 18 November 2025"
-        url: "https://support.stripe.com/questions/stripe-user-terms-update-november-18-2025?locale=en-GB"
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2025-12-20"
-        title: "Stripe Service Providers, Sub-Processors and Affiliates"
-        url: "https://stripe.com/legal/service-providers"
-  - id: "milestone-2025-2024-volume-1-4-trillion"
-    title: "Stripe reports $1.4 trillion in 2024 payment volume"
-    date: "2025-02-27"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "annual disclosure"
+      - label: Former entity
+        value: Stripe, Inc.
+      - label: New entity
+        value: Stripe, LLC
+      - label: Scope
+        value: US contracting entity; this record does not imply a change to every Stripe affiliate worldwide
+      - label: Date discrepancy
+        value: Stripe's user-terms notice says January 5, while its service-provider list says January 3; month precision avoids choosing between them
+    organizations:
+      - Stripe, Inc.
+      - Stripe, LLC
+    locations:
+      - United States
+    tags:
+      - legal-entity
+      - corporate-structure
+      - united-states
+    source_ids:
+      - source-7209b823727c000ddf0c
+      - source-519ba3de493a815c1243
+  - id: milestone-2025-2024-volume-1-4-trillion
+    title: Stripe reports $1.4 trillion in 2024 payment volume
+    date: 2025-02-27
+    date_precision: day
+    confidence: confirmed
+    status: annual disclosure
     annual_volume:
       calendar_year: 2024
-      display: "$1.4 trillion"
-      kind: "payment-volume"
-      qualifier: "published-value"
+      display: $1.4 trillion
+      kind: payment-volume
+      qualifier: published-value
       value_usd: 1400000000000
-    summary: "Stripe's 2024 annual update reported $1.4 trillion in payment volume, durable profitability, and adoption by half of the Fortune 100."
+    summary: Stripe's 2024 annual update reported $1.4 trillion in payment volume, durable profitability, and adoption by half of the Fortune 100.
     details:
-      - label: "Growth"
-        value: "Total payment volume increased 38% from 2023"
-      - label: "Profitability"
-        value: "Stripe said it was profitable and expected to remain so"
-      - label: "Research strategy"
-        value: "The company emphasized reinvesting operating earnings in research and development"
+      - label: Growth
+        value: Total payment volume increased 38% from 2023
+      - label: Profitability
+        value: Stripe said it was profitable and expected to remain so
+      - label: Research strategy
+        value: The company emphasized reinvesting operating earnings in research and development
     metrics:
-      - label: "Total payment volume"
-        value: "$1.4 trillion"
-      - label: "Share of global GDP"
-        value: "1.3%"
-      - label: "Fortune 100 adoption"
-        value: "50%"
-      - label: "Forbes Cloud 100 adoption"
-        value: "80%"
-      - label: "Forbes AI 50 adoption"
-        value: "78%"
-    people: ["Patrick Collison", "John Collison"]
-    organizations: ["Stripe"]
-    tags: ["annual-letter", "company-scale", "payment-volume", "profitability"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2025-02-27"
-        title: "Stripe's total payment volume reaches $1.4T, fueled by long-standing investments in AI"
-        url: "https://stripe.com/newsroom/news/stripe-2024-update"
-  - id: "milestone-2024-2023-volume-1-trillion"
-    title: "Stripe crosses $1 trillion in annual payment volume"
-    date: "2024-03-13"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "annual disclosure"
+      - label: Total payment volume
+        value: $1.4 trillion
+      - label: Share of global GDP
+        value: 1.3%
+      - label: Fortune 100 adoption
+        value: 50%
+      - label: Forbes Cloud 100 adoption
+        value: 80%
+      - label: Forbes AI 50 adoption
+        value: 78%
+    people:
+      - Patrick Collison
+      - John Collison
+    organizations:
+      - Stripe
+    tags:
+      - annual-letter
+      - company-scale
+      - payment-volume
+      - profitability
+    source_ids:
+      - source-1dc5f19b6950b5352d21
+  - id: milestone-2024-2023-volume-1-trillion
+    title: Stripe crosses $1 trillion in annual payment volume
+    date: 2024-03-13
+    date_precision: day
+    confidence: confirmed
+    status: annual disclosure
     annual_volume:
       calendar_year: 2023
-      display: "$1 trillion"
-      kind: "payment-volume"
-      qualifier: "published-value"
+      display: $1 trillion
+      kind: payment-volume
+      qualifier: published-value
       value_usd: 1000000000000
-    summary: "Stripe's 2023 annual letter reported that businesses processed $1 trillion on the platform and that the company was robustly cash-flow positive."
+    summary: Stripe's 2023 annual letter reported that businesses processed $1 trillion on the platform and that the company was robustly cash-flow positive.
     details:
-      - label: "Profitability"
-        value: "Robustly cash-flow positive in 2023, with the same expected for 2024"
-      - label: "Scale comparison"
-        value: "Stripe described the volume as roughly 1% of global GDP"
+      - label: Profitability
+        value: Robustly cash-flow positive in 2023, with the same expected for 2024
+      - label: Scale comparison
+        value: Stripe described the volume as roughly 1% of global GDP
     metrics:
-      - label: "Total payment volume"
-        value: "$1 trillion"
-      - label: "Share of global GDP"
-        value: "About 1%"
-      - label: "Growth from 2022"
-        value: "About 25%"
-        context: "Comparison with the prior year's $817 billion volume"
-    people: ["Patrick Collison", "John Collison"]
-    organizations: ["Stripe"]
-    tags: ["annual-letter", "company-scale", "payment-volume", "cash-flow-positive"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2024-03-13"
-        title: "Stripe's 2023 annual letter"
-        url: "https://stripe.com/en-ca/annual-updates/2023"
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2024-03-13"
-        title: "Stripe 2023 annual letter"
-        url: "https://assets.ctfassets.net/fzn2n1nzq965/1gMd12owbzJaSe4Y560OEJ/0e7a27759e1b3070c5179ded5b94f525/Stripe_2023_annual_letter_enGB.pdf"
-  - id: "milestone-2023-2022-volume-817-billion"
-    title: "Stripe reports more than $817 billion in 2022 payment volume"
-    date: "2023-04-05"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "annual disclosure"
+      - label: Total payment volume
+        value: $1 trillion
+      - label: Share of global GDP
+        value: About 1%
+      - label: Growth from 2022
+        value: About 25%
+        context: Comparison with the prior year's $817 billion volume
+    people:
+      - Patrick Collison
+      - John Collison
+    organizations:
+      - Stripe
+    tags:
+      - annual-letter
+      - company-scale
+      - payment-volume
+      - cash-flow-positive
+    source_ids:
+      - source-8a7b0b685a7ceb93b864
+      - source-ed092678fc3313192a56
+  - id: milestone-2023-2022-volume-817-billion
+    title: Stripe reports more than $817 billion in 2022 payment volume
+    date: 2023-04-05
+    date_precision: day
+    confidence: confirmed
+    status: annual disclosure
     annual_volume:
       calendar_year: 2022
-      display: "$817 billion+"
-      kind: "payment-volume"
-      qualifier: "lower-bound"
+      display: $817 billion+
+      kind: payment-volume
+      qualifier: lower-bound
       value_usd: 817000000000
-    summary: "Stripe's 2022 annual letter reported more than $817 billion in total volume, slower growth than 2021, and more than 100 companies each processing over $1 billion annually."
+    summary: Stripe's 2022 annual letter reported more than $817 billion in total volume, slower growth than 2021, and more than 100 companies each processing over $1 billion annually.
     details:
-      - label: "Growth"
-        value: "Total volume increased 26% from 2021"
-      - label: "Large-user cohort"
-        value: "More than 100 companies processed over $1 billion each through Stripe during the year"
+      - label: Growth
+        value: Total volume increased 26% from 2021
+      - label: Large-user cohort
+        value: More than 100 companies processed over $1 billion each through Stripe during the year
     metrics:
-      - label: "Total payment volume"
-        value: "$817 billion+"
-      - label: "Year-over-year growth"
-        value: "26%"
-      - label: "Users above $1 billion annual volume"
-        value: "100+"
-    people: ["Patrick Collison", "John Collison"]
-    organizations: ["Stripe"]
-    tags: ["annual-letter", "company-scale", "payment-volume"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2023-04-05"
-        title: "Stripe 2022 annual update"
-        url: "https://assets.ctfassets.net/fzn2n1nzq965/5Qj1NdQFtWO3rIE4WhAVl9/102082e311fc26462207a8ebb89eef25/stripe-2022-annual-update.pdf"
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2023-04-05"
-        title: "Stripe publishes 2022 annual letter"
-        url: "https://stripe.com/newsroom/news/stripe-2022-update"
-  - id: "milestone-2022-workforce-reduction"
-    title: "Stripe announces a 14% workforce reduction"
-    date: "2022-11-03"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "restructuring announced"
-    summary: "Patrick Collison told employees that Stripe would reduce its team by about 14%, saying the founders had overhired after pandemic-era ecommerce growth."
+      - label: Total payment volume
+        value: $817 billion+
+      - label: Year-over-year growth
+        value: 26%
+      - label: Users above $1 billion annual volume
+        value: 100+
+    people:
+      - Patrick Collison
+      - John Collison
+    organizations:
+      - Stripe
+    tags:
+      - annual-letter
+      - company-scale
+      - payment-volume
+    source_ids:
+      - source-4c2b6be236dc25d35aff
+      - source-c368358c8a9f73e7acf1
+  - id: milestone-2022-workforce-reduction
+    title: Stripe announces a 14% workforce reduction
+    date: 2022-11-03
+    date_precision: day
+    confidence: confirmed
+    status: restructuring announced
+    summary: Patrick Collison told employees that Stripe would reduce its team by about 14%, saying the founders had overhired after pandemic-era ecommerce growth.
     details:
-      - label: "Reason given"
-        value: "Costs and staffing had been built for a faster-growth environment than Stripe expected in 2022 and 2023"
-      - label: "Founder accountability"
-        value: "Patrick and John Collison said they were fully responsible for the decisions leading to the reduction"
-      - label: "Severance floor"
-        value: "At least 14 weeks, with more for longer tenure"
+      - label: Reason given
+        value: Costs and staffing had been built for a faster-growth environment than Stripe expected in 2022 and 2023
+      - label: Founder accountability
+        value: Patrick and John Collison said they were fully responsible for the decisions leading to the reduction
+      - label: Severance floor
+        value: At least 14 weeks, with more for longer tenure
     metrics:
-      - label: "Workforce reduction"
-        value: "About 14%"
-      - label: "Pandemic-era growth"
-        value: "3x+"
-        context: "Stripe's stated revenue and payment-volume growth since the pandemic began"
-    people: ["Patrick Collison", "John Collison"]
-    organizations: ["Stripe"]
-    tags: ["workforce", "layoffs", "restructuring"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2022-11-03"
-        title: "CEO Patrick Collison's email to Stripe employees"
-        url: "https://stripe.com/it/newsroom/news/ceo-patrick-collisons-email-to-stripe-employees"
-  - id: "milestone-2022-2021-volume-640-billion"
-    title: "Stripe reports more than $640 billion in 2021 payment volume"
-    date: "2022-04"
-    date_precision: "month"
-    confidence: "confirmed"
-    status: "annual disclosure"
+      - label: Workforce reduction
+        value: About 14%
+      - label: Pandemic-era growth
+        value: 3x+
+        context: Stripe's stated revenue and payment-volume growth since the pandemic began
+    people:
+      - Patrick Collison
+      - John Collison
+    organizations:
+      - Stripe
+    tags:
+      - workforce
+      - layoffs
+      - restructuring
+    source_ids:
+      - source-7974addf5e18ced26551
+  - id: milestone-2022-2021-volume-640-billion
+    title: Stripe reports more than $640 billion in 2021 payment volume
+    date: 2022-04
+    date_precision: month
+    confidence: confirmed
+    status: annual disclosure
     annual_volume:
       calendar_year: 2021
-      display: "$640 billion+"
-      kind: "payment-volume"
-      qualifier: "lower-bound"
+      display: $640 billion+
+      kind: payment-volume
+      qualifier: lower-bound
       value_usd: 640000000000
-    summary: "Stripe's 2021 annual letter reported more than $640 billion in payment volume and rapid daily growth in both new users and businesses reaching meaningful sales scale."
+    summary: Stripe's 2021 annual letter reported more than $640 billion in payment volume and rapid daily growth in both new users and businesses reaching meaningful sales scale.
     details:
-      - label: "Growth"
-        value: "Payment volume increased 60% from 2020"
-      - label: "Context"
-        value: "Stripe cautioned that pandemic-related behavioral shifts made the growth rate unlikely to repeat in 2022"
+      - label: Growth
+        value: Payment volume increased 60% from 2020
+      - label: Context
+        value: Stripe cautioned that pandemic-related behavioral shifts made the growth rate unlikely to repeat in 2022
     metrics:
-      - label: "Total payment volume"
-        value: "$640 billion+"
-      - label: "Year-over-year growth"
-        value: "60%"
-      - label: "New companies per day"
-        value: "1,400"
-      - label: "New nonprofits per day"
+      - label: Total payment volume
+        value: $640 billion+
+      - label: Year-over-year growth
+        value: 60%
+      - label: New companies per day
+        value: 1,400
+      - label: New nonprofits per day
         value: "100"
-      - label: "Businesses crossing $1 million lifetime sales per day"
-        value: "100+"
-    people: ["Patrick Collison", "John Collison"]
-    organizations: ["Stripe"]
-    tags: ["annual-letter", "company-scale", "payment-volume"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2022-04"
-        title: "Stripe 2021 update"
-        url: "https://stripe.com/files/stripe-2021-update.pdf"
-  - id: "milestone-2020-global-office-closure"
-    title: "Stripe closes all offices during the COVID-19 pandemic"
-    date: "2020-03-18"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "temporary global remote operation"
-    summary: "After phasing in precautions and closing individual offices, Stripe closed every office and shifted employees and on-site contractors worldwide to working from home."
+      - label: Businesses crossing $1 million lifetime sales per day
+        value: 100+
+    people:
+      - Patrick Collison
+      - John Collison
+    organizations:
+      - Stripe
+    tags:
+      - annual-letter
+      - company-scale
+      - payment-volume
+    source_ids:
+      - source-7aebf381a98587d0d180
+  - id: milestone-2020-global-office-closure
+    title: Stripe closes all offices during the COVID-19 pandemic
+    date: 2020-03-18
+    date_precision: day
+    confidence: confirmed
+    status: temporary global remote operation
+    summary: After phasing in precautions and closing individual offices, Stripe closed every office and shifted employees and on-site contractors worldwide to working from home.
     details:
-      - label: "Initial precautions"
-        value: "Work-from-home guidance, suspended travel, and a pause on office visitors began in late February"
-      - label: "Global closure"
-        value: "All Stripe offices were closed by the March 18 update"
-      - label: "Vendor support"
-        value: "Stripe said it would continue paying vendors to preserve jobs for affected hourly workers"
-    organizations: ["Stripe"]
-    tags: ["covid-19", "remote-work", "operations"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2020-03-02"
-        title: "COVID-19 precautions for Stripe employees and customers"
-        url: "https://stripe.com/newsroom/news/covid-19"
-  - id: "milestone-2019-remote-engineering-hub"
-    title: "Stripe establishes Remote as its fifth engineering hub"
-    date: "2019-05-02"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "launched"
-    summary: "Stripe formalized Remote as a coequal engineering hub alongside San Francisco, Seattle, Dublin, and Singapore, making distributed hiring part of its operating model."
+      - label: Initial precautions
+        value: Work-from-home guidance, suspended travel, and a pause on office visitors began in late February
+      - label: Global closure
+        value: All Stripe offices were closed by the March 18 update
+      - label: Vendor support
+        value: Stripe said it would continue paying vendors to preserve jobs for affected hourly workers
+    organizations:
+      - Stripe
+    tags:
+      - covid-19
+      - remote-work
+      - operations
+    source_ids:
+      - source-3884ba13c1dbeb603dae
+  - id: milestone-2019-remote-engineering-hub
+    title: Stripe establishes Remote as its fifth engineering hub
+    date: 2019-05-02
+    date_precision: day
+    confidence: confirmed
+    status: launched
+    summary: Stripe formalized Remote as a coequal engineering hub alongside San Francisco, Seattle, Dublin, and Singapore, making distributed hiring part of its operating model.
     details:
-      - label: "Operating model"
-        value: "Virtual hub treated as coequal with four physical engineering hubs"
-      - label: "Initial geography"
-        value: "North America, beginning with the United States and Canada"
-      - label: "Hiring goal"
-        value: "At least 100 remote engineers during the first year"
+      - label: Operating model
+        value: Virtual hub treated as coequal with four physical engineering hubs
+      - label: Initial geography
+        value: North America, beginning with the United States and Canada
+      - label: Hiring goal
+        value: At least 100 remote engineers during the first year
     metrics:
-      - label: "Initial hiring goal"
-        value: "100+ remote engineers"
-      - label: "First-year hires"
+      - label: Initial hiring goal
+        value: 100+ remote engineers
+      - label: First-year hires
         value: "100"
-        context: "Stripe's one-year retrospective said it met the goal"
-      - label: "Remote share after one year"
-        value: "22%"
-        context: "Share of Stripe's engineering population reported in May 2020"
-    organizations: ["Stripe"]
-    locations: ["Remote", "United States", "Canada"]
-    tags: ["remote-work", "engineering", "operating-model"]
-    sources:
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2019-05-02"
-        title: "Stripe's fifth engineering hub is Remote"
-        url: "https://stripe.com/blog/remote-hub"
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2020-05-28"
-        title: "Stripe's remote engineering hub, one year in"
-        url: "https://stripe.com/blog/remote-hub-one-year"
-  - id: "milestone-2019-irish-electronic-money-license"
-    title: "Stripe receives Irish electronic money institution authorization"
-    date: "2019-03-22"
-    date_precision: "day"
-    confidence: "confirmed"
-    status: "authorized"
-    summary: "The Central Bank of Ireland authorized Stripe Technology Europe as an electronic money institution for payment, money-remittance, issuing, acquiring, and account-information services."
+        context: Stripe's one-year retrospective said it met the goal
+      - label: Remote share after one year
+        value: 22%
+        context: Share of Stripe's engineering population reported in May 2020
+    organizations:
+      - Stripe
+    locations:
+      - Remote
+      - United States
+      - Canada
+    tags:
+      - remote-work
+      - engineering
+      - operating-model
+    source_ids:
+      - source-90f07d388464369c2b51
+      - source-6fa2526817c31490953f
+  - id: milestone-2019-irish-electronic-money-license
+    title: Stripe receives Irish electronic money institution authorization
+    date: 2019-03-22
+    date_precision: day
+    confidence: confirmed
+    status: authorized
+    summary: The Central Bank of Ireland authorized Stripe Technology Europe as an electronic money institution for payment, money-remittance, issuing, acquiring, and account-information services.
     details:
-      - label: "Authorized entity"
-        value: "Stripe Technology Europe, Limited"
-      - label: "Regulator"
-        value: "Central Bank of Ireland"
-      - label: "Reference"
-        value: "C187865"
-      - label: "Scope"
-        value: "Electronic money issuance and specified payment services; Stripe is not described as a bank"
-    organizations: ["Stripe Technology Europe, Limited", "Central Bank of Ireland"]
-    locations: ["Ireland", "European Economic Area"]
-    tags: ["regulation", "license", "electronic-money", "ireland", "europe"]
-    sources:
-      - kind: "filing"
-        publisher: "Central Bank of Ireland"
-        published_at: "2019-03-22"
-        title: "Financial Service Provider Register Data: Stripe Technology Europe, Limited"
-        url: "https://registers.centralbank.ie/firmregisterdatapage.aspx?firmreferencenumber=c187865&register=63"
-      - kind: "primary"
-        publisher: "Stripe"
-        published_at: "2019-04-05"
-        title: "Stripe Technology Europe terms"
-        url: "https://stripe.com/de/legal/stel"
-  - id: "milestone-2017-first-stripe-sessions"
-    title: "Stripe holds its first Sessions conference"
-    date: "2017-06-01"
-    date_precision: "day"
-    confidence: "reported"
-    status: "held"
-    summary: "Stripe convened hundreds of users for its first Sessions conference, creating the annual event that became its main venue for coordinated product announcements."
+      - label: Authorized entity
+        value: Stripe Technology Europe, Limited
+      - label: Regulator
+        value: Central Bank of Ireland
+      - label: Reference
+        value: C187865
+      - label: Scope
+        value: Electronic money issuance and specified payment services; Stripe is not described as a bank
+    organizations:
+      - Stripe Technology Europe, Limited
+      - Central Bank of Ireland
+    locations:
+      - Ireland
+      - European Economic Area
+    tags:
+      - regulation
+      - license
+      - electronic-money
+      - ireland
+      - europe
+    source_ids:
+      - source-618a6c3ce25fc7419a80
+      - source-749f533b264cd161b60f
+  - id: milestone-2017-first-stripe-sessions
+    title: Stripe holds its first Sessions conference
+    date: 2017-06-01
+    date_precision: day
+    confidence: reported
+    status: held
+    summary: Stripe convened hundreds of users for its first Sessions conference, creating the annual event that became its main venue for coordinated product announcements.
     details:
-      - label: "Audience"
-        value: "Hundreds of Stripe users"
-      - label: "Launch example"
-        value: "Stripe Sigma debuted at the conference"
-      - label: "Historical role"
-        value: "Sessions later became Stripe's recurring annual user and product conference"
-    organizations: ["Stripe"]
-    related_events: ["product-2017-sigma"]
-    tags: ["sessions", "conference", "community"]
-    sources:
-      - kind: "reporting"
-        publisher: "TechCrunch"
-        published_at: "2017-06-01"
-        title: "Stripe launches Sigma, a new analytics tool to help businesses track payments data"
-        url: "https://techcrunch.com/2017/06/01/stripe-sigma-data-analytics/"
-  - id: "milestone-2016-california-money-transmitter-license"
-    title: "Stripe obtains a California money transmitter license"
+      - label: Audience
+        value: Hundreds of Stripe users
+      - label: Launch example
+        value: Stripe Sigma debuted at the conference
+      - label: Historical role
+        value: Sessions later became Stripe's recurring annual user and product conference
+    organizations:
+      - Stripe
+    related_events:
+      - product-2017-sigma
+    tags:
+      - sessions
+      - conference
+      - community
+    source_ids:
+      - source-b51fb51f19c22188d7b9
+  - id: milestone-2016-california-money-transmitter-license
+    title: Stripe obtains a California money transmitter license
     date: "2016"
-    date_precision: "year"
-    confidence: "confirmed"
-    status: "licensed"
-    summary: "Stripe Payments Company obtained a California money transmitter license, creating a regulated foundation for US money-movement products beyond ordinary card acquiring."
+    date_precision: year
+    confidence: confirmed
+    status: licensed
+    summary: Stripe Payments Company obtained a California money transmitter license, creating a regulated foundation for US money-movement products beyond ordinary card acquiring.
     details:
-      - label: "Licensed entity"
-        value: "Stripe Payments Company"
-      - label: "Regulator"
-        value: "California Department of Business Oversight, now the Department of Financial Protection and Innovation"
-      - label: "Date precision"
-        value: "Stripe's regulatory submission confirms 2016 but does not provide the license date"
-    organizations: ["Stripe Payments Company", "California Department of Financial Protection and Innovation"]
-    locations: ["California", "United States"]
-    tags: ["regulation", "license", "money-transmission", "california"]
-    sources:
-      - kind: "filing"
-        publisher: "California Department of Business Oversight"
-        published_at: "2019-05"
-        title: "PRO 07:17 - Stripe submission"
-        url: "https://dfpi.ca.gov/wp-content/uploads/sites/337/2019/05/PRO-07-17-Stripe.pdf"
-      - kind: "filing"
-        publisher: "California Department of Financial Protection and Innovation"
-        title: "Stripe Payments Company regulated entity record"
-        url: "https://dfpi.ca.gov/regulated_entity/stripe-payments-company/"
+      - label: Licensed entity
+        value: Stripe Payments Company
+      - label: Regulator
+        value: California Department of Business Oversight, now the Department of Financial Protection and Innovation
+      - label: Date precision
+        value: Stripe's regulatory submission confirms 2016 but does not provide the license date
+    organizations:
+      - Stripe Payments Company
+      - California Department of Financial Protection and Innovation
+    locations:
+      - California
+      - United States
+    tags:
+      - regulation
+      - license
+      - money-transmission
+      - california
+    source_ids:
+      - source-e651876aba816022517a
+      - source-5d278320d7e0662046c0
+schema: stripe-history/history/v2

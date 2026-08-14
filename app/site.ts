@@ -11,7 +11,7 @@ export type SitePath = `/${string}`;
 export const site = {
   applicationName: "Stripe History",
   description:
-    "An independent, sourced timeline of Stripe acquisitions, products, leadership, funding, expansion, offices, publishing, company milestones, and annual volume.",
+    "An independent, sourced timeline of Stripe acquisitions, products, leadership, funding, valuation, expansion, offices, publishing, company milestones, and annual volume.",
   domain: SITE_DOMAIN,
   historyTitle: "Stripe Company History",
   name: "Stripe History",

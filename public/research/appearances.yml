@@ -1,0 +1,252 @@
+schema: stripe-history/appearances/v1
+appearances:
+  - id: appearance-2025-05-patrick-john-collison-sessions-ama
+    occurred_at: 2025-05
+    date_precision: month
+    title: AMA with Patrick and John Collison
+    venue: Stripe Sessions
+    series: Sessions 2025
+    participants:
+      - name: Patrick Collison
+        role: speaker
+      - name: John Collison
+        role: speaker
+    media: [video, transcript]
+    transcript:
+      availability: official
+      language: en
+      source_id: source-7db75f16638fc07f166c
+    topics: [stablecoins, payment-methods, ai, product-strategy, company-building]
+    historical_periods: [stripe-2009-2025]
+    significance: Patrick and John answer customer questions about stablecoin adoption, local payment methods, AI, product strategy, and what they would change if they were building Stripe again.
+    source_ids: [source-7db75f16638fc07f166c]
+    review_status: reviewed
+  - id: appearance-2025-03-patrick-collison-congress-testimony
+    occurred_at: 2025-03-11
+    date_precision: day
+    published_at: 2025-03-11
+    title: Testimony on payment stablecoins and central bank digital currency
+    venue: United States House Committee on Financial Services
+    participants:
+      - name: Patrick Collison
+        role: witness
+    media: [testimony, transcript]
+    transcript:
+      availability: official
+      language: en
+      source_id: source-bbf6b0fb0b8942bc569f
+    topics: [stablecoins, payments, regulation, bridge, payment-volume]
+    historical_periods: [stripe-2010-2025]
+    significance: Patrick's written congressional testimony gives a first-person account of Stripe's founding, scale, payment-method coverage, Bridge acquisition, and policy case for stablecoins.
+    source_ids: [source-18cef128fcb5c9083568, source-bbf6b0fb0b8942bc569f]
+    review_status: reviewed
+  - id: appearance-2024-04-patrick-john-collison-sessions-ama
+    occurred_at: 2024-04-24
+    date_precision: day
+    published_at: 2024-04-24
+    title: AMA with Patrick and John Collison
+    venue: Stripe Sessions
+    series: Sessions 2024
+    participants:
+      - name: Patrick Collison
+        role: speaker
+      - name: John Collison
+        role: speaker
+    media: [video, transcript]
+    duration_seconds: 2700
+    duration_precision: approximate
+    transcript:
+      availability: official
+      language: en
+      source_id: source-001e51b689b259d0b4e3
+    topics: [auctomatic, company-building, craft, culture, climate, ai, product-strategy]
+    historical_periods: [pre-stripe, stripe-2009-2024]
+    significance: Patrick and John revisit Auctomatic, explain Stripe's emphasis on craft and long-duration work, and discuss climate, AI, competitive learning, and product strategy in an official transcript.
+    source_ids: [source-001e51b689b259d0b4e3]
+    review_status: reviewed
+  - id: appearance-2024-04-patrick-collison-berkeley-haas
+    occurred_at: 2024-04
+    date_precision: month
+    published_at: 2024-04-30
+    title: Patrick Collison on founding a company that should have already existed
+    venue: UC Berkeley Haas
+    series: Dean's Speaker Series
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+    media: [video, transcript]
+    duration_seconds: 3600
+    duration_precision: approximate
+    transcript:
+      availability: official
+      language: en
+      source_id: source-ca9f69ba263dbc27bda3
+    topics: [founding, startup-school, early-company, culture, writing]
+    historical_periods: [stripe-2009-2011, stripe-2012-2024]
+    significance: Patrick gives a detailed first-person account of the 2009 Startup School walk, John proposing the prototype, the first US trip, early company hardship, and Stripe's writing culture.
+    source_ids: [source-ca9f69ba263dbc27bda3]
+    review_status: reviewed
+  - id: appearance-2024-02-patrick-collison-dwarkesh
+    occurred_at: 2024-02-21
+    date_precision: day
+    published_at: 2024-02-21
+    title: Patrick Collison on craft, APIs, and Stripe's future
+    venue: Dwarkesh Podcast
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+    media: [podcast, video, transcript]
+    transcript:
+      availability: official
+      language: en
+      source_id: source-51a0e1edbe8fc1ce9d5a
+    topics: [company-building, payment-volume, progress-studies, arc-institute, stripe-climate, api-design, culture]
+    historical_periods: [pre-stripe, stripe-2009-2024]
+    significance: Patrick gives a long first-person account of Stripe's history, processing scale, API design, company culture, Stripe Climate, Arc Institute, and how he and John divide their work.
+    source_ids: [source-51a0e1edbe8fc1ce9d5a]
+    review_status: reviewed
+  - id: appearance-2023-11-patrick-john-collison-social-radars
+    occurred_at: 2023-11-14
+    date_precision: day
+    published_at: 2023-11-14
+    title: Patrick and John Collison on building Stripe
+    venue: The Social Radars
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+      - name: John Collison
+        role: interviewee
+    media: [podcast]
+    duration_seconds: 4294
+    duration_precision: exact
+    transcript:
+      availability: none
+    topics: [founding, y-combinator, company-building, product-strategy, culture]
+    historical_periods: [pre-stripe, stripe-2009-2023]
+    significance: The brothers jointly recount Stripe's path from a two-person project through its later scale, adding a shared first-person perspective on the company's founding and development.
+    source_ids: [source-d8e4c6cb20568d496b94]
+    review_status: reviewed
+  - id: appearance-2023-10-patrick-john-collison-colossus
+    occurred_at: 2023-10-17
+    date_precision: day
+    published_at: 2023-10-17
+    title: A Business State of Mind
+    venue: Invest Like the Best
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+      - name: John Collison
+        role: interviewee
+    media: [podcast, transcript]
+    transcript:
+      availability: official
+      language: en
+      source_id: source-1278271efc6181fee94f
+    topics: [company-building, culture, strategy, capital-allocation, internet-economy]
+    historical_periods: [stripe-2009-2023]
+    significance: Patrick and John discuss Stripe's strategy, culture, attention to detail, capital allocation, and the internet economy together in a long-form primary interview.
+    source_ids: [source-1278271efc6181fee94f]
+    review_status: reviewed
+  - id: appearance-2020-06-john-collison-colossus
+    occurred_at: 2020-06-16
+    date_precision: day
+    published_at: 2020-06-16
+    title: Growing the Internet Economy
+    venue: Invest Like the Best
+    participants:
+      - name: John Collison
+        role: interviewee
+    media: [podcast, transcript]
+    transcript:
+      availability: official
+      language: en
+      source_id: source-4d80199395399e9e47d8
+    topics: [internet-economy, writing, conglomerates, company-building, governance]
+    historical_periods: [stripe-2009-2020]
+    significance: John discusses Stripe's mission, the internet economy, writing, industrial conglomerates, and company governance in a long-form interview with a complete publisher transcript.
+    source_ids: [source-4d80199395399e9e47d8]
+    review_status: reviewed
+  - id: appearance-2018-12-patrick-collison-tim-ferriss
+    occurred_at: 2018-12-24
+    date_precision: day
+    published_at: 2018-12-24
+    title: Patrick Collison on books, Auctomatic, Stripe, and technological progress
+    venue: The Tim Ferriss Show
+    series: Episode 353
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+    media: [podcast, transcript]
+    transcript:
+      availability: official
+      language: en
+      source_id: source-7365200928b2c76a48b7
+    topics: [auctomatic, founding, books, learning, progress-studies, company-building]
+    historical_periods: [pre-stripe, stripe-2009-2018]
+    significance: Patrick gives an unusually detailed account of his early programming, Auctomatic, Stripe's origin, reading practice, recruiting, and interest in technological progress.
+    source_ids: [source-7365200928b2c76a48b7]
+    review_status: reviewed
+  - id: appearance-2016-05-patrick-john-collison-cbs
+    occurred_at: 2016-05-01
+    date_precision: day
+    published_at: 2016-05-01
+    title: Fintech and the origin of Stripe
+    venue: CBS 60 Minutes
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+      - name: John Collison
+        role: interviewee
+    media: [video, transcript]
+    transcript:
+      availability: official
+      language: en
+      source_id: source-26410b426525f71187bb
+    topics: [founding, early-company, payments, product-demo, financial-industry]
+    historical_periods: [pre-stripe, stripe-2009-2016]
+    significance: The brothers explain the payment friction that led them to Stripe and demonstrate the early product in a contemporaneous national television profile with an official script.
+    source_ids: [source-26410b426525f71187bb]
+    review_status: reviewed
+  - id: appearance-2015-02-john-collison-stanford
+    occurred_at: 2015-02-17
+    date_precision: day
+    published_at: 2015-02-17
+    title: Putting Startup Success in Perspective
+    venue: Stanford Technology Ventures Program
+    series: Entrepreneurial Thought Leaders
+    participants:
+      - name: John Collison
+        role: interviewee
+    media: [video, transcript]
+    duration_seconds: 3456
+    duration_precision: exact
+    transcript:
+      availability: official
+      language: en
+      source_id: source-a5d1d621862fa7f1cac0
+    topics: [founding, startup-failure, company-building, culture, entrepreneurship]
+    historical_periods: [pre-stripe, stripe-2009-2015]
+    significance: John explains how celebrated startups repeatedly pass through uncertainty and failure, placing Stripe's early path in the context of startup evolution and durable company vision.
+    source_ids: [source-a5d1d621862fa7f1cac0]
+    review_status: reviewed
+  - id: appearance-2012-04-patrick-collison-startup-grind
+    occurred_at: '2012'
+    date_precision: year
+    published_at: 2013-02-20
+    title: Stripe, six months in
+    venue: Startup Grind
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+    media: [video, transcript]
+    duration_seconds: 3300
+    duration_precision: approximate
+    transcript:
+      availability: official
+      language: en
+      source_id: source-bda69e86e22cf8e2c66f
+    topics: [auctomatic, buenos-aires, founding, first-users, early-hires, fundraising]
+    historical_periods: [pre-stripe, stripe-2009-2012]
+    significance: This early interview preserves Patrick's account of Auctomatic, Buenos Aires, the first Stripe prototype and users, the September 2011 launch, early hires, and fundraising while the company was still young.
+    source_ids: [source-bda69e86e22cf8e2c66f]
+    review_status: reviewed
