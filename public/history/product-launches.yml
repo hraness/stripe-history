@@ -1,0 +1,842 @@
+schema: "stripe-guide/history/v1"
+category:
+  id: "product-launches"
+  label: "Product launches"
+  description: "Notable Stripe products and major platform capabilities, with previews and general availability distinguished."
+  order: 4
+events:
+  - id: "product-2026-stripe-database-preview"
+    title: "Stripe previews Stripe Database"
+    date: "2026-04-29"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "preview"
+    summary: "At Sessions 2026, Stripe previewed a managed, hosted, read-only Postgres database that can expose real-time Stripe data after one-click Dashboard or CLI setup."
+    details:
+      - label: "Launch kind"
+        value: "New product preview"
+      - label: "Access"
+        value: "Preview; not represented as generally available"
+    organizations: ["Stripe"]
+    tags: ["sessions", "data", "developer-tools", "preview"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2026-04-29"
+        title: "Everything we announced at Sessions 2026"
+        url: "https://stripe.com/blog/everything-we-announced-at-sessions-2026"
+  - id: "product-2026-checkout-studio-preview"
+    title: "Stripe previews Checkout studio"
+    date: "2026-04-29"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "preview"
+    summary: "Stripe previewed Checkout studio, a visual checkout configuration and optimization product with an AI assistant, transaction replay, A/B testing, and personalized recommendations."
+    details:
+      - label: "Launch kind"
+        value: "New product preview"
+      - label: "Availability"
+        value: "Preview"
+    organizations: ["Stripe"]
+    tags: ["sessions", "checkout", "ai", "preview"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2026-04-29"
+        title: "Everything we announced at Sessions 2026"
+        url: "https://stripe.com/blog/everything-we-announced-at-sessions-2026"
+  - id: "product-2026-link-agent-wallet"
+    title: "Link launches a wallet for AI agents"
+    date: "2026-04-29"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Link's agent wallet, allowing an authorized agent to pay with a one-time-use card or Shared Payment Token while the customer retains approvals and purchase visibility."
+    details:
+      - label: "Launch kind"
+        value: "New product capability"
+      - label: "Control model"
+        value: "Customer approvals, purchase visibility, and task-specific credentials"
+    metrics:
+      - label: "Link users"
+        value: "250 million+"
+        context: "Stripe's reported global Link user base at launch"
+    organizations: ["Stripe", "Link"]
+    tags: ["sessions", "agentic-commerce", "wallet", "ai"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2026-04-29"
+        title: "Everything we announced at Sessions 2026"
+        url: "https://stripe.com/blog/everything-we-announced-at-sessions-2026"
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2026-04-29"
+        title: "Giving agents the ability to pay"
+        url: "https://stripe.com/blog/giving-agents-the-ability-to-pay"
+  - id: "product-2026-streaming-payments-announced"
+    title: "Stripe introduces streaming payments"
+    date: "2026-04-29"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "announced"
+    summary: "Stripe introduced streaming payments for AI-native usage, combining Metronome metering with stablecoin micropayments on Tempo so businesses can collect payment as value is delivered."
+    details:
+      - label: "Launch kind"
+        value: "New business-model infrastructure"
+      - label: "Components"
+        value: "Metronome usage tracking and Tempo stablecoin settlement"
+      - label: "Availability"
+        value: "Announced at Sessions; broad availability was not stated"
+    organizations: ["Stripe", "Metronome", "Tempo"]
+    tags: ["sessions", "billing", "stablecoins", "ai"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2026-04-29"
+        title: "Stripe builds out the economic infrastructure for AI with 288 launches"
+        url: "https://stripe.com/en-be/newsroom/news/sessions-2026"
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2026-04-29"
+        title: "Everything we announced at Sessions 2026"
+        url: "https://stripe.com/blog/everything-we-announced-at-sessions-2026"
+  - id: "product-2025-agentic-commerce-suite"
+    title: "Stripe launches the Agentic Commerce Suite"
+    date: "2025-12-11"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched a single integration for product discovery, checkout, payments, and fraud controls inside AI applications, extending its earlier agentic-commerce work into a named suite."
+    details:
+      - label: "Launch kind"
+        value: "New product suite"
+      - label: "Initial scope"
+        value: "Businesses selling through supported AI applications"
+    organizations: ["Stripe"]
+    tags: ["agentic-commerce", "ai", "checkout"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2025-12-11"
+        title: "Stripe launches the Agentic Commerce Suite to help every business thrive in the AI-enabled commerce era"
+        url: "https://stripe.com/newsroom/news/agentic-commerce-suite"
+  - id: "product-2025-agentic-commerce-protocol"
+    title: "Stripe and OpenAI release the Agentic Commerce Protocol"
+    date: "2025-09-29"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "released"
+    summary: "Stripe and OpenAI released the open Agentic Commerce Protocol and used it to power Instant Checkout in ChatGPT, establishing a shared interface for AI agents and merchants."
+    details:
+      - label: "Launch kind"
+        value: "Open protocol and production integration"
+      - label: "Initial surface"
+        value: "Instant Checkout in ChatGPT"
+    organizations: ["Stripe", "OpenAI"]
+    tags: ["agentic-commerce", "open-protocol", "checkout", "ai"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2025-09-29"
+        title: "Stripe powers Instant Checkout in ChatGPT and releases Agentic Commerce Protocol codeveloped with OpenAI"
+        url: "https://stripe.com/newsroom/news/stripe-openai-instant-checkout"
+  - id: "product-2025-tempo-introduced"
+    title: "Stripe and Paradigm introduce Tempo"
+    date: "2025-09-04"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "introduced"
+    summary: "Stripe and Paradigm introduced Tempo, a Layer 1 blockchain incubated for scalable, low-cost stablecoin payments rather than general-purpose crypto workloads."
+    details:
+      - label: "Launch kind"
+        value: "Incubated infrastructure project"
+      - label: "Network"
+        value: "Layer 1 blockchain purpose-built for payments"
+    organizations: ["Stripe", "Paradigm", "Tempo"]
+    tags: ["stablecoins", "blockchain", "payments-infrastructure"]
+    sources:
+      - kind: "primary"
+        publisher: "Tempo"
+        published_at: "2025-09-04"
+        title: "Introducing Tempo, the payments-first blockchain"
+        url: "https://tempo.xyz/blog/introducing-tempo"
+  - id: "product-2025-global-payouts"
+    title: "Stripe launches Global Payouts"
+    date: "2025-05-07"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Global Payouts so businesses could pay customers, contractors, and other third parties using an email address without requiring those recipients to become Stripe sellers."
+    details:
+      - label: "Launch kind"
+        value: "New payout product"
+      - label: "Initial positioning"
+        value: "Third-party payouts using hosted, no-code, or API paths"
+    organizations: ["Stripe"]
+    related_events: ["payment-2026-global-payouts-expanded-preview"]
+    tags: ["sessions", "payouts", "money-movement"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2025-05-07"
+        title: "Stripe accelerates the utility of AI and stablecoins with major launches"
+        url: "https://stripe.com/newsroom/news/sessions-2025"
+  - id: "product-2025-managed-payments"
+    title: "Stripe announces Managed Payments"
+    date: "2025-05-07"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "announced"
+    summary: "Stripe announced Managed Payments, a merchant-of-record offering intended to handle global taxes, fraud, disputes, fulfillment obligations, and market entry for digital businesses."
+    details:
+      - label: "Launch kind"
+        value: "New merchant-of-record product"
+      - label: "Availability"
+        value: "Announced at Sessions; the source did not claim universal availability"
+    organizations: ["Stripe"]
+    tags: ["sessions", "merchant-of-record", "global-commerce"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2025-05-07"
+        title: "Stripe accelerates the utility of AI and stablecoins with major launches"
+        url: "https://stripe.com/newsroom/news/sessions-2025"
+  - id: "product-2025-orchestration"
+    title: "Stripe launches Orchestration"
+    date: "2025-05-07"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Orchestration for enterprises to configure, manage, compare, and optimize payments across multiple processors from the Stripe Dashboard."
+    details:
+      - label: "Launch kind"
+        value: "Multiprocessor payments product"
+      - label: "Audience"
+        value: "Enterprises with complex payment-provider stacks"
+    organizations: ["Stripe"]
+    tags: ["sessions", "orchestration", "enterprise", "interoperability"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2025-05-07"
+        title: "Stripe accelerates the utility of AI and stablecoins with major launches"
+        url: "https://stripe.com/newsroom/news/sessions-2025"
+  - id: "product-2025-payments-foundation-model"
+    title: "Stripe unveils the Payments Foundation Model"
+    date: "2025-05-07"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "announced and deploying"
+    summary: "Stripe unveiled a foundation model trained on tens of billions of transactions for reuse across fraud, authorization, and other payment tasks, with early deployment improving card-testing detection."
+    details:
+      - label: "Launch kind"
+        value: "Shared AI model for payments"
+      - label: "Rollout"
+        value: "Announced for deployment across the payments suite"
+    metrics:
+      - label: "Training corpus"
+        value: "Tens of billions of transactions"
+      - label: "Detection lift"
+        value: "64%"
+        context: "Reported increase in card-testing attack detection for large businesses in early results"
+    organizations: ["Stripe"]
+    tags: ["sessions", "ai", "fraud", "payments-intelligence"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2025-05-07"
+        title: "Stripe accelerates the utility of AI and stablecoins with major launches"
+        url: "https://stripe.com/newsroom/news/sessions-2025"
+  - id: "product-2025-stablecoin-financial-accounts"
+    title: "Stripe launches stablecoin financial accounts"
+    date: "2025-05-07"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "rollout announced"
+    summary: "Stripe announced stablecoin-powered financial accounts for businesses in 101 countries, initially supporting USDC and Bridge's USDB with fiat and crypto receiving rails."
+    details:
+      - label: "Launch kind"
+        value: "Treasury expansion"
+      - label: "Initial assets"
+        value: "USDC and USDB"
+      - label: "Availability"
+        value: "Rollout announced for 101 countries; country-level timing may vary"
+    metrics:
+      - label: "Countries"
+        value: "101"
+    organizations: ["Stripe", "Bridge"]
+    tags: ["sessions", "stablecoins", "treasury", "global-commerce"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2025-05-07"
+        title: "Stripe accelerates the utility of AI and stablecoins with major launches"
+        url: "https://stripe.com/newsroom/news/sessions-2025"
+  - id: "product-2024-multiprocessor-interoperability"
+    title: "Stripe announces multiprocessor product interoperability"
+    date: "2024-04-24"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "announced"
+    summary: "Stripe announced that its Optimized Checkout Suite, Billing, and Radar would become usable by companies that process payments with other providers, a major change from its earlier integrated-stack requirement."
+    details:
+      - label: "Launch kind"
+        value: "Platform strategy and product availability change"
+      - label: "Products"
+        value: "Optimized Checkout Suite, Billing, and Radar"
+      - label: "Availability"
+        value: "Future availability announced at Sessions"
+    organizations: ["Stripe"]
+    tags: ["sessions", "interoperability", "enterprise", "multiprocessor"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2024-04-24"
+        title: "Stripe Sessions: 50+ announcements, including AI-powered payments, major upgrades to Connect, interoperability, and more"
+        url: "https://stripe.com/newsroom/news/sessions-2024"
+  - id: "product-2024-radar-assistant"
+    title: "Stripe launches Radar Assistant"
+    date: "2024-04-24"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Radar Assistant to draft fraud rules from natural-language prompts and test their likely fraud and false-positive effects against historical payments."
+    details:
+      - label: "Launch kind"
+        value: "AI-powered product capability"
+      - label: "Product"
+        value: "Stripe Radar"
+    organizations: ["Stripe"]
+    tags: ["sessions", "radar", "ai", "fraud"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2024-04-24"
+        title: "Stripe Sessions: 50+ announcements, including AI-powered payments, major upgrades to Connect, interoperability, and more"
+        url: "https://stripe.com/newsroom/news/sessions-2024"
+  - id: "product-2024-usage-based-billing"
+    title: "Stripe Billing adds full usage-based billing support"
+    date: "2024-04-24"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched full usage-based billing support so businesses could meter customer usage inside Stripe and translate it into charges for consumption-based products."
+    details:
+      - label: "Launch kind"
+        value: "Major product capability"
+      - label: "Product"
+        value: "Stripe Billing"
+    organizations: ["Stripe"]
+    tags: ["sessions", "billing", "usage-based-pricing"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2024-04-24"
+        title: "Stripe Sessions: 50+ announcements, including AI-powered payments, major upgrades to Connect, interoperability, and more"
+        url: "https://stripe.com/newsroom/news/sessions-2024"
+  - id: "product-2023-hosted-crypto-onramp"
+    title: "Stripe expands Crypto Onramp with a hosted option"
+    date: "2023-05-04"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched a Stripe-hosted crypto onramp that let web3 companies direct users to a hosted purchase flow, complementing the previously released embeddable onramp."
+    details:
+      - label: "Launch kind"
+        value: "New hosted product surface"
+      - label: "Product"
+        value: "Stripe Crypto Onramp"
+    organizations: ["Stripe"]
+    tags: ["crypto", "onramp", "hosted-checkout"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2023-05-04"
+        title: "Stripe expands access to its crypto onramp with a new hosted option"
+        url: "https://stripe.com/en-gb/newsroom/news/fiat-to-crypto-onramp"
+  - id: "product-2023-reader-s700"
+    title: "Stripe launches Reader S700"
+    date: "2023-05-02"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Reader S700, a Stripe-designed Android smart reader for handheld or countertop use that can run customized point-of-sale experiences."
+    details:
+      - label: "Launch kind"
+        value: "New hardware product"
+      - label: "Platform"
+        value: "Stripe Terminal"
+    organizations: ["Stripe"]
+    tags: ["terminal", "hardware", "in-person-payments"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2023-05-02"
+        title: "Stripe launches Stripe Reader S700, a customizable smart reader"
+        url: "https://stripe.com/newsroom/news/stripe-reader-s700"
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2023-05-03"
+        title: "Sessions 2023: Powering growth for the internet economy"
+        url: "https://stripe.com/blog/stripe-sessions-2023"
+  - id: "product-2023-enhanced-issuer-network"
+    title: "Stripe launches the Enhanced Issuer Network"
+    date: "2023-02-21"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched the Enhanced Issuer Network to share richer transaction signals with participating card issuers and improve authorization and fraud outcomes."
+    details:
+      - label: "Launch kind"
+        value: "Payments network product"
+      - label: "Objective"
+        value: "Reduce fraud and improve authorization rates"
+    organizations: ["Stripe"]
+    tags: ["payments-performance", "issuers", "fraud", "network"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2023-02-21"
+        title: "Stripe launches Enhanced Issuer Network to help businesses reduce fraud and boost authorization rates"
+        url: "https://stripe.com/newsroom/news/enhanced-issuer-network"
+  - id: "product-2022-stripe-apps"
+    title: "Stripe launches Stripe Apps and its App Marketplace"
+    date: "2022-05-24"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "At Sessions 2022, Stripe launched Stripe Apps so developers could extend Dashboard workflows and businesses could install third-party tools from an app marketplace."
+    details:
+      - label: "Launch kind"
+        value: "Developer platform and marketplace"
+    organizations: ["Stripe"]
+    tags: ["sessions", "apps", "marketplace", "developer-platform"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2022-05-24"
+        title: "Stripe launches Stripe Apps to help businesses build or discover tools that work seamlessly with Stripe"
+        url: "https://stripe.com/newsroom/news/stripe-apps"
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2022-05-24"
+        title: "Sessions 2022 and product highlights from the year"
+        url: "https://stripe.com/blog/stripe-sessions-2022"
+  - id: "product-2022-data-pipeline"
+    title: "Stripe launches Data Pipeline"
+    date: "2022-05-18"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Data Pipeline to synchronize Stripe data and reports into customers' Snowflake or Amazon Redshift warehouses without a custom extraction pipeline."
+    details:
+      - label: "Launch kind"
+        value: "New data product"
+      - label: "Initial destinations"
+        value: "Snowflake and Amazon Redshift"
+    organizations: ["Stripe", "Snowflake", "Amazon Web Services"]
+    tags: ["data", "warehouse", "finance-automation"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2022-05-18"
+        title: "Stripe introduces Data Pipeline to help users sync their data with Amazon Redshift and Snowflake Data Cloud"
+        url: "https://stripe.com/newsroom/news/stripe-data-pipeline"
+  - id: "product-2022-financial-connections"
+    title: "Stripe launches Financial Connections"
+    date: "2022-05-04"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Financial Connections so businesses could let customers link bank accounts and share permissioned financial data for payments and financial-services workflows."
+    details:
+      - label: "Launch kind"
+        value: "New bank-account connectivity product"
+    organizations: ["Stripe"]
+    tags: ["open-banking", "bank-accounts", "payments"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2022-05-04"
+        title: "Stripe introduces Financial Connections to help businesses connect to their customers' bank accounts"
+        url: "https://stripe.com/newsroom/news/financial-connections"
+  - id: "product-2021-revenue-recognition"
+    title: "Stripe launches Revenue Recognition"
+    date: "2021-09-21"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Revenue Recognition to automate accrual accounting, reporting, and audit-ready revenue schedules for Stripe and non-Stripe transactions."
+    details:
+      - label: "Launch kind"
+        value: "New finance automation product"
+    organizations: ["Stripe"]
+    tags: ["accounting", "revenue-recognition", "finance-automation"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2021-09-21"
+        title: "Stripe launches Revenue Recognition to simplify accounting and automate financial reporting"
+        url: "https://stripe.com/newsroom/news/revenue-recognition"
+  - id: "product-2021-identity"
+    title: "Stripe launches Identity"
+    date: "2021-07-14"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Identity as a self-serve identity-verification product built on its own onboarding infrastructure, initially supporting government documents from more than 30 countries."
+    details:
+      - label: "Launch kind"
+        value: "New identity product"
+      - label: "Initial methods"
+        value: "Government ID, selfie matching, and record checks"
+    metrics:
+      - label: "Document countries"
+        value: "30+"
+    organizations: ["Stripe"]
+    tags: ["identity", "kyc", "fraud", "compliance"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2021-07-14"
+        title: "Stripe launches Stripe Identity, an identity verification tool to increase trust online"
+        url: "https://stripe.com/newsroom/news/stripe-launches-identity"
+  - id: "product-2021-stripe-tax"
+    title: "Stripe launches Stripe Tax"
+    date: "2021-06-10"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Tax to calculate and collect sales tax, VAT, and GST and generate filing reports, initially covering more than 30 countries and every US state."
+    details:
+      - label: "Launch kind"
+        value: "New tax compliance product"
+      - label: "Initial scope"
+        value: "Calculation, collection, nexus monitoring, and reports"
+    metrics:
+      - label: "Countries"
+        value: "30+"
+        context: "Initial calculation and collection coverage"
+    organizations: ["Stripe"]
+    tags: ["tax", "compliance", "finance-automation"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2021-06-10"
+        title: "Stripe launches Stripe Tax to simplify global tax compliance for businesses"
+        url: "https://stripe.com/newsroom/news/stripe-launches-stripe-tax"
+  - id: "product-2021-payment-links"
+    title: "Stripe launches Payment Links"
+    date: "2021-05-25"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Payment Links so a business could create and share a Stripe-hosted payment page from the Dashboard without a website or code."
+    details:
+      - label: "Launch kind"
+        value: "New no-code payment product"
+      - label: "Initial capabilities"
+        value: "One-time and recurring payments, wallets, coupons, subscriptions, and trials"
+    organizations: ["Stripe"]
+    tags: ["no-code", "checkout", "payments"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2021-05-25"
+        title: "Stripe launches Payment Links to enable online sales in minutes without any code"
+        url: "https://stripe.com/newsroom/news/stripe-launches-payment-links"
+  - id: "product-2020-treasury"
+    title: "Stripe launches Treasury"
+    date: "2020-12-03"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "invite-only launch"
+    summary: "Stripe launched Treasury for platforms to embed financial accounts, money movement, and cards with regulated bank partners, initially through an invite-only program."
+    details:
+      - label: "Launch kind"
+        value: "Embedded financial-services product"
+      - label: "Initial access"
+        value: "Invite only"
+      - label: "Bank partners"
+        value: "Evolve Bank & Trust and Goldman Sachs for the initial US program"
+    organizations: ["Stripe", "Evolve Bank & Trust", "Goldman Sachs"]
+    tags: ["treasury", "embedded-finance", "banking-as-a-service"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2020-12-03"
+        title: "Stripe launches Stripe Treasury in major expansion of financial services offering for platform partners"
+        url: "https://stripe.com/newsroom/news/treasury"
+  - id: "product-2020-stripe-climate"
+    title: "Stripe launches Stripe Climate"
+    date: "2020-10-28"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Climate so businesses could direct a fraction of revenue to a Stripe-selected portfolio of permanent carbon-removal projects, with Stripe taking no fee."
+    details:
+      - label: "Launch kind"
+        value: "New climate contribution product"
+      - label: "Fee"
+        value: "No Stripe fee; 100% directed to carbon removal"
+    organizations: ["Stripe"]
+    tags: ["climate", "carbon-removal", "market-formation"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2020-10-28"
+        title: "Stripe launches world's first large-scale carbon removal purchase tool"
+        url: "https://stripe.com/gb/newsroom/news/climate-launch"
+  - id: "product-2019-corporate-card"
+    title: "Stripe launches the Corporate Card"
+    date: "2019-09-10"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched in the United States"
+    summary: "At Sessions 2019, Stripe launched a no-fee corporate card for US Stripe businesses with instant virtual cards, configurable controls, real-time expense reporting, and category-based rewards."
+    details:
+      - label: "Launch kind"
+        value: "New card product"
+      - label: "Initial market"
+        value: "United States"
+    organizations: ["Stripe"]
+    locations: ["United States"]
+    related_events: ["payment-2019-payouts-45-countries"]
+    tags: ["sessions", "corporate-card", "spend-management"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2019-09-10"
+        title: "Stripe introduces the Stripe Corporate Card and activates payouts to 45 countries"
+        url: "https://stripe.com/en-sg/newsroom/news/stripe-introduces-corporate-card"
+  - id: "product-2019-stripe-capital"
+    title: "Stripe launches Capital"
+    date: "2019-09-05"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched in the United States"
+    summary: "Stripe launched Capital to offer data-driven financing with automated repayment to eligible US businesses and to let Connect platforms extend financing to their users."
+    details:
+      - label: "Launch kind"
+        value: "New business financing product"
+      - label: "Initial market"
+        value: "United States"
+      - label: "Funding model"
+        value: "Loans issued by a bank partner and serviced through Stripe"
+    organizations: ["Stripe"]
+    locations: ["United States"]
+    tags: ["capital", "lending", "embedded-finance"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2019-09-05"
+        title: "Stripe launches Stripe Capital to make it faster and easier for internet companies to access the funds they need"
+        url: "https://stripe.com/en-ca/newsroom/news/stripe-capital"
+  - id: "product-2018-terminal"
+    title: "Stripe launches Terminal"
+    date: "2018-09-17"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Terminal, extending its programmable payments stack to card-present transactions through certified readers, SDKs, and unified online and in-person reporting."
+    details:
+      - label: "Launch kind"
+        value: "New in-person payments product"
+    organizations: ["Stripe"]
+    tags: ["terminal", "in-person-payments", "hardware"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2018-09-17"
+        title: "Stripe announces Stripe Terminal, a programmable point of sale for in-person payments"
+        url: "https://stripe.com/newsroom/news/stripe-launches-terminal"
+  - id: "product-2018-issuing"
+    title: "Stripe launches Issuing"
+    date: "2018-07-26"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "private beta in the United States"
+    summary: "Stripe launched Issuing so businesses could create and manage physical and virtual Visa cards through APIs, beginning with a private US beta."
+    details:
+      - label: "Launch kind"
+        value: "New card-issuing product"
+      - label: "Initial access"
+        value: "Private beta"
+      - label: "Initial market"
+        value: "United States"
+    organizations: ["Stripe", "Visa"]
+    locations: ["United States"]
+    tags: ["issuing", "cards", "private-beta"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2018-07-26"
+        title: "Stripe launches Stripe Issuing to help businesses create their own credit and debit cards"
+        url: "https://stripe.com/gb/newsroom/news/stripe-launches-issuing"
+  - id: "product-2018-billing"
+    title: "Stripe launches Billing"
+    date: "2018-04-05"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Billing as an evolution of Subscriptions, adding hosted invoicing, flexible recurring-business primitives, and machine-learning-assisted revenue recovery."
+    details:
+      - label: "Launch kind"
+        value: "New recurring-revenue suite"
+      - label: "Predecessor"
+        value: "Stripe Subscriptions"
+    organizations: ["Stripe"]
+    tags: ["billing", "subscriptions", "revenue-automation"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2018-04-05"
+        title: "Stripe launches Stripe Billing to accelerate boom in subscription-based businesses"
+        url: "https://stripe.com/in/newsroom/news/stripe-launches-billing"
+  - id: "product-2017-elements"
+    title: "Stripe launches Elements"
+    date: "2017-10-03"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Elements, hosted and customizable UI components that let developers build checkout forms while keeping sensitive payment details off their servers."
+    details:
+      - label: "Launch kind"
+        value: "New checkout UI toolkit"
+    organizations: ["Stripe"]
+    tags: ["elements", "checkout", "developer-tools"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2017-10-03"
+        title: "Stripe unveils Stripe Elements to help businesses streamline checkout flows and increase conversions"
+        url: "https://stripe.com/us/newsroom/news/stripe-launches-elements"
+  - id: "product-2017-sigma"
+    title: "Stripe launches Sigma"
+    date: "2017-06-01"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Sigma, giving businesses a hosted SQL interface for real-time analysis of their Stripe data without building a separate warehouse and pipeline."
+    details:
+      - label: "Launch kind"
+        value: "New analytics product"
+    organizations: ["Stripe"]
+    related_events: ["milestone-2017-first-stripe-sessions"]
+    tags: ["sigma", "analytics", "sql"]
+    sources:
+      - kind: "reporting"
+        publisher: "TechCrunch"
+        published_at: "2017-06-01"
+        title: "Stripe launches Sigma, a new analytics tool to help businesses track payments data"
+        url: "https://techcrunch.com/2017/06/01/stripe-sigma-data-analytics/"
+  - id: "product-2016-radar"
+    title: "Stripe launches Radar"
+    date: "2016-10"
+    date_precision: "month"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Radar as a machine-learning fraud system trained across the Stripe network, combining automatic blocking with business-configurable review and rules."
+    details:
+      - label: "Launch kind"
+        value: "New fraud-prevention product"
+      - label: "Date note"
+        value: "Stripe identifies the launch as fall 2016; this record uses month precision"
+    metrics:
+      - label: "Businesses at launch"
+        value: "100,000+"
+        context: "Businesses whose card payments informed the network model"
+    organizations: ["Stripe"]
+    tags: ["radar", "fraud", "machine-learning"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2016-10-27"
+        title: "A primer on machine learning for fraud detection"
+        url: "https://stripe.com/blog/a-primer-on-machine-learning-for-fraud-detection"
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2018-04-18"
+        title: "Improved fraud prevention with Radar 2.0"
+        url: "https://stripe.com/us/blog/radar-2018"
+  - id: "product-2016-atlas"
+    title: "Stripe announces Atlas"
+    date: "2016-02-24"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "private beta"
+    summary: "Stripe announced Atlas in private beta, bundling Delaware incorporation, a US bank account, a Stripe account, and legal, tax, and infrastructure guidance for founders worldwide."
+    details:
+      - label: "Launch kind"
+        value: "New company-formation service"
+      - label: "Initial access"
+        value: "Private beta"
+    organizations: ["Stripe", "Silicon Valley Bank", "PwC", "Orrick", "Amazon Web Services"]
+    tags: ["atlas", "incorporation", "startups", "private-beta"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2016-02-24"
+        title: "Announcing Stripe Atlas—helping entrepreneurs start a global business from anywhere"
+        url: "https://stripe.com/au/newsroom/news/stripe-launches-atlas"
+  - id: "product-2014-checkout"
+    title: "Stripe debuts its one-click Checkout"
+    date: "2014-03-05"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe debuted an embeddable Checkout for mobile and web that retained card details for subsequent one-click payments while keeping buyers on the merchant's site."
+    details:
+      - label: "Launch kind"
+        value: "New hosted checkout surface"
+    organizations: ["Stripe"]
+    tags: ["checkout", "mobile", "one-click"]
+    sources:
+      - kind: "reporting"
+        publisher: "TechCrunch"
+        published_at: "2014-03-05"
+        title: "Stripe debuts a new Checkout experience with one-click payments for mobile and web"
+        url: "https://techcrunch.com/2014/03/05/stripe-debuts-a-new-checkout-experience-with-one-click-payments-for-mobile-and-web/"
+  - id: "product-2012-connect"
+    title: "Stripe launches Connect"
+    date: "2012-10-10"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched Connect so marketplaces and platforms could onboard sellers, route payments, and build on permissioned payment data through APIs."
+    details:
+      - label: "Launch kind"
+        value: "New platform payments product"
+      - label: "Early users"
+        value: "Reddit and Skillshare"
+    organizations: ["Stripe", "Reddit", "Skillshare"]
+    tags: ["connect", "platforms", "marketplaces"]
+    sources:
+      - kind: "reporting"
+        publisher: "TechCrunch"
+        published_at: "2012-10-10"
+        title: "Stripe's new payments product could be a boon for collaborative consumption, ecommerce startups"
+        url: "https://techcrunch.com/2012/10/10/stripe-connect/"
+  - id: "product-2011-payments-api-public-launch"
+    title: "Stripe's payments API launches publicly"
+    date: "2011-09-30"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "public launch"
+    summary: "After a private beta, Stripe opened its developer-focused payments platform to the public, offering customizable payment forms and direct tokenization so card data did not touch merchant servers."
+    details:
+      - label: "Launch kind"
+        value: "Initial public product launch"
+      - label: "Initial market"
+        value: "United States"
+    organizations: ["Stripe"]
+    locations: ["United States"]
+    related_events: ["country-2011-united-states-public-launch", "origins-stripe-public-launch"]
+    tags: ["payments-api", "public-launch", "developer-tools"]
+    sources:
+      - kind: "reporting"
+        publisher: "TechCrunch"
+        published_at: "2011-09-30"
+        title: "Sequoia-backed Stripe wants to disrupt the online payments space"
+        url: "https://techcrunch.com/2011/09/30/sequoia-backed-stripe-launches-to-disrupt-the-online-payments-industry-with-a-developer-friendly-platform/"

@@ -1,0 +1,599 @@
+schema: "stripe-guide/history/v1"
+category:
+  id: "country-expansion"
+  label: "Country expansion"
+  description: "Stripe market launches and material geographic expansions, with beta, invite-only, and full-stack availability kept distinct."
+  order: 5
+events:
+  - id: "country-2022-thailand-general-availability"
+    title: "Stripe launches in Thailand"
+    date: "2022-10-26"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "general availability"
+    summary: "Stripe made its payments platform generally available to businesses in Thailand after a beta, with local support and payment methods tailored to Thai commerce."
+    details:
+      - label: "Access"
+        value: "General availability for eligible Thai businesses"
+      - label: "Earlier stage"
+        value: "Thailand entered beta earlier in 2022"
+    locations: ["Thailand"]
+    organizations: ["Stripe"]
+    tags: ["asia-pacific", "market-launch", "general-availability"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2022-10-26"
+        title: "Stripe launches in Thailand"
+        url: "https://stripe.com/newsroom/news/thailand"
+  - id: "country-2022-croatia-gibraltar-liechtenstein-launch"
+    title: "Stripe opens signup in Croatia, Gibraltar, and Liechtenstein"
+    date: "2022-06"
+    date_precision: "month"
+    confidence: "confirmed"
+    status: "available"
+    summary: "Stripe opened signup to businesses in Croatia, Gibraltar, and Liechtenstein for payments, subscriptions, fraud management, and other core platform capabilities."
+    details:
+      - label: "New markets"
+        value: "Croatia, Gibraltar, and Liechtenstein"
+      - label: "Product scope"
+        value: "Payments, subscriptions, fraud management, and related Stripe tools"
+      - label: "Total caution"
+        value: "Stripe did not publish a new global market total in this changelog item"
+    locations: ["Croatia", "Gibraltar", "Liechtenstein"]
+    organizations: ["Stripe"]
+    tags: ["europe", "market-launch", "signup"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2022-06"
+        title: "Stripe changelog: June 2022"
+        url: "https://stripe.com/blog/changelog"
+  - id: "country-2022-indonesia-thailand-beta"
+    title: "Stripe opens beta access in Indonesia and Thailand"
+    date: "2022-05-24"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "beta"
+    summary: "At Sessions 2022, Stripe said businesses in Indonesia and Thailand could begin using Stripe in beta, expanding its platform to two major Southeast Asian markets."
+    details:
+      - label: "Access"
+        value: "Beta; not equivalent to unrestricted general availability"
+      - label: "Feature parity"
+        value: "The announcement did not promise parity with every established Stripe market"
+    metrics:
+      - label: "Markets served"
+        value: "47"
+        context: "Stripe's stated market count in its Sessions 2022 recap"
+    locations: ["Indonesia", "Thailand"]
+    organizations: ["Stripe"]
+    tags: ["asia-pacific", "market-launch", "beta", "sessions"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2022-05-24"
+        title: "Sessions 2022 and product highlights from the year"
+        url: "https://stripe.com/blog/stripe-sessions-2022"
+  - id: "country-2021-brazil-expansion"
+    title: "Stripe expands its platform in Brazil"
+    date: "2021-06-17"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "expanded availability"
+    summary: "Stripe's Sessions 2021 recap identified Brazil as a newly expanded market and highlighted Boleto support for reaching Brazilian customers."
+    details:
+      - label: "Local payment method"
+        value: "Boleto Bancario"
+      - label: "Scope caution"
+        value: "The recap described expansion without claiming identical product availability across every market"
+    locations: ["Brazil"]
+    organizations: ["Stripe"]
+    tags: ["latin-america", "market-expansion", "sessions"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2021-06-17"
+        title: "Stripe Sessions 2021"
+        url: "https://stripe.com/blog/sessions-keynote-2021"
+  - id: "country-2021-uae-launch"
+    title: "Stripe launches in the United Arab Emirates"
+    date: "2021-04-05"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "launch with staged onboarding"
+    summary: "Stripe launched in the United Arab Emirates, its first market in the Middle East, while initially onboarding businesses from an invitation queue."
+    details:
+      - label: "Access"
+        value: "Businesses joined an initial invitation queue rather than receiving unrestricted instant access"
+      - label: "Regional significance"
+        value: "Stripe's first Middle Eastern market"
+      - label: "Local presence"
+        value: "A Dubai office was announced alongside the launch"
+    locations: ["United Arab Emirates", "Dubai"]
+    organizations: ["Stripe"]
+    related_events: ["dubai-middle-east-office-opens"]
+    tags: ["middle-east", "market-launch", "staged-onboarding"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2021-04-05"
+        title: "Stripe launches in the United Arab Emirates"
+        url: "https://stripe.com/newsroom/news/stripe-launches-uae"
+  - id: "country-2020-five-european-markets"
+    title: "Stripe launches in five more European countries"
+    date: "2020-05-27"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "general availability"
+    summary: "Stripe launched in the Czech Republic, Romania, Bulgaria, Cyprus, and Malta, bringing its stated footprint to 39 countries, including 29 in Europe."
+    details:
+      - label: "New markets"
+        value: "Czech Republic, Romania, Bulgaria, Cyprus, and Malta"
+      - label: "Availability"
+        value: "The full Stripe stack was presented as available to local businesses"
+    metrics:
+      - label: "Countries served"
+        value: "39"
+        context: "Stripe's stated global count after the five launches"
+      - label: "European countries served"
+        value: "29"
+        context: "Stripe's stated European count after the five launches"
+    locations: ["Czech Republic", "Romania", "Bulgaria", "Cyprus", "Malta"]
+    organizations: ["Stripe"]
+    tags: ["europe", "market-launch", "general-availability"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2020-05-27"
+        title: "Stripe launches in five more European countries"
+        url: "https://stripe.com/blog/stripe-launches-in-five-more-european-countries"
+  - id: "country-2020-hungary-launch"
+    title: "Stripe launches in Hungary"
+    date: "2020"
+    date_precision: "year"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe counted Hungary among six European markets launched since the previous Sessions conference, although its 2021 recap did not give a precise launch date."
+    details:
+      - label: "Date basis"
+        value: "Year precision because the Sessions recap grouped the launch with other markets without a day"
+    locations: ["Hungary"]
+    organizations: ["Stripe"]
+    tags: ["europe", "market-launch"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2021-06-17"
+        title: "Stripe Sessions 2021"
+        url: "https://stripe.com/blog/sessions-keynote-2021"
+  - id: "country-2019-mexico-launch"
+    title: "Stripe launches in Mexico"
+    date: "2019-10-24"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "general availability"
+    summary: "Stripe officially launched its product stack for Mexican online businesses, including Connect, Billing, Radar, Sigma, OXXO cash payments, and eligible card installments."
+    details:
+      - label: "Local methods"
+        value: "OXXO cash payments and card installments up to 18 months where eligible"
+      - label: "Product scope"
+        value: "Payments plus Connect, Billing, Radar, Sigma, and related platform products"
+    metrics:
+      - label: "Currencies accepted"
+        value: "135+"
+        context: "Currencies Stripe said businesses could accept at launch"
+    locations: ["Mexico", "Mexico City"]
+    organizations: ["Stripe"]
+    related_events: ["mexico-city-office-opens"]
+    tags: ["latin-america", "market-launch", "general-availability"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2019-10-24"
+        title: "Stripe launches in Mexico"
+        url: "https://stripe.com/en-br/newsroom/news/stripe-launches-mexico"
+  - id: "country-2019-malaysia-launch"
+    title: "Stripe launches in Malaysia"
+    date: "2019-10-07"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "general availability"
+    summary: "Stripe launched for Malaysian businesses with its broader product stack and began beta support for FPX, the country's bank-transfer payment network."
+    details:
+      - label: "Local method"
+        value: "FPX in beta at launch"
+      - label: "Feature-gap note"
+        value: "FPX was not represented as generally available in the launch announcement"
+    locations: ["Malaysia"]
+    organizations: ["Stripe"]
+    tags: ["asia-pacific", "market-launch", "general-availability", "beta"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2019-10-07"
+        title: "Stripe launches in Malaysia"
+        url: "https://stripe.com/newsroom/news/malaysia-launch"
+  - id: "country-2019-eight-european-markets"
+    title: "Stripe launches in eight more European countries"
+    date: "2019-09-09"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "general availability"
+    summary: "Stripe opened its full platform to businesses in Estonia, Greece, Latvia, Lithuania, Poland, Portugal, Slovakia, and Slovenia after beta periods."
+    details:
+      - label: "New markets"
+        value: "Estonia, Greece, Latvia, Lithuania, Poland, Portugal, Slovakia, and Slovenia"
+      - label: "Access"
+        value: "General availability after earlier beta access"
+    metrics:
+      - label: "Currencies"
+        value: "130+"
+        context: "Currencies Stripe said businesses in the eight markets could accept"
+    locations: ["Estonia", "Greece", "Latvia", "Lithuania", "Poland", "Portugal", "Slovakia", "Slovenia"]
+    organizations: ["Stripe"]
+    tags: ["europe", "market-launch", "general-availability"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2019-09-09"
+        title: "Stripe launches in eight more European countries"
+        url: "https://stripe.com/en-dk/newsroom/news/central-and-eastern-europe-expansion"
+  - id: "country-2019-italy-general-availability"
+    title: "Stripe makes its full platform available in Italy"
+    date: "2019-01-29"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "general availability after beta"
+    summary: "Stripe made its full software suite available to Italian businesses after a beta period, including Payments, Connect, Checkout, Billing, and Radar with an Italian-language interface."
+    details:
+      - label: "Earlier stage"
+        value: "Selected Italian businesses had used Stripe in beta during the preceding months"
+      - label: "Product scope"
+        value: "Payments plus Connect, Checkout, Billing, Radar, and related online-business tools"
+    locations: ["Italy"]
+    organizations: ["Stripe"]
+    tags: ["europe", "market-launch", "general-availability"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe via iPressLIVE"
+        published_at: "2019-01-29"
+        title: "Da oggi tutte le imprese italiane possono utilizzare Stripe per gestire pagamenti e tesoreria"
+        url: "https://www.ipresslive.it/en/ipress/comunicati/view/25948/"
+  - id: "country-2017-india-private-beta"
+    title: "Stripe begins an invite-only private beta in India"
+    date: "2017-12-12"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "invite-only private beta"
+    summary: "Stripe began a small private beta in India so local companies could test rupee payouts and help identify the functionality needed for the market."
+    details:
+      - label: "Access"
+        value: "Invite-only for a small group of businesses"
+      - label: "Local capability"
+        value: "Indian bank-account connection and rupee payouts were part of the local operating goal"
+      - label: "Current caution"
+        value: "The historical beta should not be read as evidence of unrestricted present-day signup"
+    locations: ["India"]
+    organizations: ["Stripe"]
+    tags: ["asia-pacific", "market-launch", "private-beta"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2017-12-12"
+        title: "Kicking off Stripe's private beta in India"
+        url: "https://stripe.com/jp/blog/india-private-beta"
+      - kind: "primary"
+        publisher: "Stripe Support"
+        title: "Stripe accounts are invite-only in India"
+        url: "https://support.stripe.com/questions/stripe-accounts-are-invite-only-in-india"
+  - id: "country-2017-new-zealand-launch"
+    title: "Stripe launches in New Zealand"
+    date: "2017-08-22"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "general availability"
+    summary: "Stripe opened its full payments stack to New Zealand businesses following a beta, including Connect, Subscriptions, Radar, and global currency acceptance."
+    details:
+      - label: "Access"
+        value: "General availability after beta"
+      - label: "Product scope"
+        value: "Payments, Connect, Subscriptions, Radar, and the broader Stripe stack"
+    metrics:
+      - label: "Currencies"
+        value: "135+"
+        context: "Currencies Stripe said New Zealand businesses could accept"
+    locations: ["New Zealand"]
+    organizations: ["Stripe"]
+    tags: ["asia-pacific", "market-launch", "general-availability"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2017-08-22"
+        title: "Stripe in New Zealand"
+        url: "https://stripe.com/blog/new-zealand"
+  - id: "country-2017-hong-kong-launch"
+    title: "Stripe launches in Hong Kong"
+    date: "2017-07-10"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "general availability with staged local methods"
+    summary: "Stripe launched its payments platform in Hong Kong with US-dollar settlement and simultaneous Alipay and WeChat Pay partnerships that had different rollout stages."
+    details:
+      - label: "Settlement"
+        value: "Hong Kong businesses could settle in US dollars without a US entity or bank account"
+      - label: "Alipay"
+        value: "One-time payments generally available; recurring payments in private beta"
+      - label: "WeChat Pay"
+        value: "Private beta at announcement"
+    metrics:
+      - label: "Currencies"
+        value: "130+"
+        context: "Currencies Stripe said Hong Kong businesses could accept"
+    locations: ["Hong Kong"]
+    organizations: ["Stripe", "Alipay", "WeChat Pay"]
+    related_events: ["payment-2017-alipay-wechat-global-partnerships"]
+    tags: ["asia-pacific", "market-launch", "general-availability", "staged-rollout"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2017-07-10"
+        title: "Stripe launches in Hong Kong, announces new global partnerships with Alipay and WeChat Pay"
+        url: "https://stripe.com/newsroom/news/stripe-launches-hong-kong"
+  - id: "country-2017-six-western-european-markets"
+    title: "Stripe launches in six more European countries"
+    date: "2017-06-22"
+    date_precision: "day"
+    confidence: "reported"
+    status: "general availability"
+    summary: "Stripe launched for businesses in Austria, Belgium, Germany, Luxembourg, the Netherlands, and Switzerland, adding the German-speaking and Benelux markets to its European footprint."
+    details:
+      - label: "New markets"
+        value: "Austria, Belgium, Germany, Luxembourg, the Netherlands, and Switzerland"
+      - label: "Access"
+        value: "Contemporaneous reports said businesses could begin using Stripe's online and mobile payment products"
+    locations: ["Austria", "Belgium", "Germany", "Luxembourg", "Netherlands", "Switzerland"]
+    organizations: ["Stripe"]
+    tags: ["europe", "market-launch", "general-availability"]
+    sources:
+      - kind: "reporting"
+        publisher: "The Irish Times"
+        published_at: "2017-06-22"
+        title: "Online payments firm Stripe launches in six more European countries"
+        url: "https://www.irishtimes.com/business/technology/online-payments-firm-stripe-launches-in-six-more-european-countries-1.3129274"
+      - kind: "reporting"
+        publisher: "Futurezone"
+        published_at: "2017-06-22"
+        title: "Bezahlservice Stripe kommt nach Österreich und Deutschland"
+        url: "https://futurezone.at/b2b/bezahlservice-stripe-kommt-nach-oesterreich-und-deutschland/271.196.432"
+  - id: "country-2016-spain-general-availability"
+    title: "Stripe becomes generally available in Spain"
+    date: "2016-10-05"
+    date_precision: "day"
+    confidence: "reported"
+    status: "general availability after beta"
+    summary: "Stripe opened its online-business platform to Spanish businesses after a year-long beta, supporting payments in more than 130 currencies and a broader suite of commerce tools."
+    details:
+      - label: "Earlier stage"
+        value: "Approximately one year in beta before general availability"
+      - label: "Access"
+        value: "Reported as available to any eligible Spanish business"
+    locations: ["Spain"]
+    organizations: ["Stripe"]
+    tags: ["europe", "market-launch", "general-availability"]
+    sources:
+      - kind: "reporting"
+        publisher: "Ecommerce News"
+        published_at: "2016-10-06"
+        title: "Stripe continúa su rápida expansión con el lanzamiento de su plataforma para negocios online en España"
+        url: "https://ecommerce-news.es/stripe-continua-rapida-expansion-lanzamiento-plataforma-negocios-online-espana/"
+      - kind: "reporting"
+        publisher: "El Pais"
+        published_at: "2016-10-05"
+        title: "El revolucionario método de pagos Stripe llega a España"
+        url: "https://elpais.com/economia/2016/10/04/actualidad/1475618340_735986.html"
+  - id: "country-2016-singapore-launch"
+    title: "Stripe launches in Singapore"
+    date: "2016-09-20"
+    date_precision: "day"
+    confidence: "confirmed"
+    status: "general availability"
+    summary: "After a 2015 beta, Stripe opened access to businesses across Singapore and supported local companies selling globally through its payments platform."
+    details:
+      - label: "Earlier stage"
+        value: "Beta began in 2015"
+      - label: "Access"
+        value: "Opened to all eligible Singapore businesses at launch"
+    locations: ["Singapore"]
+    organizations: ["Stripe"]
+    tags: ["asia-pacific", "market-launch", "general-availability"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2016-09-20"
+        title: "Stripe in Singapore!"
+        url: "https://stripe.com/blog/stripe-in-singapore"
+  - id: "country-2016-france-launch"
+    title: "Stripe becomes generally available in France"
+    date: "2016-06-08"
+    date_precision: "day"
+    confidence: "reported"
+    status: "general availability"
+    summary: "Stripe moved from beta to general availability in France, supporting local companies while deepening its European payments footprint."
+    details:
+      - label: "Earlier stage"
+        value: "Beta access preceded general availability"
+    locations: ["France"]
+    organizations: ["Stripe"]
+    tags: ["europe", "market-launch", "general-availability"]
+    sources:
+      - kind: "reporting"
+        publisher: "Fortune"
+        published_at: "2016-06-08"
+        title: "Stripe launches in France"
+        url: "https://fortune.com/2016/06/08/stripe-payments-france/"
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2026-05-28"
+        title: "Stripe marks ten years in France"
+        url: "https://stripe.com/in/newsroom/news/ten-years-in-france"
+  - id: "country-2016-japan-launch"
+    title: "Stripe launches in Japan"
+    date: "2016"
+    date_precision: "year"
+    confidence: "confirmed"
+    status: "launched"
+    summary: "Stripe launched in Japan in 2016, establishing a local market that later became a major base for enterprise and Japan-specific product development."
+    details:
+      - label: "Date basis"
+        value: "Stripe's 2024 retrospective confirms the year but does not state a launch day"
+    locations: ["Japan"]
+    organizations: ["Stripe"]
+    tags: ["asia-pacific", "market-launch"]
+    sources:
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2024-07-18"
+        title: "Stripe accelerates growth in Japan with new solutions for ambitious enterprises"
+        url: "https://stripe.com/newsroom/news/tour-tokyo-2024"
+  - id: "country-2015-nordic-launches"
+    title: "Stripe expands to four Nordic countries"
+    date: "2015-06"
+    date_precision: "month"
+    confidence: "reported"
+    status: "launch rollout"
+    summary: "Stripe announced its expansion to Denmark, Finland, Norway, and Sweden during June 2015; later reporting identified all four as fully available Stripe markets."
+    details:
+      - label: "New markets"
+        value: "Denmark, Finland, Norway, and Sweden"
+      - label: "Date basis"
+        value: "Month precision because contemporaneous coverage described a launch week rather than one shared availability day"
+      - label: "Availability basis"
+        value: "A 2017 market review described all four countries as fully available before Stripe's next European expansion"
+    locations: ["Denmark", "Finland", "Norway", "Sweden"]
+    organizations: ["Stripe"]
+    tags: ["europe", "market-launch", "nordics"]
+    sources:
+      - kind: "reporting"
+        publisher: "Ehandel.se"
+        published_at: "2015-06-15"
+        title: "Nu kommer betaltjänsten Stripe till Norden"
+        url: "https://www.ehandel.se/nu-kommer-betaltjansten-stripe-till-norden_5651-html"
+      - kind: "reporting"
+        publisher: "VentureBeat"
+        published_at: "2017-06-22"
+        title: "Stripe refocuses European effort with 6 new markets and expanded payments platform"
+        url: "https://venturebeat.com/ai/stripe-launches-in-6-new-european-markets-and-expands-its-connect-payments-platform-for-marketplaces"
+  - id: "country-2014-australia-launch"
+    title: "Stripe launches in Australia"
+    date: "2014-07-21"
+    date_precision: "day"
+    confidence: "reported"
+    status: "general availability"
+    summary: "Stripe launched broadly in Australia after a year-long beta, making the country its first Asia-Pacific market with general availability."
+    details:
+      - label: "Earlier stage"
+        value: "Approximately one year in beta before launch"
+      - label: "Regional significance"
+        value: "First generally available Asia-Pacific market"
+    locations: ["Australia"]
+    organizations: ["Stripe"]
+    tags: ["asia-pacific", "market-launch", "general-availability"]
+    sources:
+      - kind: "reporting"
+        publisher: "The Guardian"
+        published_at: "2014-07-22"
+        title: "Stripe steps up PayPal rivalry with Australian launch"
+        url: "https://www.theguardian.com/technology/2014/jul/22/stripe-steps-up-paypal-rivalry-with-australian-launch"
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2024-08-22"
+        title: "Stripe marks ten years in Australia"
+        url: "https://stripe.com/gb/newsroom/news/australia-10th-anniversary"
+  - id: "country-2013-ireland-launch"
+    title: "Stripe launches in Ireland"
+    date: "2013-09-03"
+    date_precision: "day"
+    confidence: "reported"
+    status: "general availability"
+    summary: "Stripe launched in Ireland, its first eurozone market, shortly after entering the United Kingdom and before Ireland later became a dual-headquarters location."
+    details:
+      - label: "Regional significance"
+        value: "First Stripe market in the eurozone"
+    locations: ["Ireland"]
+    organizations: ["Stripe"]
+    tags: ["europe", "market-launch", "general-availability"]
+    sources:
+      - kind: "reporting"
+        publisher: "TechCentral.ie"
+        published_at: "2013-09-03"
+        title: "Stripe arrives in Ireland"
+        url: "https://www.techcentral.ie/stripe-arrives-in-ireland/"
+      - kind: "primary"
+        publisher: "Stripe"
+        published_at: "2023-09-18"
+        title: "Stripe marks ten years in Ireland"
+        url: "https://stripe.com/ie/newsroom/news/ten-years-in-ireland"
+  - id: "country-2013-united-kingdom-launch"
+    title: "Stripe launches in the United Kingdom"
+    date: "2013-08-15"
+    date_precision: "day"
+    confidence: "reported"
+    status: "general availability"
+    summary: "Stripe opened to all eligible businesses in the United Kingdom after beta testing, making the UK its first generally available European market."
+    details:
+      - label: "Earlier stage"
+        value: "Private beta preceded the public launch"
+      - label: "Regional significance"
+        value: "First generally available Stripe market in Europe"
+    locations: ["United Kingdom"]
+    organizations: ["Stripe"]
+    tags: ["europe", "market-launch", "general-availability"]
+    sources:
+      - kind: "reporting"
+        publisher: "TechCrunch"
+        published_at: "2013-08-15"
+        title: "Stripe now open for business in UK, other countries and currencies coming soon"
+        url: "https://techcrunch.com/2013/08/15/stripe-now-open-for-business-in-uk-other-countries-and-currencies-coming-soon/"
+  - id: "country-2012-canada-launch"
+    title: "Stripe launches in Canada"
+    date: "2012-09-19"
+    date_precision: "day"
+    confidence: "reported"
+    status: "general availability"
+    summary: "Stripe launched in Canada, its first market outside the United States, allowing Canadian businesses to accept payments with domestic bank settlement."
+    details:
+      - label: "Regional significance"
+        value: "Stripe's first country expansion beyond the United States"
+      - label: "Settlement"
+        value: "Canadian-dollar settlement to Canadian bank accounts"
+    locations: ["Canada"]
+    organizations: ["Stripe"]
+    tags: ["north-america", "market-launch", "general-availability"]
+    sources:
+      - kind: "reporting"
+        publisher: "TechCrunch"
+        published_at: "2012-09-19"
+        title: "Stripe launches developer-friendly online payments processing in Canada"
+        url: "https://techcrunch.com/2012/09/19/stripe-launches-developer-friendly-online-payments-processing-in-canada/"
+  - id: "country-2011-united-states-public-launch"
+    title: "Stripe publicly launches in the United States"
+    date: "2011-09-30"
+    date_precision: "day"
+    confidence: "reported"
+    status: "public launch"
+    summary: "Stripe opened its developer-focused payments service publicly in the United States after an invite-only beta, establishing the base market for later expansion."
+    details:
+      - label: "Earlier stage"
+        value: "Invite-only beta preceded public availability"
+      - label: "Initial product"
+        value: "API-driven card payment processing for internet businesses"
+    locations: ["United States"]
+    organizations: ["Stripe"]
+    related_events: ["origins-stripe-public-launch", "product-2011-payments-api-public-launch"]
+    tags: ["north-america", "market-launch", "public-launch"]
+    sources:
+      - kind: "reporting"
+        publisher: "TechCrunch"
+        published_at: "2011-09-30"
+        title: "Sequoia-backed Stripe launches to disrupt the online payments industry with a developer-friendly platform"
+        url: "https://techcrunch.com/2011/09/30/sequoia-backed-stripe-launches-to-disrupt-the-online-payments-industry-with-a-developer-friendly-platform/"

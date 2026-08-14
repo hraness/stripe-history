@@ -1,0 +1,59 @@
+@import "./tokens.css";
+@import "./reset.css";
+@import "./plain-site.css";
+
+:root {
+  --background: var(--plain-background, #ffffff);
+  --foreground: var(--plain-foreground, #171717);
+  --font-heading: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  --font-text: Arial, Helvetica, sans-serif;
+  --radius-xs: 0.25rem;
+}
+
+.stripe-history-skip-link {
+  align-items: center;
+  background: var(--plain-foreground);
+  border: 1px solid var(--plain-foreground);
+  border-radius: var(--radius-xs);
+  color: var(--plain-background);
+  display: inline-flex;
+  font-weight: 700;
+  left: 0.75rem;
+  min-height: 3rem;
+  outline: 2px solid var(--plain-background);
+  outline-offset: 2px;
+  padding-inline: 1rem;
+  position: fixed;
+  top: 0.75rem;
+  transform: translateY(calc(-100% - 1.5rem));
+  transition: transform 120ms ease;
+  z-index: 4000;
+}
+
+.stripe-history-skip-link:focus {
+  transform: translateY(0);
+}
+
+.stripe-history-theme-toggle {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--plain-line);
+  border-radius: 999px;
+  color: var(--plain-muted);
+  display: inline-flex;
+  font: inherit;
+  height: 2rem;
+  justify-content: center;
+  padding: 0;
+  width: 2rem;
+}
+
+.stripe-history-theme-toggle:hover {
+  color: var(--plain-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stripe-history-skip-link {
+    transition: none;
+  }
+}

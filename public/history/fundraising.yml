@@ -1,0 +1,512 @@
+schema: 'stripe-guide/history/v1'
+category:
+  id: 'fundraising'
+  label: 'Fundraising and liquidity'
+  description: 'Primary financing rounds and major employee or investor secondary transactions, with capital raises distinguished from liquidity events.'
+  order: 7
+events:
+  - id: 'employee-tender-159-billion-valuation'
+    date: '2026-02-24'
+    date_precision: 'day'
+    title: 'Stripe runs employee tender at a $159 billion valuation'
+    summary: 'Stripe arranged a tender offer that let current and former employees sell shares at a $159 billion valuation. Thrive Capital, Coatue, Andreessen Horowitz, and Stripe supplied liquidity; this was not a primary operating-capital raise.'
+    confidence: 'confirmed'
+    status: 'Employee liquidity transaction'
+    organizations:
+      - 'Stripe'
+      - 'Thrive Capital'
+      - 'Coatue'
+      - 'Andreessen Horowitz'
+    metrics:
+      - label: 'Implied valuation'
+        value: '$159 billion'
+      - label: 'Capital type'
+        value: 'Secondary liquidity'
+        context: 'No primary capital raised for operations'
+    tags:
+      - 'employee-liquidity'
+      - 'secondary'
+      - 'valuation'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2026-02-24'
+        title: 'Stripe''s 2025 annual letter'
+        url: 'https://stripe.com/en-nl/newsroom/news/stripe-2025-update'
+
+  - id: 'employee-tender-91-5-billion-valuation'
+    date: '2025-02-27'
+    date_precision: 'day'
+    title: 'Stripe arranges employee liquidity at a $91.5 billion valuation'
+    summary: 'Stripe and investors agreed to buy shares from current and former employees at a $91.5 billion valuation. The tender provided liquidity without taking the company public and did not represent new operating capital.'
+    confidence: 'confirmed'
+    status: 'Employee liquidity transaction'
+    organizations:
+      - 'Stripe'
+    metrics:
+      - label: 'Implied valuation'
+        value: '$91.5 billion'
+      - label: 'Capital type'
+        value: 'Secondary liquidity'
+    tags:
+      - 'employee-liquidity'
+      - 'secondary'
+      - 'valuation'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2025-02-27'
+        title: 'Stripe announces employee liquidity at a $91.5B valuation'
+        url: 'https://stripe.com/newsroom/news/employee-liquidity-feb-2025'
+
+  - id: 'sequoia-secondary-purchase-70-billion-valuation'
+    date: '2024-09-09'
+    date_precision: 'day'
+    title: 'Sequoia buys Stripe shares from its limited partners'
+    summary: 'Sequoia Capital purchased up to $861 million of Stripe shares from investors in older Sequoia funds at $27.51 per share, implying a roughly $70 billion valuation. It was an investor-led secondary transaction, not money raised by Stripe.'
+    confidence: 'reported'
+    status: 'Investor secondary transaction'
+    amount:
+      currency: 'USD'
+      display: 'Up to $861 million'
+      value: 861000000
+    organizations:
+      - 'Stripe'
+      - 'Sequoia Capital'
+    metrics:
+      - label: 'Implied valuation'
+        value: 'About $70 billion'
+      - label: 'Share price'
+        value: '$27.51'
+      - label: 'Capital type'
+        value: 'Secondary purchase'
+    tags:
+      - 'secondary'
+      - 'valuation'
+    sources:
+      - kind: 'reporting'
+        publisher: 'Axios'
+        published_at: '2024-09-09'
+        title: 'Sequoia Capital buys Stripe shares from its own investors'
+        url: 'https://www.axios.com/2024/09/09/sequoia-capital-stripe'
+
+  - id: 'employee-tender-65-billion-valuation'
+    date: '2024-02-28'
+    date_precision: 'day'
+    title: 'Stripe arranges employee tender at a $65 billion valuation'
+    summary: 'Stripe and investors arranged a tender offer for current and former employees at a $65 billion valuation. The transaction provided shareholder liquidity and did not add primary capital to Stripe''s balance sheet.'
+    confidence: 'confirmed'
+    status: 'Employee liquidity transaction'
+    organizations:
+      - 'Stripe'
+    metrics:
+      - label: 'Implied valuation'
+        value: '$65 billion'
+      - label: 'Capital type'
+        value: 'Secondary liquidity'
+    tags:
+      - 'employee-liquidity'
+      - 'secondary'
+      - 'valuation'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2024-02-28'
+        title: 'Stripe announces employee liquidity at a $65B valuation'
+        url: 'https://stripe.com/newsroom/news/employee-liquidity-feb-2024'
+
+  - id: 'series-i-employee-liquidity-round'
+    date: '2023-03-15'
+    date_precision: 'day'
+    title: 'Stripe raises more than $6.5 billion in Series I financing'
+    summary: 'Stripe raised more than $6.5 billion at a $50 billion valuation to fund employee liquidity and tax obligations connected to expiring equity awards. Stripe said it did not need the capital to operate and would retire shares to offset dilution.'
+    confidence: 'confirmed'
+    status: 'Primary financing dedicated to employee liquidity and taxes'
+    amount:
+      currency: 'USD'
+      display: 'More than $6.5 billion'
+      value: 6500000000
+    organizations:
+      - 'Stripe'
+    metrics:
+      - label: 'Post-money valuation'
+        value: '$50 billion'
+      - label: 'Use of proceeds'
+        value: 'Employee liquidity and award-related taxes'
+    tags:
+      - 'series-i'
+      - 'primary-financing'
+      - 'employee-liquidity'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2023-03-15'
+        title: 'Stripe announces Series I employee liquidity'
+        url: 'https://stripe.com/en-ch/newsroom/news/stripe-series-i-employee-liquidity'
+
+  - id: 'series-h-600-million-round'
+    date: '2021-03-14'
+    date_precision: 'day'
+    title: 'Stripe raises $600 million in Series H financing'
+    summary: 'Stripe raised $600 million at a $95 billion valuation to invest in European operations, its payments and treasury network, and global expansion. The round included Allianz X, Axa, Baillie Gifford, Fidelity, Sequoia, and Ireland''s NTMA.'
+    confidence: 'confirmed'
+    status: 'Primary financing completed'
+    amount:
+      currency: 'USD'
+      display: '$600 million'
+      value: 600000000
+    organizations:
+      - 'Stripe'
+      - 'Allianz X'
+      - 'Axa'
+      - 'Baillie Gifford'
+      - 'Fidelity'
+      - 'Sequoia Capital'
+      - 'Ireland Strategic Investment Fund'
+    metrics:
+      - label: 'Valuation'
+        value: '$95 billion'
+    tags:
+      - 'series-h'
+      - 'primary-financing'
+      - 'valuation'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2021-03-14'
+        title: 'Stripe raises $600 million to accelerate growth in Europe and reinforce enterprise leadership'
+        url: 'https://stripe.com/es-us/newsroom/news/stripe-series-h'
+
+  - id: 'series-g-extension-600-million'
+    date: '2020-04-16'
+    date_precision: 'day'
+    title: 'Stripe extends Series G by $600 million'
+    summary: 'Stripe added $600 million to its Series G on the same terms and valuation as the September 2019 round. Stripe said it would invest in product development, global expansion, and support for businesses adapting during the COVID-19 pandemic.'
+    confidence: 'confirmed'
+    status: 'Primary financing completed'
+    amount:
+      currency: 'USD'
+      display: '$600 million'
+      value: 600000000
+    organizations:
+      - 'Stripe'
+      - 'Andreessen Horowitz'
+      - 'General Catalyst'
+      - 'GV'
+      - 'Sequoia Capital'
+    metrics:
+      - label: 'Pre-money valuation'
+        value: '$35 billion'
+        context: 'Same terms as the September 2019 Series G'
+    tags:
+      - 'series-g'
+      - 'primary-financing'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2020-04-16'
+        title: 'Stripe extends Series G funding round'
+        url: 'https://stripe.com/en-ca/newsroom/news/stripe-extends-series-g-funding-round'
+
+  - id: 'series-g-250-million-round'
+    date: '2019-09-19'
+    date_precision: 'day'
+    title: 'Stripe raises $250 million in Series G financing'
+    summary: 'Stripe raised $250 million from General Catalyst, Sequoia Capital, and Andreessen Horowitz at a $35 billion pre-money valuation. The company said the funds would support international expansion and new products.'
+    confidence: 'confirmed'
+    status: 'Primary financing completed'
+    amount:
+      currency: 'USD'
+      display: '$250 million'
+      value: 250000000
+    organizations:
+      - 'Stripe'
+      - 'General Catalyst'
+      - 'Sequoia Capital'
+      - 'Andreessen Horowitz'
+    metrics:
+      - label: 'Pre-money valuation'
+        value: '$35 billion'
+    tags:
+      - 'series-g'
+      - 'primary-financing'
+      - 'valuation'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2019-09-19'
+        title: 'Stripe expands global infrastructure with new funding'
+        url: 'https://stripe.com/newsroom/news/stripe-expands-global-infrastructure-with-new-funding'
+
+  - id: 'tiger-global-follow-on-100-million'
+    date: '2019-01-30'
+    date_precision: 'day'
+    title: 'Stripe raises $100 million from Tiger Global'
+    summary: 'Stripe raised a $100 million follow-on investment from Tiger Global Management, four months after its prior growth round. The transaction increased Stripe''s reported valuation from $20 billion to $22.5 billion.'
+    confidence: 'confirmed'
+    status: 'Primary follow-on financing completed'
+    amount:
+      currency: 'USD'
+      display: '$100 million'
+      value: 100000000
+    organizations:
+      - 'Stripe'
+      - 'Tiger Global Management'
+    metrics:
+      - label: 'Valuation'
+        value: '$22.5 billion'
+    tags:
+      - 'follow-on-financing'
+      - 'primary-financing'
+      - 'valuation'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2019-01-30'
+        title: 'Diane Greene joins Stripe''s board of directors'
+        url: 'https://stripe.com/gb/newsroom/news/diane-greene-joins-stripe-board'
+      - kind: 'reporting'
+        publisher: 'Payments Dive'
+        published_at: '2019-01-30'
+        title: 'Stripe raises $100M from Tiger Global for international expansion, operations'
+        url: 'https://www.paymentsdive.com/ex/mpt/news/stripe-raises-100m-from-tiger-global-for-international-expansion-operations/'
+
+  - id: 'growth-financing-245-million'
+    date: '2018-09-26'
+    date_precision: 'day'
+    title: 'Stripe raises $245 million at a $20 billion valuation'
+    summary: 'Stripe raised $245 million in a financing led by Tiger Global Management, with participation from DST Global and Sequoia Capital. The round valued the payments company at approximately $20 billion.'
+    confidence: 'reported'
+    status: 'Primary financing completed'
+    amount:
+      currency: 'USD'
+      display: '$245 million'
+      value: 245000000
+    organizations:
+      - 'Stripe'
+      - 'Tiger Global Management'
+      - 'DST Global'
+      - 'Sequoia Capital'
+    metrics:
+      - label: 'Valuation'
+        value: '$20 billion'
+    tags:
+      - 'growth-financing'
+      - 'primary-financing'
+      - 'valuation'
+    sources:
+      - kind: 'reporting'
+        publisher: 'Axios'
+        published_at: '2018-09-26'
+        title: 'Stripe is now worth $20 billion'
+        url: 'https://www.axios.com/2018/09/26/stripe-is-now-worth-20-billion-1537984799'
+
+  - id: 'series-d-150-million-round'
+    date: '2016-11-25'
+    date_precision: 'day'
+    title: 'Stripe raises $150 million in Series D financing'
+    summary: 'Stripe raised $150 million in a round led by CapitalG and General Catalyst, with existing investors participating. Contemporary reporting placed the company''s post-money valuation at about $9.2 billion.'
+    confidence: 'reported'
+    status: 'Primary financing completed'
+    amount:
+      currency: 'USD'
+      display: '$150 million'
+      value: 150000000
+    organizations:
+      - 'Stripe'
+      - 'CapitalG'
+      - 'General Catalyst'
+    metrics:
+      - label: 'Post-money valuation'
+        value: 'About $9.2 billion'
+    tags:
+      - 'series-d'
+      - 'primary-financing'
+      - 'valuation'
+    sources:
+      - kind: 'reporting'
+        publisher: 'TechCrunch'
+        published_at: '2016-11-25'
+        title: 'Payments provider Stripe has raised another $150M at a $9B valuation'
+        url: 'https://techcrunch.com/2016/11/25/payments-provider-stripe-has-raised-another-150-at-a-9b-valuation/'
+
+  - id: 'visa-strategic-financing-5-billion-valuation'
+    date: '2015-07-28'
+    date_precision: 'day'
+    title: 'Stripe adds Visa and other investors at a $5 billion valuation'
+    summary: 'Stripe raised a strategic financing reported at less than $100 million alongside a global partnership with Visa. Visa, American Express, Sequoia Capital, and Kleiner Perkins participated at a valuation of about $5 billion.'
+    confidence: 'reported'
+    status: 'Strategic primary financing completed'
+    amount:
+      currency: 'USD'
+      display: 'Less than $100 million (reported)'
+    organizations:
+      - 'Stripe'
+      - 'Visa'
+      - 'American Express'
+      - 'Sequoia Capital'
+      - 'Kleiner Perkins'
+    metrics:
+      - label: 'Valuation'
+        value: 'About $5 billion'
+    tags:
+      - 'strategic-financing'
+      - 'primary-financing'
+      - 'valuation'
+    sources:
+      - kind: 'reporting'
+        publisher: 'TechCrunch'
+        published_at: '2015-07-28'
+        title: 'Stripe is now valued at $5B after a Visa investment'
+        url: 'https://techcrunch.com/2015/07/28/stripe-5-billion/'
+
+  - id: 'series-c-extension-70-million'
+    date: '2014-12-02'
+    date_precision: 'day'
+    title: 'Stripe raises $70 million at a $3.5 billion valuation'
+    summary: 'Stripe raised $70 million in additional financing led by Thrive Capital, with Sequoia Capital, General Catalyst, Founders Fund, and Khosla Ventures participating. The round valued Stripe at roughly $3.5 billion.'
+    confidence: 'reported'
+    status: 'Primary financing completed'
+    amount:
+      currency: 'USD'
+      display: '$70 million'
+      value: 70000000
+    organizations:
+      - 'Stripe'
+      - 'Thrive Capital'
+      - 'Sequoia Capital'
+      - 'General Catalyst'
+      - 'Founders Fund'
+      - 'Khosla Ventures'
+    metrics:
+      - label: 'Valuation'
+        value: 'About $3.5 billion'
+    tags:
+      - 'series-c'
+      - 'primary-financing'
+      - 'valuation'
+    sources:
+      - kind: 'reporting'
+        publisher: 'TechCrunch'
+        published_at: '2014-12-02'
+        title: 'Stripe raises $70M at a $3.5B valuation'
+        url: 'https://techcrunch.com/2014/12/02/stripe-3-5-billion/'
+
+  - id: 'series-c-80-million-round'
+    date: '2014-01-22'
+    date_precision: 'day'
+    title: 'Stripe raises more than $80 million in Series C financing'
+    summary: 'Stripe raised more than $80 million from Founders Fund, Khosla Ventures, Sequoia Capital, and Allen & Company to expand internationally. Contemporary reporting put its valuation at approximately $1.75 billion.'
+    confidence: 'reported'
+    status: 'Primary financing completed'
+    amount:
+      currency: 'USD'
+      display: 'More than $80 million'
+      value: 80000000
+    organizations:
+      - 'Stripe'
+      - 'Founders Fund'
+      - 'Khosla Ventures'
+      - 'Sequoia Capital'
+      - 'Allen & Company'
+    metrics:
+      - label: 'Valuation'
+        value: 'About $1.75 billion'
+    tags:
+      - 'series-c'
+      - 'primary-financing'
+      - 'valuation'
+    sources:
+      - kind: 'reporting'
+        publisher: 'TechCrunch'
+        published_at: '2014-01-22'
+        title: 'With an eye to international growth, Stripe raises $80M'
+        url: 'https://techcrunch.com/2014/01/22/with-an-eye-to-international-growth-payments-company-stripe-raises-80m-from-peter-thiel-khosla-and-sequoia-at-a-1-25b-valuation/'
+
+  - id: 'series-b-20-million-round'
+    date: '2012-07-09'
+    date_precision: 'day'
+    title: 'Stripe raises $20 million in Series B financing'
+    summary: 'Stripe raised $20 million in a Series B led by General Catalyst, with Sequoia Capital, Peter Thiel, Elad Gil, Redpoint Ventures, and others participating. Reports placed its valuation in the hundreds of millions of dollars.'
+    confidence: 'reported'
+    status: 'Primary financing completed'
+    amount:
+      currency: 'USD'
+      display: '$20 million'
+      value: 20000000
+    organizations:
+      - 'Stripe'
+      - 'General Catalyst'
+      - 'Sequoia Capital'
+      - 'Redpoint Ventures'
+    people:
+      - 'Peter Thiel'
+      - 'Elad Gil'
+    tags:
+      - 'series-b'
+      - 'primary-financing'
+    sources:
+      - kind: 'reporting'
+        publisher: 'TechCrunch'
+        published_at: '2012-07-09'
+        title: 'Payments startup Stripe swipes $20M from General Catalyst, Sequoia, Thiel and more'
+        url: 'https://techcrunch.com/2012/07/09/payments-startup-stripe-swipes-20m-from-general-catalyst-sequoia-thiel-and-more/'
+
+  - id: 'series-a-18-million-round'
+    date: '2012-02-09'
+    date_precision: 'day'
+    title: 'Stripe raises $18 million in Series A financing'
+    summary: 'Stripe raised $18 million in a round led by Sequoia Capital, with participation from Max Levchin and existing investors. The financing valued the young payments company at approximately $100 million.'
+    confidence: 'reported'
+    status: 'Primary financing completed'
+    amount:
+      currency: 'USD'
+      display: '$18 million'
+      value: 18000000
+    organizations:
+      - 'Stripe'
+      - 'Sequoia Capital'
+    people:
+      - 'Max Levchin'
+    metrics:
+      - label: 'Valuation'
+        value: 'About $100 million'
+    tags:
+      - 'series-a'
+      - 'primary-financing'
+      - 'valuation'
+    sources:
+      - kind: 'reporting'
+        publisher: 'VentureBeat'
+        published_at: '2012-02-09'
+        title: 'Stripe scores $18M at a $100M valuation'
+        url: 'https://venturebeat.com/ai/stripe-funding-valuation'
+
+  - id: 'early-seed-financing-2-million'
+    date: '2011-03-28'
+    date_precision: 'day'
+    title: 'Stripe discloses roughly $2 million in early backing'
+    summary: 'Before its public launch, Stripe had raised about $2 million from investors including Peter Thiel, Elon Musk, Sequoia Capital, Andreessen Horowitz, and SV Angel. The capital supported development of its early payments product.'
+    confidence: 'reported'
+    status: 'Seed financing completed'
+    amount:
+      currency: 'USD'
+      display: 'About $2 million'
+      value: 2000000
+    organizations:
+      - 'Stripe'
+      - 'Sequoia Capital'
+      - 'Andreessen Horowitz'
+      - 'SV Angel'
+    people:
+      - 'Peter Thiel'
+      - 'Elon Musk'
+    tags:
+      - 'seed'
+      - 'primary-financing'
+    sources:
+      - kind: 'reporting'
+        publisher: 'TechCrunch'
+        published_at: '2011-03-28'
+        title: 'Stealth payment startup Stripe backed by PayPal founders'
+        url: 'https://techcrunch.com/2011/03/28/stealth-payment-startup-stripe-paypal/'

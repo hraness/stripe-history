@@ -1,0 +1,553 @@
+schema: 'stripe-guide/history/v1'
+category:
+  id: 'headquarters-and-offices'
+  label: 'Headquarters and offices'
+  description: 'Stripe headquarters moves, major engineering hubs, and documented first or replacement offices in country markets.'
+  order: 8
+events:
+  - id: 'new-dublin-headquarters-opens'
+    date: '2025-10-09'
+    date_precision: 'day'
+    title: 'Stripe opens a new Dublin headquarters at One Wilton Park'
+    summary: 'Stripe opened a 14,500-square-meter headquarters at One Wilton Park, nearly tripling the size of its previous Dublin office. Stripe described Dublin as a headquarters alongside South San Francisco and its largest office outside the United States.'
+    confidence: 'confirmed'
+    status: 'Headquarters opened'
+    locations:
+      - 'One Wilton Park, Dublin, Ireland'
+      - 'Dublin, Ireland'
+    metrics:
+      - label: 'Office area'
+        value: '14,500 square meters'
+      - label: 'Size change'
+        value: 'Nearly 3x'
+        context: 'Compared with the previous Dublin office'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'dublin-engineering-hub-landing-team'
+      - 'first-dublin-office-opens'
+    tags:
+      - 'headquarters'
+      - 'dublin'
+      - 'office-opening'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2025-10-09'
+        title: 'Stripe opens new Dublin headquarters'
+        url: 'https://stripe.com/newsroom/news/stripe-opens-new-dublin-hq'
+
+  - id: 'london-flagship-office-opens'
+    date: '2024-05-21'
+    date_precision: 'day'
+    title: 'Stripe opens a new London flagship office'
+    summary: 'Stripe opened a new flagship office in London, a decade after establishing its first London office in Shoreditch. The company presented the larger site as a base for continued UK product and customer work.'
+    confidence: 'confirmed'
+    status: 'Replacement office opened'
+    locations:
+      - 'London, United Kingdom'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'first-london-office-opens'
+    tags:
+      - 'london'
+      - 'office-opening'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2024-05-21'
+        title: 'Stripe Tour London 2024'
+        url: 'https://stripe.com/en-fr/newsroom/news/tour-london-2024'
+
+  - id: 'oyster-point-headquarters-occupied'
+    date: '2022'
+    date_precision: 'year'
+    title: 'Stripe establishes its headquarters at Oyster Point'
+    summary: 'By 2022, Stripe was operating its headquarters from the Oyster Point development in South San Francisco, occupying roughly 421,000 square feet across the site. The move followed the lease announced in 2019.'
+    confidence: 'confirmed'
+    status: 'Headquarters occupied'
+    locations:
+      - '354 Oyster Point Boulevard, South San Francisco, California'
+      - 'South San Francisco, California'
+    metrics:
+      - label: 'Leased area'
+        value: 'About 421,000 square feet'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'oyster-point-headquarters-lease'
+      - 'townsend-headquarters-established'
+    tags:
+      - 'headquarters'
+      - 'oyster-point'
+      - 'south-san-francisco'
+    sources:
+      - kind: 'reporting'
+        publisher: 'SFGATE'
+        published_at: '2022-11-03'
+        title: 'Stripe lays off 1,000 employees'
+        url: 'https://www.sfgate.com/tech/article/stripe-lays-off-1000-employees-17556389.php'
+      - kind: 'filing'
+        publisher: 'City of South San Francisco'
+        published_at: '2022'
+        title: 'Oyster Point public financing statement'
+        url: 'https://www.ssfca.gov/files/assets/public/v/1/finance/documents/19685000-city-of-south-san-francisco-cfd-special-tax-bonds-oyster-point-series-2022.pdf'
+
+  - id: 'toronto-office-announced'
+    date: '2021-09-28'
+    date_precision: 'day'
+    title: 'Stripe announces its first Canadian office in Toronto'
+    summary: 'Stripe announced a Toronto office, its first in Canada, and named Connor Wilson to lead the country business. The site was intended to support Canadian users and recruit engineering and commercial teams.'
+    confidence: 'confirmed'
+    status: 'Country office announced'
+    people:
+      - 'Connor Wilson'
+    locations:
+      - 'Toronto, Canada'
+    organizations:
+      - 'Stripe'
+    tags:
+      - 'canada'
+      - 'office-opening'
+      - 'country-office'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2021-09-28'
+        title: 'Stripe opens first Canadian office in Toronto'
+        url: 'https://stripe.com/en-cy/newsroom/news/toronto'
+
+  - id: 'dubai-middle-east-office-opens'
+    date: '2021-04-05'
+    date_precision: 'day'
+    title: 'Stripe opens its first Middle East office in Dubai'
+    summary: 'Stripe launched in the United Arab Emirates and opened a Dubai office, its first in the Middle East. The local base supported a market entry built with Network International and access for UAE-based online businesses.'
+    confidence: 'confirmed'
+    status: 'Regional office opened'
+    locations:
+      - 'Dubai, United Arab Emirates'
+    organizations:
+      - 'Stripe'
+      - 'Network International'
+    related_events:
+      - 'country-2021-uae-launch'
+    tags:
+      - 'united-arab-emirates'
+      - 'office-opening'
+      - 'country-office'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2021-04-05'
+        title: 'Stripe launches in the UAE'
+        url: 'https://stripe.com/newsroom/news/stripe-launches-uae'
+
+  - id: 'tokyo-engineering-office-opens'
+    date: '2020-05-26'
+    date_precision: 'day'
+    title: 'Stripe opens an engineering office in Tokyo'
+    summary: 'Stripe announced the opening of a Tokyo engineering office to build for the needs of Japanese businesses, including domestic payment methods and faster local product launches.'
+    confidence: 'confirmed'
+    status: 'Engineering office opened'
+    people:
+      - 'Daniel Heffernan'
+    locations:
+      - 'Tokyo, Japan'
+    organizations:
+      - 'Stripe'
+    tags:
+      - 'japan'
+      - 'tokyo'
+      - 'engineering-office'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2020-05-26'
+        title: 'Stripe announces an industry-first partnership with JCB and doubles down on its Japanese operations'
+        url: 'https://stripe.com/newsroom/news/accelerating-in-japan'
+
+  - id: 'mexico-city-office-opens'
+    date: '2019-10-24'
+    date_precision: 'day'
+    title: 'Stripe opens a Mexico City office with its Mexico launch'
+    summary: 'Stripe launched its payments platform in Mexico after opening a Mexico City office and building a local team. Stripe described Mexico as its first country launch in Latin America.'
+    confidence: 'confirmed'
+    status: 'Country office opened'
+    locations:
+      - 'Mexico City, Mexico'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'country-2019-mexico-launch'
+    tags:
+      - 'mexico'
+      - 'office-opening'
+      - 'country-office'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2019-10-24'
+        title: 'Stripe launches in Mexico'
+        url: 'https://stripe.com/en-br/newsroom/news/stripe-launches-mexico'
+
+  - id: 'oyster-point-headquarters-lease'
+    date: '2019-10-23'
+    date_precision: 'day'
+    title: 'Stripe leases an Oyster Point headquarters campus'
+    summary: 'Stripe signed a lease for approximately 421,000 square feet at Oyster Point in South San Francisco, planning to leave its Townsend Street headquarters after construction. The agreement covered two buildings and anticipated occupancy after development.'
+    confidence: 'confirmed'
+    status: 'Headquarters lease signed; later occupied'
+    locations:
+      - '352 and 354 Oyster Point Boulevard, South San Francisco, California'
+      - 'South San Francisco, California'
+    metrics:
+      - label: 'Leased area'
+        value: 'About 421,000 square feet'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'oyster-point-headquarters-occupied'
+      - 'townsend-headquarters-established'
+    tags:
+      - 'headquarters'
+      - 'lease'
+      - 'oyster-point'
+    sources:
+      - kind: 'reporting'
+        publisher: 'San Francisco Chronicle'
+        published_at: '2019-10-23'
+        title: 'Stripe to leave San Francisco for South San Francisco'
+        url: 'https://www.sfchronicle.com/business/article/2nd-most-valuable-U-S-startup-to-leave-SF-as-14558067.php'
+      - kind: 'filing'
+        publisher: 'City of South San Francisco'
+        published_at: '2022'
+        title: 'Oyster Point public financing statement'
+        url: 'https://www.ssfca.gov/files/assets/public/v/1/finance/documents/19685000-city-of-south-san-francisco-cfd-special-tax-bonds-oyster-point-series-2022.pdf'
+
+  - id: 'singapore-engineering-hub-announced'
+    date: '2019-09-26'
+    date_precision: 'day'
+    title: 'Stripe announces an engineering hub in Singapore'
+    summary: 'Stripe announced that its Singapore office would become the company''s fourth engineering hub, joining San Francisco, Seattle, and Dublin. The team was charged with building products for Southeast Asia and global markets.'
+    confidence: 'confirmed'
+    status: 'Engineering hub announced'
+    locations:
+      - 'Singapore'
+    organizations:
+      - 'Stripe'
+    tags:
+      - 'singapore'
+      - 'engineering-hub'
+      - 'country-office'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2019-09-26'
+        title: 'Stripe''s fourth engineering hub is in Singapore'
+        url: 'https://stripe.com/blog/singapore-eng-office'
+
+  - id: 'dublin-engineering-hub-landing-team'
+    date: '2018'
+    date_precision: 'year'
+    title: 'Stripe seeds its Dublin engineering hub'
+    summary: 'Stripe sent an initial engineering landing team to Dublin in summer 2018, creating its first engineering hub outside the United States. Stripe publicly detailed the hub and its hiring plans in March 2019.'
+    confidence: 'confirmed'
+    status: 'Engineering hub established'
+    locations:
+      - 'Dublin, Ireland'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'first-dublin-office-opens'
+      - 'new-dublin-headquarters-opens'
+    tags:
+      - 'dublin'
+      - 'engineering-hub'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2019-03-21'
+        title: 'Stripe''s Dublin engineering office'
+        url: 'https://stripe.com/blog/dublin-eng-office'
+
+  - id: 'townsend-headquarters-established'
+    date: '2018'
+    date_precision: 'year'
+    title: 'Stripe establishes its headquarters at 510 Townsend Street'
+    summary: 'Stripe occupied 510 Townsend Street as its San Francisco headquarters after signing a roughly 300,000-square-foot lease in 2015. Contemporary reporting and photographs document the company operating there by 2018.'
+    confidence: 'confirmed'
+    status: 'Headquarters occupied'
+    locations:
+      - '510 Townsend Street, San Francisco, California'
+    metrics:
+      - label: 'Leased area'
+        value: 'About 300,000 square feet'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'townsend-headquarters-lease'
+      - 'oyster-point-headquarters-lease'
+      - 'oyster-point-headquarters-occupied'
+      - 'mission-bay-office-established'
+    tags:
+      - 'headquarters'
+      - 'townsend'
+      - 'san-francisco'
+    sources:
+      - kind: 'reporting'
+        publisher: 'San Francisco Chronicle'
+        published_at: '2019-09-20'
+        title: '$35 billion startup Stripe considers move out of San Francisco'
+        url: 'https://www.sfchronicle.com/business/article/35-billion-startup-Stripe-considers-move-out-of-14453688.php'
+
+  - id: 'seattle-engineering-hub-established'
+    date: '2016'
+    date_precision: 'year'
+    title: 'Stripe establishes its Seattle engineering hub'
+    summary: 'Stripe began establishing an engineering office in Seattle in 2016, its first engineering outpost beyond Silicon Valley. Stripe later identified Seattle as one of its global engineering hubs.'
+    confidence: 'reported'
+    status: 'Engineering office established; later designated a global hub'
+    details:
+      - label: 'Date basis'
+        value: 'Year precision because contemporary reporting documents setup in October 2016 rather than a definitive opening day'
+    locations:
+      - 'Seattle, Washington'
+    organizations:
+      - 'Stripe'
+    tags:
+      - 'seattle'
+      - 'engineering-hub'
+      - 'engineering-office'
+    sources:
+      - kind: 'reporting'
+        publisher: 'GeekWire'
+        published_at: '2016-10-20'
+        title: 'Online payments powerhouse Stripe is the latest tech giant to plan engineering outpost in Seattle'
+        url: 'https://www.geekwire.com/2016/online-payments-powerhouse-stripe-latest-tech-giant-plan-engineering-outpost-seattle/'
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2019-09-26'
+        title: 'Stripe''s fourth engineering hub is in Singapore'
+        url: 'https://stripe.com/blog/singapore-eng-office'
+
+  - id: 'mission-bay-office-established'
+    date: '2016'
+    date_precision: 'year'
+    title: 'Stripe takes a major office footprint at 185 Berry Street'
+    summary: 'Stripe took roughly 102,000 square feet at 185 Berry Street in the China Basin and Mission Bay area as it outgrew the Pioneer Building. A later regulatory filing lists the address as Stripe''s business and mailing location.'
+    confidence: 'confirmed'
+    status: 'Interim San Francisco office footprint'
+    locations:
+      - '185 Berry Street, San Francisco, California'
+      - 'Mission Bay, San Francisco, California'
+    metrics:
+      - label: 'Reported area'
+        value: 'About 102,000 square feet'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'pioneer-building-headquarters-opens'
+      - 'townsend-headquarters-established'
+      - 'townsend-headquarters-lease'
+    tags:
+      - 'office-expansion'
+      - 'mission-bay'
+      - 'san-francisco'
+    sources:
+      - kind: 'filing'
+        publisher: 'U.S. Securities and Exchange Commission'
+        published_at: '2017-07-31'
+        title: 'Stripe Form D filing listing 185 Berry Street'
+        url: 'https://www.sec.gov/Archives/edgar/data/1691342/000169134217000002/0001691342-17-000002-index.html'
+      - kind: 'reporting'
+        publisher: 'Cushman & Wakefield'
+        published_at: '2016'
+        title: 'San Francisco office market report'
+        url: 'https://cushman517.rssing.com/chan-63281234/all_p2.html'
+
+  - id: 'paris-office-opens'
+    date: '2016'
+    date_precision: 'year'
+    title: 'Stripe opens its first office in France'
+    summary: 'Stripe established its first French office in Paris in 2016, three years after beginning work with French businesses. Stripe''s ten-year retrospective identifies the office as the start of its permanent local presence.'
+    confidence: 'confirmed'
+    status: 'Country office opened'
+    locations:
+      - 'Paris, France'
+    organizations:
+      - 'Stripe'
+    tags:
+      - 'france'
+      - 'office-opening'
+      - 'country-office'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2026-05-28'
+        title: 'Ten years in France'
+        url: 'https://stripe.com/in/newsroom/news/ten-years-in-france'
+
+  - id: 'townsend-headquarters-lease'
+    date: '2015-04-28'
+    date_precision: 'day'
+    title: 'Stripe signs a large lease at 510 Townsend Street'
+    summary: 'Stripe signed a lease for approximately 300,000 square feet at a planned 510 Townsend Street development. The deal gave the fast-growing company a future headquarters large enough to consolidate its expanding San Francisco workforce.'
+    confidence: 'confirmed'
+    status: 'Headquarters lease signed; later occupied'
+    locations:
+      - '510 Townsend Street, San Francisco, California'
+    metrics:
+      - label: 'Leased area'
+        value: 'About 300,000 square feet'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'townsend-headquarters-established'
+      - 'mission-bay-office-established'
+    tags:
+      - 'headquarters'
+      - 'lease'
+      - 'townsend'
+    sources:
+      - kind: 'reporting'
+        publisher: 'Bisnow'
+        published_at: '2015-04-28'
+        title: 'Behind the deal: Stripe''s mega-lease'
+        url: 'https://www.bisnow.com/san-francisco/news/office/behind-the-deal-stripes-mega-lease-45440'
+
+  - id: 'first-dublin-office-opens'
+    date: '2015'
+    date_precision: 'year'
+    title: 'Stripe opens its first Dublin office'
+    summary: 'Stripe established an office in Dublin in 2015, two years after making its products available in Ireland. The office later became Stripe''s first engineering hub outside the United States and one of its two headquarters.'
+    confidence: 'confirmed'
+    status: 'Country office opened'
+    locations:
+      - 'Dublin, Ireland'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'dublin-engineering-hub-landing-team'
+      - 'new-dublin-headquarters-opens'
+    tags:
+      - 'ireland'
+      - 'office-opening'
+      - 'country-office'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2019-03-21'
+        title: 'Stripe''s Dublin engineering office'
+        url: 'https://stripe.com/blog/dublin-eng-office'
+
+  - id: 'first-london-office-opens'
+    date: '2014'
+    date_precision: 'year'
+    title: 'Stripe opens its first London office in Shoreditch'
+    summary: 'Stripe opened its first London office in Shoreditch in 2014, one year after launching in the United Kingdom. The local base became the foundation for Stripe''s largest market outside the United States.'
+    confidence: 'confirmed'
+    status: 'Country office opened'
+    locations:
+      - 'Shoreditch, London, United Kingdom'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'london-flagship-office-opens'
+    tags:
+      - 'united-kingdom'
+      - 'office-opening'
+      - 'country-office'
+    sources:
+      - kind: 'primary'
+        publisher: 'Stripe'
+        published_at: '2024-05-21'
+        title: 'Stripe Tour London 2024'
+        url: 'https://stripe.com/en-fr/newsroom/news/tour-london-2024'
+
+  - id: 'pioneer-building-headquarters-opens'
+    date: '2013'
+    date_precision: 'year'
+    title: 'Stripe moves into the Pioneer Building'
+    summary: 'Stripe moved into a roughly 23,000-square-foot office in the Pioneer Building at 3180 18th Street, creating its first substantial San Francisco headquarters. Design records place completion and occupancy in 2013.'
+    confidence: 'confirmed'
+    status: 'Headquarters occupied'
+    locations:
+      - '3180 18th Street, San Francisco, California'
+      - 'Pioneer Building, San Francisco, California'
+    metrics:
+      - label: 'Office area'
+        value: 'About 23,000 square feet'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'palo-alto-to-san-francisco-move'
+      - 'mission-bay-office-established'
+    tags:
+      - 'headquarters'
+      - 'pioneer-building'
+      - 'san-francisco'
+    sources:
+      - kind: 'archive'
+        publisher: 'Office Snapshots'
+        published_at: '2014-01-27'
+        title: 'Inside Stripe''s San Francisco headquarters'
+        url: 'https://officesnapshots.com/2014/01/27/inside-stripes-san-francisco-headquarters/'
+      - kind: 'archive'
+        publisher: 'Officelovin'
+        published_at: '2014-04'
+        title: 'Stripe''s new San Francisco office'
+        url: 'https://www.officelovin.com/2014/04/stripes-new-san-francisco-office/'
+
+  - id: 'palo-alto-to-san-francisco-move'
+    date: '2012-05'
+    date_precision: 'month'
+    title: 'Stripe moves from Palo Alto to San Francisco'
+    summary: 'Stripe moved its small team from Palo Alto to San Francisco as the company prepared to expand after its early funding and private beta. Contemporary reporting described the relocation as recent in May 2012.'
+    confidence: 'reported'
+    status: 'Headquarters relocated'
+    locations:
+      - 'Palo Alto, California'
+      - 'San Francisco, California'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'early-palo-alto-office'
+      - 'pioneer-building-headquarters-opens'
+    tags:
+      - 'headquarters'
+      - 'relocation'
+      - 'palo-alto'
+      - 'san-francisco'
+    sources:
+      - kind: 'reporting'
+        publisher: 'TechCrunch'
+        published_at: '2012-05-20'
+        title: 'The story behind payment disruptor Stripe and its founder Patrick Collison'
+        url: 'https://techcrunch.com/2012/05/20/the-story-behind-payment-disruptor-stripe-com-and-its-founder-patrick-collison/'
+
+  - id: 'early-palo-alto-office'
+    date: '2010'
+    date_precision: 'year'
+    title: 'Stripe builds its early team in Palo Alto'
+    summary: 'Stripe''s earliest office presence was in Palo Alto, where the Collison brothers recruited initial employees and worked on the private beta. Patrick Collison later recalled choosing Palo Alto despite the practical constraints it imposed on recruits living in San Francisco.'
+    confidence: 'confirmed'
+    status: 'Early headquarters'
+    people:
+      - 'Patrick Collison'
+      - 'John Collison'
+    locations:
+      - 'Palo Alto, California'
+    organizations:
+      - 'Stripe'
+    related_events:
+      - 'palo-alto-to-san-francisco-move'
+    tags:
+      - 'headquarters'
+      - 'palo-alto'
+      - 'early-company'
+    sources:
+      - kind: 'interview'
+        publisher: 'UC Berkeley Haas News'
+        title: 'Stripe co-founder and CEO Patrick Collison on founding a company that should have already existed'
+        url: 'https://newsroom.haas.berkeley.edu/stripe-co-founder-and-ceo-patrick-collison-on-founding-a-company-that-should-have-already-existed/'

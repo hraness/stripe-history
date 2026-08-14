@@ -1,0 +1,156 @@
+import {
+  GITHUB_REPOSITORY_URL,
+  HRANESS_URL,
+  SITE_ORIGIN,
+  site,
+  type SitePath,
+} from "./site";
+import type { HistoryCollection } from "@/lib/content";
+
+export interface BreadcrumbItem {
+  readonly name: string;
+  readonly path: SitePath;
+}
+
+function absoluteUrl(path: SitePath): string {
+  return new URL(path, `${SITE_ORIGIN}/`).toString();
+}
+
+const publisherJsonLd = {
+  "@type": "Organization",
+  "@id": `${HRANESS_URL}#organization`,
+  name: "Hraness",
+  url: HRANESS_URL,
+  sameAs: ["https://github.com/hraness"],
+} as const;
+
+export function websiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_ORIGIN}/#website`,
+    url: `${SITE_ORIGIN}/`,
+    name: site.name,
+    alternateName: site.domain,
+    description: site.description,
+    inLanguage: "en-US",
+    publisher: publisherJsonLd,
+    sameAs: [GITHUB_REPOSITORY_URL],
+  } as const;
+}
+
+export function historyCollectionJsonLd(
+  items: readonly Readonly<{
+    readonly id: string;
+    readonly title: string;
+  }>[],
+  input: Readonly<{
+    description: string;
+    path: SitePath;
+    title: string;
+  }>,
+) {
+  const url = absoluteUrl(input.path);
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${url}#collection`,
+    url,
+    name: input.title,
+    description: input.description,
+    inLanguage: "en-US",
+    isPartOf: { "@id": `${SITE_ORIGIN}/#website` },
+    publisher: publisherJsonLd,
+    about: {
+      "@type": "Organization",
+      name: "Stripe",
+      url: "https://stripe.com/",
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: items.length,
+      itemListElement: items.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.title,
+        url: `${url}#${item.id}`,
+      })),
+    },
+  } as const;
+}
+
+export function breadcrumbJsonLd(items: readonly BreadcrumbItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: absoluteUrl(item.path),
+    })),
+  } as const;
+}
+
+export function aboutPageJsonLd() {
+  const url = absoluteUrl("/about");
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${url}#page`,
+    url,
+    name: `About ${site.domain}`,
+    description:
+      `The scope, sourcing, editorial review, independence, corrections, and privacy practices behind the ${site.domain} company timeline.`,
+    inLanguage: "en-US",
+    isPartOf: { "@id": `${SITE_ORIGIN}/#website` },
+    publisher: publisherJsonLd,
+    about: {
+      "@type": "Organization",
+      name: "Stripe",
+      url: "https://stripe.com/",
+    },
+  } as const;
+}
+
+export function historyDatasetJsonLd(history: HistoryCollection) {
+  const dates = history.events.map(({ date }) => date).toSorted();
+  const earliestYear = dates.at(0)?.slice(0, 4);
+  const latestYear = dates.at(-1)?.slice(0, 4);
+  return {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "@id": `${SITE_ORIGIN}/data#dataset`,
+    name: "Stripe Company History Dataset",
+    description: site.description,
+    url: `${SITE_ORIGIN}/data`,
+    isAccessibleForFree: true,
+    license: `${GITHUB_REPOSITORY_URL}/blob/main/LICENSE`,
+    creator: publisherJsonLd,
+    publisher: publisherJsonLd,
+    about: {
+      "@type": "Organization",
+      name: "Stripe",
+      url: "https://stripe.com/",
+    },
+    ...(earliestYear === undefined || latestYear === undefined
+      ? {}
+      : { temporalCoverage: `${earliestYear}/${latestYear}` }),
+    keywords: [
+      "Stripe history",
+      "company history",
+      "fintech",
+      "payments",
+      "acquisitions",
+      "funding",
+      "product launches",
+      "annual payment volume",
+    ],
+    distribution: history.categories.map((category) => ({
+      "@type": "DataDownload",
+      name: `${category.label} history records`,
+      contentUrl: `${SITE_ORIGIN}/history/${category.id}.yml`,
+      encodingFormat: "application/yaml",
+    })),
+  } as const;
+}
