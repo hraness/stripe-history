@@ -104,7 +104,7 @@ describe("stripehistory.com valuation history", () => {
     expect(html).toContain('data-value-usd="20000000"');
     expect(html).toContain('data-value-usd="159000000000"');
     expect(html).toContain('data-analytics-kind="valuation"');
-    expect(html).toContain('id="stripe-guide-valuation-structured-data"');
+    expect(html).toContain('id="stripe-history-valuation-structured-data"');
     expect(html).toContain('aria-current="true" aria-label="valuation: 25 observations, selected; activate to show all history" data-analytics-event="history filter selected" data-analytics-id="all"');
     expect(html).toMatch(/data-filter-id="valuation"[^>]* href="\/"/u);
     expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
@@ -113,10 +113,10 @@ describe("stripehistory.com valuation history", () => {
     expect(html).not.toContain("company priced");
     expect(html).not.toContain("company coordinated");
     expect(html).not.toContain("capital raised");
-    expect(html).toContain('class="stripe-guide-header"');
+    expect(html).toContain('class="stripe-history-header"');
     expect(html).toContain('href="/about">about</a>');
-    expect(html).toContain('class="hraness-brand stripe-guide-footer-hraness"');
-    expect(html).not.toContain('class="stripe-guide-breadcrumbs"');
-    expect(html).not.toContain('class="stripe-guide-section-heading"');
+    expect(html).toContain('class="hraness-brand stripe-history-footer-hraness"');
+    expect(html).not.toContain('class="stripe-history-breadcrumbs"');
+    expect(html).not.toContain('class="stripe-history-section-heading"');
   });
 });

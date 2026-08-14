@@ -33,7 +33,7 @@ export default async function DataPage() {
   );
 
   return (
-    <main className="plain-page stripe-guide-main" id="main-content">
+    <main className="plain-page stripe-history-main" id="main-content">
       <JsonLdScript
         data={[
           historyDatasetJsonLd(history),
@@ -42,20 +42,20 @@ export default async function DataPage() {
             { name: "Data", path: "/data" },
           ]),
         ]}
-        id="stripe-guide-dataset-structured-data"
+        id="stripe-history-dataset-structured-data"
       />
       <SiteHeader />
-      <nav aria-label="Breadcrumb" className="stripe-guide-breadcrumbs">
+      <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
         <Link href="/">history</Link>
         <span aria-hidden="true"> / </span>
         <span>data</span>
       </nav>
-      <section aria-labelledby="data-heading" className="stripe-guide-section">
-        <div className="stripe-guide-section-heading">
+      <section aria-labelledby="data-heading" className="stripe-history-section">
+        <div className="stripe-history-section-heading">
           <h1 id="data-heading">{dataTitle}</h1>
           <span>{history.events.length} sourced events</span>
         </div>
-        <p className="stripe-guide-data-intro">
+        <p className="stripe-history-data-intro">
           These reviewable YAML files power the public timeline and valuation
           record. History entries preserve chronology, category, summary,
           confidence, and status when applicable; the research files preserve
@@ -64,7 +64,7 @@ export default async function DataPage() {
           website code are available under the MIT License in the{" "}
           <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>.
         </p>
-        <ul className="stripe-guide-data-list">
+        <ul className="stripe-history-data-list">
           {history.categories.map((category) => (
             <li key={category.id}>
               <h2>
@@ -80,7 +80,7 @@ export default async function DataPage() {
         </ul>
         <section
           aria-labelledby="research-data-heading"
-          className="stripe-guide-data-research"
+          className="stripe-history-data-research"
         >
           <h2 id="research-data-heading">Research and provenance</h2>
           <p>

@@ -45,13 +45,13 @@ describe("stripehistory.com category history", () => {
       html.indexOf('data-filter-id="acquisitions"'),
     );
     expect(html).toContain("Stripe reportedly discusses acquiring OpenRouter");
-    expect(html).toContain('id="stripe-guide-history-category-structured-data"');
-    expect(html).not.toContain('class="stripe-guide-selector"');
-    expect(html).toContain('class="stripe-guide-header"');
+    expect(html).toContain('id="stripe-history-history-category-structured-data"');
+    expect(html).not.toContain('class="stripe-history-selector"');
+    expect(html).toContain('class="stripe-history-header"');
     expect(html).toContain('href="/about">about</a>');
-    expect(html).toContain('class="hraness-brand stripe-guide-footer-hraness"');
-    expect(html).not.toContain('class="stripe-guide-breadcrumbs"');
-    expect(html).not.toContain('class="stripe-guide-section-heading"');
+    expect(html).toContain('class="hraness-brand stripe-history-footer-hraness"');
+    expect(html).not.toContain('class="stripe-history-breadcrumbs"');
+    expect(html).not.toContain('class="stripe-history-section-heading"');
     expect(html).not.toMatch(/31 of \d+ events/u);
     expect(html).not.toContain("A month in Buenos Aires");
   });

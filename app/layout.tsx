@@ -37,7 +37,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html data-theme="light" lang="en-US" suppressHydrationWarning>
       <body className={siteThemes.plain.bodyClassName}>
-        <JsonLdScript data={websiteJsonLd()} id="stripe-guide-website-structured-data" />
+        <JsonLdScript data={websiteJsonLd()} id="stripe-history-website-structured-data" />
         <DesignThemeProvider storageKey="stripe-history-theme-v1">
           <ThemeColorSync darkColor="#151515" lightColor="#ffffff" />
           <SkipLink href="#main-content">Skip to content</SkipLink>

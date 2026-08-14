@@ -30,8 +30,8 @@ describe("canonical stripehistory.com history", () => {
 
     expect(eventCount).toBe(history.events.length);
     expect(eventCount).toBeGreaterThanOrEqual(200);
-    expect(html).toContain('class="plain-page stripe-guide-main stripe-guide-history-main"');
-    expect(html).toContain('<p class="stripe-guide-wordmark"><a href="/">stripehistory.com</a></p>');
+    expect(html).toContain('class="plain-page stripe-history-main stripe-history-history-main"');
+    expect(html).toContain('<p class="stripe-history-wordmark"><a href="/">stripehistory.com</a></p>');
     expect(html).toContain('<h1 class="stripe-history-visually-hidden" id="history-heading">Stripe company history</h1>');
     expect(html).toContain("funding, valuation, expansion");
     expect(html).toContain(`aria-current="true" aria-label="all: ${history.events.length} events"`);
@@ -58,11 +58,11 @@ describe("canonical stripehistory.com history", () => {
     expect(html).toContain("A month in Buenos Aires produces Stripe&#x27;s first working prototype");
     expect(html).toContain('class="history-event-sources"');
     expect(html).toContain('data-analytics-event="source link opened"');
-    expect(html).toContain('id="stripe-guide-history-structured-data"');
+    expect(html).toContain('id="stripe-history-history-structured-data"');
     expect(html).toContain('aria-label="Appearance: light"');
-    expect(html).toContain('class="hraness-brand stripe-guide-footer-hraness" href="https://hraness.com"');
+    expect(html).toContain('class="hraness-brand stripe-history-footer-hraness" href="https://hraness.com"');
     expect(html).toContain('href="https://github.com/hraness/stripe-history"');
-    expect(html).not.toContain('class="stripe-guide-selector"');
+    expect(html).not.toContain('class="stripe-history-selector"');
     expect(html).not.toContain('/atom.xml');
     expect(html).not.toContain('/news.yml');
     expect(html).not.toContain("<form");

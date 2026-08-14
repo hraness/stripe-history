@@ -393,16 +393,16 @@ export function HistoryView({
 
   return (
     <main
-      className="plain-page stripe-guide-main stripe-guide-history-main"
+      className="plain-page stripe-history-main stripe-history-history-main"
       id="main-content"
     >
       <SiteHeader />
-      <section aria-labelledby="history-heading" className="stripe-guide-section">
+      <section aria-labelledby="history-heading" className="stripe-history-section">
         <h1 className="stripe-history-visually-hidden" id="history-heading">
           {historyHeading}
         </h1>
         {selectedCategoryId === undefined ? (
-          <p className="stripe-guide-intro">{site.description}</p>
+          <p className="stripe-history-intro">{site.description}</p>
         ) : null}
         <HistoryFilters
           history={history}

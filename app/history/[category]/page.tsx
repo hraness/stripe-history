@@ -78,7 +78,7 @@ export default async function HistoryCategoryPage({
             { name: resolved.category.label, path },
           ]),
         ]}
-        id="stripe-guide-history-category-structured-data"
+        id="stripe-history-history-category-structured-data"
       />
       <HistoryView
         history={resolved.history}

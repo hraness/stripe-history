@@ -58,16 +58,16 @@ export default async function PaymentVolumePage() {
             { name: "Annual volume", path: "/history/payment-volume" },
           ]),
         ]}
-        id="stripe-guide-payment-volume-structured-data"
+        id="stripe-history-payment-volume-structured-data"
       />
       <main
-        className="plain-page stripe-guide-main stripe-guide-history-main"
+        className="plain-page stripe-history-main stripe-history-history-main"
         id="main-content"
       >
         <SiteHeader />
         <section
           aria-labelledby="payment-volume-heading"
-          className="stripe-guide-section history-volume-page"
+          className="stripe-history-section history-volume-page"
         >
         <h1 className="stripe-history-visually-hidden" id="payment-volume-heading">
           {paymentVolumeTitle}

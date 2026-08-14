@@ -27,18 +27,18 @@ describe("stripehistory.com payment volume history", () => {
     expect(html).toContain("Stripe calls the 2025 figure");
     expect(html).toContain("2021 and 2022 figures are lower bounds");
     expect(html).toContain('data-analytics-event="source link opened"');
-    expect(html).toContain('id="stripe-guide-payment-volume-structured-data"');
+    expect(html).toContain('id="stripe-history-payment-volume-structured-data"');
     expect(html).toContain('aria-current="true" aria-label="annual volume: 5 annual disclosures, selected; activate to show all history" data-analytics-event="history filter selected" data-analytics-id="all"');
     expect(html).toMatch(/data-filter-id="payment-volume"[^>]* href="\/"/u);
     expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
       html.indexOf('data-filter-id="payment-volume"'),
     );
-    expect(html).not.toContain('class="stripe-guide-selector"');
-    expect(html).toContain('class="stripe-guide-header"');
+    expect(html).not.toContain('class="stripe-history-selector"');
+    expect(html).toContain('class="stripe-history-header"');
     expect(html).toContain('href="/about">about</a>');
-    expect(html).toContain('class="hraness-brand stripe-guide-footer-hraness"');
-    expect(html).not.toContain('class="stripe-guide-breadcrumbs"');
-    expect(html).not.toContain('class="stripe-guide-section-heading"');
+    expect(html).toContain('class="hraness-brand stripe-history-footer-hraness"');
+    expect(html).not.toContain('class="stripe-history-breadcrumbs"');
+    expect(html).not.toContain('class="stripe-history-section-heading"');
     expect(html).not.toContain("$400 billion");
   });
 });
