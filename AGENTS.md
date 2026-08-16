@@ -1,3 +1,4 @@
+<!-- kb:context scopes/repository--cdb4ee2aea69 -->
 # Contents
 
 - `app/` – the public timeline, category, annual-volume, valuation, data, and methodology pages, plus crawl metadata, social image, and framework shell.
@@ -6,6 +7,9 @@
 - `public/research/` – the canonical source catalog, valuations, founder appearances, collection definitions, and research-run ledger.
 - `scripts/` – bounded Stripe Sessions extraction, research audit and planning, legacy-source migration, and structured-output helpers.
 - `assets/` – the Hraness README lockup.
+- `.agents/skills/` – reusable cross-repository KB and phased-execution workflows.
+- `kb/` – authored repository rationale, evidence, synthesis, and plans.
+- `WRITING.md` and `STYLE.md` – internal and public prose contracts.
 - `.github/workflows/` – standalone repository validation.
 - `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `CITATION.cff`, and `LICENSE` – project documentation, citation metadata, policy, and terms.
 - `package.json`, `tsconfig.json`, `eslint.config.mjs`, and `bun.lock` – the standalone Next.js application and verification configuration.
@@ -13,6 +17,13 @@
 # Guidelines
 
 - Use Bun 1.3.14 for installs, scripts, and checks.
+- Follow `WRITING.md` for internal prose and `STYLE.md` for public prose.
+- Apply unreasonably robust programming when agent work is cheap. Model invalid states out of existence, parse provider and authored data from `unknown`, and pair readable regression examples with property tests for general laws.
+- Pin Hraness dependencies to reviewed immutable releases or full commits. Never connect repositories with sibling paths, Git submodules, or coordinated `main` assumptions.
+- Extract a shared package only after two concrete consumers need the same stable interface. Keep shared packages product-neutral.
+- Use a shared design kit or `@hraness/ui` only for stable, portable primitives and tokens at an immutable version. Keep evidence modeling, timeline composition, methodology, and the local visual contract product-owned.
+- Freeze shared interfaces before parallel lanes begin. Give authored-corpus migrations, manifests, lockfiles, and other convergence surfaces one owner while lanes edit disjoint paths.
+- Keep mandatory rules in the closest `AGENTS.md`, current procedures in `docs/`, executable contracts in types and tests, and pull-based rationale, evidence, synthesis, and plans in `kb/`.
 - Keep the canonical public identity at `https://stripehistory.com`. Preserve former hosts only as direct permanent redirects to the matching canonical path.
 - Keep history server-rendered, crawlable, and available as reviewable YAML. Preserve durable category, annual-volume, valuation, and data URLs.
 - Require at least one canonical source ID for every event and valuation observation. Prefer primary evidence, preserve uncertainty, and distinguish proposed, reported, announced, and completed events.

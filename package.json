@@ -45,7 +45,11 @@
     "search:indexnow": "bun run scripts/submit-indexnow.ts",
     "start": "next start",
     "test": "bun test ./app ./lib ./scripts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "kb:refresh": "bunx --bun github:hraness/kb#v0.15.1 refresh --root kb",
+    "kb:check:lane": "bunx --bun github:hraness/kb#v0.15.1 check --root kb --no-catalog",
+    "kb:check": "bunx --bun github:hraness/kb#v0.15.1 check --root kb && bunx --bun github:hraness/kb#v0.15.1 agents check --root kb --repo .",
+    "kb:catalog": "bunx --bun github:hraness/kb#v0.15.1 catalog --root kb"
   },
   "dependencies": {
     "@ai-sdk/gateway-v4": "npm:@ai-sdk/gateway@^4.0.27",
