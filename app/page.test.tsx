@@ -3,6 +3,7 @@ import { loadHistory } from "@/lib/content";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import Home, { generateMetadata } from "./page";
+import { site } from "./site";
 
 describe("canonical stripehistory.com history", () => {
   test("publishes root-canonical history metadata", async () => {
@@ -31,9 +32,9 @@ describe("canonical stripehistory.com history", () => {
     expect(eventCount).toBe(history.events.length);
     expect(eventCount).toBeGreaterThanOrEqual(200);
     expect(html).toContain('class="plain-page stripe-history-main stripe-history-history-main"');
-    expect(html).toContain('<p class="stripe-history-wordmark"><a href="/">stripehistory.com</a></p>');
+    expect(html).toContain('<a class="stripe-history-wordmark" href="/">stripehistory.com</a>');
     expect(html).toContain('<h1 class="stripe-history-visually-hidden" id="history-heading">Stripe company history</h1>');
-    expect(html).toContain("funding, valuation, expansion");
+    expect(html).toContain(site.historyIntro);
     expect(html).toContain(`aria-current="true" aria-label="all: ${history.events.length} events"`);
     expect(html).toContain('href="/history/acquisitions"');
     expect(html).toContain('href="/history/payment-volume"');
@@ -60,6 +61,7 @@ describe("canonical stripehistory.com history", () => {
     expect(html).toContain('data-analytics-event="source link opened"');
     expect(html).toContain('id="stripe-history-history-structured-data"');
     expect(html).toContain('aria-label="Appearance: light"');
+    expect(html).toContain('class="stripe-history-theme-icon"');
     expect(html).toContain('class="hraness-brand stripe-history-footer-hraness" href="https://hraness.com"');
     expect(html).toContain('href="https://github.com/hraness/stripe-history"');
     expect(html).not.toContain('class="stripe-history-selector"');

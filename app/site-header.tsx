@@ -8,7 +8,7 @@ export function SiteHeader({
 }: Readonly<{ aboutSelected?: boolean }>) {
   return (
     <header className="stripe-history-header">
-      <p className="stripe-history-wordmark"><Link href="/">{site.domain}</Link></p>
+      <Link className="stripe-history-wordmark" href="/">{site.domain}</Link>
       <div className="stripe-history-header-controls">
         <nav aria-label="Site">
           <Link aria-current={aboutSelected ? "page" : undefined} href="/about">

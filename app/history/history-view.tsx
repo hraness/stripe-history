@@ -13,6 +13,7 @@ import {
   type HistoryFilterVisualId,
 } from "./category-visuals";
 import { HistoryStickyOffsetSync } from "./history-sticky-offset-sync";
+import { HistoryMeasureRail } from "./history-measure-rail";
 import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
 import { site } from "../site";
@@ -95,10 +96,11 @@ function HistoryMeasuresSidebar({
     ...valuationHeadlines.map(({ valueUsd }) => valueUsd),
   );
   return (
-    <aside aria-label="Stripe scale over time" className="history-volume">
+    <HistoryMeasureRail>
       {annualVolumes.length === 0 ? null : (
         <figure
           data-measure="payment-volume"
+          id="history-measure-payment-volume"
           style={historyFilterVisualStyle("payment-volume")}
         >
           <figcaption>
@@ -134,6 +136,7 @@ function HistoryMeasuresSidebar({
       {valuationHeadlines.length === 0 ? null : (
         <figure
           data-measure="valuation"
+          id="history-measure-valuation"
           style={historyFilterVisualStyle("valuation")}
         >
           <figcaption>
@@ -181,7 +184,7 @@ function HistoryMeasuresSidebar({
           </ol>
         </figure>
       )}
-    </aside>
+    </HistoryMeasureRail>
   );
 }
 
@@ -402,7 +405,7 @@ export function HistoryView({
           {historyHeading}
         </h1>
         {selectedCategoryId === undefined ? (
-          <p className="stripe-history-intro">{site.description}</p>
+          <p className="stripe-history-intro">{site.historyIntro}</p>
         ) : null}
         <HistoryFilters
           history={history}

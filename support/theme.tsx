@@ -1,5 +1,8 @@
 "use client";
 
+import Moon02Icon from "@hugeicons/core-free-icons/Moon02Icon";
+import Sun03Icon from "@hugeicons/core-free-icons/Sun03Icon";
+import { HugeiconsIcon } from "@hugeicons/react";
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 import { useEffect, useSyncExternalStore } from "react";
 
@@ -87,6 +90,7 @@ export function ThemeToggle({
   );
 
   const nextTheme = theme === "dark" ? "light" : "dark";
+  const icon = theme === "dark" ? Sun03Icon : Moon02Icon;
   return (
     <button
       aria-label={`${ariaLabel}: ${theme}`}
@@ -98,7 +102,14 @@ export function ThemeToggle({
       title={`Use ${nextTheme} appearance`}
       type="button"
     >
-      <span aria-hidden="true">{theme === "dark" ? "☀" : "☾"}</span>
+      <HugeiconsIcon
+        aria-hidden="true"
+        className="stripe-history-theme-icon"
+        color="currentColor"
+        icon={icon}
+        size={17}
+        strokeWidth={1.8}
+      />
     </button>
   );
 }
