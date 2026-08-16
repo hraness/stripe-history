@@ -42,6 +42,7 @@
     "history:research:plan": "bun run scripts/audit-history-research.ts --plan",
     "history:sources:migrate": "bun run scripts/migrate-history-sources.ts --write",
     "lint": "eslint .",
+    "search:indexnow": "bun run scripts/submit-indexnow.ts",
     "start": "next start",
     "test": "bun test ./app ./lib ./scripts",
     "typecheck": "tsc --noEmit"

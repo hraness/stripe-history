@@ -26,13 +26,14 @@ describe("stripehistory.com public identity", () => {
     const urls = entries.map(({ url }) => url);
 
     expect(urls).toEqual(expect.arrayContaining([
-      SITE_ORIGIN,
+      `${SITE_ORIGIN}/`,
       `${SITE_ORIGIN}/history/payment-volume`,
       `${SITE_ORIGIN}/history/valuation`,
       `${SITE_ORIGIN}/about`,
       `${SITE_ORIGIN}/data`,
       ...historyCategoryIds.map((id) => `${SITE_ORIGIN}/history/${id}`),
     ]));
+    expect(urls).not.toContain(SITE_ORIGIN);
     expect(urls).not.toContain(`${SITE_ORIGIN}/history`);
     expect(urls.some((url) => url.startsWith(`${SITE_ORIGIN}/news/`))).toBe(false);
     expect(entries.every((entry) => entry.changeFrequency === undefined)).toBe(true);

@@ -122,10 +122,14 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
     "@type": "Dataset",
     "@id": `${SITE_ORIGIN}/data#dataset`,
     name: "Stripe Company History Dataset",
-    description: site.description,
+    alternateName: "Stripe History Dataset",
+    description: site.datasetDescription,
     url: `${SITE_ORIGIN}/data`,
+    identifier: `${SITE_ORIGIN}/data#dataset`,
+    inLanguage: "en-US",
     isAccessibleForFree: true,
     license: `${GITHUB_REPOSITORY_URL}/blob/main/LICENSE`,
+    sameAs: `${GITHUB_REPOSITORY_URL}/tree/main/public`,
     creator: publisherJsonLd,
     publisher: publisherJsonLd,
     about: {
@@ -133,6 +137,8 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
       name: "Stripe",
       url: "https://stripe.com/",
     },
+    measurementTechnique:
+      "Source-linked editorial review of chronology, category placement, claim status, confidence, and duplicate claims.",
     ...(earliestYear === undefined || latestYear === undefined
       ? {}
       : { temporalCoverage: `${earliestYear}/${latestYear}` }),

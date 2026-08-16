@@ -22,6 +22,14 @@ describe("Stripe company history dataset", () => {
     expect(html).toContain('<h1 id="data-heading">Stripe Company History Dataset</h1>');
     expect(html).toContain(`${history.events.length} sourced events`);
     expect(html).toContain("confidence, and status when applicable");
+    expect(html).toContain("Questions this history answers");
+    expect(html).toContain("How did Stripe start, and who has led the company?");
+    expect(html).toContain("What companies has Stripe acquired?");
+    expect(html).toContain("How have Stripe&#x27;s funding and valuation changed?");
+    expect(html).toContain("How much payment volume has Stripe processed?");
+    expect(html).toContain("When did Stripe launch products and expand globally?");
+    expect(html).toContain('href="/history/origins-and-early-company"');
+    expect(html).toContain('href="/history/executives-and-team"');
     expect(html.match(/download YAML/gu)).toHaveLength(11);
     expect(html).toContain('href="/history/acquisitions"');
     expect(html).toContain('href="/history/acquisitions.yml"');

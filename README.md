@@ -15,6 +15,15 @@ The site renders more than 200 sourced events as one reverse-chronological histo
 - [Private-company valuation history](https://stripehistory.com/history/valuation)
 - [Open history and research data](https://stripehistory.com/data)
 
+## Questions the history answers
+
+- [How did Stripe start, and who formed its earliest team?](https://stripehistory.com/history/origins-and-early-company)
+- [What companies has Stripe acquired?](https://stripehistory.com/history/acquisitions)
+- [How have Stripe's funding and private-company valuation changed?](https://stripehistory.com/history/valuation)
+- [How much annual payment and total volume has Stripe disclosed?](https://stripehistory.com/history/payment-volume)
+- [When did Stripe launch products and expand into new countries?](https://stripehistory.com/history/product-launches)
+- [How have Stripe's payment methods, settlement rails, and payout reach expanded?](https://stripehistory.com/history/payment-and-payout-expansion)
+
 The authored event records live in [`public/history/`](./public/history/), one file per category. The [`public/research/`](./public/research/) directory contains the canonical source catalog, valuation observations, founder appearances, collection definitions, and research-run ledger. They remain ordinary YAML so corrections and provenance changes are readable in review without scraping the site.
 
 ## Sources and editorial method
@@ -45,6 +54,14 @@ Open `http://localhost:3000`. Run the complete local verification before submitt
 ```sh
 bun run check
 ```
+
+After a production update is live, notify IndexNow of the canonical HTML URLs in the sitemap:
+
+```sh
+bun run search:indexnow -- --submit
+```
+
+Run the same command without `--submit` to inspect the exact payload. The command rejects duplicate, non-HTTPS, off-domain, and noncanonical URLs before making a request.
 
 The optional `bun run history:sessions:update` command re-extracts notable product launches from the checked Stripe Sessions source set. It requires `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN`; review every proposed record and source before committing it. The migration command rewrites legacy embedded sources and should be used only on a reviewed legacy corpus after a dry run of `bun run scripts/migrate-history-sources.ts`.
 

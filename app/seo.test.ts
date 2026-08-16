@@ -38,9 +38,14 @@ describe("stripehistory.com structured discovery", () => {
     expect(dataset).toMatchObject({
       "@type": "Dataset",
       "@id": "https://stripehistory.com/data#dataset",
+      alternateName: "Stripe History Dataset",
       creator: { name: "Hraness" },
+      identifier: "https://stripehistory.com/data#dataset",
+      inLanguage: "en-US",
       license: "https://github.com/hraness/stripe-history/blob/main/LICENSE",
+      measurementTechnique: expect.stringContaining("Source-linked editorial review"),
       name: "Stripe Company History Dataset",
+      sameAs: "https://github.com/hraness/stripe-history/tree/main/public",
       temporalCoverage: "2005/2026",
     });
     expect(dataset.variableMeasured).toEqual(expect.arrayContaining([

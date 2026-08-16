@@ -8,7 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     {
-      url: SITE_ORIGIN,
+      url: `${SITE_ORIGIN}/`,
     },
     {
       url: `${SITE_ORIGIN}/history/payment-volume`,
