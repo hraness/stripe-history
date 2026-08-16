@@ -130,14 +130,6 @@
   max-width: 38rem;
 }
 
-.stripe-history-intro {
-  color: var(--plain-muted);
-  font-size: 0.925rem;
-  line-height: 1.5;
-  margin: 0.75rem 0 1rem;
-  max-width: 38rem;
-}
-
 .stripe-history-data-intro {
   color: var(--plain-muted);
   margin: 0 0 1.5rem;
@@ -1016,7 +1008,6 @@
     padding-inline: 0.25rem;
   }
 
-  .stripe-history-intro,
   .history-filter-description {
     font-size: 0.875rem;
     line-height: 1.45;

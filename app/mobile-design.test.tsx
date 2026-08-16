@@ -5,10 +5,20 @@ import { ThemeToggle } from "@/support/theme";
 
 import { HistoryMeasureRail } from "./history/history-measure-rail";
 
-const [globalsCss, supportCss] = await Promise.all([
+const [globalsCss, plainSiteCss, supportCss] = await Promise.all([
   Bun.file(new URL("./globals.css", import.meta.url)).text(),
+  Bun.file(new URL("../support/plain-site.css", import.meta.url)).text(),
   Bun.file(new URL("../support/styles.css", import.meta.url)).text(),
 ]);
+
+test("blue plain-site links stay quiet until interaction", () => {
+  expect(plainSiteCss).toMatch(
+    /:where\(\.plain-page a, \.plain-footer a\)\s*\{[^}]*color:\s*var\(--plain-link\);[^}]*text-decoration:\s*none;/su,
+  );
+  expect(plainSiteCss).toMatch(
+    /\.plain-page a:is\(:hover, :focus-visible\)[\s\S]*?\{[^}]*text-decoration:\s*underline;/u,
+  );
+});
 
 test("mobile history uses a controlled full-width chart rail instead of clipped panels", () => {
   expect(globalsCss).toMatch(

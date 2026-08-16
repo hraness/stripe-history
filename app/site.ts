@@ -16,8 +16,6 @@ export const site = {
     "An independent, sourced timeline of Stripe acquisitions, products, leadership, funding, valuation, expansion, offices, publishing, company milestones, and annual volume.",
   domain: SITE_DOMAIN,
   historyTitle: "Stripe Company History",
-  historyIntro:
-    "An independent, sourced timeline of Stripe products, people, funding, valuation, expansion, and milestones.",
   name: "Stripe History",
   socialImageAlt: `Stripe company history timeline from ${SITE_DOMAIN}`,
   title: `Stripe Company History | ${SITE_DOMAIN}`,

@@ -3,7 +3,6 @@ import { loadHistory } from "@/lib/content";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import Home, { generateMetadata } from "./page";
-import { site } from "./site";
 
 describe("canonical stripehistory.com history", () => {
   test("publishes root-canonical history metadata", async () => {
@@ -34,7 +33,9 @@ describe("canonical stripehistory.com history", () => {
     expect(html).toContain('class="plain-page stripe-history-main stripe-history-history-main"');
     expect(html).toContain('<a class="stripe-history-wordmark" href="/">stripehistory.com</a>');
     expect(html).toContain('<h1 class="stripe-history-visually-hidden" id="history-heading">Stripe company history</h1>');
-    expect(html).toContain(site.historyIntro);
+    expect(html).not.toContain(
+      "An independent, sourced timeline of Stripe products, people, funding, valuation, expansion, and milestones.",
+    );
     expect(html).toContain(`aria-current="true" aria-label="all: ${history.events.length} events"`);
     expect(html).toContain('href="/history/acquisitions"');
     expect(html).toContain('href="/history/payment-volume"');

@@ -58,12 +58,16 @@ body.plain-site > main {
 :where(.plain-page a, .plain-footer a) {
   color: var(--plain-link);
   overflow-wrap: anywhere;
+  text-decoration: none;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.15em;
 }
 
-:where(.plain-page a:hover, .plain-footer a:hover) {
-  text-decoration-thickness: 2px;
+:where(
+  .plain-page a:is(:hover, :focus-visible),
+  .plain-footer a:is(:hover, :focus-visible)
+) {
+  text-decoration: underline;
 }
 
 .plain-site :where(.plain-page a:focus-visible, .plain-footer a:focus-visible) {

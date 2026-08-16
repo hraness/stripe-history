@@ -16,7 +16,6 @@ import { HistoryStickyOffsetSync } from "./history-sticky-offset-sync";
 import { HistoryMeasureRail } from "./history-measure-rail";
 import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
-import { site } from "../site";
 
 interface HistoryViewProps {
   readonly history: HistoryCollection;
@@ -404,9 +403,6 @@ export function HistoryView({
         <h1 className="stripe-history-visually-hidden" id="history-heading">
           {historyHeading}
         </h1>
-        {selectedCategoryId === undefined ? (
-          <p className="stripe-history-intro">{site.historyIntro}</p>
-        ) : null}
         <HistoryFilters
           history={history}
           {...(selectedCategoryId === undefined ? {} : { selectedCategoryId })}
