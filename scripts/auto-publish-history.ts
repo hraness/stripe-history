@@ -94,28 +94,71 @@ const proposalEventFields = {
   title: z.string().min(4).max(180),
 } as const;
 
-export const PublicationProposalSchema = z.discriminatedUnion("disposition", [
-  z.strictObject({
-    disposition: z.literal("reject"),
-    reason: z.string().min(10).max(500),
-  }),
-  z.strictObject({
-    disposition: z.literal("needs-review"),
-    reason: z.string().min(10).max(500),
-  }),
-  z.strictObject({
-    disposition: z.literal("add-source"),
-    evidence_quotes: z.array(z.string().min(20).max(800)).min(1).max(6),
-    existing_event_id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u).max(120),
-    reason: z.string().min(10).max(500),
-  }),
-  z.strictObject({
-    disposition: z.literal("publish-new"),
-    event: z.strictObject(proposalEventFields),
-    evidence_quotes: z.array(z.string().min(20).max(800)).min(1).max(6),
-    reason: z.string().min(10).max(500),
-  }),
-]);
+const ProposalEventSchema = z.strictObject(proposalEventFields);
+const ProposalEvidenceQuoteSchema = z.string().min(20).max(800);
+
+export const PublicationProposalSchema = z.strictObject({
+  disposition: z.enum(["reject", "needs-review", "add-source", "publish-new"]),
+  event: ProposalEventSchema.nullable().describe(
+    "The complete proposed event for publish-new; null for every other disposition.",
+  ),
+  evidence_quotes: z.array(ProposalEvidenceQuoteSchema).max(6).describe(
+    "Exact evidence substrings for add-source or publish-new; an empty array otherwise.",
+  ),
+  existing_event_id: z.string()
+    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u)
+    .max(120)
+    .nullable()
+    .describe("The existing event ID for add-source; null for every other disposition."),
+  reason: z.string().min(10).max(500),
+}).superRefine((proposal, context) => {
+  const publishes = proposal.disposition === "add-source"
+    || proposal.disposition === "publish-new";
+  if (publishes && proposal.evidence_quotes.length === 0) {
+    context.addIssue({
+      code: "custom",
+      message: "Publishing proposals require exact evidence quotes",
+      path: ["evidence_quotes"],
+    });
+  }
+  if (!publishes && proposal.evidence_quotes.length !== 0) {
+    context.addIssue({
+      code: "custom",
+      message: "Non-publishing proposals must use an empty evidence quote array",
+      path: ["evidence_quotes"],
+    });
+  }
+  if (proposal.disposition === "add-source") {
+    if (proposal.existing_event_id === null) {
+      context.addIssue({
+        code: "custom",
+        message: "add-source requires an existing event ID",
+        path: ["existing_event_id"],
+      });
+    }
+  } else if (proposal.existing_event_id !== null) {
+    context.addIssue({
+      code: "custom",
+      message: "Only add-source can include an existing event ID",
+      path: ["existing_event_id"],
+    });
+  }
+  if (proposal.disposition === "publish-new") {
+    if (proposal.event === null) {
+      context.addIssue({
+        code: "custom",
+        message: "publish-new requires an event",
+        path: ["event"],
+      });
+    }
+  } else if (proposal.event !== null) {
+    context.addIssue({
+      code: "custom",
+      message: "Only publish-new can include an event",
+      path: ["event"],
+    });
+  }
+});
 
 export const PublicationReviewSchema = z.strictObject({
   evidence_quotes: z.array(z.string().min(20).max(800)).max(6),
@@ -401,6 +444,9 @@ function validateProposalForCompilation(
   if (proposal.disposition === "reject" || proposal.disposition === "needs-review") return;
   exactQuotes(evidence.text, proposal.evidence_quotes);
   if (proposal.disposition === "add-source") {
+    if (proposal.existing_event_id === null) {
+      throw new Error("add-source proposal is missing an existing event ID");
+    }
     const existing = findEvent(histories, proposal.existing_event_id);
     if (existing === null) throw new Error("Model referenced an unknown existing event");
     if (!policy.auto_publish_categories.includes(existing.history.file.category.id as never)) {
@@ -411,6 +457,7 @@ function validateProposalForCompilation(
     }
     return;
   }
+  if (proposal.event === null) throw new Error("publish-new proposal is missing an event");
   if (!policy.auto_publish_categories.includes(proposal.event.category as never)) {
     throw new Error("Model selected a category outside automatic publication policy");
   }
@@ -429,11 +476,10 @@ function validateProposalForCompilation(
 }
 
 function compileEvent(
-  proposal: Extract<z.infer<typeof PublicationProposalSchema>, { disposition: "publish-new" }>,
+  event: z.infer<typeof ProposalEventSchema>,
   eventId: string,
   sourceId: string,
 ): HistoryEvent {
-  const event = proposal.event;
   return HistoryEventSchema.parse({
     ...(event.amount === null ? {} : { amount: event.amount }),
     confidence: event.confidence,
@@ -743,8 +789,9 @@ export async function autoPublishHistory(
       });
 
       if (proposal.disposition === "publish-new") {
+        if (proposal.event === null) throw new Error("publish-new proposal is missing an event");
         const eventId = proposedEventId(proposal.event.title, source.url, histories);
-        const event = compileEvent(proposal, eventId, source.id);
+        const event = compileEvent(proposal.event, eventId, source.id);
         addEvent(histories, proposal.event.category, event);
         pending.push({
           candidateUrl: canonicalNewsUrl(candidate.url),
@@ -762,6 +809,9 @@ export async function autoPublishHistory(
           eventId,
         }));
       } else {
+        if (proposal.existing_event_id === null) {
+          throw new Error("add-source proposal is missing an existing event ID");
+        }
         const changed = addSourceToEvent(histories, proposal.existing_event_id, source.id);
         pending.push({
           candidateUrl: canonicalNewsUrl(candidate.url),

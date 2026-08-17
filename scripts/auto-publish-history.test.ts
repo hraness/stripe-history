@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 
 import { afterEach, describe, expect, test } from "bun:test";
 import { parse, stringify } from "yaml";
+import { z } from "zod";
 
 import { AutomatedPublicationLedgerSchema } from "../lib/automated-publication-schema";
 import { HistoryFileSchema } from "../lib/history-schema";
@@ -12,6 +13,7 @@ import { stableResearchSourceId } from "../lib/research-source-identity";
 import { auditHistoryResearch } from "./audit-history-research";
 import {
   autoPublishHistory,
+  PublicationProposalSchema,
   renderAutomatedPublicationMarkdown,
   type PublicationGenerator,
 } from "./auto-publish-history";
@@ -75,6 +77,7 @@ function acceptedGenerator(calls: string[]): PublicationGenerator {
       return {
         disposition: "publish-new",
         evidence_quotes: [evidenceQuote],
+        existing_event_id: null,
         event: {
           amount: null,
           category: "product-launches",
@@ -102,6 +105,26 @@ function acceptedGenerator(calls: string[]): PublicationGenerator {
 }
 
 describe("automatic history publication", () => {
+  test("uses an AI Gateway-compatible proposal schema without oneOf", () => {
+    const jsonSchema = z.toJSONSchema(PublicationProposalSchema);
+
+    expect(JSON.stringify(jsonSchema)).not.toContain('"oneOf"');
+    expect(PublicationProposalSchema.parse({
+      disposition: "reject",
+      event: null,
+      evidence_quotes: [],
+      existing_event_id: null,
+      reason: "The candidate is routine marketing rather than a material event.",
+    })).toMatchObject({ disposition: "reject" });
+    expect(() => PublicationProposalSchema.parse({
+      disposition: "publish-new",
+      event: null,
+      evidence_quotes: [],
+      existing_event_id: null,
+      reason: "The source appears to describe a material event.",
+    })).toThrow("publish-new requires an event");
+  });
+
   test("renders untrusted report labels and URLs without Markdown injection", () => {
     const markdown = renderAutomatedPublicationMarkdown({
       asOf: "2026-08-16",
@@ -247,6 +270,7 @@ describe("automatic history publication", () => {
         return {
           disposition: "publish-new",
           evidence_quotes: [evidence],
+          existing_event_id: null,
           event: {
             amount: null,
             category: "product-launches",
