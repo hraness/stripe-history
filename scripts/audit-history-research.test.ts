@@ -158,6 +158,8 @@ describe("Stripe history research audit", () => {
   test("validates the complete checked-in corpus with bounded counts", async () => {
     const report = await auditHistoryResearch(projectDirectory);
 
+    expect(report.automatedPublicationDecisions).toBe(0);
+    expect(report.automatedPublicationRuns).toBe(0);
     expect(report.collections).toBe(4);
     expect(report.collectionSupportingSources).toBe(2);
     expect(report.historyFiles).toBe(11);

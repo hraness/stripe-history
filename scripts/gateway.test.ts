@@ -31,5 +31,6 @@ describe("gateway configuration", () => {
   test("rejects malformed model identifiers", () => {
     expect(() => resolveGatewayModel("missing-provider")).toThrow();
     expect(resolveGatewayModel("openai/gpt-5-mini")).toBe("openai/gpt-5-mini");
+    expect(resolveGatewayModel("openai/gpt-5.6-sol")).toBe("openai/gpt-5.6-sol");
   });
 });

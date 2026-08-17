@@ -24,7 +24,7 @@ The site renders more than 200 sourced events as one reverse-chronological histo
 - [When did Stripe launch products and expand into new countries?](https://stripehistory.com/history/product-launches)
 - [How have Stripe's payment methods, settlement rails, and payout reach expanded?](https://stripehistory.com/history/payment-and-payout-expansion)
 
-The authored event records live in [`public/history/`](./public/history/), one file per category. The [`public/research/`](./public/research/) directory contains the canonical source catalog, valuation observations, founder appearances, collection definitions, and research-run ledger. They remain ordinary YAML so corrections and provenance changes are readable in review without scraping the site.
+The authored event records live in [`public/history/`](./public/history/), one file per category. The [`public/research/`](./public/research/) directory contains the canonical source catalog, valuation observations, founder appearances, collection definitions, research-run ledger, automatic-publication policy, and accepted publication attestations. They remain ordinary YAML so corrections and provenance changes are readable in review without scraping the site.
 
 ## Sources and editorial method
 
@@ -38,13 +38,27 @@ bun run history:research:audit
 
 An external capture archive can be verified with `bun run history:research:audit -- --capture-root /absolute/path`. Capture planning is read-only; pass a collection and explicit date as needed, for example `bun run history:research:plan -- --collection valuation-history --as-of 2026-08-14`.
 
-The [weekly news research workflow](./.github/workflows/weekly-news.yml) runs every Thursday at 9:17 AM Atlantic time. It checks Stripe's first-party newsroom and blog indexes, focused publisher feeds, and bounded GDELT searches, removes URLs already present in the source catalog, and opens one dated review issue when candidates remain. The issue is a research queue, not an automatic history update. Every candidate still requires source capture, significance review, deduplication, and an ordinary reviewed commit.
+The [weekly history publication workflow](./.github/workflows/weekly-news.yml) runs every Thursday at 9:17 AM Atlantic time. It checks Stripe's first-party newsroom and blog indexes, focused publisher feeds, and bounded GDELT searches, then removes URLs already present in the source catalog.
+
+Up to three current candidates from reviewed first-party or publisher-feed monitors receive two independent structured reviews from [GPT-5.6 Sol](https://developers.openai.com/api/docs/models/gpt-5.6-sol) at `max` reasoning effort. The model never receives Git credentials, shell access, or file tools. A deterministic compiler can only add one new event or append one source reference inside the categories allowed by [`publication-policy.yml`](./public/research/publication-policy.yml). It requires exact source-text quotes, preserves reporting uncertainty, records hash-only evidence and model attestations, and caps each run at two published changes.
+
+Valuation-only claims, annual-volume figures, founder appearances and side projects, older events, ambiguous evidence, GDELT-only discoveries, rejected fact checks, and candidates beyond the run limits remain in a dated review issue. Accepted changes must pass strict YAML schemas, the research audit, the full repository check, a production build, and a generated-diff allowlist. The workflow commits only those data files and pushes only when its checkout is still a direct fast-forward of `main`.
+
+Automatic publication requires a Vercel AI Gateway key stored as the GitHub Actions secret `STRIPE_HISTORY_LLM_API_KEY`. Create the key in the [AI Gateway API Keys page](https://vercel.com/docs/ai-gateway/authentication-and-byok), then add it to the repository without placing it in source or logs. The checked policy bounds model calls and output size; review AI Gateway usage and spending separately.
 
 Run the same discovery locally with an explicit date:
 
 ```sh
 bun run history:news:pull -- --as-of 2026-08-20 --json-out /tmp/stripe-news.json --markdown-out /tmp/stripe-news.md
 ```
+
+Preview model decisions without editing the corpus by omitting `--write`:
+
+```sh
+STRIPE_HISTORY_LLM_API_KEY=... bun run history:publish:auto -- --digest /tmp/stripe-news.json --json-out /tmp/stripe-publication.json --markdown-out /tmp/stripe-publication.md
+```
+
+The scheduled workflow is the publication owner. Local `--write` is intended only for deterministic fixture work or a reviewed recovery, not a second concurrent publisher.
 
 Read the full [methodology and independence statement](https://stripehistory.com/about).
 

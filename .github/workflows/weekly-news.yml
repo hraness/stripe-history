@@ -1,4 +1,4 @@
-name: Weekly news research
+name: Weekly history publication
 
 on:
   schedule:
@@ -12,21 +12,22 @@ on:
         type: string
 
 permissions:
-  contents: read
+  contents: write
   issues: write
 
 concurrency:
-  group: weekly-news-research
+  group: weekly-history-publication
   cancel-in-progress: false
 
 jobs:
-  discover:
+  publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
-          persist-credentials: false
+          ref: main
+          persist-credentials: true
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
           bun-version: "1.3.14"
@@ -41,10 +42,83 @@ jobs:
           bun run history:news:pull -- --as-of "$as_of" --json-out weekly-news/latest-news.json --markdown-out weekly-news/latest-news.md
           echo "as_of=$as_of" >> "$GITHUB_OUTPUT"
           echo "candidate_count=$(jq '.candidates | length' weekly-news/latest-news.json)" >> "$GITHUB_OUTPUT"
-      - name: Add digest to job summary
-        if: always() && hashFiles('weekly-news/latest-news.md') != ''
-        run: sed -n '1,500p' weekly-news/latest-news.md >> "$GITHUB_STEP_SUMMARY"
-      - name: Upload review artifacts
+      - id: credential
+        name: Check model credential
+        if: steps.digest.outputs.candidate_count != '0'
+        env:
+          STRIPE_HISTORY_LLM_API_KEY: ${{ secrets.STRIPE_HISTORY_LLM_API_KEY }}
+        run: |
+          if [ -n "$STRIPE_HISTORY_LLM_API_KEY" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            {
+              echo "# Weekly Stripe history publication: ${{ steps.digest.outputs.as_of }}"
+              echo
+              echo "Automatic publication is blocked because the repository secret \`STRIPE_HISTORY_LLM_API_KEY\` is not configured."
+              echo
+              cat weekly-news/latest-news.md
+            } > weekly-news/publication.md
+          fi
+      - id: model
+        name: Decide and compile history changes
+        if: steps.digest.outputs.candidate_count != '0' && steps.credential.outputs.configured == 'true'
+        continue-on-error: true
+        env:
+          STRIPE_HISTORY_LLM_API_KEY: ${{ secrets.STRIPE_HISTORY_LLM_API_KEY }}
+        run: |
+          set +e
+          bun run history:publish:auto -- --digest weekly-news/latest-news.json --write --json-out weekly-news/publication.json --markdown-out weekly-news/publication.md
+          status=$?
+          if [ -f weekly-news/publication.json ]; then
+            echo "published=$(jq '.published' weekly-news/publication.json)" >> "$GITHUB_OUTPUT"
+            echo "needs_review=$(jq '[.decisions[] | select(.outcome == "needs-review" or .outcome == "deferred")] | length' weekly-news/publication.json)" >> "$GITHUB_OUTPUT"
+            echo "infrastructure_errors=$(jq '[.decisions[] | select(.outcome == "infrastructure-error")] | length' weekly-news/publication.json)" >> "$GITHUB_OUTPUT"
+          else
+            echo "published=0" >> "$GITHUB_OUTPUT"
+            echo "needs_review=${{ steps.digest.outputs.candidate_count }}" >> "$GITHUB_OUTPUT"
+            echo "infrastructure_errors=1" >> "$GITHUB_OUTPUT"
+          fi
+          exit "$status"
+      - name: Verify generated diff scope
+        if: steps.model.outcome == 'success' && steps.model.outputs.published != '0'
+        run: |
+          test -z "$(git diff --name-only --diff-filter=D)"
+          changed="$(git diff --name-only)"
+          test -n "$changed"
+          unexpected="$(printf '%s\n' "$changed" | grep -Ev '^(public/history/(origins-and-early-company|executives-and-team|acquisitions|product-launches|country-expansion|payment-and-payout-expansion|fundraising|headquarters-and-offices|publishing|company-milestones)\.yml|public/research/(sources|automated-publications)\.yml)$' || true)"
+          test -z "$unexpected"
+          printf '%s\n' "$changed" | grep -Fx 'public/research/sources.yml'
+          printf '%s\n' "$changed" | grep -Fx 'public/research/automated-publications.yml'
+          test "$(printf '%s\n' "$changed" | wc -l)" -le 4
+      - name: Validate generated history
+        if: steps.model.outcome == 'success' && steps.model.outputs.published != '0'
+        run: |
+          bun run history:research:audit
+          bun run check
+          bun run build
+      - id: push
+        name: Commit and fast-forward push
+        if: steps.model.outcome == 'success' && steps.model.outputs.published != '0'
+        run: |
+          git add public/history public/research/sources.yml public/research/automated-publications.yml
+          git diff --cached --check
+          git config user.name "stripehistory-research[bot]"
+          git config user.email "stripehistory-research[bot]@users.noreply.github.com"
+          git commit -m "chore(history): publish weekly research ${{ steps.digest.outputs.as_of }}"
+          git fetch origin main
+          test "$(git rev-parse HEAD^)" = "$(git rev-parse origin/main)"
+          git push origin HEAD:main
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Add reports to job summary
+        if: always()
+        run: |
+          if [ -f weekly-news/publication.md ]; then
+            sed -n '1,500p' weekly-news/publication.md >> "$GITHUB_STEP_SUMMARY"
+          elif [ -f weekly-news/latest-news.md ]; then
+            sed -n '1,500p' weekly-news/latest-news.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Upload research artifacts
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
@@ -52,16 +126,45 @@ jobs:
           path: weekly-news/
           if-no-files-found: ignore
           retention-days: 30
-      - name: Create or refresh review issue
-        if: steps.digest.outputs.candidate_count != '0'
+      - name: Create or refresh manual review issue
+        if: >-
+          always()
+          && steps.digest.outputs.candidate_count != '0'
+          && (steps.credential.outputs.configured != 'true'
+            || steps.model.outcome == 'failure'
+            || steps.model.outputs.needs_review != '0'
+            || steps.model.outputs.infrastructure_errors != '0')
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           ISSUE_TITLE: Weekly Stripe history research - ${{ steps.digest.outputs.as_of }}
         run: |
+          body=weekly-news/publication.md
+          if [ ! -f "$body" ]; then body=weekly-news/latest-news.md; fi
           issue_number="$(gh issue list --repo "$GH_REPO" --state all --search "$ISSUE_TITLE in:title" --limit 100 --json number,title --jq ".[] | select(.title == \"$ISSUE_TITLE\") | .number" | head -n 1)"
           if [ -n "$issue_number" ]; then
-            gh issue edit "$issue_number" --repo "$GH_REPO" --body-file weekly-news/latest-news.md
+            gh issue edit "$issue_number" --repo "$GH_REPO" --body-file "$body"
+            gh issue reopen "$issue_number" --repo "$GH_REPO" || true
           else
-            gh issue create --repo "$GH_REPO" --title "$ISSUE_TITLE" --body-file weekly-news/latest-news.md
+            gh issue create --repo "$GH_REPO" --title "$ISSUE_TITLE" --body-file "$body"
           fi
+      - name: Close a fully handled review issue
+        if: >-
+          steps.digest.outputs.candidate_count != '0'
+          && steps.credential.outputs.configured == 'true'
+          && steps.model.outcome == 'success'
+          && steps.model.outputs.needs_review == '0'
+          && steps.model.outputs.infrastructure_errors == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE_TITLE: Weekly Stripe history research - ${{ steps.digest.outputs.as_of }}
+        run: |
+          issue_number="$(gh issue list --repo "$GH_REPO" --state open --search "$ISSUE_TITLE in:title" --limit 100 --json number,title --jq ".[] | select(.title == \"$ISSUE_TITLE\") | .number" | head -n 1)"
+          if [ -n "$issue_number" ]; then gh issue close "$issue_number" --repo "$GH_REPO"; fi
+      - name: Fail when automatic publication was unavailable
+        if: >-
+          always()
+          && steps.digest.outputs.candidate_count != '0'
+          && (steps.credential.outputs.configured != 'true' || steps.model.outcome == 'failure')
+        run: exit 1

@@ -4,8 +4,8 @@
 - `app/` – the public timeline, category, annual-volume, valuation, data, and methodology pages, plus crawl metadata, social image, and framework shell.
 - `lib/` – strict history and research YAML contracts with validated content loading.
 - `public/history/` – the authored, source-linked Stripe history records.
-- `public/research/` – the canonical source catalog, valuations, founder appearances, collection definitions, and research-run ledger.
-- `scripts/` – bounded Stripe Sessions extraction, research audit and planning, legacy-source migration, and structured-output helpers.
+- `public/research/` – the canonical source catalog, valuations, founder appearances, collection definitions, research-run ledger, and bounded automatic-publication policy and attestations.
+- `scripts/` – bounded discovery and publication, Stripe Sessions extraction, research audit and planning, legacy-source migration, and structured-output helpers.
 - `assets/` – the Hraness README lockup.
 - `.agents/skills/` – reusable cross-repository KB and phased-execution workflows.
 - `kb/` – authored repository rationale, evidence, synthesis, and plans.
