@@ -7,6 +7,7 @@ import { parse } from "yaml";
 import {
   NewsMonitorFileSchema,
   canonicalNewsUrl,
+  gdeltTitleMatches,
   parseGdeltCandidates,
   parseHtmlArticle,
   parseHtmlIndexLinks,
@@ -99,7 +100,7 @@ describe("weekly news discovery", () => {
           language: "English",
           seendate: "20260813T120000Z",
           sourcecountry: "United States",
-          title: "Stripe weekly candidate",
+          title: "Stripe payment weekly candidate",
           url: "https://example.com/weekly?utm_source=gdelt",
         }] }), "application/json");
       }
@@ -119,7 +120,7 @@ describe("weekly news discovery", () => {
       }
       if (url.hostname === "techcrunch.com") {
         return response(`
-          <rss><channel><item><title>Stripe weekly candidate</title><link>https://example.com/weekly</link><pubDate>Thu, 13 Aug 2026 12:00:00 GMT</pubDate><source>Example News</source></item></channel></rss>
+          <rss><channel><item><title>Stripe payment weekly candidate</title><link>https://example.com/weekly</link><pubDate>Thu, 13 Aug 2026 12:00:00 GMT</pubDate><source>Example News</source></item></channel></rss>
         `, "application/rss+xml");
       }
       if (url.hostname === "marginalrevolution.com") {
@@ -177,6 +178,38 @@ describe("weekly news discovery", () => {
       url: "https://example.com/update",
     }]);
     expect(() => parseGdeltCandidates({ articles: [{ title: "Incomplete" }] })).toThrow();
+  });
+
+  test("rejects generic stripe and body-only founder matches", () => {
+    const config = NewsMonitorFileSchema.parse(parse(`
+      schema: stripe-history/news-monitors/v1
+      lookback_days: 8
+      max_candidates: 10
+      max_items_per_monitor: 10
+      minimum_request_interval_ms: 1000
+      monitors:
+        - id: stripe
+          kind: gdelt
+          query: Stripe
+          title_any_terms: [Stripe]
+          title_context_terms: [payment, acquire]
+          research_areas: [company-history]
+        - id: founders
+          kind: gdelt
+          query: Patrick
+          title_any_terms: [Patrick Collison, John Collison]
+          research_areas: [founder-side-projects]
+    `) as unknown);
+    const stripe = config.monitors[0];
+    const founders = config.monitors[1];
+    if (stripe?.kind !== "gdelt" || founders?.kind !== "gdelt") {
+      throw new Error("Expected GDELT monitors");
+    }
+    expect(gdeltTitleMatches("Stripe acquires Example", stripe)).toBe(true);
+    expect(gdeltTitleMatches("Buckeye sheds its black stripe", stripe)).toBe(false);
+    expect(gdeltTitleMatches("Striped bedding for autumn", stripe)).toBe(false);
+    expect(gdeltTitleMatches("Patrick Collison announces a grant", founders)).toBe(true);
+    expect(gdeltTitleMatches("California wealth tax battle", founders)).toBe(false);
   });
 
   test("renders untrusted titles as escaped review candidates", () => {

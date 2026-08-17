@@ -40,6 +40,41 @@ monitors:
   - id: gdelt-stripe
     kind: gdelt
     query: '"Stripe" sourcelang:english'
+    title_any_terms:
+      - Stripe
+    title_context_terms:
+      - acquisition
+      - acquire
+      - appoint
+      - bank
+      - billing
+      - billion
+      - checkout
+      - Collison
+      - commerce
+      - crypto
+      - deal
+      - executive
+      - expand
+      - financial
+      - fintech
+      - fund
+      - launch
+      - merchant
+      - million
+      - officer
+      - OpenRouter
+      - payment
+      - PayPal
+      - product
+      - revenue
+      - Sessions
+      - stablecoin
+      - subscription
+      - tax
+      - tender
+      - valuation
+      - volume
     research_areas:
       - company-history
       - sessions-product-launches
@@ -47,6 +82,9 @@ monitors:
   - id: gdelt-founders
     kind: gdelt
     query: '("Patrick Collison" OR "John Collison") sourcelang:english'
+    title_any_terms:
+      - Patrick Collison
+      - John Collison
     research_areas:
       - founder-appearances
       - founder-side-projects

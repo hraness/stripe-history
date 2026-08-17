@@ -37,6 +37,8 @@ const NewsMonitorSchema = z.discriminatedUnion("kind", [
     ...commonMonitorFields,
     kind: z.literal("gdelt"),
     query: z.string().min(3).max(240),
+    title_any_terms: z.array(z.string().min(2).max(80)).min(1).max(20),
+    title_context_terms: z.array(z.string().min(2).max(80)).min(1).max(50).optional(),
   }),
   z.strictObject({
     ...commonMonitorFields,
@@ -396,6 +398,28 @@ function gdeltUrl(
   return url.toString();
 }
 
+function escapedPattern(value: string): string {
+  return value.replaceAll(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+}
+
+function titleContainsBoundedTerm(title: string, term: string): boolean {
+  return new RegExp(
+    `(?:^|[^a-z0-9])${escapedPattern(term.toLocaleLowerCase("en-US"))}(?=$|[^a-z0-9])`,
+    "u",
+  ).test(title.toLocaleLowerCase("en-US"));
+}
+
+export function gdeltTitleMatches(
+  title: string,
+  monitor: Extract<NewsMonitor, { kind: "gdelt" }>,
+): boolean {
+  if (!monitor.title_any_terms.some((term) => titleContainsBoundedTerm(title, term))) return false;
+  if (monitor.title_context_terms === undefined) return true;
+  const normalized = title.toLocaleLowerCase("en-US");
+  return monitor.title_context_terms.some((term) =>
+    normalized.includes(term.toLocaleLowerCase("en-US")));
+}
+
 async function collectMonitor(
   monitor: NewsMonitor,
   config: z.infer<typeof NewsMonitorFileSchema>,
@@ -410,7 +434,11 @@ async function collectMonitor(
       fetcher,
       sleep,
     );
-    return { candidates: parseGdeltCandidates(JSON.parse(body)), warnings: [] };
+    return {
+      candidates: parseGdeltCandidates(JSON.parse(body)).filter(({ title }) =>
+        gdeltTitleMatches(title, monitor)),
+      warnings: [],
+    };
   }
   const body = await requestText(monitor.url, fetcher, sleep);
   if (monitor.kind === "rss") {
@@ -472,6 +500,14 @@ function conciseError(error: unknown): string {
   return cleanText(message).slice(0, 300);
 }
 
+function headlineIdentity(value: string): string {
+  return value
+    .normalize("NFKC")
+    .toLocaleLowerCase("en-US")
+    .replaceAll(/[^a-z0-9]+/gu, " ")
+    .trim();
+}
+
 export async function pullLatestNews(options: PullOptions): Promise<WeeklyNewsDigest> {
   const projectDirectory = resolve(options.projectDirectory ?? process.cwd());
   const asOf = exactIsoDate(options.asOf, "--as-of");
@@ -527,7 +563,14 @@ export async function pullLatestNews(options: PullOptions): Promise<WeeklyNewsDi
     }
   }
 
-  const orderedCandidates = [...candidates.values()]
+  const headlineIdentities = new Set<string>();
+  const distinctCandidates = [...candidates.values()].filter(({ title }) => {
+    const identity = headlineIdentity(title);
+    if (headlineIdentities.has(identity)) return false;
+    headlineIdentities.add(identity);
+    return true;
+  });
+  const orderedCandidates = distinctCandidates
     .toSorted((left, right) =>
       (right.publishedAt ?? "").localeCompare(left.publishedAt ?? "")
       || left.title.localeCompare(right.title)
