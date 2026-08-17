@@ -1,4 +1,26 @@
 runs:
+  - candidate_digest_sha256: 3436afe3ac0fd1474254f66431924d8b8461390b24f6be6675576bb58b9fa56c
+    decisions:
+      - candidate_url: https://techcrunch.com/2026/08/16/stripe-will-reportedly-acquire-ai-gateway-startup-openrouter-for-7b
+        category: acquisitions
+        disposition: published-new-event
+        evidence_quote_sha256:
+          - 5148e010dbe135e2659aaaac6869744e7fd0301849f0b7fd3883a9f0ad83dcfe
+          - 91b04d82ed100a03842488967f2211d512448be577f2a6a861e66324f941e8f9
+          - ef5bdfbd653f274b0f1021532d89b93b874a5afb2ec9ac8c204d1e86c300c2f4
+          - ff5a98199f14579c77de4ecf04fd1985965949d53f2ad768c6c9efd11556df8b
+        evidence_sha256: c61c6c76a36eedb99f557fa088caf2e2e09b0c5f32828ed3c5301d47d5c1f1b5
+        event_id: stripe-reportedly-finalizes-a-deal-to-acquire-openrouter
+        proposal_sha256: a180f77b92795ee5a3155c03ee76dca238ee56e76ce24369a20ac384e0568f23
+        review_sha256: ab8de58c38f72daa5d2ed0255b308123933ac575fd256cdfab8b7d76ab07f6fd
+        source_id: source-e850972d627be2bcc336
+    id: publication-b578ecd606db66d83ced
+    model: openai/gpt-5.6-sol
+    proposal_prompt_version: stripe-history/weekly-proposal/v4
+    published_on: 2026-08-16
+    reasoning_effort: max
+    review_mode: independent-grounded-second-pass
+    review_prompt_version: stripe-history/weekly-review/v1
   - candidate_digest_sha256: c5d1f69f687a29a704c445c0813a07a2bda3fad4184a3bf1bc8c8250953562cb
     decisions:
       - candidate_url: https://techcrunch.com/2026/08/14/talks-to-sell-paypal-to-stripe-and-advent-are-heating-up
