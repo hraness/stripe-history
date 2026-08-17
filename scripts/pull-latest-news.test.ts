@@ -352,6 +352,7 @@ describe("weekly news discovery", () => {
     expect(workflow).toContain("Stripe history research review queue");
     expect(workflow).toContain("public/research/automated-decisions.yml");
     expect(workflow).toContain("steps.review.outputs.actionable == '0'");
+    expect(workflow).toContain("(.unresolved // .decisions)");
     expect(workflow).toContain("Verify generated diff scope");
     expect(workflow).toContain("bun run history:research:audit");
     expect(workflow).toContain("bun run check");

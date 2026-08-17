@@ -1,4 +1,28 @@
 runs:
+  - candidate_digest_sha256: bd28e9ac31ad7568239025eb0a154336a0f3a652312dbc649b579f62dba04a5a
+    decided_on: 2026-08-17
+    decisions:
+      - basis: compiler
+        candidate_url: https://fortune.com/2026/08/16/stripe-7-billion-deal-ai-firm-openrouter-acquisition
+        outcome: infrastructure-error
+        reason: "Invalid error response format: Gateway request failed"
+        title: Stripe clinches over $7 billion deal to buy AI firm OpenRouter
+      - basis: compiler
+        candidate_url: https://siliconangle.com/2026/08/16/stripe-reportedly-finalizes-deal-buy-ai-model-router-openrouter-7b
+        outcome: infrastructure-error
+        reason: https://siliconangle.com/2026/08/16/stripe-reportedly-finalizes-deal-buy-ai-model-router-openrouter-7b returned HTTP 404
+        title: Stripe reportedly finalizes deal to buy AI model router OpenRouter for more than $7B
+      - basis: proposal
+        candidate_url: https://stripe.com/blog/mapping-the-ai-economy
+        outcome: rejected
+        proposal_sha256: 00c6ebfcaa560061971b912da8b98ba7a6e970feca083754798512f2d5898e8f
+        reason: This is a Stripe data-analysis and marketing article about AI spending and customer localization. It does not establish a discrete material company event, product launch, geographic expansion, or publishing program.
+        title: Mapping the AI economy
+    id: decision-run-ba422af888f94917706b
+    model: openai/gpt-5.6-sol
+    proposal_prompt_version: stripe-history/weekly-proposal/v4
+    reasoning_effort: max
+    review_prompt_version: stripe-history/weekly-review/v1
   - candidate_digest_sha256: 0048a487a8e225de3d14d35a3dc94a007c20ffa97072f28bc81a08cbc2fe5202
     decided_on: 2026-08-17
     decisions:
@@ -22,30 +46,6 @@ runs:
         reason: This is market analysis based on Stripe transaction data, supplemented by customer examples and product marketing. It does not establish a discrete, consequential Stripe company event in an allowed category.
         title: Mapping the AI economy
     id: decision-run-9a30cbf826fb014af662
-    model: openai/gpt-5.6-sol
-    proposal_prompt_version: stripe-history/weekly-proposal/v4
-    reasoning_effort: max
-    review_prompt_version: stripe-history/weekly-review/v1
-  - candidate_digest_sha256: bd28e9ac31ad7568239025eb0a154336a0f3a652312dbc649b579f62dba04a5a
-    decided_on: 2026-08-17
-    decisions:
-      - basis: compiler
-        candidate_url: https://fortune.com/2026/08/16/stripe-7-billion-deal-ai-firm-openrouter-acquisition
-        outcome: infrastructure-error
-        reason: "Invalid error response format: Gateway request failed"
-        title: Stripe clinches over $7 billion deal to buy AI firm OpenRouter
-      - basis: compiler
-        candidate_url: https://siliconangle.com/2026/08/16/stripe-reportedly-finalizes-deal-buy-ai-model-router-openrouter-7b
-        outcome: infrastructure-error
-        reason: https://siliconangle.com/2026/08/16/stripe-reportedly-finalizes-deal-buy-ai-model-router-openrouter-7b returned HTTP 404
-        title: Stripe reportedly finalizes deal to buy AI model router OpenRouter for more than $7B
-      - basis: proposal
-        candidate_url: https://stripe.com/blog/mapping-the-ai-economy
-        outcome: rejected
-        proposal_sha256: 00c6ebfcaa560061971b912da8b98ba7a6e970feca083754798512f2d5898e8f
-        reason: This is a Stripe data-analysis and marketing article about AI spending and customer localization. It does not establish a discrete material company event, product launch, geographic expansion, or publishing program.
-        title: Mapping the AI economy
-    id: decision-run-ba422af888f94917706b
     model: openai/gpt-5.6-sol
     proposal_prompt_version: stripe-history/weekly-proposal/v4
     reasoning_effort: max

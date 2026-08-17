@@ -252,8 +252,7 @@ export const AutomatedDecisionLedgerSchema = z.strictObject({
     if (
       previous !== undefined
       && current !== undefined
-      && (previous.decided_on < current.decided_on
-        || (previous.decided_on === current.decided_on && previous.id > current.id))
+      && previous.decided_on < current.decided_on
     ) {
       context.addIssue({
         code: "custom",
