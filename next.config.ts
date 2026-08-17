@@ -1,4 +1,8 @@
 import type { NextConfig } from "next";
+import {
+  type ProductionDeliveryProofEnvironment,
+  withProductionDeliveryProof,
+} from "@hraness/vercel-delivery";
 
 const nextConfig: NextConfig = {
   async headers() {
@@ -40,4 +44,13 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export function createNextConfig(
+  environment: ProductionDeliveryProofEnvironment = process.env,
+): NextConfig {
+  return withProductionDeliveryProof(nextConfig, {
+    environment,
+    projectName: "stripe-history",
+  });
+}
+
+export default createNextConfig();

@@ -3,7 +3,7 @@ import {
   valuationTier,
 } from "@/lib/content";
 import type { ValuationObservation } from "@/lib/research-schema";
-import { JsonLdScript } from "@/support/json-ld";
+import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
 
 import { breadcrumbJsonLd, historyCollectionJsonLd } from "../../seo";

@@ -1,4 +1,4 @@
-import { JsonLdScript } from "@/support/json-ld";
+import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
 import Link from "next/link";
 

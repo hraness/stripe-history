@@ -3,7 +3,7 @@ import {
   historyCategoryIds,
   type HistoryCategoryId,
 } from "@/lib/history-schema";
-import { JsonLdScript } from "@/support/json-ld";
+import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 

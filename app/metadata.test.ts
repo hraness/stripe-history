@@ -1,6 +1,13 @@
 import { describe, expect, test } from "bun:test";
 import { historyCategoryIds } from "@/lib/history-schema";
-import nextConfig from "../next.config";
+import {
+  PREVIEW_NOTICE_ORIGIN_ENV,
+  PREVIEW_ROBOTS_HEADER,
+  PREVIEW_ROBOTS_POLICY,
+  PRODUCTION_DELIVERY_PROOF_HEADER,
+  productionDeliveryProofToken,
+} from "@hraness/vercel-delivery";
+import nextConfig, { createNextConfig } from "../next.config";
 
 import { metadata } from "./layout";
 import manifest from "./manifest";
@@ -109,5 +116,41 @@ describe("stripehistory.com public identity", () => {
         source: "/:path*",
       },
     ]);
+  });
+
+  test("preserves data no-index rules under the generic Preview delivery contract", async () => {
+    const identity = {
+      VERCEL: "1",
+      VERCEL_DEPLOYMENT_ID: "dpl_StripeHistoryPreview123",
+      VERCEL_ENV: "preview",
+      VERCEL_GIT_COMMIT_SHA: "0123456789abcdef0123456789abcdef01234567",
+      VERCEL_PROJECT_ID: "prj_StripeHistoryProject123",
+      VERCEL_URL: "stripe-history-git-example-hraness.vercel.app",
+    } as const;
+    const config = createNextConfig(identity);
+    const headers = await config.headers?.();
+
+    expect(headers).toContainEqual({
+      headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
+      source: "/history/:category.yml",
+    });
+    expect(headers).toContainEqual({
+      headers: [
+        {
+          key: PRODUCTION_DELIVERY_PROOF_HEADER,
+          value: productionDeliveryProofToken({
+            deploymentId: identity.VERCEL_DEPLOYMENT_ID,
+            projectId: identity.VERCEL_PROJECT_ID,
+            projectName: "stripe-history",
+            sha: identity.VERCEL_GIT_COMMIT_SHA,
+          }),
+        },
+        { key: PREVIEW_ROBOTS_HEADER, value: PREVIEW_ROBOTS_POLICY },
+      ],
+      source: "/:path*",
+    });
+    expect(config.env?.[PREVIEW_NOTICE_ORIGIN_ENV]).toBe(
+      "https://stripe-history-git-example-hraness.vercel.app",
+    );
   });
 });

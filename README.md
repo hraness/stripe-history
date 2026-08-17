@@ -85,7 +85,7 @@ bun run search:indexnow -- --submit
 
 Run the same command without `--submit` to inspect the exact payload. The command rejects duplicate, non-HTTPS, off-domain, and noncanonical URLs before making a request.
 
-The optional `bun run history:sessions:update` command re-extracts notable product launches from the checked Stripe Sessions source set. It requires `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN`; review every proposed record and source before committing it. The migration command rewrites legacy embedded sources and should be used only on a reviewed legacy corpus after a dry run of `bun run scripts/migrate-history-sources.ts`.
+The optional `bun run history:sessions:update` command re-extracts notable product launches from the checked Stripe Sessions source set. It requires `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN`; review every proposed record and source before committing it.
 
 ## Corrections and contributions
 

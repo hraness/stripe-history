@@ -2,7 +2,6 @@
 
 - `update-sessions-history.ts` – bounded extraction and deduplication of notable Stripe Sessions launches.
 - `audit-history-research.ts` – deterministic corpus, coverage, provenance, discovery, and optional external-capture verification.
-- `migrate-history-sources.ts` – transactional migration from legacy embedded event sources to the canonical source catalog.
 - `gateway.ts` – structured AI Gateway output validation.
 - `bounded-http.ts` – response-size and content-type limits.
 - `pull-latest-news.ts` – bounded weekly candidate discovery and review-digest generation.
@@ -17,4 +16,4 @@
 - Route valuation-only claims, founder-side projects, old events, ambiguous evidence, untrusted-monitor-only candidates, and anything outside the automatic policy to manual review.
 - Keep accepted records deterministic and write updates atomically.
 - Keep the ordinary research audit self-contained. Require an explicit `--capture-root` before verifying external retained evidence.
-- Dry-run legacy source migrations before using `--write`; keep lock ownership and rollback behavior deterministic.
+- Do not restore the retired embedded-source migrator. The published corpus is source-ID-only; strict history and research schemas, catalog resolution, and the corpus audit are its continuing executable boundary.
