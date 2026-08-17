@@ -5,7 +5,10 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { parse, stringify } from "yaml";
 
-import { AutomatedPublicationLedgerSchema } from "../lib/automated-publication-schema";
+import {
+  AutomatedDecisionLedgerSchema,
+  AutomatedPublicationLedgerSchema,
+} from "../lib/automated-publication-schema";
 import {
   auditHistoryResearch,
   planHistoryResearchCaptures,
@@ -166,7 +169,17 @@ describe("Stripe history research audit", () => {
       (total, run) => total + run.decisions.length,
       0,
     );
+    const decisionLedger = AutomatedDecisionLedgerSchema.parse(parse(await readFile(
+      join(projectDirectory, "public", "research", "automated-decisions.yml"),
+      "utf8",
+    )) as unknown);
+    const allDecisions = decisionLedger.runs.reduce(
+      (total, run) => total + run.decisions.length,
+      0,
+    );
 
+    expect(report.automatedDecisions).toBe(allDecisions);
+    expect(report.automatedDecisionRuns).toBe(decisionLedger.runs.length);
     expect(report.automatedPublicationDecisions).toBe(ledgerDecisions);
     expect(report.automatedPublicationRuns).toBe(ledger.runs.length);
     expect(report.collections).toBe(4);

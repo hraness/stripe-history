@@ -5,8 +5,10 @@ import { isAbsolute, join, normalize, relative, resolve } from "node:path";
 import { parse } from "yaml";
 
 import {
+  AutomatedDecisionLedgerSchema,
   AutomatedPublicationLedgerSchema,
   AutomatedPublicationPolicySchema,
+  type AutomatedDecisionRun,
   type AutomatedPublicationRun,
 } from "../lib/automated-publication-schema";
 import { HistoryFileSchema, PartialDateSchema } from "../lib/history-schema";
@@ -37,6 +39,8 @@ const TRACKING_PARAMETERS = new Set([
 
 export interface ResearchAuditReport {
   readonly appearances: number;
+  readonly automatedDecisions: number;
+  readonly automatedDecisionRuns: number;
   readonly automatedPublicationDecisions: number;
   readonly automatedPublicationRuns: number;
   readonly collectionInputs: number;
@@ -174,6 +178,9 @@ function assertDateInCoverage(
 
 interface LoadedResearch {
   readonly appearances: ReturnType<typeof AppearanceFileSchema.parse>["appearances"];
+  readonly automatedDecisionRuns: ReturnType<
+    typeof AutomatedDecisionLedgerSchema.parse
+  >["runs"];
   readonly automatedPublicationRuns: ReturnType<
     typeof AutomatedPublicationLedgerSchema.parse
   >["runs"];
@@ -198,6 +205,7 @@ async function loadResearch(
     .toSorted();
   const [
     appearances,
+    automatedDecisions,
     automatedPublications,
     collections,
     publicationPolicy,
@@ -207,6 +215,7 @@ async function loadResearch(
     ...historyValues
   ] = await Promise.all([
     parseYaml(join(projectDirectory, "public", "research", "appearances.yml")),
+    parseYaml(join(projectDirectory, "public", "research", "automated-decisions.yml")),
     parseYaml(join(projectDirectory, "public", "research", "automated-publications.yml")),
     parseYaml(join(projectDirectory, "public", "research", "collections.yml")),
     parseYaml(join(projectDirectory, "public", "research", "publication-policy.yml")),
@@ -218,6 +227,7 @@ async function loadResearch(
   const parsedCollections = ResearchCollectionsFileSchema.parse(collections);
   const loaded: LoadedResearch = {
     appearances: AppearanceFileSchema.parse(appearances).appearances,
+    automatedDecisionRuns: AutomatedDecisionLedgerSchema.parse(automatedDecisions).runs,
     automatedPublicationRuns: AutomatedPublicationLedgerSchema.parse(
       automatedPublications,
     ).runs,
@@ -839,6 +849,91 @@ function verifyAutomatedPublicationRuns(
   return decisions;
 }
 
+function automatedDecisionRunId(run: AutomatedDecisionRun): string {
+  return `decision-run-${sha256(canonicalJson({
+    asOf: run.decided_on,
+    candidateDigest: run.candidate_digest_sha256,
+    decisions: run.decisions,
+    model: run.model,
+    proposalPromptVersion: run.proposal_prompt_version,
+    reasoningEffort: run.reasoning_effort,
+    reviewPromptVersion: run.review_prompt_version,
+  })).slice(0, 20)}`;
+}
+
+function verifyAutomatedDecisionRuns(loaded: LoadedResearch): number {
+  const policy = loaded.publicationPolicy;
+  const proposalPromptVersions = new Set([
+    policy.proposal_prompt_version,
+    ...policy.historical_proposal_prompt_versions,
+  ]);
+  const reviewPromptVersions = new Set([
+    policy.review_prompt_version,
+    ...policy.historical_review_prompt_versions,
+  ]);
+  const eventById = new Map(loaded.historyFiles.flatMap((history) =>
+    history.events.map((event) => [event.id, { category: history.category.id, event }] as const)));
+  const publicationByUrl = new Map(loaded.automatedPublicationRuns.flatMap((run) =>
+    run.decisions.map((decision) => [decision.candidate_url, decision] as const)));
+  const attestedPublicationUrls = new Set<string>();
+  let decisions = 0;
+
+  for (const run of loaded.automatedDecisionRuns) {
+    if (
+      run.model !== policy.model
+      || run.reasoning_effort !== policy.reasoning_effort
+      || !proposalPromptVersions.has(run.proposal_prompt_version)
+      || !reviewPromptVersions.has(run.review_prompt_version)
+    ) {
+      throw new Error(`${run.id} does not match the versioned automatic publication policy`);
+    }
+    if (run.decisions.length > 250) {
+      throw new Error(`${run.id} exceeds the automatic decision limit`);
+    }
+    const expectedRunId = automatedDecisionRunId(run);
+    if (run.id !== expectedRunId) {
+      throw new Error(`Automatic decision run ${run.id} must use ${expectedRunId}`);
+    }
+    for (const decision of run.decisions) {
+      decisions += 1;
+      assertCanonicalUrlValue(decision.candidate_url, `${run.id} candidate`);
+      if (decision.event_id !== undefined) {
+        const bound = eventById.get(decision.event_id);
+        if (bound === undefined || bound.category !== decision.category) {
+          throw new Error(
+            `${run.id} decision for ${decision.candidate_url} references a missing event`,
+          );
+        }
+      }
+      if (
+        decision.outcome === "published-new-event"
+        || decision.outcome === "source-added-to-event"
+      ) {
+        const publication = publicationByUrl.get(decision.candidate_url);
+        if (
+          publication === undefined
+          || publication.disposition !== decision.outcome
+          || publication.category !== decision.category
+          || publication.event_id !== decision.event_id
+          || publication.proposal_sha256 !== decision.proposal_sha256
+          || publication.review_sha256 !== decision.review_sha256
+        ) {
+          throw new Error(
+            `${run.id} decision for ${decision.candidate_url} lacks a matching publication attestation`,
+          );
+        }
+        attestedPublicationUrls.add(decision.candidate_url);
+      }
+    }
+  }
+  for (const candidateUrl of publicationByUrl.keys()) {
+    if (!attestedPublicationUrls.has(candidateUrl)) {
+      throw new Error(`Automatic publication ${candidateUrl} lacks a durable decision record`);
+    }
+  }
+  return decisions;
+}
+
 function auditLoadedResearch(loaded: LoadedResearch): ResearchAuditReport {
   const sourceById = verifySources(loaded.sources);
   const mutableSourceStats = verifyMutableSources(loaded, sourceById);
@@ -866,6 +961,7 @@ function auditLoadedResearch(loaded: LoadedResearch): ResearchAuditReport {
   }
   verifyResearchRuns(loaded, sourceById);
   const automatedPublicationDecisions = verifyAutomatedPublicationRuns(loaded, sourceById);
+  const automatedDecisions = verifyAutomatedDecisionRuns(loaded);
   const matchingCollectionInputs = new Set(
     loaded.collections.flatMap(({ input_source_ids: ids }) => ids),
   );
@@ -879,6 +975,8 @@ function auditLoadedResearch(loaded: LoadedResearch): ResearchAuditReport {
   ]);
   return {
     appearances: loaded.appearances.length,
+    automatedDecisions,
+    automatedDecisionRuns: loaded.automatedDecisionRuns.length,
     automatedPublicationDecisions,
     automatedPublicationRuns: loaded.automatedPublicationRuns.length,
     collectionInputs: matchingCollectionInputs.size,
