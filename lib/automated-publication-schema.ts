@@ -22,6 +22,8 @@ const ExactDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/u);
 
 export const AutomatedPublicationPolicySchema = z.strictObject({
   auto_publish_categories: z.array(z.enum(automatedHistoryCategoryIds)).min(1).max(11),
+  historical_proposal_prompt_versions: z.array(CompactTextSchema.max(120)).max(20),
+  historical_review_prompt_versions: z.array(CompactTextSchema.max(120)).max(20),
   max_candidates_per_run: z.number().int().min(1).max(6),
   max_publications_per_run: z.number().int().min(1).max(3),
   max_source_characters: z.number().int().min(5_000).max(80_000),
@@ -37,6 +39,26 @@ export const AutomatedPublicationPolicySchema = z.strictObject({
   for (const field of ["auto_publish_categories", "trusted_monitors"] as const) {
     if (new Set(policy[field]).size !== policy[field].length) {
       context.addIssue({ code: "custom", message: `${field} values must be unique`, path: [field] });
+    }
+  }
+  for (const [currentField, historyField] of [
+    ["proposal_prompt_version", "historical_proposal_prompt_versions"],
+    ["review_prompt_version", "historical_review_prompt_versions"],
+  ] as const) {
+    const historical = policy[historyField];
+    if (new Set(historical).size !== historical.length) {
+      context.addIssue({
+        code: "custom",
+        message: `${historyField} values must be unique`,
+        path: [historyField],
+      });
+    }
+    if (historical.includes(policy[currentField])) {
+      context.addIssue({
+        code: "custom",
+        message: `${historyField} cannot repeat the current prompt version`,
+        path: [historyField],
+      });
     }
   }
 });

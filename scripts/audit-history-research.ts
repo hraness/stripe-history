@@ -766,14 +766,22 @@ function verifyAutomatedPublicationRuns(
   ]));
   const seenCandidateUrls = new Set<string>();
   const seenSourceIds = new Set<string>();
+  const proposalPromptVersions = new Set([
+    policy.proposal_prompt_version,
+    ...policy.historical_proposal_prompt_versions,
+  ]);
+  const reviewPromptVersions = new Set([
+    policy.review_prompt_version,
+    ...policy.historical_review_prompt_versions,
+  ]);
   let decisions = 0;
 
   for (const run of loaded.automatedPublicationRuns) {
     if (
       run.model !== policy.model
       || run.reasoning_effort !== policy.reasoning_effort
-      || run.proposal_prompt_version !== policy.proposal_prompt_version
-      || run.review_prompt_version !== policy.review_prompt_version
+      || !proposalPromptVersions.has(run.proposal_prompt_version)
+      || !reviewPromptVersions.has(run.review_prompt_version)
     ) {
       throw new Error(`${run.id} does not match the versioned automatic publication policy`);
     }

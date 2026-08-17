@@ -8,6 +8,7 @@ import {
   NewsMonitorFileSchema,
   canonicalNewsUrl,
   gdeltTitleMatches,
+  parseExaCandidates,
   parseGdeltCandidates,
   parseHtmlArticle,
   parseHtmlIndexLinks,
@@ -46,6 +47,21 @@ const htmlMonitor = NewsMonitorFileSchema.parse({
   schema: "stripe-history/news-monitors/v1",
 }).monitors[0];
 
+const exaMonitor = NewsMonitorFileSchema.parse({
+  lookback_days: 8,
+  max_candidates: 10,
+  max_items_per_monitor: 10,
+  minimum_request_interval_ms: 1000,
+  monitors: [{
+    id: "exa-example",
+    include_domains: ["example.com", "techcrunch.com"],
+    kind: "exa-search",
+    query: "Recent material Stripe company news",
+    research_areas: ["company-history"],
+  }],
+  schema: "stripe-history/news-monitors/v1",
+}).monitors[0];
+
 describe("weekly news discovery", () => {
   test("loads the checked monitor configuration", async () => {
     const value = parse(await readFile(
@@ -58,6 +74,8 @@ describe("weekly news discovery", () => {
       "stripe-newsroom",
       "stripe-blog",
       "techcrunch-stripe",
+      "techcrunch-latest",
+      "exa-stripe-reporting",
       "marginal-revolution-founders",
       "gdelt-stripe",
       "gdelt-founders",
@@ -91,8 +109,46 @@ describe("weekly news discovery", () => {
       headers: { "content-type": contentType },
       status: 200,
     });
-    const fetcher = (async (input: string | URL | Request): Promise<Response> => {
+    const fetcher = (async (
+      input: string | URL | Request,
+      init?: RequestInit,
+    ): Promise<Response> => {
       const url = new URL(input instanceof Request ? input.url : input.toString());
+      if (url.toString() === "https://api.exa.ai/search") {
+        expect(init?.method).toBe("POST");
+        expect(new Headers(init?.headers).get("x-api-key")).toBe("fixture-exa-key");
+        expect(JSON.parse(String(init?.body))).toEqual({
+          category: "news",
+          endPublishedDate: "2026-08-16T23:59:59.999Z",
+          includeDomains: [
+            "bloomberg.com",
+            "cnbc.com",
+            "ft.com",
+            "reuters.com",
+            "stripe.com",
+            "techcrunch.com",
+            "theinformation.com",
+            "wsj.com",
+          ],
+          moderation: true,
+          numResults: 40,
+          query: "Recent material Stripe company news about acquisitions, signed deals, product launches, leadership, funding, valuation, geographic expansion, or payment infrastructure",
+          startPublishedDate: "2026-08-09T00:00:00.000Z",
+          type: "auto",
+        });
+        return response(JSON.stringify({
+          requestId: "fixture-request",
+          results: [{
+            publishedDate: "2026-08-16T20:57:00.000Z",
+            title: "Stripe will reportedly acquire AI gateway startup OpenRouter for $7B+",
+            url: "https://techcrunch.com/2026/08/16/stripe-openrouter?utm_source=exa",
+          }, {
+            publishedDate: "2026-08-16T20:58:00.000Z",
+            title: "Disallowed result",
+            url: "https://untrusted.example/story",
+          }],
+        }), "application/json");
+      }
       if (url.hostname === "api.gdeltproject.org") {
         const founders = url.searchParams.get("query")?.includes("Patrick") === true;
         return response(JSON.stringify({ articles: founders ? [] : [{
@@ -118,9 +174,17 @@ describe("weekly news discovery", () => {
       if (url.toString() === "https://stripe.com/blog") {
         return response("<a href=\"/about\">About</a>", "text/html");
       }
-      if (url.hostname === "techcrunch.com") {
+      if (url.toString() === "https://techcrunch.com/tag/stripe/feed/") {
         return response(`
           <rss><channel><item><title>Stripe payment weekly candidate</title><link>https://example.com/weekly</link><pubDate>Thu, 13 Aug 2026 12:00:00 GMT</pubDate><source>Example News</source></item></channel></rss>
+        `, "application/rss+xml");
+      }
+      if (url.toString() === "https://techcrunch.com/feed/") {
+        return response(`
+          <rss><channel>
+            <item><title>Stripe will reportedly acquire AI gateway startup OpenRouter for $7B+</title><link>https://techcrunch.com/2026/08/16/stripe-openrouter</link><pubDate>Sun, 16 Aug 2026 20:57:00 GMT</pubDate><description>OpenRouter reached a reported agreement with Stripe.</description><source>TechCrunch</source></item>
+            <item><title>Unrelated startup funding</title><link>https://techcrunch.com/2026/08/16/unrelated</link><pubDate>Sun, 16 Aug 2026 20:58:00 GMT</pubDate><source>TechCrunch</source></item>
+          </channel></rss>
         `, "application/rss+xml");
       }
       if (url.hostname === "marginalrevolution.com") {
@@ -131,16 +195,22 @@ describe("weekly news discovery", () => {
 
     const digest = await pullLatestNews({
       asOf: "2026-08-16",
+      environment: { EXA_API_KEY: "fixture-exa-key" },
       fetcher,
       generatedAt: "2026-08-16T12:00:00.000Z",
       sleep: async () => {},
     });
     expect(digest.monitors.every(({ status }) => status === "ok")).toBe(true);
     expect(digest.candidates.map(({ url }) => url)).toEqual([
+      "https://techcrunch.com/2026/08/16/stripe-openrouter",
       "https://stripe.com/newsroom/news/weekly-test-candidate",
       "https://example.com/weekly",
     ]);
-    expect(digest.candidates[1]?.monitors).toEqual(["gdelt-stripe", "techcrunch-stripe"]);
+    expect(digest.candidates[2]?.monitors).toEqual(["gdelt-stripe", "techcrunch-stripe"]);
+    expect(digest.candidates[0]?.monitors).toEqual([
+      "exa-stripe-reporting",
+      "techcrunch-latest",
+    ]);
     expect(digest.discoveryPlans.map(({ collection }) => collection)).toEqual([
       "founder-appearances",
       "founder-side-projects",
@@ -178,6 +248,28 @@ describe("weekly news discovery", () => {
       url: "https://example.com/update",
     }]);
     expect(() => parseGdeltCandidates({ articles: [{ title: "Incomplete" }] })).toThrow();
+  });
+
+  test("parses Exa results only from the checked domain allowlist", () => {
+    if (exaMonitor?.kind !== "exa-search") throw new Error("Expected Exa monitor");
+    expect(parseExaCandidates({
+      results: [{
+        publishedDate: "2026-08-16T20:57:00.000Z",
+        title: "Stripe reportedly reaches an OpenRouter agreement",
+        url: "https://news.techcrunch.com/story?utm_source=exa",
+      }, {
+        publishedDate: "2026-08-16T20:58:00.000Z",
+        title: "Off-list result",
+        url: "https://attacker.example/story",
+      }],
+    }, exaMonitor)).toEqual([{
+      publishedAt: "2026-08-16",
+      source: "news.techcrunch.com",
+      title: "Stripe reportedly reaches an OpenRouter agreement",
+      url: "https://news.techcrunch.com/story",
+    }]);
+    expect(() => parseExaCandidates({ results: [{ title: "Missing URL" }] }, exaMonitor))
+      .toThrow();
   });
 
   test("rejects generic stripe and body-only founder matches", () => {
@@ -244,6 +336,7 @@ describe("weekly news discovery", () => {
     expect(workflow).toContain("contents: write");
     expect(workflow).toContain("persist-credentials: true");
     expect(workflow).toContain("STRIPE_HISTORY_LLM_API_KEY");
+    expect(workflow).toContain("EXA_API_KEY: ${{ secrets.EXA_API_KEY }}");
     expect(workflow).toContain("history:publish:auto");
     expect(workflow).toContain("--write --json-out");
     expect(workflow).toContain("Verify generated diff scope");

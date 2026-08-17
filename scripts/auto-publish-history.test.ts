@@ -385,6 +385,52 @@ describe("automatic history publication", () => {
       .toBe(originalSources);
   });
 
+  test("keeps a reported agreement separate from earlier acquisition talks", async () => {
+    const directory = await fixtureProject();
+    const agreementQuote = "Stripe finalized a deal to acquire OpenRouter for more than $7 billion, according to people familiar with the matter.";
+    await writeDigest(directory, {
+      monitors: ["techcrunch-latest"],
+      publishedAt: "2026-08-16",
+      researchAreas: ["company-history"],
+      source: "TechCrunch",
+      title: "Stripe will reportedly acquire AI gateway startup OpenRouter for $7B+",
+      url: "https://techcrunch.com/2026/08/16/stripe-will-reportedly-acquire-openrouter/",
+    });
+    let reviewCalled = false;
+    const generator = (async (options) => {
+      if (options.name === "weekly_stripe_history_review") {
+        reviewCalled = true;
+        throw new Error("The deterministic deal-state guard should run before review");
+      }
+      expect(options.system).toContain("Reported talks");
+      expect(options.system).toContain("reported signed or finalized agreement");
+      return {
+        disposition: "add-source",
+        evidence_quotes: [agreementQuote],
+        event: null,
+        existing_event_id: "openrouter-acquisition-talks-reported",
+        reason: "The reporting describes a later state of the same proposed acquisition.",
+      } as never;
+    }) as PublicationGenerator;
+    const report = await autoPublishHistory({
+      digestPath: "digest.json",
+      environment: { STRIPE_HISTORY_LLM_API_KEY: "fixture-gateway-credential" },
+      fetcher: async () => new Response(
+        `<article><p>${agreementQuote}</p><p>${"The report describes the companies and proposed transaction. ".repeat(15)}</p></article>`,
+        { headers: { "content-type": "text/html; charset=utf-8" } },
+      ),
+      generator,
+      projectDirectory: directory,
+      write: true,
+    });
+    expect(reviewCalled).toBe(false);
+    expect(report.published).toBe(0);
+    expect(report.decisions).toMatchObject([{
+      outcome: "infrastructure-error",
+      reason: expect.stringContaining("later deal state"),
+    }]);
+  });
+
   test("keeps untrusted-monitor and founder-only candidates in manual review without credentials", async () => {
     const directory = await fixtureProject();
     await writeDigest(directory, {

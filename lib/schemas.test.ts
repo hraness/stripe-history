@@ -36,6 +36,8 @@ describe("public YAML schemas", () => {
   test("models the bounded automatic publication policy and provenance ledger", () => {
     const policy = {
       auto_publish_categories: ["acquisitions", "product-launches"],
+      historical_proposal_prompt_versions: ["stripe-history/weekly-proposal/v0"],
+      historical_review_prompt_versions: [],
       max_candidates_per_run: 3,
       max_publications_per_run: 2,
       max_source_characters: 40_000,
@@ -58,6 +60,10 @@ describe("public YAML schemas", () => {
     expect(AutomatedPublicationPolicySchema.safeParse({
       ...policy,
       model: "openai/gpt-5-mini",
+    }).success).toBe(false);
+    expect(AutomatedPublicationPolicySchema.safeParse({
+      ...policy,
+      historical_proposal_prompt_versions: [policy.proposal_prompt_version],
     }).success).toBe(false);
     expect(AutomatedPublicationLedgerSchema.safeParse({
       runs: [],

@@ -27,6 +27,31 @@ monitors:
     research_areas:
       - company-history
       - valuation-history
+  - id: techcrunch-latest
+    kind: rss
+    url: https://techcrunch.com/feed/
+    include_terms:
+      - Stripe
+      - OpenRouter
+    research_areas:
+      - company-history
+      - valuation-history
+  - id: exa-stripe-reporting
+    kind: exa-search
+    query: Recent material Stripe company news about acquisitions, signed deals, product launches, leadership, funding, valuation, geographic expansion, or payment infrastructure
+    include_domains:
+      - bloomberg.com
+      - cnbc.com
+      - ft.com
+      - reuters.com
+      - stripe.com
+      - techcrunch.com
+      - theinformation.com
+      - wsj.com
+    research_areas:
+      - company-history
+      - sessions-product-launches
+      - valuation-history
   - id: marginal-revolution-founders
     kind: rss
     url: https://marginalrevolution.com/feed

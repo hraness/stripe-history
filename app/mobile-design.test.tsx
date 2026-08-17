@@ -69,3 +69,15 @@ test("theme control uses HugeIcons with a compact visual ring and full hit targe
     /\.stripe-history-theme-toggle::before\s*\{[^}]*block-size:\s*2rem;[^}]*border:\s*1px solid var\(--plain-line\);[^}]*inline-size:\s*2rem;/u,
   );
 });
+
+test("site chrome begins close to the viewport while preserving coarse hit targets", () => {
+  expect(globalsCss).toMatch(
+    /\.stripe-history-main\s*\{[^}]*margin-block:\s*max\(0\.25rem, env\(safe-area-inset-top\)\)/u,
+  );
+  expect(globalsCss).toMatch(
+    /\.stripe-history-header\s*\{[^}]*min-block-size:\s*2\.5rem;[^}]*padding-block:\s*0;/u,
+  );
+  expect(plainSiteCss).toMatch(
+    /@media \(pointer: coarse\)\s*\{[^}]*--plain-link-target-min:\s*var\(--interactive-target-min, 48px\);/u,
+  );
+});

@@ -44,7 +44,7 @@ Up to three current candidates from reviewed first-party or publisher-feed monit
 
 Valuation-only claims, annual-volume figures, founder appearances and side projects, older events, ambiguous evidence, GDELT-only discoveries, rejected fact checks, and candidates beyond the run limits remain in a dated review issue. Accepted changes must pass strict YAML schemas, the research audit, the full repository check, a production build, and a generated-diff allowlist. The workflow commits only those data files and pushes only when its checkout is still a direct fast-forward of `main`.
 
-Automatic publication requires a Vercel AI Gateway key stored as the GitHub Actions secret `STRIPE_HISTORY_LLM_API_KEY`. Create the key in the [AI Gateway API Keys page](https://vercel.com/docs/ai-gateway/authentication-and-byok), then add it to the repository without placing it in source or logs. The checked policy bounds model calls and output size; review AI Gateway usage and spending separately.
+Automatic publication requires a Vercel AI Gateway key stored as the GitHub Actions secret `STRIPE_HISTORY_LLM_API_KEY`. Create the key in the [AI Gateway API Keys page](https://vercel.com/docs/ai-gateway/authentication-and-byok), then add it to the repository without placing it in source or logs. The optional `EXA_API_KEY` GitHub Actions secret enables the checked, domain-restricted Exa discovery monitor; direct publisher evidence still comes from each result's canonical source. The checked policy bounds model calls and output size; review provider usage and spending separately.
 
 Run the same discovery locally with an explicit date:
 
