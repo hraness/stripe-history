@@ -38,6 +38,13 @@ async function fixtureProject(): Promise<string> {
   const directory = await mkdtemp(join(tmpdir(), "stripe-auto-publish-"));
   temporaryDirectories.push(directory);
   await cp(join(process.cwd(), "public"), join(directory, "public"), { recursive: true });
+  await writeFile(
+    join(directory, "public", "research", "automated-publications.yml"),
+    stringify(AutomatedPublicationLedgerSchema.parse({
+      runs: [],
+      schema: "stripe-history/automated-publications/v1",
+    }), { lineWidth: 0 }),
+  );
   return directory;
 }
 
@@ -176,6 +183,7 @@ describe("automatic history publication", () => {
       url: "https://stripe.com/newsroom/news/example-network",
     } as const;
     await writeDigest(directory, candidate);
+    const baseline = await auditHistoryResearch(directory);
     const calls: string[] = [];
 
     const report = await autoPublishHistory({
@@ -227,7 +235,9 @@ describe("automatic history publication", () => {
       review_mode: "independent-grounded-second-pass",
     });
     expect(JSON.stringify(ledger)).not.toContain(evidenceQuote);
-    await expect(auditHistoryResearch(directory)).resolves.toMatchObject({ events: 232 });
+    await expect(auditHistoryResearch(directory)).resolves.toMatchObject({
+      events: baseline.events + 1,
+    });
 
     const repeat = await autoPublishHistory({
       digestPath: "digest.json",

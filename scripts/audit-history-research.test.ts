@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { parse, stringify } from "yaml";
 
+import { AutomatedPublicationLedgerSchema } from "../lib/automated-publication-schema";
 import {
   auditHistoryResearch,
   planHistoryResearchCaptures,
@@ -157,9 +158,17 @@ const writeWebCapture = async (
 describe("Stripe history research audit", () => {
   test("validates the complete checked-in corpus with bounded counts", async () => {
     const report = await auditHistoryResearch(projectDirectory);
+    const ledger = AutomatedPublicationLedgerSchema.parse(parse(await readFile(
+      join(projectDirectory, "public", "research", "automated-publications.yml"),
+      "utf8",
+    )) as unknown);
+    const ledgerDecisions = ledger.runs.reduce(
+      (total, run) => total + run.decisions.length,
+      0,
+    );
 
-    expect(report.automatedPublicationDecisions).toBe(0);
-    expect(report.automatedPublicationRuns).toBe(0);
+    expect(report.automatedPublicationDecisions).toBe(ledgerDecisions);
+    expect(report.automatedPublicationRuns).toBe(ledger.runs.length);
     expect(report.collections).toBe(4);
     expect(report.collectionSupportingSources).toBe(2);
     expect(report.historyFiles).toBe(11);
