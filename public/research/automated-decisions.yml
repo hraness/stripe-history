@@ -1,0 +1,63 @@
+runs:
+  - candidate_digest_sha256: 0048a487a8e225de3d14d35a3dc94a007c20ffa97072f28bc81a08cbc2fe5202
+    decided_on: 2026-08-17
+    decisions:
+      - basis: manual-migration
+        candidate_url: https://fortune.com/2026/08/16/stripe-7-billion-deal-ai-firm-openrouter-acquisition
+        category: acquisitions
+        event_id: stripe-reportedly-finalizes-a-deal-to-acquire-openrouter
+        outcome: corroborating-existing-event
+        reason: This report corroborates the existing reported OpenRouter agreement and does not establish a separate deal state.
+        title: Stripe clinches over $7 billion deal to buy AI firm OpenRouter
+      - basis: manual-migration
+        candidate_url: https://siliconangle.com/2026/08/16/stripe-reportedly-finalizes-deal-buy-ai-model-router-openrouter-7b
+        category: acquisitions
+        event_id: stripe-reportedly-finalizes-a-deal-to-acquire-openrouter
+        outcome: corroborating-existing-event
+        reason: This report corroborates the existing reported OpenRouter agreement and does not establish a separate deal state.
+        title: Stripe reportedly finalizes deal to buy AI model router OpenRouter for more than $7B
+      - basis: manual-migration
+        candidate_url: https://stripe.com/blog/mapping-the-ai-economy
+        outcome: rejected
+        reason: This is market analysis based on Stripe transaction data, supplemented by customer examples and product marketing. It does not establish a discrete, consequential Stripe company event in an allowed category.
+        title: Mapping the AI economy
+    id: decision-run-9a30cbf826fb014af662
+    model: openai/gpt-5.6-sol
+    proposal_prompt_version: stripe-history/weekly-proposal/v4
+    reasoning_effort: max
+    review_prompt_version: stripe-history/weekly-review/v1
+  - candidate_digest_sha256: c5d1f69f687a29a704c445c0813a07a2bda3fad4184a3bf1bc8c8250953562cb
+    decided_on: 2026-08-16
+    decisions:
+      - basis: review
+        candidate_url: https://techcrunch.com/2026/08/14/talks-to-sell-paypal-to-stripe-and-advent-are-heating-up
+        category: acquisitions
+        event_id: paypal-stripe-advent-offer-reported
+        outcome: source-added-to-event
+        proposal_sha256: 4723faaf61e74bfb0a21caba43e7d8eb4a34a5f449188f8a9bef8ebd4dbb2323
+        reason: Published after grounded proposal and independent review.
+        review_sha256: ae9fbf611c2272f020559314f286143f713d323748f9ee1a4b185b41fa339d63
+        title: Talks to sell PayPal to Stripe and Advent are heating up
+    id: decision-run-b7377ed343d16e99e5c1
+    model: openai/gpt-5.6-sol
+    proposal_prompt_version: stripe-history/weekly-proposal/v3
+    reasoning_effort: max
+    review_prompt_version: stripe-history/weekly-review/v1
+  - candidate_digest_sha256: 3436afe3ac0fd1474254f66431924d8b8461390b24f6be6675576bb58b9fa56c
+    decided_on: 2026-08-16
+    decisions:
+      - basis: review
+        candidate_url: https://techcrunch.com/2026/08/16/stripe-will-reportedly-acquire-ai-gateway-startup-openrouter-for-7b
+        category: acquisitions
+        event_id: stripe-reportedly-finalizes-a-deal-to-acquire-openrouter
+        outcome: published-new-event
+        proposal_sha256: a180f77b92795ee5a3155c03ee76dca238ee56e76ce24369a20ac384e0568f23
+        reason: Published after grounded proposal and independent review.
+        review_sha256: ab8de58c38f72daa5d2ed0255b308123933ac575fd256cdfab8b7d76ab07f6fd
+        title: Stripe will reportedly acquire AI gateway startup OpenRouter for $7B+
+    id: decision-run-dd1a46e8cca030d18cbe
+    model: openai/gpt-5.6-sol
+    proposal_prompt_version: stripe-history/weekly-proposal/v4
+    reasoning_effort: max
+    review_prompt_version: stripe-history/weekly-review/v1
+schema: stripe-history/automated-decisions/v1

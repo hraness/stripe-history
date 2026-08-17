@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 
 import {
+  AutomatedDecisionLedgerSchema,
   AutomatedPublicationLedgerSchema,
   AutomatedPublicationPolicySchema,
 } from "./automated-publication-schema";
@@ -69,6 +70,32 @@ describe("public YAML schemas", () => {
       runs: [],
       schema: "stripe-history/automated-publications/v1",
     }).success).toBe(true);
+    expect(AutomatedDecisionLedgerSchema.safeParse({
+      runs: [],
+      schema: "stripe-history/automated-decisions/v1",
+    }).success).toBe(true);
+    expect(AutomatedDecisionLedgerSchema.safeParse({
+      runs: [{
+        candidate_digest_sha256: "a".repeat(64),
+        decided_on: "2026-08-17",
+        decisions: [{
+          basis: "review",
+          candidate_url: "https://example.com/report",
+          category: "acquisitions",
+          event_id: "example-event",
+          outcome: "published-new-event",
+          proposal_sha256: "b".repeat(64),
+          reason: "Published after independent review.",
+          title: "Example report",
+        }],
+        id: `decision-run-${"c".repeat(20)}`,
+        model: "openai/gpt-5.6-sol",
+        proposal_prompt_version: "stripe-history/weekly-proposal/v1",
+        reasoning_effort: "max",
+        review_prompt_version: "stripe-history/weekly-review/v1",
+      }],
+      schema: "stripe-history/automated-decisions/v1",
+    }).success).toBe(false);
   });
 
   test("rejects history precision that disagrees with the date", () => {

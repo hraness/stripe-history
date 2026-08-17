@@ -6,7 +6,10 @@ import { afterEach, describe, expect, test } from "bun:test";
 import { parse, stringify } from "yaml";
 import { z } from "zod";
 
-import { AutomatedPublicationLedgerSchema } from "../lib/automated-publication-schema";
+import {
+  AutomatedDecisionLedgerSchema,
+  AutomatedPublicationLedgerSchema,
+} from "../lib/automated-publication-schema";
 import { HistoryFileSchema } from "../lib/history-schema";
 import { ResearchSourceCatalogSchema } from "../lib/research-schema";
 import { stableResearchSourceId } from "../lib/research-source-identity";
@@ -15,6 +18,7 @@ import {
   autoPublishHistory,
   PublicationProposalSchema,
   renderAutomatedPublicationMarkdown,
+  renderAutomatedPublicationReviewMarkdown,
   type PublicationGenerator,
 } from "./auto-publish-history";
 
@@ -43,6 +47,13 @@ async function fixtureProject(): Promise<string> {
     stringify(AutomatedPublicationLedgerSchema.parse({
       runs: [],
       schema: "stripe-history/automated-publications/v1",
+    }), { lineWidth: 0 }),
+  );
+  await writeFile(
+    join(directory, "public", "research", "automated-decisions.yml"),
+    stringify(AutomatedDecisionLedgerSchema.parse({
+      runs: [],
+      schema: "stripe-history/automated-decisions/v1",
     }), { lineWidth: 0 }),
   );
   return directory;
@@ -155,6 +166,7 @@ describe("automatic history publication", () => {
     const markdown = renderAutomatedPublicationMarkdown({
       asOf: "2026-08-16",
       decisions: [{
+        basis: "automatic-policy",
         outcome: "needs-review",
         reason: "Review [this] candidate.",
         title: "[Candidate](https://attacker.example)",
@@ -170,6 +182,45 @@ describe("automatic history publication", () => {
     expect(markdown).toContain("\\[Candidate\\](https://attacker.example)");
     expect(markdown).toContain("<https://example.com/story_%28draft%29>");
     expect(markdown).toContain("Review \\[this\\] candidate.");
+  });
+
+  test("keeps only unresolved decisions in the rolling review issue", () => {
+    const review = renderAutomatedPublicationReviewMarkdown({
+      asOf: "2026-08-17",
+      decisions: [{
+        basis: "proposal",
+        category: "acquisitions",
+        eventId: "existing-openrouter-event",
+        outcome: "corroborating-existing-event",
+        proposalSha256: "a".repeat(64),
+        reason: "This is another report of the existing event.",
+        title: "Corroborating report",
+        url: "https://example.com/corroborating-report",
+      }, {
+        basis: "proposal",
+        outcome: "rejected",
+        proposalSha256: "b".repeat(64),
+        reason: "This article does not establish a company event.",
+        title: "Rejected analysis",
+        url: "https://example.com/rejected-analysis",
+      }, {
+        basis: "automatic-policy",
+        outcome: "needs-review",
+        reason: "The source date is ambiguous.",
+        title: "Ambiguous candidate",
+        url: "https://example.com/ambiguous-candidate",
+      }],
+      generatedAt: "2026-08-17T12:00:00.000Z",
+      model: "openai/gpt-5.6-sol",
+      published: 0,
+      reasoningEffort: "max",
+      schema: "stripe-history/automated-publication-report/v1",
+    });
+
+    expect(review).toContain("Ambiguous candidate");
+    expect(review).not.toContain("Corroborating report");
+    expect(review).not.toContain("Rejected analysis");
+    expect(review).toContain("automated-decisions.yml");
   });
 
   test("uses Sol max twice and commits only deterministic sourced YAML", async () => {
@@ -235,7 +286,27 @@ describe("automatic history publication", () => {
       review_mode: "independent-grounded-second-pass",
     });
     expect(JSON.stringify(ledger)).not.toContain(evidenceQuote);
+    const decisionLedgerPath = join(
+      directory,
+      "public",
+      "research",
+      "automated-decisions.yml",
+    );
+    const decisionLedger = AutomatedDecisionLedgerSchema.parse(parse(await readFile(
+      decisionLedgerPath,
+      "utf8",
+    )) as unknown);
+    expect(decisionLedger.runs).toHaveLength(1);
+    expect(decisionLedger.runs[0]?.decisions).toMatchObject([{
+      basis: "review",
+      outcome: "published-new-event",
+      proposal_sha256: expect.any(String),
+      review_sha256: expect.any(String),
+    }]);
+    const decisionLedgerBeforeRepeat = await readFile(decisionLedgerPath, "utf8");
     await expect(auditHistoryResearch(directory)).resolves.toMatchObject({
+      automatedDecisions: 1,
+      automatedDecisionRuns: 1,
       events: baseline.events + 1,
     });
 
@@ -252,6 +323,7 @@ describe("automatic history publication", () => {
       write: true,
     });
     expect(repeat.published).toBe(0);
+    expect(await readFile(decisionLedgerPath, "utf8")).toBe(decisionLedgerBeforeRepeat);
 
     const tamperedHistory = HistoryFileSchema.parse(parse(await readFile(
       join(directory, "public", "history", "product-launches.yml"),
@@ -451,6 +523,199 @@ describe("automatic history publication", () => {
       outcome: "needs-review",
       reason: expect.stringContaining("automatic policy"),
     }]);
+    const decisionLedger = AutomatedDecisionLedgerSchema.parse(parse(await readFile(
+      join(directory, "public", "research", "automated-decisions.yml"),
+      "utf8",
+    )) as unknown);
+    expect(decisionLedger.runs[0]?.decisions).toMatchObject([{
+      basis: "automatic-policy",
+      outcome: "needs-review",
+    }]);
+  });
+
+  test("records a missing model credential as an actionable infrastructure decision", async () => {
+    const directory = await fixtureProject();
+    const candidate = {
+      monitors: ["stripe-newsroom"],
+      publishedAt: "2026-08-15",
+      researchAreas: ["company-history"],
+      source: "Stripe",
+      title: "Stripe launches Example Network",
+      url: "https://stripe.com/newsroom/news/example-network",
+    } as const;
+    await writeDigest(directory, candidate);
+    const report = await autoPublishHistory({
+      digestPath: "digest.json",
+      environment: {},
+      fetcher: async () => {
+        throw new Error("A missing credential must stop before evidence fetching");
+      },
+      generator: (async () => {
+        throw new Error("A missing credential must stop before model invocation");
+      }) as PublicationGenerator,
+      projectDirectory: directory,
+      write: true,
+    });
+
+    expect(report.decisions).toMatchObject([{
+      basis: "compiler",
+      outcome: "infrastructure-error",
+      reason: expect.stringContaining("AI Gateway credential"),
+    }]);
+    expect(renderAutomatedPublicationReviewMarkdown(report)).toContain(candidate.title);
+    const decisionLedger = AutomatedDecisionLedgerSchema.parse(parse(await readFile(
+      join(directory, "public", "research", "automated-decisions.yml"),
+      "utf8",
+    )) as unknown);
+    expect(decisionLedger.runs[0]?.decisions[0]?.outcome).toBe("infrastructure-error");
+  });
+
+  test("carries unresolved decisions into later empty weekly reviews", async () => {
+    const directory = await fixtureProject();
+    const candidate = {
+      monitors: ["gdelt-founders"],
+      publishedAt: "2026-08-15",
+      researchAreas: ["founder-side-projects"],
+      source: "example.com",
+      title: "Patrick Collison starts an example project",
+      url: "https://example.com/patrick-project",
+    } as const;
+    await writeDigest(directory, candidate);
+    await autoPublishHistory({
+      digestPath: "digest.json",
+      environment: {},
+      projectDirectory: directory,
+      write: true,
+    });
+    await writeFile(join(directory, "digest.json"), JSON.stringify({
+      asOf: "2026-08-23",
+      candidates: [],
+      discoveryPlans: [],
+      generatedAt: "2026-08-23T12:00:00.000Z",
+      lookbackFrom: "2026-08-16",
+      monitors: [],
+      schema: "stripe-history/weekly-news-digest/v1",
+    }));
+
+    const later = await autoPublishHistory({
+      digestPath: "digest.json",
+      environment: {},
+      projectDirectory: directory,
+      write: true,
+    });
+    expect(later.decisions).toEqual([]);
+    expect(later.unresolved).toMatchObject([{
+      outcome: "needs-review",
+      title: candidate.title,
+    }]);
+    expect(renderAutomatedPublicationReviewMarkdown(later)).toContain(candidate.title);
+    const decisionLedger = AutomatedDecisionLedgerSchema.parse(parse(await readFile(
+      join(directory, "public", "research", "automated-decisions.yml"),
+      "utf8",
+    )) as unknown);
+    expect(decisionLedger.runs).toHaveLength(1);
+  });
+
+  test("records untrusted corroboration without adding it to the issue or corpus", async () => {
+    const directory = await fixtureProject();
+    const candidate = {
+      monitors: ["gdelt-stripe"],
+      publishedAt: "2026-08-16",
+      researchAreas: ["company-history"],
+      source: "Example News",
+      title: "Stripe finalizes OpenRouter agreement",
+      url: "https://example.com/stripe-openrouter-corroboration",
+    } as const;
+    await writeDigest(directory, candidate);
+    const originalSources = await readFile(
+      join(directory, "public", "research", "sources.yml"),
+      "utf8",
+    );
+    const corroboratingQuote = "Stripe reportedly finalized its agreement to acquire OpenRouter for more than $7 billion, according to people familiar with the deal.";
+    const calls: string[] = [];
+    const report = await autoPublishHistory({
+      digestPath: "digest.json",
+      environment: { STRIPE_HISTORY_LLM_API_KEY: "fixture-gateway-credential" },
+      fetcher: async () => new Response(
+        `<article><p>${corroboratingQuote}</p><p>${"The report repeats the transaction terms and identifies Stripe and OpenRouter. ".repeat(12)}</p></article>`,
+        { headers: { "content-type": "text/html; charset=utf-8" } },
+      ),
+      generator: (async (options) => {
+        calls.push(options.name);
+        return {
+          disposition: "add-source",
+          evidence_quotes: [corroboratingQuote],
+          event: null,
+          existing_event_id: "stripe-reportedly-finalizes-a-deal-to-acquire-openrouter",
+          reason: "The report independently corroborates the already recorded agreement state.",
+        } as never;
+      }) as PublicationGenerator,
+      projectDirectory: directory,
+      write: true,
+    });
+
+    expect(calls).toEqual(["weekly_stripe_history_proposal"]);
+    expect(report.published).toBe(0);
+    expect(report.decisions).toMatchObject([{
+      basis: "proposal",
+      category: "acquisitions",
+      eventId: "stripe-reportedly-finalizes-a-deal-to-acquire-openrouter",
+      outcome: "corroborating-existing-event",
+    }]);
+    expect(renderAutomatedPublicationReviewMarkdown(report)).not.toContain(candidate.title);
+    expect(await readFile(join(directory, "public", "research", "sources.yml"), "utf8"))
+      .toBe(originalSources);
+    const decisionLedger = AutomatedDecisionLedgerSchema.parse(parse(await readFile(
+      join(directory, "public", "research", "automated-decisions.yml"),
+      "utf8",
+    )) as unknown);
+    expect(decisionLedger.runs[0]?.decisions[0]).toMatchObject({
+      outcome: "corroborating-existing-event",
+      proposal_sha256: expect.any(String),
+    });
+    await expect(auditHistoryResearch(directory)).resolves.toMatchObject({
+      automatedDecisions: 1,
+      automatedPublicationDecisions: 0,
+    });
+  });
+
+  test("persists rejected model decisions outside the rolling issue", async () => {
+    const directory = await fixtureProject();
+    const candidate = {
+      monitors: ["stripe-blog"],
+      publishedAt: "2026-08-15",
+      researchAreas: ["company-history"],
+      source: "Stripe",
+      title: "Stripe publishes market analysis",
+      url: "https://stripe.com/blog/example-market-analysis",
+    } as const;
+    await writeDigest(directory, candidate);
+    const report = await autoPublishHistory({
+      digestPath: "digest.json",
+      environment: { STRIPE_HISTORY_LLM_API_KEY: "fixture-gateway-credential" },
+      fetcher: async () => response(),
+      generator: (async () => ({
+        disposition: "reject",
+        evidence_quotes: [],
+        event: null,
+        existing_event_id: null,
+        reason: "This is market analysis and does not establish a discrete company event.",
+      })) as PublicationGenerator,
+      projectDirectory: directory,
+      write: true,
+    });
+
+    expect(report.decisions).toMatchObject([{
+      basis: "proposal",
+      outcome: "rejected",
+      proposalSha256: expect.any(String),
+    }]);
+    expect(renderAutomatedPublicationReviewMarkdown(report)).not.toContain(candidate.title);
+    const decisionLedger = AutomatedDecisionLedgerSchema.parse(parse(await readFile(
+      join(directory, "public", "research", "automated-decisions.yml"),
+      "utf8",
+    )) as unknown);
+    expect(decisionLedger.runs[0]?.decisions[0]?.outcome).toBe("rejected");
   });
 
   test("requires the independent reviewer to return literal source evidence", async () => {

@@ -13,8 +13,11 @@ import { parse, stringify } from "yaml";
 import { z } from "zod";
 
 import {
+  AutomatedDecisionLedgerSchema,
   AutomatedPublicationLedgerSchema,
   AutomatedPublicationPolicySchema,
+  type AutomatedDecision,
+  type AutomatedDecisionRun,
   type AutomatedPublicationDecision,
   type AutomatedPublicationPolicy,
 } from "../lib/automated-publication-schema";
@@ -186,16 +189,20 @@ export const PublicationReviewSchema = z.strictObject({
 });
 
 export interface AutomatedPublicationReportDecision {
+  readonly basis: AutomatedDecision["basis"];
   readonly category?: HistoryCategoryId;
   readonly eventId?: string;
   readonly outcome:
+    | "corroborating-existing-event"
     | "deferred"
     | "infrastructure-error"
     | "needs-review"
     | "published-new-event"
     | "rejected"
     | "source-added-to-event";
+  readonly proposalSha256?: string;
   readonly reason: string;
+  readonly reviewSha256?: string;
   readonly title: string;
   readonly url: string;
 }
@@ -208,6 +215,7 @@ export interface AutomatedPublicationReport {
   readonly published: number;
   readonly reasoningEffort: "max";
   readonly schema: typeof REPORT_SCHEMA;
+  readonly unresolved?: readonly AutomatedPublicationReportDecision[];
 }
 
 export type PublicationGenerator = typeof generateStructured;
@@ -651,19 +659,138 @@ export function renderAutomatedPublicationMarkdown(report: AutomatedPublicationR
   return `${lines.join("\n")}\n`;
 }
 
+export function isActionableAutomatedDecision(
+  decision: AutomatedPublicationReportDecision,
+): boolean {
+  return decision.outcome === "deferred"
+    || decision.outcome === "infrastructure-error"
+    || decision.outcome === "needs-review";
+}
+
+export function renderAutomatedPublicationReviewMarkdown(
+  report: AutomatedPublicationReport,
+): string {
+  const actionable = report.unresolved
+    ?? report.decisions.filter(isActionableAutomatedDecision);
+  const lines = [
+    "# Stripe history research review queue",
+    "",
+    `Last research run: ${report.asOf}.`,
+    "",
+  ];
+  if (actionable.length === 0) {
+    lines.push("No unresolved research decisions.");
+  } else {
+    lines.push(`${actionable.length} decision${actionable.length === 1 ? "" : "s"} need human action.`, "");
+    for (const decision of actionable) {
+      lines.push(
+        `- [ ] [${escapeMarkdown(decision.title)}](<${markdownUrl(decision.url)}>)`,
+        `  - Outcome: ${decision.outcome}${decision.category === undefined ? "" : ` · ${decision.category}`}${decision.eventId === undefined ? "" : ` · \`${decision.eventId}\``}`,
+        `  - ${escapeMarkdown(decision.reason)}`,
+      );
+    }
+  }
+  lines.push(
+    "",
+    "Resolved publications, rejections, and corroborating duplicates are omitted here and retained in `public/research/automated-decisions.yml`.",
+    "",
+  );
+  return `${lines.join("\n")}\n`;
+}
+
+function defaultDecisionBasis(
+  outcome: AutomatedPublicationReportDecision["outcome"],
+): AutomatedDecision["basis"] {
+  if (outcome === "published-new-event" || outcome === "source-added-to-event") return "review";
+  if (outcome === "corroborating-existing-event") return "proposal";
+  if (outcome === "deferred" || outcome === "needs-review") return "automatic-policy";
+  return "compiler";
+}
+
 function reportDecision(
   candidate: z.infer<typeof NewsCandidateSchema>,
   outcome: AutomatedPublicationReportDecision["outcome"],
   reason: string,
-  extra: Readonly<{ category?: HistoryCategoryId; eventId?: string }> = {},
+  extra: Readonly<{
+    basis?: AutomatedDecision["basis"];
+    category?: HistoryCategoryId;
+    eventId?: string;
+    proposalSha256?: string;
+    reviewSha256?: string;
+  }> = {},
 ): AutomatedPublicationReportDecision {
   return {
+    basis: extra.basis ?? defaultDecisionBasis(outcome),
     ...extra,
     outcome,
     reason: cleanOneLine(reason, 500),
     title: candidate.title,
     url: candidate.url,
   };
+}
+
+function ledgerDecision(decision: AutomatedPublicationReportDecision): AutomatedDecision {
+  return {
+    basis: decision.basis,
+    candidate_url: canonicalNewsUrl(decision.url),
+    ...(decision.category === undefined ? {} : { category: decision.category }),
+    ...(decision.eventId === undefined ? {} : { event_id: decision.eventId }),
+    outcome: decision.outcome,
+    ...(decision.proposalSha256 === undefined
+      ? {}
+      : { proposal_sha256: decision.proposalSha256 }),
+    reason: decision.reason,
+    ...(decision.reviewSha256 === undefined ? {} : { review_sha256: decision.reviewSha256 }),
+    title: decision.title,
+  };
+}
+
+function reportFromLedgerDecision(decision: AutomatedDecision): AutomatedPublicationReportDecision {
+  return {
+    basis: decision.basis,
+    ...(decision.category === undefined ? {} : { category: decision.category }),
+    ...(decision.event_id === undefined ? {} : { eventId: decision.event_id }),
+    outcome: decision.outcome,
+    ...(decision.proposal_sha256 === undefined
+      ? {}
+      : { proposalSha256: decision.proposal_sha256 }),
+    reason: decision.reason,
+    ...(decision.review_sha256 === undefined
+      ? {}
+      : { reviewSha256: decision.review_sha256 }),
+    title: decision.title,
+    url: decision.candidate_url,
+  };
+}
+
+function unresolvedDecisionQueue(
+  ledger: z.infer<typeof AutomatedDecisionLedgerSchema>,
+): AutomatedPublicationReportDecision[] {
+  const seen = new Set<string>();
+  const unresolved: AutomatedPublicationReportDecision[] = [];
+  for (const run of ledger.runs) {
+    for (const decision of run.decisions) {
+      if (seen.has(decision.candidate_url)) continue;
+      seen.add(decision.candidate_url);
+      const report = reportFromLedgerDecision(decision);
+      if (isActionableAutomatedDecision(report)) unresolved.push(report);
+    }
+  }
+  return unresolved.toSorted((left, right) => left.url.localeCompare(right.url));
+}
+
+export function automatedDecisionRunId(
+  run: Omit<AutomatedDecisionRun, "id">,
+): string {
+  return `decision-run-${sha256(canonicalJson({
+    asOf: run.decided_on,
+    candidateDigest: run.candidate_digest_sha256,
+    decisions: run.decisions,
+    model: run.model,
+    proposalPromptVersion: run.proposal_prompt_version,
+    reasoningEffort: run.reasoning_effort,
+    reviewPromptVersion: run.review_prompt_version,
+  })).slice(0, 20)}`;
 }
 
 export async function autoPublishHistory(
@@ -680,86 +807,96 @@ export async function autoPublishHistory(
   )) as unknown);
   const sourcesPath = join(projectDirectory, "public", "research", "sources.yml");
   const ledgerPath = join(projectDirectory, "public", "research", "automated-publications.yml");
+  const decisionLedgerPath = join(
+    projectDirectory,
+    "public",
+    "research",
+    "automated-decisions.yml",
+  );
   let sourceCatalog = ResearchSourceCatalogSchema.parse(parse(
     await readFile(sourcesPath, "utf8"),
   ) as unknown);
   let ledger = AutomatedPublicationLedgerSchema.parse(parse(
     await readFile(ledgerPath, "utf8"),
   ) as unknown);
+  let decisionLedger = AutomatedDecisionLedgerSchema.parse(parse(
+    await readFile(decisionLedgerPath, "utf8"),
+  ) as unknown);
   const histories = await loadHistory(projectDirectory);
   const decisions: AutomatedPublicationReportDecision[] = [];
   const pending: PendingPublication[] = [];
   const trustedMonitors = new Set(policy.trusted_monitors);
-  const eligible = digest.candidates.filter((candidate) =>
+  const currentCompanyCandidates = digest.candidates.filter((candidate) =>
     candidate.publishedAt !== undefined
     && candidate.publishedAt >= digest.lookbackFrom
     && candidate.publishedAt <= digest.asOf
-    && candidate.monitors.some((monitor) => trustedMonitors.has(monitor))
     && candidate.researchAreas.some((area) =>
       area === "company-history" || area === "sessions-product-launches"));
-  const selected = eligible.slice(0, policy.max_candidates_per_run);
-  const selectedUrls = selected.map(({ url }) => canonicalNewsUrl(url)).toSorted();
+  const eligible = currentCompanyCandidates.filter((candidate) =>
+    candidate.monitors.some((monitor) => trustedMonitors.has(monitor)));
+  const selected = currentCompanyCandidates.slice(0, policy.max_candidates_per_run);
   const candidateDigest = sha256(canonicalJson({
     asOf: digest.asOf,
+    candidates: digest.candidates.map((candidate) => ({
+      monitors: [...candidate.monitors].toSorted(),
+      publishedAt: candidate.publishedAt,
+      researchAreas: [...candidate.researchAreas].toSorted(),
+      source: candidate.source,
+      title: candidate.title,
+      url: canonicalNewsUrl(candidate.url),
+    })).toSorted((left, right) => left.url.localeCompare(right.url)),
     model: policy.model,
     proposalPrompt: policy.proposal_prompt_version,
     reviewPrompt: policy.review_prompt_version,
-    urls: selectedUrls,
   }));
-  if (ledger.runs.some((run) =>
-    run.published_on === digest.asOf && run.candidate_digest_sha256 === candidateDigest)) {
+  const priorDecisionRun = decisionLedger.runs.find((run) =>
+    run.decided_on === digest.asOf && run.candidate_digest_sha256 === candidateDigest);
+  if (priorDecisionRun !== undefined) {
     return {
       asOf: digest.asOf,
-      decisions: selected.map((candidate) => reportDecision(
-        candidate,
-        "deferred",
-        "This exact candidate set already has a committed automated publication run.",
-      )),
+      decisions: priorDecisionRun.decisions.map(reportFromLedgerDecision),
       generatedAt: options.generatedAt ?? new Date().toISOString(),
       model: policy.model,
       published: 0,
       reasoningEffort: policy.reasoning_effort,
       schema: REPORT_SCHEMA,
+      unresolved: unresolvedDecisionQueue(decisionLedger),
     };
   }
   for (const candidate of digest.candidates) {
     if (selected.includes(candidate)) continue;
-    const reason = eligible.includes(candidate)
+    const reason = currentCompanyCandidates.includes(candidate)
       ? `Deferred after the bounded ${policy.max_candidates_per_run}-candidate model limit.`
       : "Outside automatic policy because its date, monitor, or research area requires manual review.";
-    decisions.push(reportDecision(candidate, "needs-review", reason));
-  }
-  if (selected.length === 0) {
-    return {
-      asOf: digest.asOf,
-      decisions,
-      generatedAt: options.generatedAt ?? new Date().toISOString(),
-      model: policy.model,
-      published: 0,
-      reasoningEffort: policy.reasoning_effort,
-      schema: REPORT_SCHEMA,
-    };
+    decisions.push(reportDecision(
+      candidate,
+      currentCompanyCandidates.includes(candidate) ? "deferred" : "needs-review",
+      reason,
+    ));
   }
   const credential = resolveGatewayCredential(options.environment ?? process.env);
-  if (credential === null) {
-    throw new Error("Set STRIPE_HISTORY_LLM_API_KEY, AI_GATEWAY_API_KEY, or VERCEL_OIDC_TOKEN");
-  }
   const generator = options.generator ?? generateStructured;
   const fetcher = options.fetcher ?? fetch;
   const knownSourceIdentities = new Map(sourceCatalog.sources.map((source) => [
     canonicalResearchSourceIdentity(source.url, source.published_at),
     source.id,
   ]));
-
-  for (const candidate of selected) {
-    if (pending.length >= policy.max_publications_per_run) {
+  if (credential === null) {
+    for (const candidate of selected) {
       decisions.push(reportDecision(
         candidate,
-        "deferred",
-        `Deferred after the bounded ${policy.max_publications_per_run}-publication limit.`,
+        "infrastructure-error",
+        "Automatic decision is unavailable because no AI Gateway credential is configured.",
       ));
-      continue;
     }
+  }
+
+  const modelCandidates = credential === null
+    ? []
+    : selected.map((candidate) => ({ candidate, credential }));
+  for (const { candidate, credential: modelCredential } of modelCandidates) {
+    let proposalSha256: string | undefined;
+    let reviewSha256: string | undefined;
     try {
       const evidence = await fetchEvidence(candidate, policy, fetcher);
       const source = ResearchSourceSchema.parse({
@@ -783,7 +920,7 @@ export async function autoPublishHistory(
       }
       const context = historyContext(histories, candidate);
       const proposal = await generator({
-        credential,
+        credential: modelCredential,
         maxOutputTokens: 16_384,
         model: policy.model,
         name: "weekly_stripe_history_proposal",
@@ -801,12 +938,19 @@ export async function autoPublishHistory(
         tags: ["stripe-history", "automatic-publication", "proposal", "v1"],
         timeoutMs: 300_000,
       });
+      proposalSha256 = sha256(canonicalJson(proposal));
       if (proposal.disposition === "reject") {
-        decisions.push(reportDecision(candidate, "rejected", proposal.reason));
+        decisions.push(reportDecision(candidate, "rejected", proposal.reason, {
+          basis: "proposal",
+          proposalSha256,
+        }));
         continue;
       }
       if (proposal.disposition === "needs-review") {
-        decisions.push(reportDecision(candidate, "needs-review", proposal.reason));
+        decisions.push(reportDecision(candidate, "needs-review", proposal.reason, {
+          basis: "proposal",
+          proposalSha256,
+        }));
         continue;
       }
       validateProposalForCompilation(
@@ -818,9 +962,45 @@ export async function autoPublishHistory(
         source,
         { from: digest.lookbackFrom, through: digest.asOf },
       );
-      const proposalSha256 = sha256(canonicalJson(proposal));
+      if (!eligible.includes(candidate)) {
+        if (proposal.disposition === "add-source") {
+          if (proposal.existing_event_id === null) {
+            throw new Error("add-source proposal is missing an existing event ID");
+          }
+          const existing = findEvent(histories, proposal.existing_event_id);
+          if (existing === null) throw new Error("Model referenced an unknown existing event");
+          decisions.push(reportDecision(
+            candidate,
+            "corroborating-existing-event",
+            proposal.reason,
+            {
+              basis: "proposal",
+              category: existing.history.file.category.id,
+              eventId: existing.event.id,
+              proposalSha256,
+            },
+          ));
+        } else {
+          decisions.push(reportDecision(
+            candidate,
+            "needs-review",
+            `${proposal.reason} The discovery monitor is not trusted for automatic publication.`,
+            { basis: "proposal", proposalSha256 },
+          ));
+        }
+        continue;
+      }
+      if (pending.length >= policy.max_publications_per_run) {
+        decisions.push(reportDecision(
+          candidate,
+          "deferred",
+          `Deferred after the bounded ${policy.max_publications_per_run}-publication limit.`,
+          { proposalSha256 },
+        ));
+        continue;
+      }
       const review = await generator({
-        credential,
+        credential: modelCredential,
         maxOutputTokens: 16_384,
         model: policy.model,
         name: "weekly_stripe_history_review",
@@ -838,12 +1018,16 @@ export async function autoPublishHistory(
         tags: ["stripe-history", "automatic-publication", "review", "v1"],
         timeoutMs: 300_000,
       });
+      reviewSha256 = sha256(canonicalJson(review));
       if (review.verdict !== "approve") {
-        decisions.push(reportDecision(candidate, "rejected", review.reason));
+        decisions.push(reportDecision(candidate, "rejected", review.reason, {
+          basis: "review",
+          proposalSha256,
+          reviewSha256,
+        }));
         continue;
       }
       const reviewQuotes = exactQuotes(evidence.text, review.evidence_quotes);
-      const reviewSha256 = sha256(canonicalJson(review));
       const nextSourceCatalog = ResearchSourceCatalogSchema.parse({
         ...sourceCatalog,
         sources: [...sourceCatalog.sources, source].toSorted((left, right) =>
@@ -867,8 +1051,11 @@ export async function autoPublishHistory(
           sourceId: source.id,
         });
         decisions.push(reportDecision(candidate, "published-new-event", review.reason, {
+          basis: "review",
           category: proposal.event.category,
           eventId,
+          proposalSha256,
+          reviewSha256,
         }));
       } else {
         if (proposal.existing_event_id === null) {
@@ -887,14 +1074,20 @@ export async function autoPublishHistory(
           sourceId: source.id,
         });
         decisions.push(reportDecision(candidate, "source-added-to-event", review.reason, {
+          basis: "review",
           category: changed.category,
           eventId: changed.event.id,
+          proposalSha256,
+          reviewSha256,
         }));
       }
       sourceCatalog = nextSourceCatalog;
       knownSourceIdentities.set(sourceIdentity, source.id);
     } catch (error) {
-      decisions.push(reportDecision(candidate, "infrastructure-error", conciseError(error)));
+      decisions.push(reportDecision(candidate, "infrastructure-error", conciseError(error), {
+        ...(proposalSha256 === undefined ? {} : { proposalSha256 }),
+        ...(reviewSha256 === undefined ? {} : { reviewSha256 }),
+      }));
     }
   }
 
@@ -932,19 +1125,45 @@ export async function autoPublishHistory(
       }, ...ledger.runs].toSorted((left, right) =>
         right.published_on.localeCompare(left.published_on) || left.id.localeCompare(right.id)),
     });
-    if (options.write === true) {
+  }
+
+  if (decisions.length > 0) {
+    const orderedDecisions = decisions.map(ledgerDecision).toSorted((left, right) =>
+      left.candidate_url.localeCompare(right.candidate_url));
+    const runWithoutId: Omit<AutomatedDecisionRun, "id"> = {
+      candidate_digest_sha256: candidateDigest,
+      decided_on: digest.asOf,
+      decisions: orderedDecisions,
+      model: policy.model,
+      proposal_prompt_version: policy.proposal_prompt_version,
+      reasoning_effort: policy.reasoning_effort,
+      review_prompt_version: policy.review_prompt_version,
+    };
+    decisionLedger = AutomatedDecisionLedgerSchema.parse({
+      ...decisionLedger,
+      runs: [{
+        ...runWithoutId,
+        id: automatedDecisionRunId(runWithoutId),
+      }, ...decisionLedger.runs].toSorted((left, right) =>
+        right.decided_on.localeCompare(left.decided_on) || left.id.localeCompare(right.id)),
+    });
+  }
+
+  if (options.write === true && decisions.length > 0) {
+    const outputs = new Map<string, string>([
+      [decisionLedgerPath, stringify(decisionLedger, { lineWidth: 0 })],
+    ]);
+    if (pending.length > 0) {
       const changedCategories = new Set(pending.map(({ category }) => category));
-      const outputs = new Map<string, string>([
-        [sourcesPath, stringify(sourceCatalog, { lineWidth: 0 })],
-        [ledgerPath, stringify(ledger, { lineWidth: 0 })],
-      ]);
+      outputs.set(sourcesPath, stringify(sourceCatalog, { lineWidth: 0 }));
+      outputs.set(ledgerPath, stringify(ledger, { lineWidth: 0 }));
       for (const history of histories) {
         if (changedCategories.has(history.file.category.id)) {
           outputs.set(history.path, stringify(history.file, { lineWidth: 0 }));
         }
       }
-      await writePublicationCorpus(projectDirectory, outputs);
     }
+    await writePublicationCorpus(projectDirectory, outputs);
   }
 
   return {
@@ -955,6 +1174,7 @@ export async function autoPublishHistory(
     published: pending.length,
     reasoningEffort: policy.reasoning_effort,
     schema: REPORT_SCHEMA,
+    unresolved: unresolvedDecisionQueue(decisionLedger),
   };
 }
 
@@ -980,18 +1200,23 @@ if (import.meta.main) {
   });
   const json = `${JSON.stringify(report, null, 2)}\n`;
   const markdown = renderAutomatedPublicationMarkdown(report);
+  const reviewMarkdown = renderAutomatedPublicationReviewMarkdown(report);
   const jsonOutput = flagValue("--json-out");
   const markdownOutput = flagValue("--markdown-out");
+  const reviewOutput = flagValue("--review-out");
   if (jsonOutput !== undefined) await writeOutput(jsonOutput, json);
   if (markdownOutput !== undefined) await writeOutput(markdownOutput, markdown);
-  if (jsonOutput === undefined && markdownOutput === undefined) console.log(json);
+  if (reviewOutput !== undefined) await writeOutput(reviewOutput, reviewMarkdown);
+  if (jsonOutput === undefined && markdownOutput === undefined && reviewOutput === undefined) {
+    console.log(json);
+  }
   else console.log(JSON.stringify({
+    actionable: (report.unresolved
+      ?? report.decisions.filter(isActionableAutomatedDecision)).length,
     infrastructureErrors: report.decisions.filter(({ outcome }) =>
       outcome === "infrastructure-error").length,
-    needsReview: report.decisions.filter(({ outcome }) => outcome === "needs-review").length,
+    needsReview: report.decisions.filter(({ outcome }) =>
+      outcome === "needs-review" || outcome === "deferred").length,
     published: report.published,
   }));
-  if (report.decisions.some(({ outcome }) => outcome === "infrastructure-error")) {
-    process.exitCode = 2;
-  }
 }

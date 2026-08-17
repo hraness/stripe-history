@@ -348,6 +348,10 @@ describe("weekly news discovery", () => {
     expect(workflow).toContain("EXA_API_KEY: ${{ secrets.EXA_API_KEY }}");
     expect(workflow).toContain("history:publish:auto");
     expect(workflow).toContain("--write --json-out");
+    expect(workflow).toContain("--review-out weekly-news/review-queue.md");
+    expect(workflow).toContain("Stripe history research review queue");
+    expect(workflow).toContain("public/research/automated-decisions.yml");
+    expect(workflow).toContain("steps.review.outputs.actionable == '0'");
     expect(workflow).toContain("Verify generated diff scope");
     expect(workflow).toContain("bun run history:research:audit");
     expect(workflow).toContain("bun run check");
