@@ -667,6 +667,15 @@ export function isActionableAutomatedDecision(
     || decision.outcome === "needs-review";
 }
 
+function isTerminalAutomatedDecision(
+  decision: Pick<AutomatedDecision, "outcome">,
+): boolean {
+  return decision.outcome === "corroborating-existing-event"
+    || decision.outcome === "published-new-event"
+    || decision.outcome === "rejected"
+    || decision.outcome === "source-added-to-event";
+}
+
 export function renderAutomatedPublicationReviewMarkdown(
   report: AutomatedPublicationReport,
 ): string {
@@ -766,12 +775,15 @@ function reportFromLedgerDecision(decision: AutomatedDecision): AutomatedPublica
 function unresolvedDecisionQueue(
   ledger: z.infer<typeof AutomatedDecisionLedgerSchema>,
 ): AutomatedPublicationReportDecision[] {
+  const resolved = new Set(ledger.runs.flatMap((run) =>
+    run.decisions.filter(isTerminalAutomatedDecision).map((decision) => decision.candidate_url)));
   const seen = new Set<string>();
   const unresolved: AutomatedPublicationReportDecision[] = [];
   for (const run of ledger.runs) {
     for (const decision of run.decisions) {
       if (seen.has(decision.candidate_url)) continue;
       seen.add(decision.candidate_url);
+      if (resolved.has(decision.candidate_url)) continue;
       const report = reportFromLedgerDecision(decision);
       if (isActionableAutomatedDecision(report)) unresolved.push(report);
     }
@@ -826,7 +838,11 @@ export async function autoPublishHistory(
   const decisions: AutomatedPublicationReportDecision[] = [];
   const pending: PendingPublication[] = [];
   const trustedMonitors = new Set(policy.trusted_monitors);
-  const currentCompanyCandidates = digest.candidates.filter((candidate) =>
+  const resolvedCandidateUrls = new Set(decisionLedger.runs.flatMap((run) =>
+    run.decisions.filter(isTerminalAutomatedDecision).map((decision) => decision.candidate_url)));
+  const undecidedCandidates = digest.candidates.filter((candidate) =>
+    !resolvedCandidateUrls.has(canonicalNewsUrl(candidate.url)));
+  const currentCompanyCandidates = undecidedCandidates.filter((candidate) =>
     candidate.publishedAt !== undefined
     && candidate.publishedAt >= digest.lookbackFrom
     && candidate.publishedAt <= digest.asOf
@@ -863,7 +879,7 @@ export async function autoPublishHistory(
       unresolved: unresolvedDecisionQueue(decisionLedger),
     };
   }
-  for (const candidate of digest.candidates) {
+  for (const candidate of undecidedCandidates) {
     if (selected.includes(candidate)) continue;
     const reason = currentCompanyCandidates.includes(candidate)
       ? `Deferred after the bounded ${policy.max_candidates_per_run}-candidate model limit.`
@@ -1144,8 +1160,7 @@ export async function autoPublishHistory(
       runs: [{
         ...runWithoutId,
         id: automatedDecisionRunId(runWithoutId),
-      }, ...decisionLedger.runs].toSorted((left, right) =>
-        right.decided_on.localeCompare(left.decided_on) || left.id.localeCompare(right.id)),
+      }, ...decisionLedger.runs],
     });
   }
 
@@ -1213,7 +1228,7 @@ if (import.meta.main) {
   else console.log(JSON.stringify({
     actionable: (report.unresolved
       ?? report.decisions.filter(isActionableAutomatedDecision)).length,
-    infrastructureErrors: report.decisions.filter(({ outcome }) =>
+    infrastructureErrors: (report.unresolved ?? report.decisions).filter(({ outcome }) =>
       outcome === "infrastructure-error").length,
     needsReview: report.decisions.filter(({ outcome }) =>
       outcome === "needs-review" || outcome === "deferred").length,

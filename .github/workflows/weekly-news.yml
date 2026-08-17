@@ -66,7 +66,7 @@ jobs:
           elif [ -f weekly-news/publication.json ]; then
             published="$(jq '.published' weekly-news/publication.json)"
             actionable="$(jq '(.unresolved // [.decisions[] | select(.outcome == "needs-review" or .outcome == "deferred" or .outcome == "infrastructure-error")]) | length' weekly-news/publication.json)"
-            infrastructure_errors="$(jq '[.decisions[] | select(.outcome == "infrastructure-error")] | length' weekly-news/publication.json)"
+            infrastructure_errors="$(jq '(.unresolved // .decisions) | map(select(.outcome == "infrastructure-error")) | length' weekly-news/publication.json)"
           elif [ "${candidate_count:-0}" != '0' ]; then
             published=0
             actionable="$candidate_count"

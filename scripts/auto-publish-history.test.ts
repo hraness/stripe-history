@@ -716,6 +716,35 @@ describe("automatic history publication", () => {
       "utf8",
     )) as unknown);
     expect(decisionLedger.runs[0]?.decisions[0]?.outcome).toBe("rejected");
+
+    await writeFile(join(directory, "digest.json"), JSON.stringify({
+      asOf: "2026-08-17",
+      candidates: [candidate],
+      discoveryPlans: [],
+      generatedAt: "2026-08-17T12:00:00.000Z",
+      lookbackFrom: "2026-08-10",
+      monitors: [],
+      schema: "stripe-history/weekly-news-digest/v1",
+    }));
+    const repeat = await autoPublishHistory({
+      digestPath: "digest.json",
+      environment: { STRIPE_HISTORY_LLM_API_KEY: "fixture-gateway-credential" },
+      fetcher: async () => {
+        throw new Error("Resolved candidates must not be fetched again");
+      },
+      generator: (async () => {
+        throw new Error("Resolved candidates must not call the model again");
+      }) as PublicationGenerator,
+      projectDirectory: directory,
+      write: true,
+    });
+    expect(repeat.decisions).toEqual([]);
+    expect(repeat.unresolved).toEqual([]);
+    const repeatedLedger = AutomatedDecisionLedgerSchema.parse(parse(await readFile(
+      join(directory, "public", "research", "automated-decisions.yml"),
+      "utf8",
+    )) as unknown);
+    expect(repeatedLedger.runs).toHaveLength(1);
   });
 
   test("requires the independent reviewer to return literal source evidence", async () => {
