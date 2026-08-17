@@ -107,8 +107,25 @@ function acceptedGenerator(calls: string[]): PublicationGenerator {
 describe("automatic history publication", () => {
   test("uses an AI Gateway-compatible proposal schema without oneOf", () => {
     const jsonSchema = z.toJSONSchema(PublicationProposalSchema);
+    const objectSchemas: Record<string, unknown>[] = [];
+    const visitSchema = (value: unknown): void => {
+      if (Array.isArray(value)) {
+        for (const item of value) visitSchema(item);
+        return;
+      }
+      if (typeof value !== "object" || value === null) return;
+      const record = value as Record<string, unknown>;
+      if (record.type === "object") objectSchemas.push(record);
+      for (const child of Object.values(record)) visitSchema(child);
+    };
+    visitSchema(jsonSchema);
 
     expect(JSON.stringify(jsonSchema)).not.toContain('"oneOf"');
+    for (const schema of objectSchemas) {
+      expect((schema.required as string[] | undefined)?.toSorted()).toEqual(
+        Object.keys(schema.properties as Record<string, unknown>).toSorted(),
+      );
+    }
     expect(PublicationProposalSchema.parse({
       disposition: "reject",
       event: null,

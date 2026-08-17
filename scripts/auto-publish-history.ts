@@ -67,9 +67,16 @@ const WeeklyNewsDigestInputSchema = z.strictObject({
 const proposalEventFields = {
   amount: z.union([
     z.strictObject({
-      currency: z.string().regex(/^[A-Z]{3}$/u).optional(),
+      currency: z.string()
+        .regex(/^[A-Z]{3}$/u)
+        .nullable()
+        .describe("The ISO currency code, or null when the display is not currency-denominated."),
       display: z.string().min(1).max(120),
-      value: z.number().finite().nonnegative().optional(),
+      value: z.number()
+        .finite()
+        .nonnegative()
+        .nullable()
+        .describe("The exact numeric amount, or null when only display text is supported."),
     }),
     z.null(),
   ]),
@@ -82,7 +89,11 @@ const proposalEventFields = {
   })).max(12),
   locations: z.array(z.string().min(1).max(120)).max(12),
   metrics: z.array(z.strictObject({
-    context: z.string().min(1).max(500).optional(),
+    context: z.string()
+      .min(1)
+      .max(500)
+      .nullable()
+      .describe("Metric context, or null when the label and value are self-explanatory."),
     label: z.string().min(1).max(100),
     value: z.string().min(1).max(120),
   })).max(12),
@@ -481,14 +492,29 @@ function compileEvent(
   sourceId: string,
 ): HistoryEvent {
   return HistoryEventSchema.parse({
-    ...(event.amount === null ? {} : { amount: event.amount }),
+    ...(event.amount === null
+      ? {}
+      : {
+          amount: {
+            ...(event.amount.currency === null ? {} : { currency: event.amount.currency }),
+            display: event.amount.display,
+            ...(event.amount.value === null ? {} : { value: event.amount.value }),
+          },
+        }),
     confidence: event.confidence,
     date: event.date,
     date_precision: "day",
     ...(event.details.length === 0 ? {} : { details: event.details }),
     id: eventId,
     ...(event.locations.length === 0 ? {} : { locations: unique(event.locations) }),
-    ...(event.metrics.length === 0 ? {} : { metrics: event.metrics }),
+    ...(event.metrics.length === 0
+      ? {}
+      : {
+          metrics: event.metrics.map(({ context, ...metric }) => ({
+            ...metric,
+            ...(context === null ? {} : { context }),
+          })),
+        }),
     ...(event.organizations.length === 0
       ? {}
       : { organizations: unique(event.organizations) }),
