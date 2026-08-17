@@ -11,7 +11,7 @@
 }
 
 .stripe-history-main {
-  margin-block: clamp(0.75rem, 3vh, 1.5rem) clamp(2.5rem, 8vh, 5rem);
+  margin-block: max(0.25rem, env(safe-area-inset-top)) clamp(2.5rem, 8vh, 5rem);
   max-width: 42rem;
 }
 
@@ -31,8 +31,8 @@
   display: flex;
   gap: 0.5rem;
   justify-content: space-between;
-  min-block-size: 3rem;
-  padding-block: 0.15rem;
+  min-block-size: 2.5rem;
+  padding-block: 0;
 }
 
 .stripe-history-section h2,

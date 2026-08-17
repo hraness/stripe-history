@@ -36,6 +36,7 @@ jobs:
       - id: digest
         name: Pull latest news
         env:
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           REQUESTED_AS_OF: ${{ inputs.as_of }}
         run: |
           as_of="${REQUESTED_AS_OF:-$(date -u +%F)}"

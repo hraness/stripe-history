@@ -13,6 +13,7 @@ import {
 } from "./audit-history-research";
 
 const NEWS_SCHEMA = "stripe-history/weekly-news-digest/v1" as const;
+const EXA_ENDPOINT = "https://api.exa.ai/search";
 const GDELT_ENDPOINT = "https://api.gdeltproject.org/api/v2/doc/doc";
 const RESPONSE_BYTE_LIMIT = 4 * 1024 * 1024;
 const MAX_SOURCE_LENGTH = 160;
@@ -33,6 +34,14 @@ const commonMonitorFields = {
 } as const;
 
 const NewsMonitorSchema = z.discriminatedUnion("kind", [
+  z.strictObject({
+    ...commonMonitorFields,
+    include_domains: z.array(
+      z.string().regex(/^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$/u),
+    ).min(1).max(40),
+    kind: z.literal("exa-search"),
+    query: z.string().min(10).max(500),
+  }),
   z.strictObject({
     ...commonMonitorFields,
     kind: z.literal("gdelt"),
@@ -79,6 +88,14 @@ const GdeltResponseSchema = z.strictObject({
   }).passthrough()).max(250),
 }).passthrough();
 
+const ExaResponseSchema = z.object({
+  results: z.array(z.object({
+    publishedDate: z.string().max(80).nullable().optional(),
+    title: z.string().max(2_000).nullable().optional(),
+    url: z.url().max(MAX_URL_LENGTH),
+  }).passthrough()).max(100),
+}).passthrough();
+
 type NewsMonitor = z.infer<typeof NewsMonitorSchema>;
 type Fetcher = typeof fetch;
 
@@ -117,6 +134,7 @@ interface CandidateInput {
 
 interface PullOptions {
   readonly asOf: string;
+  readonly environment?: Readonly<Record<string, string | undefined>>;
   readonly fetcher?: Fetcher;
   readonly generatedAt?: string;
   readonly projectDirectory?: string;
@@ -347,6 +365,33 @@ export function parseGdeltCandidates(value: unknown): readonly CandidateInput[] 
   });
 }
 
+function domainMatches(hostname: string, allowedDomain: string): boolean {
+  return hostname === allowedDomain || hostname.endsWith(`.${allowedDomain}`);
+}
+
+export function parseExaCandidates(
+  value: unknown,
+  monitor: Extract<NewsMonitor, { kind: "exa-search" }>,
+): readonly CandidateInput[] {
+  return ExaResponseSchema.parse(value).results.flatMap((result) => {
+    if (result.title === undefined || result.title === null) return [];
+    try {
+      const url = canonicalNewsUrl(result.url);
+      const hostname = new URL(url).hostname;
+      if (!monitor.include_domains.some((domain) => domainMatches(hostname, domain))) return [];
+      const publishedAt = parsePublishedDate(result.publishedDate ?? undefined);
+      return [{
+        ...(publishedAt === undefined ? {} : { publishedAt }),
+        source: hostname,
+        title: boundedText(result.title, MAX_TITLE_LENGTH),
+        url,
+      }];
+    } catch {
+      return [];
+    }
+  });
+}
+
 async function requestText(
   url: string,
   fetcher: Fetcher,
@@ -379,6 +424,51 @@ async function requestText(
     if (attempt < 2) await sleep(1_000 * (2 ** attempt));
   }
   throw lastError ?? new Error(`${url} request failed`);
+}
+
+async function requestExaSearch(
+  monitor: Extract<NewsMonitor, { kind: "exa-search" }>,
+  window: Readonly<{ from: string; through: string }>,
+  maxItems: number,
+  apiKey: string,
+  fetcher: Fetcher,
+  sleep: (milliseconds: number) => Promise<void>,
+): Promise<unknown> {
+  let lastError: Error | undefined;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const response = await fetcher(EXA_ENDPOINT, {
+        body: JSON.stringify({
+          category: "news",
+          endPublishedDate: `${window.through}T23:59:59.999Z`,
+          includeDomains: monitor.include_domains,
+          moderation: true,
+          numResults: Math.min(maxItems, 40),
+          query: monitor.query,
+          startPublishedDate: `${window.from}T00:00:00.000Z`,
+          type: "auto",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+        },
+        method: "POST",
+        signal: AbortSignal.timeout(30_000),
+      });
+      const body = await boundedResponseText(response, {
+        allowErrorStatus: true,
+        label: EXA_ENDPOINT,
+        maxBytes: RESPONSE_BYTE_LIMIT,
+      });
+      if (response.ok) return JSON.parse(body) as unknown;
+      lastError = new Error(`${EXA_ENDPOINT} returned HTTP ${response.status}`);
+      if (response.status !== 429 && response.status < 500) break;
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+    }
+    if (attempt < 2) await sleep(1_000 * (2 ** attempt));
+  }
+  throw lastError ?? new Error(`${EXA_ENDPOINT} request failed`);
 }
 
 function gdeltUrl(
@@ -427,7 +517,25 @@ async function collectMonitor(
   knownUrls: ReadonlySet<string>,
   fetcher: Fetcher,
   sleep: (milliseconds: number) => Promise<void>,
+  environment: Readonly<Record<string, string | undefined>>,
 ): Promise<Readonly<{ candidates: readonly CandidateInput[]; warnings: readonly string[] }>> {
+  if (monitor.kind === "exa-search") {
+    const apiKey = environment.EXA_API_KEY?.trim();
+    if (apiKey === undefined || apiKey === "") {
+      throw new Error("EXA_API_KEY is not configured");
+    }
+    return {
+      candidates: parseExaCandidates(await requestExaSearch(
+        monitor,
+        window,
+        config.max_items_per_monitor,
+        apiKey,
+        fetcher,
+        sleep,
+      ), monitor),
+      warnings: [],
+    };
+  }
   if (monitor.kind === "gdelt") {
     const body = await requestText(
       gdeltUrl(monitor, window.from, window.through, config.max_items_per_monitor),
@@ -513,6 +621,7 @@ export async function pullLatestNews(options: PullOptions): Promise<WeeklyNewsDi
   const asOf = exactIsoDate(options.asOf, "--as-of");
   const fetcher = options.fetcher ?? fetch;
   const sleep = options.sleep ?? sleepFor;
+  const environment = options.environment ?? process.env;
   const config = NewsMonitorFileSchema.parse(parse(await readFile(
     join(projectDirectory, "public", "research", "news-monitors.yml"),
     "utf8",
@@ -539,6 +648,7 @@ export async function pullLatestNews(options: PullOptions): Promise<WeeklyNewsDi
         knownUrls,
         fetcher,
         sleep,
+        environment,
       );
       const newCandidates = collected.candidates
         .filter(({ publishedAt }) => dateInWindow(publishedAt, window.from, window.through))
