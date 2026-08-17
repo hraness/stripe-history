@@ -5,6 +5,7 @@
 - `migrate-history-sources.ts` – transactional migration from legacy embedded event sources to the canonical source catalog.
 - `gateway.ts` – structured AI Gateway output validation.
 - `bounded-http.ts` – response-size and content-type limits.
+- `pull-latest-news.ts` – bounded weekly candidate discovery and review-digest generation.
 - `*.test.ts` – credentials, untrusted input, source inventory, and output-contract regressions.
 
 # Guidelines

@@ -38,6 +38,14 @@ bun run history:research:audit
 
 An external capture archive can be verified with `bun run history:research:audit -- --capture-root /absolute/path`. Capture planning is read-only; pass a collection and explicit date as needed, for example `bun run history:research:plan -- --collection valuation-history --as-of 2026-08-14`.
 
+The [weekly news research workflow](./.github/workflows/weekly-news.yml) runs every Thursday at 9:17 AM Atlantic time. It checks Stripe's first-party newsroom and blog indexes, focused publisher feeds, and bounded GDELT searches, removes URLs already present in the source catalog, and opens one dated review issue when candidates remain. The issue is a research queue, not an automatic history update. Every candidate still requires source capture, significance review, deduplication, and an ordinary reviewed commit.
+
+Run the same discovery locally with an explicit date:
+
+```sh
+bun run history:news:pull -- --as-of 2026-08-20 --json-out /tmp/stripe-news.json --markdown-out /tmp/stripe-news.md
+```
+
 Read the full [methodology and independence statement](https://stripehistory.com/about).
 
 ## Run locally

@@ -2,6 +2,7 @@
 
 - `history/*.yml` – authored category metadata and source-ID-linked events served by the website.
 - `research/*.yml` – canonical source, valuation, appearance, collection, and research-run records.
+- `research/news-monitors.yml` – reviewed first-party, publisher-feed, and news-index discovery inputs.
 
 # Guidelines
 

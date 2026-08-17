@@ -1,0 +1,52 @@
+schema: stripe-history/news-monitors/v1
+lookback_days: 8
+max_candidates: 100
+max_items_per_monitor: 40
+minimum_request_interval_ms: 1000
+monitors:
+  - id: stripe-newsroom
+    kind: html-index
+    url: https://stripe.com/newsroom
+    link_path_prefixes:
+      - /newsroom/news/
+    research_areas:
+      - company-history
+      - sessions-product-launches
+      - valuation-history
+  - id: stripe-blog
+    kind: html-index
+    url: https://stripe.com/blog
+    link_path_prefixes:
+      - /blog/
+    research_areas:
+      - company-history
+      - sessions-product-launches
+  - id: techcrunch-stripe
+    kind: rss
+    url: https://techcrunch.com/tag/stripe/feed/
+    research_areas:
+      - company-history
+      - valuation-history
+  - id: marginal-revolution-founders
+    kind: rss
+    url: https://marginalrevolution.com/feed
+    include_terms:
+      - Stripe
+      - Patrick Collison
+      - John Collison
+    research_areas:
+      - founder-appearances
+      - founder-side-projects
+  - id: gdelt-stripe
+    kind: gdelt
+    query: '"Stripe" sourcelang:english'
+    research_areas:
+      - company-history
+      - sessions-product-launches
+      - valuation-history
+  - id: gdelt-founders
+    kind: gdelt
+    query: '("Patrick Collison" OR "John Collison") sourcelang:english'
+    research_areas:
+      - founder-appearances
+      - founder-side-projects
