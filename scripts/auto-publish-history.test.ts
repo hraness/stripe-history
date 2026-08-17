@@ -72,7 +72,9 @@ const response = (): Response => new Response(evidenceBody, {
 
 function acceptedGenerator(calls: string[]): PublicationGenerator {
   return (async (options) => {
-    calls.push(`${options.name}:${String(options.model)}:${String(options.reasoningEffort)}`);
+    calls.push(
+      `${options.name}:${String(options.model)}:${String(options.reasoningEffort)}:${String(options.maxOutputTokens)}`,
+    );
     if (options.name === "weekly_stripe_history_proposal") {
       return {
         disposition: "publish-new",
@@ -193,8 +195,8 @@ describe("automatic history publication", () => {
       outcome: "published-new-event",
     }]);
     expect(calls).toEqual([
-      "weekly_stripe_history_proposal:openai/gpt-5.6-sol:max",
-      "weekly_stripe_history_review:openai/gpt-5.6-sol:max",
+      "weekly_stripe_history_proposal:openai/gpt-5.6-sol:max:16384",
+      "weekly_stripe_history_review:openai/gpt-5.6-sol:max:16384",
     ]);
 
     const sourceId = stableResearchSourceId(candidate.url, candidate.publishedAt);

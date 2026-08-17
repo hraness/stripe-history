@@ -748,7 +748,7 @@ export async function autoPublishHistory(
       const context = historyContext(histories, candidate);
       const proposal = await generator({
         credential,
-        maxOutputTokens: 4_096,
+        maxOutputTokens: 16_384,
         model: policy.model,
         name: "weekly_stripe_history_proposal",
         prompt: JSON.stringify({
@@ -785,7 +785,7 @@ export async function autoPublishHistory(
       const proposalSha256 = sha256(canonicalJson(proposal));
       const review = await generator({
         credential,
-        maxOutputTokens: 4_096,
+        maxOutputTokens: 16_384,
         model: policy.model,
         name: "weekly_stripe_history_review",
         prompt: JSON.stringify({
