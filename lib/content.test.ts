@@ -172,6 +172,9 @@ describe("published YAML corpus", () => {
       ],
     });
     expect(history.sources.every(({ id }) => /^source-[a-f0-9]{20}$/u.test(id))).toBeTrue();
+    expect(history.events.every(({ sourceIds, sources }) =>
+      sourceIds.length > 0 && sources.length === sourceIds.length
+    )).toBeTrue();
   });
 
   test("orders annual volume years without requiring perpetual growth", () => {

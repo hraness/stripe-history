@@ -4,8 +4,8 @@ import {
   SkipLink,
   ThemeColorSync,
 } from "@/support/theme";
-import { INDEXABLE_ROBOTS } from "@/support/discovery";
-import { JsonLdScript } from "@/support/json-ld";
+import { INDEXABLE_ROBOTS } from "@hraness/web-discovery";
+import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";

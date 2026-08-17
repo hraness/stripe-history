@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { serializeJsonLd } from "@/support/discovery";
+import { serializeJsonLd } from "@hraness/web-discovery";
 import { loadHistory } from "@/lib/content";
 
 import {

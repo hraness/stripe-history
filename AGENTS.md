@@ -5,7 +5,7 @@
 - `lib/` – strict history and research YAML contracts with validated content loading.
 - `public/history/` – the authored, source-linked Stripe history records.
 - `public/research/` – the canonical source catalog, valuations, founder appearances, collection definitions, research-run ledger, and bounded automatic-publication policy and attestations.
-- `scripts/` – bounded discovery and publication, Stripe Sessions extraction, research audit and planning, legacy-source migration, and structured-output helpers.
+- `scripts/` – bounded discovery and publication, Stripe Sessions extraction, research audit and planning, and structured-output helpers.
 - `assets/` – the Hraness README lockup.
 - `.agents/skills/` – reusable cross-repository KB and phased-execution workflows.
 - `kb/` – authored repository rationale, evidence, synthesis, and plans.
@@ -21,6 +21,7 @@
 - Apply unreasonably robust programming when agent work is cheap. Model invalid states out of existence, parse provider and authored data from `unknown`, and pair readable regression examples with property tests for general laws.
 - Deliver ordinary single-owner changes by fast-forward push to `main` after repository checks. Escalate to a pull request when a change touches schemas or migrations, auth, billing, provider or deployment state, a public or consumed contract, a shared generated or lockfile convergence surface, or another active lane. Repository-owned bounded automation may keep its documented direct path. Never force-push.
 - Pin Hraness dependencies to reviewed immutable releases or full commits. Never connect repositories with sibling paths, Git submodules, or coordinated `main` assumptions.
+- Use immutable `@hraness/web-discovery` exports for generic metadata and JSON-LD serialization, and `@hraness/vercel-delivery` for the generic Vercel proof and Preview response contract. Keep history semantics, research schemas, redirects, crawl policy, and editorial presentation product-owned.
 - Extract a shared package only after two concrete consumers need the same stable interface. Keep shared packages product-neutral.
 - Use a shared design kit or `@hraness/ui` only for stable, portable primitives and tokens at an immutable version. Keep evidence modeling, timeline composition, methodology, and the local visual contract product-owned.
 - Freeze shared interfaces before parallel lanes begin. Give authored-corpus migrations, manifests, lockfiles, and other convergence surfaces one owner while lanes edit disjoint paths.
