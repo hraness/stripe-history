@@ -233,7 +233,7 @@ describe("weekly news discovery", () => {
     expect(markdown).toContain("discovery candidates, not accepted historical facts");
   });
 
-  test("keeps the Thursday workflow bounded and review-only", async () => {
+  test("keeps the Thursday publisher bounded, validated, and fast-forward only", async () => {
     const workflow = await readFile(
       join(process.cwd(), ".github", "workflows", "weekly-news.yml"),
       "utf8",
@@ -241,8 +241,17 @@ describe("weekly news discovery", () => {
     expect(workflow).toContain('cron: "17 9 * * 4"');
     expect(workflow).toContain("timezone: America/Puerto_Rico");
     expect(workflow).toContain("issues: write");
-    expect(workflow).toContain("persist-credentials: false");
-    expect(workflow).toContain("--body-file weekly-news/latest-news.md");
-    expect(workflow).not.toContain("contents: write");
+    expect(workflow).toContain("contents: write");
+    expect(workflow).toContain("persist-credentials: true");
+    expect(workflow).toContain("STRIPE_HISTORY_LLM_API_KEY");
+    expect(workflow).toContain("history:publish:auto");
+    expect(workflow).toContain("--write --json-out");
+    expect(workflow).toContain("Verify generated diff scope");
+    expect(workflow).toContain("bun run history:research:audit");
+    expect(workflow).toContain("bun run check");
+    expect(workflow).toContain("bun run build");
+    expect(workflow).toContain('test "$(git rev-parse HEAD^)" = "$(git rev-parse origin/main)"');
+    expect(workflow).toContain("git push origin HEAD:main");
+    expect(workflow).not.toContain("codex exec");
   });
 });

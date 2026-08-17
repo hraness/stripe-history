@@ -2,6 +2,7 @@
 
 - `history-schema.ts` – strict schemas and public history types.
 - `research-schema.ts` and `research-source-identity.ts` – strict provenance, valuation, appearance, collection, and run contracts with stable source identity.
+- `automated-publication-schema.ts` – reviewed model policy and hash-only publication attestation contracts.
 - `content.ts` – deterministic loading, source resolution, validation, categorization, chronology, annual-volume extraction, and valuation selection.
 - `*.test.ts` – schema, ordering, uniqueness, and source-provenance regressions.
 

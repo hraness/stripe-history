@@ -4,6 +4,11 @@ import { isAbsolute, join, normalize, relative, resolve } from "node:path";
 
 import { parse } from "yaml";
 
+import {
+  AutomatedPublicationLedgerSchema,
+  AutomatedPublicationPolicySchema,
+  type AutomatedPublicationRun,
+} from "../lib/automated-publication-schema";
 import { HistoryFileSchema, PartialDateSchema } from "../lib/history-schema";
 import {
   AppearanceFileSchema,
@@ -32,6 +37,8 @@ const TRACKING_PARAMETERS = new Set([
 
 export interface ResearchAuditReport {
   readonly appearances: number;
+  readonly automatedPublicationDecisions: number;
+  readonly automatedPublicationRuns: number;
   readonly collectionInputs: number;
   readonly collectionSupportingSources: number;
   readonly collections: number;
@@ -167,11 +174,15 @@ function assertDateInCoverage(
 
 interface LoadedResearch {
   readonly appearances: ReturnType<typeof AppearanceFileSchema.parse>["appearances"];
+  readonly automatedPublicationRuns: ReturnType<
+    typeof AutomatedPublicationLedgerSchema.parse
+  >["runs"];
   readonly collections: ReturnType<typeof ResearchCollectionsFileSchema.parse>["collections"];
   readonly historyFiles: readonly ReturnType<typeof HistoryFileSchema.parse>[];
   readonly mutableSources: ReturnType<
     typeof ResearchCollectionsFileSchema.parse
   >["mutable_sources"];
+  readonly publicationPolicy: ReturnType<typeof AutomatedPublicationPolicySchema.parse>;
   readonly researchRuns: ReturnType<typeof ResearchRunLedgerSchema.parse>["runs"];
   readonly sources: ReturnType<typeof ResearchSourceCatalogSchema.parse>["sources"];
   readonly valuations: ReturnType<typeof ValuationFileSchema.parse>["observations"];
@@ -185,9 +196,20 @@ async function loadResearch(
   const historyNames = (await readdir(historyDirectory))
     .filter((fileName) => fileName.endsWith(".yml"))
     .toSorted();
-  const [appearances, collections, runs, sources, valuations, ...historyValues] = await Promise.all([
+  const [
+    appearances,
+    automatedPublications,
+    collections,
+    publicationPolicy,
+    runs,
+    sources,
+    valuations,
+    ...historyValues
+  ] = await Promise.all([
     parseYaml(join(projectDirectory, "public", "research", "appearances.yml")),
+    parseYaml(join(projectDirectory, "public", "research", "automated-publications.yml")),
     parseYaml(join(projectDirectory, "public", "research", "collections.yml")),
+    parseYaml(join(projectDirectory, "public", "research", "publication-policy.yml")),
     parseYaml(join(projectDirectory, "public", "research", "runs.yml")),
     parseYaml(join(projectDirectory, "public", "research", "sources.yml")),
     parseYaml(join(projectDirectory, "public", "research", "valuations.yml")),
@@ -196,9 +218,13 @@ async function loadResearch(
   const parsedCollections = ResearchCollectionsFileSchema.parse(collections);
   const loaded: LoadedResearch = {
     appearances: AppearanceFileSchema.parse(appearances).appearances,
+    automatedPublicationRuns: AutomatedPublicationLedgerSchema.parse(
+      automatedPublications,
+    ).runs,
     collections: parsedCollections.collections,
     historyFiles: historyValues.map((value) => HistoryFileSchema.parse(value)),
     mutableSources: parsedCollections.mutable_sources,
+    publicationPolicy: AutomatedPublicationPolicySchema.parse(publicationPolicy),
     researchRuns: ResearchRunLedgerSchema.parse(runs).runs,
     sources: ResearchSourceCatalogSchema.parse(sources).sources,
     valuations: ValuationFileSchema.parse(valuations).observations,
@@ -709,6 +735,102 @@ function verifyResearchRuns(
   }
 }
 
+function automatedPublicationRunId(run: AutomatedPublicationRun): string {
+  const decisions = run.decisions.map((decision) => ({
+    candidateUrl: decision.candidate_url,
+    category: decision.category,
+    disposition: decision.disposition,
+    evidenceQuoteDigests: decision.evidence_quote_sha256,
+    evidenceSha256: decision.evidence_sha256,
+    eventId: decision.event_id,
+    proposalSha256: decision.proposal_sha256,
+    reviewSha256: decision.review_sha256,
+    sourceId: decision.source_id,
+  }));
+  return `publication-${sha256(canonicalJson({
+    asOf: run.published_on,
+    candidateDigest: run.candidate_digest_sha256,
+    decisions,
+    model: run.model,
+  })).slice(0, 20)}`;
+}
+
+function verifyAutomatedPublicationRuns(
+  loaded: LoadedResearch,
+  sourceById: ReadonlyMap<string, ResearchSource>,
+): number {
+  const policy = loaded.publicationPolicy;
+  const historyByCategory = new Map(loaded.historyFiles.map((history) => [
+    history.category.id,
+    history,
+  ]));
+  const seenCandidateUrls = new Set<string>();
+  const seenSourceIds = new Set<string>();
+  let decisions = 0;
+
+  for (const run of loaded.automatedPublicationRuns) {
+    if (
+      run.model !== policy.model
+      || run.reasoning_effort !== policy.reasoning_effort
+      || run.proposal_prompt_version !== policy.proposal_prompt_version
+      || run.review_prompt_version !== policy.review_prompt_version
+    ) {
+      throw new Error(`${run.id} does not match the versioned automatic publication policy`);
+    }
+    if (run.decisions.length > policy.max_publications_per_run) {
+      throw new Error(`${run.id} exceeds the automatic publication limit`);
+    }
+    const expectedRunId = automatedPublicationRunId(run);
+    if (run.id !== expectedRunId) {
+      throw new Error(`Automatic publication run ${run.id} must use ${expectedRunId}`);
+    }
+
+    for (const decision of run.decisions) {
+      decisions += 1;
+      assertCanonicalUrlValue(
+        decision.candidate_url,
+        `${run.id} candidate ${decision.source_id}`,
+      );
+      if (seenCandidateUrls.has(decision.candidate_url)) {
+        throw new Error(`Automatic publication candidate ${decision.candidate_url} is repeated`);
+      }
+      seenCandidateUrls.add(decision.candidate_url);
+      if (seenSourceIds.has(decision.source_id)) {
+        throw new Error(`Automatic publication source ${decision.source_id} is repeated`);
+      }
+      seenSourceIds.add(decision.source_id);
+      if (!policy.auto_publish_categories.includes(decision.category)) {
+        throw new Error(`${run.id} published outside the automatic category allowlist`);
+      }
+
+      const source = sourceById.get(decision.source_id);
+      if (source === undefined) {
+        throw new Error(`${run.id} references missing source ${decision.source_id}`);
+      }
+      if (source.published_at !== undefined && source.published_at > run.published_on) {
+        throw new Error(`${run.id} references a source published after the run`);
+      }
+      const history = historyByCategory.get(decision.category);
+      const event = history?.events.find(({ id }) => id === decision.event_id);
+      if (event === undefined) {
+        throw new Error(
+          `${run.id} references missing ${decision.category} event ${decision.event_id}`,
+        );
+      }
+      if (!event.source_ids.includes(decision.source_id)) {
+        throw new Error(`${run.id} source ${decision.source_id} is absent from ${event.id}`);
+      }
+      if (
+        decision.disposition === "published-new-event"
+        && event.date > run.published_on
+      ) {
+        throw new Error(`${run.id} published future event ${event.id}`);
+      }
+    }
+  }
+  return decisions;
+}
+
 function auditLoadedResearch(loaded: LoadedResearch): ResearchAuditReport {
   const sourceById = verifySources(loaded.sources);
   const mutableSourceStats = verifyMutableSources(loaded, sourceById);
@@ -735,6 +857,7 @@ function auditLoadedResearch(loaded: LoadedResearch): ResearchAuditReport {
     verifyCollection(collection, loaded, sourceById);
   }
   verifyResearchRuns(loaded, sourceById);
+  const automatedPublicationDecisions = verifyAutomatedPublicationRuns(loaded, sourceById);
   const matchingCollectionInputs = new Set(
     loaded.collections.flatMap(({ input_source_ids: ids }) => ids),
   );
@@ -748,6 +871,8 @@ function auditLoadedResearch(loaded: LoadedResearch): ResearchAuditReport {
   ]);
   return {
     appearances: loaded.appearances.length,
+    automatedPublicationDecisions,
+    automatedPublicationRuns: loaded.automatedPublicationRuns.length,
     collectionInputs: matchingCollectionInputs.size,
     collectionSupportingSources: supportingCollectionSources.size,
     collections: loaded.collections.length,

@@ -1,5 +1,9 @@
 import { describe, expect, test } from "bun:test";
 
+import {
+  AutomatedPublicationLedgerSchema,
+  AutomatedPublicationPolicySchema,
+} from "./automated-publication-schema";
 import { HistoryFileSchema } from "./history-schema";
 import {
   AppearanceSchema,
@@ -29,6 +33,38 @@ const valuationObservation = {
 } as const;
 
 describe("public YAML schemas", () => {
+  test("models the bounded automatic publication policy and provenance ledger", () => {
+    const policy = {
+      auto_publish_categories: ["acquisitions", "product-launches"],
+      max_candidates_per_run: 3,
+      max_publications_per_run: 2,
+      max_source_characters: 40_000,
+      model: "openai/gpt-5.6-sol",
+      proposal_prompt_version: "stripe-history/weekly-proposal/v1",
+      reasoning_effort: "max",
+      review_prompt_version: "stripe-history/weekly-review/v1",
+      schema: "stripe-history/automated-publication-policy/v1",
+      trusted_monitors: ["stripe-newsroom", "techcrunch-stripe"],
+    } as const;
+    expect(AutomatedPublicationPolicySchema.safeParse(policy).success).toBe(true);
+    expect(AutomatedPublicationPolicySchema.safeParse({
+      ...policy,
+      auto_publish_categories: ["side-quests"],
+    }).success).toBe(false);
+    expect(AutomatedPublicationPolicySchema.safeParse({
+      ...policy,
+      trusted_monitors: ["stripe-newsroom", "stripe-newsroom"],
+    }).success).toBe(false);
+    expect(AutomatedPublicationPolicySchema.safeParse({
+      ...policy,
+      model: "openai/gpt-5-mini",
+    }).success).toBe(false);
+    expect(AutomatedPublicationLedgerSchema.safeParse({
+      runs: [],
+      schema: "stripe-history/automated-publications/v1",
+    }).success).toBe(true);
+  });
+
   test("rejects history precision that disagrees with the date", () => {
     const result = HistoryFileSchema.safeParse({
       category: {

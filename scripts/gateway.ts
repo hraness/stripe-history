@@ -4,6 +4,8 @@ import { generateText, Output } from "ai-v7";
 
 const DEFAULT_MODEL = "openai/gpt-5-mini";
 
+export type GatewayReasoningEffort = "high" | "max" | "xhigh";
+
 export type GatewayCredential =
   | Readonly<{ kind: "api-key"; value: string }>
   | Readonly<{ kind: "oidc" }>;
@@ -49,25 +51,39 @@ export function resolveGatewayModel(
 
 export async function generateStructured<S extends z.ZodType>({
   credential,
+  maxOutputTokens = 16_384,
+  model,
   name,
   prompt,
+  reasoningEffort,
   schema,
   system,
   tags,
+  timeoutMs = 120_000,
 }: Readonly<{
   credential: GatewayCredential;
+  maxOutputTokens?: number;
+  model?: string;
   name: string;
   prompt: string;
+  reasoningEffort?: GatewayReasoningEffort;
   schema: S;
   system: string;
   tags: readonly string[];
+  timeoutMs?: number;
 }>): Promise<z.infer<S>> {
+  if (!Number.isInteger(maxOutputTokens) || maxOutputTokens < 512 || maxOutputTokens > 16_384) {
+    throw new Error("maxOutputTokens must be an integer from 512 through 16384");
+  }
+  if (!Number.isInteger(timeoutMs) || timeoutMs < 10_000 || timeoutMs > 600_000) {
+    throw new Error("timeoutMs must be an integer from 10000 through 600000");
+  }
   const gateway = createGateway(gatewayOptionsForCredential(credential));
   const result = await generateText({
-    abortSignal: AbortSignal.timeout(120_000),
-    maxOutputTokens: 16_384,
+    abortSignal: AbortSignal.timeout(timeoutMs),
+    maxOutputTokens,
     maxRetries: 0,
-    model: gateway(resolveGatewayModel()),
+    model: gateway(resolveGatewayModel(model)),
     output: Output.object({ name, schema }),
     prompt,
     providerOptions: {
@@ -76,6 +92,14 @@ export async function generateStructured<S extends z.ZodType>({
         tags: [...tags],
         zeroDataRetention: true,
       },
+      ...(reasoningEffort === undefined
+        ? {}
+        : {
+            openai: {
+              reasoningEffort,
+              reasoningSummary: null,
+            },
+          }),
     },
     system,
   });

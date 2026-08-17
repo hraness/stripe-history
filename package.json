@@ -41,6 +41,7 @@
     "history:research:discover": "bun run scripts/audit-history-research.ts --discover",
     "history:research:plan": "bun run scripts/audit-history-research.ts --plan",
     "history:news:pull": "bun run scripts/pull-latest-news.ts",
+    "history:publish:auto": "bun run scripts/auto-publish-history.ts",
     "history:sources:migrate": "bun run scripts/migrate-history-sources.ts --write",
     "lint": "eslint .",
     "search:indexnow": "bun run scripts/submit-indexnow.ts",
