@@ -62,12 +62,12 @@ sources:
     url: https://press.stripe.com/where-is-my-flying-car
     id: source-031c156e70030822874d
     media_type: article
-  - id: source-03373a611af0c9e92786
-    kind: reporting
+  - kind: reporting
     publisher: Forbes
     published_at: 2021-02-17
     title: Investors Are Now Valuing Stripe At $115 Billion
     url: https://www.forbes.com/sites/jeffkauflin/2021/02/17/investors-are-now-valuing-stripe-at-115-billion/
+    id: source-03373a611af0c9e92786
     media_type: article
   - kind: primary
     publisher: Stripe Press
@@ -76,19 +76,19 @@ sources:
     url: https://stripepress.substack.com/p/the-origins-of-efficiency-is-out
     id: source-0366916b6be55183514a
     media_type: article
-  - id: source-03f4b7ce98afc255b0ba
-    kind: reporting
+  - kind: reporting
     publisher: TechCrunch
     published_at: 2022-07-14
     title: Stripe is the latest fintech to falter, taking a 28% internal valuation cut
     url: https://techcrunch.com/2022/07/14/stripe-fintech-payments-valuation-cut-28/
+    id: source-03f4b7ce98afc255b0ba
     media_type: article
-  - id: source-049dfcb3b15c61d71dfe
-    kind: reporting
+  - kind: reporting
     publisher: Axios
     published_at: 2025-09-23
     title: Stripe in talks to buy back stock from investors
     url: https://www.axios.com/2025/09/23/stripe-buy-back-stock-vc
+    id: source-049dfcb3b15c61d71dfe
     media_type: article
   - kind: primary
     publisher: Stripe
@@ -97,12 +97,12 @@ sources:
     url: https://stripe.com/newsroom/news/stripe-launches-payment-links
     id: source-054ed926fdf9b32db3db
     media_type: article
-  - id: source-05c9e0722cf8a6d3e9ef
-    kind: reporting
+  - kind: reporting
     publisher: The Irish Times
     published_at: 2021-09-10
     title: Stripe in early discussions with investment banks about going public
     url: https://www.irishtimes.com/business/technology/stripe-in-early-discussions-with-investment-banks-about-going-public-1.4670863
+    id: source-05c9e0722cf8a6d3e9ef
     media_type: article
   - kind: archive
     publisher: RTÉ Archives
@@ -386,12 +386,12 @@ sources:
     url: https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332
     id: source-2b9798bb1521325a716a
     media_type: podcast
-  - id: source-2cca70fe5628f59eba33
-    kind: reporting
+  - kind: reporting
     publisher: Axios
     published_at: 2020-04-16
     title: Stripe raises $600 million
     url: https://www.axios.com/2020/04/16/stripe-fundraising-600-million
+    id: source-2cca70fe5628f59eba33
     media_type: article
   - kind: primary
     publisher: Recko
@@ -608,12 +608,12 @@ sources:
     url: https://techcrunch.com/2013/08/15/stripe-now-open-for-business-in-uk-other-countries-and-currencies-coming-soon/
     id: source-4b1e9dcf5163ebb8555b
     media_type: article
-  - id: source-4b4de85478f5981d6494
-    kind: reporting
+  - kind: reporting
     publisher: TechCrunch
     published_at: 2024-01-06
     title: "Deal Dive: A Stripe secondary deal worth paying attention to"
     url: https://techcrunch.com/2024/01/06/stripe-secondary-deal-ipo/
+    id: source-4b4de85478f5981d6494
     media_type: article
   - kind: primary
     publisher: Marginal Revolution
@@ -813,12 +813,12 @@ sources:
     url: https://www.dwarkesh.com/p/scaling-ama
     id: source-66b82449fa2a80e4c027
     media_type: article
-  - id: source-67de5aa3b7009ba5ed83
-    kind: reporting
+  - kind: reporting
     publisher: TechCrunch
     published_at: 2023-01-11
     title: Stripe internal valuation gets cut to $63 billion
     url: https://techcrunch.com/2023/01/11/stripe-internal-valuation-63-billion-409a/
+    id: source-67de5aa3b7009ba5ed83
     media_type: article
   - kind: primary
     publisher: Stripe
@@ -1031,12 +1031,12 @@ sources:
     url: https://stripe.com/newsroom/news/tour-tokyo-2024
     id: source-7eedf151286d54e1e53d
     media_type: article
-  - id: source-7f1e28293e44b7e2b09c
-    kind: reporting
+  - kind: reporting
     publisher: TechCrunch
     published_at: 2023-07-19
     title: Fintech valuations have fallen. Where do they go from here?
     url: https://techcrunch.com/2023/07/19/fintech-valuations-down-2023/
+    id: source-7f1e28293e44b7e2b09c
     media_type: article
   - kind: primary
     publisher: Stripe Press
@@ -1341,6 +1341,14 @@ sources:
     url: https://www.irishtimes.com/business/technology/online-payments-firm-stripe-launches-in-six-more-european-countries-1.3129274
     id: source-aa4776c0eb2453cd72de
     media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2026-08-14
+    title: Talks to sell PayPal to Stripe and Advent are heating up
+    url: https://techcrunch.com/2026/08/14/talks-to-sell-paypal-to-stripe-and-advent-are-heating-up
+    id: source-ab40489a8a581a196987
+    language: en
+    media_type: article
   - kind: primary
     publisher: Stripe
     published_at: 2026-04-29
@@ -1460,12 +1468,12 @@ sources:
     url: https://stripe.com/jp/blog/india-private-beta
     id: source-be4a882fc54182757d5a
     media_type: article
-  - id: source-be63a33e896357893bf6
-    kind: reporting
+  - kind: reporting
     publisher: Bloomberg Law
     published_at: 2023-01-12
     title: Stripe Cuts Valuation 11% to $63 Billion, The Information Says
     url: https://news.bloomberglaw.com/mergers-and-acquisitions/stripe-cuts-valuation-11-to-63-billion-the-information-says
+    id: source-be63a33e896357893bf6
     media_type: article
   - kind: primary
     publisher: Stripe

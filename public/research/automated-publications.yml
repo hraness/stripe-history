@@ -1,2 +1,24 @@
+runs:
+  - candidate_digest_sha256: c5d1f69f687a29a704c445c0813a07a2bda3fad4184a3bf1bc8c8250953562cb
+    decisions:
+      - candidate_url: https://techcrunch.com/2026/08/14/talks-to-sell-paypal-to-stripe-and-advent-are-heating-up
+        category: acquisitions
+        disposition: source-added-to-event
+        evidence_quote_sha256:
+          - 30c7c10f5d5ec8531354e0a8414943222e690454dec9c8b1357c367774f034b8
+          - 888ee91d37984126a182f60baf0b95d979e4e5b9af18ac6abcb1420e8b990de3
+          - b9c219d7e4dc6eb7deb9911151721aa8ea558f5c1e0e4205bf132da84d2a6476
+          - d8de4296f0f2cf4c96e4f91bc35689b475d61448c328b88019b39ec93ff9c67b
+        evidence_sha256: 09f23d2d95a07731c4765c1919580619aa56d70ea9944967639a4b42c6d9a268
+        event_id: paypal-stripe-advent-offer-reported
+        proposal_sha256: 4723faaf61e74bfb0a21caba43e7d8eb4a34a5f449188f8a9bef8ebd4dbb2323
+        review_sha256: ae9fbf611c2272f020559314f286143f713d323748f9ee1a4b185b41fa339d63
+        source_id: source-ab40489a8a581a196987
+    id: publication-dc24a8d53a1a93550ae0
+    model: openai/gpt-5.6-sol
+    proposal_prompt_version: stripe-history/weekly-proposal/v3
+    published_on: 2026-08-16
+    reasoning_effort: max
+    review_mode: independent-grounded-second-pass
+    review_prompt_version: stripe-history/weekly-review/v1
 schema: stripe-history/automated-publications/v1
-runs: []
