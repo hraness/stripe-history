@@ -41,6 +41,7 @@ const NewsMonitorSchema = z.discriminatedUnion("kind", [
     ).min(1).max(40),
     kind: z.literal("exa-search"),
     query: z.string().min(10).max(500),
+    title_any_terms: z.array(z.string().min(2).max(80)).min(1).max(20),
   }),
   z.strictObject({
     ...commonMonitorFields,
@@ -375,6 +376,8 @@ export function parseExaCandidates(
 ): readonly CandidateInput[] {
   return ExaResponseSchema.parse(value).results.flatMap((result) => {
     if (result.title === undefined || result.title === null) return [];
+    if (!monitor.title_any_terms.some((term) =>
+      titleContainsBoundedTerm(result.title ?? "", term))) return [];
     try {
       const url = canonicalNewsUrl(result.url);
       const hostname = new URL(url).hostname;

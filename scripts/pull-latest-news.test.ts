@@ -58,6 +58,7 @@ const exaMonitor = NewsMonitorFileSchema.parse({
     kind: "exa-search",
     query: "Recent material Stripe company news",
     research_areas: ["company-history"],
+    title_any_terms: ["Stripe", "Patrick Collison", "John Collison"],
   }],
   schema: "stripe-history/news-monitors/v1",
 }).monitors[0];
@@ -146,6 +147,10 @@ describe("weekly news discovery", () => {
             publishedDate: "2026-08-16T20:58:00.000Z",
             title: "Disallowed result",
             url: "https://untrusted.example/story",
+          }, {
+            publishedDate: "2026-08-16T20:59:00.000Z",
+            title: "Unrelated startup funding",
+            url: "https://techcrunch.com/2026/08/16/unrelated",
           }],
         }), "application/json");
       }
@@ -250,7 +255,7 @@ describe("weekly news discovery", () => {
     expect(() => parseGdeltCandidates({ articles: [{ title: "Incomplete" }] })).toThrow();
   });
 
-  test("parses Exa results only from the checked domain allowlist", () => {
+  test("parses Exa results only from the checked domains and title identities", () => {
     if (exaMonitor?.kind !== "exa-search") throw new Error("Expected Exa monitor");
     expect(parseExaCandidates({
       results: [{
@@ -261,6 +266,10 @@ describe("weekly news discovery", () => {
         publishedDate: "2026-08-16T20:58:00.000Z",
         title: "Off-list result",
         url: "https://attacker.example/story",
+      }, {
+        publishedDate: "2026-08-16T20:59:00.000Z",
+        title: "Unrelated startup funding",
+        url: "https://techcrunch.com/unrelated",
       }],
     }, exaMonitor)).toEqual([{
       publishedAt: "2026-08-16",

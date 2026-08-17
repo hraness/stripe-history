@@ -39,6 +39,10 @@ monitors:
   - id: exa-stripe-reporting
     kind: exa-search
     query: Recent material Stripe company news about acquisitions, signed deals, product launches, leadership, funding, valuation, geographic expansion, or payment infrastructure
+    title_any_terms:
+      - Stripe
+      - Patrick Collison
+      - John Collison
     include_domains:
       - bloomberg.com
       - cnbc.com
