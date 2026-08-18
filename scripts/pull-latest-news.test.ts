@@ -334,7 +334,7 @@ describe("weekly news discovery", () => {
     expect(markdown).toContain("discovery candidates, not accepted historical facts");
   });
 
-  test("keeps the Thursday publisher bounded, validated, and fast-forward only", async () => {
+  test("keeps the Thursday publisher bounded, validated, and protected by a PR", async () => {
     const workflow = await readFile(
       join(process.cwd(), ".github", "workflows", "weekly-news.yml"),
       "utf8",
@@ -342,7 +342,9 @@ describe("weekly news discovery", () => {
     expect(workflow).toContain('cron: "17 9 * * 4"');
     expect(workflow).toContain("timezone: America/Puerto_Rico");
     expect(workflow).toContain("issues: write");
+    expect(workflow).toContain("actions: write");
     expect(workflow).toContain("contents: write");
+    expect(workflow).toContain("pull-requests: write");
     expect(workflow).toContain("persist-credentials: true");
     expect(workflow).toContain("STRIPE_HISTORY_LLM_API_KEY");
     expect(workflow).toContain("EXA_API_KEY: ${{ secrets.EXA_API_KEY }}");
@@ -358,7 +360,27 @@ describe("weekly news discovery", () => {
     expect(workflow).toContain("bun run check");
     expect(workflow).toContain("bun run build");
     expect(workflow).toContain('test "$(git rev-parse HEAD^)" = "$(git rev-parse origin/main)"');
-    expect(workflow).toContain("git push origin HEAD:main");
+    expect(workflow).toContain('branch="automation/weekly-history-${{ github.run_id }}-${{ github.run_attempt }}"');
+    expect(workflow).toContain('git push origin "HEAD:refs/heads/$branch"');
+    expect(workflow).toContain("gh pr create");
+    expect(workflow).toContain('if gh workflow run ci.yml --repo "$GH_REPO" --ref "$branch"');
+    expect(workflow).toContain('gh run watch "$branch_run_id" --repo "$GH_REPO" --exit-status');
+    expect(workflow).toContain('.headSha == $sha');
+    expect(workflow).toContain('.name == "Required" and .conclusion == "success"');
+    expect(workflow).toContain('gh pr merge "$pr_url"');
+    expect(workflow).toContain("--squash --delete-branch");
+    expect(workflow).toContain('--match-head-commit "$candidate_sha"');
+    expect(workflow).toContain('test "$(jq -r \'.state\' <<<"$pr_state")" = MERGED');
+    expect(workflow).toContain('if gh workflow run ci.yml --repo "$GH_REPO" --ref main');
+    expect(workflow).toContain('gh run watch "$main_run_id" --repo "$GH_REPO" --exit-status');
+    expect(workflow).toContain("grep -Fq '(HTTP 404)'");
+    expect(workflow).toContain('test "$branch_deleted" = true');
+    expect(workflow).toContain("if [ '${{ steps.push.outcome }}' != 'success' ]");
+    expect(workflow).toContain("grep -Fq '## Workflow delivery failure'");
+    expect(workflow).toContain("sed -n '/^## Workflow delivery failure/,$p'");
+    expect(workflow).toContain("review-issue-preserved.md");
+    expect(workflow).not.toContain("--auto");
+    expect(workflow).not.toContain("git push origin HEAD:main");
     expect(workflow).not.toContain("codex exec");
   });
 });
