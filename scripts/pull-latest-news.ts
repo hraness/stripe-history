@@ -4,6 +4,7 @@ import { dirname, join, resolve } from "node:path";
 import { parse } from "yaml";
 import { z } from "zod";
 
+import { HistoryFileSchema, historyCategoryIds } from "../lib/history-schema";
 import { ResearchSourceCatalogSchema } from "../lib/research-schema";
 import { canonicalResearchSourceUrl } from "../lib/research-source-identity";
 import { boundedResponseText } from "./bounded-http";
@@ -36,12 +37,14 @@ const commonMonitorFields = {
 const NewsMonitorSchema = z.discriminatedUnion("kind", [
   z.strictObject({
     ...commonMonitorFields,
+    category: z.literal("news").nullable().default("news"),
     include_domains: z.array(
       z.string().regex(/^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$/u),
     ).min(1).max(40),
     kind: z.literal("exa-search"),
     query: z.string().min(10).max(500),
-    title_any_terms: z.array(z.string().min(2).max(80)).min(1).max(20),
+    title_any_terms: z.array(z.string().min(2).max(80)).max(40).default([]),
+    title_terms_from_history_category: z.enum(historyCategoryIds).optional(),
   }),
   z.strictObject({
     ...commonMonitorFields,
@@ -75,6 +78,19 @@ export const NewsMonitorFileSchema = z.strictObject({
   const ids = monitors.map(({ id }) => id);
   if (new Set(ids).size !== ids.length) {
     context.addIssue({ code: "custom", message: "News monitor IDs must be unique" });
+  }
+  for (const [index, monitor] of monitors.entries()) {
+    if (
+      monitor.kind === "exa-search"
+      && monitor.title_any_terms.length === 0
+      && monitor.title_terms_from_history_category === undefined
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "Exa monitors require explicit or history-derived title terms",
+        path: ["monitors", index],
+      });
+    }
   }
 });
 
@@ -133,11 +149,13 @@ interface CandidateInput {
   readonly url: string;
 }
 
-interface PullOptions {
+export interface PullOptions {
   readonly asOf: string;
   readonly environment?: Readonly<Record<string, string | undefined>>;
   readonly fetcher?: Fetcher;
   readonly generatedAt?: string;
+  readonly lookbackFrom?: string;
+  readonly monitorIds?: readonly string[];
   readonly projectDirectory?: string;
   readonly sleep?: (milliseconds: number) => Promise<void>;
 }
@@ -373,10 +391,11 @@ function domainMatches(hostname: string, allowedDomain: string): boolean {
 export function parseExaCandidates(
   value: unknown,
   monitor: Extract<NewsMonitor, { kind: "exa-search" }>,
+  titleTerms: readonly string[] = monitor.title_any_terms,
 ): readonly CandidateInput[] {
   return ExaResponseSchema.parse(value).results.flatMap((result) => {
     if (result.title === undefined || result.title === null) return [];
-    if (!monitor.title_any_terms.some((term) =>
+    if (!titleTerms.some((term) =>
       titleContainsBoundedTerm(result.title ?? "", term))) return [];
     try {
       const url = canonicalNewsUrl(result.url);
@@ -393,6 +412,25 @@ export function parseExaCandidates(
       return [];
     }
   });
+}
+
+async function resolvedExaTitleTerms(
+  projectDirectory: string,
+  monitor: Extract<NewsMonitor, { kind: "exa-search" }>,
+): Promise<readonly string[]> {
+  const terms = new Set(monitor.title_any_terms);
+  if (monitor.title_terms_from_history_category !== undefined) {
+    const file = HistoryFileSchema.parse(parse(await readFile(join(
+      projectDirectory,
+      "public",
+      "history",
+      `${monitor.title_terms_from_history_category}.yml`,
+    ), "utf8")) as unknown);
+    for (const event of file.events) {
+      for (const person of event.people ?? []) terms.add(person);
+    }
+  }
+  return [...terms].toSorted();
 }
 
 async function requestText(
@@ -442,7 +480,7 @@ async function requestExaSearch(
     try {
       const response = await fetcher(EXA_ENDPOINT, {
         body: JSON.stringify({
-          category: "news",
+          ...(monitor.category === null ? {} : { category: monitor.category }),
           endPublishedDate: `${window.through}T23:59:59.999Z`,
           includeDomains: monitor.include_domains,
           moderation: true,
@@ -516,6 +554,7 @@ export function gdeltTitleMatches(
 async function collectMonitor(
   monitor: NewsMonitor,
   config: z.infer<typeof NewsMonitorFileSchema>,
+  projectDirectory: string,
   window: Readonly<{ from: string; through: string }>,
   knownUrls: ReadonlySet<string>,
   fetcher: Fetcher,
@@ -535,7 +574,7 @@ async function collectMonitor(
         apiKey,
         fetcher,
         sleep,
-      ), monitor),
+      ), monitor, await resolvedExaTitleTerms(projectDirectory, monitor)),
       warnings: [],
     };
   }
@@ -634,19 +673,33 @@ export async function pullLatestNews(options: PullOptions): Promise<WeeklyNewsDi
     "utf8",
   )) as unknown);
   const knownUrls = new Set(sources.sources.map(({ url }) => canonicalNewsUrl(url)));
+  const requestedMonitorIds = new Set(options.monitorIds ?? []);
+  const unknownMonitorIds = [...requestedMonitorIds].filter((id) =>
+    !config.monitors.some((monitor) => monitor.id === id));
+  if (unknownMonitorIds.length > 0) {
+    throw new Error(`Unknown news monitor ID(s): ${unknownMonitorIds.toSorted().join(", ")}`);
+  }
+  const monitors = requestedMonitorIds.size === 0
+    ? config.monitors
+    : config.monitors.filter(({ id }) => requestedMonitorIds.has(id));
+  const lookbackFrom = options.lookbackFrom === undefined
+    ? shiftDate(asOf, -(config.lookback_days - 1))
+    : exactIsoDate(options.lookbackFrom, "--from");
+  if (lookbackFrom > asOf) throw new Error("--from must not be after --as-of");
   const window = {
-    from: shiftDate(asOf, -(config.lookback_days - 1)),
+    from: lookbackFrom,
     through: asOf,
   };
   const candidates = new Map<string, NewsCandidate>();
   const monitorReports: NewsMonitorReport[] = [];
 
-  for (const monitor of config.monitors) {
+  for (const monitor of monitors) {
     if (monitorReports.length > 0) await sleep(config.minimum_request_interval_ms);
     try {
       const collected = await collectMonitor(
         monitor,
         config,
+        projectDirectory,
         window,
         knownUrls,
         fetcher,
@@ -753,6 +806,19 @@ function flagValue(name: string): string | undefined {
   return value;
 }
 
+function flagValues(name: string): readonly string[] {
+  const values: string[] = [];
+  for (let index = 0; index < process.argv.length; index += 1) {
+    if (process.argv[index] !== name) continue;
+    const value = process.argv[index + 1];
+    if (value === undefined || value.startsWith("--")) {
+      throw new Error(`${name} requires a value`);
+    }
+    values.push(value);
+  }
+  return values;
+}
+
 async function writeOutput(path: string, contents: string): Promise<void> {
   await mkdir(dirname(path), { recursive: true });
   await writeFile(path, contents, { encoding: "utf8", mode: 0o600 });
@@ -761,7 +827,13 @@ async function writeOutput(path: string, contents: string): Promise<void> {
 if (import.meta.main) {
   const asOf = flagValue("--as-of");
   if (asOf === undefined) throw new Error("--as-of is required");
-  const digest = await pullLatestNews({ asOf });
+  const monitorIds = flagValues("--monitor");
+  const lookbackFrom = flagValue("--from");
+  const digest = await pullLatestNews({
+    asOf,
+    ...(lookbackFrom === undefined ? {} : { lookbackFrom }),
+    ...(monitorIds.length === 0 ? {} : { monitorIds }),
+  });
   const json = `${JSON.stringify(digest, null, 2)}\n`;
   const markdown = renderWeeklyNewsMarkdown(digest);
   const jsonOutput = flagValue("--json-out");

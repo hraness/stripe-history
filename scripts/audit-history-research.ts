@@ -403,8 +403,22 @@ function verifyCollection(
       throw new Error(`${collection.id} appearance output must be research/appearances.yml`);
     }
     const observed = new Set<string>();
+    const reviewedLeadership = new Set([
+      "John Collison",
+      "Patrick Collison",
+      ...loaded.historyFiles
+        .filter(({ category }) => category.id === "executives-and-team")
+        .flatMap(({ events }) => events.flatMap(({ people }) => people ?? [])),
+    ]);
     for (const appearance of loaded.appearances) {
       assertDateInCoverage(collection, appearance.occurred_at, appearance.id);
+      for (const participant of appearance.participants) {
+        if (!reviewedLeadership.has(participant.name)) {
+          throw new Error(
+            `${collection.id} appearance ${appearance.id} has undeclared leadership participant ${participant.name}`,
+          );
+        }
+      }
       for (const sourceId of appearance.source_ids) observed.add(sourceId);
     }
     const declared = new Set(collection.input_source_ids);
@@ -478,7 +492,7 @@ function baselinePlanPayload(
   };
 }
 
-function stableCandidateDecisionId(
+export function stableCandidateDecisionId(
   collection: string,
   planSha256: string,
   candidateUrl: string,
@@ -1362,7 +1376,7 @@ function stableDiscoveryTaskId(
   return `task-${sha256(JSON.stringify([collection, kind, value, from, through])).slice(0, 20)}`;
 }
 
-function buildDiscoveryPlan(
+export function buildDiscoveryPlan(
   collection: ResearchCollection,
   acceptedSourceIds: readonly string[],
   reviewedThrough: string,

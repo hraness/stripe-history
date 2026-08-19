@@ -13,6 +13,7 @@ The site renders more than 200 sourced events as one reverse-chronological histo
 - [Company milestones](https://stripehistory.com/history/company-milestones)
 - [Annual payment and total volume](https://stripehistory.com/history/payment-volume)
 - [Private-company valuation history](https://stripehistory.com/history/valuation)
+- [Stripe leadership appearances](https://stripehistory.com/appearances)
 - [Open history and research data](https://stripehistory.com/data)
 
 ## Questions the history answers
@@ -24,7 +25,7 @@ The site renders more than 200 sourced events as one reverse-chronological histo
 - [When did Stripe launch products and expand into new countries?](https://stripehistory.com/history/product-launches)
 - [How have Stripe's payment methods, settlement rails, and payout reach expanded?](https://stripehistory.com/history/payment-and-payout-expansion)
 
-The authored event records live in [`public/history/`](./public/history/), one file per category. The [`public/research/`](./public/research/) directory contains the canonical source catalog, valuation observations, founder appearances, collection definitions, research-run ledger, automatic-publication policy, complete automated decision history, and accepted publication attestations. They remain ordinary YAML so corrections and provenance changes are readable in review without scraping the site.
+The authored event records live in [`public/history/`](./public/history/), one file per category. The [`public/research/`](./public/research/) directory contains the canonical source catalog, valuation observations, leadership appearances, collection definitions, research-run ledger, automatic-publication policy, complete automated decision history, and accepted publication attestations. They remain ordinary YAML so corrections and provenance changes are readable in review without scraping the site.
 
 ## Sources and editorial method
 
@@ -38,7 +39,7 @@ bun run history:research:audit
 
 An external capture archive can be verified with `bun run history:research:audit -- --capture-root /absolute/path`. Capture planning is read-only; pass a collection and explicit date as needed, for example `bun run history:research:plan -- --collection valuation-history --as-of 2026-08-14`.
 
-The [weekly history publication workflow](./.github/workflows/weekly-news.yml) runs every Thursday at 9:17 AM Atlantic time. It checks Stripe's first-party newsroom and blog indexes, focused publisher feeds, and bounded GDELT searches, then removes URLs already present in the source catalog.
+The [weekly history publication workflow](./.github/workflows/weekly-news.yml) runs every Thursday at 9:17 AM Atlantic time. It checks Stripe's first-party newsroom and blog indexes, focused publisher feeds, bounded GDELT searches, and a domain-restricted Exa search for long-form leadership appearances, then removes URLs already present in the source catalog. Appearance identities are derived from the reviewed people in the executive history rather than maintained as a second hard-coded roster. Appearance candidates remain review-only.
 
 Up to three current company-history candidates receive bounded triage from [GPT-5.6 Sol](https://developers.openai.com/api/docs/models/gpt-5.6-sol) at `max` reasoning effort. Candidates from reviewed first-party or publisher-feed monitors can continue to an independent structured review. The model never receives Git credentials, shell access, or file tools. A deterministic compiler can only add one new event or append one source reference inside the categories allowed by [`publication-policy.yml`](./public/research/publication-policy.yml). It requires exact source-text quotes, preserves reporting uncertainty, records hash-only evidence and model attestations, and caps each run at two published changes. Reports from other monitors can identify corroboration, but cannot change the published corpus automatically.
 
@@ -51,6 +52,20 @@ Run the same discovery locally with an explicit date:
 ```sh
 bun run history:news:pull -- --as-of 2026-08-20 --json-out /tmp/stripe-news.json --markdown-out /tmp/stripe-news.md
 ```
+
+The manual [leadership appearance backfill](./.github/workflows/appearance-backfill.yml) searches one bounded calendar window at a time from 2009 onward and uploads a review artifact. It does not edit public data or open issues. The same window can be inspected locally:
+
+```sh
+bun run history:news:pull -- --from 2020-01-01 --as-of 2020-12-31 --monitor exa-stripe-leadership-appearances --json-out /tmp/stripe-appearances-2020.json --markdown-out /tmp/stripe-appearances-2020.md
+```
+
+After capturing and reviewing a candidate's complete transcript in Jungle's KB, generate a grounded digest proposal with the strong-model summarizer:
+
+```sh
+STRIPE_HISTORY_LLM_API_KEY=... bun run history:appearances:summarize -- --capture /absolute/path/to/capture.md --json-out /tmp/appearance-summary.json
+```
+
+The summarizer uses `openai/gpt-5.6-sol` at `max` reasoning by default, emits a Reading-style gist and three to five ideas, and fails unless every private audit quote is an exact 6–25-word transcript passage. It never edits the appearance corpus. A reviewer reconciles the proposed digest, participant role, date, canonical source, and transcript status before adding YAML and a research-run decision.
 
 Preview model decisions without editing the corpus by omitting `--write`:
 

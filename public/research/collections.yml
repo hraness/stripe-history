@@ -18,11 +18,11 @@ mutable_sources:
 collections:
   - id: founder-appearances
     dataset: appearances
-    scope: Reviewed public appearances by Patrick Collison or John Collison that contain first-person evidence about Stripe, its predecessors, or its operating history.
+    scope: Reviewed public appearances by Stripe founders and senior leaders that contain first-person evidence about Stripe, its predecessors, products, strategy, organization, or operating history. The durable collection ID predates the executive expansion.
     coverage:
       basis: occurred-at
       from: '2008'
-      through: 2026-08-12
+      through: 2026-08-19
     output_files:
       - research/appearances.yml
     input_source_ids:
@@ -32,6 +32,7 @@ collections:
       - source-26410b426525f71187bb
       - source-4d80199395399e9e47d8
       - source-51a0e1edbe8fc1ce9d5a
+      - source-523815a4d8be2b7368b9
       - source-7365200928b2c76a48b7
       - source-7db75f16638fc07f166c
       - source-a5d1d621862fa7f1cac0
@@ -41,13 +42,21 @@ collections:
       - source-d8e4c6cb20568d496b94
     supporting_source_ids: []
     discovery_sources:
+      - https://stripe.com/newsroom/information
+      - https://www.youtube.com/@a16z
       - https://www.youtube.com/@stripe
       - https://www.youtube.com/@ycombinator
       - https://www.dwarkeshpatel.com/p/patrick-collison
+      - https://podcasts.apple.com/us/podcast/a16z-podcast/id842818711
       - https://stripe.com/sessions
     query_families:
       - 'site:youtube.com Patrick Collison interview Stripe'
       - 'site:youtube.com John Collison interview Stripe'
+      - 'site:youtube.com Stripe executive interview podcast keynote'
+      - 'Stripe leadership podcast interview transcript company building'
+      - 'Will Gaybrick Stripe interview AI product strategy stablecoins'
+      - 'Claire Hughes Johnson Stripe interview company building operations'
+      - 'Stripe CFO CTO CRO interview podcast payments strategy'
       - 'Patrick Collison transcript Stripe founding Auctomatic'
       - 'John Collison transcript Stripe early employees product history'
       - 'Patrick Collison testimony Stripe transcript'
@@ -60,7 +69,7 @@ collections:
       - semantic-claim
     capture_policy: primary-and-claim-critical
     refresh:
-      cadence: quarterly
+      cadence: monthly
       mode: incremental-discovery
       lookback_days: 120
       minimum_request_interval_ms: 1000

@@ -187,12 +187,12 @@ describe("Stripe history research audit", () => {
     expect(report.historyFiles).toBe(11);
     expect(report.events).toBeGreaterThan(200);
     expect(report.valuations).toBeGreaterThanOrEqual(25);
-    expect(report.appearances).toBe(12);
+    expect(report.appearances).toBe(13);
     expect(report.sources).toBeGreaterThan(250);
     expect(report.datasetReferencedSources).toBeLessThanOrEqual(report.referencedSources);
     expect(report.mutableSourceUrls).toBe(1);
     expect(report.mutableSourceSnapshots).toBe(5);
-    expect(report.researchRuns).toBe(3);
+    expect(report.researchRuns).toBe(4);
     expect(report.referencedSources + report.unreferencedSources).toBe(report.sources);
     expect(report.unreferencedSources).toBe(0);
     expect(report.collectionInputs).toBeGreaterThan(40);
@@ -231,7 +231,7 @@ describe("Stripe history research audit", () => {
 
     const evolvedReport = await auditHistoryResearch(temporaryProject);
     expect(evolvedReport).toMatchObject({
-      researchRuns: 4,
+      researchRuns: 5,
     });
 
     const [unfinishedPlan] = await planHistoryResearchDiscovery(
@@ -340,7 +340,8 @@ describe("Stripe history research audit", () => {
     const recordedRuns = parse(await readFile(recordedRunsPath, "utf8")) as {
       runs: Array<Record<string, unknown>>;
     };
-    const recordedRun = recordedRuns.runs.find(({ kind }) => kind === "discovery");
+    const recordedRun = recordedRuns.runs.find(({ collection, kind }) =>
+      kind === "discovery" && collection === "valuation-history");
     if (recordedRun === undefined) throw new Error("Missing discovery run fixture");
     recordedRun.recorded_on = "2026-08-14";
     await writeFile(recordedRunsPath, stringify(recordedRuns));
@@ -354,7 +355,8 @@ describe("Stripe history research audit", () => {
     const targetRuns = parse(await readFile(targetRunsPath, "utf8")) as {
       runs: Array<Record<string, unknown>>;
     };
-    const targetRun = targetRuns.runs.find(({ kind }) => kind === "discovery");
+    const targetRun = targetRuns.runs.find(({ collection, kind }) =>
+      kind === "discovery" && collection === "valuation-history");
     const targetPlan = targetRun?.plan as Record<string, unknown> | undefined;
     const watermark = targetPlan?.watermark as Record<string, unknown> | undefined;
     if (targetPlan === undefined || watermark === undefined) {
@@ -377,6 +379,13 @@ describe("Stripe history research audit", () => {
       sourceUrl: "https://stripe.com/blog/changelog",
       status: "complete",
     });
+    const appearanceEvidence = "complete a16z appearance capture evidence";
+    await writeWebCapture(captureRoot, "tokens-are-the-new-dollars-evidence-2026-08-19", {
+      capturedAt: "2026-08-19T12:00:00.000Z",
+      evidence: appearanceEvidence,
+      sourceUrl: "https://www.youtube.com/watch?v=P5iICDVn5gc",
+      status: "complete",
+    });
     const collectionsPath = join(temporaryProject, "public", "research", "collections.yml");
     const collections = parse(await readFile(collectionsPath, "utf8")) as {
       mutable_sources: Array<{ capture_evidence: { sha256: string } }>;
@@ -384,7 +393,23 @@ describe("Stripe history research audit", () => {
     const mutable = collections.mutable_sources[0];
     if (mutable === undefined) throw new Error("Missing mutable-source fixture");
     mutable.capture_evidence.sha256 = createHash("sha256").update(evidence).digest("hex");
-    await writeFile(collectionsPath, stringify(collections));
+    const runsPath = join(temporaryProject, "public", "research", "runs.yml");
+    const runs = parse(await readFile(runsPath, "utf8")) as {
+      runs: Array<{ collection: string; decisions?: Array<{ evidence?: { sha256: string } }> }>;
+    };
+    const appearanceRun = runs.runs.find(({ collection, decisions }) =>
+      collection === "founder-appearances" && decisions !== undefined && decisions.length > 0);
+    const appearanceDecision = appearanceRun?.decisions?.[0];
+    if (appearanceDecision?.evidence === undefined) {
+      throw new Error("Missing appearance evidence fixture");
+    }
+    appearanceDecision.evidence.sha256 = createHash("sha256")
+      .update(appearanceEvidence)
+      .digest("hex");
+    await Promise.all([
+      writeFile(collectionsPath, stringify(collections)),
+      writeFile(runsPath, stringify(runs)),
+    ]);
 
     await expect(auditHistoryResearch(temporaryProject, { captureRoot })).rejects.toThrow(
       "sessions-product-launches all-accepted capture policy requires complete evidence for source-28eaa414dc9531c6df9d",
@@ -555,8 +580,8 @@ describe("Stripe history research audit", () => {
         .toBe(false);
       const founder = first[0];
       expect(founder?.watermark).toEqual({
-        lookbackFrom: "2026-04-14",
-        reviewedThrough: "2026-08-12",
+        lookbackFrom: "2026-04-21",
+        reviewedThrough: "2026-08-19",
         targetThrough: "2026-09-01",
       });
       expect(founder?.tasks.some(({ kind }) => kind === "discovery-source")).toBe(true);

@@ -23,6 +23,83 @@ runs:
       - source-bda69e86e22cf8e2c66f
       - source-ca9f69ba263dbc27bda3
       - source-d8e4c6cb20568d496b94
+  - kind: discovery
+    collection: founder-appearances
+    status: complete
+    recorded_on: 2026-08-19
+    completed_on: 2026-08-19
+    plan:
+      schema: stripe-history/research-discovery-plan/v1
+      collection: founder-appearances
+      dataset: appearances
+      acceptedInputSha256: a622fe5922701b9b018c139ef2fd208cdd61dcbc4a1667c73b63f87b8cc56982
+      acceptedSourceIds:
+        - source-001e51b689b259d0b4e3
+        - source-1278271efc6181fee94f
+        - source-18cef128fcb5c9083568
+        - source-26410b426525f71187bb
+        - source-4d80199395399e9e47d8
+        - source-51a0e1edbe8fc1ce9d5a
+        - source-7365200928b2c76a48b7
+        - source-7db75f16638fc07f166c
+        - source-a5d1d621862fa7f1cac0
+        - source-bbf6b0fb0b8942bc569f
+        - source-bda69e86e22cf8e2c66f
+        - source-ca9f69ba263dbc27bda3
+        - source-d8e4c6cb20568d496b94
+      authorityOrder: [primary, interview, reporting, archive]
+      dedupeKeys:
+        - native-id
+        - canonical-url-published-at
+        - appearance-participants-venue-occurred-at
+        - semantic-claim
+      minimumRequestIntervalMs: 1000
+      outputFiles: [research/appearances.yml]
+      reviewRequirements:
+        - canonical-and-native-identity
+        - semantic-claim-deduplication
+        - source-capture-before-acceptance
+        - human-significance-review
+        - advance-watermark-after-complete-review
+      tasks:
+        - id: task-3da818052418bae7f63d
+          kind: discovery-source
+          url: https://www.youtube.com/@a16z
+        - id: task-4a433ba20019e5b74d5f
+          kind: query-family
+          query: Will Gaybrick Stripe interview AI product strategy stablecoins
+      watermark:
+        lookbackFrom: 2026-04-14
+        reviewedThrough: 2026-08-12
+        targetThrough: 2026-08-19
+      planSha256: 092ba8bb739dd549fceeb77dad2f7beba78357404f31fb28ecc6f86c00efd535
+    tasks:
+      - id: task-3da818052418bae7f63d
+        status: complete
+        completed_on: 2026-08-19
+        outcome: candidates-reviewed
+        decision_ids: [candidate-abc9f8f83d3e7538a519]
+      - id: task-4a433ba20019e5b74d5f
+        status: complete
+        completed_on: 2026-08-19
+        outcome: candidates-reviewed
+        decision_ids: [candidate-abc9f8f83d3e7538a519]
+    decisions:
+      - candidate_id: candidate-abc9f8f83d3e7538a519
+        candidate_url: https://www.youtube.com/watch?v=P5iICDVn5gc
+        native_id: youtube:P5iICDVn5gc
+        disposition: accepted
+        source_id: source-523815a4d8be2b7368b9
+        task_ids:
+          - task-3da818052418bae7f63d
+          - task-4a433ba20019e5b74d5f
+        reason: Complete a16z video and transcript preserve Will Gaybrick's first-person account of Stripe's AI-era product, organization, and commerce strategy.
+        evidence:
+          capture_slug: tokens-are-the-new-dollars-evidence-2026-08-19
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 19cb7d6ab7fd4e4fd12e6a9ca59bddd5432cd53a8964bdf1e9f7ce61dc126015
   - kind: baseline-import
     collection: founder-side-projects
     status: complete

@@ -77,6 +77,7 @@ describe("weekly news discovery", () => {
       "techcrunch-stripe",
       "techcrunch-latest",
       "exa-stripe-reporting",
+      "exa-stripe-leadership-appearances",
       "marginal-revolution-founders",
       "gdelt-stripe",
       "gdelt-founders",
@@ -118,7 +119,42 @@ describe("weekly news discovery", () => {
       if (url.toString() === "https://api.exa.ai/search") {
         expect(init?.method).toBe("POST");
         expect(new Headers(init?.headers).get("x-api-key")).toBe("fixture-exa-key");
-        expect(JSON.parse(String(init?.body))).toEqual({
+        const request = JSON.parse(String(init?.body)) as Readonly<Record<string, unknown>>;
+        if (String(request.query).startsWith("Long-form podcast")) {
+          expect(request).toEqual({
+            endPublishedDate: "2026-08-16T23:59:59.999Z",
+            includeDomains: [
+              "a16z.com",
+              "colossus.com",
+              "ecorner.stanford.edu",
+              "newcomer.co",
+              "podcasts.apple.com",
+              "spotify.com",
+              "stripe.com",
+              "tim.blog",
+              "youtube.com",
+              "youtu.be",
+            ],
+            moderation: true,
+            numResults: 40,
+            query: "Long-form podcast, video interview, keynote, fireside chat, or testimony featuring a Stripe founder or senior executive discussing Stripe's products, company building, strategy, technology, commerce, or operating history",
+            startPublishedDate: "2026-08-09T00:00:00.000Z",
+            type: "auto",
+          });
+          return response(JSON.stringify({
+            requestId: "fixture-appearance-request",
+            results: [{
+              publishedDate: "2026-08-15T13:00:00.000Z",
+              title: "Will Gaybrick discusses building products at Stripe",
+              url: "https://www.youtube.com/watch?v=fixture-appearance",
+            }, {
+              publishedDate: "2026-08-15T14:00:00.000Z",
+              title: "Unrelated founder interview",
+              url: "https://www.youtube.com/watch?v=unrelated",
+            }],
+          }), "application/json");
+        }
+        expect(request).toEqual({
           category: "news",
           endPublishedDate: "2026-08-16T23:59:59.999Z",
           includeDomains: [
@@ -208,16 +244,19 @@ describe("weekly news discovery", () => {
     expect(digest.monitors.every(({ status }) => status === "ok")).toBe(true);
     expect(digest.candidates.map(({ url }) => url)).toEqual([
       "https://techcrunch.com/2026/08/16/stripe-openrouter",
+      "https://www.youtube.com/watch?v=fixture-appearance",
       "https://stripe.com/newsroom/news/weekly-test-candidate",
       "https://example.com/weekly",
     ]);
-    expect(digest.candidates[2]?.monitors).toEqual(["gdelt-stripe", "techcrunch-stripe"]);
+    expect(digest.candidates[3]?.monitors).toEqual(["gdelt-stripe", "techcrunch-stripe"]);
     expect(digest.candidates[0]?.monitors).toEqual([
       "exa-stripe-reporting",
       "techcrunch-latest",
     ]);
+    expect(digest.candidates[1]?.monitors).toEqual([
+      "exa-stripe-leadership-appearances",
+    ]);
     expect(digest.discoveryPlans.map(({ collection }) => collection)).toEqual([
-      "founder-appearances",
       "founder-side-projects",
       "valuation-history",
     ]);
@@ -279,6 +318,45 @@ describe("weekly news discovery", () => {
     }]);
     expect(() => parseExaCandidates({ results: [{ title: "Missing URL" }] }, exaMonitor))
       .toThrow();
+  });
+
+  test("supports a bounded appearance-only historical window", async () => {
+    const fetcher = (async (
+      input: string | URL | Request,
+      init?: RequestInit,
+    ): Promise<Response> => {
+      expect(input.toString()).toBe("https://api.exa.ai/search");
+      const request = JSON.parse(String(init?.body)) as Readonly<Record<string, unknown>>;
+      expect(request.startPublishedDate).toBe("2020-01-01T00:00:00.000Z");
+      expect(request.endPublishedDate).toBe("2020-12-31T23:59:59.999Z");
+      expect(request).not.toHaveProperty("category");
+      return new Response(JSON.stringify({ results: [] }), { status: 200 });
+    }) as typeof fetch;
+    const digest = await pullLatestNews({
+      asOf: "2020-12-31",
+      environment: { EXA_API_KEY: "fixture-exa-key" },
+      fetcher,
+      generatedAt: "2026-08-19T12:00:00.000Z",
+      lookbackFrom: "2020-01-01",
+      monitorIds: ["exa-stripe-leadership-appearances"],
+      sleep: async () => {},
+    });
+    expect(digest.lookbackFrom).toBe("2020-01-01");
+    expect(digest.monitors.map(({ id }) => id)).toEqual([
+      "exa-stripe-leadership-appearances",
+    ]);
+  });
+
+  test("rejects unknown monitor selections and reversed windows", async () => {
+    await expect(pullLatestNews({
+      asOf: "2026-08-19",
+      monitorIds: ["missing-monitor"],
+    })).rejects.toThrow("Unknown news monitor");
+    await expect(pullLatestNews({
+      asOf: "2026-08-19",
+      lookbackFrom: "2026-08-20",
+      monitorIds: ["exa-stripe-leadership-appearances"],
+    })).rejects.toThrow("must not be after");
   });
 
   test("rejects generic stripe and body-only founder matches", () => {
@@ -382,5 +460,21 @@ describe("weekly news discovery", () => {
     expect(workflow).not.toContain("--auto");
     expect(workflow).not.toContain("git push origin HEAD:main");
     expect(workflow).not.toContain("codex exec");
+  });
+
+  test("keeps the leadership appearance backfill bounded and review-only", async () => {
+    const workflow = await readFile(
+      join(process.cwd(), ".github", "workflows", "appearance-backfill.yml"),
+      "utf8",
+    );
+    expect(workflow).toContain("workflow_dispatch:");
+    expect(workflow).toContain("EXA_API_KEY: ${{ secrets.EXA_API_KEY }}");
+    expect(workflow).toContain("exa-stripe-leadership-appearances");
+    expect(workflow).toContain("--from \"$window_from\"");
+    expect(workflow).toContain("--as-of \"$window_through\"");
+    expect(workflow).toContain("actions/upload-artifact");
+    expect(workflow).not.toContain("history:publish:auto");
+    expect(workflow).not.toContain("issues: write");
+    expect(workflow).not.toContain("contents: write");
   });
 });

@@ -58,7 +58,7 @@ export default async function DataPage() {
           These reviewable YAML files power the public timeline and valuation
           record. History entries preserve chronology, category, summary,
           confidence, and status when applicable; the research files preserve
-          canonical source identities, valuation observations, founder
+          canonical source identities, valuation observations, leadership
           appearances, collection scope, and review runs. The dataset and
           website code are available under the MIT License in the{" "}
           <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>.
@@ -162,7 +162,8 @@ export default async function DataPage() {
               {history.valuations.length} observations
             </li>
             <li>
-              <a href="/research/appearances.yml">founder appearances YAML</a> ·{" "}
+              <Link href="/appearances">leadership appearances</Link> ·{" "}
+              <a href="/research/appearances.yml">YAML</a> ·{" "}
               {history.appearances.length} appearances
             </li>
             <li>

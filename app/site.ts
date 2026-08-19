@@ -11,7 +11,7 @@ export type SitePath = `/${string}`;
 export const site = {
   applicationName: "Stripe History",
   datasetDescription:
-    "Open, source-linked YAML records behind the Stripe company history timeline, including events, valuation observations, annual volume disclosures, founder appearances, source provenance, collection scope, and review runs.",
+    "Open, source-linked YAML records behind the Stripe company history timeline, including events, valuation observations, annual volume disclosures, leadership appearances, source provenance, collection scope, and review runs.",
   description:
     "An independent, sourced timeline of Stripe acquisitions, products, leadership, funding, valuation, expansion, offices, publishing, company milestones, and annual volume.",
   domain: SITE_DOMAIN,

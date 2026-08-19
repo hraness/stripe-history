@@ -1,5 +1,39 @@
 schema: stripe-history/appearances/v1
 appearances:
+  - id: appearance-2026-08-will-gaybrick-a16z
+    occurred_at: 2026-08-17
+    date_precision: day
+    published_at: 2026-08-17
+    title: Tokens Are the New Dollars
+    venue: a16z
+    series: The a16z Show
+    participants:
+      - name: Will Gaybrick
+        role: interviewee
+        stripe_role: President of Product and Business
+    media: [podcast, video, transcript]
+    duration_seconds: 3228
+    duration_precision: exact
+    transcript:
+      availability: automatic
+      language: en
+      source_id: source-523815a4d8be2b7368b9
+    topics: [ai, company-building, minions, product-strategy, agentic-commerce, stablecoins, model-tokens]
+    historical_periods: [stripe-2015-2026]
+    significance: Will Gaybrick gives a first-person account of how Stripe is using AI to increase product output, reorganizing work around founder-like agency, and preparing its financial infrastructure for agentic commerce, stablecoins, and model-token economics.
+    digest:
+      gist: Stripe president Will Gaybrick describes AI as a reason to expand what a company builds rather than mainly reduce headcount. Stripe is redesigning its organization and delivery systems around more capable engineers and one-shot coding agents, while preparing its payments stack for agentic commerce, stablecoin settlement, and software agents that consume models and services. Cheaper software creation raises output only if product review, pricing, sales, and other downstream systems can absorb it.
+      ideas:
+        - title: Widen the roadmap
+          detail: Stripe treats agentic coding as a way to work through accumulated user needs and create more products, not merely lower engineering cost.
+        - title: Create founder-like agency
+          detail: More productive engineers need smaller teams, clearer ownership, and fewer centralized processes if their code is to reach users quickly.
+        - title: Measure autonomous work at the merge boundary
+          detail: Stripe Minions are one-shot agents whose pull requests still pass CI and human review, making accepted output more informative than prompt or session counts.
+        - title: Rebuild commerce around agents
+          detail: Checkout, delegation, fraud, payments, stablecoins, and model-token infrastructure must change when software agents initiate purchases and machines buy services from machines.
+    source_ids: [source-523815a4d8be2b7368b9]
+    review_status: reviewed
   - id: appearance-2025-05-patrick-john-collison-sessions-ama
     occurred_at: 2025-05
     date_precision: month
