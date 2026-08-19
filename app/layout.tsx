@@ -9,6 +9,7 @@ import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
+import { PostHogAnalytics } from "./posthog-analytics";
 import { websiteJsonLd } from "./seo";
 import { SITE_ORIGIN, site, socialMetadata } from "./site";
 
@@ -38,6 +39,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html data-theme="light" lang="en-US" suppressHydrationWarning>
       <body className={siteThemes.plain.bodyClassName}>
         <JsonLdScript data={websiteJsonLd()} id="stripe-history-website-structured-data" />
+        <PostHogAnalytics
+          apiHost={process.env.NEXT_PUBLIC_POSTHOG_HOST}
+          apiKey={process.env.NEXT_PUBLIC_POSTHOG_KEY}
+        />
         <DesignThemeProvider storageKey="stripe-history-theme-v1">
           <ThemeColorSync darkColor="#151515" lightColor="#ffffff" />
           <SkipLink href="#main-content">Skip to content</SkipLink>

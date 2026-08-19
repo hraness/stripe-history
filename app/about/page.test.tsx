@@ -14,7 +14,11 @@ describe("stripehistory.com about page", () => {
     expect(html).toContain("<h1 id=\"about-heading\">About stripehistory.com</h1>");
     expect(html).toContain('aria-label="Breadcrumb"');
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
-    expect(html).toContain("does not run product analytics or session replay");
+    expect(html).toContain("anonymous, cookieless pageview events for public pages");
+    expect(html).toContain("normalized public page path, its page category, a site identifier");
+    expect(html).toContain("referrer properties, account data, and user content");
+    expect(html).toContain("does not save an analytics cookie or identifier");
+    expect(html).toContain("does not use autocapture, session replay, heatmaps, surveys");
     expect(html).toContain("no user accounts or authentication");
     expect(html).toContain("ordinary logs and security controls of the hosting provider");
     expect(html).toContain("founder side projects and aesthetics programs");

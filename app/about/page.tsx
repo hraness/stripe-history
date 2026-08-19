@@ -92,7 +92,16 @@ export default function AboutPage() {
 
         <h2>Privacy</h2>
         <p>
-          The site does not run product analytics or session replay, and it has
+          The site sends anonymous, cookieless pageview events for public pages
+          to PostHog. Each event contains the normalized public page path, its
+          page category, a site identifier, an analytics schema version, and
+          PostHog&apos;s cookieless marker. It excludes query strings, URL
+          fragments, referrer properties, account data, and user content. The
+          browser does not save an analytics cookie or identifier.
+        </p>
+        <p>
+          The site does not use autocapture, session replay, heatmaps, surveys,
+          feature flags, performance monitoring, or user profiles, and it has
           no user accounts or authentication. Requests are still subject to the
           ordinary logs and security controls of the hosting provider.
         </p>

@@ -8,11 +8,15 @@ import Loading from "./loading";
 import NotFound from "./not-found";
 
 describe("standalone runtime surfaces", () => {
-  test("does not load analytics code or PostHog environment configuration", async () => {
+  test("loads the privacy-bounded PostHog provider from public environment values", async () => {
     const layoutSource = await readFile(new URL("./layout.tsx", import.meta.url), "utf8");
+    const posthogSource = await readFile(new URL("./posthog.ts", import.meta.url), "utf8");
 
-    expect(layoutSource).not.toContain("PageAnalytics");
-    expect(layoutSource).not.toContain("POSTHOG");
+    expect(layoutSource).toContain("PostHogAnalytics");
+    expect(layoutSource).toContain("NEXT_PUBLIC_POSTHOG_KEY");
+    expect(layoutSource).toContain("NEXT_PUBLIC_POSTHOG_HOST");
+    expect(posthogSource).toContain('import("posthog-js")');
+    expect(posthogSource).not.toContain('import posthog from "posthog-js"');
   });
 
   test("renders route and document failures without private telemetry", () => {
