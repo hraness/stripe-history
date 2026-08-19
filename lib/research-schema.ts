@@ -419,6 +419,20 @@ const TranscriptSchema = z.discriminatedUnion("availability", [
   }),
 ]);
 
+const AppearanceDigestSchema = z.strictObject({
+  gist: z.string().trim().refine(
+    (value) => {
+      const words = value.match(/[\p{L}\p{N}]+(?:[’'-][\p{L}\p{N}]+)*/gu) ?? [];
+      return words.length >= 35 && words.length <= 100 && !/[\r\n]/u.test(value);
+    },
+    "Appearance gist must be one paragraph of 35 through 100 words",
+  ),
+  ideas: z.array(z.strictObject({
+    detail: CompactTextSchema.max(320),
+    title: CompactTextSchema.max(100),
+  })).min(3).max(5),
+});
+
 function partialDatePrecedes(left: string, right: string): boolean {
   const leftParts = left.split("-").map(Number);
   const rightParts = right.split("-").map(Number);
@@ -444,12 +458,14 @@ export const AppearanceSchema = z.strictObject({
     .min(1).max(5),
   occurred_at: PartialDateSchema,
   participants: z.array(z.strictObject({
-    name: z.enum(["John Collison", "Patrick Collison"]),
+    name: CompactTextSchema.max(100),
     role: z.enum(["guest", "interviewee", "speaker", "witness"]),
+    stripe_role: CompactTextSchema.max(140).optional(),
   })).min(1).max(2),
   published_at: PartialDateSchema.optional(),
   review_status: z.literal("reviewed"),
   series: CompactTextSchema.max(120).optional(),
+  digest: AppearanceDigestSchema.optional(),
   significance: z.string().trim().min(30).max(600).refine(
     (value) => !/[\r\n]/u.test(value),
     "Significance must be one paragraph",

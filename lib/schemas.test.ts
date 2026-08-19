@@ -476,7 +476,7 @@ describe("public YAML schemas", () => {
     }).success).toBe(false);
   });
 
-  test("orders reviewed founder appearances by occurrence, not publication", () => {
+  test("orders reviewed leadership appearances by occurrence, not publication", () => {
     const appearance = (id: string, occurredAt: string, publishedAt: string) => ({
       date_precision: "day",
       historical_periods: ["stripe-2009-2024"],

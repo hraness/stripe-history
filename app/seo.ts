@@ -174,7 +174,7 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
       "product launches",
       "annual payment volume",
       "private company valuation",
-      "founder appearances",
+      "leadership appearances",
       "research provenance",
     ],
     distribution: [
@@ -198,7 +198,7 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
       },
       {
         "@type": "DataDownload" as const,
-        name: "Founder appearances",
+        name: "Stripe leadership appearances",
         contentUrl: `${SITE_ORIGIN}/research/appearances.yml`,
         encodingFormat: "application/yaml",
       },
@@ -215,5 +215,54 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
         encodingFormat: "application/yaml",
       },
     ],
+  } as const;
+}
+
+export function appearanceCollectionJsonLd(history: HistoryCollection) {
+  const url = `${SITE_ORIGIN}/appearances`;
+  const sourceById = new Map(history.sources.map((source) => [source.id, source]));
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${url}#collection`,
+    url,
+    name: "Stripe Leadership Appearances",
+    description:
+      "Reviewed podcasts, interviews, talks, and testimony from Stripe founders and senior leaders, with source-linked summaries and transcripts when available.",
+    inLanguage: "en-US",
+    isPartOf: { "@id": `${SITE_ORIGIN}/#website` },
+    publisher: publisherJsonLd,
+    about: { "@type": "Organization", name: "Stripe", url: "https://stripe.com/" },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: history.appearances.length,
+      itemListElement: history.appearances.map((appearance, index) => {
+        const source = sourceById.get(appearance.source_ids[0] ?? "");
+        const itemType = appearance.media.includes("video") ? "VideoObject" : "PodcastEpisode";
+        return {
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": itemType,
+            "@id": `${url}#${appearance.id}`,
+            name: appearance.title,
+            description: appearance.digest?.gist ?? appearance.significance,
+            datePublished: appearance.published_at ?? appearance.occurred_at,
+            ...(appearance.duration_seconds === undefined
+              ? {}
+              : { duration: `PT${appearance.duration_seconds}S` }),
+            ...(source === undefined ? {} : { contentUrl: source.url }),
+            about: { "@type": "Organization", name: "Stripe" },
+            contributor: appearance.participants.map((participant) => ({
+              "@type": "Person",
+              name: participant.name,
+              ...(participant.stripe_role === undefined
+                ? {}
+                : { jobTitle: participant.stripe_role }),
+            })),
+          },
+        };
+      }),
+    },
   } as const;
 }

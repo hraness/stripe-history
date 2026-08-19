@@ -56,6 +56,24 @@ monitors:
       - company-history
       - sessions-product-launches
       - valuation-history
+  - id: exa-stripe-leadership-appearances
+    kind: exa-search
+    category: null
+    query: Long-form podcast, video interview, keynote, fireside chat, or testimony featuring a Stripe founder or senior executive discussing Stripe's products, company building, strategy, technology, commerce, or operating history
+    title_terms_from_history_category: executives-and-team
+    include_domains:
+      - a16z.com
+      - colossus.com
+      - ecorner.stanford.edu
+      - newcomer.co
+      - podcasts.apple.com
+      - spotify.com
+      - stripe.com
+      - tim.blog
+      - youtube.com
+      - youtu.be
+    research_areas:
+      - founder-appearances
   - id: marginal-revolution-founders
     kind: rss
     url: https://marginalrevolution.com/feed

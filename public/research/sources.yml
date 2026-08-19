@@ -687,6 +687,15 @@ sources:
     id: source-51a0e1edbe8fc1ce9d5a
     media_type: transcript
   - kind: interview
+    publisher: a16z
+    published_at: 2026-08-17
+    title: Tokens Are the New Dollars | Stripe's Will Gaybrick & David George
+    url: https://www.youtube.com/watch?v=P5iICDVn5gc
+    id: source-523815a4d8be2b7368b9
+    media_type: video
+    native_id: youtube:P5iICDVn5gc
+    language: en
+  - kind: interview
     publisher: Storied San Francisco
     title: Saikat Chakrabarti
     url: https://www.storiedsf.com/episodes/saikat-chakrabarti
