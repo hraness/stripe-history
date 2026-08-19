@@ -1,13 +1,19 @@
-import { loadHistory } from "@/lib/content";
 import {
-  historyCategoryIds,
-  type HistoryCategoryId,
+  loadHistory,
+} from "@/lib/content";
+import {
+  timelineCategoryIds,
+  type TimelineCategoryId,
 } from "@/lib/history-schema";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { breadcrumbJsonLd, historyCollectionJsonLd } from "../../seo";
+import {
+  appearanceCollectionJsonLd,
+  breadcrumbJsonLd,
+  historyCollectionJsonLd,
+} from "../../seo";
 import { site, socialMetadata } from "../../site";
 import { HistoryView } from "../history-view";
 
@@ -19,7 +25,7 @@ export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return historyCategoryIds.map((category) => ({ category }));
+  return timelineCategoryIds.map((category) => ({ category }));
 }
 
 async function resolveCategory(categoryId: string) {
@@ -68,11 +74,13 @@ export default async function HistoryCategoryPage({
     <>
       <JsonLdScript
         data={[
-          historyCollectionJsonLd(visibleEvents, {
-            description: resolved.category.description,
-            path,
-            title,
-          }),
+          resolved.category.id === "appearances"
+            ? appearanceCollectionJsonLd(resolved.history)
+            : historyCollectionJsonLd(visibleEvents, {
+                description: resolved.category.description,
+                path,
+                title,
+              }),
           breadcrumbJsonLd([
             { name: "History", path: "/" },
             { name: resolved.category.label, path },
@@ -82,7 +90,7 @@ export default async function HistoryCategoryPage({
       />
       <HistoryView
         history={resolved.history}
-        selectedCategoryId={resolved.category.id as HistoryCategoryId}
+        selectedCategoryId={resolved.category.id as TimelineCategoryId}
       />
     </>
   );

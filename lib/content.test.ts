@@ -10,7 +10,7 @@ import {
   valuationTier,
 } from "./content";
 import type { ValuationObservation } from "./research-schema";
-import { historyCategoryIds } from "./history-schema";
+import { timelineCategoryIds } from "./history-schema";
 
 const projectDirectory = dirname(dirname(fileURLToPath(import.meta.url)));
 
@@ -19,8 +19,14 @@ describe("published YAML corpus", () => {
     const history = await loadHistory(join(projectDirectory, "public", "history"));
 
     expect(history.categories.map(({ id }) => id).toSorted()).toEqual(
-      [...historyCategoryIds].toSorted(),
+      [...timelineCategoryIds].toSorted(),
     );
+    expect(history.categories.map(({ id }) => id).slice(0, 4)).toEqual([
+      "origins-and-early-company",
+      "executives-and-team",
+      "appearances",
+      "acquisitions",
+    ]);
     expect(history.events.length).toBeGreaterThanOrEqual(200);
     expect(history.events.map(({ date }) => date)).toEqual(
       history.events.map(({ date }) => date).toSorted().reverse(),
@@ -152,6 +158,24 @@ describe("published YAML corpus", () => {
     expect(history.appearances.map(({ id }) => id)).toContain(
       "appearance-2024-02-patrick-collison-dwarkesh",
     );
+    expect(history.events.filter(({ categoryId }) => categoryId === "appearances"))
+      .toHaveLength(history.appearances.length);
+    expect(history.events.find(
+      ({ id }) => id === "appearance-2026-08-will-gaybrick-a16z",
+    )).toMatchObject({
+      categoryId: "appearances",
+      date: "2026-08-17",
+      details: [
+        {
+          label: "participant",
+          value: "Will Gaybrick · President of Product and Business",
+        },
+        { label: "venue", value: "The a16z Show · a16z" },
+        { label: "recording", value: "53 min · automatic transcript" },
+      ],
+      status: "podcast",
+      title: "Tokens Are the New Dollars",
+    });
     expect(history.appearances.find(
       ({ id }) => id === "appearance-2024-04-patrick-john-collison-sessions-ama",
     )?.duration_precision).toBe("approximate");

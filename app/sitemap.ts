@@ -20,9 +20,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${SITE_ORIGIN}/about`,
     },
     {
-      url: `${SITE_ORIGIN}/appearances`,
-    },
-    {
       url: `${SITE_ORIGIN}/data`,
     },
     ...history.categories.map(({ id }) => ({

@@ -9,6 +9,7 @@ import {
   type HistoryEvent,
   type HistoryFile,
   type HistorySource,
+  type TimelineCategoryId,
 } from "./history-schema";
 import {
   AppearanceFileSchema,
@@ -29,11 +30,18 @@ async function parseYamlFile(path: string): Promise<unknown> {
 }
 
 export interface CategorizedHistoryEvent extends Omit<HistoryEvent, "source_ids"> {
-  readonly categoryId: HistoryFile["category"]["id"];
+  readonly categoryId: TimelineCategoryId;
   readonly categoryLabel: string;
   readonly categoryOrder: number;
   readonly sourceIds: readonly string[];
   readonly sources: readonly HistorySource[];
+}
+
+export interface TimelineCategory {
+  readonly description: string;
+  readonly id: TimelineCategoryId;
+  readonly label: string;
+  readonly order: number;
 }
 
 export interface AnnualVolumePoint {
@@ -61,12 +69,64 @@ export interface ValuationHeadlinePoint {
 export interface HistoryCollection {
   readonly annualVolumes: readonly AnnualVolumePoint[];
   readonly appearances: readonly Appearance[];
-  readonly categories: readonly HistoryFile["category"][];
+  readonly categories: readonly TimelineCategory[];
   readonly events: readonly CategorizedHistoryEvent[];
   readonly files: readonly HistoryFile[];
   readonly sources: readonly ResearchSource[];
   readonly valuationHeadlines: readonly ValuationHeadlinePoint[];
   readonly valuations: readonly ResolvedValuationObservation[];
+}
+
+export const APPEARANCES_CATEGORY = {
+  description:
+    "Reviewed podcasts, interviews, talks, and testimony from Stripe founders and senior leaders, with source-linked editorial summaries and transcripts when available.",
+  id: "appearances",
+  label: "Appearances",
+  order: 2.5,
+} as const satisfies TimelineCategory;
+
+function formatAppearanceDuration(seconds: number): string {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  return hours === 0 ? `${minutes} min` : `${hours} hr ${minutes} min`;
+}
+
+function appearanceFormat(appearance: Appearance): string {
+  if (appearance.media.includes("testimony")) return "testimony";
+  if (appearance.media.includes("podcast")) return "podcast";
+  if (appearance.media.includes("video")) return "video";
+  if (appearance.media.includes("article")) return "article";
+  return "interview";
+}
+
+function appearanceDetails(
+  appearance: Appearance,
+): NonNullable<HistoryEvent["details"]> {
+  const participants = appearance.participants.map((participant) =>
+    participant.stripe_role === undefined
+      ? participant.name
+      : `${participant.name} · ${participant.stripe_role}`
+  ).join("; ");
+  const venue = appearance.series === undefined
+    ? appearance.venue
+    : `${appearance.series} · ${appearance.venue}`;
+  const recording = [
+    appearance.duration_seconds === undefined
+      ? undefined
+      : formatAppearanceDuration(appearance.duration_seconds),
+    appearance.transcript.availability === "none"
+      ? undefined
+      : `${appearance.transcript.availability} transcript`,
+  ].filter((value): value is string => value !== undefined).join(" · ");
+
+  return [
+    {
+      label: appearance.participants.length === 1 ? "participant" : "participants",
+      value: participants,
+    },
+    { label: "venue", value: venue },
+    ...(recording === "" ? [] : [{ label: "recording", value: recording }]),
+  ];
 }
 
 export function validateAnnualVolumeSeries(
@@ -245,26 +305,26 @@ export async function loadHistory(
     throw new Error("History category orders must be unique");
   }
 
-  const events = files.flatMap((file) =>
+  const historyEvents = files.flatMap((file) =>
     file.events.map((event) => {
       const { source_ids: sourceIds, ...eventFields } = event;
       return {
-      ...eventFields,
-      categoryId: file.category.id,
-      categoryLabel: file.category.label,
-      categoryOrder: file.category.order,
-      sourceIds,
-      sources: resolveSources(sourceIds, sourceById, `History event ${event.id}`),
-    };
+        ...eventFields,
+        categoryId: file.category.id,
+        categoryLabel: file.category.label,
+        categoryOrder: file.category.order,
+        sourceIds,
+        sources: resolveSources(sourceIds, sourceById, `History event ${event.id}`),
+      };
     })
   );
-  const eventIds = events.map((event) => event.id);
+  const eventIds = historyEvents.map((event) => event.id);
   if (new Set(eventIds).size !== eventIds.length) {
     throw new Error("History event IDs must be globally unique");
   }
   const knownEventIds = new Set(eventIds);
-  const eventById = new Map(events.map((event) => [event.id, event]));
-  for (const event of events) {
+  const eventById = new Map(historyEvents.map((event) => [event.id, event]));
+  for (const event of historyEvents) {
     const unknownRelatedEvents = event.related_events?.filter(
       (eventId) => !knownEventIds.has(eventId),
     ) ?? [];
@@ -288,7 +348,7 @@ export async function loadHistory(
       throw new Error(`History annual volume ${event.id} requires a primary source`);
     }
   }
-  const annualVolumes = events.flatMap((event) =>
+  const annualVolumes = historyEvents.flatMap((event) =>
     event.annual_volume === undefined
       ? []
       : [{
@@ -318,21 +378,50 @@ export async function loadHistory(
       );
     }
   }
-  for (const appearance of appearanceFile.appearances) {
-    resolveSources(appearance.source_ids, sourceById, `Appearance ${appearance.id}`);
+  const appearanceEvents: readonly CategorizedHistoryEvent[] =
+    appearanceFile.appearances.map((appearance) => ({
+      categoryId: APPEARANCES_CATEGORY.id,
+      categoryLabel: APPEARANCES_CATEGORY.label,
+      categoryOrder: APPEARANCES_CATEGORY.order,
+      confidence: "confirmed",
+      date: appearance.occurred_at,
+      date_precision: appearance.date_precision,
+      details: appearanceDetails(appearance),
+      id: appearance.id,
+      people: appearance.participants.map(({ name }) => name),
+      sourceIds: appearance.source_ids,
+      sources: resolveSources(
+        appearance.source_ids,
+        sourceById,
+        `Appearance ${appearance.id}`,
+      ),
+      status: appearanceFormat(appearance),
+      summary: appearance.digest?.gist ?? appearance.significance,
+      tags: appearance.topics,
+      title: appearance.title,
+    }));
+  const combinedEventIds = [
+    ...eventIds,
+    ...appearanceEvents.map(({ id }) => id),
+  ];
+  if (new Set(combinedEventIds).size !== combinedEventIds.length) {
+    throw new Error("Timeline event IDs must be globally unique");
   }
+  const categories = [
+    ...files.map((file) => file.category),
+    APPEARANCES_CATEGORY,
+  ].toSorted((left, right) => left.order - right.order);
+  const events = [...historyEvents, ...appearanceEvents].toSorted((left, right) =>
+    right.date.localeCompare(left.date)
+    || left.categoryOrder - right.categoryOrder
+    || left.id.localeCompare(right.id)
+  );
 
   return {
     annualVolumes,
     appearances: appearanceFile.appearances,
-    categories: files.map((file) => file.category).toSorted(
-      (left, right) => left.order - right.order,
-    ),
-    events: events.toSorted((left, right) =>
-      right.date.localeCompare(left.date)
-      || left.categoryOrder - right.categoryOrder
-      || left.id.localeCompare(right.id)
-    ),
+    categories,
+    events,
     files,
     sources: sourceCatalog.sources,
     valuationHeadlines: deriveValuationHeadlines(valuations),

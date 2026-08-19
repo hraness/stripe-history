@@ -10,6 +10,7 @@ import Flag01Icon from "@hugeicons/core-free-icons/Flag01Icon";
 import Location01Icon from "@hugeicons/core-free-icons/Location01Icon";
 import MapsIcon from "@hugeicons/core-free-icons/MapsIcon";
 import News01Icon from "@hugeicons/core-free-icons/News01Icon";
+import PodcastIcon from "@hugeicons/core-free-icons/PodcastIcon";
 import PuzzleIcon from "@hugeicons/core-free-icons/PuzzleIcon";
 import RocketIcon from "@hugeicons/core-free-icons/RocketIcon";
 import ShoppingCart01Icon from "@hugeicons/core-free-icons/ShoppingCart01Icon";
@@ -21,6 +22,7 @@ import type { HistoryFilterVisualId } from "./category-visuals";
 const historyCategoryIcons = {
   acquisitions: ConnectIcon,
   all: Calendar03Icon,
+  appearances: PodcastIcon,
   "company-milestones": Flag01Icon,
   "country-expansion": MapsIcon,
   "executives-and-team": UserMultiple02Icon,

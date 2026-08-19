@@ -4,7 +4,7 @@ import type {
   HistoryCollection,
   ValuationHeadlinePoint,
 } from "@/lib/content";
-import type { HistoryCategoryId } from "@/lib/history-schema";
+import type { TimelineCategoryId } from "@/lib/history-schema";
 import Link from "next/link";
 
 import { HistoryCategoryIcon } from "./category-icon";
@@ -19,13 +19,13 @@ import { SiteHeader } from "../site-header";
 
 interface HistoryViewProps {
   readonly history: HistoryCollection;
-  readonly selectedCategoryId?: HistoryCategoryId;
+  readonly selectedCategoryId?: TimelineCategoryId;
 }
 
 interface HistoryFiltersProps {
   readonly history: HistoryCollection;
   readonly paymentVolumeSelected?: boolean;
-  readonly selectedCategoryId?: HistoryCategoryId;
+  readonly selectedCategoryId?: TimelineCategoryId;
   readonly valuationSelected?: boolean;
 }
 
@@ -43,8 +43,8 @@ interface HistoryYear {
 }
 
 function categoryHref(
-  categoryId: HistoryCategoryId,
-): `/history/${HistoryCategoryId}` {
+  categoryId: TimelineCategoryId,
+): `/history/${TimelineCategoryId}` {
   return `/history/${categoryId}`;
 }
 

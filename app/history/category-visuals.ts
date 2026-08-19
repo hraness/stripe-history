@@ -1,12 +1,12 @@
 import type { CSSProperties } from "react";
 
 import {
-  historyCategoryIds,
-  type HistoryCategoryId,
+  timelineCategoryIds,
+  type TimelineCategoryId,
 } from "@/lib/history-schema";
 
 export type HistoryFilterVisualId =
-  | HistoryCategoryId
+  | TimelineCategoryId
   | "all"
   | "payment-volume"
   | "valuation";
@@ -24,6 +24,7 @@ const categoryVisuals = {
   // people and milestones, greens for payments and products, gold for capital,
   // teal for geography, violet for origins, and magenta for publishing.
   acquisitions: { paletteIndex: 6 },
+  appearances: { paletteIndex: 11 },
   "company-milestones": { paletteIndex: 10 },
   "country-expansion": { paletteIndex: 2 },
   "executives-and-team": { paletteIndex: 5 },
@@ -34,7 +35,7 @@ const categoryVisuals = {
   "product-launches": { paletteIndex: 7 },
   publishing: { paletteIndex: 3 },
   "side-quests": { paletteIndex: 8 },
-} as const satisfies Readonly<Record<HistoryCategoryId, HistoryCategoryVisual>>;
+} as const satisfies Readonly<Record<TimelineCategoryId, HistoryCategoryVisual>>;
 
 export const historyFilterVisuals = {
   ...categoryVisuals,
@@ -54,7 +55,7 @@ export function goldenAngleHue(paletteIndex: number): number {
   return Number(hue.toFixed(3));
 }
 
-export function historyCategoryHue(categoryId: HistoryCategoryId): number {
+export function historyCategoryHue(categoryId: TimelineCategoryId): number {
   return goldenAngleHue(categoryVisuals[categoryId].paletteIndex);
 }
 
@@ -68,5 +69,5 @@ export function historyFilterVisualStyle(
 }
 
 export function historyCategoryHues(): readonly number[] {
-  return historyCategoryIds.map(historyCategoryHue);
+  return timelineCategoryIds.map(historyCategoryHue);
 }

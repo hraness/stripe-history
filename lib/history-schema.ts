@@ -19,6 +19,13 @@ export const historyCategoryIds = [
 
 export type HistoryCategoryId = (typeof historyCategoryIds)[number];
 
+export const timelineCategoryIds = [
+  ...historyCategoryIds,
+  "appearances",
+] as const;
+
+export type TimelineCategoryId = (typeof timelineCategoryIds)[number];
+
 function isRealPartialDate(value: string): boolean {
   const match = /^(\d{4})(?:-(0[1-9]|1[0-2])(?:-(0[1-9]|[12]\d|3[01]))?)?$/u.exec(value);
   if (match === null) return false;

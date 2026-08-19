@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { historyCategoryIds } from "@/lib/history-schema";
+import { timelineCategoryIds } from "@/lib/history-schema";
 import {
   PREVIEW_NOTICE_ORIGIN_ENV,
   PREVIEW_ROBOTS_HEADER,
@@ -38,8 +38,9 @@ describe("stripehistory.com public identity", () => {
       `${SITE_ORIGIN}/history/valuation`,
       `${SITE_ORIGIN}/about`,
       `${SITE_ORIGIN}/data`,
-      ...historyCategoryIds.map((id) => `${SITE_ORIGIN}/history/${id}`),
+      ...timelineCategoryIds.map((id) => `${SITE_ORIGIN}/history/${id}`),
     ]));
+    expect(urls).not.toContain(`${SITE_ORIGIN}/appearances`);
     expect(urls).not.toContain(SITE_ORIGIN);
     expect(urls).not.toContain(`${SITE_ORIGIN}/history`);
     expect(urls.some((url) => url.startsWith(`${SITE_ORIGIN}/news/`))).toBe(false);
@@ -91,6 +92,11 @@ describe("stripehistory.com public identity", () => {
 
   test("redirects former and www hosts directly to the canonical origin", async () => {
     expect(await nextConfig.redirects?.()).toEqual([
+      {
+        destination: "https://stripehistory.com/history/appearances",
+        permanent: true,
+        source: "/appearances",
+      },
       {
         destination: "https://stripehistory.com",
         has: [{ type: "host", value: "stripe.town" }],

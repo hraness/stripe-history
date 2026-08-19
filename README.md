@@ -13,7 +13,7 @@ The site renders more than 200 sourced events as one reverse-chronological histo
 - [Company milestones](https://stripehistory.com/history/company-milestones)
 - [Annual payment and total volume](https://stripehistory.com/history/payment-volume)
 - [Private-company valuation history](https://stripehistory.com/history/valuation)
-- [Stripe leadership appearances](https://stripehistory.com/appearances)
+- [Stripe leadership appearances](https://stripehistory.com/history/appearances)
 - [Open history and research data](https://stripehistory.com/data)
 
 ## Questions the history answers
@@ -53,7 +53,7 @@ Run the same discovery locally with an explicit date:
 bun run history:news:pull -- --as-of 2026-08-20 --json-out /tmp/stripe-news.json --markdown-out /tmp/stripe-news.md
 ```
 
-The manual [leadership appearance backfill](./.github/workflows/appearance-backfill.yml) searches one bounded calendar window at a time from 2009 onward and uploads a private review artifact. It does not edit public data or open issues. Reviewers deduplicate the artifact, capture the retained sources, and merge only evidence-backed records into the main [leadership appearances](https://stripehistory.com/appearances) catalog. The same window can be inspected locally:
+The manual [leadership appearance backfill](./.github/workflows/appearance-backfill.yml) searches one bounded calendar window at a time from 2009 onward and uploads a private review artifact. It does not edit public data or open issues. Reviewers deduplicate the artifact, capture the retained sources, and merge only evidence-backed records into the main [leadership appearances](https://stripehistory.com/history/appearances) timeline category. The same window can be inspected locally:
 
 ```sh
 bun run history:news:pull -- --from 2020-01-01 --as-of 2020-12-31 --monitor exa-stripe-leadership-appearances --json-out /tmp/stripe-appearances-2020.json --markdown-out /tmp/stripe-appearances-2020.md

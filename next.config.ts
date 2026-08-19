@@ -17,7 +17,11 @@ const nextConfig: NextConfig = {
     const canonicalOrigin = "https://stripehistory.com";
     const legacyHosts = ["stripe.town", "www.stripehistory.com"];
 
-    return legacyHosts.flatMap((host) => {
+    return [{
+      destination: `${canonicalOrigin}/history/appearances`,
+      permanent: true,
+      source: "/appearances",
+    }, ...legacyHosts.flatMap((host) => {
       const has = [{ type: "host" as const, value: host }];
       return [
         {
@@ -33,7 +37,7 @@ const nextConfig: NextConfig = {
           source: "/:path*",
         },
       ];
-    });
+    })];
   },
   webpack(config) {
     config.resolve.extensionAlias = {

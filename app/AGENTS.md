@@ -1,7 +1,7 @@
 # Contents
 
 - `page.tsx` – the canonical unified Stripe history timeline.
-- `history/` – the legacy redirect, category pages, annual-volume and valuation pages, and shared timeline rendering.
+- `history/` – category pages, the appearances projection, annual-volume and valuation pages, and shared timeline rendering.
 - `data/` – the crawlable history and research dataset index.
 - `about/` – sourcing, review, independence, corrections, and privacy.
 - `site.ts`, `site-header.tsx`, and `site-footer.tsx` – canonical identity and shared page chrome.

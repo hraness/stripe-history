@@ -145,7 +145,7 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
     variableMeasured: [
       {
         "@type": "PropertyValue",
-        name: "Sourced history events",
+        name: "Sourced timeline records",
         value: history.events.length,
       },
       {
@@ -157,6 +157,11 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
         "@type": "PropertyValue",
         name: "Annual volume disclosures",
         value: history.annualVolumes.length,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Leadership appearances",
+        value: history.appearances.length,
       },
       {
         "@type": "PropertyValue",
@@ -180,8 +185,12 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
     distribution: [
       ...history.categories.map((category) => ({
         "@type": "DataDownload" as const,
-        name: `${category.label} history records`,
-        contentUrl: `${SITE_ORIGIN}/history/${category.id}.yml`,
+        name: category.id === "appearances"
+          ? "Stripe leadership appearances"
+          : `${category.label} history records`,
+        contentUrl: category.id === "appearances"
+          ? `${SITE_ORIGIN}/research/appearances.yml`
+          : `${SITE_ORIGIN}/history/${category.id}.yml`,
         encodingFormat: "application/yaml",
       })),
       {
@@ -194,12 +203,6 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
         "@type": "DataDownload" as const,
         name: "Stripe valuation observations",
         contentUrl: `${SITE_ORIGIN}/research/valuations.yml`,
-        encodingFormat: "application/yaml",
-      },
-      {
-        "@type": "DataDownload" as const,
-        name: "Stripe leadership appearances",
-        contentUrl: `${SITE_ORIGIN}/research/appearances.yml`,
         encodingFormat: "application/yaml",
       },
       {
@@ -219,7 +222,7 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
 }
 
 export function appearanceCollectionJsonLd(history: HistoryCollection) {
-  const url = `${SITE_ORIGIN}/appearances`;
+  const url = `${SITE_ORIGIN}/history/appearances`;
   const sourceById = new Map(history.sources.map((source) => [source.id, source]));
   return {
     "@context": "https://schema.org",

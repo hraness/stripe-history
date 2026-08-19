@@ -138,7 +138,9 @@ export default async function DataPage() {
               <p>{category.description}</p>
               <p>
                 {countByCategory.get(category.id) ?? 0} events ·{" "}
-                <a href={`/history/${category.id}.yml`}>download YAML</a>
+                <a href={category.id === "appearances"
+                  ? "/research/appearances.yml"
+                  : `/history/${category.id}.yml`}>download YAML</a>
               </p>
             </li>
           ))}
@@ -160,11 +162,6 @@ export default async function DataPage() {
             <li>
               <a href="/research/valuations.yml">valuation observations YAML</a> ·{" "}
               {history.valuations.length} observations
-            </li>
-            <li>
-              <Link href="/appearances">leadership appearances</Link> ·{" "}
-              <a href="/research/appearances.yml">YAML</a> ·{" "}
-              {history.appearances.length} appearances
             </li>
             <li>
               <a href="/research/collections.yml">research collections YAML</a>

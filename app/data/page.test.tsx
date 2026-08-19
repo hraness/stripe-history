@@ -30,13 +30,14 @@ describe("Stripe company history dataset", () => {
     expect(html).toContain("When did Stripe launch products and expand globally?");
     expect(html).toContain('href="/history/origins-and-early-company"');
     expect(html).toContain('href="/history/executives-and-team"');
-    expect(html.match(/download YAML/gu)).toHaveLength(11);
+    expect(html.match(/download YAML/gu)).toHaveLength(12);
     expect(html).toContain('href="/history/acquisitions"');
     expect(html).toContain('href="/history/acquisitions.yml"');
     expect(html).toContain('href="/history/valuation"');
     expect(html).toContain('href="/research/sources.yml"');
     expect(html).toContain('href="/research/valuations.yml"');
     expect(html).toContain('href="/research/appearances.yml"');
+    expect(html).toContain('href="/history/appearances"');
     expect(html).not.toContain('href="/appearances/backfill"');
     expect(html).not.toContain('href="/research/appearance-backfill.yml"');
     expect(html).toContain('href="/research/collections.yml"');

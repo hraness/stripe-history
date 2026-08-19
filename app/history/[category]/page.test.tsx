@@ -11,9 +11,40 @@ import HistoryCategoryPage, {
 describe("stripehistory.com category history", () => {
   test("generates every canonical category route", () => {
     const params = generateStaticParams();
-    expect(params.length).toBe(11);
+    expect(params.length).toBe(12);
     expect(params).toContainEqual({ category: "acquisitions" });
+    expect(params).toContainEqual({ category: "appearances" });
     expect(params).not.toContainEqual({ category: "payment-volume" });
+  });
+
+  test("renders appearances inside the shared category timeline", async () => {
+    const history = await loadHistory();
+    const appearanceCount = history.events.filter(
+      ({ categoryId }) => categoryId === "appearances",
+    ).length;
+    const metadata = await generateMetadata({
+      params: Promise.resolve({ category: "appearances" }),
+    });
+    const html = renderToStaticMarkup(await HistoryCategoryPage({
+      params: Promise.resolve({ category: "appearances" }),
+    }));
+
+    expect(appearanceCount).toBe(history.appearances.length);
+    expect(metadata).toMatchObject({
+      alternates: { canonical: "/history/appearances" },
+      title: `Stripe Appearances Timeline: ${appearanceCount} Sourced Events`,
+    });
+    expect(html.match(/data-category="appearances"/gu)).toHaveLength(appearanceCount);
+    expect(html).toContain('data-filter-id="appearances"');
+    expect(html).toContain('id="appearance-2026-08-will-gaybrick-a16z"');
+    expect(html).toContain("Tokens Are the New Dollars");
+    expect(html).toContain("Will Gaybrick · President of Product and Business");
+    expect(html).toContain("53 min · automatic transcript");
+    expect(html).toContain('href="https://www.youtube.com/watch?v=P5iICDVn5gc"');
+    expect(html).toContain('id="stripe-history-history-category-structured-data"');
+    expect(html).toContain('"@type":"PodcastEpisode"');
+    expect(html).not.toContain('class="stripe-history-appearance-list"');
+    expect(html).not.toContain('href="/appearances"');
   });
 
   test("publishes category-specific metadata", async () => {

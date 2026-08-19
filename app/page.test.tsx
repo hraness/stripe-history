@@ -38,6 +38,7 @@ describe("canonical stripehistory.com history", () => {
     );
     expect(html).toContain(`aria-current="true" aria-label="all: ${history.events.length} events"`);
     expect(html).toContain('href="/history/acquisitions"');
+    expect(html).toContain('href="/history/appearances"');
     expect(html).toContain('href="/history/payment-volume"');
     expect(html).toContain('href="/history/valuation"');
     expect(html).toContain('id="history-year-2026"');
@@ -57,6 +58,8 @@ describe("canonical stripehistory.com history", () => {
       history.annualVolumes.length + history.valuationHeadlines.length,
     );
     expect(html).toContain("Stripe reportedly discusses acquiring OpenRouter");
+    expect(html).toContain("Tokens Are the New Dollars");
+    expect(html).toContain('data-category="appearances"');
     expect(html).toContain("A month in Buenos Aires produces Stripe&#x27;s first working prototype");
     expect(html).toContain('class="history-event-sources"');
     expect(html).toContain('data-analytics-event="source link opened"');

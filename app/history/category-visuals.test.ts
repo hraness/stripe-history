@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { historyCategoryIds } from "@/lib/history-schema";
+import { timelineCategoryIds } from "@/lib/history-schema";
 
 import {
   GOLDEN_ANGLE_DEGREES,
@@ -16,8 +16,8 @@ function circularHueDistance(left: number, right: number): number {
 describe("history category visuals", () => {
   test("covers every category with a distinct golden-angle hue", () => {
     const hues = historyCategoryHues();
-    expect(hues).toHaveLength(historyCategoryIds.length);
-    expect(new Set(hues).size).toBe(historyCategoryIds.length);
+    expect(hues).toHaveLength(timelineCategoryIds.length);
+    expect(new Set(hues).size).toBe(timelineCategoryIds.length);
 
     const distances = hues.flatMap((hue, index) =>
       hues.slice(index + 1).map((otherHue) =>

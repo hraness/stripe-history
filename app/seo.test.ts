@@ -4,6 +4,7 @@ import { loadHistory } from "@/lib/content";
 
 import {
   aboutPageJsonLd,
+  appearanceCollectionJsonLd,
   breadcrumbJsonLd,
   historyCollectionJsonLd,
   historyDatasetJsonLd,
@@ -51,6 +52,7 @@ describe("stripehistory.com structured discovery", () => {
     expect(dataset.variableMeasured).toEqual(expect.arrayContaining([
       expect.objectContaining({ name: "Valuation observations", value: 25 }),
       expect.objectContaining({ name: "Annual volume disclosures", value: 5 }),
+      expect.objectContaining({ name: "Leadership appearances", value: 41 }),
     ]));
     expect(dataset.distribution).toHaveLength(16);
     expect(dataset.distribution).toContainEqual({
@@ -61,9 +63,34 @@ describe("stripehistory.com structured discovery", () => {
     });
     expect(dataset.distribution).toContainEqual({
       "@type": "DataDownload",
+      contentUrl: "https://stripehistory.com/research/appearances.yml",
+      encodingFormat: "application/yaml",
+      name: "Stripe leadership appearances",
+    });
+    expect(dataset.distribution).toContainEqual({
+      "@type": "DataDownload",
       contentUrl: "https://stripehistory.com/research/valuations.yml",
       encodingFormat: "application/yaml",
       name: "Stripe valuation observations",
+    });
+  });
+
+  test("anchors appearance entities in the timeline category", async () => {
+    const history = await loadHistory();
+    const collection = appearanceCollectionJsonLd(history);
+
+    expect(collection).toMatchObject({
+      "@id": "https://stripehistory.com/history/appearances#collection",
+      url: "https://stripehistory.com/history/appearances",
+      mainEntity: {
+        numberOfItems: history.appearances.length,
+      },
+    });
+    expect(collection.mainEntity.itemListElement[0]?.item).toMatchObject({
+      "@id": expect.stringContaining(
+        "/history/appearances#appearance-2026-08-will-gaybrick-a16z",
+      ),
+      "@type": "VideoObject",
     });
   });
 
