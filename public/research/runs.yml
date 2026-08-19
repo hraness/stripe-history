@@ -100,6 +100,381 @@ runs:
           status: complete
           evidence_path: evidence/source.html
           sha256: 19cb7d6ab7fd4e4fd12e6a9ca59bddd5432cd53a8964bdf1e9f7ce61dc126015
+  - kind: backfill
+    collection: founder-appearances
+    status: complete
+    recorded_on: 2026-08-19
+    completed_on: 2026-08-19
+    review_window:
+      from: 2009-01-01
+      through: 2026-08-19
+    artifact_url: https://github.com/hraness/stripe-history/actions/runs/32265726670
+    accepted_input_sha256: 429813dbfb2842dd711b5a6d3069724981a0e75b4a0f6cb82452f6ca6ea33a88
+    accepted_source_ids:
+      - source-001e51b689b259d0b4e3
+      - source-1278271efc6181fee94f
+      - source-18cef128fcb5c9083568
+      - source-26410b426525f71187bb
+      - source-4d80199395399e9e47d8
+      - source-51a0e1edbe8fc1ce9d5a
+      - source-523815a4d8be2b7368b9
+      - source-7365200928b2c76a48b7
+      - source-7db75f16638fc07f166c
+      - source-a5d1d621862fa7f1cac0
+      - source-bbf6b0fb0b8942bc569f
+      - source-bda69e86e22cf8e2c66f
+      - source-ca9f69ba263dbc27bda3
+      - source-d8e4c6cb20568d496b94
+    plan_sha256: 6b072148a122798067e3f9846b6f6221393a4ee8ac309ffa9eb7577325ace725
+    decisions:
+      - candidate_id: candidate-08034f0f05d785abe204
+        candidate_url: https://podcasts.apple.com/us/podcast/bonus-episode-stripe-ceo-john-collison-2-28-25/id1480890290?i=1000696834852
+        disposition: accepted
+        source_id: source-d5562f80014ab418430b
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: john-collison-bonus-podcast-2025
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: f38f6215c83abd0c27e4d21f4abf5ec80526c33485be94d7692a2875ed81d7b5
+      - candidate_id: candidate-08906a117f80cb97e57e
+        candidate_url: https://podcasts.apple.com/us/podcast/saastr-636-extreme-product-design-building-things-people/id1089973241?i=1000601129097
+        disposition: accepted
+        source_id: source-ff6b00bcb15ca05ca7f4
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: david-singleton-extreme-product-design-2023
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: b34e8f2b4312e0ee196962aa27deed8f6304172a3bda3c2d40d5f1f1bf1d08c9
+      - candidate_id: candidate-08b9d49899a5e3373992
+        candidate_url: https://www.youtube.com/watch?v=jdNwzYMtPN8
+        native_id: youtube:jdNwzYMtPN8
+        disposition: accepted
+        source_id: source-af973a63a7068c0ccff9
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: patrick-collison-hard-fork-live-2025
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 73006cef6a92e6affb7d188b70c95e074f8c1fce061d9792107d35f3dbfe1f8b
+      - candidate_id: candidate-0c6b8b8665b1dc406b2d
+        candidate_url: https://www.youtube.com/watch?v=H8Dl8rZ6qwE
+        native_id: youtube:H8Dl8rZ6qwE
+        disposition: accepted
+        source_id: source-c7d664518b9bba629716
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: patrick-john-collison-hiring-culture-2014
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: b502f4e293592683e173126453bb376c9d90b265202ecdfbe3d31f138ed42273
+      - candidate_id: candidate-1127057da8a648bf1325
+        candidate_url: https://podcasts.apple.com/mu/podcast/stripes-patrick-collison-micro-pessimism-macro-optimism/id1089013200?i=1000599602701
+        disposition: accepted
+        source_id: source-4cf5bde77c3a4330d227
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: patrick-collison-micro-pessimism-macro-optimism-2023
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 493a556d2095a01b6072884c3334a8c25e981a3c4e08be52f406af5b41652b62
+      - candidate_id: candidate-13936ecf14d65dd28c31
+        candidate_url: https://podcasts.apple.com/us/podcast/claire-hughes-johnson-coo-of-stripe/id1550832941?i=1000521087003
+        disposition: accepted
+        source_id: source-472eb2b12343ba3fa8e5
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: claire-hughes-johnson-angels-podcast-2021
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 152b20ef78d4529ebc15f9a0b2468857057cb0e2450164d388683dc27028d5fd
+      - candidate_id: candidate-1439b0c30bf1445c321a
+        candidate_url: https://www.youtube.com/watch?v=y_4emS6D4og
+        native_id: youtube:y_4emS6D4og
+        disposition: accepted
+        source_id: source-650f1c1afaf31f558df3
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: patrick-collison-unsexy-conf-2013
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 41b3089d7f16c2f6933b8f603b7981b738ef3ae26afb37fb5d2da4d4971e9255
+      - candidate_id: candidate-1629cdd0b52b7485e8c3
+        candidate_url: https://www.youtube.com/watch?v=AM1_NADNSgI
+        native_id: youtube:AM1_NADNSgI
+        disposition: accepted
+        source_id: source-ef5f15ce3644987cd0d2
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: will-gaybrick-inside-stripe-2025
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 87703359c15b05ddb8922c9714ae7b65f4c2b125d8ca01cc6d8ba8575625f8df
+      - candidate_id: candidate-185aa164d5de11d6c5df
+        candidate_url: https://podcasts.apple.com/us/podcast/claire-hughes-johnson-stripe-scaling-operations-and/id80867514?i=1000614322138
+        disposition: accepted
+        source_id: source-57a7fe4d5d7acd711d7b
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: claire-hughes-johnson-scaling-operations-2023
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: b32e9afb9382c6b6aa4c55e0c6fdf021ddf8d479d8179b7ac1e411de6ae05a55
+      - candidate_id: candidate-3d4f461f17d71f4cd763
+        candidate_url: https://a16z.com/podcast/john-and-patrick-collison-on-stripes-growth-agent-commerce-and-the-future-of-software
+        disposition: accepted
+        source_id: source-c8cf9fc9a738a7673ab5
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: john-patrick-collison-stripe-growth-agent-commerce-2026
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 96312e0e64cf5cb3d26109b839fa15f0c0a489e54791c7012b6e54064b0db6fe
+      - candidate_id: candidate-41cecf83fd68f40211f7
+        candidate_url: https://podcasts.apple.com/us/podcast/stripes-david-singleton-on-technology-innovation-putting/id962121995?i=1000569774533
+        disposition: accepted
+        source_id: source-15f3382443f13e368075
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: david-singleton-technology-innovation-2022
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: a13a496da36a7dfd2ad0085fe599b82a071a3fbffb66c945c5f023f771d5477d
+      - candidate_id: candidate-45ffc95252f7c441f9ea
+        candidate_url: https://podcasts.apple.com/us/podcast/128-former-coo-corporate-officer-at-stripe-claire-hughes/id1510985491?i=1000602919224
+        disposition: accepted
+        source_id: source-9dee161b28ef4003aeb3
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: claire-hughes-johnson-scaling-people-2023
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: d35a8712233fbffafd092a0ec9da60365ae42ec791f77c47ba8cc82d764ce14d
+      - candidate_id: candidate-55a7fe20f52aa39d04c8
+        candidate_url: https://www.youtube.com/watch?v=yXN5xSXJ1Is
+        native_id: youtube:yXN5xSXJ1Is
+        disposition: accepted
+        source_id: source-daf244691067ecfd0a84
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: john-collison-stripe-ai-day-paris-2023
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 92548fb2c910ac19ca657ce54724d2dd9e8fc63c26392a2c8234314705697c78
+      - candidate_id: candidate-57efd8e62dc65eb2b27d
+        candidate_url: https://www.youtube.com/watch?v=QhGqLqCzFac
+        native_id: youtube:QhGqLqCzFac
+        disposition: accepted
+        source_id: source-98566fabeed1b3474821
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: john-collison-odd-lots-agentic-commerce-2026
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 9ea29f6259f15d3939dd6c5ea2597180677d6828291b02fd19e597eb8eb2e282
+      - candidate_id: candidate-67aa73c93b621ed7f57f
+        candidate_url: https://podcasts.apple.com/jp/podcast/patrick-collison-has-a-few-questions-for-tyler-live/id983795625?i=1000384289632
+        disposition: rejected
+        reason: Patrick Collison is the interviewer, and the complete capture does not provide material first-person evidence about Stripe or its operating history.
+        evidence:
+          capture_slug: patrick-collison-questions-tyler-live-2017
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: a169461140e144ca5fcfd1899fab7db644dbb1bb1e282c33f37bf3789a663b3c
+      - candidate_id: candidate-706e2306f17330f3136f
+        candidate_url: https://podcasts.apple.com/us/podcast/stripe-ceo-patrick-collison-on-innovating-e-commerce/id1610419911?i=1000613083611
+        disposition: accepted
+        source_id: source-d09d6a2687fa0f13d64c
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: patrick-collison-ecommerce-biomedical-research-2023
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: bdc4d6634d0ed81366000d6461450ba48f7f9f5b27b85adce78f0fc5a1054dbd
+      - candidate_id: candidate-77053ee631e0eb928516
+        candidate_url: https://www.youtube.com/watch?v=F0_IKKY3HCk
+        native_id: youtube:F0_IKKY3HCk
+        disposition: accepted
+        source_id: source-644e7df552ad28028b3a
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: david-singleton-culture-excellence-2023
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 6f6b453e78cd17d4ce4dfb43bcefd2f34befb76305e0d02de31d1bdce0a51675
+      - candidate_id: candidate-7d85ac896cc0297dfb63
+        candidate_url: https://www.newcomer.co/p/scaling-people-with-claire-hughes
+        disposition: accepted
+        source_id: source-a83d235b649d61ebd04a
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: claire-hughes-johnson-scaling-people-newcomer-2023
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 715089f0a258f7e085dbd59b1ddd1e08a26066ac9fbafc4cf8b9be9cd7f03895
+      - candidate_id: candidate-854f7cf473710458e390
+        candidate_url: https://podcasts.apple.com/us/podcast/cro-stripe-mike-clayville-building-tornado-companies/id1510985491?i=1000538185612
+        disposition: accepted
+        source_id: source-28538b94e9867ad8ddea
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: mike-clayville-building-tornado-companies-2021
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 2ca41b9f8aa88d2c43958098b52179a522ebb3d54ee31e35c4a6e83d45271b1a
+      - candidate_id: candidate-87e61f8d1c6c3e38fc93
+        candidate_url: https://podcasts.apple.com/ca/podcast/the-future-of-the-internet-economy-with-stripe/id1462649946?i=1000567104995
+        disposition: accepted
+        source_id: source-6321e360d21ebafc1539
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: john-collison-future-internet-economy-2022
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: ae73fcc54480b4c7423490bd8f051a9603bf07c2bc86d09346eee6dd55815b92
+      - candidate_id: candidate-b861fb2001b954d8ecb3
+        candidate_url: https://www.youtube.com/watch?v=YgYiF86h0yU
+        native_id: youtube:YgYiF86h0yU
+        disposition: accepted
+        source_id: source-119db9dd4efb34c354fa
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: patrick-collison-amjad-masad-start-company-2026
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: d6d3f3c9cc8cb0e2daeb49ce98cbe76fe52bb14f1bd2e6433bf94fd92af16a42
+      - candidate_id: candidate-bf88346930cc77ac95f6
+        candidate_url: https://podcasts.apple.com/no/podcast/stripe-ceo-patrick-collison-on-management-rationalism/id1081584611?i=1000378637097
+        disposition: accepted
+        source_id: source-4091456d98a90957fe07
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: patrick-collison-management-rationalism-2016
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 9d3ce93a839804418f6937fb6e39e2463ffa087f7966ee45f2c68e2eac1121fc
+      - candidate_id: candidate-c09e1de34bf8384cefbb
+        candidate_url: https://podcasts.apple.com/us/podcast/stripes-patrick-collison-im-petrified-of-getting-too/id1233991021?i=1000404469689
+        disposition: accepted
+        source_id: source-1c1ccd634b5f7d73f612
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: patrick-collison-petrified-getting-too-big-2018
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: e950fb84e7d2de2f17a665bd449b72b55fee1bad7a37d3d286377c1240129a69
+      - candidate_id: candidate-d5c6c16bd5aafd553c08
+        candidate_url: https://www.youtube.com/watch?v=-7sWLIybWnQ
+        native_id: youtube:-7sWLIybWnQ
+        disposition: rejected
+        reason: The complete capture is a macro-investing discussion with Stanley Druckenmiller; Stripe appears only in the introduction and receives no material first-person treatment.
+        evidence:
+          capture_slug: john-collison-druckenmiller-sohn-2022
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 36ffd0f932b8c7ed0c6af1d6ccb545027f3eac4eecf66a9e413f79bfb2dcef1e
+      - candidate_id: candidate-d647c9878e90aaa3081d
+        candidate_url: https://www.youtube.com/watch?v=l9wzs_QIyp0
+        native_id: youtube:l9wzs_QIyp0
+        disposition: accepted
+        source_id: source-18b5f3a0d6c6c83811f7
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: john-patrick-collison-friedman-gross-2026
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: b33850f66ab4b941ea1d096110ba39f6ab00f703707a0439e5579aae332132ad
+      - candidate_id: candidate-d85f3dcac8db9b98e403
+        candidate_url: https://podcasts.apple.com/us/podcast/ep-118-will-gaybrick-president-of-product-and/id1606770839?i=1000670156025
+        disposition: accepted
+        source_id: source-39cb086a5372e02b17bc
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: will-gaybrick-capital-allocation-org-design-2024
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 6f5045ab4c70bea73ae98109e872f9bf46570045e716c6d07a03e110a28e8aab
+      - candidate_id: candidate-ec971caf7ddb276570e0
+        candidate_url: https://podcasts.apple.com/us/podcast/tech-and-progress-with-patrick-collison-and-tyler-cowen/id1460731098?i=1000457824338
+        disposition: rejected
+        reason: The complete capture contains a general discussion of technology and progress, but no material first-person evidence about Stripe or its operating history.
+        evidence:
+          capture_slug: patrick-collison-tyler-cowen-tech-progress-2019
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: da69918b392e86f3a2fa8837ec9398414d526dc685680a5baebbe2646a3bd57b
+      - candidate_id: candidate-ef18153d6e91131beee7
+        candidate_url: https://podcasts.apple.com/us/podcast/32-patrick-collison-earning-your-stripes/id990149481?i=1000410487693
+        disposition: accepted
+        source_id: source-5abe9c3805865ebd263c
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: patrick-collison-knowledge-project-2018
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 6b7a186c0ddd38a788b5c70d9571294656dc796fcfcfb9f1c45a6640b95e7890
+      - candidate_id: candidate-f3a7ae41832e7d6713fa
+        candidate_url: https://podcasts.apple.com/id/podcast/patrick-collison-on-programming-languages-ai-and/id1819406817?i=1000717598878
+        disposition: accepted
+        source_id: source-6c270caf7a0f7aea8142
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: patrick-collison-programming-languages-ai-stripe-2025
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 446f5f67cded53729ab95ddda9c3aa0454f000efd2419ff4d7d6e30275f18bfe
+      - candidate_id: candidate-f8bdcfc7437b28cfe1c1
+        candidate_url: https://a16z.com/podcast/patrick-collison-on-stripes-early-choices-smalltalk-and-what-comes-after-coding
+        disposition: accepted
+        source_id: source-3e4c405e9bd479571d83
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: patrick-collison-stripe-early-choices-smalltalk-2026
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 4ba1f74be658ee2eed1b697218c6769736d58e1915a2997ebe2fbdb3ee1b46f8
+      - candidate_id: candidate-f953cd0f071e44d1c27b
+        candidate_url: https://podcasts.apple.com/us/podcast/lessons-from-scaling-stripe-claire-hughes-johnson-ex/id1627920305?i=1000602823726
+        disposition: accepted
+        source_id: source-34e9256f6b05d1c012cb
+        reason: Complete retained capture contains material first-person evidence about Stripe, its products, organization, strategy, or operating history.
+        evidence:
+          capture_slug: claire-hughes-johnson-lessons-scaling-stripe-2023
+          captured_on: 2026-08-19
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 9c8ab8cb6ad45b24f169047a19de8a428f1466f9cc27eefef06548790a9de237
   - kind: baseline-import
     collection: founder-side-projects
     status: complete

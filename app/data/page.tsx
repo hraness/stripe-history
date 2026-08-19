@@ -1,5 +1,4 @@
 import { loadHistory } from "@/lib/content";
-import { loadAppearanceBackfill } from "@/lib/appearance-backfill";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -24,10 +23,7 @@ export const metadata: Metadata = {
 };
 
 export default async function DataPage() {
-  const [history, appearanceBackfill] = await Promise.all([
-    loadHistory(),
-    loadAppearanceBackfill(),
-  ]);
+  const history = await loadHistory();
   const countByCategory = new Map(
     history.categories.map(({ id }) => [
       id,
@@ -169,11 +165,6 @@ export default async function DataPage() {
               <Link href="/appearances">leadership appearances</Link> ·{" "}
               <a href="/research/appearances.yml">YAML</a> ·{" "}
               {history.appearances.length} appearances
-            </li>
-            <li>
-              <Link href="/appearances/backfill">appearance backfill queue</Link> ·{" "}
-              <a href="/research/appearance-backfill.yml">YAML</a> ·{" "}
-              {appearanceBackfill.candidates.length} candidates
             </li>
             <li>
               <a href="/research/collections.yml">research collections YAML</a>

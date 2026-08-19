@@ -53,7 +53,7 @@ Run the same discovery locally with an explicit date:
 bun run history:news:pull -- --as-of 2026-08-20 --json-out /tmp/stripe-news.json --markdown-out /tmp/stripe-news.md
 ```
 
-The manual [leadership appearance backfill](./.github/workflows/appearance-backfill.yml) searches one bounded calendar window at a time from 2009 onward and uploads a review artifact. It does not edit public data or open issues. A reviewer can normalize a completed run into the public, nonindexable [appearance backfill queue](https://stripehistory.com/appearances/backfill); candidates remain separate from the reviewed appearance corpus until full source review. The same window can be inspected locally:
+The manual [leadership appearance backfill](./.github/workflows/appearance-backfill.yml) searches one bounded calendar window at a time from 2009 onward and uploads a private review artifact. It does not edit public data or open issues. Reviewers deduplicate the artifact, capture the retained sources, and merge only evidence-backed records into the main [leadership appearances](https://stripehistory.com/appearances) catalog. The same window can be inspected locally:
 
 ```sh
 bun run history:news:pull -- --from 2020-01-01 --as-of 2020-12-31 --monitor exa-stripe-leadership-appearances --json-out /tmp/stripe-appearances-2020.json --markdown-out /tmp/stripe-appearances-2020.md

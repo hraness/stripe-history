@@ -1,5 +1,4 @@
 import { loadHistory } from "@/lib/content";
-import { loadAppearanceBackfill } from "@/lib/appearance-backfill";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -30,10 +29,7 @@ function durationLabel(seconds: number | undefined): string | null {
 }
 
 export default async function AppearancesPage() {
-  const [history, backfill] = await Promise.all([
-    loadHistory(),
-    loadAppearanceBackfill(),
-  ]);
+  const history = await loadHistory();
   const sourceById = new Map(history.sources.map((source) => [source.id, source]));
 
   return (
@@ -60,12 +56,6 @@ export default async function AppearancesPage() {
           <span>{history.appearances.length} reviewed</span>
         </div>
         <p className="stripe-history-appearances-intro">{description}</p>
-        <p className="stripe-history-appearances-intro">
-          <Link href="/appearances/backfill">
-            Review {backfill.candidates.length} historical appearance candidates
-          </Link>{" "}
-          from the public 2009–2026 leadership backfill.
-        </p>
         <ol className="stripe-history-appearance-list">
           {history.appearances.map((appearance) => {
             const sources = appearance.source_ids.flatMap((sourceId) => {

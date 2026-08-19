@@ -34,6 +34,178 @@ appearances:
           detail: Checkout, delegation, fraud, payments, stablecoins, and model-token infrastructure must change when software agents initiate purchases and machines buy services from machines.
     source_ids: [source-523815a4d8be2b7368b9]
     review_status: reviewed
+  - id: appearance-2026-05-patrick-collison-replit
+    occurred_at: 2026-05-21
+    date_precision: day
+    published_at: 2026-05-21
+    title: The Best Time in History to Start a Company
+    venue: Replit
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+        stripe_role: Co-founder and CEO
+    media: [video, transcript]
+    duration_seconds: 2111
+    duration_precision: exact
+    transcript:
+      availability: automatic
+      language: en
+      source_id: source-119db9dd4efb34c354fa
+    topics: [ai, entrepreneurship, company-creation, software, internet-economy]
+    historical_periods: [stripe-2009-2026]
+    significance: Patrick uses current Stripe formation data to explain the acceleration in new company creation, then connects AI-assisted software development to smaller teams, faster revenue, and new entrepreneurial opportunities.
+    source_ids: [source-119db9dd4efb34c354fa]
+    review_status: reviewed
+  - id: appearance-2026-05-patrick-john-collison-friedman-gross
+    occurred_at: 2026-05-19
+    date_precision: day
+    published_at: 2026-05-19
+    title: Nat Friedman and Daniel Gross in conversation with John and Patrick Collison
+    venue: Stripe
+    participants:
+      - name: John Collison
+        role: speaker
+        stripe_role: Co-founder and President
+      - name: Patrick Collison
+        role: speaker
+        stripe_role: Co-founder and CEO
+    media: [video, transcript]
+    duration_seconds: 3358
+    duration_precision: exact
+    transcript:
+      availability: automatic
+      language: en
+      source_id: source-18b5f3a0d6c6c83811f7
+    topics: [ai, company-building, software, product-strategy, entrepreneurship]
+    historical_periods: [stripe-2009-2026]
+    significance: John and Patrick join Nat Friedman and Daniel Gross for a first-person discussion of how AI changes software creation, company formation, organizational design, and Stripe's product environment.
+    source_ids: [source-18b5f3a0d6c6c83811f7]
+    review_status: reviewed
+  - id: appearance-2026-05-john-collison-odd-lots
+    occurred_at: 2026-05-16
+    date_precision: day
+    published_at: 2026-05-16
+    title: How agentic commerce will reshape the internet
+    venue: Bloomberg Odd Lots
+    participants:
+      - name: John Collison
+        role: interviewee
+        stripe_role: Co-founder and President
+    media: [podcast, video, transcript]
+    duration_seconds: 2975
+    duration_precision: exact
+    transcript:
+      availability: automatic
+      language: en
+      source_id: source-98566fabeed1b3474821
+    topics: [agentic-commerce, payments, stablecoins, internet-economy, product-strategy]
+    historical_periods: [stripe-2009-2026]
+    significance: John explains how autonomous buyers alter discovery, checkout, delegated authority, fraud, and settlement, providing Stripe's current view of the infrastructure required for agentic commerce.
+    source_ids: [source-98566fabeed1b3474821]
+    review_status: reviewed
+  - id: appearance-2026-04-patrick-john-collison-a16z
+    occurred_at: 2026-04-28
+    date_precision: day
+    published_at: 2026-04-28
+    title: Stripe's growth, agent commerce, and the future of software
+    venue: a16z
+    series: The a16z Show
+    participants:
+      - name: John Collison
+        role: interviewee
+        stripe_role: Co-founder and President
+      - name: Patrick Collison
+        role: interviewee
+        stripe_role: Co-founder and CEO
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [growth, agentic-commerce, stablecoins, software, employee-liquidity]
+    historical_periods: [stripe-2009-2026]
+    significance: John and Patrick discuss Stripe's reported growth, employee tender, agent commerce, stablecoins, and the shift from mass-produced software toward bespoke systems generated when needed.
+    source_ids: [source-c8cf9fc9a738a7673ab5]
+    review_status: reviewed
+  - id: appearance-2026-02-patrick-collison-a16z
+    occurred_at: 2026-02-20
+    date_precision: day
+    published_at: 2026-02-20
+    title: Stripe's early choices, Smalltalk, and what comes after coding
+    venue: a16z
+    series: The a16z Show
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+        stripe_role: Co-founder and CEO
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [programming-languages, early-company, software, ai, company-building]
+    historical_periods: [pre-stripe, stripe-2009-2026]
+    significance: Patrick revisits Stripe's early technical choices and Smalltalk roots while considering how AI changes programming, software architecture, and the work of building enduring technology companies.
+    source_ids: [source-3e4c405e9bd479571d83]
+    review_status: reviewed
+  - id: appearance-2025-11-will-gaybrick-the-peel
+    occurred_at: 2025-11-13
+    date_precision: day
+    published_at: 2025-11-13
+    title: "Inside Stripe: Stablecoins, AI, and (not) going public"
+    venue: The Peel
+    participants:
+      - name: Will Gaybrick
+        role: interviewee
+        stripe_role: President of Product and Business
+    media: [podcast, video, transcript]
+    duration_seconds: 5769
+    duration_precision: exact
+    transcript:
+      availability: automatic
+      language: en
+      source_id: source-ef5f15ce3644987cd0d2
+    topics: [stablecoins, ai, product-strategy, organization-design, public-markets]
+    historical_periods: [stripe-2015-2025]
+    significance: Will gives a long first-person account of Stripe's product expansion, stablecoin strategy, AI work, organization, capital allocation, and decision to remain private.
+    source_ids: [source-ef5f15ce3644987cd0d2]
+    review_status: reviewed
+  - id: appearance-2025-07-patrick-collison-cursor
+    occurred_at: 2025-07-17
+    date_precision: day
+    published_at: 2025-07-17
+    title: Programming languages, AI, and Stripe's biggest engineering decisions
+    venue: Cursor
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+        stripe_role: Co-founder and CEO
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [programming-languages, ai, engineering, software-architecture, company-building]
+    historical_periods: [pre-stripe, stripe-2009-2025]
+    significance: Patrick discusses the programming-language ideas behind his early work, Stripe's major architectural decisions and rewrites, his use of AI, and the relationship between software and human organizations.
+    source_ids: [source-6c270caf7a0f7aea8142]
+    review_status: reviewed
+  - id: appearance-2025-06-patrick-collison-hard-fork
+    occurred_at: 2025-06-27
+    date_precision: day
+    published_at: 2025-06-27
+    title: Patrick Collison at Hard Fork Live
+    venue: Hard Fork Live
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+        stripe_role: Co-founder and CEO
+    media: [podcast, video, transcript]
+    duration_seconds: 6598
+    duration_precision: exact
+    transcript:
+      availability: automatic
+      language: en
+      source_id: source-af973a63a7068c0ccff9
+    topics: [agentic-commerce, biotechnology, long-term-thinking, payments, progress]
+    historical_periods: [stripe-2009-2025]
+    significance: Patrick connects Stripe's approach to long-duration company building with agentic commerce and his work in biotechnology, including the Arc Institute and a broader case for institutional ambition.
+    source_ids: [source-af973a63a7068c0ccff9]
+    review_status: reviewed
   - id: appearance-2025-05-patrick-john-collison-sessions-ama
     occurred_at: 2025-05
     date_precision: month
@@ -73,6 +245,42 @@ appearances:
     historical_periods: [stripe-2010-2025]
     significance: Patrick's written congressional testimony gives a first-person account of Stripe's founding, scale, payment-method coverage, Bridge acquisition, and policy case for stablecoins.
     source_ids: [source-18cef128fcb5c9083568, source-bbf6b0fb0b8942bc569f]
+    review_status: reviewed
+  - id: appearance-2025-02-john-collison-squawk-pod
+    occurred_at: 2025-02-28
+    date_precision: day
+    published_at: 2025-02-28
+    title: Stripe CEO John Collison
+    venue: Squawk Pod
+    participants:
+      - name: John Collison
+        role: interviewee
+        stripe_role: Co-founder and President
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [growth, valuation, private-markets, payments, company-building]
+    historical_periods: [stripe-2009-2025]
+    significance: John discusses Stripe's scale, private valuation, long operating horizon, and the company's position in payments with Andrew Ross Sorkin in a rare current interview.
+    source_ids: [source-d5562f80014ab418430b]
+    review_status: reviewed
+  - id: appearance-2024-09-will-gaybrick-logan-bartlett
+    occurred_at: 2024-09-20
+    date_precision: day
+    published_at: 2024-09-20
+    title: Capital allocation, organization design, AI, and global growth
+    venue: The Logan Bartlett Show
+    participants:
+      - name: Will Gaybrick
+        role: interviewee
+        stripe_role: President of Product and Business
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [capital-allocation, organization-design, ai, global-growth, product-strategy]
+    historical_periods: [stripe-2015-2024]
+    significance: Will traces his path from investor to Stripe executive and explains how the company approaches capital allocation, product organization, AI, and international growth.
+    source_ids: [source-39cb086a5372e02b17bc]
     review_status: reviewed
   - id: appearance-2024-04-patrick-john-collison-sessions-ama
     occurred_at: 2024-04-24
@@ -181,6 +389,250 @@ appearances:
     significance: Patrick and John discuss Stripe's strategy, culture, attention to detail, capital allocation, and the internet economy together in a long-form primary interview.
     source_ids: [source-1278271efc6181fee94f]
     review_status: reviewed
+  - id: appearance-2023-10-john-collison-stripe-ai-day
+    occurred_at: 2023-10-06
+    date_precision: day
+    published_at: 2023-10-06
+    title: Arthur Mensch and John Collison at Stripe AI Day Paris
+    venue: Stripe AI Day Paris
+    participants:
+      - name: John Collison
+        role: speaker
+        stripe_role: Co-founder and President
+    media: [video, transcript]
+    duration_seconds: 2330
+    duration_precision: exact
+    transcript:
+      availability: automatic
+      language: en
+      source_id: source-daf244691067ecfd0a84
+    topics: [ai, machine-learning, software, entrepreneurship, product-strategy]
+    historical_periods: [stripe-2009-2023]
+    significance: John discusses the AI company landscape with Mistral co-founder Arthur Mensch at a Stripe event, connecting model development, startup formation, and the infrastructure needs of fast-growing AI businesses.
+    source_ids: [source-daf244691067ecfd0a84]
+    review_status: reviewed
+  - id: appearance-2023-08-claire-hughes-johnson-newcomer
+    occurred_at: 2023-08-08
+    date_precision: day
+    published_at: 2023-08-08
+    title: Scaling People with Claire Hughes Johnson
+    venue: Newcomer
+    participants:
+      - name: Claire Hughes Johnson
+        role: interviewee
+        stripe_role: Corporate Officer and Adviser
+    media: [article]
+    transcript:
+      availability: none
+    topics: [operations, organization-design, hiring, management, company-building]
+    historical_periods: [stripe-2014-2021]
+    significance: Claire explains the operating systems, hiring practices, management expectations, and organizational mechanisms she used while helping Stripe scale from an early company into a global organization.
+    source_ids: [source-a83d235b649d61ebd04a]
+    review_status: reviewed
+  - id: appearance-2023-05-claire-hughes-johnson-stanford
+    occurred_at: 2023-05-24
+    date_precision: day
+    published_at: 2023-05-24
+    title: Scaling Operations and People
+    venue: Stanford eCorner
+    series: Entrepreneurial Thought Leaders
+    participants:
+      - name: Claire Hughes Johnson
+        role: interviewee
+        stripe_role: Corporate Officer and Adviser
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [operations, people, management, culture, company-building]
+    historical_periods: [stripe-2014-2021]
+    significance: Claire turns her experience scaling Stripe's operations and people systems into practical guidance on management, culture, organizational design, and the transition from startup improvisation to durable operating practice.
+    source_ids: [source-57a7fe4d5d7acd711d7b]
+    review_status: reviewed
+  - id: appearance-2023-05-patrick-collison-minor-consult
+    occurred_at: 2023-05-15
+    date_precision: day
+    published_at: 2023-05-15
+    title: Innovating e-commerce and accelerating biomedical research
+    venue: The Minor Consult
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+        stripe_role: Co-founder and CEO
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [founding, ecommerce, biomedical-research, arc-institute, progress]
+    historical_periods: [pre-stripe, stripe-2009-2023]
+    significance: Patrick recounts his path into entrepreneurship and Stripe while explaining why he helped create Arc Institute and how stronger institutions could accelerate biomedical research.
+    source_ids: [source-d09d6a2687fa0f13d64c]
+    review_status: reviewed
+  - id: appearance-2023-05-david-singleton-lenny
+    occurred_at: 2023-05-04
+    date_precision: day
+    published_at: 2023-05-04
+    title: Building a culture of excellence
+    venue: Lenny's Podcast
+    participants:
+      - name: David Singleton
+        role: interviewee
+        stripe_role: Chief Technology Officer
+    media: [podcast, video, transcript]
+    duration_seconds: 5399
+    duration_precision: exact
+    transcript:
+      availability: automatic
+      language: en
+      source_id: source-644e7df552ad28028b3a
+    topics: [engineering, culture, product-development, quality, management]
+    historical_periods: [stripe-2021-2023]
+    significance: David gives a detailed account of Stripe's engineering culture, product quality bar, user feedback loops, leadership expectations, and mechanisms for keeping technical teams focused on customer outcomes.
+    source_ids: [source-644e7df552ad28028b3a]
+    review_status: reviewed
+  - id: appearance-2023-03-claire-hughes-johnson-grit
+    occurred_at: 2023-03-06
+    date_precision: day
+    published_at: 2023-03-06
+    title: Scaling People
+    venue: Grit
+    participants:
+      - name: Claire Hughes Johnson
+        role: interviewee
+        stripe_role: Former Chief Operating Officer
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [management, hiring, operations, leadership, company-building]
+    historical_periods: [stripe-2014-2021]
+    significance: Claire explains the frameworks she developed while scaling Stripe, including how leaders establish operating principles, diagnose organizational problems, and build management systems without losing speed.
+    source_ids: [source-9dee161b28ef4003aeb3]
+    review_status: reviewed
+  - id: appearance-2023-03-claire-hughes-johnson-lenny
+    occurred_at: 2023-03-05
+    date_precision: day
+    published_at: 2023-03-05
+    title: Lessons from scaling Stripe
+    venue: Lenny's Podcast
+    participants:
+      - name: Claire Hughes Johnson
+        role: interviewee
+        stripe_role: Former Chief Operating Officer
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [operations, management, hiring, culture, performance]
+    historical_periods: [stripe-2014-2021]
+    significance: Claire describes the management infrastructure behind Stripe's growth, including goal setting, hiring, performance systems, feedback, and the operating cadences needed as a company moves through successive stages of scale.
+    source_ids: [source-34e9256f6b05d1c012cb]
+    review_status: reviewed
+  - id: appearance-2023-02-david-singleton-saastr
+    occurred_at: 2023-02-22
+    date_precision: day
+    published_at: 2023-02-22
+    title: Extreme Product Design
+    venue: SaaStr
+    participants:
+      - name: David Singleton
+        role: interviewee
+        stripe_role: Chief Technology Officer
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [product-design, user-research, engineering, quality, product-development]
+    historical_periods: [stripe-2021-2023]
+    significance: David explains how Stripe turns close user observation into product and engineering decisions, arguing for unusually direct feedback loops and a quality bar grounded in what customers actually do.
+    source_ids: [source-ff6b00bcb15ca05ca7f4]
+    review_status: reviewed
+  - id: appearance-2023-02-patrick-collison-greymatter
+    occurred_at: 2023-02-14
+    date_precision: day
+    published_at: 2023-02-14
+    title: Micro Pessimism, Macro Optimism
+    venue: Greymatter
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+        stripe_role: Co-founder and CEO
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [company-building, economic-outlook, strategy, startups, long-term-thinking]
+    historical_periods: [stripe-2009-2023]
+    significance: Patrick discusses how Stripe and its users navigate a difficult economic cycle while maintaining a long-term view of internet business formation, technological progress, and the opportunity for new companies.
+    source_ids: [source-4cf5bde77c3a4330d227]
+    review_status: reviewed
+  - id: appearance-2022-07-david-singleton-seedcamp
+    occurred_at: 2022-07-13
+    date_precision: day
+    published_at: 2022-07-13
+    title: Technology innovation, customers, and the CTO role
+    venue: This Much I Know
+    series: The Seedcamp Podcast
+    participants:
+      - name: David Singleton
+        role: interviewee
+        stripe_role: Chief Technology Officer
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [engineering, customers, innovation, leadership, product-development]
+    historical_periods: [stripe-2021-2022]
+    significance: David describes the CTO role at Stripe, the company's customer-centered approach to technical innovation, and the leadership practices required to connect engineering investment with useful products.
+    source_ids: [source-15f3382443f13e368075]
+    review_status: reviewed
+  - id: appearance-2022-06-john-collison-david-mcwilliams
+    occurred_at: 2022-06-20
+    date_precision: day
+    published_at: 2022-06-20
+    title: The future of the internet economy
+    venue: The David McWilliams Podcast
+    participants:
+      - name: John Collison
+        role: interviewee
+        stripe_role: Co-founder and President
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [internet-economy, innovation, entrepreneurship, payments, global-growth]
+    historical_periods: [stripe-2009-2022]
+    significance: John connects Stripe's mission and product development to broader changes in internet business formation, innovation, globalization, and the economic conditions facing entrepreneurs.
+    source_ids: [source-6321e360d21ebafc1539]
+    review_status: reviewed
+  - id: appearance-2021-10-mike-clayville-grit
+    occurred_at: 2021-10-11
+    date_precision: day
+    published_at: 2021-10-11
+    title: Building Tornado Companies
+    venue: Grit
+    participants:
+      - name: Mike Clayville
+        role: interviewee
+        stripe_role: Chief Revenue Officer
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [sales, growth, leadership, organization-design, enterprise]
+    historical_periods: [stripe-2020-2021]
+    significance: Mike explains how Stripe was building its revenue organization for rapid enterprise growth, including leadership, go-to-market design, hiring, and the operating demands of a fast-scaling company.
+    source_ids: [source-28538b94e9867ad8ddea]
+    review_status: reviewed
+  - id: appearance-2021-05-claire-hughes-johnson-angels
+    occurred_at: 2021-05-10
+    date_precision: day
+    published_at: 2021-05-10
+    title: Claire Hughes Johnson, COO of Stripe
+    venue: "The #ANGELS Podcast"
+    participants:
+      - name: Claire Hughes Johnson
+        role: interviewee
+        stripe_role: Chief Operating Officer
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [operations, leadership, hiring, culture, company-building]
+    historical_periods: [stripe-2014-2021]
+    significance: Claire reflects on joining Stripe early, building its operating function, developing leaders and culture, and scaling the company across products, geographies, and organizational stages.
+    source_ids: [source-472eb2b12343ba3fa8e5]
+    review_status: reviewed
   - id: appearance-2020-06-john-collison-colossus
     occurred_at: 2020-06-16
     date_precision: day
@@ -219,6 +671,61 @@ appearances:
     historical_periods: [pre-stripe, stripe-2009-2018]
     significance: Patrick gives an unusually detailed account of his early programming, Auctomatic, Stripe's origin, reading practice, recruiting, and interest in technological progress.
     source_ids: [source-7365200928b2c76a48b7]
+    review_status: reviewed
+  - id: appearance-2018-05-patrick-collison-knowledge-project
+    occurred_at: 2018-05-02
+    date_precision: day
+    published_at: 2018-05-02
+    title: Earning Your Stripes
+    venue: The Knowledge Project
+    series: Episode 32
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+        stripe_role: Co-founder and CEO
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [founding, company-building, decision-making, learning, payments]
+    historical_periods: [pre-stripe, stripe-2009-2018]
+    significance: Patrick gives a broad account of Stripe's origin and growth while discussing decision-making, learning, organizational quality, and the habits he uses to build a long-duration company.
+    source_ids: [source-5abe9c3805865ebd263c]
+    review_status: reviewed
+  - id: appearance-2018-03-patrick-collison-times-tech
+    occurred_at: 2018-03-02
+    date_precision: day
+    published_at: 2018-03-02
+    title: I'm petrified of getting too confident
+    venue: The Times Tech Podcast
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+        stripe_role: Co-founder and CEO
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [company-building, payments, growth, competition, culture]
+    historical_periods: [stripe-2009-2018]
+    significance: Patrick discusses Stripe's position in financial infrastructure, its growth and valuation, and why maintaining uncertainty and intellectual humility mattered as the company became larger.
+    source_ids: [source-1c1ccd634b5f7d73f612]
+    review_status: reviewed
+  - id: appearance-2016-12-patrick-collison-gray-area
+    occurred_at: 2016-12-06
+    date_precision: day
+    published_at: 2016-12-06
+    title: Management, rationalism, and the Enlightenment
+    venue: The Gray Area
+    participants:
+      - name: Patrick Collison
+        role: interviewee
+        stripe_role: Co-founder and CEO
+    media: [podcast]
+    transcript:
+      availability: none
+    topics: [management, rationalism, company-building, culture, payments]
+    historical_periods: [stripe-2009-2016]
+    significance: Patrick explains Stripe's business and management philosophy while connecting the company's operating culture to rationalism, intellectual history, and a belief in technological and institutional progress.
+    source_ids: [source-4091456d98a90957fe07]
     review_status: reviewed
   - id: appearance-2016-05-patrick-john-collison-cbs
     occurred_at: 2016-05-01
@@ -262,6 +769,54 @@ appearances:
     historical_periods: [pre-stripe, stripe-2009-2015]
     significance: John explains how celebrated startups repeatedly pass through uncertainty and failure, placing Stripe's early path in the context of startup evolution and durable company vision.
     source_ids: [source-a5d1d621862fa7f1cac0]
+    review_status: reviewed
+  - id: appearance-2014-10-patrick-john-collison-yc
+    occurred_at: 2014-10-28
+    date_precision: day
+    published_at: 2014-10-28
+    title: Hiring and Culture, Part 2
+    venue: Y Combinator
+    series: Hiring and Culture
+    participants:
+      - name: Patrick Collison
+        role: speaker
+        stripe_role: Co-founder and CEO
+      - name: John Collison
+        role: speaker
+        stripe_role: Co-founder and President
+    media: [video, transcript]
+    duration_seconds: 3037
+    duration_precision: exact
+    transcript:
+      availability: automatic
+      language: en
+      source_id: source-c7d664518b9bba629716
+    topics: [hiring, culture, management, early-company, company-building]
+    historical_periods: [stripe-2009-2014]
+    significance: Patrick and John explain Stripe's early hiring bar, interview process, cultural choices, and management lessons while the company was moving beyond its founding team.
+    source_ids: [source-c7d664518b9bba629716]
+    review_status: reviewed
+  - id: appearance-2013-08-patrick-collison-unsexy
+    occurred_at: 2013-08-13
+    date_precision: day
+    published_at: 2013-08-13
+    title: Patrick Collison at unSEXY Conf 2013
+    venue: unSEXY Conference
+    participants:
+      - name: Patrick Collison
+        role: speaker
+        stripe_role: Co-founder and CEO
+    media: [video, transcript]
+    duration_seconds: 676
+    duration_precision: exact
+    transcript:
+      availability: automatic
+      language: en
+      source_id: source-650f1c1afaf31f558df3
+    topics: [founding, payments, early-company, product, entrepreneurship]
+    historical_periods: [stripe-2009-2013]
+    significance: Patrick gives a compact contemporaneous account of the payments problem Stripe set out to solve, the early product, and the company's progress while it was still a young startup.
+    source_ids: [source-650f1c1afaf31f558df3]
     review_status: reviewed
   - id: appearance-2012-04-patrick-collison-startup-grind
     occurred_at: '2012'
