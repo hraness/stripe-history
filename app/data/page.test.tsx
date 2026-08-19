@@ -37,6 +37,9 @@ describe("Stripe company history dataset", () => {
     expect(html).toContain('href="/research/sources.yml"');
     expect(html).toContain('href="/research/valuations.yml"');
     expect(html).toContain('href="/research/appearances.yml"');
+    expect(html).toContain('href="/appearances/backfill"');
+    expect(html).toContain('href="/research/appearance-backfill.yml"');
+    expect(html).toContain("31 candidates");
     expect(html).toContain('href="/research/collections.yml"');
     expect(html).toContain('href="/research/runs.yml"');
     expect(html).toContain(`${history.sources.length} canonical sources`);
