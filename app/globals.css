@@ -291,6 +291,59 @@
   text-align: end;
 }
 
+.stripe-history-backfill-intro {
+  color: var(--plain-muted);
+  display: grid;
+  gap: 0.7rem;
+  margin-bottom: 2rem;
+  max-width: 42rem;
+}
+
+.stripe-history-backfill-intro p,
+.stripe-history-backfill-list h3,
+.stripe-history-backfill-list p {
+  margin: 0;
+}
+
+.stripe-history-backfill-years {
+  display: grid;
+  gap: 2rem;
+}
+
+.stripe-history-backfill-years > section > .stripe-history-section-heading {
+  border-top: 2px solid var(--plain-foreground);
+  margin-bottom: 0;
+  padding-top: 0.5rem;
+}
+
+.stripe-history-backfill-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stripe-history-backfill-list > li {
+  border-top: 1px solid var(--plain-line);
+}
+
+.stripe-history-backfill-list article {
+  padding-block: 0.85rem 1rem;
+}
+
+.stripe-history-backfill-list h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-label);
+  line-height: 1.35;
+  margin-top: 0.25rem;
+}
+
+.stripe-history-backfill-list .stripe-history-appearance-participants,
+.stripe-history-backfill-source {
+  color: var(--plain-muted);
+  font-size: var(--text-caption);
+  margin-top: 0.3rem;
+}
+
 .stripe-history-state button {
   background: var(--plain-foreground);
   border: 1px solid var(--plain-foreground);

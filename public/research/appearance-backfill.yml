@@ -1,0 +1,168 @@
+schema: stripe-history/appearance-backfill/v1
+completed_at: 2026-08-19T14:45:15Z
+workflow_run: https://github.com/hraness/stripe-history/actions/runs/32265726670
+monitor_id: exa-stripe-leadership-appearances
+review_window:
+  from: 2009-01-01
+  through: 2026-08-19
+counts:
+  raw_hits: 47
+  already_reviewed_variants: 9
+  duplicate_variants: 5
+  excluded_hits: 2
+candidates:
+  - published_at: 2026-05-21
+    title: "The Best Time in History to Start a Company | Patrick Collison & Amjad Masad"
+    url: https://www.youtube.com/watch?v=YgYiF86h0yU
+    participants: [Patrick Collison]
+    review_status: source-review-needed
+  - published_at: 2026-05-19
+    title: "Nat Friedman and Daniel Gross in conversation with John and Patrick Collison"
+    url: https://www.youtube.com/watch?v=l9wzs_QIyp0
+    participants: [John Collison, Patrick Collison]
+    review_status: source-review-needed
+  - published_at: 2026-05-16
+    title: "Stripe's John Collison on How Agentic Commerce Will Reshape the Internet | Odd Lots"
+    url: https://www.youtube.com/watch?v=QhGqLqCzFac
+    participants: [John Collison]
+    review_status: source-review-needed
+  - published_at: 2026-04-28
+    title: "John and Patrick Collison on Stripe's Growth, Agent Commerce, and the Future of Software"
+    url: https://a16z.com/podcast/john-and-patrick-collison-on-stripes-growth-agent-commerce-and-the-future-of-software
+    participants: [John Collison, Patrick Collison]
+    review_status: source-review-needed
+  - published_at: 2026-02-20
+    title: "Patrick Collison on Stripe's Early Choices, Smalltalk, and What Comes After Coding"
+    url: https://a16z.com/podcast/patrick-collison-on-stripes-early-choices-smalltalk-and-what-comes-after-coding
+    participants: [Patrick Collison]
+    review_status: source-review-needed
+  - published_at: 2025-11-13
+    title: "Inside Stripe: Stablecoins, AI, and (not) Going Public | Will Gaybrick"
+    url: https://www.youtube.com/watch?v=AM1_NADNSgI
+    participants: [Will Gaybrick]
+    review_status: source-review-needed
+  - published_at: 2025-07-17
+    title: "Patrick Collison on programming languages, AI, and Stripe"
+    url: https://podcasts.apple.com/id/podcast/patrick-collison-on-programming-languages-ai-and/id1819406817?i=1000717598878
+    participants: [Patrick Collison]
+    review_status: source-review-needed
+  - published_at: 2025-06-27
+    title: "Hard Fork Live, with Patrick Collison, Kathryn Zealand, Sam Altman & Brad Lightcap"
+    url: https://www.youtube.com/watch?v=jdNwzYMtPN8
+    participants: [Patrick Collison]
+    review_status: source-review-needed
+  - published_at: 2025-02-28
+    title: "Bonus Episode: Stripe CEO John Collison"
+    url: https://podcasts.apple.com/us/podcast/bonus-episode-stripe-ceo-john-collison-2-28-25/id1480890290?i=1000696834852
+    participants: [John Collison]
+    review_status: source-review-needed
+  - published_at: 2024-09-20
+    title: "Will Gaybrick on capital allocation, org design, AI, and global growth"
+    url: https://podcasts.apple.com/us/podcast/ep-118-will-gaybrick-president-of-product-and/id1606770839?i=1000670156025
+    participants: [Will Gaybrick]
+    review_status: source-review-needed
+  - published_at: 2023-10-06
+    title: "Arthur Mensch and John Collison | Stripe AI Day Paris"
+    url: https://www.youtube.com/watch?v=yXN5xSXJ1Is
+    participants: [John Collison]
+    review_status: source-review-needed
+  - published_at: 2023-08-08
+    title: "Scaling People with Claire Hughes Johnson"
+    url: https://www.newcomer.co/p/scaling-people-with-claire-hughes
+    participants: [Claire Hughes Johnson]
+    review_status: source-review-needed
+  - published_at: 2023-05-24
+    title: "Claire Hughes Johnson on scaling operations and culture at Stripe"
+    url: https://podcasts.apple.com/us/podcast/claire-hughes-johnson-stripe-scaling-operations-and/id80867514?i=1000614322138
+    participants: [Claire Hughes Johnson]
+    review_status: source-review-needed
+  - published_at: 2023-05-15
+    title: "Stripe CEO Patrick Collison on innovating e-commerce and accelerating biomedical research"
+    url: https://podcasts.apple.com/us/podcast/stripe-ceo-patrick-collison-on-innovating-e-commerce/id1610419911?i=1000613083611
+    participants: [Patrick Collison]
+    review_status: source-review-needed
+  - published_at: 2023-05-04
+    title: "Building a culture of excellence | David Singleton"
+    url: https://www.youtube.com/watch?v=F0_IKKY3HCk
+    participants: [David Singleton]
+    review_status: source-review-needed
+  - published_at: 2023-03-06
+    title: "Former Stripe COO Claire Hughes Johnson on scaling people"
+    url: https://podcasts.apple.com/us/podcast/128-former-coo-corporate-officer-at-stripe-claire-hughes/id1510985491?i=1000602919224
+    participants: [Claire Hughes Johnson]
+    review_status: source-review-needed
+  - published_at: 2023-03-05
+    title: "Lessons from scaling Stripe | Claire Hughes Johnson"
+    url: https://podcasts.apple.com/us/podcast/lessons-from-scaling-stripe-claire-hughes-johnson-ex/id1627920305?i=1000602823726
+    participants: [Claire Hughes Johnson]
+    review_status: source-review-needed
+  - published_at: 2023-02-22
+    title: "Extreme Product Design with Stripe CTO David Singleton"
+    url: https://podcasts.apple.com/us/podcast/saastr-636-extreme-product-design-building-things-people/id1089973241?i=1000601129097
+    participants: [David Singleton]
+    review_status: source-review-needed
+  - published_at: 2023-02-14
+    title: "Stripe's Patrick Collison: Micro Pessimism, Macro Optimism"
+    url: https://podcasts.apple.com/mu/podcast/stripes-patrick-collison-micro-pessimism-macro-optimism/id1089013200?i=1000599602701
+    participants: [Patrick Collison]
+    review_status: source-review-needed
+  - published_at: 2022-07-13
+    title: "Stripe's David Singleton on technology innovation, customers, and the CTO role"
+    url: https://podcasts.apple.com/us/podcast/stripes-david-singleton-on-technology-innovation-putting/id962121995?i=1000569774533
+    participants: [David Singleton]
+    review_status: source-review-needed
+  - published_at: 2022-06-20
+    title: "The future of the internet economy with John Collison"
+    url: https://podcasts.apple.com/ca/podcast/the-future-of-the-internet-economy-with-stripe/id1462649946?i=1000567104995
+    participants: [John Collison]
+    review_status: source-review-needed
+  - published_at: 2022-06-10
+    title: "John Collison in conversation with Stanley Druckenmiller | Sohn 2022"
+    url: https://www.youtube.com/watch?v=-7sWLIybWnQ
+    participants: [John Collison]
+    review_status: source-review-needed
+  - published_at: 2021-10-11
+    title: "Stripe CRO Mike Clayville: Building Tornado Companies"
+    url: https://podcasts.apple.com/us/podcast/cro-stripe-mike-clayville-building-tornado-companies/id1510985491?i=1000538185612
+    participants: [Mike Clayville]
+    review_status: source-review-needed
+  - published_at: 2021-05-10
+    title: "Claire Hughes Johnson, COO of Stripe | The #ANGELS Podcast"
+    url: https://podcasts.apple.com/us/podcast/claire-hughes-johnson-coo-of-stripe/id1550832941?i=1000521087003
+    participants: [Claire Hughes Johnson]
+    review_status: source-review-needed
+  - published_at: 2019-11-25
+    title: "Tech and Progress with Patrick Collison and Tyler Cowen"
+    url: https://podcasts.apple.com/us/podcast/tech-and-progress-with-patrick-collison-and-tyler-cowen/id1460731098?i=1000457824338
+    participants: [Patrick Collison]
+    review_status: source-review-needed
+  - published_at: 2018-05-02
+    title: "Patrick Collison: Earning Your Stripes | The Knowledge Project"
+    url: https://podcasts.apple.com/us/podcast/32-patrick-collison-earning-your-stripes/id990149481?i=1000410487693
+    participants: [Patrick Collison]
+    review_status: source-review-needed
+  - published_at: 2018-03-02
+    title: "Stripe's Patrick Collison: I'm petrified of getting too big"
+    url: https://podcasts.apple.com/us/podcast/stripes-patrick-collison-im-petrified-of-getting-too/id1233991021?i=1000404469689
+    participants: [Patrick Collison]
+    review_status: source-review-needed
+  - published_at: 2017-04-12
+    title: "Patrick Collison has a few questions for Tyler (live)"
+    url: https://podcasts.apple.com/jp/podcast/patrick-collison-has-a-few-questions-for-tyler-live/id983795625?i=1000384289632
+    participants: [Patrick Collison]
+    review_status: source-review-needed
+  - published_at: 2016-12-06
+    title: "Stripe CEO Patrick Collison on management, rationalism, and the Enlightenment"
+    url: https://podcasts.apple.com/no/podcast/stripe-ceo-patrick-collison-on-management-rationalism/id1081584611?i=1000378637097
+    participants: [Patrick Collison]
+    review_status: source-review-needed
+  - published_at: 2014-10-28
+    title: "Hiring and Culture, Part 2 | Patrick and John Collison"
+    url: https://www.youtube.com/watch?v=H8Dl8rZ6qwE
+    participants: [Patrick Collison, John Collison]
+    review_status: source-review-needed
+  - published_at: 2013-08-13
+    title: "unSEXY Conf 2013: Patrick Collison, Stripe"
+    url: https://www.youtube.com/watch?v=y_4emS6D4og
+    participants: [Patrick Collison]
+    review_status: source-review-needed
