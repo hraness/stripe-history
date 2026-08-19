@@ -187,12 +187,12 @@ describe("Stripe history research audit", () => {
     expect(report.historyFiles).toBe(11);
     expect(report.events).toBeGreaterThan(200);
     expect(report.valuations).toBeGreaterThanOrEqual(25);
-    expect(report.appearances).toBe(13);
+    expect(report.appearances).toBe(41);
     expect(report.sources).toBeGreaterThan(250);
     expect(report.datasetReferencedSources).toBeLessThanOrEqual(report.referencedSources);
     expect(report.mutableSourceUrls).toBe(1);
     expect(report.mutableSourceSnapshots).toBe(5);
-    expect(report.researchRuns).toBe(4);
+    expect(report.researchRuns).toBe(5);
     expect(report.referencedSources + report.unreferencedSources).toBe(report.sources);
     expect(report.unreferencedSources).toBe(0);
     expect(report.collectionInputs).toBeGreaterThan(40);
@@ -231,7 +231,7 @@ describe("Stripe history research audit", () => {
 
     const evolvedReport = await auditHistoryResearch(temporaryProject);
     expect(evolvedReport).toMatchObject({
-      researchRuns: 5,
+      researchRuns: 6,
     });
 
     const [unfinishedPlan] = await planHistoryResearchDiscovery(
@@ -370,6 +370,23 @@ describe("Stripe history research audit", () => {
     );
   });
 
+  test("binds historical backfills to their prior accepted corpus", async () => {
+    const temporaryProject = await copyResearchProject();
+    const runsPath = join(temporaryProject, "public", "research", "runs.yml");
+    const runs = parse(await readFile(runsPath, "utf8")) as {
+      runs: Array<Record<string, unknown>>;
+    };
+    const backfill = runs.runs.find(({ collection, kind }) =>
+      kind === "backfill" && collection === "founder-appearances");
+    if (backfill === undefined) throw new Error("Missing founder appearance backfill fixture");
+    backfill.accepted_input_sha256 = "0".repeat(64);
+    await writeFile(runsPath, stringify(runs));
+
+    await expect(auditHistoryResearch(temporaryProject)).rejects.toThrow(
+      "founder-appearances backfill accepted-input digest is invalid",
+    );
+  });
+
   test("requires complete evidence for every all-accepted input in strict archive mode", async () => {
     const temporaryProject = await copyResearchProject();
     const captureRoot = await temporaryCaptureRoot();
@@ -377,13 +394,6 @@ describe("Stripe history research audit", () => {
     await writeWebCapture(captureRoot, "stripe-changelog-snapshot-2026-08-12", {
       evidence,
       sourceUrl: "https://stripe.com/blog/changelog",
-      status: "complete",
-    });
-    const appearanceEvidence = "complete a16z appearance capture evidence";
-    await writeWebCapture(captureRoot, "tokens-are-the-new-dollars-evidence-2026-08-19", {
-      capturedAt: "2026-08-19T12:00:00.000Z",
-      evidence: appearanceEvidence,
-      sourceUrl: "https://www.youtube.com/watch?v=P5iICDVn5gc",
       status: "complete",
     });
     const collectionsPath = join(temporaryProject, "public", "research", "collections.yml");
@@ -395,17 +405,32 @@ describe("Stripe history research audit", () => {
     mutable.capture_evidence.sha256 = createHash("sha256").update(evidence).digest("hex");
     const runsPath = join(temporaryProject, "public", "research", "runs.yml");
     const runs = parse(await readFile(runsPath, "utf8")) as {
-      runs: Array<{ collection: string; decisions?: Array<{ evidence?: { sha256: string } }> }>;
+      runs: Array<{
+        decisions?: Array<{
+          candidate_url: string;
+          evidence?: {
+            capture_slug: string;
+            captured_on: string;
+            sha256: string;
+          };
+        }>;
+      }>;
     };
-    const appearanceRun = runs.runs.find(({ collection, decisions }) =>
-      collection === "founder-appearances" && decisions !== undefined && decisions.length > 0);
-    const appearanceDecision = appearanceRun?.decisions?.[0];
-    if (appearanceDecision?.evidence === undefined) {
-      throw new Error("Missing appearance evidence fixture");
+    for (const run of runs.runs) {
+      for (const decision of run.decisions ?? []) {
+        if (decision.evidence === undefined) continue;
+        const decisionEvidence = `complete evidence for ${decision.candidate_url}`;
+        await writeWebCapture(captureRoot, decision.evidence.capture_slug, {
+          capturedAt: `${decision.evidence.captured_on}T12:00:00.000Z`,
+          evidence: decisionEvidence,
+          sourceUrl: decision.candidate_url,
+          status: "complete",
+        });
+        decision.evidence.sha256 = createHash("sha256")
+          .update(decisionEvidence)
+          .digest("hex");
+      }
     }
-    appearanceDecision.evidence.sha256 = createHash("sha256")
-      .update(appearanceEvidence)
-      .digest("hex");
     await Promise.all([
       writeFile(collectionsPath, stringify(collections)),
       writeFile(runsPath, stringify(runs)),

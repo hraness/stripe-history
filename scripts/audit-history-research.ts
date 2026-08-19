@@ -492,6 +492,23 @@ function baselinePlanPayload(
   };
 }
 
+function backfillPlanPayload(
+  collection: ResearchCollection,
+  acceptedSourceIds: readonly string[],
+  artifactUrl: string,
+  reviewWindow: Readonly<{ from: string; through: string }>,
+): Readonly<Record<string, unknown>> {
+  return {
+    acceptedInputSha256: sha256(canonicalJson(acceptedSourceIds)),
+    acceptedSourceIds,
+    artifactUrl,
+    collection: collection.id,
+    dataset: collection.dataset,
+    reviewWindow,
+    schema: "stripe-history/research-backfill-plan/v1",
+  };
+}
+
 export function stableCandidateDecisionId(
   collection: string,
   planSha256: string,
@@ -659,6 +676,68 @@ function verifyDiscoveryRun(
   }
 }
 
+function verifyBackfillRun(
+  run: Extract<ResearchRun, { kind: "backfill" }>,
+  collection: ResearchCollection,
+  sourceById: ReadonlyMap<string, ResearchSource>,
+): void {
+  if (run.collection !== collection.id) {
+    throw new Error(`Backfill run ${run.plan_sha256} has inconsistent collection identity`);
+  }
+  if (run.review_window.through > collection.coverage.through) {
+    throw new Error(`${collection.id} backfill review exceeds collection coverage`);
+  }
+  const expectedAcceptedDigest = sha256(canonicalJson(run.accepted_source_ids));
+  if (run.accepted_input_sha256 !== expectedAcceptedDigest) {
+    throw new Error(`${collection.id} backfill accepted-input digest is invalid`);
+  }
+  const expectedPlanDigest = sha256(canonicalJson(backfillPlanPayload(
+    collection,
+    run.accepted_source_ids,
+    run.artifact_url,
+    run.review_window,
+  )));
+  if (run.plan_sha256 !== expectedPlanDigest) {
+    throw new Error(`${collection.id} backfill plan digest is invalid`);
+  }
+  assertCanonicalUrlValue(run.artifact_url, `${collection.id} backfill artifact`);
+  for (const sourceId of run.accepted_source_ids) {
+    if (!sourceById.has(sourceId)) {
+      throw new Error(`${collection.id} backfill input references missing ${sourceId}`);
+    }
+  }
+  for (const decision of run.decisions) {
+    assertCanonicalUrlValue(decision.candidate_url, `${collection.id} ${decision.candidate_id}`);
+    const expectedId = stableCandidateDecisionId(
+      collection.id,
+      run.plan_sha256,
+      decision.candidate_url,
+      decision.native_id,
+    );
+    if (decision.candidate_id !== expectedId) {
+      throw new Error(`${collection.id} candidate ${decision.candidate_id} must use ${expectedId}`);
+    }
+    if (decision.disposition === "accepted") {
+      const source = sourceById.get(decision.source_id);
+      if (source === undefined) {
+        throw new Error(`${collection.id} accepted candidate references missing ${decision.source_id}`);
+      }
+      if (canonicalCaptureUrl(source.url) !== canonicalCaptureUrl(decision.candidate_url)) {
+        throw new Error(`${collection.id} accepted candidate URL does not match ${decision.source_id}`);
+      }
+      if (decision.evidence.status !== "complete") {
+        throw new Error(`${collection.id} accepted candidate requires complete capture evidence`);
+      }
+    } else if (decision.disposition === "duplicate") {
+      if (!sourceById.has(decision.duplicate_of_source_id)) {
+        throw new Error(
+          `${collection.id} duplicate candidate references missing ${decision.duplicate_of_source_id}`,
+        );
+      }
+    }
+  }
+}
+
 function verifyResearchRuns(
   loaded: LoadedResearch,
   sourceById: ReadonlyMap<string, ResearchSource>,
@@ -674,6 +753,7 @@ function verifyResearchRuns(
       throw new Error(`${collection.id} does not accept discovery-run ledger entries`);
     }
     if (run.kind === "discovery") verifyDiscoveryRun(run, collection, sourceById);
+    if (run.kind === "backfill") verifyBackfillRun(run, collection, sourceById);
   }
 
   for (const collection of loaded.collections) {
@@ -682,13 +762,22 @@ function verifyResearchRuns(
     const completeRuns = runs
       .filter((run) => run.status === "complete")
       .toSorted((left, right) => {
-        const leftTarget = left.kind === "baseline-import"
-          ? left.target_through
-          : left.plan.watermark.targetThrough;
-        const rightTarget = right.kind === "baseline-import"
-          ? right.target_through
-          : right.plan.watermark.targetThrough;
-        return leftTarget.localeCompare(rightTarget);
+        const target = (run: ResearchRun): string => {
+          if (run.kind === "baseline-import") return run.target_through;
+          if (run.kind === "discovery") return run.plan.watermark.targetThrough;
+          return run.completed_on;
+        };
+        const rank = (run: ResearchRun): number => {
+          if (run.kind === "baseline-import") return 0;
+          if (run.kind === "discovery") return 1;
+          return 2;
+        };
+        const digest = (run: ResearchRun): string => run.kind === "discovery"
+          ? run.plan.planSha256
+          : run.plan_sha256;
+        return target(left).localeCompare(target(right))
+          || rank(left) - rank(right)
+          || digest(left).localeCompare(digest(right));
       });
     const baselineRuns = completeRuns.filter((run) => run.kind === "baseline-import");
     if (baselineRuns.length !== 1 || completeRuns[0]?.kind !== "baseline-import") {
@@ -721,25 +810,28 @@ function verifyResearchRuns(
     let acceptedSourceIds = [...imported];
     let reviewedThrough = baseline.target_through;
     for (const run of completeRuns.slice(1)) {
-      if (run.kind !== "discovery") {
+      if (run.kind === "baseline-import") {
         throw new Error(`${collection.id} cannot contain a second baseline import`);
       }
-      if (run.plan.watermark.reviewedThrough !== reviewedThrough) {
-        throw new Error(`${collection.id} complete discovery runs must form a watermark chain`);
+      const runAcceptedSourceIds = run.kind === "discovery"
+        ? run.plan.acceptedSourceIds
+        : run.accepted_source_ids;
+      if (!sameValues(runAcceptedSourceIds, acceptedSourceIds)) {
+        const label = run.kind === "discovery" ? "discovery" : "backfill";
+        throw new Error(`${collection.id} ${label} inputs do not match the prior complete run`);
       }
-      if (!sameValues(run.plan.acceptedSourceIds, acceptedSourceIds)) {
-        throw new Error(`${collection.id} discovery inputs do not match the prior complete run`);
+      if (run.kind === "discovery" && run.plan.watermark.reviewedThrough !== reviewedThrough) {
+        throw new Error(`${collection.id} complete discovery runs must form a watermark chain`);
       }
       acceptedSourceIds = [
         ...acceptedSourceIds,
-        ...run.decisions
-          .filter((decision) => decision.disposition === "accepted")
-          .map(({ source_id: sourceId }) => sourceId),
+        ...run.decisions.flatMap((decision) =>
+          decision.disposition === "accepted" ? [decision.source_id] : []),
       ].toSorted();
       if (new Set(acceptedSourceIds).size !== acceptedSourceIds.length) {
-        throw new Error(`${collection.id} complete discovery run re-accepts an existing source`);
+        throw new Error(`${collection.id} complete run re-accepts an existing source`);
       }
-      reviewedThrough = run.plan.watermark.targetThrough;
+      if (run.kind === "discovery") reviewedThrough = run.plan.watermark.targetThrough;
     }
     if (reviewedThrough !== collection.coverage.through) {
       throw new Error(
@@ -1202,7 +1294,7 @@ async function verifyDeclaredCaptureEvidence(
     );
   }
   for (const run of loaded.researchRuns) {
-    if (run.kind !== "discovery") continue;
+    if (run.kind === "baseline-import") continue;
     for (const decision of run.decisions) {
       if (decision.evidence !== undefined) {
         await verifyCaptureEvidenceBundle(

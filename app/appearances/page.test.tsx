@@ -25,7 +25,6 @@ describe("Stripe leadership appearances", () => {
     expect(html).toContain('"@type":"CollectionPage"');
     expect(html).toContain('"@type":"PodcastEpisode"');
     expect(html).toContain('"@type":"VideoObject"');
-    expect(html).toContain('href="/appearances/backfill"');
-    expect(html).toContain("Review 31 historical appearance candidates");
+    expect(html).not.toContain('href="/appearances/backfill"');
   });
 });

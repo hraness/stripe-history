@@ -800,6 +800,33 @@ const ResearchCandidateDecisionSchema = z.discriminatedUnion("disposition", [
   }),
 ]);
 
+const researchBackfillDecisionBase = {
+  candidate_id: z.string().regex(/^candidate-[a-f0-9]{20}$/u),
+  candidate_url: HttpsUrlSchema,
+  native_id: CompactTextSchema.max(160).optional(),
+  reason: CompactTextSchema,
+} as const;
+
+const ResearchBackfillDecisionSchema = z.discriminatedUnion("disposition", [
+  z.strictObject({
+    ...researchBackfillDecisionBase,
+    disposition: z.literal("accepted"),
+    evidence: ResearchCaptureEvidenceSchema,
+    source_id: SourceIdSchema,
+  }),
+  z.strictObject({
+    ...researchBackfillDecisionBase,
+    disposition: z.literal("duplicate"),
+    duplicate_of_source_id: SourceIdSchema,
+    evidence: ResearchCaptureEvidenceSchema.optional(),
+  }),
+  z.strictObject({
+    ...researchBackfillDecisionBase,
+    disposition: z.literal("rejected"),
+    evidence: ResearchCaptureEvidenceSchema.optional(),
+  }),
+]);
+
 const ResearchBaselineImportRunSchema = z.strictObject({
   accepted_input_sha256: Sha256Schema,
   candidate_history: z.literal("not-reconstructible-pre-ledger"),
@@ -871,16 +898,80 @@ const ResearchDiscoveryRunSchema = z.strictObject({
   }
 });
 
+const ResearchBackfillRunSchema = z.strictObject({
+  accepted_input_sha256: Sha256Schema,
+  accepted_source_ids: z.array(SourceIdSchema).min(1).max(300),
+  artifact_url: HttpsUrlSchema,
+  collection: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u),
+  completed_on: ExactDateSchema,
+  decisions: z.array(ResearchBackfillDecisionSchema).min(1).max(2_000),
+  kind: z.literal("backfill"),
+  plan_sha256: Sha256Schema,
+  recorded_on: ExactDateSchema,
+  review_window: z.strictObject({
+    from: ExactDateSchema,
+    through: ExactDateSchema,
+  }),
+  status: z.literal("complete"),
+}).superRefine((run, context) => {
+  if (run.recorded_on > run.completed_on) {
+    context.addIssue({
+      code: "custom",
+      message: "Backfill run must be recorded by its completion date",
+      path: ["recorded_on"],
+    });
+  }
+  if (run.review_window.from > run.review_window.through) {
+    context.addIssue({
+      code: "custom",
+      message: "Backfill review window must be chronological",
+      path: ["review_window"],
+    });
+  }
+  if (run.review_window.through > run.completed_on) {
+    context.addIssue({
+      code: "custom",
+      message: "Backfill review window must not follow its completion date",
+      path: ["review_window", "through"],
+    });
+  }
+  uniqueValues(run.accepted_source_ids, context, ["accepted_source_ids"]);
+  uniqueValues(run.decisions.map(({ candidate_id: id }) => id), context, ["decisions"]);
+  const sortedInputs = run.accepted_source_ids.toSorted();
+  if (run.accepted_source_ids.some((id, index) => id !== sortedInputs[index])) {
+    context.addIssue({
+      code: "custom",
+      message: "Backfill accepted inputs must be ordered by source ID",
+      path: ["accepted_source_ids"],
+    });
+  }
+  const sortedDecisions = run.decisions.map(({ candidate_id: id }) => id).toSorted();
+  if (run.decisions.some(({ candidate_id: id }, index) => id !== sortedDecisions[index])) {
+    context.addIssue({
+      code: "custom",
+      message: "Backfill candidate decisions must be ordered by ID",
+      path: ["decisions"],
+    });
+  }
+});
+
 export const ResearchRunLedgerSchema = z.strictObject({
   runs: z.array(z.discriminatedUnion("kind", [
     ResearchBaselineImportRunSchema,
+    ResearchBackfillRunSchema,
     ResearchDiscoveryRunSchema,
   ])).min(1).max(500),
   schema: z.literal(STRIPE_HISTORY_RESEARCH_RUNS_SCHEMA_VERSION),
 }).superRefine((ledger, context) => {
-  const keys = ledger.runs.map((run) => run.kind === "baseline-import"
-    ? `${run.collection}:${run.target_through}:${run.plan_sha256}`
-    : `${run.collection}:${run.plan.watermark.targetThrough}:${run.plan.planSha256}`);
+  const keys = ledger.runs.map((run) => {
+    if (run.kind === "baseline-import") {
+      return `${run.collection}:${run.target_through}:0-baseline:${run.plan_sha256}`;
+    }
+    if (run.kind === "discovery") {
+      return `${run.collection}:${run.plan.watermark.targetThrough}:1-discovery:${run.plan.planSha256}`;
+    }
+    return `${run.collection}:${run.completed_on}:2-backfill:${run.plan_sha256}`;
+  });
   uniqueValues(keys, context, ["runs"]);
   const sortedKeys = keys.toSorted();
   if (keys.some((key, index) => key !== sortedKeys[index])) {

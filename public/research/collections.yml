@@ -27,19 +27,47 @@ collections:
       - research/appearances.yml
     input_source_ids:
       - source-001e51b689b259d0b4e3
+      - source-119db9dd4efb34c354fa
       - source-1278271efc6181fee94f
+      - source-15f3382443f13e368075
+      - source-18b5f3a0d6c6c83811f7
       - source-18cef128fcb5c9083568
+      - source-1c1ccd634b5f7d73f612
       - source-26410b426525f71187bb
+      - source-28538b94e9867ad8ddea
+      - source-34e9256f6b05d1c012cb
+      - source-39cb086a5372e02b17bc
+      - source-3e4c405e9bd479571d83
+      - source-4091456d98a90957fe07
+      - source-472eb2b12343ba3fa8e5
+      - source-4cf5bde77c3a4330d227
       - source-4d80199395399e9e47d8
       - source-51a0e1edbe8fc1ce9d5a
       - source-523815a4d8be2b7368b9
+      - source-57a7fe4d5d7acd711d7b
+      - source-5abe9c3805865ebd263c
+      - source-6321e360d21ebafc1539
+      - source-644e7df552ad28028b3a
+      - source-650f1c1afaf31f558df3
+      - source-6c270caf7a0f7aea8142
       - source-7365200928b2c76a48b7
       - source-7db75f16638fc07f166c
+      - source-98566fabeed1b3474821
+      - source-9dee161b28ef4003aeb3
       - source-a5d1d621862fa7f1cac0
+      - source-a83d235b649d61ebd04a
+      - source-af973a63a7068c0ccff9
       - source-bbf6b0fb0b8942bc569f
       - source-bda69e86e22cf8e2c66f
+      - source-c7d664518b9bba629716
+      - source-c8cf9fc9a738a7673ab5
       - source-ca9f69ba263dbc27bda3
+      - source-d09d6a2687fa0f13d64c
+      - source-d5562f80014ab418430b
       - source-d8e4c6cb20568d496b94
+      - source-daf244691067ecfd0a84
+      - source-ef5f15ce3644987cd0d2
+      - source-ff6b00bcb15ca05ca7f4
     supporting_source_ids: []
     discovery_sources:
       - https://stripe.com/newsroom/information

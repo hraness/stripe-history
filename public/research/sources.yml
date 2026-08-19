@@ -146,6 +146,15 @@ sources:
     id: source-10f2721c9aa4fdff57df
     media_type: article
   - kind: interview
+    publisher: Replit
+    published_at: 2026-05-21
+    title: "The Best Time in History to Start a Company | Patrick Collison & Amjad Masad"
+    url: https://www.youtube.com/watch?v=YgYiF86h0yU
+    id: source-119db9dd4efb34c354fa
+    language: en
+    media_type: video
+    native_id: youtube:YgYiF86h0yU
+  - kind: interview
     publisher: Colossus
     published_at: 2023-10-17
     title: A Business State of Mind
@@ -154,6 +163,13 @@ sources:
     language: en
     media_type: transcript
     native_id: colossus:collison-a-business-state-of-mind
+  - kind: interview
+    publisher: Seedcamp
+    published_at: 2022-07-13
+    title: "Stripe's David Singleton on technology innovation, customers, and the CTO role"
+    url: https://podcasts.apple.com/us/podcast/stripes-david-singleton-on-technology-innovation-putting/id962121995?i=1000569774533
+    id: source-15f3382443f13e368075
+    media_type: podcast
   - kind: primary
     publisher: Stripe
     published_at: 2018-09-17
@@ -168,6 +184,15 @@ sources:
     url: https://stripe.com/blog/a-primer-on-machine-learning-for-fraud-detection
     id: source-170ce598057aeb518fa4
     media_type: article
+  - kind: interview
+    publisher: Stripe
+    published_at: 2026-05-19
+    title: "Nat Friedman and Daniel Gross in conversation with John and Patrick Collison"
+    url: https://www.youtube.com/watch?v=l9wzs_QIyp0
+    id: source-18b5f3a0d6c6c83811f7
+    language: en
+    media_type: video
+    native_id: youtube:l9wzs_QIyp0
   - kind: primary
     publisher: Stripe
     published_at: 2016-09-19
@@ -212,6 +237,13 @@ sources:
     url: https://www.ftc.gov/system/files/ftc_gov/pdf/stripe-debanking-letter.pdf
     id: source-1aceab1f7585dbec2798
     media_type: pdf
+  - kind: interview
+    publisher: The Times Tech Podcast
+    published_at: 2018-03-02
+    title: "Stripe's Patrick Collison: I'm petrified of getting too confident"
+    url: https://podcasts.apple.com/us/podcast/stripes-patrick-collison-im-petrified-of-getting-too/id1233991021?i=1000404469689
+    id: source-1c1ccd634b5f7d73f612
+    media_type: podcast
   - kind: reporting
     publisher: The Irish Times
     published_at: 2026-06-05
@@ -359,6 +391,13 @@ sources:
     url: https://stripe.com/blog/singapore-eng-office
     id: source-2770509db6a3e2e2cabd
     media_type: article
+  - kind: interview
+    publisher: Grit
+    published_at: 2021-10-11
+    title: "Stripe CRO Mike Clayville: Building Tornado Companies"
+    url: https://podcasts.apple.com/us/podcast/cro-stripe-mike-clayville-building-tornado-companies/id1510985491?i=1000538185612
+    id: source-28538b94e9867ad8ddea
+    media_type: podcast
   - kind: primary
     publisher: Stripe
     published_at: 2026-04-29
@@ -487,6 +526,13 @@ sources:
     url: https://stripe.com/en-ca/newsroom/news/stripe-terminal-accelerates-global-momentum
     id: source-34734b9c0fe2092013a9
     media_type: article
+  - kind: interview
+    publisher: Lenny's Podcast
+    published_at: 2023-03-05
+    title: "Lessons from scaling Stripe | Claire Hughes Johnson"
+    url: https://podcasts.apple.com/us/podcast/lessons-from-scaling-stripe-claire-hughes-johnson-ex/id1627920305?i=1000602823726
+    id: source-34e9256f6b05d1c012cb
+    media_type: podcast
   - kind: reporting
     publisher: TechCentral.ie
     published_at: 2013-09-03
@@ -535,6 +581,13 @@ sources:
     url: https://press.stripe.com/scaling
     id: source-391821de004fb1a8d195
     media_type: article
+  - kind: interview
+    publisher: The Logan Bartlett Show
+    published_at: 2024-09-20
+    title: "Will Gaybrick on capital allocation, org design, AI, and global growth"
+    url: https://podcasts.apple.com/us/podcast/ep-118-will-gaybrick-president-of-product-and/id1606770839?i=1000670156025
+    id: source-39cb086a5372e02b17bc
+    media_type: podcast
   - kind: reporting
     publisher: TechCrunch
     published_at: 2014-12-02
@@ -555,6 +608,20 @@ sources:
     url: https://news.bloomberglaw.com/coronavirus/riding-record-valuations-fintech-companies-keep-hiring-lawyers
     id: source-3d6c52f0fa2137ac7a41
     media_type: article
+  - kind: interview
+    publisher: a16z
+    published_at: 2026-02-20
+    title: "Patrick Collison on Stripe's early choices, Smalltalk, and what comes after coding"
+    url: https://a16z.com/podcast/patrick-collison-on-stripes-early-choices-smalltalk-and-what-comes-after-coding
+    id: source-3e4c405e9bd479571d83
+    media_type: podcast
+  - kind: interview
+    publisher: The Gray Area
+    published_at: 2016-12-06
+    title: "Stripe CEO Patrick Collison on management, rationalism, and the Enlightenment"
+    url: https://podcasts.apple.com/no/podcast/stripe-ceo-patrick-collison-on-management-rationalism/id1081584611?i=1000378637097
+    id: source-4091456d98a90957fe07
+    media_type: podcast
   - kind: primary
     publisher: Stripe Press
     title: Working in Public
@@ -580,6 +647,13 @@ sources:
     url: https://press.stripe.com/scaling-people
     id: source-46bb338c33a88fca0929
     media_type: article
+  - kind: interview
+    publisher: "The #ANGELS Podcast"
+    published_at: 2021-05-10
+    title: "Claire Hughes Johnson, COO of Stripe"
+    url: https://podcasts.apple.com/us/podcast/claire-hughes-johnson-coo-of-stripe/id1550832941?i=1000521087003
+    id: source-472eb2b12343ba3fa8e5
+    media_type: podcast
   - kind: primary
     publisher: Meta
     published_at: 2025-04-11
@@ -635,6 +709,13 @@ sources:
     url: https://paystack.com/stripe
     id: source-4cba29dde5bde54884d6
     media_type: article
+  - kind: interview
+    publisher: Greymatter
+    published_at: 2023-02-14
+    title: "Stripe's Patrick Collison: Micro Pessimism, Macro Optimism"
+    url: https://podcasts.apple.com/mu/podcast/stripes-patrick-collison-micro-pessimism-macro-optimism/id1089013200?i=1000599602701
+    id: source-4cf5bde77c3a4330d227
+    media_type: podcast
   - kind: interview
     publisher: Colossus
     published_at: 2020-06-16
@@ -729,6 +810,13 @@ sources:
     id: source-56f670931dbb37ef809e
     media_type: article
   - kind: interview
+    publisher: Stanford eCorner
+    published_at: 2023-05-24
+    title: "Claire Hughes Johnson on scaling operations and culture at Stripe"
+    url: https://podcasts.apple.com/us/podcast/claire-hughes-johnson-stripe-scaling-operations-and/id80867514?i=1000614322138
+    id: source-57a7fe4d5d7acd711d7b
+    media_type: podcast
+  - kind: interview
     publisher: Wharton FinTech Podcast
     published_at: 2026-01-14
     title: Stripe's First Employee on Building Modern Banking Infrastructure
@@ -755,6 +843,13 @@ sources:
     url: https://www.sfgate.com/tech/article/stripe-lays-off-1000-employees-17556389.php
     id: source-5a48b33330f710b1c700
     media_type: article
+  - kind: interview
+    publisher: The Knowledge Project
+    published_at: 2018-05-02
+    title: "Patrick Collison: Earning Your Stripes"
+    url: https://podcasts.apple.com/us/podcast/32-patrick-collison-earning-your-stripes/id990149481?i=1000410487693
+    id: source-5abe9c3805865ebd263c
+    media_type: podcast
   - kind: primary
     publisher: Stripe Press
     title: An Elegant Puzzle
@@ -801,6 +896,13 @@ sources:
     url: https://stripe.com/blog/ending-bitcoin-support
     id: source-61963e80f78f63567415
     media_type: article
+  - kind: interview
+    publisher: The David McWilliams Podcast
+    published_at: 2022-06-20
+    title: "The future of the internet economy with John Collison"
+    url: https://podcasts.apple.com/ca/podcast/the-future-of-the-internet-economy-with-stripe/id1462649946?i=1000567104995
+    id: source-6321e360d21ebafc1539
+    media_type: podcast
   - kind: primary
     publisher: Stripe
     published_at: 2020-12-03
@@ -808,6 +910,24 @@ sources:
     url: https://stripe.com/newsroom/news/treasury
     id: source-642ae265859bee92a254
     media_type: article
+  - kind: interview
+    publisher: Lenny's Podcast
+    published_at: 2023-05-04
+    title: "Building a culture of excellence | David Singleton"
+    url: https://www.youtube.com/watch?v=F0_IKKY3HCk
+    id: source-644e7df552ad28028b3a
+    language: en
+    media_type: video
+    native_id: youtube:F0_IKKY3HCk
+  - kind: interview
+    publisher: 500 Global
+    published_at: 2013-08-13
+    title: "unSEXY Conf 2013: Patrick Collison, Stripe"
+    url: https://www.youtube.com/watch?v=y_4emS6D4og
+    id: source-650f1c1afaf31f558df3
+    language: en
+    media_type: video
+    native_id: youtube:y_4emS6D4og
   - kind: primary
     publisher: Anthropic
     published_at: 2025-10-07
@@ -856,6 +976,13 @@ sources:
     url: https://rootsofprogress.org/about/
     id: source-6a70e99c09c187ea49b2
     media_type: article
+  - kind: interview
+    publisher: Cursor
+    published_at: 2025-07-17
+    title: "Patrick Collison on programming languages, AI, and Stripe's biggest engineering decisions"
+    url: https://podcasts.apple.com/id/podcast/patrick-collison-on-programming-languages-ai-and/id1819406817?i=1000717598878
+    id: source-6c270caf7a0f7aea8142
+    media_type: podcast
   - kind: primary
     publisher: Stripe
     published_at: 2017-04-13
@@ -1211,6 +1338,15 @@ sources:
     url: https://stripe.com/legal/ssa-services-terms#stripe-next-day-settlement
     id: source-97444be68e85216131c3
     media_type: article
+  - kind: interview
+    publisher: Bloomberg Odd Lots
+    published_at: 2026-05-16
+    title: "Stripe's John Collison on how agentic commerce will reshape the internet"
+    url: https://www.youtube.com/watch?v=QhGqLqCzFac
+    id: source-98566fabeed1b3474821
+    language: en
+    media_type: video
+    native_id: youtube:QhGqLqCzFac
   - kind: reporting
     publisher: Axios
     published_at: 2026-07-24
@@ -1259,6 +1395,13 @@ sources:
     url: https://press.stripe.com/we-are-as-gods
     id: source-9dc6403512fc204f5744
     media_type: article
+  - kind: interview
+    publisher: Grit
+    published_at: 2023-03-06
+    title: "Former Stripe COO Claire Hughes Johnson on scaling people"
+    url: https://podcasts.apple.com/us/podcast/128-former-coo-corporate-officer-at-stripe-claire-hughes/id1510985491?i=1000602919224
+    id: source-9dee161b28ef4003aeb3
+    media_type: podcast
   - kind: reporting
     publisher: VentureBeat
     published_at: 2017-06-22
@@ -1336,6 +1479,13 @@ sources:
     url: https://www.theguardian.com/technology/2014/jul/22/stripe-steps-up-paypal-rivalry-with-australian-launch
     id: source-a7f01b8f3120c54b2b6b
     media_type: article
+  - kind: interview
+    publisher: Newcomer
+    published_at: 2023-08-08
+    title: "Scaling People with Claire Hughes Johnson"
+    url: https://www.newcomer.co/p/scaling-people-with-claire-hughes
+    id: source-a83d235b649d61ebd04a
+    media_type: article
   - kind: filing
     publisher: U.S. Securities and Exchange Commission
     published_at: 2025-04-11
@@ -1378,6 +1528,15 @@ sources:
     url: https://arcinstitute.org/about
     id: source-af73c6bed56faf7ea27e
     media_type: article
+  - kind: interview
+    publisher: Hard Fork
+    published_at: 2025-06-27
+    title: "Hard Fork Live, with Patrick Collison, Kathryn Zealand, Sam Altman & Brad Lightcap"
+    url: https://www.youtube.com/watch?v=jdNwzYMtPN8
+    id: source-af973a63a7068c0ccff9
+    language: en
+    media_type: video
+    native_id: youtube:jdNwzYMtPN8
   - kind: reporting
     publisher: TechCrunch
     published_at: 2011-03-28
@@ -1567,6 +1726,15 @@ sources:
     url: https://stripe.com/en-ca/newsroom/news/stripe-capital
     id: source-c5c46de8097c01eba667
     media_type: article
+  - kind: interview
+    publisher: YC Root Access
+    published_at: 2014-10-28
+    title: "Hiring and Culture, Part 2 | Patrick and John Collison"
+    url: https://www.youtube.com/watch?v=H8Dl8rZ6qwE
+    id: source-c7d664518b9bba629716
+    language: en
+    media_type: video
+    native_id: youtube:H8Dl8rZ6qwE
   - kind: primary
     publisher: Stripe
     published_at: 2021-04-27
@@ -1574,6 +1742,13 @@ sources:
     url: https://stripe.com/en-fr/newsroom/news/taxjar
     id: source-c87c7df4d40a29c6f83b
     media_type: article
+  - kind: interview
+    publisher: a16z
+    published_at: 2026-04-28
+    title: "John and Patrick Collison on Stripe's growth, agent commerce, and the future of software"
+    url: https://a16z.com/podcast/john-and-patrick-collison-on-stripes-growth-agent-commerce-and-the-future-of-software
+    id: source-c8cf9fc9a738a7673ab5
+    media_type: podcast
   - kind: reporting
     publisher: TechCrunch
     published_at: 2012-07-09
@@ -1642,6 +1817,13 @@ sources:
     url: https://podcasts.apple.com/za/podcast/140-from-stripes-fifth-engineer-to-serving-millions/id1512227295?i=1000773198342
     id: source-cf93160c4967b70fc148
     media_type: podcast
+  - kind: interview
+    publisher: The Minor Consult
+    published_at: 2023-05-15
+    title: "Stripe CEO Patrick Collison on innovating e-commerce and accelerating biomedical research"
+    url: https://podcasts.apple.com/us/podcast/stripe-ceo-patrick-collison-on-innovating-e-commerce/id1610419911?i=1000613083611
+    id: source-d09d6a2687fa0f13d64c
+    media_type: podcast
   - kind: reporting
     publisher: Reuters
     published_at: 2024-10-21
@@ -1683,6 +1865,13 @@ sources:
     url: https://www.irishtimes.com/life-and-style/people/harvard-next-on-menu-for-knowledge-hungry-dot-com-high-flyer-1.738348
     id: source-d506d7eb5c4011f06d96
     media_type: article
+  - kind: interview
+    publisher: Squawk Pod
+    published_at: 2025-02-28
+    title: "Bonus Episode: Stripe CEO John Collison"
+    url: https://podcasts.apple.com/us/podcast/bonus-episode-stripe-ceo-john-collison-2-28-25/id1480890290?i=1000696834852
+    id: source-d5562f80014ab418430b
+    media_type: podcast
   - kind: primary
     publisher: Stripe
     published_at: 2016-02-24
@@ -1732,6 +1921,15 @@ sources:
     url: https://stripe.com/blog/sessions-keynote-2021
     id: source-da5bc3eea46cefe0be5e
     media_type: article
+  - kind: interview
+    publisher: Stripe
+    published_at: 2023-10-06
+    title: "Arthur Mensch and John Collison | Stripe AI Day Paris"
+    url: https://www.youtube.com/watch?v=yXN5xSXJ1Is
+    id: source-daf244691067ecfd0a84
+    language: en
+    media_type: video
+    native_id: youtube:yXN5xSXJ1Is
   - kind: primary
     publisher: Arc Institute
     published_at: 2021-12-15
@@ -1923,6 +2121,15 @@ sources:
     url: https://techcrunch.com/2026/04/17/once-close-enough-for-an-acquisition-stripe-and-airwallex-are-now-going-after-each-other/
     id: source-ee8d68525578975d8f67
     media_type: article
+  - kind: interview
+    publisher: The Peel
+    published_at: 2025-11-13
+    title: "Inside Stripe: Stablecoins, AI, and (not) going public | Will Gaybrick"
+    url: https://www.youtube.com/watch?v=AM1_NADNSgI
+    id: source-ef5f15ce3644987cd0d2
+    language: en
+    media_type: video
+    native_id: youtube:AM1_NADNSgI
   - kind: primary
     publisher: Stripe
     published_at: 2020-05-26
@@ -2047,3 +2254,10 @@ sources:
     url: https://stripe.com/newsroom/news/stripe-launches-uae
     id: source-ff627c78180e70f274cb
     media_type: article
+  - kind: interview
+    publisher: SaaStr
+    published_at: 2023-02-22
+    title: "Extreme Product Design with Stripe CTO David Singleton"
+    url: https://podcasts.apple.com/us/podcast/saastr-636-extreme-product-design-building-things-people/id1089973241?i=1000601129097
+    id: source-ff6b00bcb15ca05ca7f4
+    media_type: podcast
