@@ -15,7 +15,6 @@ permissions:
   actions: write
   contents: write
   issues: write
-  pull-requests: write
 
 concurrency:
   group: weekly-history-publication
@@ -114,7 +113,7 @@ jobs:
           bun run check
           bun run build
       - id: push
-        name: Commit and open protected publication PR
+        name: Commit and fast-forward main
         if: steps.model.outcome == 'success' && steps.review.outputs.durable_changes == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -128,38 +127,9 @@ jobs:
           candidate_sha="$(git rev-parse HEAD)"
           git fetch origin main
           test "$(git rev-parse HEAD^)" = "$(git rev-parse origin/main)"
-          branch="automation/weekly-history-${{ github.run_id }}-${{ github.run_attempt }}"
-          git switch -c "$branch"
-          git push origin "HEAD:refs/heads/$branch"
-          pr_url="$(gh pr create --repo "$GH_REPO" --base main --head "$branch" --title "chore(history): publish weekly research ${{ steps.digest.outputs.as_of }}" --body "Automated bounded weekly history publication. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}")"
-          branch_dispatched=false
-          for attempt in $(seq 1 10); do
-            if gh workflow run ci.yml --repo "$GH_REPO" --ref "$branch"; then
-              branch_dispatched=true
-              break
-            fi
-            sleep 2
-          done
-          test "$branch_dispatched" = true
-          branch_run_id=''
-          for attempt in $(seq 1 60); do
-            branch_run_id="$(gh run list --repo "$GH_REPO" --workflow ci.yml --event workflow_dispatch --branch "$branch" --limit 20 --json databaseId,headSha,createdAt --jq "map(select(.headSha == \"$candidate_sha\")) | sort_by(.createdAt) | last | .databaseId // empty")"
-            test -n "$branch_run_id" && break
-            sleep 2
-          done
-          test -n "$branch_run_id"
-          gh run watch "$branch_run_id" --repo "$GH_REPO" --exit-status
-          gh run view "$branch_run_id" --repo "$GH_REPO" --json headSha,status,conclusion,jobs | jq -e --arg sha "$candidate_sha" '
-            .headSha == $sha
-            and .status == "completed"
-            and .conclusion == "success"
-            and ([.jobs[] | select(.name == "Required" and .conclusion == "success")] | length) == 1
-          '
-          gh pr merge "$pr_url" --repo "$GH_REPO" --squash --delete-branch --match-head-commit "$candidate_sha"
-          pr_state="$(gh pr view "$pr_url" --repo "$GH_REPO" --json state,headRefOid,mergeCommit)"
-          test "$(jq -r '.state' <<<"$pr_state")" = MERGED
-          test "$(jq -r '.headRefOid' <<<"$pr_state")" = "$candidate_sha"
-          merge_sha="$(jq -er '.mergeCommit.oid' <<<"$pr_state")"
+          git push origin "HEAD:main"
+          remote_sha="$(git ls-remote --exit-code origin refs/heads/main | awk '{print $1}')"
+          test "$remote_sha" = "$candidate_sha"
           main_dispatched=false
           for attempt in $(seq 1 10); do
             if gh workflow run ci.yml --repo "$GH_REPO" --ref main; then
@@ -171,36 +141,19 @@ jobs:
           test "$main_dispatched" = true
           main_run_id=''
           for attempt in $(seq 1 60); do
-            main_run_id="$(gh run list --repo "$GH_REPO" --workflow ci.yml --event workflow_dispatch --branch main --limit 20 --json databaseId,headSha,createdAt --jq "map(select(.headSha == \"$merge_sha\")) | sort_by(.createdAt) | last | .databaseId // empty")"
+            main_run_id="$(gh run list --repo "$GH_REPO" --workflow ci.yml --event workflow_dispatch --branch main --limit 20 --json databaseId,headSha,createdAt --jq "map(select(.headSha == \"$candidate_sha\")) | sort_by(.createdAt) | last | .databaseId // empty")"
             test -n "$main_run_id" && break
             sleep 2
           done
           test -n "$main_run_id"
           gh run watch "$main_run_id" --repo "$GH_REPO" --exit-status
-          gh run view "$main_run_id" --repo "$GH_REPO" --json headSha,status,conclusion,jobs | jq -e --arg sha "$merge_sha" '
+          gh run view "$main_run_id" --repo "$GH_REPO" --json headSha,status,conclusion,jobs | jq -e --arg sha "$candidate_sha" '
             .headSha == $sha
             and .status == "completed"
             and .conclusion == "success"
             and ([.jobs[] | select(.name == "Required" and .conclusion == "success")] | length) == 1
           '
-          branch_deleted=false
-          branch_ref_error="$RUNNER_TEMP/weekly-branch-ref-error"
-          for attempt in $(seq 1 30); do
-            if gh api "/repos/$GH_REPO/git/ref/heads/$branch" --silent 2>"$branch_ref_error"; then
-              sleep 2
-            elif grep -Fq '(HTTP 404)' "$branch_ref_error"; then
-              branch_deleted=true
-              break
-            else
-              cat "$branch_ref_error" >&2
-              exit 1
-            fi
-          done
-          rm -f "$branch_ref_error"
-          test "$branch_deleted" = true
           echo "sha=$candidate_sha" >> "$GITHUB_OUTPUT"
-          echo "merge_sha=$merge_sha" >> "$GITHUB_OUTPUT"
-          echo "pr_url=$pr_url" >> "$GITHUB_OUTPUT"
       - name: Add reports to job summary
         if: always()
         run: |
@@ -237,7 +190,7 @@ jobs:
               echo
               echo '## Workflow delivery failure'
               echo
-              echo 'The decision report could not be validated or delivered through its protected publication PR. Review the workflow logs before resolving this queue.'
+              echo 'The decision report could not be validated or fast-forward delivered to main. Review the workflow logs before resolving this queue.'
               echo
               echo 'Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
             } >> "$issue_body"
