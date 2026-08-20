@@ -1,4 +1,75 @@
 runs:
+  - candidate_digest_sha256: 7550fd5e10466a6e6b39eae0435116f31250e11ae83a43bfa406e5829b0d4dd9
+    decided_on: 2026-08-20
+    decisions:
+      - basis: proposal
+        candidate_url: https://economictimes.indiatimes.com/tech/technology/payments-firm-stripe-to-buy-marketplace-openrouter-in-ai-push/articleshow/133362682.cms
+        outcome: needs-review
+        proposal_sha256: bec0f7b946efb50aad2b6fe8a0dcf0b9f357f4693d43aea55d960f83d2ec5b52
+        reason: This is a material deal-state change from the August 16 reported finalized agreement. Reuters says Stripe itself announced that it had agreed to buy OpenRouter, so the official agreement announcement warrants a separate event rather than an added source. Because the evidence comes from a reporting source, confidence remains reported, and the article does not establish completion. The discovery monitor is not trusted for automatic publication.
+        title: "Stripe acquisition OpenRouter : Payments firm Stripe to buy marketplace OpenRouter in AI push"
+      - basis: proposal
+        candidate_url: https://memeburn.com/stripe-reportedly-acquires-openrouter-for-over-7-billion-what-changes-for-developers
+        outcome: rejected
+        proposal_sha256: dfefd0d4f7b784aca2764c22489bfb6a5a760eeb6226683d5e11c3568df1354c
+        reason: The article repeats Bloomberg's reported August 16 finalized agreement and Stripe's nonconfirmation, all of which are already represented in the existing event. It offers no independent reporting or new deal state.
+        title: Stripe Reportedly Acquires OpenRouter for Over $7 Billion . What Changes for Developers
+      - basis: automatic-policy
+        candidate_url: https://stripe.com/blog/reduce-fx-costs-with-stripe
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: New currency capabilities for global businesses to cut FX costs
+      - basis: automatic-policy
+        candidate_url: https://stripe.com/blog/why-global-workers-are-driving-demand-for-stablecoin-payouts
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Why global workers are driving demand for stablecoin payouts
+      - basis: automatic-policy
+        candidate_url: https://stripe.com/newsroom/news/stripe-agrees-to-acquire-openrouter
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Stripe agrees to acquire OpenRouter to help businesses optimize token routing and usage
+      - basis: automatic-policy
+        candidate_url: https://stripe.com/newsroom/news/stripe-named-a-leader-by-gartner-for-its-billing-product-for-third-consecutive-year
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Stripe named a Leader by Gartner for its Billing Product for third consecutive year
+      - basis: automatic-policy
+        candidate_url: https://stripe.com/newsroom/news/tour-sydney-2026
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Stripe Treasury launches in Australia, unifying payments and global money management
+      - basis: automatic-policy
+        candidate_url: https://techcrunch.com/2026/08/19/stripe-didnt-really-buy-openrouter-because-of-the-singularity
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Stripe didn’t really buy OpenRouter because of the ‘singularity’
+      - basis: automatic-policy
+        candidate_url: https://www.cnbc.com/2026/08/19/stripe-openrouter-fintech-ai-model-marketplace-.html
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Stripe to buy OpenRouter as fintech expands deeper into AI
+      - basis: proposal
+        candidate_url: https://www.dealstreetasia.com/stories/stripe-openrouter-ai-push-492693
+        outcome: needs-review
+        proposal_sha256: c4b34601e7bb0868ab2740f833727dffcfa0e416881ca7b0c98cf7f761d275f2
+        reason: "The August 16 record captures third-party reporting that a deal had been finalized. This article reports a later, materially different public state: Stripe itself said it had agreed to buy OpenRouter. A company-attributed agreement statement is separate from an earlier reported agreement, so this warrants a new event rather than an added source. Completion is not established, and confidence remains reported because the available authority is a reporting source. The discovery monitor is not trust"
+        title: Payments firm Stripe to buy marketplace OpenRouter in AI push
+      - basis: automatic-policy
+        candidate_url: https://www.proactiveinvestors.com.au/companies/news/1097301/tech-bytes-stripe-to-acquire-openrouter-in-major-ai-infrastructure-deal-1097301.html
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: "Tech Bytes : Stripe to acquire OpenRouter in major AI infrastructure deal"
+      - basis: automatic-policy
+        candidate_url: https://www.wsj.com/business/deals/stripe-advent-in-talks-to-buy-paypal-ea6aa2ba
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Exclusive | PayPal in Talks to Sell Itself to Stripe, Private-Equity Firm Advent
+    id: decision-run-7fb5ae363cd5a05cd11f
+    model: openai/gpt-5.6-sol
+    proposal_prompt_version: stripe-history/weekly-proposal/v4
+    reasoning_effort: max
+    review_prompt_version: stripe-history/weekly-review/v1
   - candidate_digest_sha256: bd28e9ac31ad7568239025eb0a154336a0f3a652312dbc649b579f62dba04a5a
     decided_on: 2026-08-17
     decisions:
