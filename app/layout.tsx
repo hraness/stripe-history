@@ -4,29 +4,37 @@ import {
   SkipLink,
   ThemeColorSync,
 } from "@/support/theme";
-import { INDEXABLE_ROBOTS } from "@hraness/web-discovery";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 import { PostHogAnalytics } from "./posthog-analytics";
 import { websiteJsonLd } from "./seo";
-import { SITE_ORIGIN, site, socialMetadata } from "./site";
+import { SITE_ORIGIN, site } from "./site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
   title: {
-    default: site.title,
+    default: site.applicationName,
     template: site.titleTemplate,
   },
-  description: site.description,
   applicationName: site.applicationName,
-  alternates: {
-    canonical: "/",
-  },
   formatDetection: { address: false, email: false, telephone: false },
-  robots: INDEXABLE_ROBOTS,
-  ...socialMetadata(site.title, site.description, "/"),
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: site.name,
+    images: [{
+      alt: site.socialImageAlt,
+      height: 630,
+      url: "/opengraph-image",
+      width: 1200,
+    }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [{ alt: site.socialImageAlt, url: "/opengraph-image" }],
+  },
 };
 
 export const viewport: Viewport = {
