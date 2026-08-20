@@ -1,8 +1,10 @@
 import { describe, expect, test } from "bun:test";
+import { INDEXABLE_ROBOTS } from "@hraness/web-discovery";
 import { loadHistory } from "@/lib/content";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import Home, { generateMetadata } from "./page";
+import { site } from "./site";
 
 describe("canonical stripehistory.com history", () => {
   test("publishes root-canonical history metadata", async () => {
@@ -12,6 +14,8 @@ describe("canonical stripehistory.com history", () => {
 
     expect(metadata).toMatchObject({
       alternates: { canonical: "/" },
+      description: site.description,
+      robots: INDEXABLE_ROBOTS,
       title: expectedTitle,
     });
     expect(metadata.openGraph).toMatchObject({

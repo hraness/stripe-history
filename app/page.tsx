@@ -1,4 +1,5 @@
 import { loadHistory } from "@/lib/content";
+import { INDEXABLE_ROBOTS } from "@hraness/web-discovery";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
 
@@ -19,6 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title,
     description: site.description,
     alternates: { canonical: "/" },
+    robots: INDEXABLE_ROBOTS,
     ...socialMetadata(`${title} | ${site.domain}`, site.description, "/"),
   };
 }

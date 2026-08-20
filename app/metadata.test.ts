@@ -53,10 +53,9 @@ describe("stripehistory.com public identity", () => {
       },
       sitemap: `${SITE_ORIGIN}/sitemap.xml`,
     });
-    expect(metadata.robots).toMatchObject({ index: true, follow: true });
   });
 
-  test("keeps canonical metadata on stripehistory.com", () => {
+  test("keeps only site-wide defaults that other routes can inherit", () => {
     expect(robots()).toMatchObject({ host: SITE_ORIGIN });
     expect(manifest()).toMatchObject({
       description: site.description,
@@ -68,14 +67,26 @@ describe("stripehistory.com public identity", () => {
     expect(new URL(metadata.metadataBase ?? "https://invalid.example").origin).toBe(
       SITE_ORIGIN,
     );
-    expect(metadata.alternates).toEqual({ canonical: "/" });
-    expect(metadata.title).toEqual({
-      default: site.title,
-      template: site.titleTemplate,
+    expect(metadata).toMatchObject({
+      applicationName: site.applicationName,
+      title: {
+        default: site.applicationName,
+        template: site.titleTemplate,
+      },
+      openGraph: {
+        locale: "en_US",
+        siteName: site.name,
+        type: "website",
+      },
     });
-    expect(metadata.description).toBe(site.description);
-    expect(metadata.openGraph?.title).toBe(site.title);
-    expect(metadata.twitter?.title).toBe(site.title);
+    expect(metadata).not.toHaveProperty("description");
+    expect(metadata).not.toHaveProperty("robots");
+    expect(metadata.alternates).toBeUndefined();
+    expect(metadata.openGraph).not.toHaveProperty("url");
+    expect(metadata.openGraph).not.toHaveProperty("title");
+    expect(metadata.openGraph).not.toHaveProperty("description");
+    expect(metadata.twitter).not.toHaveProperty("title");
+    expect(metadata.twitter).not.toHaveProperty("description");
     expect(socialImageAlt).toBe(site.socialImageAlt);
   });
 
