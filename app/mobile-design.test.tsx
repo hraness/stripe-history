@@ -56,17 +56,19 @@ test("mobile filter overflow has a scroll affordance without a persistent scroll
   );
 });
 
-test("theme control uses HugeIcons with a compact visual ring and full hit target", () => {
+test("theme control uses the shared System-first menu with a full hit target", () => {
   const html = renderToStaticMarkup(<ThemeToggle />);
 
-  expect(html).toContain('class="stripe-history-theme-icon"');
+  expect(html).toContain('data-theme-value="system"');
+  expect(html).toContain('data-presentation="menu"');
+  expect(html).toContain('aria-label="Appearance: System"');
   expect(html).toContain("<svg");
   expect(html).not.toMatch(/[☀☾]/u);
   expect(supportCss).toMatch(
-    /\.stripe-history-theme-toggle\s*\{[^}]*min-block-size:\s*max\(2\.5rem, var\(--plain-link-target-min\)\);[^}]*min-inline-size:\s*max\(2\.5rem, var\(--plain-link-target-min\)\);/u,
+    /\.stripe-history-theme-toggle \.hraness-icon-button__control\s*\{[^}]*min-block-size:\s*max\(2\.5rem, var\(--plain-link-target-min\)\);[^}]*min-inline-size:\s*max\(2\.5rem, var\(--plain-link-target-min\)\);/u,
   );
   expect(supportCss).toMatch(
-    /\.stripe-history-theme-toggle::before\s*\{[^}]*block-size:\s*2rem;[^}]*border:\s*1px solid var\(--plain-line\);[^}]*inline-size:\s*2rem;/u,
+    /\.stripe-history-theme-toggle \.hraness-icon-button__control\s*\{[^}]*border:\s*1px solid var\(--plain-line\);/u,
   );
 });
 

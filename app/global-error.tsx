@@ -1,16 +1,24 @@
 "use client";
 
+import {
+  DesignThemeProvider,
+  ThemeColorSync,
+} from "@hraness/design-kit/react";
 import type { RouteErrorPageProps } from "./error";
+import "./globals.css";
 
 export default function GlobalError({ reset }: RouteErrorPageProps) {
   return (
-    <html lang="en-US">
+    <html data-theme="light" lang="en-US" suppressHydrationWarning>
       <body className="plain-site">
-        <main className="plain-page stripe-history-main stripe-history-state" id="main-content">
-          <h1>Stripe History is temporarily unavailable</h1>
-          <p>The site could not finish loading.</p>
-          <button onClick={reset} type="button">Try again</button>
-        </main>
+        <DesignThemeProvider storageKey="stripe-history-theme-v1">
+          <ThemeColorSync darkColor="#151515" lightColor="#ffffff" />
+          <main className="plain-page stripe-history-main stripe-history-state" id="main-content">
+            <h1>Stripe History is temporarily unavailable</h1>
+            <p>The site could not finish loading.</p>
+            <button onClick={reset} type="button">Try again</button>
+          </main>
+        </DesignThemeProvider>
       </body>
     </html>
   );
