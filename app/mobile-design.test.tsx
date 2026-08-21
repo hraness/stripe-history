@@ -56,7 +56,7 @@ test("mobile filter overflow has a scroll affordance without a persistent scroll
   );
 });
 
-test("theme control uses the shared System-first menu with a full hit target", () => {
+test("theme control uses the unmodified shared System-first icon menu", () => {
   const html = renderToStaticMarkup(<ThemeToggle />);
 
   expect(html).toContain('data-theme-value="system"');
@@ -64,12 +64,8 @@ test("theme control uses the shared System-first menu with a full hit target", (
   expect(html).toContain('aria-label="Appearance: System"');
   expect(html).toContain("<svg");
   expect(html).not.toMatch(/[☀☾]/u);
-  expect(supportCss).toMatch(
-    /\.stripedex-theme-toggle \.hraness-icon-button__control\s*\{[^}]*min-block-size:\s*max\(2\.5rem, var\(--plain-link-target-min\)\);[^}]*min-inline-size:\s*max\(2\.5rem, var\(--plain-link-target-min\)\);/u,
-  );
-  expect(supportCss).toMatch(
-    /\.stripedex-theme-toggle \.hraness-icon-button__control\s*\{[^}]*border:\s*1px solid var\(--plain-line\);/u,
-  );
+  expect(html).not.toContain("stripedex-theme-toggle");
+  expect(supportCss).not.toContain("stripedex-theme-toggle");
 });
 
 test("site chrome begins close to the viewport while preserving coarse hit targets", () => {

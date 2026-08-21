@@ -30,6 +30,7 @@ describe("standalone runtime surfaces", () => {
     expect(route).toContain("Something went wrong");
     expect(route).toContain("Try again");
     expect(document).toContain("Stripedex is temporarily unavailable");
+    expect(`${route}${document}`).not.toContain("hraness-design-theme-toggle");
     expect(`${route}${document}`).not.toContain("PostHog");
   });
 
@@ -41,6 +42,8 @@ describe("standalone runtime surfaces", () => {
     expect(loading).toContain('role="status"');
     expect(notFound).toContain("Page not found");
     expect(notFound).toContain('href="/"');
+    expect(loading.match(/data-presentation="menu"/gu)).toHaveLength(1);
+    expect(notFound.match(/data-presentation="menu"/gu)).toHaveLength(1);
     expect(notFound).toContain('aria-label="hraness"');
   });
 });

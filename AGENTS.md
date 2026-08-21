@@ -29,6 +29,7 @@
 - Keep the canonical public identity at `https://stripedex.com`. Preserve former hosts only as direct permanent redirects to the matching canonical path.
 - Keep `stripe-history/*` as the stable public schema and prompt-version namespace. A product rename does not rewrite published data contracts or append-only attestations.
 - Keep history server-rendered, crawlable, and available as reviewable YAML. Preserve durable category, annual-volume, valuation, and data URLs.
+- Give every ordinary themed page exactly one shared icon-menu appearance control as the final action in its header. Do not put appearance controls in footers, content, or fallback action rows.
 - Require at least one canonical source ID for every event and valuation observation. Prefer primary evidence, preserve uncertainty, and distinguish proposed, reported, announced, and completed events.
 - Parse every provider response and YAML file from `unknown`. Preserve reverse chronology, globally unique IDs, bounded text, and deterministic source provenance.
 - Keep the site independent of Stripe, Inc. Do not imply endorsement, ownership, or official status.

@@ -3,6 +3,7 @@ import { DesignThemeProvider } from "@hraness/design-kit/react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { ThemeToggle } from "@/support/theme";
+import { SiteHeader } from "./site-header";
 
 test("appearance starts with System and keeps the existing product preference key", () => {
   const html = renderToStaticMarkup(
@@ -15,6 +16,18 @@ test("appearance starts with System and keeps the existing product preference ke
   expect(html).toContain('data-hraness-design-theme-guard=""');
   expect(html).toContain('data-theme-value="system"');
   expect(html).toContain('aria-label="Appearance: System"');
+});
+
+test("site chrome keeps the shared appearance menu as its final header action", () => {
+  const html = renderToStaticMarkup(<SiteHeader />);
+  const controlsStart = html.indexOf('class="stripedex-header-controls"');
+  const navigationEnd = html.indexOf("</nav>", controlsStart);
+  const theme = html.indexOf('data-presentation="menu"', controlsStart);
+  const controlsEnd = html.indexOf("</div>", theme);
+
+  expect(html.match(/data-presentation="menu"/gu)).toHaveLength(1);
+  expect(navigationEnd).toBeLessThan(theme);
+  expect(html.slice(theme, controlsEnd)).not.toContain("<a ");
 });
 
 test("Stripedex does not keep a second theme runtime", async () => {

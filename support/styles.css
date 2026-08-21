@@ -34,38 +34,6 @@
   transform: translateY(0);
 }
 
-.stripedex-theme-toggle {
-  color: var(--plain-muted);
-}
-
-.stripedex-theme-toggle .hraness-icon-button__control {
-  background: transparent;
-  border: 1px solid var(--plain-line);
-  border-radius: 999px;
-  color: inherit;
-  min-block-size: max(2.5rem, var(--plain-link-target-min));
-  min-inline-size: max(2.5rem, var(--plain-link-target-min));
-}
-
-.stripedex-theme-toggle .hraness-icon-button__control:is(:hover, [data-hovered]) {
-  color: var(--plain-foreground);
-}
-
-.stripedex-theme-toggle .hraness-icon-button__control:focus-visible {
-  outline: 2px solid var(--plain-link);
-  outline-offset: 2px;
-}
-
-@media (forced-colors: active) {
-  .stripedex-theme-toggle .hraness-icon-button__control {
-    border-color: ButtonText;
-  }
-
-  .stripedex-theme-toggle .hraness-icon-button__control:focus-visible {
-    outline-color: Highlight;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .stripedex-skip-link {
     transition: none;

@@ -28,7 +28,6 @@ export function ThemeToggle({
   return (
     <SharedThemeToggle
       aria-label={ariaLabel}
-      className="stripedex-theme-toggle"
       presentation="menu"
       size="compact"
     />
