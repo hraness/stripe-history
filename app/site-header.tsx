@@ -1,4 +1,4 @@
-import { ThemeToggle } from "@/support/theme";
+import { ThemeMenuButton } from "@/support/theme";
 import Link from "next/link";
 
 import { site } from "./site";
@@ -15,7 +15,7 @@ export function SiteHeader({
             about
           </Link>
         </nav>
-        <ThemeToggle aria-label="Appearance" />
+        <ThemeMenuButton aria-label="Appearance" />
       </div>
     </header>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeToggle as SharedThemeToggle } from "@hraness/design-kit/react";
+import { ThemeMenuButton as SharedThemeMenuButton } from "@hraness/design-kit/react";
 import type { AnchorHTMLAttributes } from "react";
 
 export function SkipLink({
@@ -22,14 +22,12 @@ export function SkipLink({
   );
 }
 
-export function ThemeToggle({
+export function ThemeMenuButton({
   "aria-label": ariaLabel = "Appearance",
 }: Readonly<{ "aria-label"?: string }>) {
   return (
-    <SharedThemeToggle
+    <SharedThemeMenuButton
       aria-label={ariaLabel}
-      presentation="menu"
-      size="compact"
     />
   );
 }

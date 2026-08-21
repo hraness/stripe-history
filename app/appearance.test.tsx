@@ -2,13 +2,13 @@ import { expect, test } from "bun:test";
 import { DesignThemeProvider } from "@hraness/design-kit/react";
 import { renderToStaticMarkup } from "react-dom/server";
 
-import { ThemeToggle } from "@/support/theme";
+import { ThemeMenuButton } from "@/support/theme";
 import { SiteHeader } from "./site-header";
 
 test("appearance starts with System and keeps the existing product preference key", () => {
   const html = renderToStaticMarkup(
     <DesignThemeProvider storageKey="stripe-history-theme-v1">
-      <ThemeToggle />
+      <ThemeMenuButton />
     </DesignThemeProvider>,
   );
 

@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 
-import { ThemeToggle } from "@/support/theme";
+import { ThemeMenuButton } from "@/support/theme";
 
 import { HistoryMeasureRail } from "./history/history-measure-rail";
 
@@ -57,7 +57,7 @@ test("mobile filter overflow has a scroll affordance without a persistent scroll
 });
 
 test("theme control uses the unmodified shared System-first icon menu", () => {
-  const html = renderToStaticMarkup(<ThemeToggle />);
+  const html = renderToStaticMarkup(<ThemeMenuButton />);
 
   expect(html).toContain('data-theme-value="system"');
   expect(html).toContain('data-presentation="menu"');
