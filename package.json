@@ -55,6 +55,8 @@
   },
   "dependencies": {
     "@ai-sdk/gateway-v4": "npm:@ai-sdk/gateway@^4.0.27",
+    "@hraness/design-kit": "github:hraness/design-kit#v0.1.6",
+    "@hraness/ui": "github:hraness/ui#v0.4.6",
     "@hraness/vercel-delivery": "github:hraness/vercel-delivery#v0.1.2",
     "@hraness/web-discovery": "github:hraness/web-discovery#v0.1.0",
     "@hugeicons/core-free-icons": "^4.2.2",

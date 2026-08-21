@@ -1,9 +1,9 @@
 import { siteThemes } from "@/support/design-kit";
 import {
   DesignThemeProvider,
-  SkipLink,
   ThemeColorSync,
-} from "@/support/theme";
+} from "@hraness/design-kit/react";
+import { SkipLink } from "@/support/theme";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
@@ -39,7 +39,10 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: "light dark",
-  themeColor: "#ffffff",
+  themeColor: [
+    { color: "#ffffff", media: "(prefers-color-scheme: light)" },
+    { color: "#151515", media: "(prefers-color-scheme: dark)" },
+  ],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

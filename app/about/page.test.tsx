@@ -24,7 +24,7 @@ describe("stripehistory.com about page", () => {
     expect(html).toContain("founder side projects and aesthetics programs");
     expect(html).toContain("timeline and its focused category views stay aligned");
     expect(html).toContain('aria-current="page" href="/about">about</a>');
-    expect(html).toContain('aria-label="Appearance: light"');
+    expect(html).toContain('aria-label="Appearance: System"');
     expect(html).toContain('href="https://hraness.com/"');
     expect(html).toContain('href="https://github.com/hraness/stripe-history"');
     expect(html).not.toContain("Atom feed");

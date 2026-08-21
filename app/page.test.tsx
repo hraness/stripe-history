@@ -68,8 +68,8 @@ describe("canonical stripehistory.com history", () => {
     expect(html).toContain('class="history-event-sources"');
     expect(html).toContain('data-analytics-event="source link opened"');
     expect(html).toContain('id="stripe-history-history-structured-data"');
-    expect(html).toContain('aria-label="Appearance: light"');
-    expect(html).toContain('class="stripe-history-theme-icon"');
+    expect(html).toContain('aria-label="Appearance: System"');
+    expect(html).toContain('data-theme-value="system"');
     expect(html).toContain('class="hraness-brand stripe-history-footer-hraness" href="https://hraness.com"');
     expect(html).toContain('href="https://github.com/hraness/stripe-history"');
     expect(html).not.toContain('class="stripe-history-selector"');
