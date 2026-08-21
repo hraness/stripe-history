@@ -4,7 +4,7 @@ export default function Loading() {
   return (
     <main
       aria-busy="true"
-      className="plain-page stripe-history-main stripe-history-state"
+      className="plain-page stripedex-main stripedex-state"
       id="main-content"
     >
       <SiteHeader />

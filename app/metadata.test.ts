@@ -16,14 +16,14 @@ import robots from "./robots";
 import sitemap from "./sitemap";
 import { SITE_ORIGIN, site } from "./site";
 
-describe("stripehistory.com public identity", () => {
+describe("stripedex.com public identity", () => {
   test("states the canonical history collection", () => {
     expect(site).toMatchObject({
-      applicationName: "Stripe History",
-      domain: "stripehistory.com",
+      applicationName: "Stripedex",
+      domain: "stripedex.com",
       historyTitle: "Stripe Company History",
-      name: "Stripe History",
-      title: "Stripe Company History | stripehistory.com",
+      name: "Stripedex",
+      title: "Stripe Company History | stripedex.com",
     });
     expect(site.description).toContain("independent, sourced timeline of Stripe");
   });
@@ -102,47 +102,41 @@ describe("stripehistory.com public identity", () => {
   });
 
   test("redirects former and www hosts directly to the canonical origin", async () => {
-    expect(await nextConfig.redirects?.()).toEqual([
+    const redirects = await nextConfig.redirects?.();
+    expect(redirects?.at(0)).toEqual({
+      destination: "https://stripedex.com/history/appearances",
+      permanent: true,
+      source: "/appearances",
+    });
+    expect(redirects?.slice(1)).toEqual([
+      "stripe.town",
+      "stripehistory.com",
+      "www.stripehistory.com",
+      "www.stripedex.com",
+    ].flatMap((host) => [
       {
-        destination: "https://stripehistory.com/history/appearances",
-        permanent: true,
-        source: "/appearances",
-      },
-      {
-        destination: "https://stripehistory.com",
-        has: [{ type: "host", value: "stripe.town" }],
-        permanent: true,
-        source: "/history",
-      },
-      {
-        destination: "https://stripehistory.com/:path*",
-        has: [{ type: "host", value: "stripe.town" }],
-        permanent: true,
-        source: "/:path*",
-      },
-      {
-        destination: "https://stripehistory.com",
-        has: [{ type: "host", value: "www.stripehistory.com" }],
+        destination: "https://stripedex.com",
+        has: [{ type: "host", value: host }],
         permanent: true,
         source: "/history",
       },
       {
-        destination: "https://stripehistory.com/:path*",
-        has: [{ type: "host", value: "www.stripehistory.com" }],
+        destination: "https://stripedex.com/:path*",
+        has: [{ type: "host", value: host }],
         permanent: true,
         source: "/:path*",
       },
-    ]);
+    ]));
   });
 
   test("preserves data no-index rules under the generic Preview delivery contract", async () => {
     const identity = {
       VERCEL: "1",
-      VERCEL_DEPLOYMENT_ID: "dpl_StripeHistoryPreview123",
+      VERCEL_DEPLOYMENT_ID: "dpl_StripedexPreview123",
       VERCEL_ENV: "preview",
       VERCEL_GIT_COMMIT_SHA: "0123456789abcdef0123456789abcdef01234567",
-      VERCEL_PROJECT_ID: "prj_StripeHistoryProject123",
-      VERCEL_URL: "stripe-history-git-example-hraness.vercel.app",
+      VERCEL_PROJECT_ID: "prj_StripedexProject123",
+      VERCEL_URL: "stripedex-git-example-hraness.vercel.app",
     } as const;
     const config = createNextConfig(identity);
     const headers = await config.headers?.();
@@ -158,7 +152,7 @@ describe("stripehistory.com public identity", () => {
           value: productionDeliveryProofToken({
             deploymentId: identity.VERCEL_DEPLOYMENT_ID,
             projectId: identity.VERCEL_PROJECT_ID,
-            projectName: "stripe-history",
+            projectName: "stripedex",
             sha: identity.VERCEL_GIT_COMMIT_SHA,
           }),
         },
@@ -167,7 +161,7 @@ describe("stripehistory.com public identity", () => {
       source: "/:path*",
     });
     expect(config.env?.[PREVIEW_NOTICE_ORIGIN_ENV]).toBe(
-      "https://stripe-history-git-example-hraness.vercel.app",
+      "https://stripedex-git-example-hraness.vercel.app",
     );
   });
 });

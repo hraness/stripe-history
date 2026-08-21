@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import AboutPage, { metadata } from "./page";
 
-describe("stripehistory.com about page", () => {
+describe("stripedex.com about page", () => {
   test("publishes a canonical editorial and privacy explanation", () => {
     const html = renderToStaticMarkup(<AboutPage />);
 
@@ -11,7 +11,7 @@ describe("stripehistory.com about page", () => {
       alternates: { canonical: "/about" },
       title: "About",
     });
-    expect(html).toContain("<h1 id=\"about-heading\">About stripehistory.com</h1>");
+    expect(html).toContain("<h1 id=\"about-heading\">About stripedex.com</h1>");
     expect(html).toContain('aria-label="Breadcrumb"');
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
     expect(html).toContain("anonymous, cookieless pageview events for public pages");
@@ -26,7 +26,7 @@ describe("stripehistory.com about page", () => {
     expect(html).toContain('aria-current="page" href="/about">about</a>');
     expect(html).toContain('aria-label="Appearance: System"');
     expect(html).toContain('href="https://hraness.com/"');
-    expect(html).toContain('href="https://github.com/hraness/stripe-history"');
+    expect(html).toContain('href="https://github.com/hraness/stripedex"');
     expect(html).not.toContain("Atom feed");
     expect(html).not.toContain("news summaries");
     expect(html).toContain('type="application/ld+json"');

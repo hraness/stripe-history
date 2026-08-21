@@ -26,7 +26,8 @@
 - Use a shared design kit or `@hraness/ui` only for stable, portable primitives and tokens at an immutable version. Keep evidence modeling, timeline composition, methodology, and the local visual contract product-owned.
 - Freeze shared interfaces before parallel lanes begin. Give authored-corpus migrations, manifests, lockfiles, and other convergence surfaces one owner while lanes edit disjoint paths.
 - Keep mandatory rules in the closest `AGENTS.md`, current procedures in `docs/`, executable contracts in types and tests, and pull-based rationale, evidence, synthesis, and plans in `kb/`.
-- Keep the canonical public identity at `https://stripehistory.com`. Preserve former hosts only as direct permanent redirects to the matching canonical path.
+- Keep the canonical public identity at `https://stripedex.com`. Preserve former hosts only as direct permanent redirects to the matching canonical path.
+- Keep `stripe-history/*` as the stable public schema and prompt-version namespace. A product rename does not rewrite published data contracts or append-only attestations.
 - Keep history server-rendered, crawlable, and available as reviewable YAML. Preserve durable category, annual-volume, valuation, and data URLs.
 - Require at least one canonical source ID for every event and valuation observation. Prefer primary evidence, preserve uncertainty, and distinguish proposed, reported, announced, and completed events.
 - Parse every provider response and YAML file from `unknown`. Preserve reverse chronology, globally unique IDs, bounded text, and deterministic source provenance.

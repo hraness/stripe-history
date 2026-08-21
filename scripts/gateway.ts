@@ -21,6 +21,8 @@ export function resolveGatewayCredential(
   environment: Readonly<Record<string, string | undefined>> = process.env,
 ): GatewayCredential | null {
   for (const value of [
+    environment.STRIPEDEX_LLM_API_KEY,
+    // Keep the sealed GitHub secret usable until it is rotated under the new name.
     environment.STRIPE_HISTORY_LLM_API_KEY,
     environment.AI_GATEWAY_API_KEY,
   ]) {
@@ -37,14 +39,14 @@ export function gatewayOptionsForCredential(
 }
 
 export function resolveGatewayModel(
-  value: unknown = process.env.STRIPE_HISTORY_MODEL,
+  value: unknown = process.env.STRIPEDEX_MODEL ?? process.env.STRIPE_HISTORY_MODEL,
 ): string {
   if (value === undefined) return DEFAULT_MODEL;
   if (
     typeof value !== "string"
     || !/^[a-z0-9][a-z0-9._-]*\/[a-z0-9][a-z0-9._-]*$/u.test(value)
   ) {
-    throw new Error("STRIPE_HISTORY_MODEL must be a gateway provider/model identifier");
+    throw new Error("STRIPEDEX_MODEL must be a gateway provider/model identifier");
   }
   return value;
 }

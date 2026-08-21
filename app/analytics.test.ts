@@ -22,7 +22,7 @@ function pageview(properties: CaptureResult["properties"]): CaptureResult {
   };
 }
 
-describe("Stripe History analytics routes", () => {
+describe("Stripedex analytics routes", () => {
   test("classifies every rendered public route from a finite allowlist", () => {
     const expectedCategoryPaths = timelineCategoryIds.map(
       (category) => `/history/${category}`,
@@ -37,40 +37,40 @@ describe("Stripe History analytics routes", () => {
     ]));
 
     for (const path of PUBLIC_ANALYTICS_PATHS) {
-      expect(classifyPublicAnalyticsRoute(`https://stripehistory.com${path}`))
-        .toMatchObject({ canonical_path: path, site_id: "stripehistory" });
+      expect(classifyPublicAnalyticsRoute(`https://stripedex.com${path}`))
+        .toMatchObject({ canonical_path: path, site_id: "stripedex" });
     }
   });
 
   test("removes query, fragment, and trailing-slash detail from approved pages", () => {
     const route = classifyPublicAnalyticsRoute(
-      "https://stripehistory.com/history/acquisitions/?account=private#person",
+      "https://stripedex.com/history/acquisitions/?account=private#person",
     );
     expect(route).toEqual({
       analytics_schema_version: 1,
-      canonical_domain: "stripehistory.com",
+      canonical_domain: "stripedex.com",
       canonical_path: "/history/acquisitions",
       page_kind: "history_category",
-      site_id: "stripehistory",
+      site_id: "stripedex",
     });
     expect(route === null ? null : canonicalAnalyticsUrl(route))
-      .toBe("https://stripehistory.com/history/acquisitions");
+      .toBe("https://stripedex.com/history/acquisitions");
   });
 
   test("rejects noncanonical hosts, protocols, and unknown paths", () => {
-    expect(classifyPublicAnalyticsRoute("https://www.stripehistory.com/about")).toBeNull();
-    expect(classifyPublicAnalyticsRoute("http://stripehistory.com/about")).toBeNull();
-    expect(classifyPublicAnalyticsRoute("https://stripehistory.com:444/about")).toBeNull();
-    expect(classifyPublicAnalyticsRoute("https://stripehistory.com/history/private-account"))
+    expect(classifyPublicAnalyticsRoute("https://www.stripedex.com/about")).toBeNull();
+    expect(classifyPublicAnalyticsRoute("http://stripedex.com/about")).toBeNull();
+    expect(classifyPublicAnalyticsRoute("https://stripedex.com:444/about")).toBeNull();
+    expect(classifyPublicAnalyticsRoute("https://stripedex.com/history/private-account"))
       .toBeNull();
-    expect(classifyPublicAnalyticsRoute("https://stripehistory.com/research/private"))
+    expect(classifyPublicAnalyticsRoute("https://stripedex.com/research/private"))
       .toBeNull();
   });
 });
 
-describe("Stripe History PostHog boundary", () => {
+describe("Stripedex PostHog boundary", () => {
   const evidence = {
-    href: "https://stripehistory.com/about?email=reader@example.com#account",
+    href: "https://stripedex.com/about?email=reader@example.com#account",
     production: true,
   } as const;
 
@@ -134,16 +134,16 @@ describe("Stripe History PostHog boundary", () => {
 
     expect(result?.properties).toEqual({
       $cookieless_mode: true,
-      $current_url: "https://stripehistory.com/about",
-      $host: "stripehistory.com",
+      $current_url: "https://stripedex.com/about",
+      $host: "stripedex.com",
       $pathname: "/about",
       $process_person_profile: false,
       analytics_schema_version: 1,
-      canonical_domain: "stripehistory.com",
+      canonical_domain: "stripedex.com",
       canonical_path: "/about",
       distinct_id: POSTHOG_COOKILESS_DISTINCT_ID,
       page_kind: "about",
-      site_id: "stripehistory",
+      site_id: "stripedex",
       token: "phc_publicproject",
     });
     expect(JSON.stringify(result)).not.toContain("reader@example.com");
@@ -168,7 +168,7 @@ describe("Stripe History PostHog boundary", () => {
     expect(beforeSend(pageview({ ...validProperties, $cookieless_mode: false })))
       .toBeNull();
     expect(createPostHogBeforeSend(
-      () => "https://stripehistory.com/history/private-account",
+      () => "https://stripedex.com/history/private-account",
     )(pageview(validProperties))).toBeNull();
   });
 });

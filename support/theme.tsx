@@ -12,7 +12,7 @@ export function SkipLink({
   return (
     <a
       {...props}
-      className={["stripe-history-skip-link", className]
+      className={["stripedex-skip-link", className]
         .filter(Boolean)
         .join(" ")}
       href={href}
@@ -28,7 +28,7 @@ export function ThemeToggle({
   return (
     <SharedThemeToggle
       aria-label={ariaLabel}
-      className="stripe-history-theme-toggle"
+      className="stripedex-theme-toggle"
       presentation="menu"
       size="compact"
     />

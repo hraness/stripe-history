@@ -3,7 +3,7 @@ import { NOINDEX_ROBOTS } from "@hraness/web-discovery";
 
 import { metadata } from "./not-found";
 
-describe("stripehistory.com not-found metadata", () => {
+describe("stripedex.com not-found metadata", () => {
   test("uses a distinct noindex page instead of the homepage identity", () => {
     expect(metadata).toEqual({
       title: "Page not found",

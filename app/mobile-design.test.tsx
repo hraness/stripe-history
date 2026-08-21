@@ -65,19 +65,19 @@ test("theme control uses the shared System-first menu with a full hit target", (
   expect(html).toContain("<svg");
   expect(html).not.toMatch(/[☀☾]/u);
   expect(supportCss).toMatch(
-    /\.stripe-history-theme-toggle \.hraness-icon-button__control\s*\{[^}]*min-block-size:\s*max\(2\.5rem, var\(--plain-link-target-min\)\);[^}]*min-inline-size:\s*max\(2\.5rem, var\(--plain-link-target-min\)\);/u,
+    /\.stripedex-theme-toggle \.hraness-icon-button__control\s*\{[^}]*min-block-size:\s*max\(2\.5rem, var\(--plain-link-target-min\)\);[^}]*min-inline-size:\s*max\(2\.5rem, var\(--plain-link-target-min\)\);/u,
   );
   expect(supportCss).toMatch(
-    /\.stripe-history-theme-toggle \.hraness-icon-button__control\s*\{[^}]*border:\s*1px solid var\(--plain-line\);/u,
+    /\.stripedex-theme-toggle \.hraness-icon-button__control\s*\{[^}]*border:\s*1px solid var\(--plain-line\);/u,
   );
 });
 
 test("site chrome begins close to the viewport while preserving coarse hit targets", () => {
   expect(globalsCss).toMatch(
-    /\.stripe-history-main\s*\{[^}]*margin-block:\s*max\(0\.25rem, env\(safe-area-inset-top\)\)/u,
+    /\.stripedex-main\s*\{[^}]*margin-block:\s*max\(0\.25rem, env\(safe-area-inset-top\)\)/u,
   );
   expect(globalsCss).toMatch(
-    /\.stripe-history-header\s*\{[^}]*min-block-size:\s*2\.5rem;[^}]*padding-block:\s*0;/u,
+    /\.stripedex-header\s*\{[^}]*min-block-size:\s*2\.5rem;[^}]*padding-block:\s*0;/u,
   );
   expect(plainSiteCss).toMatch(
     /@media \(pointer: coarse\)\s*\{[^}]*--plain-link-target-min:\s*var\(--interactive-target-min, 48px\);/u,

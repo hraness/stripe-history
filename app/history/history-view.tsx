@@ -395,12 +395,12 @@ export function HistoryView({
 
   return (
     <main
-      className="plain-page stripe-history-main stripe-history-history-main"
+      className="plain-page stripedex-main stripedex-history-main"
       id="main-content"
     >
       <SiteHeader />
-      <section aria-labelledby="history-heading" className="stripe-history-section">
-        <h1 className="stripe-history-visually-hidden" id="history-heading">
+      <section aria-labelledby="history-heading" className="stripedex-section">
+        <h1 className="stripedex-visually-hidden" id="history-heading">
           {historyHeading}
         </h1>
         <HistoryFilters

@@ -17,7 +17,7 @@ test("appearance starts with System and keeps the existing product preference ke
   expect(html).toContain('aria-label="Appearance: System"');
 });
 
-test("Stripe History does not keep a second theme runtime", async () => {
+test("Stripedex does not keep a second theme runtime", async () => {
   const [source, layout, globalError] = await Promise.all([
     Bun.file(new URL("../support/theme.tsx", import.meta.url)).text(),
     Bun.file(new URL("./layout.tsx", import.meta.url)).text(),

@@ -1,29 +1,29 @@
-# Stripe History
+# Stripedex
 
-[stripehistory.com](https://stripehistory.com/) is an independent, open-source timeline of Stripe company history, with sourced data on products, acquisitions, funding, valuation, leadership, expansion, milestones, and annual payment volume.
+[stripedex.com](https://stripedex.com/) is an independent, open-source timeline of Stripe company history, with sourced data on products, acquisitions, funding, valuation, leadership, expansion, milestones, and annual payment volume.
 
 The site renders more than 200 sourced events as one reverse-chronological history and as focused, crawlable category pages. It also presents sourced annual payment-volume and private-company valuation records. Each claim retains reviewable YAML provenance, including status and uncertainty where they apply.
 
 ## Browse the history
 
-- [Complete Stripe company history](https://stripehistory.com/)
-- [Acquisitions](https://stripehistory.com/history/acquisitions)
-- [Product launches](https://stripehistory.com/history/product-launches)
-- [Fundraising](https://stripehistory.com/history/fundraising)
-- [Company milestones](https://stripehistory.com/history/company-milestones)
-- [Annual payment and total volume](https://stripehistory.com/history/payment-volume)
-- [Private-company valuation history](https://stripehistory.com/history/valuation)
-- [Stripe leadership appearances](https://stripehistory.com/history/appearances)
-- [Open history and research data](https://stripehistory.com/data)
+- [Complete Stripe company history](https://stripedex.com/)
+- [Acquisitions](https://stripedex.com/history/acquisitions)
+- [Product launches](https://stripedex.com/history/product-launches)
+- [Fundraising](https://stripedex.com/history/fundraising)
+- [Company milestones](https://stripedex.com/history/company-milestones)
+- [Annual payment and total volume](https://stripedex.com/history/payment-volume)
+- [Private-company valuation history](https://stripedex.com/history/valuation)
+- [Stripe leadership appearances](https://stripedex.com/history/appearances)
+- [Open history and research data](https://stripedex.com/data)
 
 ## Questions the history answers
 
-- [How did Stripe start, and who formed its earliest team?](https://stripehistory.com/history/origins-and-early-company)
-- [What companies has Stripe acquired?](https://stripehistory.com/history/acquisitions)
-- [How have Stripe's funding and private-company valuation changed?](https://stripehistory.com/history/valuation)
-- [How much annual payment and total volume has Stripe disclosed?](https://stripehistory.com/history/payment-volume)
-- [When did Stripe launch products and expand into new countries?](https://stripehistory.com/history/product-launches)
-- [How have Stripe's payment methods, settlement rails, and payout reach expanded?](https://stripehistory.com/history/payment-and-payout-expansion)
+- [How did Stripe start, and who formed its earliest team?](https://stripedex.com/history/origins-and-early-company)
+- [What companies has Stripe acquired?](https://stripedex.com/history/acquisitions)
+- [How have Stripe's funding and private-company valuation changed?](https://stripedex.com/history/valuation)
+- [How much annual payment and total volume has Stripe disclosed?](https://stripedex.com/history/payment-volume)
+- [When did Stripe launch products and expand into new countries?](https://stripedex.com/history/product-launches)
+- [How have Stripe's payment methods, settlement rails, and payout reach expanded?](https://stripedex.com/history/payment-and-payout-expansion)
 
 The authored event records live in [`public/history/`](./public/history/), one file per category. The [`public/research/`](./public/research/) directory contains the canonical source catalog, valuation observations, leadership appearances, collection definitions, research-run ledger, automatic-publication policy, complete automated decision history, and accepted publication attestations. They remain ordinary YAML so corrections and provenance changes are readable in review without scraping the site.
 
@@ -45,7 +45,7 @@ Up to three current company-history candidates receive bounded triage from [GPT-
 
 Every outcome, including rejections and corroborating duplicates, is appended to [`automated-decisions.yml`](./public/research/automated-decisions.yml). Accepted changes retain the stronger evidence attestation in [`automated-publications.yml`](./public/research/automated-publications.yml). A terminal ledger decision prevents the same URL from consuming model capacity again. One rolling GitHub issue contains only unresolved decisions such as ambiguous evidence, out-of-policy claims, capacity deferrals, or infrastructure errors; the workflow closes it when the queue is empty. Accepted changes and decision-ledger updates must pass strict YAML schemas, the research audit, the full repository check, a production build, and a generated-diff allowlist. The workflow commits only those data files when its checkout is still a direct child of current `main`, fast-forward pushes that exact commit to `main`, then explicitly dispatches and waits for exact-head repository CI because events created by the workflow token do not recursively start workflows. Repository checks remain the publication authority.
 
-Automatic publication requires a Vercel AI Gateway key stored as the GitHub Actions secret `STRIPE_HISTORY_LLM_API_KEY`. Create the key in the [AI Gateway API Keys page](https://vercel.com/docs/ai-gateway/authentication-and-byok), then add it to the repository without placing it in source or logs. The optional `EXA_API_KEY` GitHub Actions secret enables the checked, domain-restricted Exa discovery monitor; direct publisher evidence still comes from each result's canonical source. The checked policy bounds model calls and output size; review provider usage and spending separately.
+Automatic publication requires a Vercel AI Gateway key. The workflow exposes it as `STRIPEDEX_LLM_API_KEY`; the existing sealed GitHub Actions secret retains its legacy `STRIPE_HISTORY_LLM_API_KEY` name until the credential is rotated. Create replacement keys in the [AI Gateway API Keys page](https://vercel.com/docs/ai-gateway/authentication-and-byok), then store them without placing credentials in source or logs. The optional `EXA_API_KEY` GitHub Actions secret enables the checked, domain-restricted Exa discovery monitor; direct publisher evidence still comes from each result's canonical source. The checked policy bounds model calls and output size; review provider usage and spending separately.
 
 Run the same discovery locally with an explicit date:
 
@@ -53,7 +53,7 @@ Run the same discovery locally with an explicit date:
 bun run history:news:pull -- --as-of 2026-08-20 --json-out /tmp/stripe-news.json --markdown-out /tmp/stripe-news.md
 ```
 
-The manual [leadership appearance backfill](./.github/workflows/appearance-backfill.yml) searches one bounded calendar window at a time from 2009 onward and uploads a private review artifact. It does not edit public data or open issues. Reviewers deduplicate the artifact, capture the retained sources, and merge only evidence-backed records into the main [leadership appearances](https://stripehistory.com/history/appearances) timeline category. The same window can be inspected locally:
+The manual [leadership appearance backfill](./.github/workflows/appearance-backfill.yml) searches one bounded calendar window at a time from 2009 onward and uploads a private review artifact. It does not edit public data or open issues. Reviewers deduplicate the artifact, capture the retained sources, and merge only evidence-backed records into the main [leadership appearances](https://stripedex.com/history/appearances) timeline category. The same window can be inspected locally:
 
 ```sh
 bun run history:news:pull -- --from 2020-01-01 --as-of 2020-12-31 --monitor exa-stripe-leadership-appearances --json-out /tmp/stripe-appearances-2020.json --markdown-out /tmp/stripe-appearances-2020.md
@@ -62,7 +62,7 @@ bun run history:news:pull -- --from 2020-01-01 --as-of 2020-12-31 --monitor exa-
 After capturing and reviewing a candidate's complete transcript in Jungle's KB, generate a grounded digest proposal with the strong-model summarizer:
 
 ```sh
-STRIPE_HISTORY_LLM_API_KEY=... bun run history:appearances:summarize -- --capture /absolute/path/to/capture.md --json-out /tmp/appearance-summary.json
+STRIPEDEX_LLM_API_KEY=... bun run history:appearances:summarize -- --capture /absolute/path/to/capture.md --json-out /tmp/appearance-summary.json
 ```
 
 The summarizer uses `openai/gpt-5.6-sol` at `max` reasoning by default, emits a Reading-style gist and three to five ideas, and fails unless every private audit quote is an exact 6–25-word transcript passage. It never edits the appearance corpus. A reviewer reconciles the proposed digest, participant role, date, canonical source, and transcript status before adding YAML and a research-run decision.
@@ -70,12 +70,12 @@ The summarizer uses `openai/gpt-5.6-sol` at `max` reasoning by default, emits a 
 Preview model decisions without editing the corpus by omitting `--write`:
 
 ```sh
-STRIPE_HISTORY_LLM_API_KEY=... bun run history:publish:auto -- --digest /tmp/stripe-news.json --json-out /tmp/stripe-publication.json --markdown-out /tmp/stripe-publication.md
+STRIPEDEX_LLM_API_KEY=... bun run history:publish:auto -- --digest /tmp/stripe-news.json --json-out /tmp/stripe-publication.json --markdown-out /tmp/stripe-publication.md
 ```
 
 The scheduled workflow is the publication owner. Local `--write` is intended only for deterministic fixture work or a reviewed recovery, not a second concurrent publisher.
 
-Read the full [methodology and independence statement](https://stripehistory.com/about).
+Read the full [methodology and independence statement](https://stripedex.com/about).
 
 ## Run locally
 
@@ -108,7 +108,7 @@ Corrections, additional primary sources, and focused improvements are welcome. R
 
 ## Independence
 
-Stripe History is not affiliated with, endorsed by, or operated by Stripe, Inc. Stripe names and trademarks belong to their respective owners.
+Stripedex is not affiliated with, endorsed by, or operated by Stripe, Inc. Stripe names and trademarks belong to their respective owners.
 
 ## License
 

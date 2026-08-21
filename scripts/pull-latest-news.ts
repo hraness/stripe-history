@@ -442,7 +442,7 @@ async function requestText(
   for (let attempt = 0; attempt < 3; attempt += 1) {
     try {
       const response = await fetcher(url, {
-        headers: { "User-Agent": "stripehistory.com weekly research (+https://stripehistory.com/)" },
+        headers: { "User-Agent": "stripedex.com weekly research (+https://stripedex.com/)" },
         redirect: "follow",
         signal: AbortSignal.timeout(30_000),
       });

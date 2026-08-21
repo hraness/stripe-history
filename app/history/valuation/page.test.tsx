@@ -10,7 +10,7 @@ import {
   deriveValuationPageSeo,
 } from "./valuation-page-model";
 
-describe("stripehistory.com valuation history", () => {
+describe("stripedex.com valuation history", () => {
   test("publishes a canonical, descriptive search result from the dataset", async () => {
     const metadata = await generateMetadata();
     const seo = deriveValuationPageSeo(await loadHistory());
@@ -21,7 +21,7 @@ describe("stripehistory.com valuation history", () => {
       title: seo.title,
     });
     expect(metadata.openGraph).toMatchObject({
-      title: `${seo.title} | stripehistory.com`,
+      title: `${seo.title} | stripedex.com`,
       url: "/history/valuation",
     });
   });
@@ -58,7 +58,7 @@ describe("stripehistory.com valuation history", () => {
     expect(updatedMetadata).toMatchObject({
       description: expect.stringContaining("$200 billion 2027 company tender"),
       openGraph: {
-        title: "Stripe Valuation History by Year, 2011–2027 | stripehistory.com",
+        title: "Stripe Valuation History by Year, 2011–2027 | stripedex.com",
       },
       title: "Stripe Valuation History by Year, 2011–2027",
     });
@@ -69,7 +69,7 @@ describe("stripehistory.com valuation history", () => {
     const seo = deriveValuationPageSeo(await loadHistory());
     const html = renderToStaticMarkup(await ValuationPage());
 
-    expect(html).toContain(`<h1 class="stripe-history-visually-hidden" id="valuation-page-heading">${seo.title}</h1>`);
+    expect(html).toContain(`<h1 class="stripedex-visually-hidden" id="valuation-page-heading">${seo.title}</h1>`);
     expect(html).toContain(seo.description);
     expect(html.match(/class="history-volume-chart-track"/gu)?.length).toBe(14);
     expect(html.match(/class="history-valuation-basis-badge"/gu)?.length).toBe(25);
@@ -104,7 +104,7 @@ describe("stripehistory.com valuation history", () => {
     expect(html).toContain('data-value-usd="20000000"');
     expect(html).toContain('data-value-usd="159000000000"');
     expect(html).toContain('data-analytics-kind="valuation"');
-    expect(html).toContain('id="stripe-history-valuation-structured-data"');
+    expect(html).toContain('id="stripedex-valuation-structured-data"');
     expect(html).toContain('aria-current="true" aria-label="valuation: 25 observations, selected; activate to show all history" data-analytics-event="history filter selected" data-analytics-id="all"');
     expect(html).toMatch(/data-filter-id="valuation"[^>]* href="\/"/u);
     expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
@@ -113,10 +113,10 @@ describe("stripehistory.com valuation history", () => {
     expect(html).not.toContain("company priced");
     expect(html).not.toContain("company coordinated");
     expect(html).not.toContain("capital raised");
-    expect(html).toContain('class="stripe-history-header"');
+    expect(html).toContain('class="stripedex-header"');
     expect(html).toContain('href="/about">about</a>');
-    expect(html).toContain('class="hraness-brand stripe-history-footer-hraness"');
-    expect(html).not.toContain('class="stripe-history-breadcrumbs"');
-    expect(html).not.toContain('class="stripe-history-section-heading"');
+    expect(html).toContain('class="hraness-brand stripedex-footer-hraness"');
+    expect(html).not.toContain('class="stripedex-breadcrumbs"');
+    expect(html).not.toContain('class="stripedex-section-heading"');
   });
 });

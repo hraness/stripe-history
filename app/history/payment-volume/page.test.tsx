@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import PaymentVolumePage, { metadata } from "./page";
 
-describe("stripehistory.com payment volume history", () => {
+describe("stripedex.com payment volume history", () => {
   test("publishes a canonical search result", () => {
     expect(metadata).toMatchObject({
       alternates: { canonical: "/history/payment-volume" },
@@ -11,7 +11,7 @@ describe("stripehistory.com payment volume history", () => {
       title: "Stripe Payment and Total Volume by Year",
     });
     expect(metadata.openGraph).toMatchObject({
-      title: "Stripe Payment and Total Volume by Year | stripehistory.com",
+      title: "Stripe Payment and Total Volume by Year | stripedex.com",
       url: "/history/payment-volume",
     });
   });
@@ -19,7 +19,7 @@ describe("stripehistory.com payment volume history", () => {
   test("renders five source-linked annual observations and methodology", async () => {
     const html = renderToStaticMarkup(await PaymentVolumePage());
 
-    expect(html).toContain('<h1 class="stripe-history-visually-hidden" id="payment-volume-heading">Stripe Payment and Total Volume by Year</h1>');
+    expect(html).toContain('<h1 class="stripedex-visually-hidden" id="payment-volume-heading">Stripe Payment and Total Volume by Year</h1>');
     expect(html.match(/class="history-volume-chart-track"/gu)?.length).toBe(5);
     expect(html.match(/<tr(?:\s|>)/gu)?.length).toBe(6);
     expect(html).toContain("$640 billion+");
@@ -27,18 +27,18 @@ describe("stripehistory.com payment volume history", () => {
     expect(html).toContain("Stripe calls the 2025 figure");
     expect(html).toContain("2021 and 2022 figures are lower bounds");
     expect(html).toContain('data-analytics-event="source link opened"');
-    expect(html).toContain('id="stripe-history-payment-volume-structured-data"');
+    expect(html).toContain('id="stripedex-payment-volume-structured-data"');
     expect(html).toContain('aria-current="true" aria-label="annual volume: 5 annual disclosures, selected; activate to show all history" data-analytics-event="history filter selected" data-analytics-id="all"');
     expect(html).toMatch(/data-filter-id="payment-volume"[^>]* href="\/"/u);
     expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
       html.indexOf('data-filter-id="payment-volume"'),
     );
-    expect(html).not.toContain('class="stripe-history-selector"');
-    expect(html).toContain('class="stripe-history-header"');
+    expect(html).not.toContain('class="stripedex-selector"');
+    expect(html).toContain('class="stripedex-header"');
     expect(html).toContain('href="/about">about</a>');
-    expect(html).toContain('class="hraness-brand stripe-history-footer-hraness"');
-    expect(html).not.toContain('class="stripe-history-breadcrumbs"');
-    expect(html).not.toContain('class="stripe-history-section-heading"');
+    expect(html).toContain('class="hraness-brand stripedex-footer-hraness"');
+    expect(html).not.toContain('class="stripedex-breadcrumbs"');
+    expect(html).not.toContain('class="stripedex-section-heading"');
     expect(html).not.toContain("$400 billion");
   });
 });

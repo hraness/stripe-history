@@ -4,8 +4,8 @@ import { GITHUB_REPOSITORY_URL } from "./site";
 
 export function SiteFooter() {
   return (
-    <footer className="plain-footer stripe-history-footer">
-      <HranessBrand className="stripe-history-footer-hraness" />
+    <footer className="plain-footer stripedex-footer">
+      <HranessBrand className="stripedex-footer-hraness" />
       <div className="plain-footer__links">
         <a href="/data">data</a>
         <a href="/about">about</a>

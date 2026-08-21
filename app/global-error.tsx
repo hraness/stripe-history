@@ -13,8 +13,8 @@ export default function GlobalError({ reset }: RouteErrorPageProps) {
       <body className="plain-site">
         <DesignThemeProvider storageKey="stripe-history-theme-v1">
           <ThemeColorSync darkColor="#151515" lightColor="#ffffff" />
-          <main className="plain-page stripe-history-main stripe-history-state" id="main-content">
-            <h1>Stripe History is temporarily unavailable</h1>
+          <main className="plain-page stripedex-main stripedex-state" id="main-content">
+            <h1>Stripedex is temporarily unavailable</h1>
             <p>The site could not finish loading.</p>
             <button onClick={reset} type="button">Try again</button>
           </main>

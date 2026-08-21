@@ -29,7 +29,7 @@ describe("standalone runtime surfaces", () => {
 
     expect(route).toContain("Something went wrong");
     expect(route).toContain("Try again");
-    expect(document).toContain("Stripe History is temporarily unavailable");
+    expect(document).toContain("Stripedex is temporarily unavailable");
     expect(`${route}${document}`).not.toContain("PostHog");
   });
 

@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
 
-export const SITE_DOMAIN = "stripehistory.com" as const;
+export const SITE_DOMAIN = "stripedex.com" as const;
 export const SITE_ORIGIN = `https://${SITE_DOMAIN}` as const;
 export const GITHUB_REPOSITORY_URL =
-  "https://github.com/hraness/stripe-history" as const;
+  "https://github.com/hraness/stripedex" as const;
 export const HRANESS_URL = "https://hraness.com/" as const;
 
 export type SitePath = `/${string}`;
 
 export const site = {
-  applicationName: "Stripe History",
+  applicationName: "Stripedex",
   datasetDescription:
     "Open, source-linked YAML records behind the Stripe company history timeline, including events, valuation observations, annual volume disclosures, leadership appearances, source provenance, collection scope, and review runs.",
   description:
     "An independent, sourced timeline of Stripe acquisitions, products, leadership, funding, valuation, expansion, offices, publishing, company milestones, and annual volume.",
   domain: SITE_DOMAIN,
   historyTitle: "Stripe Company History",
-  name: "Stripe History",
+  name: "Stripedex",
   socialImageAlt: `Stripe company history timeline from ${SITE_DOMAIN}`,
   title: `Stripe Company History | ${SITE_DOMAIN}`,
   titleTemplate: `%s | ${SITE_DOMAIN}`,

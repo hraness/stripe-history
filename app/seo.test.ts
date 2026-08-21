@@ -11,20 +11,20 @@ import {
   websiteJsonLd,
 } from "./seo";
 
-describe("stripehistory.com structured discovery", () => {
-  test("identifies Stripe History, Hraness as publisher, and Stripe only as its subject", () => {
+describe("stripedex.com structured discovery", () => {
+  test("identifies Stripedex, Hraness as publisher, and Stripe only as its subject", () => {
     expect(websiteJsonLd()).toMatchObject({
       "@type": "WebSite",
-      "@id": "https://stripehistory.com/#website",
-      name: "Stripe History",
-      alternateName: "stripehistory.com",
+      "@id": "https://stripedex.com/#website",
+      name: "Stripedex",
+      alternateName: "stripedex.com",
       publisher: {
         "@type": "Organization",
         name: "Hraness",
         url: "https://hraness.com/",
       },
-      sameAs: ["https://github.com/hraness/stripe-history"],
-      url: "https://stripehistory.com/",
+      sameAs: ["https://github.com/hraness/stripedex"],
+      url: "https://stripedex.com/",
     });
     expect(aboutPageJsonLd()).toMatchObject({
       "@type": "WebPage",
@@ -38,15 +38,15 @@ describe("stripehistory.com structured discovery", () => {
 
     expect(dataset).toMatchObject({
       "@type": "Dataset",
-      "@id": "https://stripehistory.com/data#dataset",
-      alternateName: "Stripe History Dataset",
+      "@id": "https://stripedex.com/data#dataset",
+      alternateName: "Stripedex Dataset",
       creator: { name: "Hraness" },
-      identifier: "https://stripehistory.com/data#dataset",
+      identifier: "https://stripedex.com/data#dataset",
       inLanguage: "en-US",
-      license: "https://github.com/hraness/stripe-history/blob/main/LICENSE",
+      license: "https://github.com/hraness/stripedex/blob/main/LICENSE",
       measurementTechnique: expect.stringContaining("Source-linked editorial review"),
       name: "Stripe Company History Dataset",
-      sameAs: "https://github.com/hraness/stripe-history/tree/main/public",
+      sameAs: "https://github.com/hraness/stripedex/tree/main/public",
       temporalCoverage: "2005/2026",
     });
     expect(dataset.variableMeasured).toEqual(expect.arrayContaining([
@@ -57,19 +57,19 @@ describe("stripehistory.com structured discovery", () => {
     expect(dataset.distribution).toHaveLength(16);
     expect(dataset.distribution).toContainEqual({
       "@type": "DataDownload",
-      contentUrl: "https://stripehistory.com/history/acquisitions.yml",
+      contentUrl: "https://stripedex.com/history/acquisitions.yml",
       encodingFormat: "application/yaml",
       name: "Acquisitions history records",
     });
     expect(dataset.distribution).toContainEqual({
       "@type": "DataDownload",
-      contentUrl: "https://stripehistory.com/research/appearances.yml",
+      contentUrl: "https://stripedex.com/research/appearances.yml",
       encodingFormat: "application/yaml",
       name: "Stripe leadership appearances",
     });
     expect(dataset.distribution).toContainEqual({
       "@type": "DataDownload",
-      contentUrl: "https://stripehistory.com/research/valuations.yml",
+      contentUrl: "https://stripedex.com/research/valuations.yml",
       encodingFormat: "application/yaml",
       name: "Stripe valuation observations",
     });
@@ -80,8 +80,8 @@ describe("stripehistory.com structured discovery", () => {
     const collection = appearanceCollectionJsonLd(history);
 
     expect(collection).toMatchObject({
-      "@id": "https://stripehistory.com/history/appearances#collection",
-      url: "https://stripehistory.com/history/appearances",
+      "@id": "https://stripedex.com/history/appearances#collection",
+      url: "https://stripedex.com/history/appearances",
       mainEntity: {
         numberOfItems: history.appearances.length,
       },
@@ -108,7 +108,7 @@ describe("stripehistory.com structured discovery", () => {
       numberOfItems: 1,
       itemListElement: [{
         position: 1,
-        url: "https://stripehistory.com/#example-event",
+        url: "https://stripedex.com/#example-event",
       }],
     });
 
@@ -121,13 +121,13 @@ describe("stripehistory.com structured discovery", () => {
       },
     );
     expect(categoryHistory.mainEntity.itemListElement[0]?.url).toBe(
-      "https://stripehistory.com/history/company-milestones#example-event",
+      "https://stripedex.com/history/company-milestones#example-event",
     );
     expect(breadcrumbJsonLd([
       { name: "History", path: "/" },
       { name: "Company milestones", path: "/history/company-milestones" },
     ]).itemListElement[1]?.item).toBe(
-      "https://stripehistory.com/history/company-milestones",
+      "https://stripedex.com/history/company-milestones",
     );
   });
 

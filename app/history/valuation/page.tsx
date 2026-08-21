@@ -96,18 +96,18 @@ export default async function ValuationPage() {
             { name: "Valuation", path: "/history/valuation" },
           ]),
         ]}
-        id="stripe-history-valuation-structured-data"
+        id="stripedex-valuation-structured-data"
       />
       <main
-        className="plain-page stripe-history-main stripe-history-history-main"
+        className="plain-page stripedex-main stripedex-history-main"
         id="main-content"
       >
         <SiteHeader />
         <section
           aria-labelledby="valuation-page-heading"
-          className="stripe-history-section history-volume-page"
+          className="stripedex-section history-volume-page"
         >
-          <h1 className="stripe-history-visually-hidden" id="valuation-page-heading">
+          <h1 className="stripedex-visually-hidden" id="valuation-page-heading">
             {seo.title}
           </h1>
           <HistoryFilters history={history} valuationSelected />

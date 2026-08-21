@@ -7,11 +7,11 @@ import {
 } from "./history-schema";
 import { SourceIdSchema } from "./research-schema";
 
-export const STRIPE_HISTORY_AUTOMATED_PUBLICATION_POLICY_SCHEMA_VERSION =
+export const STRIPEDEX_AUTOMATED_PUBLICATION_POLICY_SCHEMA_VERSION =
   "stripe-history/automated-publication-policy/v1" as const;
-export const STRIPE_HISTORY_AUTOMATED_PUBLICATIONS_SCHEMA_VERSION =
+export const STRIPEDEX_AUTOMATED_PUBLICATIONS_SCHEMA_VERSION =
   "stripe-history/automated-publications/v1" as const;
-export const STRIPE_HISTORY_AUTOMATED_DECISIONS_SCHEMA_VERSION =
+export const STRIPEDEX_AUTOMATED_DECISIONS_SCHEMA_VERSION =
   "stripe-history/automated-decisions/v1" as const;
 
 export const automatedHistoryCategoryIds = historyCategoryIds.filter(
@@ -33,7 +33,7 @@ export const AutomatedPublicationPolicySchema = z.strictObject({
   proposal_prompt_version: z.string().regex(/^[a-z0-9]+(?:[./-][a-z0-9]+)*$/u),
   reasoning_effort: z.literal("max"),
   review_prompt_version: z.string().regex(/^[a-z0-9]+(?:[./-][a-z0-9]+)*$/u),
-  schema: z.literal(STRIPE_HISTORY_AUTOMATED_PUBLICATION_POLICY_SCHEMA_VERSION),
+  schema: z.literal(STRIPEDEX_AUTOMATED_PUBLICATION_POLICY_SCHEMA_VERSION),
   trusted_monitors: z.array(
     z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u),
   ).min(1).max(12),
@@ -108,7 +108,7 @@ export const AutomatedPublicationRunSchema = z.strictObject({
 
 export const AutomatedPublicationLedgerSchema = z.strictObject({
   runs: z.array(AutomatedPublicationRunSchema).max(500),
-  schema: z.literal(STRIPE_HISTORY_AUTOMATED_PUBLICATIONS_SCHEMA_VERSION),
+  schema: z.literal(STRIPEDEX_AUTOMATED_PUBLICATIONS_SCHEMA_VERSION),
 }).superRefine((ledger, context) => {
   const ids = ledger.runs.map(({ id }) => id);
   if (new Set(ids).size !== ids.length) {
@@ -232,7 +232,7 @@ export const AutomatedDecisionRunSchema = z.strictObject({
 
 export const AutomatedDecisionLedgerSchema = z.strictObject({
   runs: z.array(AutomatedDecisionRunSchema).max(500),
-  schema: z.literal(STRIPE_HISTORY_AUTOMATED_DECISIONS_SCHEMA_VERSION),
+  schema: z.literal(STRIPEDEX_AUTOMATED_DECISIONS_SCHEMA_VERSION),
 }).superRefine((ledger, context) => {
   const ids = ledger.runs.map(({ id }) => id);
   if (new Set(ids).size !== ids.length) {

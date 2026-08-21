@@ -11,15 +11,15 @@ import {
   stableResearchSourceId,
 } from "./research-source-identity";
 
-export const STRIPE_HISTORY_SOURCE_CATALOG_SCHEMA_VERSION =
+export const STRIPEDEX_SOURCE_CATALOG_SCHEMA_VERSION =
   "stripe-history/sources/v1" as const;
-export const STRIPE_HISTORY_VALUATIONS_SCHEMA_VERSION =
+export const STRIPEDEX_VALUATIONS_SCHEMA_VERSION =
   "stripe-history/valuations/v1" as const;
-export const STRIPE_HISTORY_APPEARANCES_SCHEMA_VERSION =
+export const STRIPEDEX_APPEARANCES_SCHEMA_VERSION =
   "stripe-history/appearances/v1" as const;
-export const STRIPE_HISTORY_RESEARCH_COLLECTIONS_SCHEMA_VERSION =
+export const STRIPEDEX_RESEARCH_COLLECTIONS_SCHEMA_VERSION =
   "stripe-history/research-collections/v1" as const;
-export const STRIPE_HISTORY_RESEARCH_RUNS_SCHEMA_VERSION =
+export const STRIPEDEX_RESEARCH_RUNS_SCHEMA_VERSION =
   "stripe-history/research-runs/v1" as const;
 
 export const SourceIdSchema = z.string().regex(/^source-[a-f0-9]{20}$/u);
@@ -50,7 +50,7 @@ export const ResearchSourceSchema = HistorySourceSchema.extend({
 }).strict();
 
 export const ResearchSourceCatalogSchema = z.strictObject({
-  schema: z.literal(STRIPE_HISTORY_SOURCE_CATALOG_SCHEMA_VERSION),
+  schema: z.literal(STRIPEDEX_SOURCE_CATALOG_SCHEMA_VERSION),
   sources: z.array(ResearchSourceSchema).min(1).max(1_000),
 }).superRefine((catalog, context) => {
   const ids = catalog.sources.map(({ id }) => id);
@@ -386,7 +386,7 @@ export const ValuationObservationSchema = z.strictObject({
 
 export const ValuationFileSchema = z.strictObject({
   observations: z.array(ValuationObservationSchema).min(1).max(200),
-  schema: z.literal(STRIPE_HISTORY_VALUATIONS_SCHEMA_VERSION),
+  schema: z.literal(STRIPEDEX_VALUATIONS_SCHEMA_VERSION),
 }).superRefine((file, context) => {
   const ids = file.observations.map(({ id }) => id);
   if (new Set(ids).size !== ids.length) {
@@ -540,7 +540,7 @@ export const AppearanceSchema = z.strictObject({
 
 export const AppearanceFileSchema = z.strictObject({
   appearances: z.array(AppearanceSchema).min(1).max(300),
-  schema: z.literal(STRIPE_HISTORY_APPEARANCES_SCHEMA_VERSION),
+  schema: z.literal(STRIPEDEX_APPEARANCES_SCHEMA_VERSION),
 }).superRefine((file, context) => {
   const ids = file.appearances.map(({ id }) => id);
   if (new Set(ids).size !== ids.length) {
@@ -961,7 +961,7 @@ export const ResearchRunLedgerSchema = z.strictObject({
     ResearchBackfillRunSchema,
     ResearchDiscoveryRunSchema,
   ])).min(1).max(500),
-  schema: z.literal(STRIPE_HISTORY_RESEARCH_RUNS_SCHEMA_VERSION),
+  schema: z.literal(STRIPEDEX_RESEARCH_RUNS_SCHEMA_VERSION),
 }).superRefine((ledger, context) => {
   const keys = ledger.runs.map((run) => {
     if (run.kind === "baseline-import") {
@@ -992,7 +992,7 @@ export const ResearchCollectionsFileSchema = z.strictObject({
     rationale: CompactTextSchema,
     source_ids: z.array(SourceIdSchema).min(2).max(100),
   })).max(50),
-  schema: z.literal(STRIPE_HISTORY_RESEARCH_COLLECTIONS_SCHEMA_VERSION),
+  schema: z.literal(STRIPEDEX_RESEARCH_COLLECTIONS_SCHEMA_VERSION),
 }).superRefine((file, context) => {
   const ids = file.collections.map(({ id }) => id);
   if (new Set(ids).size !== ids.length) {

@@ -1,9 +1,9 @@
 export const POSTHOG_ANALYTICS_SCHEMA_VERSION = 1 as const;
-export const POSTHOG_SITE_ID = "stripehistory" as const;
+export const POSTHOG_SITE_ID = "stripedex" as const;
 export const POSTHOG_API_HOST = "https://us.i.posthog.com" as const;
 export const POSTHOG_COOKILESS_DISTINCT_ID = "$posthog_cookieless" as const;
 
-const CANONICAL_DOMAIN = "stripehistory.com";
+const CANONICAL_DOMAIN = "stripedex.com";
 const CANONICAL_ORIGIN = `https://${CANONICAL_DOMAIN}`;
 
 const STATIC_ROUTES = [

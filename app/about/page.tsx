@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="plain-page stripe-history-main" id="main-content">
+    <main className="plain-page stripedex-main" id="main-content">
       <JsonLdScript
         data={[
           aboutPageJsonLd(),
@@ -39,19 +39,19 @@ export default function AboutPage() {
             { name: "About", path: "/about" },
           ]),
         ]}
-        id="stripe-history-about-structured-data"
+        id="stripedex-about-structured-data"
       />
       <SiteHeader aboutSelected />
-      <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
+      <nav aria-label="Breadcrumb" className="stripedex-breadcrumbs">
         <Link href="/">history</Link>
         <span aria-hidden="true"> / </span>
         <span>about</span>
       </nav>
       <section
         aria-labelledby="about-heading"
-        className="stripe-history-about stripe-history-section"
+        className="stripedex-about stripedex-section"
       >
-        <div className="stripe-history-section-heading">
+        <div className="stripedex-section-heading">
           <h1 id="about-heading">About {site.domain}</h1>
           <span>independent</span>
         </div>
@@ -87,7 +87,7 @@ export default function AboutPage() {
           Published and maintained by <a href={HRANESS_URL}>Hraness</a>. To
           suggest a correction, add a source, or improve the project, open an
           issue or contribution in the{" "}
-          <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>.
+          <a href={GITHUB_REPOSITORY_URL}>Stripedex repository</a>.
         </p>
 
         <h2>Privacy</h2>

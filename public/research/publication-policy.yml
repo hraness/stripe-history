@@ -1,9 +1,10 @@
 schema: stripe-history/automated-publication-policy/v1
 model: openai/gpt-5.6-sol
 reasoning_effort: max
-proposal_prompt_version: stripe-history/weekly-proposal/v4
+proposal_prompt_version: stripe-history/weekly-proposal/v5
 review_prompt_version: stripe-history/weekly-review/v1
 historical_proposal_prompt_versions:
+  - stripe-history/weekly-proposal/v4
   - stripe-history/weekly-proposal/v3
 historical_review_prompt_versions: []
 max_candidates_per_run: 3

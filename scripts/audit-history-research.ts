@@ -1116,7 +1116,7 @@ const captureSlug = (collectionId: string, source: ResearchSource): string => {
     .replaceAll(/^-|-$/gu, "")
     .slice(0, 52)
     .replace(/-$/u, "");
-  return `stripe-history-${collectionId}-${source.id.slice(7, 15)}-${title}`;
+  return `stripedex-${collectionId}-${source.id.slice(7, 15)}-${title}`;
 };
 
 const readBoundedFile = async (path: string, maximumBytes: number): Promise<Buffer> => {

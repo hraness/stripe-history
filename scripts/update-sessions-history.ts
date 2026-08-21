@@ -57,7 +57,7 @@ const duplicateSchema = z.strictObject({
   })).max(300),
 });
 
-const PUBLIC_SITE_DOMAIN = "stripehistory.com";
+const PUBLIC_SITE_DOMAIN = "stripedex.com";
 const PUBLIC_SITE_ORIGIN = `https://${PUBLIC_SITE_DOMAIN}`;
 const EXTRACTION_SYSTEM = `Extract notable Stripe product launches from an official Stripe Sessions page for ${PUBLIC_SITE_DOMAIN}.
 
@@ -165,7 +165,7 @@ async function extractSource(
     }),
     schema: extractionSchema,
     system: EXTRACTION_SYSTEM,
-    tags: ["stripe-history", "history", "sessions", "v1"],
+    tags: ["stripedex", "history", "sessions", "v1"],
   });
   return output.events.map((event) => HistoryEventSchema.parse({
     confidence: "confirmed",
@@ -203,7 +203,7 @@ async function semanticDuplicateIds(
     }),
     schema: duplicateSchema,
     system: DEDUP_SYSTEM,
-    tags: ["stripe-history", "history", "deduplication", "v1"],
+    tags: ["stripedex", "history", "deduplication", "v1"],
   });
   const proposedIds = new Set(proposed.map((event) => event.id));
   return validateHistoryDuplicateOutput(

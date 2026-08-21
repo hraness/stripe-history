@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import Home, { generateMetadata } from "./page";
 import { site } from "./site";
 
-describe("canonical stripehistory.com history", () => {
+describe("canonical stripedex.com history", () => {
   test("publishes root-canonical history metadata", async () => {
     const history = await loadHistory();
     const metadata = await generateMetadata();
@@ -19,7 +19,7 @@ describe("canonical stripehistory.com history", () => {
       title: expectedTitle,
     });
     expect(metadata.openGraph).toMatchObject({
-      title: `${expectedTitle} | stripehistory.com`,
+      title: `${expectedTitle} | stripedex.com`,
       url: "/",
     });
   });
@@ -29,14 +29,14 @@ describe("canonical stripehistory.com history", () => {
     const html = renderToStaticMarkup(await Home());
     const eventCount = html.match(/class="history-event"/gu)?.length ?? 0;
     const categoryIconCount = html.match(
-      /class="stripe-history-icon history-category-icon"/gu,
+      /class="stripedex-icon history-category-icon"/gu,
     )?.length ?? 0;
 
     expect(eventCount).toBe(history.events.length);
     expect(eventCount).toBeGreaterThanOrEqual(200);
-    expect(html).toContain('class="plain-page stripe-history-main stripe-history-history-main"');
-    expect(html).toContain('<a class="stripe-history-wordmark" href="/">stripehistory.com</a>');
-    expect(html).toContain('<h1 class="stripe-history-visually-hidden" id="history-heading">Stripe company history</h1>');
+    expect(html).toContain('class="plain-page stripedex-main stripedex-history-main"');
+    expect(html).toContain('<a class="stripedex-wordmark" href="/">stripedex.com</a>');
+    expect(html).toContain('<h1 class="stripedex-visually-hidden" id="history-heading">Stripe company history</h1>');
     expect(html).not.toContain(
       "An independent, sourced timeline of Stripe products, people, funding, valuation, expansion, and milestones.",
     );
@@ -67,12 +67,12 @@ describe("canonical stripehistory.com history", () => {
     expect(html).toContain("A month in Buenos Aires produces Stripe&#x27;s first working prototype");
     expect(html).toContain('class="history-event-sources"');
     expect(html).toContain('data-analytics-event="source link opened"');
-    expect(html).toContain('id="stripe-history-history-structured-data"');
+    expect(html).toContain('id="stripedex-history-structured-data"');
     expect(html).toContain('aria-label="Appearance: System"');
     expect(html).toContain('data-theme-value="system"');
-    expect(html).toContain('class="hraness-brand stripe-history-footer-hraness" href="https://hraness.com"');
-    expect(html).toContain('href="https://github.com/hraness/stripe-history"');
-    expect(html).not.toContain('class="stripe-history-selector"');
+    expect(html).toContain('class="hraness-brand stripedex-footer-hraness" href="https://hraness.com"');
+    expect(html).toContain('href="https://github.com/hraness/stripedex"');
+    expect(html).not.toContain('class="stripedex-selector"');
     expect(html).not.toContain('/atom.xml');
     expect(html).not.toContain('/news.yml');
     expect(html).not.toContain("<form");

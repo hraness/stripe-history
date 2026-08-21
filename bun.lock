@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "@hraness/stripe-history",
+      "name": "@hraness/stripedex",
       "dependencies": {
         "@ai-sdk/gateway-v4": "npm:@ai-sdk/gateway@^4.0.27",
         "@hraness/design-kit": "github:hraness/design-kit#v0.1.7",

@@ -14,8 +14,13 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   async redirects() {
-    const canonicalOrigin = "https://stripehistory.com";
-    const legacyHosts = ["stripe.town", "www.stripehistory.com"];
+    const canonicalOrigin = "https://stripedex.com";
+    const legacyHosts = [
+      "stripe.town",
+      "stripehistory.com",
+      "www.stripehistory.com",
+      "www.stripedex.com",
+    ];
 
     return [{
       destination: `${canonicalOrigin}/history/appearances`,
@@ -53,7 +58,7 @@ export function createNextConfig(
 ): NextConfig {
   return withProductionDeliveryProof(nextConfig, {
     environment,
-    projectName: "stripe-history",
+    projectName: "stripedex",
   });
 }
 
