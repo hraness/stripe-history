@@ -101,6 +101,14 @@ describe("stripedex.com public identity", () => {
       headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
       source: "/research/:path*",
     });
+    expect(await nextConfig.headers?.()).toContainEqual({
+      headers: [{ key: "Vary", value: "Accept" }],
+      source: "/",
+    });
+    expect(await nextConfig.headers?.()).toContainEqual({
+      headers: [{ key: "Vary", value: "Accept" }],
+      source: "/:path*",
+    });
   });
 
   test("redirects former and www hosts directly to the canonical origin", async () => {
