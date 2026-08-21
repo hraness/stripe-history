@@ -37,6 +37,8 @@ describe("stripedex.com public identity", () => {
       `${SITE_ORIGIN}/history/payment-volume`,
       `${SITE_ORIGIN}/history/valuation`,
       `${SITE_ORIGIN}/about`,
+      `${SITE_ORIGIN}/contact`,
+      `${SITE_ORIGIN}/privacy`,
       `${SITE_ORIGIN}/data`,
       ...timelineCategoryIds.map((id) => `${SITE_ORIGIN}/history/${id}`),
     ]));

@@ -8,6 +8,7 @@ import {
   breadcrumbJsonLd,
   historyCollectionJsonLd,
   historyDatasetJsonLd,
+  siteOrganizationJsonLd,
   websiteJsonLd,
 } from "./seo";
 
@@ -31,6 +32,16 @@ describe("stripedex.com structured discovery", () => {
       about: { "@type": "Organization", name: "Stripe" },
       publisher: { name: "Hraness" },
     });
+    expect(siteOrganizationJsonLd()).toMatchObject({
+      "@type": "Organization",
+      "@id": "https://stripedex.com/#organization",
+      name: "Stripedex",
+      url: "https://stripedex.com/",
+      sameAs: ["https://github.com/hraness/stripedex"],
+      parentOrganization: { name: "Hraness", url: "https://hraness.com/" },
+    });
+    expect(siteOrganizationJsonLd()).not.toHaveProperty("address");
+    expect(siteOrganizationJsonLd()).not.toHaveProperty("contactPoint");
   });
 
   test("describes the open YAML records as a truthful dataset", async () => {

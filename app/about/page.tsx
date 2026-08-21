@@ -87,7 +87,9 @@ export default function AboutPage() {
           Published and maintained by <a href={HRANESS_URL}>Hraness</a>. To
           suggest a correction, add a source, or improve the project, open an
           issue or contribution in the{" "}
-          <a href={GITHUB_REPOSITORY_URL}>Stripedex repository</a>.
+          <a href={GITHUB_REPOSITORY_URL}>Stripedex repository</a>. The same
+          public channels are listed on the{" "}
+          <Link href="/contact">contact page</Link>.
         </p>
 
         <h2>Privacy</h2>
@@ -104,6 +106,10 @@ export default function AboutPage() {
           feature flags, performance monitoring, or user profiles, and it has
           no user accounts or authentication. Requests are still subject to the
           ordinary logs and security controls of the hosting provider.
+        </p>
+        <p>
+          The dedicated <Link href="/privacy">privacy page</Link> repeats this
+          policy for agents and other readers who look for <code>/privacy</code>.
         </p>
       </section>
       <SiteFooter />

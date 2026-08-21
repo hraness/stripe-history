@@ -20,6 +20,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${SITE_ORIGIN}/about`,
     },
     {
+      url: `${SITE_ORIGIN}/contact`,
+    },
+    {
+      url: `${SITE_ORIGIN}/privacy`,
+    },
+    {
       url: `${SITE_ORIGIN}/data`,
     },
     ...history.categories.map(({ id }) => ({

@@ -30,6 +30,8 @@ describe("Stripedex analytics routes", () => {
     expect(JSON.stringify(PUBLIC_ANALYTICS_PATHS)).toBe(JSON.stringify([
       "/",
       "/about",
+      "/contact",
+      "/privacy",
       "/data",
       "/history/payment-volume",
       "/history/valuation",

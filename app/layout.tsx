@@ -9,7 +9,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 import { PostHogAnalytics } from "./posthog-analytics";
-import { websiteJsonLd } from "./seo";
+import { siteOrganizationJsonLd, websiteJsonLd } from "./seo";
 import { SITE_ORIGIN, site } from "./site";
 
 export const metadata: Metadata = {
@@ -49,7 +49,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html data-theme="light" lang="en-US" suppressHydrationWarning>
       <body className={siteThemes.plain.bodyClassName}>
-        <JsonLdScript data={websiteJsonLd()} id="stripedex-website-structured-data" />
+        <JsonLdScript
+          data={[websiteJsonLd(), siteOrganizationJsonLd()]}
+          id="stripedex-website-structured-data"
+        />
         <PostHogAnalytics
           apiHost={process.env.NEXT_PUBLIC_POSTHOG_HOST}
           apiKey={process.env.NEXT_PUBLIC_POSTHOG_KEY}

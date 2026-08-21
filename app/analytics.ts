@@ -9,6 +9,8 @@ const CANONICAL_ORIGIN = `https://${CANONICAL_DOMAIN}`;
 const STATIC_ROUTES = [
   ["/", "history_timeline"],
   ["/about", "about"],
+  ["/contact", "contact"],
+  ["/privacy", "privacy"],
   ["/data", "data_index"],
   ["/history/payment-volume", "payment_volume"],
   ["/history/valuation", "valuation"],

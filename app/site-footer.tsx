@@ -9,6 +9,8 @@ export function SiteFooter() {
       <div className="plain-footer__links">
         <a href="/data">data</a>
         <a href="/about">about</a>
+        <a href="/contact">contact</a>
+        <a href="/privacy">privacy</a>
         <a href={GITHUB_REPOSITORY_URL}>github</a>
       </div>
     </footer>
