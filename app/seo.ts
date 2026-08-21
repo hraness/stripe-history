@@ -24,6 +24,20 @@ const publisherJsonLd = {
   sameAs: ["https://github.com/hraness"],
 } as const;
 
+export function siteOrganizationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${SITE_ORIGIN}/#organization`,
+    name: site.name,
+    alternateName: site.domain,
+    description: site.description,
+    url: `${SITE_ORIGIN}/`,
+    sameAs: [GITHUB_REPOSITORY_URL],
+    parentOrganization: publisherJsonLd,
+  } as const;
+}
+
 export function websiteJsonLd() {
   return {
     "@context": "https://schema.org",

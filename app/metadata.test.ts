@@ -37,6 +37,8 @@ describe("stripedex.com public identity", () => {
       `${SITE_ORIGIN}/history/payment-volume`,
       `${SITE_ORIGIN}/history/valuation`,
       `${SITE_ORIGIN}/about`,
+      `${SITE_ORIGIN}/contact`,
+      `${SITE_ORIGIN}/privacy`,
       `${SITE_ORIGIN}/data`,
       ...timelineCategoryIds.map((id) => `${SITE_ORIGIN}/history/${id}`),
     ]));
@@ -98,6 +100,14 @@ describe("stripedex.com public identity", () => {
     expect(await nextConfig.headers?.()).toContainEqual({
       headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
       source: "/research/:path*",
+    });
+    expect(await nextConfig.headers?.()).toContainEqual({
+      headers: [{ key: "Vary", value: "Accept" }],
+      source: "/",
+    });
+    expect(await nextConfig.headers?.()).toContainEqual({
+      headers: [{ key: "Vary", value: "Accept" }],
+      source: "/:path*",
     });
   });
 

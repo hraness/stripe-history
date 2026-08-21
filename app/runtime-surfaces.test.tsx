@@ -42,6 +42,11 @@ describe("standalone runtime surfaces", () => {
     expect(loading).toContain('role="status"');
     expect(notFound).toContain("Page not found");
     expect(notFound).toContain('href="/"');
+    expect(notFound).toContain('href="/llms.txt"');
+    expect(notFound).toContain('href="/sitemap.xml"');
+    expect(notFound).toContain('href="/about"');
+    expect(notFound).toContain('href="/contact"');
+    expect(notFound).toContain('href="/privacy"');
     expect(loading.match(/data-presentation="menu"/gu)).toHaveLength(1);
     expect(notFound.match(/data-presentation="menu"/gu)).toHaveLength(1);
     expect(notFound).toContain('aria-label="hraness"');

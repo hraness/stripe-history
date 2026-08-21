@@ -3,8 +3,10 @@
 - `page.tsx` – the canonical unified Stripe history timeline.
 - `history/` – category pages, the appearances projection, annual-volume and valuation pages, and shared timeline rendering.
 - `data/` – the crawlable history and research dataset index.
-- `about/` – sourcing, review, independence, corrections, and privacy.
-- `site.ts`, `site-header.tsx`, and `site-footer.tsx` – canonical identity and shared page chrome.
+- `about/`, `contact/`, and `privacy/` – sourcing, review, independence, corrections, public contact channels, and privacy.
+- `llms.txt/` – the agent index with when-to-use guidance.
+- Root `proxy.ts` – Accept negotiation that serves Markdown for the same public URLs.
+- `site.ts`, `site-copy.ts`, `site-header.tsx`, and `site-footer.tsx` – canonical identity, shared editorial copy, and shared page chrome.
 - `analytics.ts`, `posthog.ts`, and `posthog-analytics.tsx` – the finite public-route analytics contract, strict PostHog boundary, and client provider.
 - `layout.tsx`, `globals.css`, and `support/` – the document, appearance, structured-data, and portable styling boundaries.
 - `robots.ts`, `sitemap.ts`, `manifest.ts`, and `opengraph-image.tsx` – public discovery and sharing surfaces.
