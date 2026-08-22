@@ -1,4 +1,5 @@
 import { loadHistory } from "@/lib/content";
+import { historyEventPath } from "@/lib/history-urls";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
 
@@ -44,6 +45,7 @@ export default async function PaymentVolumePage() {
         data={[
           historyCollectionJsonLd(
             records.map(({ event, point }) => ({
+              categoryId: event.categoryId,
               id: event.id,
               title: `${point.calendarYear}: ${point.display} ${point.kind === "total-volume" ? "total volume" : "payment volume"}`,
             })),
@@ -92,7 +94,7 @@ export default async function PaymentVolumePage() {
             {records.map(({ point }) => (
               <li key={point.calendarYear}>
                 <a
-                  href={`/history/${point.categoryId}#${point.eventId}`}
+                  href={historyEventPath(point.categoryId, point.eventId)}
                 >
                   <time dateTime={String(point.calendarYear)}>
                     {point.calendarYear}

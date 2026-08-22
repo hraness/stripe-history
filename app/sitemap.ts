@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { loadHistory } from "@/lib/content";
+import { historyEventPath } from "@/lib/history-urls";
 
 import { SITE_ORIGIN } from "./site";
 
@@ -30,6 +31,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     ...history.categories.map(({ id }) => ({
       url: `${SITE_ORIGIN}/history/${id}`,
+    })),
+    ...history.events.map((event) => ({
+      url: `${SITE_ORIGIN}${historyEventPath(event.categoryId, event.id)}`,
     })),
   ];
 }

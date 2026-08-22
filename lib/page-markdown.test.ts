@@ -27,7 +27,24 @@ describe("agent markdown representations", () => {
     expect(page.body).toContain(`# Stripe Company History: ${history.events.length} Sourced Events`);
     expect(page.body).toContain("not affiliated with, endorsed by, or operated by");
     expect(page.body).toContain("https://stripedex.com/history/acquisitions");
-    expect(page.body).not.toContain(history.events[0]?.title ?? "missing-event");
+    expect(page.body).toContain("## Recent events");
+    expect(page.body).toContain(history.events[0]?.title ?? "missing-event");
+    expect(page.body).toContain(
+      `https://stripedex.com/history/${history.events[0]?.categoryId}/${history.events[0]?.id}`,
+    );
+    expect(page.body).not.toContain(history.events.at(-1)?.title ?? "missing-oldest");
+  });
+
+  test("renders a durable event page from the same sourced record", async () => {
+    const page = await markdownForPath(
+      "/history/acquisitions/openrouter-acquisition-talks-reported",
+    );
+    expect(page.status).toBe(200);
+    expect(page.body).toContain("Stripe reportedly discusses acquiring OpenRouter");
+    expect(page.body).toContain("not affiliated with, endorsed by, or operated by");
+    expect(page.body).toContain("https://stripedex.com/history/acquisitions");
+    expect((await markdownForPath("/history/acquisitions/not-a-real-event")).status)
+      .toBe(404);
   });
 
   test("renders category, volume, about, contact, and privacy pages from the same records", async () => {

@@ -43,6 +43,8 @@ describe("agent representation negotiation", () => {
     expect(shouldSkipNegotiation("/llms.txt")).toBe(true);
     expect(shouldSkipNegotiation("/about.md")).toBe(false);
     expect(shouldSkipNegotiation("/about")).toBe(false);
+    expect(shouldSkipNegotiation("/x-markdown")).toBe(true);
+    expect(shouldSkipNegotiation("/x-markdown/about")).toBe(true);
     expect(decideRepresentation({
       accept: "text/markdown",
       method: "POST",

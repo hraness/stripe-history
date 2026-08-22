@@ -1,4 +1,12 @@
 import {
+  MARKDOWN_CONTENT_TYPE,
+} from "./accept";
+import {
+  HOME_MARKDOWN_RECENT_EVENT_LIMIT,
+  historyEventPath,
+  parseHistoryEventPath,
+} from "./history-urls";
+import {
   aboutDescription,
   aboutSections,
   aboutSocialTitle,
@@ -28,9 +36,7 @@ import {
 import { timelineCategoryIds, type TimelineCategoryId } from "./history-schema";
 import { llmsTxt } from "./llms-txt";
 
-export const MARKDOWN_CONTENT_TYPE = "text/markdown; charset=utf-8";
-export const NOT_ACCEPTABLE_BODY =
-  "Not Acceptable\n\nAvailable: text/html, text/markdown\n";
+export { MARKDOWN_CONTENT_TYPE, NOT_ACCEPTABLE_BODY } from "./accept";
 
 export interface MarkdownDocument {
   readonly body: string;
@@ -83,8 +89,9 @@ function eventMarkdown(event: CategorizedHistoryEvent): string {
     event.status,
     event.confidence === "confirmed" ? undefined : event.confidence,
   ].filter((value): value is string => value !== undefined).join(" · ");
+  const path = historyEventPath(event.categoryId, event.id);
   return [
-    `### ${event.title}`,
+    `### [${event.title}](${SITE_ORIGIN}${path})`,
     "",
     status === "" ? event.date : `${event.date} · ${status}`,
     "",
@@ -92,6 +99,34 @@ function eventMarkdown(event: CategorizedHistoryEvent): string {
     ...(facts.length === 0 ? [] : ["", facts.join("  \n")]),
     "",
     `Sources: ${sources}`,
+    "",
+  ].join("\n");
+}
+
+function eventPageMarkdown(
+  history: HistoryCollection,
+  categoryId: TimelineCategoryId,
+  eventId: string,
+): string | null {
+  const event = history.events.find((candidate) => (
+    candidate.categoryId === categoryId && candidate.id === eventId
+  ));
+  if (event === undefined) return null;
+  const related = (event.related_events ?? []).flatMap((relatedId) => {
+    const relatedEvent = history.events.find(({ id }) => id === relatedId);
+    return relatedEvent === undefined
+      ? []
+      : [`- [${relatedEvent.title}](${SITE_ORIGIN}${historyEventPath(relatedEvent.categoryId, relatedEvent.id)})`];
+  });
+  return [
+    heading(event.title, event.summary),
+    independenceSentence,
+    "",
+    eventMarkdown(event).replace(/^### /u, "## "),
+    ...(related.length === 0
+      ? []
+      : ["## Related events", "", ...related, ""]),
+    `Category: [Stripe ${event.categoryLabel.toLocaleLowerCase("en-US")} history](${SITE_ORIGIN}${`/history/${event.categoryId}`})`,
     "",
   ].join("\n");
 }
@@ -112,7 +147,13 @@ function historyIndexMarkdown(history: HistoryCollection): string {
     ),
     independenceSentence,
     "",
-    `This Markdown index covers the same ${history.events.length} sourced events as the HTML timeline. Category, annual-volume, and valuation pages repeat those records in a narrower view.`,
+    `This Markdown index covers the same ${history.events.length} sourced events as the HTML timeline. Category, annual-volume, and valuation pages repeat those records in a narrower view. Individual events also have durable pages at \`/history/<category>/<event-id>\`.`,
+    "",
+    "## Recent events",
+    "",
+    ...history.events.slice(0, HOME_MARKDOWN_RECENT_EVENT_LIMIT).flatMap((event) => [
+      `- [${event.title}](${SITE_ORIGIN}${historyEventPath(event.categoryId, event.id)}): ${event.date}. ${event.summary}`,
+    ]),
     "",
     "## Browse by topic",
     "",
@@ -306,6 +347,12 @@ export async function markdownForPath(pathname: string): Promise<MarkdownDocumen
   }
   if (path === "/history/valuation") {
     return { body: valuationMarkdown(history), status: 200 };
+  }
+  const eventPath = parseHistoryEventPath(path);
+  if (eventPath !== null) {
+    const body = eventPageMarkdown(history, eventPath.categoryId, eventPath.eventId);
+    if (body !== null) return { body, status: 200 };
+    return { body: notFoundMarkdown(), status: 404 };
   }
   if (path.startsWith("/history/")) {
     const categoryId = path.slice("/history/".length);

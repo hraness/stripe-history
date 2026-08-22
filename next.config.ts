@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
     return [
       { headers: noindexHeaders, source: "/history/:category.yml" },
       { headers: noindexHeaders, source: "/research/:path*" },
+      { headers: noindexHeaders, source: "/x-markdown" },
+      { headers: noindexHeaders, source: "/x-markdown/:path*" },
       { headers: [{ key: "Vary", value: "Accept" }], source: "/" },
       { headers: [{ key: "Vary", value: "Accept" }], source: "/:path*" },
     ];

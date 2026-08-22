@@ -1,4 +1,9 @@
+import { isMarkdownRewritePath } from "./history-urls";
+
 export const PRODUCED_MEDIA_TYPES = ["text/html", "text/markdown"] as const;
+export const MARKDOWN_CONTENT_TYPE = "text/markdown; charset=utf-8";
+export const NOT_ACCEPTABLE_BODY =
+  "Not Acceptable\n\nAvailable: text/html, text/markdown\n";
 
 export type ProducedMediaType = (typeof PRODUCED_MEDIA_TYPES)[number];
 
@@ -107,6 +112,7 @@ const SKIP_NEGOTIATION_PATHS = new Set([
 
 export function shouldSkipNegotiation(pathname: string): boolean {
   if (SKIP_NEGOTIATION_PATHS.has(pathname)) return true;
+  if (isMarkdownRewritePath(pathname)) return true;
   if (SKIP_NEGOTIATION_PREFIXES.some((prefix) => pathname.startsWith(prefix))) {
     return true;
   }
