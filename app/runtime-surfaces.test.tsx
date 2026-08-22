@@ -30,6 +30,13 @@ describe("standalone runtime surfaces", () => {
     expect(route).toContain("Something went wrong");
     expect(route).toContain("Try again");
     expect(document).toContain("Stripedex is temporarily unavailable");
+    expect(document).toContain('<meta content="light dark" name="color-scheme"/>');
+    expect(document).toContain(
+      '<meta content="#ffffff" media="(prefers-color-scheme: light)" name="theme-color"/>',
+    );
+    expect(document).toContain(
+      '<meta content="#151515" media="(prefers-color-scheme: dark)" name="theme-color"/>',
+    );
     expect(`${route}${document}`).not.toContain("hraness-design-theme-toggle");
     expect(`${route}${document}`).not.toContain("PostHog");
   });
