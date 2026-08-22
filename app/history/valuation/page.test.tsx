@@ -52,11 +52,12 @@ describe("stripedex.com valuation history", () => {
 
     expect(updatedSeo).toMatchObject({
       description: expect.stringContaining("$200 billion 2027 company tender"),
-      lead: expect.stringContaining("$200 billion in 2027"),
+      lead: expect.stringMatching(
+        /\$200 billion in 2027.*not affiliated with, endorsed by, or operated by/su,
+      ),
       title: "Stripe Valuation History by Year, 2011–2027",
       yearRange: "2011–2027",
     });
-    expect(updatedSeo.lead).toContain("not affiliated with, endorsed by, or operated by");
     expect(updatedMetadata).toMatchObject({
       description: expect.stringContaining("$200 billion 2027 company tender"),
       openGraph: {
