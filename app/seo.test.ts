@@ -8,7 +8,6 @@ import {
   breadcrumbJsonLd,
   historyCollectionJsonLd,
   historyDatasetJsonLd,
-  historyEventJsonLd,
   siteOrganizationJsonLd,
   websiteJsonLd,
 } from "./seo";
@@ -100,20 +99,15 @@ describe("stripedex.com structured discovery", () => {
     });
     expect(collection.mainEntity.itemListElement[0]?.item).toMatchObject({
       "@id": expect.stringContaining(
-        "/history/appearances/appearance-2026-08-will-gaybrick-a16z#event",
+        "/history/appearances#appearance-2026-08-will-gaybrick-a16z",
       ),
       "@type": "VideoObject",
-      url: "https://stripedex.com/history/appearances/appearance-2026-08-will-gaybrick-a16z",
     });
   });
 
   test("describes canonical history items and breadcrumbs", () => {
     const rootHistory = historyCollectionJsonLd(
-      [{
-        categoryId: "company-milestones",
-        id: "example-event",
-        title: "Stripe reaches an example milestone",
-      }],
+      [{ id: "example-event", title: "Stripe reaches an example milestone" }],
       {
         description: "One sourced event.",
         path: "/",
@@ -125,16 +119,12 @@ describe("stripedex.com structured discovery", () => {
       numberOfItems: 1,
       itemListElement: [{
         position: 1,
-        url: "https://stripedex.com/history/company-milestones/example-event",
+        url: "https://stripedex.com/#example-event",
       }],
     });
 
     const categoryHistory = historyCollectionJsonLd(
-      [{
-        categoryId: "company-milestones",
-        id: "example-event",
-        title: "Stripe reaches an example milestone",
-      }],
+      [{ id: "example-event", title: "Stripe reaches an example milestone" }],
       {
         description: "One sourced event.",
         path: "/history/company-milestones",
@@ -142,30 +132,8 @@ describe("stripedex.com structured discovery", () => {
       },
     );
     expect(categoryHistory.mainEntity.itemListElement[0]?.url).toBe(
-      "https://stripedex.com/history/company-milestones/example-event",
+      "https://stripedex.com/history/company-milestones#example-event",
     );
-    expect(historyEventJsonLd({
-      categoryId: "acquisitions",
-      categoryLabel: "Acquisitions",
-      categoryOrder: 3,
-      confidence: "reported",
-      date: "2026-07-24",
-      date_precision: "day",
-      id: "openrouter-acquisition-talks-reported",
-      sourceIds: ["source-990ab773c6c0913272f7"],
-      sources: [{
-        kind: "reporting",
-        publisher: "TechCrunch",
-        title: "Example source",
-        url: "https://techcrunch.com/example",
-      }],
-      summary: "Stripe held talks to acquire AI-model marketplace OpenRouter at a reported price.",
-      title: "Stripe reportedly discusses acquiring OpenRouter",
-    })).toMatchObject({
-      "@type": "Article",
-      url: "https://stripedex.com/history/acquisitions/openrouter-acquisition-talks-reported",
-      headline: "Stripe reportedly discusses acquiring OpenRouter",
-    });
     expect(breadcrumbJsonLd([
       { name: "History", path: "/" },
       { name: "Company milestones", path: "/history/company-milestones" },

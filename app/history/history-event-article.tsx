@@ -1,27 +1,15 @@
 import type { CategorizedHistoryEvent } from "@/lib/content";
-import { historyCategoryPath, historyEventPath } from "@/lib/history-urls";
+import { historyCategoryPath } from "@/lib/history-urls";
 import Link from "next/link";
 
 import { HistoryCategoryIcon } from "./category-icon";
 
 export function HistoryEventArticle({
   event,
-  headingLevel = "h3",
-  linkedTitle = true,
 }: Readonly<{
   event: CategorizedHistoryEvent;
-  headingLevel?: "h1" | "h3";
-  linkedTitle?: boolean;
 }>) {
   const categoryLabel = event.categoryLabel.toLocaleLowerCase("en-US");
-  const Heading = headingLevel;
-  const title = linkedTitle
-    ? (
-      <Link href={historyEventPath(event.categoryId, event.id)}>
-        {event.title}
-      </Link>
-    )
-    : event.title;
 
   return (
     <article id={event.id}>
@@ -47,7 +35,7 @@ export function HistoryEventArticle({
             </span>
           )}
         </p>
-        <Heading>{title}</Heading>
+        <h3>{event.title}</h3>
       </header>
       <p>{event.summary}</p>
       {event.amount === undefined

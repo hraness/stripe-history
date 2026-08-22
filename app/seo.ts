@@ -1,5 +1,4 @@
-import type { CategorizedHistoryEvent, HistoryCollection } from "@/lib/content";
-import { historyEventPath } from "@/lib/history-urls";
+import type { HistoryCollection } from "@/lib/content";
 
 import {
   GITHUB_REPOSITORY_URL,
@@ -57,7 +56,6 @@ export function websiteJsonLd() {
 
 export function historyCollectionJsonLd(
   items: readonly Readonly<{
-    readonly categoryId?: CategorizedHistoryEvent["categoryId"];
     readonly id: string;
     readonly title: string;
   }>[],
@@ -90,42 +88,9 @@ export function historyCollectionJsonLd(
         "@type": "ListItem",
         position: index + 1,
         name: item.title,
-        url: item.categoryId === undefined
-          ? `${url}#${item.id}`
-          : absoluteUrl(historyEventPath(item.categoryId, item.id)),
+        url: `${url}#${item.id}`,
       })),
     },
-  } as const;
-}
-
-export function historyEventJsonLd(event: CategorizedHistoryEvent) {
-  const path = historyEventPath(event.categoryId, event.id);
-  const url = absoluteUrl(path);
-  return {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "@id": `${url}#event`,
-    url,
-    headline: event.title,
-    description: event.summary,
-    datePublished: event.date,
-    inLanguage: "en-US",
-    isPartOf: { "@id": `${SITE_ORIGIN}/#website` },
-    publisher: publisherJsonLd,
-    about: {
-      "@type": "Organization",
-      name: "Stripe",
-      url: "https://stripe.com/",
-    },
-    citation: event.sources.map((source) => ({
-      "@type": "CreativeWork" as const,
-      name: source.title,
-      url: source.url,
-      publisher: {
-        "@type": "Organization" as const,
-        name: source.publisher,
-      },
-    })),
   } as const;
 }
 
@@ -297,8 +262,7 @@ export function appearanceCollectionJsonLd(history: HistoryCollection) {
           position: index + 1,
           item: {
             "@type": itemType,
-            "@id": `${SITE_ORIGIN}${historyEventPath("appearances", appearance.id)}#event`,
-            url: `${SITE_ORIGIN}${historyEventPath("appearances", appearance.id)}`,
+            "@id": `${url}#${appearance.id}`,
             name: appearance.title,
             description: appearance.digest?.gist ?? appearance.significance,
             datePublished: appearance.published_at ?? appearance.occurred_at,

@@ -52,9 +52,11 @@ describe("stripedex.com valuation history", () => {
 
     expect(updatedSeo).toMatchObject({
       description: expect.stringContaining("$200 billion 2027 company tender"),
+      lead: expect.stringContaining("$200 billion in 2027"),
       title: "Stripe Valuation History by Year, 2011–2027",
       yearRange: "2011–2027",
     });
+    expect(updatedSeo.lead).toContain("not affiliated with, endorsed by, or operated by");
     expect(updatedMetadata).toMatchObject({
       description: expect.stringContaining("$200 billion 2027 company tender"),
       openGraph: {
@@ -66,11 +68,26 @@ describe("stripedex.com valuation history", () => {
   });
 
   test("renders every sourced observation with typed valuation context", async () => {
-    const seo = deriveValuationPageSeo(await loadHistory());
+    const history = await loadHistory();
+    const seo = deriveValuationPageSeo(history);
+    const latestHeadline = history.valuationHeadlines.at(-1);
+    if (latestHeadline === undefined) throw new Error("Missing latest valuation headline");
     const html = renderToStaticMarkup(await ValuationPage());
 
-    expect(html).toContain(`<h1 class="stripedex-visually-hidden" id="valuation-page-heading">${seo.title}</h1>`);
+    expect(html).toContain(`<h1 class="history-page-title" id="valuation-page-heading">${seo.title}</h1>`);
+    expect(html).not.toContain('class="stripedex-visually-hidden"');
+    expect(html).toContain(seo.lead);
     expect(html).toContain(seo.description);
+    expect(html).toContain("<table>");
+    expect(html).toContain('<th scope="col">year</th>');
+    expect(html).toContain('<th scope="col">valuation</th>');
+    expect(html).toContain('<th scope="col">basis</th>');
+    expect(html).toContain('<th scope="col">status</th>');
+    expect(html).toContain('<th scope="col">sources</th>');
+    expect(html).toContain(`<tr id="${latestHeadline.observationId}"`);
+    expect(html).toContain(`"numberOfItems":${history.valuationHeadlines.length}`);
+    expect(html).toContain(`https://stripedex.com/history/valuation#${latestHeadline.observationId}`);
+    expect(html).toContain(`${latestHeadline.calendarYear}: ${latestHeadline.display}`);
     expect(html.match(/class="history-volume-chart-track"/gu)?.length).toBe(14);
     expect(html.match(/class="history-valuation-basis-badge"/gu)?.length).toBe(25);
     expect(html).toContain("company tender");

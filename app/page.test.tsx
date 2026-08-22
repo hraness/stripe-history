@@ -63,7 +63,7 @@ describe("canonical stripedex.com history", () => {
     );
     expect(html).not.toContain("Loading Stripe company history");
     expect(html).toContain("Stripe reportedly discusses acquiring OpenRouter");
-    expect(html).toContain(
+    expect(html).not.toContain(
       'href="/history/acquisitions/openrouter-acquisition-talks-reported"',
     );
     expect(html).toContain("Tokens Are the New Dollars");

@@ -5,7 +5,7 @@ import type {
   ValuationHeadlinePoint,
 } from "@/lib/content";
 import type { TimelineCategoryId } from "@/lib/history-schema";
-import { historyCategoryPath, historyEventPath } from "@/lib/history-urls";
+import { historyCategoryPath } from "@/lib/history-urls";
 import Link from "next/link";
 
 import { HistoryEventArticle } from "./history-event-article";
@@ -119,7 +119,7 @@ function HistoryMeasuresSidebar({
               <li key={point.calendarYear}>
                 <a
                   aria-label={`${point.calendarYear}: ${point.display} ${point.kind === "total-volume" ? "total volume" : "payment volume"}`}
-                  href={historyEventPath(point.categoryId, point.eventId)}
+                  href={`/history/${point.categoryId}#${point.eventId}`}
                 >
                   <span>{point.calendarYear}</span>
                   <strong>{point.display}</strong>

@@ -15,29 +15,15 @@ import {
   valuationTierLabel,
 } from "../history-view";
 import {
+  basisLabel,
+  deriveValuationHeadlineRows,
   deriveValuationPageMetadata,
   deriveValuationPageSeo,
   mechanismLabel,
+  statusLabel,
 } from "./valuation-page-model";
 
 export const dynamic = "force-static";
-
-const basisLabel: Readonly<Record<ValuationObservation["valuation"]["basis"], string>> = {
-  "common-stock-409a": "common-stock 409A",
-  "market-indication": "market indication",
-  "post-money": "post-money",
-  "pre-money": "pre-money",
-  "transaction-implied": "transaction implied",
-  unspecified: "basis not specified",
-};
-
-const statusLabel: Readonly<Record<ValuationObservation["status"], string>> = {
-  "agreements-signed": "agreements signed",
-  "company-confirmed": "company confirmed",
-  completed: "completed",
-  reported: "reported",
-  retrospective: "retrospective",
-};
 
 const financingStageLabel: Readonly<Record<
   NonNullable<ValuationObservation["financing_amount"]>["stage"],
@@ -72,6 +58,8 @@ function partialDateLabel(date: string): string {
 export default async function ValuationPage() {
   const history = await loadHistory();
   const seo = deriveValuationPageSeo(history);
+  const headlines = deriveValuationHeadlineRows(history);
+  const headlineIds = new Set(headlines.map((row) => row.observationId));
   const maximumValue = Math.max(
     ...history.valuationHeadlines.map(({ valueUsd }) => valueUsd),
   );
@@ -81,9 +69,9 @@ export default async function ValuationPage() {
       <JsonLdScript
         data={[
           historyCollectionJsonLd(
-            history.valuations.map((observation) => ({
-              id: observation.id,
-              title: `${observation.effective_date}: ${observation.title}`,
+            headlines.map((row) => ({
+              id: row.observationId,
+              title: `${row.calendarYear}: ${row.display}`,
             })),
             {
               description: seo.description,
@@ -107,21 +95,63 @@ export default async function ValuationPage() {
           aria-labelledby="valuation-page-heading"
           className="stripedex-section history-volume-page"
         >
-          <h1 className="stripedex-visually-hidden" id="valuation-page-heading">
+          <h1 className="history-page-title" id="valuation-page-heading">
             {seo.title}
           </h1>
           <HistoryFilters history={history} valuationSelected />
           <p className="history-volume-intro">
-            Stripe’s private-company valuation has been reported through
-            financing and employee-tender terms, internal 409A marks, investor
-            secondaries, and secondary-market indications. These measurements
-            are not interchangeable, so the record preserves each one with its
-            date, basis, confidence, and sources.
+            {seo.lead}
           </p>
+
+          <section
+            aria-labelledby="valuation-headlines-heading"
+            className="history-volume-table-section"
+          >
+            <h2 id="valuation-headlines-heading">yearly headlines</h2>
+            <div className="history-volume-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">year</th>
+                    <th scope="col">valuation</th>
+                    <th scope="col">basis</th>
+                    <th scope="col">status</th>
+                    <th scope="col">sources</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {headlines.map((row) => (
+                    <tr id={row.observationId} key={row.observationId}>
+                      <th scope="row">{row.calendarYear}</th>
+                      <td>{row.display}</td>
+                      <td>{row.basisLabel}</td>
+                      <td>{row.statusLabel}</td>
+                      <td>
+                        {row.sources.map((source, index) => (
+                          <span key={source.id}>
+                            {index === 0 ? null : <span aria-hidden="true"> · </span>}
+                            <a
+                              aria-label={`${source.publisher}: ${source.title}`}
+                              data-analytics-event="source link opened"
+                              data-analytics-id={row.observationId}
+                              data-analytics-kind="valuation"
+                              href={source.url}
+                            >
+                              {source.publisher}
+                            </a>
+                          </span>
+                        ))}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
 
           <figure
             aria-labelledby="valuation-chart-heading"
-            className="history-volume-chart history-valuation-chart"
+            className="history-valuation-chart history-volume-chart"
           >
             <figcaption>
               <h2 id="valuation-chart-heading">valuation by year</h2>
@@ -147,7 +177,7 @@ export default async function ValuationPage() {
                   </a>
                   <span aria-hidden="true" className="history-volume-chart-track">
                     <span
-                      className="history-volume-chart-fill history-valuation-fill"
+                      className="history-valuation-fill history-volume-chart-fill"
                       data-tier={point.tier}
                       data-value-usd={point.valueUsd}
                       style={{
@@ -162,14 +192,19 @@ export default async function ValuationPage() {
 
           <section
             aria-labelledby="valuation-observations-heading"
-            className="history-volume-table-section history-valuation-observations"
+            className="history-valuation-observations history-volume-table-section"
           >
             <h2 id="valuation-observations-heading">observations and sources</h2>
             <ol className="history-valuation-observation-list" role="list">
               {history.valuations.map((observation) => {
                 const tier = valuationTier(observation);
                 return (
-                  <li id={observation.id} key={observation.id}>
+                  <li
+                    {...(headlineIds.has(observation.id)
+                      ? {}
+                      : { id: observation.id })}
+                    key={observation.id}
+                  >
                     <article>
                       <header>
                         <p className="history-event-kicker">

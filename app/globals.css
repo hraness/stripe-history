@@ -37,7 +37,6 @@
 }
 
 .stripedex-section h2,
-.history-event h1,
 .history-event h3,
 .history-volume h2,
 .history-year-heading h2 {
@@ -402,7 +401,6 @@
 }
 
 .history-event-kicker,
-.history-event h1,
 .history-event h3,
 .history-event article > p {
   margin: 0;
@@ -415,41 +413,8 @@
   gap: 0.35rem 0.5rem;
 }
 
-.history-event h1,
 .history-event h3 {
   margin-top: 0.25rem;
-}
-
-.history-event h3 a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.history-event h3 a:hover,
-.history-event h3 a:focus-visible {
-  text-decoration: underline;
-}
-
-.history-related {
-  margin-top: 2rem;
-}
-
-.history-related h2,
-.history-related ul,
-.history-related li {
-  margin: 0;
-}
-
-.history-related ul {
-  display: grid;
-  gap: 0.4rem;
-  padding-left: 1.1rem;
-}
-
-.history-independence {
-  color: var(--plain-muted);
-  margin-top: 2rem;
-  max-width: 38rem;
 }
 
 .history-event-type {
@@ -720,6 +685,15 @@
   display: inline-flex;
   gap: 0.35rem;
   text-decoration: none;
+}
+
+.history-page-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-title);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 1rem;
+  max-width: 42rem;
 }
 
 .history-volume-intro {
@@ -1061,7 +1035,6 @@
     padding: 0.8rem 0 0.8rem 0.65rem;
   }
 
-  .history-event h1,
   .history-event h3 {
     font-size: 0.95rem;
     line-height: 1.4;

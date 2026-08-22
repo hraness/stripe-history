@@ -2,33 +2,14 @@ import { describe, expect, test } from "bun:test";
 
 import {
   historyCategoryPath,
-  historyEventPath,
   isMarkdownRewritePath,
   markdownRewritePath,
-  parseHistoryEventPath,
   publicPathFromMarkdownRewrite,
 } from "./history-urls";
 
 describe("history URL helpers", () => {
-  test("builds durable category and event paths", () => {
+  test("builds durable category paths", () => {
     expect(historyCategoryPath("acquisitions")).toBe("/history/acquisitions");
-    expect(historyEventPath(
-      "acquisitions",
-      "openrouter-acquisition-talks-reported",
-    )).toBe("/history/acquisitions/openrouter-acquisition-talks-reported");
-  });
-
-  test("parses only real category and event identity pairs", () => {
-    expect(parseHistoryEventPath(
-      "/history/acquisitions/openrouter-acquisition-talks-reported",
-    )).toEqual({
-      categoryId: "acquisitions",
-      eventId: "openrouter-acquisition-talks-reported",
-    });
-    expect(parseHistoryEventPath("/history/payment-volume/not-an-event")).toBeNull();
-    expect(parseHistoryEventPath("/history/acquisitions")).toBeNull();
-    expect(parseHistoryEventPath("/history/acquisitions/Not-Valid")).toBeNull();
-    expect(parseHistoryEventPath("/history/acquisitions/one/two")).toBeNull();
   });
 
   test("maps public document paths onto the internal markdown rewrite", () => {

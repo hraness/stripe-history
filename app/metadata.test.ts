@@ -42,7 +42,7 @@ describe("stripedex.com public identity", () => {
       `${SITE_ORIGIN}/data`,
       ...timelineCategoryIds.map((id) => `${SITE_ORIGIN}/history/${id}`),
     ]));
-    expect(urls).toContain(
+    expect(urls).not.toContain(
       `${SITE_ORIGIN}/history/acquisitions/openrouter-acquisition-talks-reported`,
     );
     expect(urls).not.toContain(`${SITE_ORIGIN}/appearances`);

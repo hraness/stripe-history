@@ -1,7 +1,6 @@
 import { MARKDOWN_CONTENT_TYPE } from "@/lib/accept";
 import { loadHistory } from "@/lib/content";
 import {
-  historyEventPath,
   markdownRewritePath,
   publicPathFromMarkdownRewrite,
 } from "@/lib/history-urls";
@@ -26,7 +25,6 @@ export async function generateStaticParams() {
     "/history/payment-volume",
     "/history/valuation",
     ...history.categories.map(({ id }) => `/history/${id}`),
-    ...history.events.map((event) => historyEventPath(event.categoryId, event.id)),
   ];
   return publicPaths.map((pathname) => {
     const rewrite = markdownRewritePath(pathname);
