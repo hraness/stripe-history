@@ -1,4 +1,7 @@
 import {
+  MARKDOWN_CONTENT_TYPE,
+} from "./accept";
+import {
   aboutDescription,
   aboutSections,
   aboutSocialTitle,
@@ -21,6 +24,10 @@ import {
 } from "@/app/site-copy";
 import { GITHUB_REPOSITORY_URL, SITE_ORIGIN, site } from "@/app/site";
 import {
+  deriveValuationHeadlineRows,
+  deriveValuationPageSeo,
+} from "@/app/history/valuation/valuation-page-model";
+import {
   loadHistory,
   type CategorizedHistoryEvent,
   type HistoryCollection,
@@ -28,9 +35,7 @@ import {
 import { timelineCategoryIds, type TimelineCategoryId } from "./history-schema";
 import { llmsTxt } from "./llms-txt";
 
-export const MARKDOWN_CONTENT_TYPE = "text/markdown; charset=utf-8";
-export const NOT_ACCEPTABLE_BODY =
-  "Not Acceptable\n\nAvailable: text/html, text/markdown\n";
+export { MARKDOWN_CONTENT_TYPE, NOT_ACCEPTABLE_BODY } from "./accept";
 
 export interface MarkdownDocument {
   readonly body: string;
@@ -257,16 +262,37 @@ function paymentVolumeMarkdown(history: HistoryCollection): string {
   ].join("\n");
 }
 
+function markdownTableCell(value: string): string {
+  return value.replaceAll("|", "\\|").replaceAll("\n", " ");
+}
+
 function valuationMarkdown(history: HistoryCollection): string {
+  const seo = deriveValuationPageSeo(history);
+  const rows = deriveValuationHeadlineRows(history);
+  const table = [
+    "| year | valuation | basis | status | sources |",
+    "| --- | --- | --- | --- | --- |",
+    ...rows.map((row) => {
+      const sources = row.sources
+        .map((source) => `[${source.publisher}](${source.url})`)
+        .join(" · ");
+      return `| ${row.calendarYear} | ${markdownTableCell(row.display)} | ${markdownTableCell(row.basisLabel)} | ${markdownTableCell(row.statusLabel)} | ${markdownTableCell(sources)} |`;
+    }),
+  ];
   return [
-    heading(
-      "Stripe private-company valuation history",
-      "Sourced private-company valuation observations for Stripe, with status, basis, and linked evidence.",
-    ),
+    heading(seo.title, seo.description),
+    seo.lead,
+    "",
+    "## Yearly headlines",
+    "",
+    ...table,
+    "",
+    "## Observations and sources",
+    "",
     ...history.valuations.map((observation) => {
-      const sources = observation.sources.map((source) => `[${source.title}](${source.url})`).join(" · ");
+      const sources = observation.sources.map((source) => `[${source.publisher}](${source.url})`).join(" · ");
       return [
-        `### ${observation.valuation.display}`,
+        `### ${observation.title}`,
         "",
         `${observation.effective_date} · ${observation.status} · ${observation.valuation.basis}`,
         "",

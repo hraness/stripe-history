@@ -2,10 +2,11 @@
 
 - `page.tsx` – the canonical unified Stripe history timeline.
 - `history/` – category pages, the appearances projection, annual-volume and valuation pages, and shared timeline rendering.
+- `x-markdown/` – the Node handler that renders the same public URLs as Markdown.
 - `data/` – the crawlable history and research dataset index.
 - `about/`, `contact/`, and `privacy/` – sourcing, review, independence, corrections, public contact channels, and privacy.
 - `llms.txt/` – the agent index with when-to-use guidance.
-- Root `proxy.ts` – Accept negotiation that serves Markdown for the same public URLs.
+- Root `proxy.ts` – Accept negotiation that rewrites Markdown requests to the Node corpus handler. Do not read YAML in the proxy.
 - `site.ts`, `site-copy.ts`, `site-header.tsx`, and `site-footer.tsx` – canonical identity, shared editorial copy, and shared page chrome.
 - `analytics.ts`, `posthog.ts`, and `posthog-analytics.tsx` – the finite public-route analytics contract, strict PostHog boundary, and client provider.
 - `layout.tsx`, `globals.css`, and `support/` – the document, appearance, structured-data, and portable styling boundaries.

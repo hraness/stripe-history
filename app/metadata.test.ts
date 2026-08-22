@@ -42,15 +42,21 @@ describe("stripedex.com public identity", () => {
       `${SITE_ORIGIN}/data`,
       ...timelineCategoryIds.map((id) => `${SITE_ORIGIN}/history/${id}`),
     ]));
+    expect(urls).not.toContain(
+      `${SITE_ORIGIN}/history/acquisitions/openrouter-acquisition-talks-reported`,
+    );
     expect(urls).not.toContain(`${SITE_ORIGIN}/appearances`);
+    expect(urls).not.toContain(`${SITE_ORIGIN}/x-markdown`);
     expect(urls).not.toContain(SITE_ORIGIN);
     expect(urls).not.toContain(`${SITE_ORIGIN}/history`);
     expect(urls.some((url) => url.startsWith(`${SITE_ORIGIN}/news/`))).toBe(false);
+    expect(urls.some((url) => url.startsWith(`${SITE_ORIGIN}/x-markdown`))).toBe(false);
     expect(entries.every((entry) => entry.changeFrequency === undefined)).toBe(true);
     expect(entries.every((entry) => entry.priority === undefined)).toBe(true);
     expect(robots()).toMatchObject({
       rules: {
         allow: "/",
+        disallow: "/x-markdown",
         userAgent: "*",
       },
       sitemap: `${SITE_ORIGIN}/sitemap.xml`,
@@ -100,6 +106,14 @@ describe("stripedex.com public identity", () => {
     expect(await nextConfig.headers?.()).toContainEqual({
       headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
       source: "/research/:path*",
+    });
+    expect(await nextConfig.headers?.()).toContainEqual({
+      headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
+      source: "/x-markdown",
+    });
+    expect(await nextConfig.headers?.()).toContainEqual({
+      headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
+      source: "/x-markdown/:path*",
     });
     expect(await nextConfig.headers?.()).toContainEqual({
       headers: [{ key: "Vary", value: "Accept" }],

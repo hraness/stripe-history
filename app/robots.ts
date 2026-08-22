@@ -6,6 +6,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: "/x-markdown",
     },
     host: SITE_ORIGIN,
     sitemap: `${SITE_ORIGIN}/sitemap.xml`,

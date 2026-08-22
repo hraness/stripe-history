@@ -1,3 +1,5 @@
+import type { HistoryCollection } from "@/lib/content";
+
 import {
   GITHUB_REPOSITORY_URL,
   HRANESS_URL,
@@ -5,7 +7,6 @@ import {
   site,
   type SitePath,
 } from "./site";
-import type { HistoryCollection } from "@/lib/content";
 
 export interface BreadcrumbItem {
   readonly name: string;

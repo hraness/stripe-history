@@ -85,7 +85,11 @@ describe("stripedex.com category history", () => {
     expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
       html.indexOf('data-filter-id="acquisitions"'),
     );
+    expect(html).not.toContain("Loading Stripe company history");
     expect(html).toContain("Stripe reportedly discusses acquiring OpenRouter");
+    expect(html).not.toContain(
+      'href="/history/acquisitions/openrouter-acquisition-talks-reported"',
+    );
     expect(html).toContain('id="stripedex-history-category-structured-data"');
     expect(html).not.toContain('class="stripedex-selector"');
     expect(html).toContain('class="stripedex-header"');

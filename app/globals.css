@@ -687,6 +687,15 @@
   text-decoration: none;
 }
 
+.history-page-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-title);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 1rem;
+  max-width: 42rem;
+}
+
 .history-volume-intro {
   color: var(--plain-muted);
   margin: 0 0 2.5rem;

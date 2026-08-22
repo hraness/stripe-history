@@ -28,6 +28,13 @@ describe("agent markdown representations", () => {
     expect(page.body).toContain("not affiliated with, endorsed by, or operated by");
     expect(page.body).toContain("https://stripedex.com/history/acquisitions");
     expect(page.body).not.toContain(history.events[0]?.title ?? "missing-event");
+    expect(page.body).not.toContain("/history/acquisitions/openrouter-acquisition-talks-reported");
+  });
+
+  test("treats invented per-event routes as missing pages", async () => {
+    expect((await markdownForPath(
+      "/history/acquisitions/openrouter-acquisition-talks-reported",
+    )).status).toBe(404);
   });
 
   test("renders category, volume, about, contact, and privacy pages from the same records", async () => {
@@ -41,6 +48,13 @@ describe("agent markdown representations", () => {
     const volume = await markdownForPath("/history/payment-volume");
     expect(volume.body).toContain("2025");
     expect(volume.body).toContain("total volume");
+
+    const valuation = await markdownForPath("/history/valuation");
+    expect(valuation.status).toBe(200);
+    expect(valuation.body).toContain("| year | valuation | basis | status | sources |");
+    expect(valuation.body).toContain("$159 billion");
+    expect(valuation.body).toContain("transaction implied");
+    expect(valuation.body).toContain("not affiliated with, endorsed by, or operated by");
 
     const about = await markdownForPath("/about");
     expect(about.body).toContain("founder side projects and aesthetics programs");

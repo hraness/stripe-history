@@ -4,12 +4,9 @@ import {
   appendVaryAccept,
   decideRepresentation,
   isNextRscRequest,
-} from "./lib/accept";
-import {
-  MARKDOWN_CONTENT_TYPE,
   NOT_ACCEPTABLE_BODY,
-  markdownForPath,
-} from "./lib/page-markdown";
+} from "./lib/accept";
+import { markdownRewritePath } from "./lib/history-urls";
 
 export async function proxy(request: NextRequest) {
   const decision = decideRepresentation({
@@ -34,14 +31,15 @@ export async function proxy(request: NextRequest) {
   }
 
   if (decision.kind === "markdown") {
-    const document = await markdownForPath(decision.pathname);
-    return new NextResponse(document.body, {
-      headers: {
-        "Content-Type": MARKDOWN_CONTENT_TYPE,
-        Vary: "Accept",
-      },
-      status: document.status,
+    const url = request.nextUrl.clone();
+    url.pathname = markdownRewritePath(decision.pathname);
+    const headers = new Headers(request.headers);
+    headers.set("x-stripedex-representation", "markdown");
+    const response = NextResponse.rewrite(url, {
+      request: { headers },
     });
+    response.headers.set("Vary", "Accept");
+    return response;
   }
 
   const response = NextResponse.next();

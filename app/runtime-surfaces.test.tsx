@@ -1,10 +1,11 @@
 import { describe, expect, test } from "bun:test";
+import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import ErrorPage from "./error";
 import GlobalError from "./global-error";
-import Loading from "./loading";
 import NotFound from "./not-found";
 
 describe("standalone runtime surfaces", () => {
@@ -41,12 +42,15 @@ describe("standalone runtime surfaces", () => {
     expect(`${route}${document}`).not.toContain("PostHog");
   });
 
-  test("renders loading and not-found states with useful navigation", () => {
-    const loading = renderToStaticMarkup(<Loading />);
+  test("does not ship a root loading shell that can replace history HTML", () => {
+    expect(existsSync(fileURLToPath(new URL("./loading.tsx", import.meta.url)))).toBe(
+      false,
+    );
+  });
+
+  test("renders not-found states with useful navigation", () => {
     const notFound = renderToStaticMarkup(<NotFound />);
 
-    expect(loading).toContain('aria-busy="true"');
-    expect(loading).toContain('role="status"');
     expect(notFound).toContain("Page not found");
     expect(notFound).toContain('href="/"');
     expect(notFound).toContain('href="/llms.txt"');
@@ -54,7 +58,6 @@ describe("standalone runtime surfaces", () => {
     expect(notFound).toContain('href="/about"');
     expect(notFound).toContain('href="/contact"');
     expect(notFound).toContain('href="/privacy"');
-    expect(loading.match(/data-presentation="menu"/gu)).toHaveLength(1);
     expect(notFound.match(/data-presentation="menu"/gu)).toHaveLength(1);
     expect(notFound).toContain('aria-label="hraness"');
   });

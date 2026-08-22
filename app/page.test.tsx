@@ -61,7 +61,11 @@ describe("canonical stripedex.com history", () => {
     expect(html.match(/class="history-volume-track"/gu)?.length).toBe(
       history.annualVolumes.length + history.valuationHeadlines.length,
     );
+    expect(html).not.toContain("Loading Stripe company history");
     expect(html).toContain("Stripe reportedly discusses acquiring OpenRouter");
+    expect(html).not.toContain(
+      'href="/history/acquisitions/openrouter-acquisition-talks-reported"',
+    );
     expect(html).toContain("Tokens Are the New Dollars");
     expect(html).toContain('data-category="appearances"');
     expect(html).toContain("A month in Buenos Aires produces Stripe&#x27;s first working prototype");
