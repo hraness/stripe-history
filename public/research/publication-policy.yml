@@ -1,9 +1,10 @@
 schema: stripe-history/automated-publication-policy/v1
 model: openai/gpt-5.6-sol
 reasoning_effort: max
-proposal_prompt_version: stripe-history/weekly-proposal/v5
+proposal_prompt_version: stripe-history/weekly-proposal/v6
 review_prompt_version: stripe-history/weekly-review/v1
 historical_proposal_prompt_versions:
+  - stripe-history/weekly-proposal/v5
   - stripe-history/weekly-proposal/v4
   - stripe-history/weekly-proposal/v3
 historical_review_prompt_versions: []
@@ -12,6 +13,7 @@ max_publications_per_run: 2
 max_source_characters: 40000
 trusted_monitors:
   - marginal-revolution-founders
+  - exa-founder-side-projects
   - exa-stripe-reporting
   - stripe-blog
   - stripe-newsroom
@@ -27,4 +29,5 @@ auto_publish_categories:
   - fundraising
   - headquarters-and-offices
   - publishing
+  - side-quests
   - company-milestones

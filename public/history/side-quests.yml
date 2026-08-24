@@ -4,6 +4,37 @@ category:
   description: Patrick and John Collison's notable projects outside Stripe, spanning science and arts funding, progress studies, governance, and hospitality.
   order: 10
 events:
+  - id: side-quest-rhine-group-launches
+    date: 2026-08-24
+    date_precision: day
+    title: Patrick Collison and Mario Draghi launch the Rhine Group
+    summary: Patrick Collison and Mario Draghi launched the Rhine Group as a European competitiveness forum, with Luis Garicano as executive director. The group is not a Stripe product or official Stripe initiative. It convenes government, academic, and business leaders using research pre-reads and Chatham House Rule, and aims to turn the 2024 Draghi competitiveness report into a concrete reform agenda.
+    confidence: confirmed
+    people:
+      - Patrick Collison
+      - Mario Draghi
+      - Luis Garicano
+    organizations:
+      - Rhine Group
+    locations:
+      - Europe
+    details:
+      - label: Co-chairs
+        value: Patrick Collison and Mario Draghi
+      - label: Executive director
+        value: Luis Garicano
+      - label: Working method
+        value: Research pre-reads under Chatham House Rule
+    status: Launched
+    tags:
+      - europe
+      - competitiveness
+      - governance
+      - policy
+    source_ids:
+      - source-605adc8c949c4c2a5e99
+      - source-a6f6ad128d03d7fea7a9
+      - source-2290b4b2108eb22c16f7
   - id: side-quest-omos-opens-at-millbrook-house
     date: 2026-07-07
     date_precision: day

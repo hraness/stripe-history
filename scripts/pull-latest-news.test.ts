@@ -78,9 +78,11 @@ describe("weekly news discovery", () => {
       "techcrunch-latest",
       "exa-stripe-reporting",
       "exa-stripe-leadership-appearances",
+      "exa-founder-side-projects",
       "marginal-revolution-founders",
       "gdelt-stripe",
       "gdelt-founders",
+      "gdelt-founder-side-projects",
     ]);
   });
 
@@ -120,6 +122,37 @@ describe("weekly news discovery", () => {
         expect(init?.method).toBe("POST");
         expect(new Headers(init?.headers).get("x-api-key")).toBe("fixture-exa-key");
         const request = JSON.parse(String(init?.body)) as Readonly<Record<string, unknown>>;
+        if (String(request.query).startsWith("Recent news about Patrick Collison or John Collison launching")) {
+          expect(request).toEqual({
+            category: "news",
+            endPublishedDate: "2026-08-16T23:59:59.999Z",
+            includeDomains: [
+              "bloomberg.com",
+              "businesspost.ie",
+              "euronews.com",
+              "ft.com",
+              "marginalrevolution.com",
+              "reuters.com",
+              "rhinegroup.eu",
+              "techcrunch.com",
+              "theinformation.com",
+              "wsj.com",
+            ],
+            moderation: true,
+            numResults: 40,
+            query: "Recent news about Patrick Collison or John Collison launching, chairing, funding, or joining a project, institute, grant program, board, forum, or think tank outside Stripe, including European competitiveness or progress-studies work",
+            startPublishedDate: "2026-08-09T00:00:00.000Z",
+            type: "auto",
+          });
+          return response(JSON.stringify({
+            requestId: "fixture-side-quest-request",
+            results: [{
+              publishedDate: "2026-08-15T10:00:00.000Z",
+              title: "Rhine Group weekly fixture",
+              url: "https://www.rhinegroup.eu/weekly-test-candidate",
+            }],
+          }), "application/json");
+        }
         if (String(request.query).startsWith("Long-form podcast")) {
           expect(request).toEqual({
             endPublishedDate: "2026-08-16T23:59:59.999Z",
@@ -244,20 +277,21 @@ describe("weekly news discovery", () => {
     expect(digest.monitors.every(({ status }) => status === "ok")).toBe(true);
     expect(digest.candidates.map(({ url }) => url)).toEqual([
       "https://techcrunch.com/2026/08/16/stripe-openrouter",
+      "https://www.rhinegroup.eu/weekly-test-candidate",
       "https://www.youtube.com/watch?v=fixture-appearance",
       "https://stripe.com/newsroom/news/weekly-test-candidate",
       "https://example.com/weekly",
     ]);
-    expect(digest.candidates[3]?.monitors).toEqual(["gdelt-stripe", "techcrunch-stripe"]);
     expect(digest.candidates[0]?.monitors).toEqual([
       "exa-stripe-reporting",
       "techcrunch-latest",
     ]);
-    expect(digest.candidates[1]?.monitors).toEqual([
+    expect(digest.candidates[1]?.monitors).toEqual(["exa-founder-side-projects"]);
+    expect(digest.candidates[2]?.monitors).toEqual([
       "exa-stripe-leadership-appearances",
     ]);
+    expect(digest.candidates[4]?.monitors).toEqual(["gdelt-stripe", "techcrunch-stripe"]);
     expect(digest.discoveryPlans.map(({ collection }) => collection)).toEqual([
-      "founder-side-projects",
       "valuation-history",
     ]);
   });
@@ -389,6 +423,26 @@ describe("weekly news discovery", () => {
     expect(gdeltTitleMatches("Striped bedding for autumn", stripe)).toBe(false);
     expect(gdeltTitleMatches("Patrick Collison announces a grant", founders)).toBe(true);
     expect(gdeltTitleMatches("California wealth tax battle", founders)).toBe(false);
+    const loaded = NewsMonitorFileSchema.parse(parse(`
+      schema: stripe-history/news-monitors/v1
+      lookback_days: 8
+      max_candidates: 10
+      max_items_per_monitor: 10
+      minimum_request_interval_ms: 1000
+      monitors:
+        - id: gdelt-founder-side-projects
+          kind: gdelt
+          query: '("Patrick Collison" OR "John Collison" OR "Rhine Group")'
+          title_any_terms: [Patrick Collison, John Collison, Rhine Group]
+          research_areas: [founder-side-projects]
+    `) as unknown).monitors[0];
+    if (loaded?.kind !== "gdelt") throw new Error("Expected GDELT side-project monitor");
+    expect(gdeltTitleMatches(
+      "Nasce il Rhine Group: Draghi, il guru del tech e i big europei insieme per evitare il declino",
+      loaded,
+    )).toBe(true);
+    expect(gdeltTitleMatches("Patrick Collison announces a grant", loaded)).toBe(true);
+    expect(gdeltTitleMatches("California wealth tax battle", loaded)).toBe(false);
   });
 
   test("renders untrusted titles as escaped review candidates", () => {

@@ -74,6 +74,26 @@ monitors:
       - youtu.be
     research_areas:
       - founder-appearances
+  - id: exa-founder-side-projects
+    kind: exa-search
+    query: Recent news about Patrick Collison or John Collison launching, chairing, funding, or joining a project, institute, grant program, board, forum, or think tank outside Stripe, including European competitiveness or progress-studies work
+    title_any_terms:
+      - Patrick Collison
+      - John Collison
+      - Rhine Group
+    include_domains:
+      - bloomberg.com
+      - businesspost.ie
+      - euronews.com
+      - ft.com
+      - marginalrevolution.com
+      - reuters.com
+      - rhinegroup.eu
+      - techcrunch.com
+      - theinformation.com
+      - wsj.com
+    research_areas:
+      - founder-side-projects
   - id: marginal-revolution-founders
     kind: rss
     url: https://marginalrevolution.com/feed
@@ -134,4 +154,13 @@ monitors:
       - John Collison
     research_areas:
       - founder-appearances
+      - founder-side-projects
+  - id: gdelt-founder-side-projects
+    kind: gdelt
+    query: '("Patrick Collison" OR "John Collison" OR "Rhine Group")'
+    title_any_terms:
+      - Patrick Collison
+      - John Collison
+      - Rhine Group
+    research_areas:
       - founder-side-projects

@@ -192,7 +192,7 @@ describe("Stripe history research audit", () => {
     expect(report.datasetReferencedSources).toBeLessThanOrEqual(report.referencedSources);
     expect(report.mutableSourceUrls).toBe(1);
     expect(report.mutableSourceSnapshots).toBe(5);
-    expect(report.researchRuns).toBe(5);
+    expect(report.researchRuns).toBe(6);
     expect(report.referencedSources + report.unreferencedSources).toBe(report.sources);
     expect(report.unreferencedSources).toBe(0);
     expect(report.collectionInputs).toBeGreaterThan(40);
@@ -231,7 +231,7 @@ describe("Stripe history research audit", () => {
 
     const evolvedReport = await auditHistoryResearch(temporaryProject);
     expect(evolvedReport).toMatchObject({
-      researchRuns: 6,
+      researchRuns: 7,
     });
 
     const [unfinishedPlan] = await planHistoryResearchDiscovery(
@@ -477,7 +477,7 @@ describe("Stripe history research audit", () => {
     await writeFile(collectionsPath, stringify(collections));
 
     expect(auditHistoryResearch(temporaryProject)).rejects.toThrow(
-      "founder-side-projects complete output has undeclared source source-5cce599c4b7c9144e3cb",
+      "founder-side-projects complete output has undeclared source source-605adc8c949c4c2a5e99",
     );
   });
 
@@ -631,12 +631,15 @@ describe("Stripe history research audit", () => {
         collection === "founder-side-projects"
       );
       expect(sideProjects?.watermark).toEqual({
-        lookbackFrom: "2026-06-29",
-        reviewedThrough: "2026-08-13",
+        lookbackFrom: "2026-07-10",
+        reviewedThrough: "2026-08-24",
         targetThrough: "2026-09-01",
       });
       expect(sideProjects?.tasks.some((task) =>
         task.kind === "discovery-source" && task.url === "https://johncollison.ie/"
+      )).toBe(true);
+      expect(sideProjects?.tasks.some((task) =>
+        task.kind === "discovery-source" && task.url === "https://www.rhinegroup.eu/"
       )).toBe(true);
       expect(sideProjects?.tasks.some((task) =>
         task.kind === "query-family" && task.query === "Patrick Collison project outside Stripe"
