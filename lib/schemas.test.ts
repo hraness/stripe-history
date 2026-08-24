@@ -53,7 +53,7 @@ describe("public YAML schemas", () => {
     expect(AutomatedPublicationPolicySchema.safeParse({
       ...policy,
       auto_publish_categories: ["side-quests"],
-    }).success).toBe(false);
+    }).success).toBe(true);
     expect(AutomatedPublicationPolicySchema.safeParse({
       ...policy,
       trusted_monitors: ["stripe-newsroom", "stripe-newsroom"],

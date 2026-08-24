@@ -631,12 +631,15 @@ describe("Stripe history research audit", () => {
         collection === "founder-side-projects"
       );
       expect(sideProjects?.watermark).toEqual({
-        lookbackFrom: "2026-06-29",
-        reviewedThrough: "2026-08-13",
+        lookbackFrom: "2026-07-10",
+        reviewedThrough: "2026-08-24",
         targetThrough: "2026-09-01",
       });
       expect(sideProjects?.tasks.some((task) =>
         task.kind === "discovery-source" && task.url === "https://johncollison.ie/"
+      )).toBe(true);
+      expect(sideProjects?.tasks.some((task) =>
+        task.kind === "discovery-source" && task.url === "https://www.rhinegroup.eu/"
       )).toBe(true);
       expect(sideProjects?.tasks.some((task) =>
         task.kind === "query-family" && task.query === "Patrick Collison project outside Stripe"

@@ -108,21 +108,24 @@ collections:
     coverage:
       basis: event-date
       from: 2019-07-30
-      through: 2026-08-13
+      through: 2026-08-24
     output_files:
       - history/side-quests.yml
     input_source_ids:
       - source-1002e320dafb67950005
       - source-1c6adfe53072cdc63578
+      - source-2290b4b2108eb22c16f7
       - source-370244a2efb2cfe025e5
       - source-475e9973e4ee494147aa
       - source-4c240f420fc0534fe6af
       - source-5a2e0ef3c00b4019656f
       - source-5cce599c4b7c9144e3cb
+      - source-605adc8c949c4c2a5e99
       - source-6a70e99c09c187ea49b2
       - source-85375dadecbd272a21c7
       - source-89af64bf0e530b9961f2
       - source-9ad888e73adc937b1c29
+      - source-a6f6ad128d03d7fea7a9
       - source-aa36e7f93ba3a24269dd
       - source-af73c6bed56faf7ea27e
       - source-dc2f070f6effb7cceff3
@@ -133,11 +136,13 @@ collections:
       - https://x.com/collision
       - https://x.com/patrickc
       - https://marginalrevolution.com/
+      - https://www.rhinegroup.eu/
     query_families:
       - 'Patrick Collison project outside Stripe'
       - 'John Collison project outside Stripe'
       - 'Patrick Collison grant philanthropy institute board arts science'
       - 'John Collison investment philanthropy hospitality restoration'
+      - 'Patrick Collison Rhine Group Europe competitiveness'
       - 'site:patrickcollison.com project grant institute'
       - 'site:marginalrevolution.com Patrick Collison grant project'
     authority_order: [primary, filing, reporting, interview, archive]

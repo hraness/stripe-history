@@ -508,7 +508,7 @@ describe("automatic history publication", () => {
     await writeDigest(directory, {
       monitors: ["gdelt-founders"],
       publishedAt: "2026-08-15",
-      researchAreas: ["founder-side-projects"],
+      researchAreas: ["founder-appearances"],
       source: "example.com",
       title: "Patrick Collison starts an example project",
       url: "https://example.com/patrick-project",
@@ -530,6 +530,33 @@ describe("automatic history publication", () => {
     expect(decisionLedger.runs[0]?.decisions).toMatchObject([{
       basis: "automatic-policy",
       outcome: "needs-review",
+    }]);
+  });
+
+  test("selects trusted founder side-quest candidates for automatic publication", async () => {
+    const directory = await fixtureProject();
+    await writeDigest(directory, {
+      monitors: ["exa-founder-side-projects"],
+      publishedAt: "2026-08-15",
+      researchAreas: ["founder-side-projects"],
+      source: "rhinegroup.eu",
+      title: "Patrick Collison and Mario Draghi launch the Rhine Group",
+      url: "https://www.rhinegroup.eu/weekly-test-candidate",
+    });
+    const report = await autoPublishHistory({
+      digestPath: "digest.json",
+      environment: {},
+      fetcher: async () => {
+        throw new Error("A selected side-quest candidate must stop before evidence fetching");
+      },
+      projectDirectory: directory,
+      write: true,
+    });
+    expect(report.published).toBe(0);
+    expect(report.decisions).toMatchObject([{
+      basis: "compiler",
+      outcome: "infrastructure-error",
+      reason: expect.stringContaining("AI Gateway credential"),
     }]);
   });
 
@@ -575,7 +602,7 @@ describe("automatic history publication", () => {
     const candidate = {
       monitors: ["gdelt-founders"],
       publishedAt: "2026-08-15",
-      researchAreas: ["founder-side-projects"],
+      researchAreas: ["founder-appearances"],
       source: "example.com",
       title: "Patrick Collison starts an example project",
       url: "https://example.com/patrick-project",

@@ -499,6 +499,197 @@ runs:
       - source-aa36e7f93ba3a24269dd
       - source-af73c6bed56faf7ea27e
       - source-dc2f070f6effb7cceff3
+  - kind: discovery
+    collection: founder-side-projects
+    status: complete
+    recorded_on: 2026-08-24
+    completed_on: 2026-08-24
+    plan:
+      schema: stripe-history/research-discovery-plan/v1
+      collection: founder-side-projects
+      dataset: history-events
+      acceptedInputSha256: f7c559bbcec758837fb0a6fdb506c004da2591019858ebd5b65ca495632f5cdf
+      acceptedSourceIds:
+        - source-1002e320dafb67950005
+        - source-1c6adfe53072cdc63578
+        - source-370244a2efb2cfe025e5
+        - source-475e9973e4ee494147aa
+        - source-4c240f420fc0534fe6af
+        - source-5a2e0ef3c00b4019656f
+        - source-5cce599c4b7c9144e3cb
+        - source-6a70e99c09c187ea49b2
+        - source-85375dadecbd272a21c7
+        - source-89af64bf0e530b9961f2
+        - source-9ad888e73adc937b1c29
+        - source-aa36e7f93ba3a24269dd
+        - source-af73c6bed56faf7ea27e
+        - source-dc2f070f6effb7cceff3
+      authorityOrder: [primary, filing, reporting, interview, archive]
+      dedupeKeys:
+        - canonical-url-published-at
+        - event-id
+        - semantic-claim
+      minimumRequestIntervalMs: 1000
+      outputFiles: [history/side-quests.yml]
+      reviewRequirements:
+        - canonical-and-native-identity
+        - semantic-claim-deduplication
+        - source-capture-before-acceptance
+        - human-significance-review
+        - advance-watermark-after-complete-review
+      tasks:
+        - id: task-fa786776ebe84ec9a27e
+          kind: discovery-source
+          url: https://johncollison.ie/
+        - id: task-a8f4e4c80057e1f4eb9c
+          kind: discovery-source
+          url: https://marginalrevolution.com/
+        - id: task-46040669b05bdac6ce12
+          kind: discovery-source
+          url: https://patrickcollison.com/
+        - id: task-866d337e860f7bcea4b1
+          kind: discovery-source
+          url: https://www.rhinegroup.eu/
+        - id: task-94a8bacb420637d68033
+          kind: discovery-source
+          url: https://x.com/collision
+        - id: task-c42b4451a88a63512678
+          kind: discovery-source
+          url: https://x.com/patrickc
+        - id: task-c068db16ba24dcde2d2c
+          kind: query-family
+          query: John Collison investment philanthropy hospitality restoration
+        - id: task-239d6a0cf902ca2bd5b8
+          kind: query-family
+          query: John Collison project outside Stripe
+        - id: task-b6bf6e354bc98c9b40e4
+          kind: query-family
+          query: Patrick Collison grant philanthropy institute board arts science
+        - id: task-910f1c05f342c4440b73
+          kind: query-family
+          query: Patrick Collison project outside Stripe
+        - id: task-787c2074cc68241e37c4
+          kind: query-family
+          query: Patrick Collison Rhine Group Europe competitiveness
+        - id: task-6470d98e621c01ed40d6
+          kind: query-family
+          query: site:marginalrevolution.com Patrick Collison grant project
+        - id: task-7e42309b24c29813d95a
+          kind: query-family
+          query: site:patrickcollison.com project grant institute
+      watermark:
+        lookbackFrom: 2026-06-29
+        reviewedThrough: 2026-08-13
+        targetThrough: 2026-08-24
+      planSha256: bcdb6c80a56d74294f25c65e3019f48279b7c90ec51ef9f25a3e12d56190c3ff
+    tasks:
+      - id: task-239d6a0cf902ca2bd5b8
+        status: complete
+        completed_on: 2026-08-24
+        outcome: no-candidates
+        decision_ids: []
+      - id: task-46040669b05bdac6ce12
+        status: complete
+        completed_on: 2026-08-24
+        outcome: no-candidates
+        decision_ids: []
+      - id: task-6470d98e621c01ed40d6
+        status: complete
+        completed_on: 2026-08-24
+        outcome: no-candidates
+        decision_ids: []
+      - id: task-787c2074cc68241e37c4
+        status: complete
+        completed_on: 2026-08-24
+        outcome: candidates-reviewed
+        decision_ids:
+          - candidate-50c1fc03a7afa1d51e7d
+          - candidate-7fb8b01b7d86837f872b
+      - id: task-7e42309b24c29813d95a
+        status: complete
+        completed_on: 2026-08-24
+        outcome: no-candidates
+        decision_ids: []
+      - id: task-866d337e860f7bcea4b1
+        status: complete
+        completed_on: 2026-08-24
+        outcome: candidates-reviewed
+        decision_ids: [candidate-db065c40c1f3a416b7e4]
+      - id: task-910f1c05f342c4440b73
+        status: complete
+        completed_on: 2026-08-24
+        outcome: no-candidates
+        decision_ids: []
+      - id: task-94a8bacb420637d68033
+        status: complete
+        completed_on: 2026-08-24
+        outcome: no-candidates
+        decision_ids: []
+      - id: task-a8f4e4c80057e1f4eb9c
+        status: complete
+        completed_on: 2026-08-24
+        outcome: no-candidates
+        decision_ids: []
+      - id: task-b6bf6e354bc98c9b40e4
+        status: complete
+        completed_on: 2026-08-24
+        outcome: no-candidates
+        decision_ids: []
+      - id: task-c068db16ba24dcde2d2c
+        status: complete
+        completed_on: 2026-08-24
+        outcome: no-candidates
+        decision_ids: []
+      - id: task-c42b4451a88a63512678
+        status: complete
+        completed_on: 2026-08-24
+        outcome: no-candidates
+        decision_ids: []
+      - id: task-fa786776ebe84ec9a27e
+        status: complete
+        completed_on: 2026-08-24
+        outcome: no-candidates
+        decision_ids: []
+    decisions:
+      - candidate_id: candidate-50c1fc03a7afa1d51e7d
+        candidate_url: https://it.euronews.com/my-europe/2026/08/24/nasce-il-rhine-group-draghi-il-guru-del-tech-e-i-big-europei-insieme-per-evitare-il-declin
+        disposition: accepted
+        source_id: source-a6f6ad128d03d7fea7a9
+        task_ids:
+          - task-787c2074cc68241e37c4
+        reason: Contemporaneous Italian reporting dated 2026-08-24 documents the Rhine Group launch, co-chairs, executive director, and stated reform aim.
+        evidence:
+          capture_slug: nasce-il-rhine-group-euronews-2026-08-24
+          captured_on: 2026-08-24
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: de146d2546eea7b7d4f3f45a729fd4c649d5574961bccccb15da98fc1880cdcb
+      - candidate_id: candidate-7fb8b01b7d86837f872b
+        candidate_url: https://app.dealroom.co/news/note/rhine-group-launches-to-advance-european-reforms
+        disposition: accepted
+        source_id: source-2290b4b2108eb22c16f7
+        task_ids:
+          - task-787c2074cc68241e37c4
+        reason: Dealroom's contemporaneous note corroborates the August 2026 launch, chairs, forum method, and reform aim from the primary site.
+        evidence:
+          capture_slug: rhine-group-dealroom-note-2026-08-24
+          captured_on: 2026-08-24
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: dc44c3a919e1d7f9a8202386733646975debfb3bbc71e73241dce38937e7c4f8
+      - candidate_id: candidate-db065c40c1f3a416b7e4
+        candidate_url: https://www.rhinegroup.eu/
+        disposition: accepted
+        source_id: source-605adc8c949c4c2a5e99
+        task_ids:
+          - task-866d337e860f7bcea4b1
+        reason: The Rhine Group homepage is the primary record of the forum, co-chairs, executive director, convening method, and Chatham House Rule.
+        evidence:
+          capture_slug: rhine-group-homepage-2026-08-24
+          captured_on: 2026-08-24
+          status: complete
+          evidence_path: evidence/source.html
+          sha256: 1f0ab98864fe91d3d6ababaeee878e717d8779f600790a4377b10f64c4e9faff
   - kind: baseline-import
     collection: valuation-history
     status: complete

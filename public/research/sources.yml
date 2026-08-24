@@ -329,6 +329,13 @@ sources:
     id: source-22c2cfbb3748446e2ba6
     media_type: article
   - kind: reporting
+    publisher: Dealroom
+    published_at: 2026-08-24
+    title: Rhine Group launches to advance European reforms
+    url: https://app.dealroom.co/news/note/rhine-group-launches-to-advance-european-reforms
+    id: source-2290b4b2108eb22c16f7
+    media_type: article
+  - kind: reporting
     publisher: Axios
     published_at: 2017-12-01
     title: Scoop - Stripe hires new engineering chief from Google
@@ -882,6 +889,12 @@ sources:
     url: https://www.forbes.com/profile/amber-feng/
     id: source-602d1868713f23b88f2c
     media_type: article
+  - kind: primary
+    publisher: Rhine Group
+    title: Rhine Group — A stronger, more competitive Europe
+    url: https://www.rhinegroup.eu/
+    id: source-605adc8c949c4c2a5e99
+    media_type: webpage
   - kind: filing
     publisher: Central Bank of Ireland
     published_at: 2019-03-22
@@ -1465,6 +1478,14 @@ sources:
     title: Get Together
     url: https://press.stripe.com/get-together
     id: source-a67403a0dfe10525868f
+    media_type: article
+  - kind: reporting
+    publisher: Euronews
+    published_at: 2026-08-24
+    title: "Nasce il Rhine Group: Draghi, il guru del tech e i big europei insieme per evitare il declino"
+    url: https://it.euronews.com/my-europe/2026/08/24/nasce-il-rhine-group-draghi-il-guru-del-tech-e-i-big-europei-insieme-per-evitare-il-declin
+    id: source-a6f6ad128d03d7fea7a9
+    language: it
     media_type: article
   - kind: primary
     publisher: Stripe Press

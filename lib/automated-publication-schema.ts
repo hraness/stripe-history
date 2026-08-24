@@ -14,10 +14,7 @@ export const STRIPEDEX_AUTOMATED_PUBLICATIONS_SCHEMA_VERSION =
 export const STRIPEDEX_AUTOMATED_DECISIONS_SCHEMA_VERSION =
   "stripe-history/automated-decisions/v1" as const;
 
-export const automatedHistoryCategoryIds = historyCategoryIds.filter(
-  (category): category is Exclude<(typeof historyCategoryIds)[number], "side-quests"> =>
-    category !== "side-quests",
-);
+export const automatedHistoryCategoryIds = historyCategoryIds;
 
 const Sha256Schema = z.string().regex(/^[a-f0-9]{64}$/u);
 const ExactDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/u);

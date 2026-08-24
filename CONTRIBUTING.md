@@ -6,7 +6,7 @@ For a history change, include the event date, a concise factual claim, its categ
 
 Keep event IDs stable after publication unless the ID itself is incorrect. Check for an existing record before adding a new one, and explain possible duplicates in the contribution.
 
-The weekly publisher is append-only and intentionally narrow. Corrections, valuation research, founder side projects, historical backfill, model-rejected candidates, and any rewrite or deletion still belong in an ordinary reviewed contribution. Do not commit model transcripts or copyrighted article bodies; accepted automated records retain source identity and hash-only evidence attestations.
+The weekly publisher is append-only and intentionally narrow. Corrections, valuation research, leadership appearances, historical backfill, model-rejected candidates, and any rewrite or deletion still belong in an ordinary reviewed contribution. Launched founder side-quest projects may publish automatically only from trusted monitors and only into `side-quests`. Do not commit model transcripts or copyrighted article bodies; accepted automated records retain source identity and hash-only evidence attestations.
 
 Run the local checks before submitting a change:
 
