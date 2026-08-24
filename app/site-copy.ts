@@ -18,10 +18,6 @@ export const contactSocialTitle = `Contact ${site.domain}`;
 export const contactDescription =
   `How to send a correction, source, or security report for the independent Stripe company history at ${site.domain}.`;
 
-export const paymentVolumeTitle = "Stripe Payment and Total Volume by Year";
-export const paymentVolumeDescription =
-  "Stripe annual volume history: payment volume from 2021 through 2024 and total volume for 2025, with source-linked disclosures from $640 billion+ to $1.9 trillion.";
-
 export const dataTitle = "Stripe Company History Dataset";
 
 export const independenceSentence =
@@ -77,12 +73,6 @@ export const contactParagraphs = [
   `There is no reader account, contact form, or product inbox on ${site.domain}. The project does not process payments, issue API keys, or operate a Stripe integration. ${independenceSentence}`,
   `Published and maintained by [Hraness](${HRANESS_URL}). The complete sourced records and website code are in the [Stripedex repository](${GITHUB_REPOSITORY_URL}). Read [about](${SITE_ORIGIN}/about) for editorial method and [privacy](${SITE_ORIGIN}/privacy) for analytics limits.`,
 ] as const;
-
-export const paymentVolumeIntro =
-  "Stripe reported annual payment volume from 2021 through 2024 and switched to “total volume” for its 2025 figure.";
-
-export const paymentVolumeMethod =
-  "Years refer to the calendar year measured, not the later disclosure date. Values preserve Stripe’s published wording and qualifiers. The 2021 and 2022 figures are lower bounds, and Stripe calls the 2025 figure “total volume.” Missing years are not inferred from rounded growth rates.";
 
 export const dataIntro =
   "These reviewable YAML files power the public timeline and valuation record. History entries preserve chronology, category, summary, confidence, and status when applicable; the research files preserve canonical source identities, valuation observations, leadership appearances, collection scope, and review runs.";

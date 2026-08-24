@@ -13,16 +13,17 @@ import {
   independenceSentence,
   notFoundDescription,
   notFoundTitle,
-  paymentVolumeDescription,
-  paymentVolumeIntro,
-  paymentVolumeMethod,
-  paymentVolumeTitle,
   privacyDescription,
   privacyParagraphs,
   privacyTitle,
   recoveryLinks,
 } from "@/app/site-copy";
 import { GITHUB_REPOSITORY_URL, SITE_ORIGIN, site } from "@/app/site";
+import {
+  derivePaymentVolumeDisclosures,
+  derivePaymentVolumePageSeo,
+  derivePaymentVolumeRecords,
+} from "@/app/history/payment-volume/payment-volume-page-model";
 import {
   deriveValuationHeadlineRows,
   deriveValuationPageSeo,
@@ -241,23 +242,46 @@ function categoryMarkdown(
 }
 
 function paymentVolumeMarkdown(history: HistoryCollection): string {
-  const rows = history.annualVolumes.map((point) => {
-    const event = history.events.find(({ id }) => id === point.eventId);
-    const kind = point.kind === "total-volume" ? "total volume" : "payment volume";
-    const sources = event?.sources.map((source) => `[${source.publisher}](${source.url})`).join(" · ");
-    return `- ${point.calendarYear}: ${point.display} ${kind}${sources === undefined ? "" : `. Sources: ${sources}`}`;
-  });
+  const seo = derivePaymentVolumePageSeo(history);
+  const rows = derivePaymentVolumeRecords(history);
+  const table = [
+    "| year | volume | kind | qualifier | sources |",
+    "| --- | --- | --- | --- | --- |",
+    ...rows.map(({ event, kindLabel, point, qualifierLabel }) => {
+      const sources = event.sources
+        .map((source) => `[${source.publisher}](${source.url})`)
+        .join(" · ");
+      return `| ${point.calendarYear} | ${markdownTableCell(point.display)} | ${markdownTableCell(kindLabel)} | ${markdownTableCell(qualifierLabel)} | ${markdownTableCell(sources)} |`;
+    }),
+  ];
   return [
-    heading(paymentVolumeTitle, paymentVolumeDescription),
-    paymentVolumeIntro,
+    heading(seo.title, seo.description),
+    seo.lead,
     "",
-    "## Disclosures",
+    "## Yearly disclosures",
     "",
-    ...rows,
+    ...table,
     "",
+    "## Disclosures and sources",
+    "",
+    ...derivePaymentVolumeDisclosures(history).map(({ event, kindLabel, qualifierLabel }) => {
+      const sources = event.sources
+        .map((source) => `[${source.publisher}](${source.url})`)
+        .join(" · ");
+      return [
+        `### ${event.title}`,
+        "",
+        `${event.date} · ${kindLabel} · ${qualifierLabel}`,
+        "",
+        event.summary,
+        "",
+        `Sources: ${sources}`,
+        "",
+      ].join("\n");
+    }),
     "## Method",
     "",
-    paymentVolumeMethod,
+    seo.method,
     "",
   ].join("\n");
 }
