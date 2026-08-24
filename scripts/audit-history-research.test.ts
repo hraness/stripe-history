@@ -192,7 +192,7 @@ describe("Stripe history research audit", () => {
     expect(report.datasetReferencedSources).toBeLessThanOrEqual(report.referencedSources);
     expect(report.mutableSourceUrls).toBe(1);
     expect(report.mutableSourceSnapshots).toBe(5);
-    expect(report.researchRuns).toBe(5);
+    expect(report.researchRuns).toBe(6);
     expect(report.referencedSources + report.unreferencedSources).toBe(report.sources);
     expect(report.unreferencedSources).toBe(0);
     expect(report.collectionInputs).toBeGreaterThan(40);
@@ -231,7 +231,7 @@ describe("Stripe history research audit", () => {
 
     const evolvedReport = await auditHistoryResearch(temporaryProject);
     expect(evolvedReport).toMatchObject({
-      researchRuns: 6,
+      researchRuns: 7,
     });
 
     const [unfinishedPlan] = await planHistoryResearchDiscovery(
@@ -477,7 +477,7 @@ describe("Stripe history research audit", () => {
     await writeFile(collectionsPath, stringify(collections));
 
     expect(auditHistoryResearch(temporaryProject)).rejects.toThrow(
-      "founder-side-projects complete output has undeclared source source-5cce599c4b7c9144e3cb",
+      "founder-side-projects complete output has undeclared source source-605adc8c949c4c2a5e99",
     );
   });
 

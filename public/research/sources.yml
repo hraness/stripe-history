@@ -322,18 +322,18 @@ sources:
     id: source-2186a9fb2e4e200518a1
     media_type: article
   - kind: reporting
-    publisher: Silicon Valley Business Journal
-    published_at: 2011-09-02
-    title: Stealth startup Stripe aims for Q4 launch
-    url: https://www.bizjournals.com/sanjose/print-edition/2011/09/02/stealth-startup-stripe-aims-for-q4.html
-    id: source-22c2cfbb3748446e2ba6
-    media_type: article
-  - kind: reporting
     publisher: Dealroom
     published_at: 2026-08-24
     title: Rhine Group launches to advance European reforms
     url: https://app.dealroom.co/news/note/rhine-group-launches-to-advance-european-reforms
     id: source-2290b4b2108eb22c16f7
+    media_type: article
+  - kind: reporting
+    publisher: Silicon Valley Business Journal
+    published_at: 2011-09-02
+    title: Stealth startup Stripe aims for Q4 launch
+    url: https://www.bizjournals.com/sanjose/print-edition/2011/09/02/stealth-startup-stripe-aims-for-q4.html
+    id: source-22c2cfbb3748446e2ba6
     media_type: article
   - kind: reporting
     publisher: Axios
