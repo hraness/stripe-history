@@ -785,13 +785,15 @@
   max-width: 42rem;
 }
 
-.history-valuation-observation-list {
+.history-valuation-observation-list,
+.history-volume-disclosure-list {
   list-style: none;
   margin: 1rem 0 0;
   padding: 0;
 }
 
-.history-valuation-observation-list > li {
+.history-valuation-observation-list > li,
+.history-volume-disclosure-list > li {
   border-top: 1px solid var(--plain-line);
   padding: 1rem 0 1.35rem;
   scroll-margin-top: calc(var(--history-filter-stack-offset) + 1rem);
@@ -801,17 +803,24 @@
   scroll-margin-top: calc(var(--history-filter-stack-offset) + 1rem);
 }
 
-.history-valuation-observation-list > li:last-child {
+.history-valuation-observation-list > li:last-child,
+.history-volume-disclosure-list > li:last-child {
   border-bottom: 1px solid var(--plain-line);
 }
 
-.history-valuation-observation-list h3 {
+.history-valuation-observation-list h3,
+.history-volume-disclosure-list h3 {
   font-size: inherit;
   margin: 0.25rem 0 0;
 }
 
-.history-valuation-observation-list .history-event-facts {
+.history-valuation-observation-list .history-event-facts,
+.history-volume-disclosure-list .history-event-facts {
   margin-top: 0.65rem;
+}
+
+.history-volume-disclosure-list article > p:not(.history-event-kicker) {
+  margin-top: 0.5rem;
 }
 
 .history-valuation-note {

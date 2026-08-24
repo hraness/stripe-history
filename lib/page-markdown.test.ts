@@ -46,8 +46,12 @@ describe("agent markdown representations", () => {
     expect(category.body).toContain("Sources:");
 
     const volume = await markdownForPath("/history/payment-volume");
-    expect(volume.body).toContain("2025");
-    expect(volume.body).toContain("total volume");
+    expect(volume.status).toBe(200);
+    expect(volume.body).toContain("| year | volume | kind | qualifier | sources |");
+    expect(volume.body).toContain("| 2025 | $1.9 trillion | total volume | published value |");
+    expect(volume.body).toContain("| 2021 | $640 billion+ | payment volume | lower bound |");
+    expect(volume.body).toContain("Stripe reports $1.9 trillion in 2025 total volume");
+    expect(volume.body).toContain("not affiliated with, endorsed by, or operated by");
 
     const valuation = await markdownForPath("/history/valuation");
     expect(valuation.status).toBe(200);
