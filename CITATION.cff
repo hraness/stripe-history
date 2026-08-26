@@ -6,7 +6,7 @@ authors:
   - family-names: Guo
     given-names: Ben
 repository-code: https://github.com/hraness/stripedex
-url: https://hraness.com/stripe/
+url: https://hraness.com/stripe
 license: MIT
 version: 0.1.0
 date-released: 2026-08-14

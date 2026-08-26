@@ -13,14 +13,14 @@ describe("canonical hraness.com/stripe history", () => {
     const expectedTitle = `Stripe Company History: ${history.events.length} Sourced Events`;
 
     expect(metadata).toMatchObject({
-      alternates: { canonical: "https://hraness.com/stripe/" },
+      alternates: { canonical: "https://hraness.com/stripe" },
       description: site.description,
       robots: INDEXABLE_ROBOTS,
       title: expectedTitle,
     });
     expect(metadata.openGraph).toMatchObject({
       title: `${expectedTitle} | hraness.com/stripe`,
-      url: "https://hraness.com/stripe/",
+      url: "https://hraness.com/stripe",
     });
   });
 

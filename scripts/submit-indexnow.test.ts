@@ -28,10 +28,10 @@ describe("IndexNow discovery notification", () => {
       urlList: sitemapUrls,
     });
     expect(new Set(payload.urlList).size).toBe(payload.urlList.length);
-    expect(payload.urlList).toContain(`${SITE_ORIGIN}/`);
-    expect(payload.urlList.every((url) => url.startsWith(`${SITE_ORIGIN}/`))).toBe(
-      true,
-    );
+    expect(payload.urlList).toContain(SITE_ORIGIN);
+    expect(payload.urlList.every((url) => (
+      url === SITE_ORIGIN || url.startsWith(`${SITE_ORIGIN}/`)
+    ))).toBe(true);
     expect(payload.urlList.some((url) => url.endsWith(".yml"))).toBe(false);
   });
 });

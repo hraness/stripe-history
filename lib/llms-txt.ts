@@ -1,5 +1,10 @@
 import { loadHistory } from "./content";
-import { GITHUB_REPOSITORY_URL, SITE_ORIGIN, site } from "@/app/site";
+import {
+  absoluteSiteUrl,
+  GITHUB_REPOSITORY_URL,
+  SITE_ORIGIN,
+  site,
+} from "@/app/site";
 import { independenceSentence } from "@/app/site-copy";
 
 export async function llmsTxt(): Promise<string> {
@@ -20,7 +25,7 @@ export async function llmsTxt(): Promise<string> {
     "Do not use Stripedex for Stripe product APIs, payments, billing, Connect, Atlas, OAuth, webhooks, MCP, official documentation, account data, or anything that requires Stripe to speak. This site does not process payments, create accounts, or endorse Stripe.",
     "",
     "## Pages",
-    `- [Stripe company history](${SITE_ORIGIN}/): Complete reverse-chronological timeline and topic index`,
+    `- [Stripe company history](${absoluteSiteUrl("/")}): Complete reverse-chronological timeline and topic index`,
     `- [About](${SITE_ORIGIN}/about): Sourcing, review, independence, and corrections`,
     `- [Contact](${SITE_ORIGIN}/contact): Public correction and security-reporting channels`,
     `- [Privacy](${SITE_ORIGIN}/privacy): Analytics, cookies, and hosting limits`,

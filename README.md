@@ -1,12 +1,12 @@
 # Stripedex
 
-[Stripedex on Hraness](https://hraness.com/stripe/) is an independent, open-source timeline of Stripe company history, with sourced data on products, acquisitions, funding, valuation, leadership, expansion, milestones, and annual payment volume.
+[Stripedex on Hraness](https://hraness.com/stripe) is an independent, open-source timeline of Stripe company history, with sourced data on products, acquisitions, funding, valuation, leadership, expansion, milestones, and annual payment volume.
 
 The site renders more than 200 sourced events as one reverse-chronological history and as focused, crawlable category pages. It also presents sourced annual payment-volume and private-company valuation records. Each claim retains reviewable YAML provenance, including status and uncertainty where they apply.
 
 ## Browse the history
 
-- [Complete Stripe company history](https://hraness.com/stripe/)
+- [Complete Stripe company history](https://hraness.com/stripe)
 - [Acquisitions](https://hraness.com/stripe/history/acquisitions)
 - [Product launches](https://hraness.com/stripe/history/product-launches)
 - [Fundraising](https://hraness.com/stripe/history/fundraising)

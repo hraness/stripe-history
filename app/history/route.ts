@@ -1,5 +1,5 @@
-import { SITE_ORIGIN } from "../site";
+import { absoluteSiteUrl } from "../site";
 
 export function GET(): Response {
-  return Response.redirect(`${SITE_ORIGIN}/`, 308);
+  return Response.redirect(absoluteSiteUrl("/"), 308);
 }

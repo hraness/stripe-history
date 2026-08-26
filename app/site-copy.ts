@@ -1,4 +1,10 @@
-import { GITHUB_REPOSITORY_URL, HRANESS_URL, SITE_ORIGIN, site } from "./site";
+import {
+  absoluteSiteUrl,
+  GITHUB_REPOSITORY_URL,
+  HRANESS_URL,
+  SITE_ORIGIN,
+  site,
+} from "./site";
 
 export const notFoundTitle = "Page not found";
 export const notFoundDescription = "The requested Stripe history page does not exist.";
@@ -24,7 +30,7 @@ export const independenceSentence =
   `${site.domain} is not affiliated with, endorsed by, or operated by Stripe, Inc. Stripe names and trademarks belong to their respective owners.`;
 
 export const recoveryLinks = [
-  { href: `${SITE_ORIGIN}/`, label: "Stripe company history" },
+  { href: absoluteSiteUrl("/"), label: "Stripe company history" },
   { href: `${SITE_ORIGIN}/llms.txt`, label: "Agent index (llms.txt)" },
   { href: `${SITE_ORIGIN}/sitemap.xml`, label: "Sitemap" },
   { href: `${SITE_ORIGIN}/about`, label: "About" },

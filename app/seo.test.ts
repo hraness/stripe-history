@@ -16,7 +16,7 @@ describe("hraness.com/stripe structured discovery", () => {
   test("identifies Stripedex, Hraness as publisher, and Stripe only as its subject", () => {
     expect(websiteJsonLd()).toMatchObject({
       "@type": "WebSite",
-      "@id": "https://hraness.com/stripe/#website",
+      "@id": "https://hraness.com/stripe#website",
       name: "Stripedex",
       alternateName: "hraness.com/stripe",
       publisher: {
@@ -25,7 +25,7 @@ describe("hraness.com/stripe structured discovery", () => {
         url: "https://hraness.com/",
       },
       sameAs: ["https://github.com/hraness/stripedex"],
-      url: "https://hraness.com/stripe/",
+      url: "https://hraness.com/stripe",
     });
     expect(aboutPageJsonLd()).toMatchObject({
       "@type": "WebPage",
@@ -34,9 +34,9 @@ describe("hraness.com/stripe structured discovery", () => {
     });
     expect(siteOrganizationJsonLd()).toMatchObject({
       "@type": "Organization",
-      "@id": "https://hraness.com/stripe/#organization",
+      "@id": "https://hraness.com/stripe#organization",
       name: "Stripedex",
-      url: "https://hraness.com/stripe/",
+      url: "https://hraness.com/stripe",
       sameAs: ["https://github.com/hraness/stripedex"],
       parentOrganization: { name: "Hraness", url: "https://hraness.com/" },
     });
@@ -119,7 +119,7 @@ describe("hraness.com/stripe structured discovery", () => {
       numberOfItems: 1,
       itemListElement: [{
         position: 1,
-        url: "https://hraness.com/stripe/#example-event",
+        url: "https://hraness.com/stripe#example-event",
       }],
     });
 

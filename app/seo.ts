@@ -27,25 +27,27 @@ const publisherJsonLd = {
 } as const;
 
 export function siteOrganizationJsonLd() {
+  const rootUrl = absoluteSiteUrl("/");
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": `${SITE_ORIGIN}/#organization`,
+    "@id": `${rootUrl}#organization`,
     name: site.name,
     alternateName: site.domain,
     description: site.description,
-    url: `${SITE_ORIGIN}/`,
+    url: rootUrl,
     sameAs: [GITHUB_REPOSITORY_URL],
     parentOrganization: publisherJsonLd,
   } as const;
 }
 
 export function websiteJsonLd() {
+  const rootUrl = absoluteSiteUrl("/");
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": `${SITE_ORIGIN}/#website`,
-    url: `${SITE_ORIGIN}/`,
+    "@id": `${rootUrl}#website`,
+    url: rootUrl,
     name: site.name,
     alternateName: site.domain,
     description: site.description,
@@ -75,7 +77,7 @@ export function historyCollectionJsonLd(
     name: input.title,
     description: input.description,
     inLanguage: "en-US",
-    isPartOf: { "@id": `${SITE_ORIGIN}/#website` },
+    isPartOf: { "@id": `${absoluteSiteUrl("/")}#website` },
     publisher: publisherJsonLd,
     about: {
       "@type": "Organization",
@@ -119,7 +121,7 @@ export function aboutPageJsonLd() {
     description:
       `The scope, sourcing, editorial review, independence, corrections, and privacy practices behind the ${site.domain} company timeline.`,
     inLanguage: "en-US",
-    isPartOf: { "@id": `${SITE_ORIGIN}/#website` },
+    isPartOf: { "@id": `${absoluteSiteUrl("/")}#website` },
     publisher: publisherJsonLd,
     about: {
       "@type": "Organization",
@@ -249,7 +251,7 @@ export function appearanceCollectionJsonLd(history: HistoryCollection) {
     description:
       "Reviewed podcasts, interviews, talks, and testimony from Stripe founders and senior leaders, with source-linked summaries and transcripts when available.",
     inLanguage: "en-US",
-    isPartOf: { "@id": `${SITE_ORIGIN}/#website` },
+    isPartOf: { "@id": `${absoluteSiteUrl("/")}#website` },
     publisher: publisherJsonLd,
     about: { "@type": "Organization", name: "Stripe", url: "https://stripe.com/" },
     mainEntity: {

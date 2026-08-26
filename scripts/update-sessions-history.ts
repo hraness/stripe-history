@@ -131,7 +131,7 @@ function decodeHtml(value: string): string {
 async function fetchSource(url: string): Promise<string> {
   const response = await fetch(url, {
     headers: {
-      "User-Agent": `Stripedex history updater (+${PUBLIC_SITE_ORIGIN}/)`,
+      "User-Agent": `Stripedex history updater (+${PUBLIC_SITE_ORIGIN})`,
     },
     redirect: "error",
     signal: AbortSignal.timeout(30_000),

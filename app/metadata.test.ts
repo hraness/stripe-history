@@ -33,7 +33,7 @@ describe("hraness.com/stripe public identity", () => {
     const urls = entries.map(({ url }) => url);
 
     expect(urls).toEqual(expect.arrayContaining([
-      `${SITE_ORIGIN}/`,
+      SITE_ORIGIN,
       `${SITE_ORIGIN}/history/payment-volume`,
       `${SITE_ORIGIN}/history/valuation`,
       `${SITE_ORIGIN}/about`,
@@ -47,7 +47,7 @@ describe("hraness.com/stripe public identity", () => {
     );
     expect(urls).not.toContain(`${SITE_ORIGIN}/appearances`);
     expect(urls).not.toContain(`${SITE_ORIGIN}/x-markdown`);
-    expect(urls).not.toContain(SITE_ORIGIN);
+    expect(urls).toContain(SITE_ORIGIN);
     expect(urls).not.toContain(`${SITE_ORIGIN}/history`);
     expect(urls.some((url) => url.startsWith(`${SITE_ORIGIN}/news/`))).toBe(false);
     expect(urls.some((url) => url.startsWith(`${SITE_ORIGIN}/x-markdown`))).toBe(false);

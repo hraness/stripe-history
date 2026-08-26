@@ -18,7 +18,12 @@ import {
   privacyTitle,
   recoveryLinks,
 } from "@/app/site-copy";
-import { GITHUB_REPOSITORY_URL, SITE_ORIGIN, site } from "@/app/site";
+import {
+  absoluteSiteUrl,
+  GITHUB_REPOSITORY_URL,
+  SITE_ORIGIN,
+  site,
+} from "@/app/site";
 import {
   derivePaymentVolumeDisclosures,
   derivePaymentVolumePageSeo,
@@ -143,7 +148,7 @@ function historyIndexMarkdown(history: HistoryCollection): string {
     "",
     "## Agent index",
     "",
-    linkList(recoveryLinks.filter(({ href }) => href !== `${SITE_ORIGIN}/`)),
+    linkList(recoveryLinks.filter(({ href }) => href !== absoluteSiteUrl("/"))),
     "",
   ].join("\n");
 }

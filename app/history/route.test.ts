@@ -7,6 +7,6 @@ describe("legacy Stripedex route", () => {
     const response = GET();
 
     expect(response.status).toBe(308);
-    expect(response.headers.get("location")).toBe("https://hraness.com/stripe/");
+    expect(response.headers.get("location")).toBe("https://hraness.com/stripe");
   });
 });

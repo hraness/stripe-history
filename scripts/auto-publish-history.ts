@@ -380,7 +380,7 @@ async function fetchEvidence(
 ): Promise<Evidence> {
   const response = await fetcher(candidate.url, {
     headers: {
-      "User-Agent": "Stripedex automated research (+https://hraness.com/stripe/)",
+      "User-Agent": "Stripedex automated research (+https://hraness.com/stripe)",
     },
     redirect: "follow",
     signal: AbortSignal.timeout(30_000),

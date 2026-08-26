@@ -22,7 +22,7 @@ export function appPathFromPublicSitePath(pathname: string): SitePath | null {
 }
 
 export function absoluteSiteUrl(path: SitePath): string {
-  return `${SITE_ORIGIN}${path === "/" ? "/" : path}`;
+  return path === "/" ? SITE_ORIGIN : `${SITE_ORIGIN}${path}`;
 }
 
 export const site = {
