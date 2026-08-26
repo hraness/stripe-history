@@ -1,12 +1,29 @@
 import type { Metadata } from "next";
 
-export const SITE_DOMAIN = "stripedex.com" as const;
-export const SITE_ORIGIN = `https://${SITE_DOMAIN}` as const;
+export const SITE_DOMAIN = "hraness.com" as const;
+export const SITE_HOST_ORIGIN = `https://${SITE_DOMAIN}` as const;
+export const SITE_BASE_PATH = "/stripe" as const;
+export const SITE_ORIGIN = `${SITE_HOST_ORIGIN}${SITE_BASE_PATH}` as const;
+export const SITE_LABEL = "hraness.com/stripe" as const;
 export const GITHUB_REPOSITORY_URL =
   "https://github.com/hraness/stripedex" as const;
 export const HRANESS_URL = "https://hraness.com/" as const;
 
 export type SitePath = `/${string}`;
+
+export function publicSitePath(path: SitePath): string {
+  return path === "/" ? SITE_BASE_PATH : `${SITE_BASE_PATH}${path}`;
+}
+
+export function appPathFromPublicSitePath(pathname: string): SitePath | null {
+  if (pathname === SITE_BASE_PATH || pathname === `${SITE_BASE_PATH}/`) return "/";
+  if (!pathname.startsWith(`${SITE_BASE_PATH}/`)) return null;
+  return pathname.slice(SITE_BASE_PATH.length) as SitePath;
+}
+
+export function absoluteSiteUrl(path: SitePath): string {
+  return `${SITE_ORIGIN}${path === "/" ? "/" : path}`;
+}
 
 export const site = {
   applicationName: "Stripedex",
@@ -14,12 +31,12 @@ export const site = {
     "Open, source-linked YAML records behind the Stripe company history timeline, including events, valuation observations, annual volume disclosures, leadership appearances, source provenance, collection scope, and review runs.",
   description:
     "An independent, sourced timeline of Stripe acquisitions, products, leadership, funding, valuation, expansion, offices, publishing, company milestones, and annual volume.",
-  domain: SITE_DOMAIN,
+  domain: SITE_LABEL,
   historyTitle: "Stripe Company History",
   name: "Stripedex",
-  socialImageAlt: `Stripe company history timeline from ${SITE_DOMAIN}`,
-  title: `Stripe Company History | ${SITE_DOMAIN}`,
-  titleTemplate: `%s | ${SITE_DOMAIN}`,
+  socialImageAlt: `Stripe company history timeline from ${SITE_LABEL}`,
+  title: `Stripe Company History | ${SITE_LABEL}`,
+  titleTemplate: `%s | ${SITE_LABEL}`,
 } as const;
 
 export function socialMetadata(
@@ -37,14 +54,14 @@ export function socialMetadata(
     openGraph: {
       type: "website" as const,
       locale: "en_US",
-      url,
+      url: absoluteSiteUrl(url),
       siteName: site.name,
       title,
       description,
       images: [{
         alt: imageAlt,
         height: 630,
-        url: imagePath,
+        url: absoluteSiteUrl(imagePath),
         width: 1200,
       }],
     },
@@ -52,7 +69,7 @@ export function socialMetadata(
       card: "summary_large_image" as const,
       title,
       description,
-      images: [{ alt: imageAlt, url: imagePath }],
+      images: [{ alt: imageAlt, url: absoluteSiteUrl(imagePath) }],
     },
   };
 }

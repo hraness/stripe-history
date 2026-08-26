@@ -19,6 +19,7 @@ import { HistoryStickyOffsetSync } from "./history-sticky-offset-sync";
 import { HistoryMeasureRail } from "./history-measure-rail";
 import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
+import { publicSitePath } from "../site";
 
 interface HistoryViewProps {
   readonly history: HistoryCollection;
@@ -119,7 +120,7 @@ function HistoryMeasuresSidebar({
               <li key={point.calendarYear}>
                 <a
                   aria-label={`${point.calendarYear}: ${point.display} ${point.kind === "total-volume" ? "total volume" : "payment volume"}`}
-                  href={`/history/${point.categoryId}#${point.eventId}`}
+                  href={publicSitePath(`/history/${point.categoryId}#${point.eventId}`)}
                 >
                   <span>{point.calendarYear}</span>
                   <strong>{point.display}</strong>
@@ -155,7 +156,7 @@ function HistoryMeasuresSidebar({
               <li key={point.calendarYear}>
                 <a
                   aria-label={`${point.calendarYear}: ${point.display}, ${valuationTierLabel[point.tier]}`}
-                  href={`/history/valuation#${point.observationId}`}
+                  href={publicSitePath(`/history/valuation#${point.observationId}`)}
                 >
                   <span>{point.calendarYear}</span>
                   <strong>{point.display}</strong>

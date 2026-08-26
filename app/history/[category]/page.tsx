@@ -14,7 +14,7 @@ import {
   breadcrumbJsonLd,
   historyCollectionJsonLd,
 } from "../../seo";
-import { site, socialMetadata } from "../../site";
+import { absoluteSiteUrl, site, socialMetadata } from "../../site";
 import { HistoryView } from "../history-view";
 
 interface HistoryCategoryPageProps {
@@ -53,7 +53,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: path },
+    alternates: { canonical: absoluteSiteUrl(path) },
     ...socialMetadata(`${title} | ${site.domain}`, description, path),
   };
 }

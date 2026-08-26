@@ -10,19 +10,19 @@ import {
   deriveValuationPageSeo,
 } from "./valuation-page-model";
 
-describe("stripedex.com valuation history", () => {
+describe("hraness.com/stripe valuation history", () => {
   test("publishes a canonical, descriptive search result from the dataset", async () => {
     const metadata = await generateMetadata();
     const seo = deriveValuationPageSeo(await loadHistory());
 
     expect(metadata).toMatchObject({
-      alternates: { canonical: "/history/valuation" },
+      alternates: { canonical: "https://hraness.com/stripe/history/valuation" },
       description: seo.description,
       title: seo.title,
     });
     expect(metadata.openGraph).toMatchObject({
-      title: `${seo.title} | stripedex.com`,
-      url: "/history/valuation",
+      title: `${seo.title} | hraness.com/stripe`,
+      url: "https://hraness.com/stripe/history/valuation",
     });
   });
 
@@ -61,7 +61,7 @@ describe("stripedex.com valuation history", () => {
     expect(updatedMetadata).toMatchObject({
       description: expect.stringContaining("$200 billion 2027 company tender"),
       openGraph: {
-        title: "Stripe Valuation History by Year, 2011–2027 | stripedex.com",
+        title: "Stripe Valuation History by Year, 2011–2027 | hraness.com/stripe",
       },
       title: "Stripe Valuation History by Year, 2011–2027",
     });
@@ -87,7 +87,7 @@ describe("stripedex.com valuation history", () => {
     expect(html).toContain('<th scope="col">sources</th>');
     expect(html).toContain(`<tr id="${latestHeadline.observationId}"`);
     expect(html).toContain(`"numberOfItems":${history.valuationHeadlines.length}`);
-    expect(html).toContain(`https://stripedex.com/history/valuation#${latestHeadline.observationId}`);
+    expect(html).toContain(`https://hraness.com/stripe/history/valuation#${latestHeadline.observationId}`);
     expect(html).toContain(`${latestHeadline.calendarYear}: ${latestHeadline.display}`);
     expect(html.match(/class="history-volume-chart-track"/gu)?.length).toBe(14);
     expect(html.match(/class="history-valuation-basis-badge"/gu)?.length).toBe(25);
@@ -131,7 +131,7 @@ describe("stripedex.com valuation history", () => {
     expect(html).not.toContain("company priced");
     expect(html).not.toContain("company coordinated");
     expect(html).not.toContain("capital raised");
-    expect(html).toContain('class="stripedex-header"');
+    expect(html).toContain('class="plain-header stripedex-header"');
     expect(html).toContain('href="/about">about</a>');
     expect(html).toContain('class="hraness-brand stripedex-footer-hraness"');
     expect(html).not.toContain('class="stripedex-breadcrumbs"');

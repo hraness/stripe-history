@@ -3,6 +3,7 @@ import type { HistoryCollection } from "@/lib/content";
 import {
   GITHUB_REPOSITORY_URL,
   HRANESS_URL,
+  absoluteSiteUrl,
   SITE_ORIGIN,
   site,
   type SitePath,
@@ -14,7 +15,7 @@ export interface BreadcrumbItem {
 }
 
 function absoluteUrl(path: SitePath): string {
-  return new URL(path, `${SITE_ORIGIN}/`).toString();
+  return absoluteSiteUrl(path);
 }
 
 const publisherJsonLd = {

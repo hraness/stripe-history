@@ -13,6 +13,7 @@ import {
   createPostHogConfig,
   isPostHogEligible,
 } from "./posthog";
+import { publicSitePath, type SitePath } from "./site";
 
 function pageview(properties: CaptureResult["properties"]): CaptureResult {
   return {
@@ -39,40 +40,42 @@ describe("Stripedex analytics routes", () => {
     ]));
 
     for (const path of PUBLIC_ANALYTICS_PATHS) {
-      expect(classifyPublicAnalyticsRoute(`https://stripedex.com${path}`))
-        .toMatchObject({ canonical_path: path, site_id: "stripedex" });
+      const canonicalPath = publicSitePath(path as SitePath);
+      expect(classifyPublicAnalyticsRoute(`https://hraness.com${canonicalPath}`))
+        .toMatchObject({ canonical_path: canonicalPath, site_id: "stripedex" });
     }
   });
 
   test("removes query, fragment, and trailing-slash detail from approved pages", () => {
     const route = classifyPublicAnalyticsRoute(
-      "https://stripedex.com/history/acquisitions/?account=private#person",
+      "https://hraness.com/stripe/history/acquisitions/?account=private#person",
     );
     expect(route).toEqual({
       analytics_schema_version: 1,
-      canonical_domain: "stripedex.com",
-      canonical_path: "/history/acquisitions",
+      canonical_domain: "hraness.com",
+      canonical_path: "/stripe/history/acquisitions",
       page_kind: "history_category",
       site_id: "stripedex",
     });
     expect(route === null ? null : canonicalAnalyticsUrl(route))
-      .toBe("https://stripedex.com/history/acquisitions");
+      .toBe("https://hraness.com/stripe/history/acquisitions");
   });
 
   test("rejects noncanonical hosts, protocols, and unknown paths", () => {
-    expect(classifyPublicAnalyticsRoute("https://www.stripedex.com/about")).toBeNull();
-    expect(classifyPublicAnalyticsRoute("http://stripedex.com/about")).toBeNull();
-    expect(classifyPublicAnalyticsRoute("https://stripedex.com:444/about")).toBeNull();
-    expect(classifyPublicAnalyticsRoute("https://stripedex.com/history/private-account"))
+    expect(classifyPublicAnalyticsRoute("https://stripedex.com/about")).toBeNull();
+    expect(classifyPublicAnalyticsRoute("http://hraness.com/stripe/about")).toBeNull();
+    expect(classifyPublicAnalyticsRoute("https://hraness.com:444/stripe/about")).toBeNull();
+    expect(classifyPublicAnalyticsRoute("https://hraness.com/about")).toBeNull();
+    expect(classifyPublicAnalyticsRoute("https://hraness.com/stripe/history/private-account"))
       .toBeNull();
-    expect(classifyPublicAnalyticsRoute("https://stripedex.com/research/private"))
+    expect(classifyPublicAnalyticsRoute("https://hraness.com/stripe/research/private"))
       .toBeNull();
   });
 });
 
 describe("Stripedex PostHog boundary", () => {
   const evidence = {
-    href: "https://stripedex.com/about?email=reader@example.com#account",
+    href: "https://hraness.com/stripe/about?email=reader@example.com#account",
     production: true,
   } as const;
 
@@ -136,13 +139,13 @@ describe("Stripedex PostHog boundary", () => {
 
     expect(result?.properties).toEqual({
       $cookieless_mode: true,
-      $current_url: "https://stripedex.com/about",
-      $host: "stripedex.com",
-      $pathname: "/about",
+      $current_url: "https://hraness.com/stripe/about",
+      $host: "hraness.com",
+      $pathname: "/stripe/about",
       $process_person_profile: false,
       analytics_schema_version: 1,
-      canonical_domain: "stripedex.com",
-      canonical_path: "/about",
+      canonical_domain: "hraness.com",
+      canonical_path: "/stripe/about",
       distinct_id: POSTHOG_COOKILESS_DISTINCT_ID,
       page_kind: "about",
       site_id: "stripedex",
@@ -170,7 +173,7 @@ describe("Stripedex PostHog boundary", () => {
     expect(beforeSend(pageview({ ...validProperties, $cookieless_mode: false })))
       .toBeNull();
     expect(createPostHogBeforeSend(
-      () => "https://stripedex.com/history/private-account",
+      () => "https://hraness.com/stripe/history/private-account",
     )(pageview(validProperties))).toBeNull();
   });
 });

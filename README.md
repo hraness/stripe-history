@@ -1,29 +1,29 @@
 # Stripedex
 
-[stripedex.com](https://stripedex.com/) is an independent, open-source timeline of Stripe company history, with sourced data on products, acquisitions, funding, valuation, leadership, expansion, milestones, and annual payment volume.
+[Stripedex on Hraness](https://hraness.com/stripe/) is an independent, open-source timeline of Stripe company history, with sourced data on products, acquisitions, funding, valuation, leadership, expansion, milestones, and annual payment volume.
 
 The site renders more than 200 sourced events as one reverse-chronological history and as focused, crawlable category pages. It also presents sourced annual payment-volume and private-company valuation records. Each claim retains reviewable YAML provenance, including status and uncertainty where they apply.
 
 ## Browse the history
 
-- [Complete Stripe company history](https://stripedex.com/)
-- [Acquisitions](https://stripedex.com/history/acquisitions)
-- [Product launches](https://stripedex.com/history/product-launches)
-- [Fundraising](https://stripedex.com/history/fundraising)
-- [Company milestones](https://stripedex.com/history/company-milestones)
-- [Annual payment and total volume](https://stripedex.com/history/payment-volume)
-- [Private-company valuation history](https://stripedex.com/history/valuation)
-- [Stripe leadership appearances](https://stripedex.com/history/appearances)
-- [Open history and research data](https://stripedex.com/data)
+- [Complete Stripe company history](https://hraness.com/stripe/)
+- [Acquisitions](https://hraness.com/stripe/history/acquisitions)
+- [Product launches](https://hraness.com/stripe/history/product-launches)
+- [Fundraising](https://hraness.com/stripe/history/fundraising)
+- [Company milestones](https://hraness.com/stripe/history/company-milestones)
+- [Annual payment and total volume](https://hraness.com/stripe/history/payment-volume)
+- [Private-company valuation history](https://hraness.com/stripe/history/valuation)
+- [Stripe leadership appearances](https://hraness.com/stripe/history/appearances)
+- [Open history and research data](https://hraness.com/stripe/data)
 
 ## Questions the history answers
 
-- [How did Stripe start, and who formed its earliest team?](https://stripedex.com/history/origins-and-early-company)
-- [What companies has Stripe acquired?](https://stripedex.com/history/acquisitions)
-- [How have Stripe's funding and private-company valuation changed?](https://stripedex.com/history/valuation)
-- [How much annual payment and total volume has Stripe disclosed?](https://stripedex.com/history/payment-volume)
-- [When did Stripe launch products and expand into new countries?](https://stripedex.com/history/product-launches)
-- [How have Stripe's payment methods, settlement rails, and payout reach expanded?](https://stripedex.com/history/payment-and-payout-expansion)
+- [How did Stripe start, and who formed its earliest team?](https://hraness.com/stripe/history/origins-and-early-company)
+- [What companies has Stripe acquired?](https://hraness.com/stripe/history/acquisitions)
+- [How have Stripe's funding and private-company valuation changed?](https://hraness.com/stripe/history/valuation)
+- [How much annual payment and total volume has Stripe disclosed?](https://hraness.com/stripe/history/payment-volume)
+- [When did Stripe launch products and expand into new countries?](https://hraness.com/stripe/history/product-launches)
+- [How have Stripe's payment methods, settlement rails, and payout reach expanded?](https://hraness.com/stripe/history/payment-and-payout-expansion)
 
 The authored event records live in [`public/history/`](./public/history/), one file per category. The [`public/research/`](./public/research/) directory contains the canonical source catalog, valuation observations, leadership appearances, collection definitions, research-run ledger, automatic-publication policy, complete automated decision history, and accepted publication attestations. They remain ordinary YAML so corrections and provenance changes are readable in review without scraping the site.
 
@@ -53,7 +53,7 @@ Run the same discovery locally with an explicit date:
 bun run history:news:pull -- --as-of 2026-08-20 --json-out /tmp/stripe-news.json --markdown-out /tmp/stripe-news.md
 ```
 
-The manual [leadership appearance backfill](./.github/workflows/appearance-backfill.yml) searches one bounded calendar window at a time from 2009 onward and uploads a private review artifact. It does not edit public data or open issues. Reviewers deduplicate the artifact, capture the retained sources, and merge only evidence-backed records into the main [leadership appearances](https://stripedex.com/history/appearances) timeline category. The same window can be inspected locally:
+The manual [leadership appearance backfill](./.github/workflows/appearance-backfill.yml) searches one bounded calendar window at a time from 2009 onward and uploads a private review artifact. It does not edit public data or open issues. Reviewers deduplicate the artifact, capture the retained sources, and merge only evidence-backed records into the main [leadership appearances](https://hraness.com/stripe/history/appearances) timeline category. The same window can be inspected locally:
 
 ```sh
 bun run history:news:pull -- --from 2020-01-01 --as-of 2020-12-31 --monitor exa-stripe-leadership-appearances --json-out /tmp/stripe-appearances-2020.json --markdown-out /tmp/stripe-appearances-2020.md
@@ -75,7 +75,7 @@ STRIPEDEX_LLM_API_KEY=... bun run history:publish:auto -- --digest /tmp/stripe-n
 
 The scheduled workflow is the publication owner. Local `--write` is intended only for deterministic fixture work or a reviewed recovery, not a second concurrent publisher.
 
-Read the full [methodology and independence statement](https://stripedex.com/about).
+Read the full [methodology and independence statement](https://hraness.com/stripe/about).
 
 ## Run locally
 

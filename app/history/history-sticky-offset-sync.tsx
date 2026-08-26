@@ -11,6 +11,7 @@ export function HistoryStickyOffsetSync() {
       ".stripedex-history-main",
     );
     const filters = main?.querySelector<HTMLElement>(".history-filters");
+    const header = main?.querySelector<HTMLElement>(".stripedex-header");
     const filterList = filters?.querySelector<HTMLElement>("ul");
     const selectedFilter = filters?.querySelector<HTMLElement>(
       'a[aria-current="true"]',
@@ -20,6 +21,8 @@ export function HistoryStickyOffsetSync() {
       || main === undefined
       || filters === null
       || filters === undefined
+      || header === null
+      || header === undefined
       || filterList === null
       || filterList === undefined
       || selectedFilter === null
@@ -29,9 +32,14 @@ export function HistoryStickyOffsetSync() {
     }
 
     const updateLayout = () => {
+      const headerHeight = header.getBoundingClientRect().height;
+      main.style.setProperty(
+        "--history-header-offset",
+        `${headerHeight}px`,
+      );
       main.style.setProperty(
         "--history-filter-stack-offset",
-        `${filters.getBoundingClientRect().height}px`,
+        `${headerHeight + filters.getBoundingClientRect().height}px`,
       );
       if (filterList.scrollWidth > filterList.clientWidth + 1) {
         const listRect = filterList.getBoundingClientRect();
@@ -49,8 +57,10 @@ export function HistoryStickyOffsetSync() {
       ? undefined
       : new ResizeObserver(updateLayout);
     observer?.observe(filters);
+    observer?.observe(header);
     return () => {
       observer?.disconnect();
+      main.style.removeProperty("--history-header-offset");
       main.style.removeProperty("--history-filter-stack-offset");
     };
   }, []);

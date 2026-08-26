@@ -5,6 +5,7 @@ import {
 } from "@hraness/vercel-delivery";
 
 const nextConfig: NextConfig = {
+  basePath: "/stripe",
   async headers() {
     const noindexHeaders = [{ key: "X-Robots-Tag", value: "noindex, follow" }];
     return [
@@ -18,35 +19,58 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   async redirects() {
-    const canonicalOrigin = "https://stripedex.com";
+    const canonicalOrigin = "https://hraness.com/stripe";
     const legacyHosts = [
-      "stripe.town",
+      "stripedex.com",
+      "www.stripedex.com",
       "stripehistory.com",
       "www.stripehistory.com",
-      "www.stripedex.com",
+      "stripe.town",
+      "www.stripe.town",
+      "stripe.guide",
+      "www.stripe.guide",
     ];
 
-    return [{
-      destination: `${canonicalOrigin}/history/appearances`,
-      permanent: true,
-      source: "/appearances",
-    }, ...legacyHosts.flatMap((host) => {
-      const has = [{ type: "host" as const, value: host }];
-      return [
-        {
-          destination: canonicalOrigin,
-          has,
-          permanent: true,
-          source: "/history",
-        },
-        {
-          destination: `${canonicalOrigin}/:path*`,
-          has,
-          permanent: true,
-          source: "/:path*",
-        },
-      ];
-    })];
+    return [
+      {
+        destination: "/history/appearances",
+        permanent: true,
+        source: "/appearances",
+      },
+      ...legacyHosts.flatMap((host) => {
+        const has = [{ type: "host" as const, value: host }];
+        return [
+          {
+            destination: canonicalOrigin,
+            has,
+            permanent: true as const,
+            source: "/history",
+            basePath: false as const,
+          },
+          {
+            destination: `${canonicalOrigin}/history/appearances`,
+            has,
+            permanent: true as const,
+            source: "/appearances",
+            basePath: false as const,
+          },
+          {
+            destination: canonicalOrigin,
+            has,
+            permanent: true as const,
+            source: "/",
+            basePath: false as const,
+          },
+          {
+            destination: `${canonicalOrigin}/:path*`,
+            has,
+            permanent: true as const,
+            source: "/:path*",
+            basePath: false as const,
+          },
+        ];
+      }),
+    ];
   },
   webpack(config) {
     config.resolve.extensionAlias = {

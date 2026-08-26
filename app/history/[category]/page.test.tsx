@@ -8,7 +8,7 @@ import HistoryCategoryPage, {
   generateStaticParams,
 } from "./page";
 
-describe("stripedex.com category history", () => {
+describe("hraness.com/stripe category history", () => {
   test("generates every canonical category route", () => {
     const params = generateStaticParams();
     expect(params.length).toBe(12);
@@ -31,7 +31,7 @@ describe("stripedex.com category history", () => {
 
     expect(appearanceCount).toBe(history.appearances.length);
     expect(metadata).toMatchObject({
-      alternates: { canonical: "/history/appearances" },
+      alternates: { canonical: "https://hraness.com/stripe/history/appearances" },
       title: `Stripe Appearances Timeline: ${appearanceCount} Sourced Events`,
     });
     expect(html.match(/data-category="appearances"/gu)).toHaveLength(appearanceCount);
@@ -56,13 +56,13 @@ describe("stripedex.com category history", () => {
       params: Promise.resolve({ category: "acquisitions" }),
     });
     expect(metadata).toMatchObject({
-      alternates: { canonical: "/history/acquisitions" },
+      alternates: { canonical: "https://hraness.com/stripe/history/acquisitions" },
       description: "Completed acquisitions, talent acquisitions, announced agreements, and credibly reported deal discussions involving Stripe.",
       title: `Stripe Acquisitions Timeline: ${acquisitionCount} Sourced Events`,
     });
     expect(metadata.openGraph).toMatchObject({
-      title: `Stripe Acquisitions Timeline: ${acquisitionCount} Sourced Events | stripedex.com`,
-      url: "/history/acquisitions",
+      title: `Stripe Acquisitions Timeline: ${acquisitionCount} Sourced Events | hraness.com/stripe`,
+      url: "https://hraness.com/stripe/history/acquisitions",
     });
   });
 
@@ -92,7 +92,7 @@ describe("stripedex.com category history", () => {
     );
     expect(html).toContain('id="stripedex-history-category-structured-data"');
     expect(html).not.toContain('class="stripedex-selector"');
-    expect(html).toContain('class="stripedex-header"');
+    expect(html).toContain('class="plain-header stripedex-header"');
     expect(html).toContain('href="/about">about</a>');
     expect(html).toContain('class="hraness-brand stripedex-footer-hraness"');
     expect(html).not.toContain('class="stripedex-breadcrumbs"');

@@ -1,35 +1,35 @@
 import type { MetadataRoute } from "next";
 import { loadHistory } from "@/lib/content";
 
-import { SITE_ORIGIN } from "./site";
+import { absoluteSiteUrl } from "./site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const history = await loadHistory();
 
   return [
     {
-      url: `${SITE_ORIGIN}/`,
+      url: absoluteSiteUrl("/"),
     },
     {
-      url: `${SITE_ORIGIN}/history/payment-volume`,
+      url: absoluteSiteUrl("/history/payment-volume"),
     },
     {
-      url: `${SITE_ORIGIN}/history/valuation`,
+      url: absoluteSiteUrl("/history/valuation"),
     },
     {
-      url: `${SITE_ORIGIN}/about`,
+      url: absoluteSiteUrl("/about"),
     },
     {
-      url: `${SITE_ORIGIN}/contact`,
+      url: absoluteSiteUrl("/contact"),
     },
     {
-      url: `${SITE_ORIGIN}/privacy`,
+      url: absoluteSiteUrl("/privacy"),
     },
     {
-      url: `${SITE_ORIGIN}/data`,
+      url: absoluteSiteUrl("/data"),
     },
     ...history.categories.map(({ id }) => ({
-      url: `${SITE_ORIGIN}/history/${id}`,
+      url: absoluteSiteUrl(`/history/${id}`),
     })),
   ];
 }

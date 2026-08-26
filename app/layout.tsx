@@ -10,10 +10,10 @@ import type { ReactNode } from "react";
 import "./globals.css";
 import { PostHogAnalytics } from "./posthog-analytics";
 import { siteOrganizationJsonLd, websiteJsonLd } from "./seo";
-import { SITE_ORIGIN, site } from "./site";
+import { absoluteSiteUrl, SITE_HOST_ORIGIN, site } from "./site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_ORIGIN),
+  metadataBase: new URL(SITE_HOST_ORIGIN),
   title: {
     default: site.applicationName,
     template: site.titleTemplate,
@@ -27,13 +27,13 @@ export const metadata: Metadata = {
     images: [{
       alt: site.socialImageAlt,
       height: 630,
-      url: "/opengraph-image",
+      url: absoluteSiteUrl("/opengraph-image"),
       width: 1200,
     }],
   },
   twitter: {
     card: "summary_large_image",
-    images: [{ alt: site.socialImageAlt, url: "/opengraph-image" }],
+    images: [{ alt: site.socialImageAlt, url: absoluteSiteUrl("/opengraph-image") }],
   },
 };
 

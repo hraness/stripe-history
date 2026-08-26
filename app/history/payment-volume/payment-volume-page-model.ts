@@ -6,7 +6,7 @@ import {
 import type { Metadata } from "next";
 
 import { independenceSentence } from "../../site-copy";
-import { site, socialMetadata } from "../../site";
+import { absoluteSiteUrl, site, socialMetadata } from "../../site";
 
 export const volumeKindLabel: Readonly<
   Record<AnnualVolumePoint["kind"], string>
@@ -178,7 +178,7 @@ export function derivePaymentVolumePageMetadata(
   return {
     title: seo.title,
     description: seo.description,
-    alternates: { canonical: "/history/payment-volume" },
+    alternates: { canonical: absoluteSiteUrl("/history/payment-volume") },
     ...socialMetadata(
       `${seo.title} | ${site.domain}`,
       seo.description,

@@ -6,21 +6,21 @@ import { renderToStaticMarkup } from "react-dom/server";
 import Home, { generateMetadata } from "./page";
 import { site } from "./site";
 
-describe("canonical stripedex.com history", () => {
+describe("canonical hraness.com/stripe history", () => {
   test("publishes root-canonical history metadata", async () => {
     const history = await loadHistory();
     const metadata = await generateMetadata();
     const expectedTitle = `Stripe Company History: ${history.events.length} Sourced Events`;
 
     expect(metadata).toMatchObject({
-      alternates: { canonical: "/" },
+      alternates: { canonical: "https://hraness.com/stripe/" },
       description: site.description,
       robots: INDEXABLE_ROBOTS,
       title: expectedTitle,
     });
     expect(metadata.openGraph).toMatchObject({
-      title: `${expectedTitle} | stripedex.com`,
-      url: "/",
+      title: `${expectedTitle} | hraness.com/stripe`,
+      url: "https://hraness.com/stripe/",
     });
   });
 
@@ -35,7 +35,9 @@ describe("canonical stripedex.com history", () => {
     expect(eventCount).toBe(history.events.length);
     expect(eventCount).toBeGreaterThanOrEqual(200);
     expect(html).toContain('class="plain-page stripedex-main stripedex-history-main"');
-    expect(html).toContain('<a class="stripedex-wordmark" href="/">stripedex.com</a>');
+    expect(html).toContain('<header class="plain-header stripedex-header">');
+    expect(html).toContain('class="hraness-brand stripedex-header-brand" href="https://hraness.com"');
+    expect(html).toContain('aria-label="primary navigation" class="plain-nav"');
     expect(html).toContain('<h1 class="stripedex-visually-hidden" id="history-heading">Stripe company history</h1>');
     expect(html).not.toContain(
       "An independent, sourced timeline of Stripe products, people, funding, valuation, expansion, and milestones.",

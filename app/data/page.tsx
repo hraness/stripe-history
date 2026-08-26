@@ -6,7 +6,13 @@ import Link from "next/link";
 import { historyDatasetJsonLd, breadcrumbJsonLd } from "../seo";
 import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
-import { GITHUB_REPOSITORY_URL, site, socialMetadata } from "../site";
+import {
+  absoluteSiteUrl,
+  GITHUB_REPOSITORY_URL,
+  publicSitePath,
+  site,
+  socialMetadata,
+} from "../site";
 
 const dataTitle = "Stripe Company History Dataset";
 const dataDescription = site.datasetDescription;
@@ -16,7 +22,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: dataTitle,
   description: dataDescription,
-  alternates: { canonical: "/data" },
+  alternates: { canonical: absoluteSiteUrl("/data") },
   ...socialMetadata(`${dataTitle} | ${site.domain}`, dataDescription, "/data", {
     alt: `Open Stripe company history data from ${site.domain}`,
   }),
@@ -138,9 +144,9 @@ export default async function DataPage() {
               <p>{category.description}</p>
               <p>
                 {countByCategory.get(category.id) ?? 0} events ·{" "}
-                <a href={category.id === "appearances"
+                <a href={publicSitePath(category.id === "appearances"
                   ? "/research/appearances.yml"
-                  : `/history/${category.id}.yml`}>download YAML</a>
+                  : `/history/${category.id}.yml`)}>download YAML</a>
               </p>
             </li>
           ))}
@@ -156,17 +162,17 @@ export default async function DataPage() {
           </p>
           <ul>
             <li>
-              <a href="/research/sources.yml">source catalog YAML</a> ·{" "}
+              <a href={publicSitePath("/research/sources.yml")}>source catalog YAML</a> ·{" "}
               {history.sources.length} canonical sources
             </li>
             <li>
-              <a href="/research/valuations.yml">valuation observations YAML</a> ·{" "}
+              <a href={publicSitePath("/research/valuations.yml")}>valuation observations YAML</a> ·{" "}
               {history.valuations.length} observations
             </li>
             <li>
-              <a href="/research/collections.yml">research collections YAML</a>
+              <a href={publicSitePath("/research/collections.yml")}>research collections YAML</a>
             </li>
-            <li><a href="/research/runs.yml">research run ledger YAML</a></li>
+            <li><a href={publicSitePath("/research/runs.yml")}>research run ledger YAML</a></li>
           </ul>
         </section>
       </section>

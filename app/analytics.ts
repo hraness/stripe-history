@@ -1,10 +1,18 @@
+import {
+  appPathFromPublicSitePath,
+  publicSitePath,
+  SITE_DOMAIN,
+  SITE_HOST_ORIGIN,
+  type SitePath,
+} from "./site";
+
 export const POSTHOG_ANALYTICS_SCHEMA_VERSION = 1 as const;
 export const POSTHOG_SITE_ID = "stripedex" as const;
 export const POSTHOG_API_HOST = "https://us.i.posthog.com" as const;
 export const POSTHOG_COOKILESS_DISTINCT_ID = "$posthog_cookieless" as const;
 
-const CANONICAL_DOMAIN = "stripedex.com";
-const CANONICAL_ORIGIN = `https://${CANONICAL_DOMAIN}`;
+const CANONICAL_DOMAIN = SITE_DOMAIN;
+const CANONICAL_ORIGIN = SITE_HOST_ORIGIN;
 
 const STATIC_ROUTES = [
   ["/", "history_timeline"],
@@ -61,11 +69,15 @@ export function classifyPublicAnalyticsRoute(value: string | URL): AnalyticsRout
       return null;
     }
 
-    const canonicalPath = canonicalPathname(url.pathname);
-    const staticPageKind = staticPageKindByPath.get(canonicalPath);
+    const publicPath = canonicalPathname(url.pathname);
+    const appPath = appPathFromPublicSitePath(publicPath);
+    if (appPath === null) return null;
+    const staticPageKind = staticPageKindByPath.get(appPath);
     const pageKind = staticPageKind
-      ?? (categoryPaths.has(canonicalPath) ? "history_category" : null);
+      ?? (categoryPaths.has(appPath) ? "history_category" : null);
     if (pageKind === null) return null;
+
+    const canonicalPath = publicSitePath(appPath as SitePath);
 
     return {
       analytics_schema_version: POSTHOG_ANALYTICS_SCHEMA_VERSION,

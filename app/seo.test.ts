@@ -12,20 +12,20 @@ import {
   websiteJsonLd,
 } from "./seo";
 
-describe("stripedex.com structured discovery", () => {
+describe("hraness.com/stripe structured discovery", () => {
   test("identifies Stripedex, Hraness as publisher, and Stripe only as its subject", () => {
     expect(websiteJsonLd()).toMatchObject({
       "@type": "WebSite",
-      "@id": "https://stripedex.com/#website",
+      "@id": "https://hraness.com/stripe/#website",
       name: "Stripedex",
-      alternateName: "stripedex.com",
+      alternateName: "hraness.com/stripe",
       publisher: {
         "@type": "Organization",
         name: "Hraness",
         url: "https://hraness.com/",
       },
       sameAs: ["https://github.com/hraness/stripedex"],
-      url: "https://stripedex.com/",
+      url: "https://hraness.com/stripe/",
     });
     expect(aboutPageJsonLd()).toMatchObject({
       "@type": "WebPage",
@@ -34,9 +34,9 @@ describe("stripedex.com structured discovery", () => {
     });
     expect(siteOrganizationJsonLd()).toMatchObject({
       "@type": "Organization",
-      "@id": "https://stripedex.com/#organization",
+      "@id": "https://hraness.com/stripe/#organization",
       name: "Stripedex",
-      url: "https://stripedex.com/",
+      url: "https://hraness.com/stripe/",
       sameAs: ["https://github.com/hraness/stripedex"],
       parentOrganization: { name: "Hraness", url: "https://hraness.com/" },
     });
@@ -49,10 +49,10 @@ describe("stripedex.com structured discovery", () => {
 
     expect(dataset).toMatchObject({
       "@type": "Dataset",
-      "@id": "https://stripedex.com/data#dataset",
+      "@id": "https://hraness.com/stripe/data#dataset",
       alternateName: "Stripedex Dataset",
       creator: { name: "Hraness" },
-      identifier: "https://stripedex.com/data#dataset",
+      identifier: "https://hraness.com/stripe/data#dataset",
       inLanguage: "en-US",
       license: "https://github.com/hraness/stripedex/blob/main/LICENSE",
       measurementTechnique: expect.stringContaining("Source-linked editorial review"),
@@ -68,19 +68,19 @@ describe("stripedex.com structured discovery", () => {
     expect(dataset.distribution).toHaveLength(16);
     expect(dataset.distribution).toContainEqual({
       "@type": "DataDownload",
-      contentUrl: "https://stripedex.com/history/acquisitions.yml",
+      contentUrl: "https://hraness.com/stripe/history/acquisitions.yml",
       encodingFormat: "application/yaml",
       name: "Acquisitions history records",
     });
     expect(dataset.distribution).toContainEqual({
       "@type": "DataDownload",
-      contentUrl: "https://stripedex.com/research/appearances.yml",
+      contentUrl: "https://hraness.com/stripe/research/appearances.yml",
       encodingFormat: "application/yaml",
       name: "Stripe leadership appearances",
     });
     expect(dataset.distribution).toContainEqual({
       "@type": "DataDownload",
-      contentUrl: "https://stripedex.com/research/valuations.yml",
+      contentUrl: "https://hraness.com/stripe/research/valuations.yml",
       encodingFormat: "application/yaml",
       name: "Stripe valuation observations",
     });
@@ -91,8 +91,8 @@ describe("stripedex.com structured discovery", () => {
     const collection = appearanceCollectionJsonLd(history);
 
     expect(collection).toMatchObject({
-      "@id": "https://stripedex.com/history/appearances#collection",
-      url: "https://stripedex.com/history/appearances",
+      "@id": "https://hraness.com/stripe/history/appearances#collection",
+      url: "https://hraness.com/stripe/history/appearances",
       mainEntity: {
         numberOfItems: history.appearances.length,
       },
@@ -119,7 +119,7 @@ describe("stripedex.com structured discovery", () => {
       numberOfItems: 1,
       itemListElement: [{
         position: 1,
-        url: "https://stripedex.com/#example-event",
+        url: "https://hraness.com/stripe/#example-event",
       }],
     });
 
@@ -132,13 +132,13 @@ describe("stripedex.com structured discovery", () => {
       },
     );
     expect(categoryHistory.mainEntity.itemListElement[0]?.url).toBe(
-      "https://stripedex.com/history/company-milestones#example-event",
+      "https://hraness.com/stripe/history/company-milestones#example-event",
     );
     expect(breadcrumbJsonLd([
       { name: "History", path: "/" },
       { name: "Company milestones", path: "/history/company-milestones" },
     ]).itemListElement[1]?.item).toBe(
-      "https://stripedex.com/history/company-milestones",
+      "https://hraness.com/stripe/history/company-milestones",
     );
   });
 

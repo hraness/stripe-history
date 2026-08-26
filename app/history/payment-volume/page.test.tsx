@@ -10,19 +10,19 @@ import {
   derivePaymentVolumePageSeo,
 } from "./payment-volume-page-model";
 
-describe("stripedex.com payment volume history", () => {
+describe("hraness.com/stripe payment volume history", () => {
   test("publishes a canonical, descriptive search result from the dataset", async () => {
     const metadata = await generateMetadata();
     const seo = derivePaymentVolumePageSeo(await loadHistory());
 
     expect(metadata).toMatchObject({
-      alternates: { canonical: "/history/payment-volume" },
+      alternates: { canonical: "https://hraness.com/stripe/history/payment-volume" },
       description: seo.description,
       title: seo.title,
     });
     expect(metadata.openGraph).toMatchObject({
-      title: `${seo.title} | stripedex.com`,
-      url: "/history/payment-volume",
+      title: `${seo.title} | hraness.com/stripe`,
+      url: "https://hraness.com/stripe/history/payment-volume",
     });
   });
 
@@ -66,7 +66,7 @@ describe("stripedex.com payment volume history", () => {
     expect(updatedMetadata).toMatchObject({
       description: expect.stringContaining("$2.5 trillion 2026 total volume"),
       openGraph: {
-        title: "Stripe Payment and Total Volume by Year, 2021–2026 | stripedex.com",
+        title: "Stripe Payment and Total Volume by Year, 2021–2026 | hraness.com/stripe",
       },
       title: "Stripe Payment and Total Volume by Year, 2021–2026",
     });
@@ -92,7 +92,7 @@ describe("stripedex.com payment volume history", () => {
     expect(html).toContain('<th scope="col">sources</th>');
     expect(html).toContain(`<tr id="${latest.eventId}"`);
     expect(html).toContain(`"numberOfItems":${history.annualVolumes.length}`);
-    expect(html).toContain(`https://stripedex.com/history/payment-volume#${latest.eventId}`);
+    expect(html).toContain(`https://hraness.com/stripe/history/payment-volume#${latest.eventId}`);
     expect(html).toContain(`${latest.calendarYear}: ${latest.display} total volume`);
     expect(html.match(/class="history-volume-chart-track"/gu)?.length).toBe(5);
     expect(html.match(/<tr(?:\s|>)/gu)?.length).toBe(6);
@@ -127,7 +127,7 @@ describe("stripedex.com payment volume history", () => {
     expect(html.indexOf('yearly disclosures')).toBeLessThan(html.indexOf("volume by year"));
     expect(html.indexOf("volume by year")).toBeLessThan(html.indexOf("disclosures and sources"));
     expect(html).not.toContain('class="stripedex-selector"');
-    expect(html).toContain('class="stripedex-header"');
+    expect(html).toContain('class="plain-header stripedex-header"');
     expect(html).toContain('href="/about">about</a>');
     expect(html).toContain('class="hraness-brand stripedex-footer-hraness"');
     expect(html).not.toContain('class="stripedex-breadcrumbs"');

@@ -2,14 +2,14 @@ import { describe, expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { NextRequest } from "next/server";
 
-import { proxy } from "./proxy";
+import { config, proxy } from "./proxy";
 
 function request(
   pathname: string,
   accept: string,
   method = "GET",
 ): NextRequest {
-  return new NextRequest(new URL(pathname, "https://stripedex.com"), {
+  return new NextRequest(new URL(pathname, "https://hraness.com"), {
     headers: { accept },
     method,
   });
@@ -23,28 +23,29 @@ describe("Accept negotiation proxy", () => {
     expect(source).not.toContain("node:fs");
     expect(source).not.toContain("@/lib/content");
     expect(source).not.toContain("@/lib/page-markdown");
+    expect(config.matcher).toContain("/");
   });
 
   test("rewrites markdown Accept and .md siblings to the Node corpus handler", async () => {
-    const root = await proxy(request("/", "text/markdown"));
+    const root = await proxy(request("/stripe", "text/markdown"));
     expect(root.headers.get("vary")).toBe("Accept");
-    expect(root.headers.get("x-middleware-rewrite")).toContain("/x-markdown");
-    expect(root.headers.get("x-middleware-rewrite")).not.toContain("/x-markdown/");
+    expect(root.headers.get("x-middleware-rewrite")).toContain("/stripe/x-markdown");
+    expect(root.headers.get("x-middleware-rewrite")).not.toContain("/stripe/x-markdown/");
 
-    const about = await proxy(request("/about", "text/markdown"));
-    expect(about.headers.get("x-middleware-rewrite")).toContain("/x-markdown/about");
+    const about = await proxy(request("/stripe/about", "text/markdown"));
+    expect(about.headers.get("x-middleware-rewrite")).toContain("/stripe/x-markdown/about");
 
-    const sibling = await proxy(request("/about.md", "text/html"));
-    expect(sibling.headers.get("x-middleware-rewrite")).toContain("/x-markdown/about");
+    const sibling = await proxy(request("/stripe/about.md", "text/html"));
+    expect(sibling.headers.get("x-middleware-rewrite")).toContain("/stripe/x-markdown/about");
 
-    const missing = await proxy(request("/this-does-not-exist", "text/markdown"));
+    const missing = await proxy(request("/stripe/this-does-not-exist", "text/markdown"));
     expect(missing.headers.get("x-middleware-rewrite")).toContain(
-      "/x-markdown/this-does-not-exist",
+      "/stripe/x-markdown/this-does-not-exist",
     );
   });
 
   test("returns 406 without inventing an API when no produced type is accepted", async () => {
-    const response = await proxy(request("/", "application/pdf"));
+    const response = await proxy(request("/stripe", "application/pdf"));
     expect(response.status).toBe(406);
     expect(await response.text()).toContain("text/html, text/markdown");
   });

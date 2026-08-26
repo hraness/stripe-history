@@ -7,11 +7,11 @@ import DataPage, { metadata } from "./page";
 describe("Stripe company history dataset", () => {
   test("publishes a canonical dataset search result", () => {
     expect(metadata).toMatchObject({
-      alternates: { canonical: "/data" },
+      alternates: { canonical: "https://hraness.com/stripe/data" },
       title: "Stripe Company History Dataset",
     });
     expect(metadata.openGraph).toMatchObject({
-      url: "/data",
+      url: "https://hraness.com/stripe/data",
     });
   });
 
@@ -32,16 +32,16 @@ describe("Stripe company history dataset", () => {
     expect(html).toContain('href="/history/executives-and-team"');
     expect(html.match(/download YAML/gu)).toHaveLength(12);
     expect(html).toContain('href="/history/acquisitions"');
-    expect(html).toContain('href="/history/acquisitions.yml"');
+    expect(html).toContain('href="/stripe/history/acquisitions.yml"');
     expect(html).toContain('href="/history/valuation"');
-    expect(html).toContain('href="/research/sources.yml"');
-    expect(html).toContain('href="/research/valuations.yml"');
-    expect(html).toContain('href="/research/appearances.yml"');
+    expect(html).toContain('href="/stripe/research/sources.yml"');
+    expect(html).toContain('href="/stripe/research/valuations.yml"');
+    expect(html).toContain('href="/stripe/research/appearances.yml"');
     expect(html).toContain('href="/history/appearances"');
     expect(html).not.toContain('href="/appearances/backfill"');
-    expect(html).not.toContain('href="/research/appearance-backfill.yml"');
-    expect(html).toContain('href="/research/collections.yml"');
-    expect(html).toContain('href="/research/runs.yml"');
+    expect(html).not.toContain('href="/stripe/research/appearance-backfill.yml"');
+    expect(html).toContain('href="/stripe/research/collections.yml"');
+    expect(html).toContain('href="/stripe/research/runs.yml"');
     expect(html).toContain(`${history.sources.length} canonical sources`);
     expect(html).toContain(`${history.valuations.length} observations`);
     expect(html).toContain('href="https://github.com/hraness/stripedex"');

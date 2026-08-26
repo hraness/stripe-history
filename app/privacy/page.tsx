@@ -10,14 +10,19 @@ import {
   privacySocialTitle,
   privacyTitle,
 } from "../site-copy";
-import { GITHUB_REPOSITORY_URL, site, socialMetadata } from "../site";
+import {
+  absoluteSiteUrl,
+  GITHUB_REPOSITORY_URL,
+  site,
+  socialMetadata,
+} from "../site";
 
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: privacyTitle,
   description: privacyDescription,
-  alternates: { canonical: "/privacy" },
+  alternates: { canonical: absoluteSiteUrl("/privacy") },
   ...socialMetadata(privacySocialTitle, privacyDescription, "/privacy", {
     alt: `Privacy practices for the independent Stripe company history at ${site.domain}`,
   }),

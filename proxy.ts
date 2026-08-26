@@ -1,6 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import {
+  appPathFromPublicSitePath,
+  publicSitePath,
+  type SitePath,
+} from "./app/site";
+import {
   appendVaryAccept,
   decideRepresentation,
   isNextRscRequest,
@@ -9,10 +14,12 @@ import {
 import { markdownRewritePath } from "./lib/history-urls";
 
 export async function proxy(request: NextRequest) {
+  const appPath = appPathFromPublicSitePath(request.nextUrl.pathname);
+  const representationPath = appPath ?? request.nextUrl.pathname;
   const decision = decideRepresentation({
     accept: request.headers.get("accept"),
     method: request.method,
-    pathname: request.nextUrl.pathname,
+    pathname: representationPath,
     rsc: isNextRscRequest(request.headers),
   });
 
@@ -32,7 +39,8 @@ export async function proxy(request: NextRequest) {
 
   if (decision.kind === "markdown") {
     const url = request.nextUrl.clone();
-    url.pathname = markdownRewritePath(decision.pathname);
+    const rewritePath = markdownRewritePath(decision.pathname) as SitePath;
+    url.pathname = appPath === null ? rewritePath : publicSitePath(rewritePath);
     const headers = new Headers(request.headers);
     headers.set("x-stripedex-representation", "markdown");
     const response = NextResponse.rewrite(url, {
@@ -49,6 +57,7 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
+    "/",
     "/((?!_next/|_vercel/).*)",
   ],
 };

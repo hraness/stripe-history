@@ -8,6 +8,7 @@ import { SiteFooter } from "../site-footer";
 import {
   GITHUB_REPOSITORY_URL,
   HRANESS_URL,
+  absoluteSiteUrl,
   site,
   socialMetadata,
 } from "../site";
@@ -22,7 +23,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: aboutTitle,
   description: aboutDescription,
-  alternates: { canonical: "/about" },
+  alternates: { canonical: absoluteSiteUrl("/about") },
   ...socialMetadata(aboutSocialTitle, aboutDescription, "/about", {
     alt: `About the independent Stripe company history at ${site.domain}`,
   }),

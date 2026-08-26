@@ -9,6 +9,7 @@ import {
   notFoundTitle,
   recoveryLinks,
 } from "./site-copy";
+import { appPathFromPublicSitePath } from "./site";
 
 export const metadata: Metadata = {
   title: notFoundTitle,
@@ -27,7 +28,7 @@ export default function NotFound() {
         <ul>
           {recoveryLinks.map((link) => (
             <li key={link.href}>
-              <Link href={new URL(link.href).pathname === "/" ? "/" : new URL(link.href).pathname}>
+              <Link href={appPathFromPublicSitePath(new URL(link.href).pathname) ?? "/"}>
                 {link.label}
               </Link>
             </li>

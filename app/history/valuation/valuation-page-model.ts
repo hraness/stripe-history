@@ -7,7 +7,7 @@ import type { ValuationObservation } from "@/lib/research-schema";
 import type { Metadata } from "next";
 
 import { independenceSentence } from "../../site-copy";
-import { site, socialMetadata } from "../../site";
+import { absoluteSiteUrl, site, socialMetadata } from "../../site";
 
 export const mechanismLabel: Readonly<
   Record<ValuationObservation["mechanism"], string>
@@ -136,7 +136,7 @@ export function deriveValuationPageMetadata(
   return {
     title: seo.title,
     description: seo.description,
-    alternates: { canonical: "/history/valuation" },
+    alternates: { canonical: absoluteSiteUrl("/history/valuation") },
     ...socialMetadata(
       `${seo.title} | ${site.domain}`,
       seo.description,

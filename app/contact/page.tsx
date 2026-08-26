@@ -14,6 +14,7 @@ import {
 import {
   GITHUB_REPOSITORY_URL,
   HRANESS_URL,
+  absoluteSiteUrl,
   site,
   socialMetadata,
 } from "../site";
@@ -23,7 +24,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: contactTitle,
   description: contactDescription,
-  alternates: { canonical: "/contact" },
+  alternates: { canonical: absoluteSiteUrl("/contact") },
   ...socialMetadata(contactSocialTitle, contactDescription, "/contact", {
     alt: `Contact channels for the independent Stripe company history at ${site.domain}`,
   }),

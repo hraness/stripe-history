@@ -1,14 +1,14 @@
 import type { MetadataRoute } from "next";
-import { SITE_ORIGIN } from "./site";
+import { absoluteSiteUrl, publicSitePath, SITE_HOST_ORIGIN } from "./site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: "/",
-      disallow: "/x-markdown",
+      allow: `${publicSitePath("/")}/`,
+      disallow: publicSitePath("/x-markdown"),
     },
-    host: SITE_ORIGIN,
-    sitemap: `${SITE_ORIGIN}/sitemap.xml`,
+    host: SITE_HOST_ORIGIN,
+    sitemap: absoluteSiteUrl("/sitemap.xml"),
   };
 }

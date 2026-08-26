@@ -14,16 +14,16 @@ import manifest from "./manifest";
 import { alt as socialImageAlt } from "./opengraph-image";
 import robots from "./robots";
 import sitemap from "./sitemap";
-import { SITE_ORIGIN, site } from "./site";
+import { SITE_BASE_PATH, SITE_HOST_ORIGIN, SITE_ORIGIN, site } from "./site";
 
-describe("stripedex.com public identity", () => {
+describe("hraness.com/stripe public identity", () => {
   test("states the canonical history collection", () => {
     expect(site).toMatchObject({
       applicationName: "Stripedex",
-      domain: "stripedex.com",
+      domain: "hraness.com/stripe",
       historyTitle: "Stripe Company History",
       name: "Stripedex",
-      title: "Stripe Company History | stripedex.com",
+      title: "Stripe Company History | hraness.com/stripe",
     });
     expect(site.description).toContain("independent, sourced timeline of Stripe");
   });
@@ -55,8 +55,8 @@ describe("stripedex.com public identity", () => {
     expect(entries.every((entry) => entry.priority === undefined)).toBe(true);
     expect(robots()).toMatchObject({
       rules: {
-        allow: "/",
-        disallow: "/x-markdown",
+        allow: "/stripe/",
+        disallow: "/stripe/x-markdown",
         userAgent: "*",
       },
       sitemap: `${SITE_ORIGIN}/sitemap.xml`,
@@ -64,17 +64,18 @@ describe("stripedex.com public identity", () => {
   });
 
   test("keeps only site-wide defaults that other routes can inherit", () => {
-    expect(robots()).toMatchObject({ host: SITE_ORIGIN });
+    expect(robots()).toMatchObject({ host: SITE_HOST_ORIGIN });
     expect(manifest()).toMatchObject({
       description: site.description,
-      id: "/",
+      id: SITE_BASE_PATH,
       name: site.historyTitle,
       short_name: site.applicationName,
-      start_url: "/",
+      start_url: SITE_BASE_PATH,
     });
     expect(new URL(metadata.metadataBase ?? "https://invalid.example").origin).toBe(
-      SITE_ORIGIN,
+      SITE_HOST_ORIGIN,
     );
+    expect(nextConfig.basePath).toBe(SITE_BASE_PATH);
     expect(metadata).toMatchObject({
       applicationName: site.applicationName,
       title: {
@@ -128,24 +129,44 @@ describe("stripedex.com public identity", () => {
   test("redirects former and www hosts directly to the canonical origin", async () => {
     const redirects = await nextConfig.redirects?.();
     expect(redirects?.at(0)).toEqual({
-      destination: "https://stripedex.com/history/appearances",
+      destination: "/history/appearances",
       permanent: true,
       source: "/appearances",
     });
     expect(redirects?.slice(1)).toEqual([
-      "stripe.town",
+      "stripedex.com",
+      "www.stripedex.com",
       "stripehistory.com",
       "www.stripehistory.com",
-      "www.stripedex.com",
+      "stripe.town",
+      "www.stripe.town",
+      "stripe.guide",
+      "www.stripe.guide",
     ].flatMap((host) => [
       {
-        destination: "https://stripedex.com",
+        basePath: false,
+        destination: "https://hraness.com/stripe",
         has: [{ type: "host", value: host }],
         permanent: true,
         source: "/history",
       },
       {
-        destination: "https://stripedex.com/:path*",
+        basePath: false,
+        destination: "https://hraness.com/stripe/history/appearances",
+        has: [{ type: "host", value: host }],
+        permanent: true,
+        source: "/appearances",
+      },
+      {
+        basePath: false,
+        destination: "https://hraness.com/stripe",
+        has: [{ type: "host", value: host }],
+        permanent: true,
+        source: "/",
+      },
+      {
+        basePath: false,
+        destination: "https://hraness.com/stripe/:path*",
         has: [{ type: "host", value: host }],
         permanent: true,
         source: "/:path*",

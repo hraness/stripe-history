@@ -1,5 +1,5 @@
 import sitemap from "../app/sitemap";
-import { SITE_DOMAIN, SITE_ORIGIN } from "../app/site";
+import { SITE_BASE_PATH, SITE_DOMAIN, SITE_ORIGIN } from "../app/site";
 
 export const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow" as const;
 export const INDEXNOW_KEY = "8a9a85bffd29ef3deaa34c0893775cf2" as const;
@@ -20,7 +20,12 @@ export async function buildIndexNowPayload(): Promise<IndexNowPayload> {
   }
   for (const value of urlList) {
     const url = new URL(value);
-    if (url.protocol !== "https:" || url.hostname !== SITE_DOMAIN) {
+    if (
+      url.protocol !== "https:"
+      || url.hostname !== SITE_DOMAIN
+      || (url.pathname !== SITE_BASE_PATH
+        && !url.pathname.startsWith(`${SITE_BASE_PATH}/`))
+    ) {
       throw new Error(`IndexNow URL is outside ${SITE_ORIGIN}: ${value}`);
     }
   }

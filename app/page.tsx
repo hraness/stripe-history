@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 
 import { HistoryView } from "./history/history-view";
 import { historyCollectionJsonLd } from "./seo";
-import { site, socialMetadata } from "./site";
+import { absoluteSiteUrl, site, socialMetadata } from "./site";
 
 export const dynamic = "force-static";
 
@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description: site.description,
-    alternates: { canonical: "/" },
+    alternates: { canonical: absoluteSiteUrl("/") },
     robots: INDEXABLE_ROBOTS,
     ...socialMetadata(`${title} | ${site.domain}`, site.description, "/"),
   };

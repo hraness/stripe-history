@@ -15,10 +15,10 @@
 
 # Guidelines
 
-- Keep the visible domain wordmark lowercase and the human site name `Stripedex`.
+- Keep the Hraness header shell consistent with `hraness.com` and the human site name `Stripedex`.
 - Render history as semantic server output. Keep the root timeline and category pages useful without client-side state.
 - Show descriptive source links after every event claim.
 - Build all canonical URLs and structured data from `site.ts`.
 - Keep raw YAML indexable only as downloadable evidence, not as duplicate search results.
 - Keep the Hraness footer attribution and public repository link visible on every rendered page.
-- Keep analytics limited to anonymous cookieless `$pageview` events on exact canonical public routes. Drop every other event and property before transport, and never enable analytics outside the `stripedex.com` Production deployment.
+- Keep analytics limited to anonymous cookieless `$pageview` events on exact canonical public routes. Drop every other event and property before transport, and never enable analytics outside the `hraness.com/stripe` Production surface.

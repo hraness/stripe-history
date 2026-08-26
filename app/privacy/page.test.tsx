@@ -7,11 +7,11 @@ function visibleText(html: string): string {
   return html.replace(/<script[\s\S]*?<\/script>/gu, " ").replace(/<[^>]+>/gu, " ").replace(/\s+/gu, " ").trim();
 }
 
-describe("stripedex.com privacy page", () => {
+describe("hraness.com/stripe privacy page", () => {
   test("publishes the existing analytics policy at /privacy", () => {
     const html = renderToStaticMarkup(<PrivacyPage />);
     expect(metadata).toMatchObject({
-      alternates: { canonical: "/privacy" },
+      alternates: { canonical: "https://hraness.com/stripe/privacy" },
       title: "Privacy",
     });
     expect(html).toContain('<h1 id="privacy-heading">Privacy</h1>');

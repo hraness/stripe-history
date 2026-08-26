@@ -14,9 +14,9 @@ describe("agent markdown representations", () => {
     expect(missing.status).toBe(404);
     expect(missing.body).toBe(notFoundMarkdown());
     expect(missing.body).toContain("# Page not found");
-    expect(missing.body).toContain("https://stripedex.com/llms.txt");
-    expect(missing.body).toContain("https://stripedex.com/sitemap.xml");
-    expect(missing.body).toContain("https://stripedex.com/about");
+    expect(missing.body).toContain("https://hraness.com/stripe/llms.txt");
+    expect(missing.body).toContain("https://hraness.com/stripe/sitemap.xml");
+    expect(missing.body).toContain("https://hraness.com/stripe/about");
     expect(MARKDOWN_CONTENT_TYPE).toBe("text/markdown; charset=utf-8");
   });
 
@@ -26,7 +26,7 @@ describe("agent markdown representations", () => {
     expect(page.status).toBe(200);
     expect(page.body).toContain(`# Stripe Company History: ${history.events.length} Sourced Events`);
     expect(page.body).toContain("not affiliated with, endorsed by, or operated by");
-    expect(page.body).toContain("https://stripedex.com/history/acquisitions");
+    expect(page.body).toContain("https://hraness.com/stripe/history/acquisitions");
     expect(page.body).not.toContain(history.events[0]?.title ?? "missing-event");
     expect(page.body).not.toContain("/history/acquisitions/openrouter-acquisition-talks-reported");
   });
@@ -73,9 +73,9 @@ describe("llms.txt", () => {
     expect(body.startsWith("# Stripedex\n> ")).toBe(true);
     expect(body).toContain("## When to use this");
     expect(body).toContain("Do not use Stripedex for Stripe product APIs");
-    expect(body).toContain("https://stripedex.com/about");
-    expect(body).toContain("https://stripedex.com/data");
-    expect(body).toContain("https://stripedex.com/history/appearances");
+    expect(body).toContain("https://hraness.com/stripe/about");
+    expect(body).toContain("https://hraness.com/stripe/data");
+    expect(body).toContain("https://hraness.com/stripe/history/appearances");
     expect(body).not.toContain("openapi");
     expect(body).not.toContain("MCP server");
   });

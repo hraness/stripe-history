@@ -3,15 +3,15 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import AboutPage, { metadata } from "./page";
 
-describe("stripedex.com about page", () => {
+describe("hraness.com/stripe about page", () => {
   test("publishes a canonical editorial and privacy explanation", () => {
     const html = renderToStaticMarkup(<AboutPage />);
 
     expect(metadata).toMatchObject({
-      alternates: { canonical: "/about" },
+      alternates: { canonical: "https://hraness.com/stripe/about" },
       title: "About",
     });
-    expect(html).toContain("<h1 id=\"about-heading\">About stripedex.com</h1>");
+    expect(html).toContain("<h1 id=\"about-heading\">About hraness.com/stripe</h1>");
     expect(html).toContain('aria-label="Breadcrumb"');
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
     expect(html).toContain("anonymous, cookieless pageview events for public pages");
