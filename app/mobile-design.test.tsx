@@ -69,6 +69,7 @@ test("theme control uses the unmodified shared System-first icon menu", () => {
 });
 
 test("site chrome matches the compact sticky Hraness shell and preserves coarse hit targets", () => {
+  expect(globalsCss).toContain('@import "@hraness/site-footer/styles.css";');
   expect(globalsCss).toMatch(
     /\.stripedex-main\s*\{[^}]*margin-block:\s*0 clamp\(2\.5rem, 8vh, 5rem\)/u,
   );
@@ -80,5 +81,8 @@ test("site chrome matches the compact sticky Hraness shell and preserves coarse 
   );
   expect(plainSiteCss).toMatch(
     /@media \(pointer: coarse\)\s*\{[^}]*--plain-link-target-min:\s*var\(--interactive-target-min, 48px\);/u,
+  );
+  expect(globalsCss).toMatch(
+    /\.stripedex-main > \.hraness-site-footer\s*\{[^}]*--hraness-site-footer-measure:\s*64rem;[^}]*inline-size:\s*100vw;[^}]*margin-inline:\s*calc\(50% - 50vw\);/u,
   );
 });

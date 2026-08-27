@@ -76,7 +76,9 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).toContain('id="stripedex-history-structured-data"');
     expect(html).toContain('aria-label="Appearance: System"');
     expect(html).toContain('data-theme-value="system"');
-    expect(html).toContain('class="hraness-brand stripedex-footer-hraness" href="https://hraness.com"');
+    expect(html).toContain('aria-label="Stripedex resources"');
+    expect(html).toContain('data-slot="hraness-site-footer"');
+    expect(html).toContain('href="https://hraness.com/"');
     expect(html).toContain('href="https://github.com/hraness/stripedex"');
     expect(html).not.toContain('class="stripedex-selector"');
     expect(html).not.toContain('/atom.xml');

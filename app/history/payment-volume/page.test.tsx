@@ -129,7 +129,8 @@ describe("hraness.com/stripe payment volume history", () => {
     expect(html).not.toContain('class="stripedex-selector"');
     expect(html).toContain('class="plain-header stripedex-header"');
     expect(html).toContain('href="/about">about</a>');
-    expect(html).toContain('class="hraness-brand stripedex-footer-hraness"');
+    expect(html).toContain('aria-label="Stripedex resources"');
+    expect(html).toContain('data-slot="hraness-site-footer"');
     expect(html).not.toContain('class="stripedex-breadcrumbs"');
     expect(html).not.toContain('class="stripedex-section-heading"');
     expect(html).not.toContain("$400 billion");
