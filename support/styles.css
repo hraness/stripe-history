@@ -6,7 +6,6 @@
   --background: var(--plain-background, #ffffff);
   --foreground: var(--plain-foreground, #171717);
   --font-heading: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-  --font-text: Arial, Helvetica, sans-serif;
   --radius-xs: 0.25rem;
 }
 
