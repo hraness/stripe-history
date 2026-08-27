@@ -12,9 +12,9 @@ repository_scopes:
 
 # Repository seams
 
-Stripedex owns its source-linked history records, research catalog, chronology rules, methodology, and public presentation. The evidence corpus and the product-specific views that explain it remain local even when stable visual primitives are shared.
+Stripe History owns its source-linked history records, research catalog, chronology rules, methodology, and public presentation. The evidence corpus and the product-specific views that explain it remain local even when stable visual primitives are shared.
 
-The public `stripe-history/*` schemas and prompt-version identifiers remain stable compatibility contracts under the Stripedex name. Existing attestations, research ledgers, capture slugs, and GitHub Actions artifact URLs keep their recorded identities.
+The public `stripe-history/*` schemas and prompt-version identifiers remain stable compatibility contracts. Existing attestations, research ledgers, recorded capture slugs, and GitHub Actions artifact URLs keep their historical identities even when current product and operational identifiers change.
 
 The app currently declares no Hraness package dependency. If it adopts a shared design kit or `@hraness/ui`, pin an immutable release and limit the dependency to stable, portable primitives and tokens. Keep evidence modeling, timeline composition, methodology, and research workflows product-owned.
 

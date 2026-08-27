@@ -10,7 +10,7 @@ tags:
 
 # Repository agent context
 
-The root `AGENTS.md` is the repository's normative control plane. Its rules apply before deeper lookup. Stripedex is a standalone research and publishing product whose sourced chronology, evidence catalog, and public presentation are owned in this repository.
+The root `AGENTS.md` is the repository's normative control plane. Its rules apply before deeper lookup. Stripe History is a standalone research and publishing product whose sourced chronology, evidence catalog, and public presentation are owned in this repository.
 
 ## Authority and repository seams
 
@@ -25,4 +25,3 @@ Apply unreasonably robust programming when agent work is cheap. Keep invalid sta
 ## Writing and planning
 
 `WRITING.md` governs internal prose. `STYLE.md` adds the public prose contract. KB plans retain decisions, deviations, review findings, and reproducible evidence. Maintained notes own conclusions worth reusing after a plan reaches a terminal state.
-

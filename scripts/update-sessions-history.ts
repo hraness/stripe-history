@@ -131,7 +131,7 @@ function decodeHtml(value: string): string {
 async function fetchSource(url: string): Promise<string> {
   const response = await fetch(url, {
     headers: {
-      "User-Agent": `Stripedex history updater (+${PUBLIC_SITE_ORIGIN})`,
+      "User-Agent": `Stripe History updater (+${PUBLIC_SITE_ORIGIN})`,
     },
     redirect: "error",
     signal: AbortSignal.timeout(30_000),
@@ -165,7 +165,7 @@ async function extractSource(
     }),
     schema: extractionSchema,
     system: EXTRACTION_SYSTEM,
-    tags: ["stripedex", "history", "sessions", "v1"],
+    tags: ["stripe-history", "history", "sessions", "v1"],
   });
   return output.events.map((event) => HistoryEventSchema.parse({
     confidence: "confirmed",
@@ -203,7 +203,7 @@ async function semanticDuplicateIds(
     }),
     schema: duplicateSchema,
     system: DEDUP_SYSTEM,
-    tags: ["stripedex", "history", "deduplication", "v1"],
+    tags: ["stripe-history", "history", "deduplication", "v1"],
   });
   const proposedIds = new Set(proposed.map((event) => event.id));
   return validateHistoryDuplicateOutput(

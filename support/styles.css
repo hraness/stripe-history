@@ -9,7 +9,7 @@
   --radius-xs: 0.25rem;
 }
 
-.stripedex-skip-link {
+.stripe-history-skip-link {
   align-items: center;
   background: var(--plain-foreground);
   border: 1px solid var(--plain-foreground);
@@ -29,12 +29,12 @@
   z-index: 4000;
 }
 
-.stripedex-skip-link:focus {
+.stripe-history-skip-link:focus {
   transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stripedex-skip-link {
+  .stripe-history-skip-link {
     transition: none;
   }
 }

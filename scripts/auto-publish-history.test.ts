@@ -93,7 +93,7 @@ function acceptedGenerator(calls: string[]): PublicationGenerator {
     calls.push(
       `${options.name}:${String(options.model)}:${String(options.reasoningEffort)}:${String(options.maxOutputTokens)}`,
     );
-    if (options.name === "weekly_stripedex_proposal") {
+    if (options.name === "weekly_stripe_history_proposal") {
       return {
         disposition: "publish-new",
         evidence_quotes: [evidenceQuote],
@@ -239,7 +239,7 @@ describe("automatic history publication", () => {
 
     const report = await autoPublishHistory({
       digestPath: "digest.json",
-      environment: { STRIPEDEX_LLM_API_KEY: "fixture-gateway-credential" },
+      environment: { STRIPE_HISTORY_LLM_API_KEY: "fixture-gateway-credential" },
       fetcher: async () => response(),
       generatedAt: "2026-08-16T12:00:00.000Z",
       generator: acceptedGenerator(calls),
@@ -254,8 +254,8 @@ describe("automatic history publication", () => {
       outcome: "published-new-event",
     }]);
     expect(calls).toEqual([
-      "weekly_stripedex_proposal:openai/gpt-5.6-sol:max:16384",
-      "weekly_stripedex_review:openai/gpt-5.6-sol:max:16384",
+      "weekly_stripe_history_proposal:openai/gpt-5.6-sol:max:16384",
+      "weekly_stripe_history_review:openai/gpt-5.6-sol:max:16384",
     ]);
 
     const sourceId = stableResearchSourceId(candidate.url, candidate.publishedAt);
@@ -312,7 +312,7 @@ describe("automatic history publication", () => {
 
     const repeat = await autoPublishHistory({
       digestPath: "digest.json",
-      environment: { STRIPEDEX_LLM_API_KEY: "fixture-gateway-credential" },
+      environment: { STRIPE_HISTORY_LLM_API_KEY: "fixture-gateway-credential" },
       fetcher: async () => {
         throw new Error("Idempotent retries must not fetch");
       },
@@ -367,7 +367,7 @@ describe("automatic history publication", () => {
       const evidence = input.evidence_text.split("\n").find((line) =>
         line.startsWith("Stripe announced"));
       if (evidence === undefined) throw new Error("Missing generated evidence fixture");
-      if (options.name === "weekly_stripedex_proposal") {
+      if (options.name === "weekly_stripe_history_proposal") {
         return {
           disposition: "publish-new",
           evidence_quotes: [evidence],
@@ -399,7 +399,7 @@ describe("automatic history publication", () => {
 
     const report = await autoPublishHistory({
       digestPath: "digest.json",
-      environment: { STRIPEDEX_LLM_API_KEY: "fixture-gateway-credential" },
+      environment: { STRIPE_HISTORY_LLM_API_KEY: "fixture-gateway-credential" },
       fetcher: async (input) => {
         const title = String(input).includes("alpha") ? alpha.title : beta.title;
         const quote = `Stripe announced ${title.replace("Stripe launches ", "the ")} on August 15, 2026, and made it available to businesses in the United States.`;
@@ -470,7 +470,7 @@ describe("automatic history publication", () => {
     });
     let reviewCalled = false;
     const generator = (async (options) => {
-      if (options.name === "weekly_stripedex_review") {
+      if (options.name === "weekly_stripe_history_review") {
         reviewCalled = true;
         throw new Error("The deterministic deal-state guard should run before review");
       }
@@ -486,7 +486,7 @@ describe("automatic history publication", () => {
     }) as PublicationGenerator;
     const report = await autoPublishHistory({
       digestPath: "digest.json",
-      environment: { STRIPEDEX_LLM_API_KEY: "fixture-gateway-credential" },
+      environment: { STRIPE_HISTORY_LLM_API_KEY: "fixture-gateway-credential" },
       fetcher: async () => new Response(
         `<article><p>${agreementQuote}</p><p>${"The report describes the companies and proposed transaction. ".repeat(15)}</p></article>`,
         { headers: { "content-type": "text/html; charset=utf-8" } },
@@ -662,7 +662,7 @@ describe("automatic history publication", () => {
     const calls: string[] = [];
     const report = await autoPublishHistory({
       digestPath: "digest.json",
-      environment: { STRIPEDEX_LLM_API_KEY: "fixture-gateway-credential" },
+      environment: { STRIPE_HISTORY_LLM_API_KEY: "fixture-gateway-credential" },
       fetcher: async () => new Response(
         `<article><p>${corroboratingQuote}</p><p>${"The report repeats the transaction terms and identifies Stripe and OpenRouter. ".repeat(12)}</p></article>`,
         { headers: { "content-type": "text/html; charset=utf-8" } },
@@ -681,7 +681,7 @@ describe("automatic history publication", () => {
       write: true,
     });
 
-    expect(calls).toEqual(["weekly_stripedex_proposal"]);
+    expect(calls).toEqual(["weekly_stripe_history_proposal"]);
     expect(report.published).toBe(0);
     expect(report.decisions).toMatchObject([{
       basis: "proposal",
@@ -719,7 +719,7 @@ describe("automatic history publication", () => {
     await writeDigest(directory, candidate);
     const report = await autoPublishHistory({
       digestPath: "digest.json",
-      environment: { STRIPEDEX_LLM_API_KEY: "fixture-gateway-credential" },
+      environment: { STRIPE_HISTORY_LLM_API_KEY: "fixture-gateway-credential" },
       fetcher: async () => response(),
       generator: (async () => ({
         disposition: "reject",
@@ -755,7 +755,7 @@ describe("automatic history publication", () => {
     }));
     const repeat = await autoPublishHistory({
       digestPath: "digest.json",
-      environment: { STRIPEDEX_LLM_API_KEY: "fixture-gateway-credential" },
+      environment: { STRIPE_HISTORY_LLM_API_KEY: "fixture-gateway-credential" },
       fetcher: async () => {
         throw new Error("Resolved candidates must not be fetched again");
       },
@@ -789,7 +789,7 @@ describe("automatic history publication", () => {
       call += 1;
       if (call === 1) return (await acceptedGenerator([])({
         credential: { kind: "api-key", value: "fixture-gateway-credential" },
-        name: "weekly_stripedex_proposal",
+        name: "weekly_stripe_history_proposal",
         prompt: "",
         schema: {} as never,
         system: "",
@@ -803,7 +803,7 @@ describe("automatic history publication", () => {
     }) as PublicationGenerator;
     const report = await autoPublishHistory({
       digestPath: "digest.json",
-      environment: { STRIPEDEX_LLM_API_KEY: "fixture-gateway-credential" },
+      environment: { STRIPE_HISTORY_LLM_API_KEY: "fixture-gateway-credential" },
       fetcher: async () => response(),
       generator,
       projectDirectory: directory,

@@ -12,7 +12,7 @@ export function SkipLink({
   return (
     <a
       {...props}
-      className={["stripedex-skip-link", className]
+      className={["stripe-history-skip-link", className]
         .filter(Boolean)
         .join(" ")}
       href={href}

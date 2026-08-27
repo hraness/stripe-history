@@ -41,9 +41,9 @@ describe("hraness.com/stripe category history", () => {
     expect(html).toContain("Will Gaybrick · President of Product and Business");
     expect(html).toContain("53 min · automatic transcript");
     expect(html).toContain('href="https://www.youtube.com/watch?v=P5iICDVn5gc"');
-    expect(html).toContain('id="stripedex-history-category-structured-data"');
+    expect(html).toContain('id="stripe-history-history-category-structured-data"');
     expect(html).toContain('"@type":"PodcastEpisode"');
-    expect(html).not.toContain('class="stripedex-appearance-list"');
+    expect(html).not.toContain('class="stripe-history-appearance-list"');
     expect(html).not.toContain('href="/appearances"');
   });
 
@@ -79,7 +79,7 @@ describe("hraness.com/stripe category history", () => {
 
     expect(eventCount).toBe(acquisitionCount);
     expect(categorizedEventCount).toBe(eventCount);
-    expect(html).toContain('<h1 class="stripedex-visually-hidden" id="history-heading">Stripe acquisitions history</h1>');
+    expect(html).toContain('<h1 class="stripe-history-visually-hidden" id="history-heading">Stripe acquisitions history</h1>');
     expect(html).toContain(`aria-current="true" aria-label="acquisitions: ${acquisitionCount} events, selected; activate to show all history" data-analytics-event="history filter selected" data-analytics-id="all"`);
     expect(html).toMatch(/data-filter-id="acquisitions"[^>]* href="\/"/u);
     expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
@@ -90,14 +90,14 @@ describe("hraness.com/stripe category history", () => {
     expect(html).not.toContain(
       'href="/history/acquisitions/openrouter-acquisition-talks-reported"',
     );
-    expect(html).toContain('id="stripedex-history-category-structured-data"');
-    expect(html).not.toContain('class="stripedex-selector"');
-    expect(html).toContain('class="plain-header stripedex-header"');
+    expect(html).toContain('id="stripe-history-history-category-structured-data"');
+    expect(html).not.toContain('class="stripe-history-selector"');
+    expect(html).toContain('class="plain-header stripe-history-header"');
     expect(html).toContain('href="/about">about</a>');
-    expect(html).toContain('aria-label="Stripedex resources"');
+    expect(html).toContain('aria-label="Stripe History resources"');
     expect(html).toContain('data-slot="hraness-site-footer"');
-    expect(html).not.toContain('class="stripedex-breadcrumbs"');
-    expect(html).not.toContain('class="stripedex-section-heading"');
+    expect(html).not.toContain('class="stripe-history-breadcrumbs"');
+    expect(html).not.toContain('class="stripe-history-section-heading"');
     expect(html).not.toMatch(/\d+ of \d+ events/u);
     expect(html).not.toContain("A month in Buenos Aires");
   });

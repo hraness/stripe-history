@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const STRIPEDEX_HISTORY_SCHEMA_VERSION =
+export const STRIPE_HISTORY_SCHEMA_VERSION =
   "stripe-history/history/v2" as const;
 
 export const historyCategoryIds = [
@@ -239,7 +239,7 @@ export const HistoryFileSchema = z.strictObject({
     order: z.number().int().min(1).max(100),
   }),
   events: z.array(HistoryEventSchema).min(1).max(300),
-  schema: z.literal(STRIPEDEX_HISTORY_SCHEMA_VERSION),
+  schema: z.literal(STRIPE_HISTORY_SCHEMA_VERSION),
 }).superRefine((file, context) => {
   const ids = file.events.map((event) => event.id);
   if (new Set(ids).size !== ids.length) {

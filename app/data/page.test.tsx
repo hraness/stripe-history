@@ -44,7 +44,7 @@ describe("Stripe company history dataset", () => {
     expect(html).toContain('href="/stripe/research/runs.yml"');
     expect(html).toContain(`${history.sources.length} canonical sources`);
     expect(html).toContain(`${history.valuations.length} observations`);
-    expect(html).toContain('href="https://github.com/hraness/stripedex"');
-    expect(html).toContain('id="stripedex-dataset-structured-data"');
+    expect(html).toContain('href="https://github.com/hraness/stripe-history"');
+    expect(html).toContain('id="stripe-history-dataset-structured-data"');
   });
 });

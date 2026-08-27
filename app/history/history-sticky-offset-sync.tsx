@@ -8,10 +8,10 @@ export function HistoryStickyOffsetSync() {
 
   useEffect(() => {
     const main = markerRef.current?.closest<HTMLElement>(
-      ".stripedex-history-main",
+      ".stripe-history-history-main",
     );
     const filters = main?.querySelector<HTMLElement>(".history-filters");
-    const header = main?.querySelector<HTMLElement>(".stripedex-header");
+    const header = main?.querySelector<HTMLElement>(".stripe-history-header");
     const filterList = filters?.querySelector<HTMLElement>("ul");
     const selectedFilter = filters?.querySelector<HTMLElement>(
       'a[aria-current="true"]',

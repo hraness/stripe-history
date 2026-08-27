@@ -192,7 +192,7 @@ function dataMarkdown(history: HistoryCollection): string {
     heading(dataTitle, site.datasetDescription),
     dataIntro,
     "",
-    `The dataset and website code are available under the MIT License in the [Stripedex repository](${GITHUB_REPOSITORY_URL}).`,
+    `The dataset and website code are available under the MIT License in the [Stripe History repository](${GITHUB_REPOSITORY_URL}).`,
     "",
     "## History files",
     "",

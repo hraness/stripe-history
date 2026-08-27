@@ -5,9 +5,9 @@ import { GITHUB_REPOSITORY_URL, publicSitePath } from "./site";
 export function SiteFooter() {
   return (
     <>
-      <aside aria-label="Stripedex resources" className="stripedex-footer-resources">
-        <p className="stripedex-footer-resources__label">Stripedex</p>
-        <nav aria-label="Stripedex links" className="stripedex-footer-resources__links">
+      <aside aria-label="Stripe History resources" className="stripe-history-footer-resources">
+        <p className="stripe-history-footer-resources__label">Stripe History</p>
+        <nav aria-label="Stripe History links" className="stripe-history-footer-resources__links">
           <a href={publicSitePath("/data")}>data</a>
           <a href={publicSitePath("/about")}>about</a>
           <a href={publicSitePath("/contact")}>contact</a>

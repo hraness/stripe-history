@@ -59,7 +59,7 @@ const temporaryCaptureRoot = async (): Promise<string> => {
 const copyResearchProject = async (): Promise<string> => {
   const root = await mkdtemp(join(tmpdir(), "stripe-research-project-"));
   temporaryRoots.push(root);
-  const project = join(root, "stripedex");
+  const project = join(root, "stripe-history");
   await cp(join(projectDirectory, "public"), join(project, "public"), { recursive: true });
   return project;
 };
@@ -67,7 +67,7 @@ const copyResearchProject = async (): Promise<string> => {
 const copyResearchProjectWithoutEvidence = async (): Promise<string> => {
   const root = await mkdtemp(join(tmpdir(), "stripe-research-no-evidence-"));
   temporaryRoots.push(root);
-  const project = join(root, "stripedex");
+  const project = join(root, "stripe-history");
   await cp(join(projectDirectory, "public"), join(project, "public"), { recursive: true });
   return project;
 };

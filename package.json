@@ -1,5 +1,5 @@
 {
-  "name": "@hraness/stripedex",
+  "name": "@hraness/stripe-history",
   "version": "0.1.0",
   "private": true,
   "description": "An independent, open-source timeline of Stripe company history, with sourced data on products, acquisitions, funding, valuation, leadership, expansion, milestones, and annual payment volume.",
@@ -8,15 +8,14 @@
   "packageManager": "bun@1.3.14",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hraness/stripedex.git"
+    "url": "git+https://github.com/hraness/stripe-history.git"
   },
   "homepage": "https://hraness.com/stripe",
   "bugs": {
-    "url": "https://github.com/hraness/stripedex/issues"
+    "url": "https://github.com/hraness/stripe-history/issues"
   },
   "keywords": [
     "stripe",
-    "stripedex",
     "stripe-history",
     "company-history",
     "business-history",

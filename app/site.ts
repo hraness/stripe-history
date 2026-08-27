@@ -6,7 +6,7 @@ export const SITE_BASE_PATH = "/stripe" as const;
 export const SITE_ORIGIN = `${SITE_HOST_ORIGIN}${SITE_BASE_PATH}` as const;
 export const SITE_LABEL = "hraness.com/stripe" as const;
 export const GITHUB_REPOSITORY_URL =
-  "https://github.com/hraness/stripedex" as const;
+  "https://github.com/hraness/stripe-history" as const;
 export const HRANESS_URL = "https://hraness.com/" as const;
 
 export type SitePath = `/${string}`;
@@ -26,14 +26,14 @@ export function absoluteSiteUrl(path: SitePath): string {
 }
 
 export const site = {
-  applicationName: "Stripedex",
+  applicationName: "Stripe History",
   datasetDescription:
     "Open, source-linked YAML records behind the Stripe company history timeline, including events, valuation observations, annual volume disclosures, leadership appearances, source provenance, collection scope, and review runs.",
   description:
     "An independent, sourced timeline of Stripe acquisitions, products, leadership, funding, valuation, expansion, offices, publishing, company milestones, and annual volume.",
   domain: SITE_LABEL,
   historyTitle: "Stripe Company History",
-  name: "Stripedex",
+  name: "Stripe History",
   socialImageAlt: `Stripe company history timeline from ${SITE_LABEL}`,
   title: `Stripe Company History | ${SITE_LABEL}`,
   titleTemplate: `%s | ${SITE_LABEL}`,

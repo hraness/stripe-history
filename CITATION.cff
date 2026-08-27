@@ -1,11 +1,11 @@
 cff-version: 1.2.0
-message: If you use the Stripedex dataset or software, please cite this repository.
-title: Stripedex
+message: If you use the Stripe History dataset or software, please cite this repository.
+title: Stripe History
 type: software
 authors:
   - family-names: Guo
     given-names: Ben
-repository-code: https://github.com/hraness/stripedex
+repository-code: https://github.com/hraness/stripe-history
 url: https://hraness.com/stripe
 license: MIT
 version: 0.1.0

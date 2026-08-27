@@ -64,25 +64,25 @@ test("theme control uses the unmodified shared System-first icon menu", () => {
   expect(html).toContain('aria-label="Appearance: System"');
   expect(html).toContain("<svg");
   expect(html).not.toMatch(/[☀☾]/u);
-  expect(html).not.toContain("stripedex-theme-toggle");
-  expect(supportCss).not.toContain("stripedex-theme-toggle");
+  expect(html).not.toContain("stripe-history-theme-toggle");
+  expect(supportCss).not.toContain("stripe-history-theme-toggle");
 });
 
 test("site chrome matches the compact sticky Hraness shell and preserves coarse hit targets", () => {
   expect(globalsCss).toContain('@import "@hraness/site-footer/styles.css";');
   expect(globalsCss).toMatch(
-    /\.stripedex-main\s*\{[^}]*margin-block:\s*0 clamp\(2\.5rem, 8vh, 5rem\)/u,
+    /\.stripe-history-main\s*\{[^}]*margin-block:\s*0 clamp\(2\.5rem, 8vh, 5rem\)/u,
   );
   expect(globalsCss).toMatch(
-    /\.stripedex-header\s*\{[^}]*inline-size:\s*100vw;[^}]*position:\s*sticky;[^}]*top:\s*0;/u,
+    /\.stripe-history-header\s*\{[^}]*inline-size:\s*100vw;[^}]*position:\s*sticky;[^}]*top:\s*0;/u,
   );
   expect(globalsCss).toMatch(
-    /\.stripedex-header \.plain-header__inner\s*\{[^}]*--plain-header-block-padding:\s*0\.55rem;[^}]*align-items:\s*center;/u,
+    /\.stripe-history-header \.plain-header__inner\s*\{[^}]*--plain-header-block-padding:\s*0\.55rem;[^}]*align-items:\s*center;/u,
   );
   expect(plainSiteCss).toMatch(
     /@media \(pointer: coarse\)\s*\{[^}]*--plain-link-target-min:\s*var\(--interactive-target-min, 48px\);/u,
   );
   expect(globalsCss).toMatch(
-    /\.stripedex-main > \.hraness-site-footer\s*\{[^}]*--hraness-site-footer-measure:\s*64rem;[^}]*inline-size:\s*100vw;[^}]*margin-inline:\s*calc\(50% - 50vw\);/u,
+    /\.stripe-history-main > \.hraness-site-footer\s*\{[^}]*--hraness-site-footer-measure:\s*64rem;[^}]*inline-size:\s*100vw;[^}]*margin-inline:\s*calc\(50% - 50vw\);/u,
   );
 });

@@ -42,7 +42,7 @@ export async function proxy(request: NextRequest) {
     const rewritePath = markdownRewritePath(decision.pathname) as SitePath;
     url.pathname = appPath === null ? rewritePath : publicSitePath(rewritePath);
     const headers = new Headers(request.headers);
-    headers.set("x-stripedex-representation", "markdown");
+    headers.set("x-stripe-history-representation", "markdown");
     const response = NextResponse.rewrite(url, {
       request: { headers },
     });

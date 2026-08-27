@@ -37,7 +37,7 @@ export default async function Home() {
           path: "/",
           title,
         })}
-        id="stripedex-history-structured-data"
+        id="stripe-history-history-structured-data"
       />
       <HistoryView history={history} />
     </>

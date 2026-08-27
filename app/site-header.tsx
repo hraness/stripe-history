@@ -6,10 +6,10 @@ export function SiteHeader({
   aboutSelected = false,
 }: Readonly<{ aboutSelected?: boolean }>) {
   return (
-    <header className="plain-header stripedex-header">
+    <header className="plain-header stripe-history-header">
       <div className="plain-header__inner">
-        <HranessBrand className="stripedex-header-brand" />
-        <div className="stripedex-header-controls">
+        <HranessBrand className="stripe-history-header-brand" />
+        <div className="stripe-history-header-controls">
           <nav aria-label="primary navigation" className="plain-nav">
             <Link href="/">stripe</Link>
             <Link href="/data">data</Link>

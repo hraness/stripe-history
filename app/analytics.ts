@@ -7,7 +7,7 @@ import {
 } from "./site";
 
 export const POSTHOG_ANALYTICS_SCHEMA_VERSION = 1 as const;
-export const POSTHOG_SITE_ID = "stripedex" as const;
+export const POSTHOG_SITE_ID = "stripe-history" as const;
 export const POSTHOG_API_HOST = "https://us.i.posthog.com" as const;
 export const POSTHOG_COOKILESS_DISTINCT_ID = "$posthog_cookieless" as const;
 

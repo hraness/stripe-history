@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 
 import { GET } from "./route";
 
-describe("legacy Stripedex route", () => {
+describe("legacy history index route", () => {
   test("permanently redirects to the canonical root timeline", () => {
     const response = GET();
 

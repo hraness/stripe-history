@@ -23,7 +23,7 @@ function pageview(properties: CaptureResult["properties"]): CaptureResult {
   };
 }
 
-describe("Stripedex analytics routes", () => {
+describe("Stripe History analytics routes", () => {
   test("classifies every rendered public route from a finite allowlist", () => {
     const expectedCategoryPaths = timelineCategoryIds.map(
       (category) => `/history/${category}`,
@@ -42,7 +42,7 @@ describe("Stripedex analytics routes", () => {
     for (const path of PUBLIC_ANALYTICS_PATHS) {
       const canonicalPath = publicSitePath(path as SitePath);
       expect(classifyPublicAnalyticsRoute(`https://hraness.com${canonicalPath}`))
-        .toMatchObject({ canonical_path: canonicalPath, site_id: "stripedex" });
+        .toMatchObject({ canonical_path: canonicalPath, site_id: "stripe-history" });
     }
   });
 
@@ -55,14 +55,14 @@ describe("Stripedex analytics routes", () => {
       canonical_domain: "hraness.com",
       canonical_path: "/stripe/history/acquisitions",
       page_kind: "history_category",
-      site_id: "stripedex",
+      site_id: "stripe-history",
     });
     expect(route === null ? null : canonicalAnalyticsUrl(route))
       .toBe("https://hraness.com/stripe/history/acquisitions");
   });
 
   test("rejects noncanonical hosts, protocols, and unknown paths", () => {
-    expect(classifyPublicAnalyticsRoute("https://stripedex.com/about")).toBeNull();
+    expect(classifyPublicAnalyticsRoute("https://example.com/stripe/about")).toBeNull();
     expect(classifyPublicAnalyticsRoute("http://hraness.com/stripe/about")).toBeNull();
     expect(classifyPublicAnalyticsRoute("https://hraness.com:444/stripe/about")).toBeNull();
     expect(classifyPublicAnalyticsRoute("https://hraness.com/about")).toBeNull();
@@ -73,7 +73,7 @@ describe("Stripedex analytics routes", () => {
   });
 });
 
-describe("Stripedex PostHog boundary", () => {
+describe("Stripe History PostHog boundary", () => {
   const evidence = {
     href: "https://hraness.com/stripe/about?email=reader@example.com#account",
     production: true,
@@ -148,7 +148,7 @@ describe("Stripedex PostHog boundary", () => {
       canonical_path: "/stripe/about",
       distinct_id: POSTHOG_COOKILESS_DISTINCT_ID,
       page_kind: "about",
-      site_id: "stripedex",
+      site_id: "stripe-history",
       token: "phc_publicproject",
     });
     expect(JSON.stringify(result)).not.toContain("reader@example.com");

@@ -32,25 +32,25 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="plain-page stripedex-main" id="main-content">
+    <main className="plain-page stripe-history-main" id="main-content">
       <JsonLdScript
         data={breadcrumbJsonLd([
           { name: "History", path: "/" },
           { name: "Contact", path: "/contact" },
         ])}
-        id="stripedex-contact-structured-data"
+        id="stripe-history-contact-structured-data"
       />
       <SiteHeader />
-      <nav aria-label="Breadcrumb" className="stripedex-breadcrumbs">
+      <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
         <Link href="/">history</Link>
         <span aria-hidden="true"> / </span>
         <span>contact</span>
       </nav>
       <section
         aria-labelledby="contact-heading"
-        className="stripedex-about stripedex-section"
+        className="stripe-history-about stripe-history-section"
       >
-        <div className="stripedex-section-heading">
+        <div className="stripe-history-section-heading">
           <h1 id="contact-heading">Contact {site.domain}</h1>
           <span>public channels</span>
         </div>
@@ -66,7 +66,7 @@ export default function ContactPage() {
         <p>
           Open those reports in the{" "}
           <a href={`${GITHUB_REPOSITORY_URL}/issues`}>
-            Stripedex issue tracker
+            Stripe History issue tracker
           </a>.
         </p>
         <h2>Security</h2>
@@ -84,7 +84,7 @@ export default function ContactPage() {
         <p>
           Published and maintained by <a href={HRANESS_URL}>Hraness</a>. The
           complete sourced records and website code are in the{" "}
-          <a href={GITHUB_REPOSITORY_URL}>Stripedex repository</a>. Read{" "}
+          <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>. Read{" "}
           <Link href="/about">about</Link> for editorial method and{" "}
           <Link href="/privacy">privacy</Link> for analytics limits.
         </p>

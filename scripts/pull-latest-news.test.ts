@@ -479,13 +479,13 @@ describe("weekly news discovery", () => {
     expect(workflow).not.toContain("pull-requests: write");
     expect(workflow).toContain("persist-credentials: true");
     expect(workflow).toContain(
-      "STRIPEDEX_LLM_API_KEY: ${{ secrets.STRIPE_HISTORY_LLM_API_KEY }}",
+      "STRIPE_HISTORY_LLM_API_KEY: ${{ secrets.STRIPE_HISTORY_LLM_API_KEY }}",
     );
     expect(workflow).toContain("EXA_API_KEY: ${{ secrets.EXA_API_KEY }}");
     expect(workflow).toContain("history:publish:auto");
     expect(workflow).toContain("--write --json-out");
     expect(workflow).toContain("--review-out weekly-news/review-queue.md");
-    expect(workflow).toContain("Stripedex research review queue");
+    expect(workflow).toContain("Stripe History research review queue");
     expect(workflow).toContain("public/research/automated-decisions.yml");
     expect(workflow).toContain("steps.review.outputs.actionable == '0'");
     expect(workflow).toContain("(.unresolved // .decisions)");

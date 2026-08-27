@@ -15,7 +15,7 @@
 
 # Guidelines
 
-- Keep the Hraness header shell consistent with `hraness.com` and the human site name `Stripedex`.
+- Keep the Hraness header shell consistent with `hraness.com` and the human site name `Stripe History`.
 - Render history as semantic server output. Keep the root timeline and category pages useful without client-side state.
 - Show descriptive source links after every event claim.
 - Build all canonical URLs and structured data from `site.ts`.

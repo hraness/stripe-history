@@ -140,7 +140,7 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
     "@type": "Dataset",
     "@id": `${SITE_ORIGIN}/data#dataset`,
     name: "Stripe Company History Dataset",
-    alternateName: "Stripedex Dataset",
+    alternateName: "Stripe History Dataset",
     description: site.datasetDescription,
     url: `${SITE_ORIGIN}/data`,
     identifier: `${SITE_ORIGIN}/data#dataset`,

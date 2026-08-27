@@ -76,7 +76,7 @@ describe("hraness.com/stripe valuation history", () => {
     const html = renderToStaticMarkup(await ValuationPage());
 
     expect(html).toContain(`<h1 class="history-page-title" id="valuation-page-heading">${seo.title}</h1>`);
-    expect(html).not.toContain('class="stripedex-visually-hidden"');
+    expect(html).not.toContain('class="stripe-history-visually-hidden"');
     expect(html).toContain(seo.lead);
     expect(html).toContain(seo.description);
     expect(html).toContain("<table>");
@@ -122,7 +122,7 @@ describe("hraness.com/stripe valuation history", () => {
     expect(html).toContain('data-value-usd="20000000"');
     expect(html).toContain('data-value-usd="159000000000"');
     expect(html).toContain('data-analytics-kind="valuation"');
-    expect(html).toContain('id="stripedex-valuation-structured-data"');
+    expect(html).toContain('id="stripe-history-valuation-structured-data"');
     expect(html).toContain('aria-current="true" aria-label="valuation: 25 observations, selected; activate to show all history" data-analytics-event="history filter selected" data-analytics-id="all"');
     expect(html).toMatch(/data-filter-id="valuation"[^>]* href="\/"/u);
     expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
@@ -131,11 +131,11 @@ describe("hraness.com/stripe valuation history", () => {
     expect(html).not.toContain("company priced");
     expect(html).not.toContain("company coordinated");
     expect(html).not.toContain("capital raised");
-    expect(html).toContain('class="plain-header stripedex-header"');
+    expect(html).toContain('class="plain-header stripe-history-header"');
     expect(html).toContain('href="/about">about</a>');
-    expect(html).toContain('aria-label="Stripedex resources"');
+    expect(html).toContain('aria-label="Stripe History resources"');
     expect(html).toContain('data-slot="hraness-site-footer"');
-    expect(html).not.toContain('class="stripedex-breadcrumbs"');
-    expect(html).not.toContain('class="stripedex-section-heading"');
+    expect(html).not.toContain('class="stripe-history-breadcrumbs"');
+    expect(html).not.toContain('class="stripe-history-section-heading"');
   });
 });

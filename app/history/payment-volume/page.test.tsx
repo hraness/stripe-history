@@ -81,7 +81,7 @@ describe("hraness.com/stripe payment volume history", () => {
     const html = renderToStaticMarkup(await PaymentVolumePage());
 
     expect(html).toContain(`<h1 class="history-page-title" id="payment-volume-heading">${seo.title}</h1>`);
-    expect(html).not.toContain('class="stripedex-visually-hidden"');
+    expect(html).not.toContain('class="stripe-history-visually-hidden"');
     expect(html).toContain(seo.lead);
     expect(html).toContain(seo.description);
     expect(html).toContain("<table>");
@@ -118,7 +118,7 @@ describe("hraness.com/stripe payment volume history", () => {
     expect(html).toContain('data-value-usd="1900000000000"');
     expect(html).toContain('href="#milestone-2026-2025-volume-1-9-trillion"');
     expect(html).toContain('data-analytics-event="source link opened"');
-    expect(html).toContain('id="stripedex-payment-volume-structured-data"');
+    expect(html).toContain('id="stripe-history-payment-volume-structured-data"');
     expect(html).toContain('aria-current="true" aria-label="annual volume: 5 annual disclosures, selected; activate to show all history" data-analytics-event="history filter selected" data-analytics-id="all"');
     expect(html).toMatch(/data-filter-id="payment-volume"[^>]* href="\/"/u);
     expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
@@ -126,13 +126,13 @@ describe("hraness.com/stripe payment volume history", () => {
     );
     expect(html.indexOf('yearly disclosures')).toBeLessThan(html.indexOf("volume by year"));
     expect(html.indexOf("volume by year")).toBeLessThan(html.indexOf("disclosures and sources"));
-    expect(html).not.toContain('class="stripedex-selector"');
-    expect(html).toContain('class="plain-header stripedex-header"');
+    expect(html).not.toContain('class="stripe-history-selector"');
+    expect(html).toContain('class="plain-header stripe-history-header"');
     expect(html).toContain('href="/about">about</a>');
-    expect(html).toContain('aria-label="Stripedex resources"');
+    expect(html).toContain('aria-label="Stripe History resources"');
     expect(html).toContain('data-slot="hraness-site-footer"');
-    expect(html).not.toContain('class="stripedex-breadcrumbs"');
-    expect(html).not.toContain('class="stripedex-section-heading"');
+    expect(html).not.toContain('class="stripe-history-breadcrumbs"');
+    expect(html).not.toContain('class="stripe-history-section-heading"');
     expect(html).not.toContain("$400 billion");
   });
 });

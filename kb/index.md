@@ -1,5 +1,5 @@
 ---
-title: Stripedex knowledge base
+title: Stripe History knowledge base
 aliases:
   - Repository knowledge base
 kb_catalog: authored
@@ -7,7 +7,7 @@ kb_catalog: authored
 
 # Knowledge base
 
-This Git-backed Markdown vault is durable memory for Stripedex. Open `kb/` itself as the vault. Markdown and Git are authoritative. Catalogs, backlinks, graph views, semantic indexes, repository context, and Git projections are derived.
+This Git-backed Markdown vault is durable memory for Stripe History. Open `kb/` itself as the vault. Markdown and Git are authoritative. Catalogs, backlinks, graph views, semantic indexes, repository context, and Git projections are derived.
 
 Start repository work with the pinned KB command exposed by this repository, then expand through bounded links, exact metadata, text search, or history only when needed.
 
@@ -26,4 +26,3 @@ Git history is the maintenance log. Do not add generated backlink sections or a 
 ## Maintenance
 
 Run `bun run kb:refresh`, review the bounded findings in context, and finish with `bun run kb:check`. Parallel note lanes use `bun run kb:check:lane`; render the complete disposable inventory with `bun run kb:catalog`.
-

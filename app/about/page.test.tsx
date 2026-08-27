@@ -26,7 +26,7 @@ describe("hraness.com/stripe about page", () => {
     expect(html).toContain('aria-current="page" href="/about">about</a>');
     expect(html).toContain('aria-label="Appearance: System"');
     expect(html).toContain('href="https://hraness.com/"');
-    expect(html).toContain('href="https://github.com/hraness/stripedex"');
+    expect(html).toContain('href="https://github.com/hraness/stripe-history"');
     expect(html).toContain('href="/contact"');
     expect(html).toContain('href="/privacy"');
     expect(html).not.toContain("Atom feed");

@@ -15,11 +15,11 @@ describe("hraness.com/stripe contact page", () => {
       title: "Contact",
     });
     expect(html).toContain("<h1 id=\"contact-heading\">Contact hraness.com/stripe</h1>");
-    expect(html).toContain("https://github.com/hraness/stripedex/issues");
+    expect(html).toContain("https://github.com/hraness/stripe-history/issues");
     expect(html).toContain("private vulnerability reporting");
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
     expect(html).toContain("There is no reader account, contact form, or product inbox");
-    expect(html).not.toContain("@stripedex.com");
+    expect(html).not.toContain("mailto:");
     expect(html).toContain('aria-label="Appearance: System"');
     expect(visibleText(html).length).toBeGreaterThan(500);
   });

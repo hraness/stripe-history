@@ -51,7 +51,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       <body className={siteThemes.plain.bodyClassName}>
         <JsonLdScript
           data={[websiteJsonLd(), siteOrganizationJsonLd()]}
-          id="stripedex-website-structured-data"
+          id="stripe-history-website-structured-data"
         />
         <PostHogAnalytics
           apiHost={process.env.NEXT_PUBLIC_POSTHOG_HOST}

@@ -20,7 +20,7 @@ test("appearance starts with System and keeps the existing product preference ke
 
 test("site chrome keeps the shared appearance menu as its final header action", () => {
   const html = renderToStaticMarkup(<SiteHeader />);
-  const controlsStart = html.indexOf('class="stripedex-header-controls"');
+  const controlsStart = html.indexOf('class="stripe-history-header-controls"');
   const navigationEnd = html.indexOf("</nav>", controlsStart);
   const theme = html.indexOf('data-presentation="menu"', controlsStart);
   const controlsEnd = html.indexOf("</div>", theme);
@@ -30,7 +30,7 @@ test("site chrome keeps the shared appearance menu as its final header action", 
   expect(html.slice(theme, controlsEnd)).not.toContain("<a ");
 });
 
-test("Stripedex does not keep a second theme runtime", async () => {
+test("Stripe History does not keep a second theme runtime", async () => {
   const [source, layout, globalError] = await Promise.all([
     Bun.file(new URL("../support/theme.tsx", import.meta.url)).text(),
     Bun.file(new URL("./layout.tsx", import.meta.url)).text(),

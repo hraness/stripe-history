@@ -19,10 +19,10 @@ import { SITE_BASE_PATH, SITE_HOST_ORIGIN, SITE_ORIGIN, site } from "./site";
 describe("hraness.com/stripe public identity", () => {
   test("states the canonical history collection", () => {
     expect(site).toMatchObject({
-      applicationName: "Stripedex",
+      applicationName: "Stripe History",
       domain: "hraness.com/stripe",
       historyTitle: "Stripe Company History",
-      name: "Stripedex",
+      name: "Stripe History",
       title: "Stripe Company History | hraness.com/stripe",
     });
     expect(site.description).toContain("independent, sourced timeline of Stripe");
@@ -134,8 +134,6 @@ describe("hraness.com/stripe public identity", () => {
       source: "/appearances",
     });
     expect(redirects?.slice(1)).toEqual([
-      "stripedex.com",
-      "www.stripedex.com",
       "stripehistory.com",
       "www.stripehistory.com",
       "stripe.town",
@@ -177,11 +175,11 @@ describe("hraness.com/stripe public identity", () => {
   test("preserves data no-index rules under the generic Preview delivery contract", async () => {
     const identity = {
       VERCEL: "1",
-      VERCEL_DEPLOYMENT_ID: "dpl_StripedexPreview123",
+      VERCEL_DEPLOYMENT_ID: "dpl_StripeHistoryPreview123",
       VERCEL_ENV: "preview",
       VERCEL_GIT_COMMIT_SHA: "0123456789abcdef0123456789abcdef01234567",
-      VERCEL_PROJECT_ID: "prj_StripedexProject123",
-      VERCEL_URL: "stripedex-git-example-hraness.vercel.app",
+      VERCEL_PROJECT_ID: "prj_StripeHistoryProject123",
+      VERCEL_URL: "stripe-history-git-example-hraness.vercel.app",
     } as const;
     const config = createNextConfig(identity);
     const headers = await config.headers?.();
@@ -197,7 +195,7 @@ describe("hraness.com/stripe public identity", () => {
           value: productionDeliveryProofToken({
             deploymentId: identity.VERCEL_DEPLOYMENT_ID,
             projectId: identity.VERCEL_PROJECT_ID,
-            projectName: "stripedex",
+            projectName: "stripe-history",
             sha: identity.VERCEL_GIT_COMMIT_SHA,
           }),
         },
@@ -206,7 +204,7 @@ describe("hraness.com/stripe public identity", () => {
       source: "/:path*",
     });
     expect(config.env?.[PREVIEW_NOTICE_ORIGIN_ENV]).toBe(
-      "https://stripedex-git-example-hraness.vercel.app",
+      "https://stripe-history-git-example-hraness.vercel.app",
     );
   });
 });

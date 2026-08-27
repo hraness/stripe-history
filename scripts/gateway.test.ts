@@ -10,14 +10,15 @@ describe("gateway configuration", () => {
   test("prefers the project-specific credential", () => {
     expect(resolveGatewayCredential({
       AI_GATEWAY_API_KEY: "generic-gateway-credential",
-      STRIPEDEX_LLM_API_KEY: "project-gateway-credential",
+      STRIPEDEX_LLM_API_KEY: "legacy-project-credential",
+      STRIPE_HISTORY_LLM_API_KEY: "project-gateway-credential",
       VERCEL_OIDC_TOKEN: "vercel-oidc-credential",
     })).toEqual({ kind: "api-key", value: "project-gateway-credential" });
   });
 
-  test("accepts the legacy sealed-secret name during credential rotation", () => {
+  test("accepts the legacy local variable during credential migration", () => {
     expect(resolveGatewayCredential({
-      STRIPE_HISTORY_LLM_API_KEY: "legacy-project-credential",
+      STRIPEDEX_LLM_API_KEY: "legacy-project-credential",
     })).toEqual({ kind: "api-key", value: "legacy-project-credential" });
   });
 

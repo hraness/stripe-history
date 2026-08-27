@@ -9,7 +9,7 @@ export interface RouteErrorPageProps {
 
 export default function ErrorPage({ reset }: RouteErrorPageProps) {
   return (
-    <main className="plain-page stripedex-main stripedex-state" id="main-content">
+    <main className="plain-page stripe-history-main stripe-history-state" id="main-content">
       <h1>Something went wrong</h1>
       <p>The requested Stripe history view could not be rendered.</p>
       <button onClick={reset} type="button">Try again</button>

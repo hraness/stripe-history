@@ -21,8 +21,6 @@ const nextConfig: NextConfig = {
   async redirects() {
     const canonicalOrigin = "https://hraness.com/stripe";
     const legacyHosts = [
-      "stripedex.com",
-      "www.stripedex.com",
       "stripehistory.com",
       "www.stripehistory.com",
       "stripe.town",
@@ -86,7 +84,7 @@ export function createNextConfig(
 ): NextConfig {
   return withProductionDeliveryProof(nextConfig, {
     environment,
-    projectName: "stripedex",
+    projectName: "stripe-history",
   });
 }
 

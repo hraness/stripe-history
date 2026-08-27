@@ -43,7 +43,7 @@ export function HistoryCategoryIcon({
   return (
     <HugeiconsIcon
       aria-hidden="true"
-      className="stripedex-icon history-category-icon"
+      className="stripe-history-icon history-category-icon"
       color="currentColor"
       icon={historyCategoryIcons[filterId]}
       size={16}

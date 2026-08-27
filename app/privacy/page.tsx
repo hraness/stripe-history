@@ -30,25 +30,25 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="plain-page stripedex-main" id="main-content">
+    <main className="plain-page stripe-history-main" id="main-content">
       <JsonLdScript
         data={breadcrumbJsonLd([
           { name: "History", path: "/" },
           { name: "Privacy", path: "/privacy" },
         ])}
-        id="stripedex-privacy-structured-data"
+        id="stripe-history-privacy-structured-data"
       />
       <SiteHeader />
-      <nav aria-label="Breadcrumb" className="stripedex-breadcrumbs">
+      <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
         <Link href="/">history</Link>
         <span aria-hidden="true"> / </span>
         <span>privacy</span>
       </nav>
       <section
         aria-labelledby="privacy-heading"
-        className="stripedex-about stripedex-section"
+        className="stripe-history-about stripe-history-section"
       >
-        <div className="stripedex-section-heading">
+        <div className="stripe-history-section-heading">
           <h1 id="privacy-heading">{privacyTitle}</h1>
           <span>public pages</span>
         </div>
@@ -78,7 +78,7 @@ export default function PrivacyPage() {
         <p>
           Questions about this policy belong on the{" "}
           <Link href="/contact">contact page</Link> or in the{" "}
-          <a href={GITHUB_REPOSITORY_URL}>Stripedex repository</a>. The broader
+          <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>. The broader
           sourcing and independence statement lives on the{" "}
           <Link href="/about">about page</Link>.
         </p>

@@ -68,11 +68,11 @@ describe("agent markdown representations", () => {
 });
 
 describe("llms.txt", () => {
-  test("names when to use Stripedex and when not to", async () => {
+  test("names when to use Stripe History and when not to", async () => {
     const body = await llmsTxt();
-    expect(body.startsWith("# Stripedex\n> ")).toBe(true);
+    expect(body.startsWith("# Stripe History\n> ")).toBe(true);
     expect(body).toContain("## When to use this");
-    expect(body).toContain("Do not use Stripedex for Stripe product APIs");
+    expect(body).toContain("Do not use Stripe History for Stripe product APIs");
     expect(body).toContain("https://hraness.com/stripe/about");
     expect(body).toContain("https://hraness.com/stripe/data");
     expect(body).toContain("https://hraness.com/stripe/history/appearances");

@@ -29,16 +29,16 @@ describe("canonical hraness.com/stripe history", () => {
     const html = renderToStaticMarkup(await Home());
     const eventCount = html.match(/class="history-event"/gu)?.length ?? 0;
     const categoryIconCount = html.match(
-      /class="stripedex-icon history-category-icon"/gu,
+      /class="stripe-history-icon history-category-icon"/gu,
     )?.length ?? 0;
 
     expect(eventCount).toBe(history.events.length);
     expect(eventCount).toBeGreaterThanOrEqual(200);
-    expect(html).toContain('class="plain-page stripedex-main stripedex-history-main"');
-    expect(html).toContain('<header class="plain-header stripedex-header">');
-    expect(html).toContain('class="hraness-brand stripedex-header-brand" href="https://hraness.com"');
+    expect(html).toContain('class="plain-page stripe-history-main stripe-history-history-main"');
+    expect(html).toContain('<header class="plain-header stripe-history-header">');
+    expect(html).toContain('class="hraness-brand stripe-history-header-brand" href="https://hraness.com"');
     expect(html).toContain('aria-label="primary navigation" class="plain-nav"');
-    expect(html).toContain('<h1 class="stripedex-visually-hidden" id="history-heading">Stripe company history</h1>');
+    expect(html).toContain('<h1 class="stripe-history-visually-hidden" id="history-heading">Stripe company history</h1>');
     expect(html).not.toContain(
       "An independent, sourced timeline of Stripe products, people, funding, valuation, expansion, and milestones.",
     );
@@ -73,14 +73,14 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).toContain("A month in Buenos Aires produces Stripe&#x27;s first working prototype");
     expect(html).toContain('class="history-event-sources"');
     expect(html).toContain('data-analytics-event="source link opened"');
-    expect(html).toContain('id="stripedex-history-structured-data"');
+    expect(html).toContain('id="stripe-history-history-structured-data"');
     expect(html).toContain('aria-label="Appearance: System"');
     expect(html).toContain('data-theme-value="system"');
-    expect(html).toContain('aria-label="Stripedex resources"');
+    expect(html).toContain('aria-label="Stripe History resources"');
     expect(html).toContain('data-slot="hraness-site-footer"');
     expect(html).toContain('href="https://hraness.com/"');
-    expect(html).toContain('href="https://github.com/hraness/stripedex"');
-    expect(html).not.toContain('class="stripedex-selector"');
+    expect(html).toContain('href="https://github.com/hraness/stripe-history"');
+    expect(html).not.toContain('class="stripe-history-selector"');
     expect(html).not.toContain('/atom.xml');
     expect(html).not.toContain('/news.yml');
     expect(html).not.toContain("<form");

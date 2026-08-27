@@ -13,18 +13,18 @@ import {
 } from "./seo";
 
 describe("hraness.com/stripe structured discovery", () => {
-  test("identifies Stripedex, Hraness as publisher, and Stripe only as its subject", () => {
+  test("identifies Stripe History, Hraness as publisher, and Stripe only as its subject", () => {
     expect(websiteJsonLd()).toMatchObject({
       "@type": "WebSite",
       "@id": "https://hraness.com/stripe#website",
-      name: "Stripedex",
+      name: "Stripe History",
       alternateName: "hraness.com/stripe",
       publisher: {
         "@type": "Organization",
         name: "Hraness",
         url: "https://hraness.com/",
       },
-      sameAs: ["https://github.com/hraness/stripedex"],
+      sameAs: ["https://github.com/hraness/stripe-history"],
       url: "https://hraness.com/stripe",
     });
     expect(aboutPageJsonLd()).toMatchObject({
@@ -35,9 +35,9 @@ describe("hraness.com/stripe structured discovery", () => {
     expect(siteOrganizationJsonLd()).toMatchObject({
       "@type": "Organization",
       "@id": "https://hraness.com/stripe#organization",
-      name: "Stripedex",
+      name: "Stripe History",
       url: "https://hraness.com/stripe",
-      sameAs: ["https://github.com/hraness/stripedex"],
+      sameAs: ["https://github.com/hraness/stripe-history"],
       parentOrganization: { name: "Hraness", url: "https://hraness.com/" },
     });
     expect(siteOrganizationJsonLd()).not.toHaveProperty("address");
@@ -50,14 +50,14 @@ describe("hraness.com/stripe structured discovery", () => {
     expect(dataset).toMatchObject({
       "@type": "Dataset",
       "@id": "https://hraness.com/stripe/data#dataset",
-      alternateName: "Stripedex Dataset",
+      alternateName: "Stripe History Dataset",
       creator: { name: "Hraness" },
       identifier: "https://hraness.com/stripe/data#dataset",
       inLanguage: "en-US",
-      license: "https://github.com/hraness/stripedex/blob/main/LICENSE",
+      license: "https://github.com/hraness/stripe-history/blob/main/LICENSE",
       measurementTechnique: expect.stringContaining("Source-linked editorial review"),
       name: "Stripe Company History Dataset",
-      sameAs: "https://github.com/hraness/stripedex/tree/main/public",
+      sameAs: "https://github.com/hraness/stripe-history/tree/main/public",
       temporalCoverage: "2005/2026",
     });
     expect(dataset.variableMeasured).toEqual(expect.arrayContaining([

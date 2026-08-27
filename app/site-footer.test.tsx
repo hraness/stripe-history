@@ -17,17 +17,17 @@ const sharedLinkOrder = [
   "https://www.youtube.com/@hraness",
 ] as const;
 
-test("keeps Stripedex resources above the canonical Hraness footer", () => {
+test("keeps Stripe History resources above the canonical Hraness footer", () => {
   const html = renderToStaticMarkup(<SiteFooter />);
 
   expect(html.match(/<footer\b/gu)).toHaveLength(1);
-  expect(html).toContain('aside aria-label="Stripedex resources"');
+  expect(html).toContain('aside aria-label="Stripe History resources"');
   expect(html).toContain('href="/stripe/data"');
   expect(html).toContain('href="/stripe/about"');
   expect(html).toContain('href="/stripe/contact"');
   expect(html).toContain('href="/stripe/privacy"');
-  expect(html).toContain('href="https://github.com/hraness/stripedex"');
-  expect(html.indexOf('aria-label="Stripedex resources"')).toBeLessThan(
+  expect(html).toContain('href="https://github.com/hraness/stripe-history"');
+  expect(html.indexOf('aria-label="Stripe History resources"')).toBeLessThan(
     html.indexOf('data-slot="hraness-site-footer"'),
   );
 

@@ -1,6 +1,6 @@
-# Stripedex
+# Stripe History
 
-[Stripedex on Hraness](https://hraness.com/stripe) is an independent, open-source timeline of Stripe company history, with sourced data on products, acquisitions, funding, valuation, leadership, expansion, milestones, and annual payment volume.
+[Stripe History on Hraness](https://hraness.com/stripe) is an independent, open-source timeline of Stripe company history, with sourced data on products, acquisitions, funding, valuation, leadership, expansion, milestones, and annual payment volume.
 
 The site renders more than 200 sourced events as one reverse-chronological history and as focused, crawlable category pages. It also presents sourced annual payment-volume and private-company valuation records. Each claim retains reviewable YAML provenance, including status and uncertainty where they apply.
 
@@ -45,7 +45,7 @@ Up to three current company-history candidates receive bounded triage from [GPT-
 
 Every outcome, including rejections and corroborating duplicates, is appended to [`automated-decisions.yml`](./public/research/automated-decisions.yml). Accepted changes retain the stronger evidence attestation in [`automated-publications.yml`](./public/research/automated-publications.yml). A terminal ledger decision prevents the same URL from consuming model capacity again. One rolling GitHub issue contains only unresolved decisions such as ambiguous evidence, out-of-policy claims, capacity deferrals, or infrastructure errors; the workflow closes it when the queue is empty. Accepted changes and decision-ledger updates must pass strict YAML schemas, the research audit, the full repository check, a production build, and a generated-diff allowlist. The workflow commits only those data files when its checkout is still a direct child of current `main`, fast-forward pushes that exact commit to `main`, then explicitly dispatches and waits for exact-head repository CI because events created by the workflow token do not recursively start workflows. Repository checks remain the publication authority.
 
-Automatic publication requires a Vercel AI Gateway key. The workflow exposes it as `STRIPEDEX_LLM_API_KEY`; the existing sealed GitHub Actions secret retains its legacy `STRIPE_HISTORY_LLM_API_KEY` name until the credential is rotated. Create replacement keys in the [AI Gateway API Keys page](https://vercel.com/docs/ai-gateway/authentication-and-byok), then store them without placing credentials in source or logs. The optional `EXA_API_KEY` GitHub Actions secret enables the checked, domain-restricted Exa discovery monitor; direct publisher evidence still comes from each result's canonical source. The checked policy bounds model calls and output size; review provider usage and spending separately.
+Automatic publication requires a Vercel AI Gateway key. The workflow exposes the sealed GitHub Actions secret as `STRIPE_HISTORY_LLM_API_KEY`. Create replacement keys in the [AI Gateway API Keys page](https://vercel.com/docs/ai-gateway/authentication-and-byok), then store them without placing credentials in source or logs. The optional `EXA_API_KEY` GitHub Actions secret enables the checked, domain-restricted Exa discovery monitor; direct publisher evidence still comes from each result's canonical source. The checked policy bounds model calls and output size; review provider usage and spending separately.
 
 Run the same discovery locally with an explicit date:
 
@@ -62,7 +62,7 @@ bun run history:news:pull -- --from 2020-01-01 --as-of 2020-12-31 --monitor exa-
 After capturing and reviewing a candidate's complete transcript in Jungle's KB, generate a grounded digest proposal with the strong-model summarizer:
 
 ```sh
-STRIPEDEX_LLM_API_KEY=... bun run history:appearances:summarize -- --capture /absolute/path/to/capture.md --json-out /tmp/appearance-summary.json
+STRIPE_HISTORY_LLM_API_KEY=... bun run history:appearances:summarize -- --capture /absolute/path/to/capture.md --json-out /tmp/appearance-summary.json
 ```
 
 The summarizer uses `openai/gpt-5.6-sol` at `max` reasoning by default, emits a Reading-style gist and three to five ideas, and fails unless every private audit quote is an exact 6–25-word transcript passage. It never edits the appearance corpus. A reviewer reconciles the proposed digest, participant role, date, canonical source, and transcript status before adding YAML and a research-run decision.
@@ -70,7 +70,7 @@ The summarizer uses `openai/gpt-5.6-sol` at `max` reasoning by default, emits a 
 Preview model decisions without editing the corpus by omitting `--write`:
 
 ```sh
-STRIPEDEX_LLM_API_KEY=... bun run history:publish:auto -- --digest /tmp/stripe-news.json --json-out /tmp/stripe-publication.json --markdown-out /tmp/stripe-publication.md
+STRIPE_HISTORY_LLM_API_KEY=... bun run history:publish:auto -- --digest /tmp/stripe-news.json --json-out /tmp/stripe-publication.json --markdown-out /tmp/stripe-publication.md
 ```
 
 The scheduled workflow is the publication owner. Local `--write` is intended only for deterministic fixture work or a reviewed recovery, not a second concurrent publisher.
@@ -108,7 +108,7 @@ Corrections, additional primary sources, and focused improvements are welcome. R
 
 ## Independence
 
-Stripedex is not affiliated with, endorsed by, or operated by Stripe, Inc. Stripe names and trademarks belong to their respective owners.
+Stripe History is not affiliated with, endorsed by, or operated by Stripe, Inc. Stripe names and trademarks belong to their respective owners.
 
 ## License
 

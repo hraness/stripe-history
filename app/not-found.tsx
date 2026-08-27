@@ -19,9 +19,9 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main className="plain-page stripedex-main stripedex-state" id="main-content">
+    <main className="plain-page stripe-history-main stripe-history-state" id="main-content">
       <SiteHeader />
-      <section aria-labelledby="not-found-heading" className="stripedex-section">
+      <section aria-labelledby="not-found-heading" className="stripe-history-section">
         <h1 id="not-found-heading">{notFoundTitle}</h1>
         <p>{notFoundDescription}</p>
         <p>Continue from:</p>
