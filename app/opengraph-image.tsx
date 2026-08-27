@@ -1,3 +1,4 @@
+import { nebulaSansSocialFonts } from "@hraness/design-kit/fonts/nebula-sans/social";
 import { ImageResponse } from "next/og";
 import { site } from "./site";
 
@@ -21,7 +22,7 @@ export default function OpenGraphImage() {
           background: "#ffffff",
           color: "#171717",
           display: "flex",
-          fontFamily: "Arial, sans-serif",
+          fontFamily: "Nebula Sans",
           height: "100%",
           justifyContent: "center",
           letterSpacing: "-0.06em",
@@ -45,6 +46,6 @@ export default function OpenGraphImage() {
         </div>
       </div>
     ),
-    size,
+    { ...size, fonts: [...nebulaSansSocialFonts()] },
   );
 }

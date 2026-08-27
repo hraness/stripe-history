@@ -22,3 +22,4 @@
 - Keep raw YAML indexable only as downloadable evidence, not as duplicate search results.
 - Keep the Hraness footer attribution and public repository link visible on every rendered page.
 - Keep analytics limited to anonymous cookieless `$pageview` events on exact canonical public routes. Drop every other event and property before transport, and never enable analytics outside the `hraness.com/stripe` Production surface.
+- Keep ordinary proportional text and the social image on the shared Nebula Sans contract. Preserve the explicit monospace heading and data roles.
