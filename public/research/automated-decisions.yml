@@ -1,4 +1,42 @@
 runs:
+  - candidate_digest_sha256: 96df26af5880117afe8008beaeadc9375d2f311c33b35e32c41d87f48dd4a3c6
+    decided_on: 2026-08-27
+    decisions:
+      - basis: automatic-policy
+        candidate_url: https://stripe.com/blog/five-monetization-trends-from-global-pricing-leaders
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Five monetization trends from global pricing leaders
+      - basis: review
+        candidate_url: https://stripe.com/newsroom/news/stripe-celebrates-10-years-in-singapore-by-expanding-its-infrastructure-for-global-businesses
+        outcome: rejected
+        proposal_sha256: 77619e01c4302fa76a889f3d2010ceed85a42504048025cc180985f52478023e
+        reason: The exact event date, 2026-08-25, is not stated in the evidence text. “Today” plus a 2026 copyright notice does not directly establish August 25, and the candidate metadata cannot substitute for textual evidence. Because the proposal’s material date is unsupported, it must be rejected.
+        review_sha256: 8cca8fa68c7183629e93ff80431970a1c57ffeb26767d08e172ce065626f0f7f
+        title: Stripe celebrates 10 years in Singapore by expanding its infrastructure for global businesses
+      - basis: proposal
+        candidate_url: https://techcrunch.com/sponsor/stripe/apate-wins-stripe-x-startup-battlefield-sydney-and-earns-a-spot-at-disrupt
+        outcome: rejected
+        proposal_sha256: e975d8627341032470cdeae17b51caa1853ef203cee78c321dcbad15ed3331b9
+        reason: This sponsored announcement covers the winner of a co-branded startup pitch competition. It is routine event marketing, not a consequential Stripe company event in an allowed category.
+        title: Apate Wins Stripe x Startup Battlefield Sydney and Earns a Spot at Disrupt | TechCrunch
+      - basis: review
+        candidate_url: https://www.businesspost.ie/tech/europe-is-weak-patrick-collison-and-mario-draghi-team-up-with-new-think-tank
+        outcome: rejected
+        proposal_sha256: 5609bfb0eff0b120ca9f535bd9baf4774e35bcfbd6cbf6c020d96464b39bb93b
+        reason: The headline supports only that Collison and Draghi teamed up with an unnamed new think tank. The evidence never identifies it as the Rhine Group or states that they launched it, so linking this source to the specific Rhine Group launch event requires an unsupported inference.
+        review_sha256: c7fbb7093ad645723bbe92737b98e53bbc2f5d30e80a8bddf6482fc631e28f83
+        title: "‘Europe is weak’: Patrick Collison and Mario Draghi team up with new think tank | Business Post"
+      - basis: automatic-policy
+        candidate_url: https://www.thevermilion.com/mario-draghis-new-swiss-group-is-born-with-patrick-collison-meta-and-andrea-pignataro-the-network-between-big-tech-finance-and-politics/article_19748
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: "Mario Draghi new Swiss group is born , with Patrick Collison ( Meta ) and Andrea Pignataro : the network between Big Tech , finance and politics"
+    id: decision-run-3ac0198ca096dc732ac2
+    model: openai/gpt-5.6-sol
+    proposal_prompt_version: stripe-history/weekly-proposal/v6
+    reasoning_effort: max
+    review_prompt_version: stripe-history/weekly-review/v1
   - candidate_digest_sha256: 7550fd5e10466a6e6b39eae0435116f31250e11ae83a43bfa406e5829b0d4dd9
     decided_on: 2026-08-20
     decisions:
