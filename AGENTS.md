@@ -24,6 +24,7 @@
 - Use immutable `@hraness/web-discovery` exports for generic metadata and JSON-LD serialization, and `@hraness/vercel-delivery` for the generic Vercel proof and Preview response contract. Keep history semantics, research schemas, redirects, crawl policy, and editorial presentation product-owned.
 - Extract a shared package only after two concrete consumers need the same stable interface. Keep shared packages product-neutral.
 - Use a shared design kit or `@hraness/ui` only for stable, portable primitives and tokens at an immutable version. Keep evidence modeling, timeline composition, methodology, and the local visual contract product-owned.
+- Keep Nebula Sans from the immutable design-kit release as the ordinary proportional face across the timeline shell, assets, and social images. Preserve the explicit monospace heading and data roles.
 - Freeze shared interfaces before parallel lanes begin. Give authored-corpus migrations, manifests, lockfiles, and other convergence surfaces one owner while lanes edit disjoint paths.
 - Keep mandatory rules in the closest `AGENTS.md`, current procedures in `docs/`, executable contracts in types and tests, and pull-based rationale, evidence, synthesis, and plans in `kb/`.
 - Keep the canonical public identity at `https://hraness.com/stripe`. Deploy the application with the `/stripe` base path behind Hraness, and preserve former hosts only as direct permanent redirects to the matching canonical path.
