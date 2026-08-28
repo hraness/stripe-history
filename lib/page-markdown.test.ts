@@ -62,6 +62,12 @@ describe("agent markdown representations", () => {
 
     const about = await markdownForPath("/about");
     expect(about.body).toContain("founder side projects and aesthetics programs");
+    expect(about.body).toContain("## Publications followed");
+    expect(about.body).toContain("https://www.stripeeconomics.com");
+    expect(about.body).toContain("https://www.worksinprogress.news");
+    const data = await markdownForPath("/data");
+    expect(data.body).toContain("## Publications followed");
+    expect(data.body).toContain("[Stripe Economics](https://www.stripeeconomics.com)");
     expect(visibleText((await markdownForPath("/privacy")).body).length).toBeGreaterThan(500);
     expect(visibleText((await markdownForPath("/contact")).body).length).toBeGreaterThan(500);
   });

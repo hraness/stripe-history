@@ -71,9 +71,30 @@ describe("weekly news discovery", () => {
     )) as unknown;
     const config = NewsMonitorFileSchema.parse(value);
     expect(config.lookback_days).toBe(8);
+    const policy = parse(await readFile(
+      join(process.cwd(), "public", "research", "publication-policy.yml"),
+      "utf8",
+    )) as Readonly<{
+      auto_publish_categories: readonly string[];
+      trusted_monitors: readonly string[];
+    }>;
+    expect(policy.auto_publish_categories).toContain("publishing");
+    expect(policy.trusted_monitors).toEqual(expect.arrayContaining([
+      "stripe-blog",
+      "stripe-economics",
+      "stripe-newsroom",
+      "stripe-press-newsletter",
+      "works-in-progress-newsletter",
+    ]));
+    expect(new Set(policy.trusted_monitors).size).toBe(policy.trusted_monitors.length);
+    expect(policy.trusted_monitors.every((id) => config.monitors.some((monitor) => monitor.id === id)))
+      .toBe(true);
     expect(config.monitors.map(({ id }) => id)).toEqual([
       "stripe-newsroom",
       "stripe-blog",
+      "stripe-economics",
+      "works-in-progress-newsletter",
+      "stripe-press-newsletter",
       "techcrunch-stripe",
       "techcrunch-latest",
       "exa-stripe-reporting",
@@ -196,8 +217,12 @@ describe("weekly news discovery", () => {
             "ft.com",
             "reuters.com",
             "stripe.com",
+            "stripeeconomics.com",
+            "stripepress.substack.com",
             "techcrunch.com",
             "theinformation.com",
+            "worksinprogress.co",
+            "worksinprogress.news",
             "wsj.com",
           ],
           moderation: true,
@@ -262,6 +287,13 @@ describe("weekly news discovery", () => {
         `, "application/rss+xml");
       }
       if (url.hostname === "marginalrevolution.com") {
+        return response("<rss><channel></channel></rss>", "application/rss+xml");
+      }
+      if (
+        url.toString() === "https://www.stripeeconomics.com/feed"
+        || url.toString() === "https://www.worksinprogress.news/feed"
+        || url.toString() === "https://stripepress.substack.com/feed"
+      ) {
         return response("<rss><channel></channel></rss>", "application/rss+xml");
       }
       throw new Error(`Unexpected test request ${url}`);

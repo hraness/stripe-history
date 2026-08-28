@@ -160,6 +160,15 @@ export default async function DataPage() {
             Browse the <Link href="/history/valuation">valuation history</Link> or
             inspect the machine-readable research records directly.
           </p>
+          <p>
+            Weekly discovery also reads first-party publication feeds, including{" "}
+            <a href="https://www.stripeeconomics.com">Stripe Economics</a>,{" "}
+            <a href="https://www.worksinprogress.news">Works in Progress</a>, and{" "}
+            <a href="https://press.stripe.com">Stripe Press</a>. The{" "}
+            <Link href="/history/publishing">publishing history</Link> records
+            those projects. It does not ingest every newsletter essay as its own
+            event.
+          </p>
           <ul>
             <li>
               <a href={publicSitePath("/research/sources.yml")}>source catalog YAML</a> ·{" "}

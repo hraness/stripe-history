@@ -119,6 +119,12 @@ sources:
     id: source-0b75f814a22078c9d80c
     media_type: article
   - kind: primary
+    publisher: Stripe Economics
+    title: Stripe Economics
+    url: https://www.stripeeconomics.com
+    id: source-0bbed6b5d651b1e8b07d
+    media_type: webpage
+  - kind: primary
     publisher: Stripe
     published_at: 2025-02-27
     title: Stripe announces employee liquidity at a $91.5B valuation
@@ -2093,6 +2099,13 @@ sources:
     title: "Stripe changelog: May 2023"
     url: https://stripe.com/blog/changelog
     id: source-e8c3c01525fe68d64c99
+    media_type: article
+  - kind: primary
+    publisher: Stripe Economics
+    published_at: 2026-03-17
+    title: K-shaped economy?
+    url: https://www.stripeeconomics.com/p/k-shaped-economy
+    id: source-e95a1887b6e1cf6c11a3
     media_type: article
   - kind: primary
     publisher: Stripe

@@ -21,6 +21,24 @@ monitors:
     research_areas:
       - company-history
       - sessions-product-launches
+  - id: stripe-economics
+    kind: rss
+    url: https://www.stripeeconomics.com/feed
+    research_areas:
+      - publishing
+      - company-history
+  - id: works-in-progress-newsletter
+    kind: rss
+    url: https://www.worksinprogress.news/feed
+    research_areas:
+      - publishing
+      - company-history
+  - id: stripe-press-newsletter
+    kind: rss
+    url: https://stripepress.substack.com/feed
+    research_areas:
+      - publishing
+      - company-history
   - id: techcrunch-stripe
     kind: rss
     url: https://techcrunch.com/tag/stripe/feed/
@@ -49,8 +67,12 @@ monitors:
       - ft.com
       - reuters.com
       - stripe.com
+      - stripeeconomics.com
+      - stripepress.substack.com
       - techcrunch.com
       - theinformation.com
+      - worksinprogress.co
+      - worksinprogress.news
       - wsj.com
     research_areas:
       - company-history
