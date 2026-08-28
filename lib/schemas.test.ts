@@ -558,6 +558,42 @@ describe("public YAML schemas", () => {
     expect(NetRevenueFileSchema.safeParse({
       ...file,
       observations: [
+        observation,
+        {
+          ...observation,
+          id: "net-revenue-2023-q3-company-net",
+          calendar_year: 2023,
+          date_precision: "month",
+          metric: "net-revenue",
+          period: "q3",
+          period_end: "2023-09",
+          title: "The Information reports Stripe Q3 2023 net revenue of roughly $1 billion",
+          amount: {
+            currency: "USD",
+            display: "~$1 billion",
+            qualifier: "approximate",
+            value_usd: 1_000_000_000,
+          },
+        },
+      ],
+    }).success).toBeTrue();
+    expect(NetRevenueFileSchema.safeParse({
+      ...file,
+      observations: [{
+        ...observation,
+        metric: "fcf",
+        title: "Axios reports Stripe 2024 free cash flow of $2.2 billion",
+        amount: {
+          currency: "USD",
+          display: "$2.2 billion",
+          qualifier: "exact",
+          value_usd: 2_200_000_000,
+        },
+      }],
+    }).success).toBeFalse();
+    expect(NetRevenueFileSchema.safeParse({
+      ...file,
+      observations: [
         {
           ...observation,
           id: "net-revenue-2024-company-revenue",

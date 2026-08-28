@@ -63,7 +63,7 @@ describe("hraness.com/stripe structured discovery", () => {
     expect(dataset.variableMeasured).toEqual(expect.arrayContaining([
       expect.objectContaining({ name: "Valuation observations", value: 25 }),
       expect.objectContaining({ name: "Annual volume disclosures", value: 5 }),
-      expect.objectContaining({ name: "Net-revenue observations", value: 2 }),
+      expect.objectContaining({ name: "Net-revenue observations", value: 6 }),
       expect.objectContaining({ name: "Leadership appearances", value: 41 }),
     ]));
     expect(dataset.distribution).toHaveLength(17);

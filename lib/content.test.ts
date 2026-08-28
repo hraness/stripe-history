@@ -156,10 +156,14 @@ describe("published YAML corpus", () => {
       tier: "financing-tender",
       valueUsd: 159_000_000_000,
     });
-    expect(history.netRevenues).toHaveLength(2);
+    expect(history.netRevenues).toHaveLength(6);
     expect(history.netRevenues.map(({ id }) => id)).toEqual([
       "net-revenue-2025-company-revenue",
       "net-revenue-2025-related-cash",
+      "net-revenue-2024-company-revenue",
+      "net-revenue-2024-related-fcf",
+      "net-revenue-2023-q3-company-net",
+      "net-revenue-2021-company-net",
     ]);
     expect(history.netRevenues.find(({ id }) => id === "net-revenue-2025-company-revenue"))
       .toMatchObject({
@@ -169,13 +173,37 @@ describe("published YAML corpus", () => {
         scope: "company",
         status: "reported",
       });
-    expect(history.netRevenueHeadlines).toEqual([{
-      calendarYear: 2025,
-      display: "$6.8 billion",
-      observationId: "net-revenue-2025-company-revenue",
-      status: "reported",
-      valueUsd: 6_800_000_000,
-    }]);
+    expect(history.netRevenues.find(({ id }) => id === "net-revenue-2023-q3-company-net"))
+      .toMatchObject({
+        amount: { display: "~$1 billion", value_usd: 1_000_000_000 },
+        metric: "net-revenue",
+        period: "q3",
+        scope: "company",
+        status: "reported",
+      });
+    expect(history.netRevenueHeadlines).toEqual([
+      {
+        calendarYear: 2021,
+        display: "~$2.5 billion",
+        observationId: "net-revenue-2021-company-net",
+        status: "reported",
+        valueUsd: 2_500_000_000,
+      },
+      {
+        calendarYear: 2024,
+        display: "$5.1 billion",
+        observationId: "net-revenue-2024-company-revenue",
+        status: "reported",
+        valueUsd: 5_100_000_000,
+      },
+      {
+        calendarYear: 2025,
+        display: "$6.8 billion",
+        observationId: "net-revenue-2025-company-revenue",
+        status: "reported",
+        valueUsd: 6_800_000_000,
+      },
+    ]);
     expect(history.appearances.map(({ id }) => id)).toContain(
       "appearance-2024-02-patrick-collison-dwarkesh",
     );

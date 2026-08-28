@@ -280,6 +280,13 @@ sources:
     id: source-1dc5f19b6950b5352d21
     media_type: article
   - kind: reporting
+    publisher: Forbes
+    published_at: 2022-05-26
+    title: The Collison Brothers Built Stripe Into A $95 Billion Unicorn With Eye-Popping Financials. Inside Their Plan To Stay On Top
+    url: https://www.forbes.com/sites/alexkonrad/2022/05/26/stripe-exclusive-interview-collison-brothers-95-billion-plan-to-stay-on-top/
+    id: source-1ed73df6933e50d0d59a
+    media_type: article
+  - kind: reporting
     publisher: Fortune
     published_at: 2016-06-08
     title: Stripe launches in France
@@ -1221,6 +1228,13 @@ sources:
     url: https://stripe.com/au/legal/payto
     id: source-80c945967e9e1f521afb
     media_type: article
+  - kind: reporting
+    publisher: The Information
+    published_at: 2023-12-21
+    title: Stripe Swings to a Profit as Business Rebounds
+    url: https://www.theinformation.com/articles/stripe-swings-to-a-profit-as-business-rebounds
+    id: source-81088c3e0016890db48d
+    media_type: article
   - kind: primary
     publisher: Stripe Press
     title: Stubborn Attachments
@@ -1309,6 +1323,13 @@ sources:
     title: Stripe raises $100M from Tiger Global for international expansion, operations
     url: https://www.paymentsdive.com/ex/mpt/news/stripe-raises-100m-from-tiger-global-for-international-expansion-operations/
     id: source-8d6599ea85d8f5f485b7
+    media_type: article
+  - kind: reporting
+    publisher: Axios
+    published_at: 2025-03-27
+    title: Stripe's 2024 revenue growth
+    url: https://www.axios.com/pro/fintech-deals/2025/03/27/stripe-revenue-2024
+    id: source-8ddd4f01e0e9f309416f
     media_type: article
   - kind: reporting
     publisher: TechCrunch
@@ -2184,6 +2205,13 @@ sources:
     url: https://assets.ctfassets.net/fzn2n1nzq965/1gMd12owbzJaSe4Y560OEJ/0e7a27759e1b3070c5179ded5b94f525/Stripe_2023_annual_letter_enGB.pdf
     id: source-ed092678fc3313192a56
     media_type: pdf
+  - kind: reporting
+    publisher: The Information
+    published_at: 2025-03-26
+    title: Stripe Minted More Than $2 Billion in Cash Last Year. Why Go Public?
+    url: https://www.theinformation.com/articles/stripe-minted-2-billion-cash-last-year-go-public
+    id: source-ed2f69cea5410893f4d4
+    media_type: article
   - kind: reporting
     publisher: TechCrunch
     published_at: 2026-04-17

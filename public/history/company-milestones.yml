@@ -146,6 +146,9 @@ events:
         value: 80%
       - label: Forbes AI 50 adoption
         value: 78%
+      - label: Revenue suite run rate
+        value: $500 million+
+        context: Stripe said the suite, with Billing at its core, had passed this annual revenue run rate
     people:
       - Patrick Collison
       - John Collison
@@ -184,6 +187,9 @@ events:
       - label: Growth from 2022
         value: About 25%
         context: Comparison with the prior year's $817 billion volume
+      - label: Revenue suite run-rate target
+        value: $500 million
+        context: Stripe said it expected the suite's annual revenue run rate to pass this amount over the next year
     people:
       - Patrick Collison
       - John Collison

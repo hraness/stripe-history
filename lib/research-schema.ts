@@ -1035,9 +1035,9 @@ export const NetRevenueObservationSchema = z.strictObject({
   date_precision: z.enum(["day", "month", "year"]),
   event_id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u).max(120).optional(),
   id: z.string().regex(/^net-revenue-[a-z0-9]+(?:-[a-z0-9]+)*$/u).max(140),
-  metric: z.enum(["cash", "net-revenue", "revenue"]),
+  metric: z.enum(["cash", "fcf", "net-revenue", "revenue"]),
   notes: CompactTextSchema.optional(),
-  period: z.enum(["fy", "h1", "q1", "run-rate"]),
+  period: z.enum(["fy", "h1", "q1", "q2", "q3", "q4", "run-rate"]),
   period_end: PartialDateSchema,
   product: CompactTextSchema.max(120).optional(),
   reported_at: PartialDateSchema.optional(),
@@ -1139,8 +1139,8 @@ export const NetRevenueFileSchema = z.strictObject({
 export function isCompanyFiscalRevenueObservation(
   observation: Readonly<{
     claim: "stated-result" | "target";
-    metric: "cash" | "net-revenue" | "revenue";
-    period: "fy" | "h1" | "q1" | "run-rate";
+    metric: "cash" | "fcf" | "net-revenue" | "revenue";
+    period: "fy" | "h1" | "q1" | "q2" | "q3" | "q4" | "run-rate";
     scope: "company" | "product";
   }>,
 ): boolean {

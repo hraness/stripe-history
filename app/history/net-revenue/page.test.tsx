@@ -56,15 +56,15 @@ describe("hraness.com/stripe net-revenue history", () => {
       lead: expect.stringMatching(
         /\$9 billion in 2026.*not affiliated with, endorsed by, or operated by/su,
       ),
-      title: "Stripe Net Revenue Observations, 2025–2026",
-      yearRange: "2025–2026",
+      title: "Stripe Net Revenue Observations, 2021–2026",
+      yearRange: "2021–2026",
     });
     expect(updatedMetadata).toMatchObject({
       description: expect.stringContaining("$9 billion 2026 revenue"),
       openGraph: {
-        title: "Stripe Net Revenue Observations, 2025–2026 | hraness.com/stripe",
+        title: "Stripe Net Revenue Observations, 2021–2026 | hraness.com/stripe",
       },
-      title: "Stripe Net Revenue Observations, 2025–2026",
+      title: "Stripe Net Revenue Observations, 2021–2026",
     });
     expect(updatedSeo).not.toEqual(priorSeo);
   });
@@ -90,32 +90,45 @@ describe("hraness.com/stripe net-revenue history", () => {
     expect(html).toContain(`"numberOfItems":${history.netRevenueHeadlines.length}`);
     expect(html).toContain(`https://hraness.com/stripe/history/net-revenue#${latestHeadline.observationId}`);
     expect(html).toContain(`${latestHeadline.calendarYear}: ${latestHeadline.display}`);
-    expect(html.match(/class="history-volume-chart-track"/gu)?.length).toBe(1);
-    expect(html.match(/<tr(?:\s|>)/gu)?.length).toBe(2);
+    expect(html.match(/class="history-volume-chart-track"/gu)?.length).toBe(3);
+    expect(html.match(/<tr(?:\s|>)/gu)?.length).toBe(4);
+    expect(html).toContain("~$2.5 billion");
+    expect(html).toContain("$5.1 billion");
+    expect(html).toContain("$2.2 billion");
+    expect(html).toContain("~$1 billion");
     expect(html).toContain("$6.8 billion");
     expect(html).toContain("$3.2 billion");
     expect(html).toContain("reported");
+    expect(html).toContain("Forbes reports Stripe 2021 net revenue of nearly $2.5 billion");
+    expect(html).toContain("Axios and The Information report Stripe 2024 revenue of $5.1 billion");
+    expect(html).toContain("The Information reports Stripe Q3 2023 net revenue of roughly $1 billion");
     expect(html).toContain("The Information reports Stripe 2025 revenue of $6.8 billion");
     expect(html).toContain("The Information reports Stripe minted $3.2 billion in cash in 2025");
-    expect(html).toContain("after interchange, scheme, and bank-partner fees");
+    expect(html).toContain("what Stripe keeps after the cut passed to partners");
     expect(html).toContain("The Information wrote &quot;revenue,&quot;");
     expect(html).toContain("Irish statutory accounts");
     expect(html).toContain("Missing years are gaps");
-    expect(html).toContain("H1 growth rates stay on the events");
+    expect(html).toContain("H1 2026 growth rates stay on the events");
+    expect(html).toContain("publicly visible Information article does not state that quarter");
     expect(html).toContain('href="/history/payment-volume"');
     expect(html).toContain('href="/history/valuation"');
+    expect(html).toContain('data-value-usd="2500000000"');
+    expect(html).toContain('data-value-usd="5100000000"');
     expect(html).toContain('data-value-usd="6800000000"');
+    expect(html).toContain('href="#net-revenue-2021-company-net"');
+    expect(html).toContain('href="#net-revenue-2024-company-revenue"');
     expect(html).toContain('href="#net-revenue-2025-company-revenue"');
     expect(html).toContain('data-analytics-event="source link opened"');
     expect(html).toContain('data-analytics-kind="net-revenue"');
     expect(html).toContain('id="stripe-history-net-revenue-structured-data"');
-    expect(html).toContain('aria-current="true" aria-label="net revenue: 2 observations, selected; activate to show all history" data-analytics-event="history filter selected" data-analytics-id="all"');
+    expect(html).toContain('aria-current="true" aria-label="net revenue: 6 observations, selected; activate to show all history" data-analytics-event="history filter selected" data-analytics-id="all"');
     expect(html).toMatch(/data-filter-id="net-revenue"[^>]* href="\/"/u);
     expect(html.indexOf('data-filter-id="payment-volume"')).toBeLessThan(
       html.indexOf('data-filter-id="net-revenue"'),
     );
-    expect(html).not.toContain("$5.12");
-    expect(html).not.toContain("$5.1 billion");
+    expect(html).toContain("$5.12 billion");
+    expect(html).not.toContain("<td>$5.12 billion</td>");
+    expect(html).not.toContain("<td>$6.9 billion</td>");
     expect(html).not.toContain("the singularity");
   });
 });
