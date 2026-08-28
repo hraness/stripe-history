@@ -23,6 +23,7 @@ export async function generateStaticParams() {
     "/history",
     "/privacy",
     "/history/payment-volume",
+    "/history/net-revenue",
     "/history/valuation",
     ...history.categories.map(({ id }) => `/history/${id}`),
   ];

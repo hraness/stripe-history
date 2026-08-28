@@ -60,6 +60,21 @@ describe("agent markdown representations", () => {
     expect(valuation.body).toContain("transaction implied");
     expect(valuation.body).toContain("not affiliated with, endorsed by, or operated by");
 
+    const netRevenue = await markdownForPath("/history/net-revenue");
+    expect(netRevenue.status).toBe(200);
+    expect(netRevenue.body).toContain("| year | amount | kind | qualifier | sources |");
+    expect(netRevenue.body).toContain("| 2021 | ~$2.5 billion | net revenue | approximate |");
+    expect(netRevenue.body).toContain("| 2024 | $5.1 billion | revenue | reported |");
+    expect(netRevenue.body).toContain("| 2025 | $6.8 billion | revenue | reported |");
+    expect(netRevenue.body).toContain("Related cash and free-cash-flow amounts stay on those disclosure cards");
+    expect(netRevenue.body).toContain("Forbes reports Stripe 2021 net revenue of nearly $2.5 billion");
+    expect(netRevenue.body).toContain("The Information reports Stripe 2025 revenue of $6.8 billion");
+    expect(netRevenue.body).toContain("not affiliated with, endorsed by, or operated by");
+    expect(netRevenue.body).toContain("Missing years are gaps");
+    expect(netRevenue.body).not.toContain("| 2022 |");
+    expect(netRevenue.body).not.toContain("| 2023 |");
+    expect(netRevenue.body).not.toContain("| $5.12 billion |");
+
     const about = await markdownForPath("/about");
     expect(about.body).toContain("founder side projects and aesthetics programs");
     expect(about.body).toContain("## Publications followed");

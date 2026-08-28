@@ -1,7 +1,7 @@
 # Contents
 
 - `page.tsx` – the canonical unified Stripe history timeline.
-- `history/` – category pages, the appearances projection, annual-volume and valuation pages, and shared timeline rendering.
+- `history/` – category pages, the appearances projection, annual-volume, annual-revenue, and valuation pages, and shared timeline rendering.
 - `x-markdown/` – the Node handler that renders the same public URLs as Markdown.
 - `data/` – the crawlable history and research dataset index.
 - `about/`, `contact/`, and `privacy/` – sourcing, review, independence, corrections, public contact channels, and privacy.

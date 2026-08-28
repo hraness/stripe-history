@@ -64,10 +64,11 @@ describe("Node markdown corpus handler", () => {
     expect(params).toContainEqual({ path: [] });
     expect(params).toContainEqual({ path: ["about"] });
     expect(params).toContainEqual({ path: ["history", "acquisitions"] });
+    expect(params).toContainEqual({ path: ["history", "net-revenue"] });
     expect(params).toContainEqual({ path: ["history", "valuation"] });
     expect(params).not.toContainEqual({
       path: ["history", "acquisitions", "openrouter-acquisition-talks-reported"],
     });
-    expect(params.length).toBe(8 + history.categories.length);
+    expect(params.length).toBe(9 + history.categories.length);
   });
 });

@@ -35,6 +35,7 @@ describe("Stripe History analytics routes", () => {
       "/privacy",
       "/data",
       "/history/payment-volume",
+      "/history/net-revenue",
       "/history/valuation",
       ...expectedCategoryPaths,
     ]));

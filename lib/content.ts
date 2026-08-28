@@ -54,6 +54,16 @@ export interface AnnualVolumePoint {
   readonly valueUsd: number;
 }
 
+export interface AnnualRevenuePoint {
+  readonly calendarYear: number;
+  readonly categoryId: HistoryFile["category"]["id"];
+  readonly display: string;
+  readonly eventId: string;
+  readonly kind: NonNullable<HistoryEvent["annual_revenue"]>["kind"];
+  readonly qualifier: NonNullable<HistoryEvent["annual_revenue"]>["qualifier"];
+  readonly valueUsd: number;
+}
+
 export interface ResolvedValuationObservation extends ValuationObservation {
   readonly sources: readonly ResearchSource[];
 }
@@ -67,6 +77,7 @@ export interface ValuationHeadlinePoint {
 }
 
 export interface HistoryCollection {
+  readonly annualRevenues: readonly AnnualRevenuePoint[];
   readonly annualVolumes: readonly AnnualVolumePoint[];
   readonly appearances: readonly Appearance[];
   readonly categories: readonly TimelineCategory[];
@@ -142,6 +153,19 @@ export function validateAnnualVolumeSeries(
   }
 }
 
+export function validateAnnualRevenueSeries(
+  points: readonly AnnualRevenuePoint[],
+): void {
+  for (let index = 1; index < points.length; index += 1) {
+    const previous = points[index - 1];
+    const current = points[index];
+    if (previous === undefined || current === undefined) continue;
+    if (previous.calendarYear >= current.calendarYear) {
+      throw new Error("History annual revenue years must be strictly increasing");
+    }
+  }
+}
+
 export function valuationTier(
   observation: ValuationObservation,
 ): ValuationHeadlinePoint["tier"] {
@@ -199,7 +223,9 @@ type HeadlineCandidate = ValuationObservation & {
   readonly sources?: readonly ResearchSource[];
 };
 
-function strongestSourceAuthority(observation: HeadlineCandidate): number {
+function strongestSourceAuthority(
+  observation: Readonly<{ sources?: readonly ResearchSource[] }>,
+): number {
   return Math.max(
     0,
     ...(observation.sources ?? []).map(({ kind }) => sourceAuthorityRank[kind]),
@@ -347,6 +373,20 @@ export async function loadHistory(
     ) {
       throw new Error(`History annual volume ${event.id} requires a primary source`);
     }
+    if (event.annual_revenue !== undefined) {
+      const hasPrimaryOrFiling = event.sources.some(
+        ({ kind }) => kind === "primary" || kind === "filing",
+      );
+      const hasReporting = event.sources.some(({ kind }) => kind === "reporting");
+      if (event.confidence === "confirmed" && !hasPrimaryOrFiling) {
+        throw new Error(
+          `History annual revenue ${event.id} requires a primary or filing source`,
+        );
+      }
+      if (event.confidence === "reported" && !hasReporting) {
+        throw new Error(`History annual revenue ${event.id} requires a reporting source`);
+      }
+    }
   }
   const annualVolumes = historyEvents.flatMap((event) =>
     event.annual_volume === undefined
@@ -362,6 +402,20 @@ export async function loadHistory(
         }]
   ).toSorted((left, right) => left.calendarYear - right.calendarYear);
   validateAnnualVolumeSeries(annualVolumes);
+  const annualRevenues = historyEvents.flatMap((event) =>
+    event.annual_revenue === undefined
+      ? []
+      : [{
+          calendarYear: event.annual_revenue.calendar_year,
+          categoryId: event.categoryId,
+          display: event.annual_revenue.display,
+          eventId: event.id,
+          kind: event.annual_revenue.kind,
+          qualifier: event.annual_revenue.qualifier,
+          valueUsd: event.annual_revenue.value_usd,
+        }]
+  ).toSorted((left, right) => left.calendarYear - right.calendarYear);
+  validateAnnualRevenueSeries(annualRevenues);
 
   const valuations = valuationFile.observations.map((observation) => ({
     ...observation,
@@ -418,6 +472,7 @@ export async function loadHistory(
   );
 
   return {
+    annualRevenues,
     annualVolumes,
     appearances: appearanceFile.appearances,
     categories,

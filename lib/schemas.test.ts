@@ -476,6 +476,137 @@ describe("public YAML schemas", () => {
     }).success).toBe(false);
   });
 
+  test("requires annual revenue to be tagged, display-matched, and a completed prior year", () => {
+    const event = {
+      annual_revenue: {
+        calendar_year: 2025,
+        display: "$6.8 billion",
+        kind: "revenue",
+        qualifier: "reported",
+        value_usd: 6_800_000_000,
+      },
+      confidence: "reported",
+      date: "2026-07-22",
+      date_precision: "day",
+      id: "annual-revenue-example",
+      source_ids: ["source-11111111111111111111"],
+      summary: "A sourced outlet reported an annual revenue figure with enough concrete context to satisfy the public history contract.",
+      tags: ["net-revenue"],
+      title: "A sourced outlet reports annual revenue",
+    };
+    const file = {
+      category: {
+        description: "Verified company milestones.",
+        id: "company-milestones",
+        label: "Company milestones",
+        order: 11,
+      },
+      events: [event],
+      schema: "stripe-history/history/v2",
+    };
+
+    expect(HistoryFileSchema.safeParse(file).success).toBeTrue();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        annual_revenue: {
+          calendar_year: 2021,
+          display: "~$2.5 billion",
+          kind: "net-revenue",
+          qualifier: "approximate",
+          value_usd: 2_500_000_000,
+        },
+        title: "Forbes reports Stripe 2021 net revenue of nearly $2.5 billion",
+      }],
+    }).success).toBeTrue();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        annual_revenue: undefined,
+        title: "The Information reports Stripe Q3 2023 net revenue of roughly $1 billion",
+      }],
+    }).success).toBeTrue();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{ ...event, tags: [] }],
+    }).success).toBeFalse();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        annual_revenue: { ...event.annual_revenue, calendar_year: 2026 },
+      }],
+    }).success).toBeFalse();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        annual_revenue: { ...event.annual_revenue, qualifier: "published-value" },
+      }],
+    }).success).toBeFalse();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        confidence: "confirmed",
+        annual_revenue: { ...event.annual_revenue, qualifier: "reported" },
+      }],
+    }).success).toBeFalse();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        confidence: "confirmed",
+        annual_revenue: {
+          ...event.annual_revenue,
+          display: "~$6.8 billion",
+          qualifier: "approximate",
+          value_usd: 6_800_000_000,
+        },
+      }],
+    }).success).toBeFalse();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        annual_revenue: {
+          ...event.annual_revenue,
+          display: "~$6.8 billion",
+          qualifier: "reported",
+          value_usd: 6_800_000_000,
+        },
+      }],
+    }).success).toBeFalse();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        annual_revenue: {
+          ...event.annual_revenue,
+          display: "$6.8 billion",
+          value_usd: 6_900_000_000,
+        },
+      }],
+    }).success).toBeFalse();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        annual_volume: {
+          calendar_year: 2025,
+          display: "$1.9 trillion",
+          kind: "total-volume",
+          qualifier: "published-value",
+          value_usd: 1_900_000_000_000,
+        },
+        confidence: "confirmed",
+        tags: ["payment-volume", "net-revenue"],
+      }],
+    }).success).toBeFalse();
+  });
+
   test("orders reviewed leadership appearances by occurrence, not publication", () => {
     const appearance = (id: string, occurredAt: string, publishedAt: string) => ({
       date_precision: "day",

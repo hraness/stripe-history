@@ -3,9 +3,11 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
+  type AnnualRevenuePoint,
   type AnnualVolumePoint,
   deriveValuationHeadlines,
   loadHistory,
+  validateAnnualRevenueSeries,
   validateAnnualVolumeSeries,
   valuationTier,
 } from "./content";
@@ -155,6 +157,44 @@ describe("published YAML corpus", () => {
       tier: "financing-tender",
       valueUsd: 159_000_000_000,
     });
+    expect(history.annualRevenues).toEqual([
+      {
+        calendarYear: 2021,
+        categoryId: "company-milestones",
+        display: "~$2.5 billion",
+        eventId: "milestone-2022-forbes-2021-net-revenue",
+        kind: "net-revenue",
+        qualifier: "approximate",
+        valueUsd: 2_500_000_000,
+      },
+      {
+        calendarYear: 2024,
+        categoryId: "company-milestones",
+        display: "$5.1 billion",
+        eventId: "milestone-2025-axios-2024-revenue",
+        kind: "revenue",
+        qualifier: "reported",
+        valueUsd: 5_100_000_000,
+      },
+      {
+        calendarYear: 2025,
+        categoryId: "company-milestones",
+        display: "$6.8 billion",
+        eventId: "milestone-2026-information-2025-revenue",
+        kind: "revenue",
+        qualifier: "reported",
+        valueUsd: 6_800_000_000,
+      },
+    ]);
+    expect(history.events.find(({ id }) => id === "milestone-2023-information-q3-net-revenue"))
+      .toMatchObject({
+        title: "The Information reports Stripe Q3 2023 net revenue of roughly $1 billion",
+      });
+    expect(
+      history.annualRevenues.some(
+        ({ eventId }) => eventId === "milestone-2023-information-q3-net-revenue",
+      ),
+    ).toBeFalse();
     expect(history.appearances.map(({ id }) => id)).toContain(
       "appearance-2024-02-patrick-collison-dwarkesh",
     );
@@ -230,6 +270,38 @@ describe("published YAML corpus", () => {
     expect(() => validateAnnualVolumeSeries([
       point(2021, 817),
       point(2022, 640),
+    ])).not.toThrow();
+  });
+
+  test("requires annual revenue years to increase and leaves gaps alone", () => {
+    const point = (
+      calendarYear: number,
+      valueUsd: number,
+    ): AnnualRevenuePoint => ({
+      calendarYear,
+      categoryId: "company-milestones",
+      display: `$${valueUsd}`,
+      eventId: `revenue-${calendarYear}`,
+      kind: "revenue",
+      qualifier: "reported",
+      valueUsd,
+    });
+
+    expect(() => validateAnnualRevenueSeries([
+      point(2021, 2_500_000_000),
+      point(2024, 5_100_000_000),
+    ])).not.toThrow();
+    expect(() => validateAnnualRevenueSeries([
+      point(2024, 5_100_000_000),
+      point(2021, 2_500_000_000),
+    ])).toThrow("years must be strictly increasing");
+    expect(() => validateAnnualRevenueSeries([
+      point(2021, 5_100_000_000),
+      point(2024, 5_100_000_000),
+    ])).not.toThrow();
+    expect(() => validateAnnualRevenueSeries([
+      point(2021, 5_100_000_000),
+      point(2024, 2_500_000_000),
     ])).not.toThrow();
   });
 
@@ -416,4 +488,5 @@ describe("published YAML corpus", () => {
       primarySource,
     ])[0]?.observationId).toBe("valuation-2025-earlier-primary");
   });
+
 });

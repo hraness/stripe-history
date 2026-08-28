@@ -5,10 +5,11 @@ import { useEffect, useRef, useState } from "react";
 
 import { HistoryCategoryIcon } from "./category-icon";
 
-type HistoryMeasureId = "payment-volume" | "valuation";
+type HistoryMeasureId = "net-revenue" | "payment-volume" | "valuation";
 
 const measureControls = [
   { id: "payment-volume", label: "annual volume" },
+  { id: "net-revenue", label: "net revenue" },
   { id: "valuation", label: "valuation" },
 ] as const satisfies readonly Readonly<{
   id: HistoryMeasureId;
@@ -37,7 +38,9 @@ export function HistoryMeasureRail({ children }: Readonly<{ children: ReactNode 
           : best;
       }, undefined);
       const id = nearest?.dataset.measure;
-      if (id === "payment-volume" || id === "valuation") setActiveMeasure(id);
+      if (id === "payment-volume" || id === "net-revenue" || id === "valuation") {
+        setActiveMeasure(id);
+      }
     };
     const onScroll = () => {
       if (frameRef.current !== undefined) cancelAnimationFrame(frameRef.current);

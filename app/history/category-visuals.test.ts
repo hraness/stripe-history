@@ -39,6 +39,9 @@ describe("history category visuals", () => {
     expect(historyFilterVisuals["payment-volume"].paletteIndex).toBe(
       historyFilterVisuals["payment-and-payout-expansion"].paletteIndex,
     );
+    expect(historyFilterVisuals["net-revenue"].paletteIndex).toBe(
+      historyFilterVisuals["company-milestones"].paletteIndex,
+    );
     expect(historyFilterVisuals.valuation.paletteIndex).toBe(
       historyFilterVisuals.fundraising.paletteIndex,
     );

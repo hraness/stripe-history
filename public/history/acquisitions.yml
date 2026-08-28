@@ -20,6 +20,27 @@ events:
       - label: Investor letter
         value: Described OpenRouter as Stripe's largest-ever acquisition
     id: openrouter-acquisition-agreement
+    metrics:
+      - label: H1 net revenue growth
+        value: 41% Y/Y
+      - label: H1 free cash flow growth
+        value: 43% Y/Y
+      - label: Products above $100M net revenue
+        value: 10+
+        context: By year-end 2026
+      - label: H1 Billing growth
+        value: 71% Y/Y
+      - label: Atlas businesses incorporated
+        value: 100,000th
+        context: Over a quarter of Delaware incorporations
+      - label: Capital active loans
+        value: 100,000+
+        context: Up 49% Y/Y
+      - label: Link users
+        value: 300 million
+      - label: Share-price compounding since Series D
+        value: 31%
+        context: Versus 14% for the S&P 500 and 18% for the Nasdaq over the same period
     organizations:
       - Stripe
       - OpenRouter

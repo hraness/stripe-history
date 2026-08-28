@@ -55,6 +55,7 @@ export interface ResearchAuditReport {
   readonly researchRuns: number;
   readonly sources: number;
   readonly unreferencedSources: number;
+  readonly annualRevenues: number;
   readonly valuations: number;
 }
 
@@ -1057,6 +1058,9 @@ function auditLoadedResearch(loaded: LoadedResearch): ResearchAuditReport {
       verifyReference(sourceId, sourceById, referenced, valuation.id);
     }
   }
+  const annualRevenues = historyEvents.filter(
+    (event) => event.annual_revenue !== undefined,
+  ).length;
   for (const appearance of loaded.appearances) {
     for (const sourceId of appearance.source_ids) {
       verifyReference(sourceId, sourceById, referenced, appearance.id);
@@ -1093,6 +1097,7 @@ function auditLoadedResearch(loaded: LoadedResearch): ResearchAuditReport {
     historyFiles: loaded.historyFiles.length,
     mutableSourceSnapshots: mutableSourceStats.snapshots,
     mutableSourceUrls: mutableSourceStats.urls,
+    annualRevenues,
     referencedSources: allReferenced.size,
     researchRuns: loaded.researchRuns.length,
     sources: loaded.sources.length,

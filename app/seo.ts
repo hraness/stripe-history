@@ -178,6 +178,11 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
       },
       {
         "@type": "PropertyValue",
+        name: "Annual net-revenue disclosures",
+        value: history.annualRevenues.length,
+      },
+      {
+        "@type": "PropertyValue",
         name: "Leadership appearances",
         value: history.appearances.length,
       },
@@ -196,6 +201,7 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
       "funding",
       "product launches",
       "annual payment volume",
+      "net revenue",
       "private company valuation",
       "leadership appearances",
       "research provenance",

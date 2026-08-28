@@ -1,4 +1,5 @@
 import type {
+  AnnualRevenuePoint,
   AnnualVolumePoint,
   CategorizedHistoryEvent,
   HistoryCollection,
@@ -28,6 +29,7 @@ interface HistoryViewProps {
 
 interface HistoryFiltersProps {
   readonly history: HistoryCollection;
+  readonly netRevenueSelected?: boolean;
   readonly paymentVolumeSelected?: boolean;
   readonly selectedCategoryId?: TimelineCategoryId;
   readonly valuationSelected?: boolean;
@@ -87,14 +89,25 @@ export function valuationBarPercent(
 }
 
 function HistoryMeasuresSidebar({
+  annualRevenues,
   annualVolumes,
   valuationHeadlines,
 }: Readonly<{
+  annualRevenues: readonly AnnualRevenuePoint[];
   annualVolumes: readonly AnnualVolumePoint[];
   valuationHeadlines: readonly ValuationHeadlinePoint[];
 }>) {
-  if (annualVolumes.length === 0 && valuationHeadlines.length === 0) return null;
+  if (
+    annualVolumes.length === 0
+    && annualRevenues.length === 0
+    && valuationHeadlines.length === 0
+  ) {
+    return null;
+  }
   const maximumVolume = Math.max(...annualVolumes.map(({ valueUsd }) => valueUsd));
+  const maximumNetRevenue = Math.max(
+    ...annualRevenues.map(({ valueUsd }) => valueUsd),
+  );
   const maximumValuation = Math.max(
     ...valuationHeadlines.map(({ valueUsd }) => valueUsd),
   );
@@ -128,6 +141,42 @@ function HistoryMeasuresSidebar({
                     <span
                       className="history-volume-fill"
                       style={{ inlineSize: `${(point.valueUsd / maximumVolume) * 100}%` }}
+                    />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </figure>
+      )}
+      {annualRevenues.length === 0 ? null : (
+        <figure
+          data-measure="net-revenue"
+          id="history-measure-net-revenue"
+          style={historyFilterVisualStyle("net-revenue")}
+        >
+          <figcaption>
+            <h2 id="net-revenue-heading">
+              <Link href="/history/net-revenue">
+                <HistoryCategoryIcon filterId="net-revenue" />
+                <span>net revenue</span>
+              </Link>
+            </h2>
+            <span>annual · USD</span>
+          </figcaption>
+          <ol className="history-volume-list" role="list">
+            {annualRevenues.map((point) => (
+              <li key={point.calendarYear}>
+                <a
+                  aria-label={`${point.calendarYear}: ${point.display} ${point.kind === "net-revenue" ? "net revenue" : "revenue"}`}
+                  href={publicSitePath(`/history/${point.categoryId}#${point.eventId}`)}
+                >
+                  <span>{point.calendarYear}</span>
+                  <strong>{point.display}</strong>
+                  <span aria-hidden="true" className="history-volume-track">
+                    <span
+                      className="history-volume-fill"
+                      style={{ inlineSize: `${(point.valueUsd / maximumNetRevenue) * 100}%` }}
                     />
                   </span>
                 </a>
@@ -207,6 +256,7 @@ function HistoryEventItem({
 
 export function HistoryFilters({
   history,
+  netRevenueSelected = false,
   paymentVolumeSelected = false,
   selectedCategoryId,
   valuationSelected = false,
@@ -218,6 +268,7 @@ export function HistoryFilters({
     ]),
   );
   const allSelected = selectedCategoryId === undefined
+    && !netRevenueSelected
     && !paymentVolumeSelected
     && !valuationSelected;
 
@@ -244,6 +295,13 @@ export function HistoryFilters({
       selected: paymentVolumeSelected,
     },
     {
+      count: history.annualRevenues.length,
+      href: "/history/net-revenue",
+      id: "net-revenue",
+      label: "net revenue",
+      selected: netRevenueSelected,
+    },
+    {
       count: history.valuations.length,
       href: "/history/valuation",
       id: "valuation",
@@ -260,7 +318,7 @@ export function HistoryFilters({
   ) => {
     const countNoun = filterId === "valuation"
       ? "observations"
-      : filterId === "payment-volume"
+      : filterId === "payment-volume" || filterId === "net-revenue"
         ? "annual disclosures"
         : count === 1
           ? "event"
@@ -343,6 +401,7 @@ export function HistoryView({
         )}
         <div className="history-layout">
           <HistoryMeasuresSidebar
+            annualRevenues={history.annualRevenues}
             annualVolumes={history.annualVolumes}
             valuationHeadlines={history.valuationHeadlines}
           />

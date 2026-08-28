@@ -116,6 +116,8 @@ describe("hraness.com/stripe valuation history", () => {
     expect(html).toContain("Sep 23, 2025");
     expect(html).toContain("source authority");
     expect(html).toContain("Missing years stay missing");
+    expect(html).toContain('href="/history/payment-volume"');
+    expect(html).toContain('href="/history/net-revenue"');
     expect(html).toContain("bars use a linear scale");
     expect(html).toContain("linear scale from zero to the largest selected value");
     expect(html).not.toMatch(/logarithmic|log scale/iu);

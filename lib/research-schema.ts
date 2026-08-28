@@ -189,9 +189,13 @@ const moneyClaimFields = {
   value_usd: z.number().int().safe().positive(),
 } as const;
 
-const moneySchema = z.strictObject(moneyClaimFields).superRefine((claim, context) => {
-  validateMonetaryClaim(claim, parseScaledMoneyDisplay(claim.display), context);
-});
+export const MonetaryAmountSchema = z.strictObject(moneyClaimFields).superRefine(
+  (claim, context) => {
+    validateMonetaryClaim(claim, parseScaledMoneyDisplay(claim.display), context);
+  },
+);
+
+const moneySchema = MonetaryAmountSchema;
 
 export const FinancingAmountStageSchema = z.enum([
   "agreements-signed",

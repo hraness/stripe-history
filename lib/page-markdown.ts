@@ -34,6 +34,11 @@ import {
   deriveValuationPageSeo,
 } from "@/app/history/valuation/valuation-page-model";
 import {
+  deriveNetRevenueDisclosures,
+  deriveNetRevenuePageSeo,
+  deriveNetRevenueRecords,
+} from "@/app/history/net-revenue/net-revenue-page-model";
+import {
   loadHistory,
   type CategorizedHistoryEvent,
   type HistoryCollection,
@@ -57,6 +62,7 @@ const KNOWN_STATIC_PATHS = new Set([
   "/llms.txt",
   "/privacy",
   "/history/payment-volume",
+  "/history/net-revenue",
   "/history/valuation",
 ]);
 
@@ -123,7 +129,7 @@ function historyIndexMarkdown(history: HistoryCollection): string {
     ),
     independenceSentence,
     "",
-    `This Markdown index covers the same ${history.events.length} sourced events as the HTML timeline. Category, annual-volume, and valuation pages repeat those records in a narrower view.`,
+    `This Markdown index covers the same ${history.events.length} sourced events as the HTML timeline. Category, annual-volume, net-revenue, and valuation pages repeat those records in a narrower view.`,
     "",
     "## Browse by topic",
     "",
@@ -133,6 +139,11 @@ function historyIndexMarkdown(history: HistoryCollection): string {
         href: `${SITE_ORIGIN}/history/payment-volume`,
         label: "Annual payment and total volume",
         note: `${history.annualVolumes.length} disclosed years`,
+      },
+      {
+        href: `${SITE_ORIGIN}/history/net-revenue`,
+        label: "Annual net revenue and revenue",
+        note: `${history.annualRevenues.length} disclosed years`,
       },
       {
         href: `${SITE_ORIGIN}/history/valuation`,
@@ -316,6 +327,51 @@ function markdownTableCell(value: string): string {
   return value.replaceAll("|", "\\|").replaceAll("\n", " ");
 }
 
+function netRevenueMarkdown(history: HistoryCollection): string {
+  const seo = deriveNetRevenuePageSeo(history);
+  const rows = deriveNetRevenueRecords(history);
+  const table = [
+    "| year | amount | kind | qualifier | sources |",
+    "| --- | --- | --- | --- | --- |",
+    ...rows.map(({ event, kindLabel, point, qualifierLabel }) => {
+      const sources = event.sources
+        .map((source) => `[${source.publisher}](${source.url})`)
+        .join(" · ");
+      return `| ${point.calendarYear} | ${markdownTableCell(point.display)} | ${markdownTableCell(kindLabel)} | ${markdownTableCell(qualifierLabel)} | ${markdownTableCell(sources)} |`;
+    }),
+  ];
+  return [
+    heading(seo.title, seo.description),
+    seo.lead,
+    "",
+    "## Yearly disclosures",
+    "",
+    ...table,
+    "",
+    "## Disclosures and sources",
+    "",
+    ...deriveNetRevenueDisclosures(history).map(({ event, kindLabel, qualifierLabel }) => {
+      const sources = event.sources
+        .map((source) => `[${source.publisher}](${source.url})`)
+        .join(" · ");
+      return [
+        `### ${event.title}`,
+        "",
+        `${event.date} · ${kindLabel} · ${qualifierLabel}`,
+        "",
+        event.summary,
+        "",
+        `Sources: ${sources}`,
+        "",
+      ].join("\n");
+    }),
+    "## Method",
+    "",
+    seo.method,
+    "",
+  ].join("\n");
+}
+
 function valuationMarkdown(history: HistoryCollection): string {
   const seo = deriveValuationPageSeo(history);
   const rows = deriveValuationHeadlineRows(history);
@@ -379,6 +435,9 @@ export async function markdownForPath(pathname: string): Promise<MarkdownDocumen
   if (path === "/data") return { body: dataMarkdown(history), status: 200 };
   if (path === "/history/payment-volume") {
     return { body: paymentVolumeMarkdown(history), status: 200 };
+  }
+  if (path === "/history/net-revenue") {
+    return { body: netRevenueMarkdown(history), status: 200 };
   }
   if (path === "/history/valuation") {
     return { body: valuationMarkdown(history), status: 200 };

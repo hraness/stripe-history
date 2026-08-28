@@ -5,6 +5,7 @@ import {
 import type { ValuationObservation } from "@/lib/research-schema";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { breadcrumbJsonLd, historyCollectionJsonLd } from "../../seo";
 import { SiteFooter } from "../../site-footer";
@@ -322,10 +323,16 @@ export default async function ValuationPage() {
             </p>
             <p>
               Pre-money, post-money, transaction-implied, common-stock 409A,
-              and market-indication values remain labeled separately. Approximate
+              and market-indication values remain labeled separately.               Approximate
               and inferred figures preserve their qualifiers. The bars use a
               linear scale from zero to the largest selected value; labels show
               the sourced nominal values.
+            </p>
+            <p>
+              Annual payment and total volume remain on the{" "}
+              <Link href="/history/payment-volume">volume record</Link>. Company
+              net-revenue and revenue disclosures remain on the{" "}
+              <Link href="/history/net-revenue">net-revenue record</Link>.
             </p>
           </section>
         </section>

@@ -113,6 +113,8 @@ describe("hraness.com/stripe payment volume history", () => {
     expect(html).toContain("Stripe calls the 2025 figure");
     expect(html).toContain("2021 and 2022 figures are lower bounds");
     expect(html).toContain("Missing years are not inferred");
+    expect(html).toContain('href="/history/net-revenue"');
+    expect(html).toContain('href="/history/valuation"');
     expect(html).toContain("bars use a linear scale");
     expect(html).toContain('data-value-usd="640000000000"');
     expect(html).toContain('data-value-usd="1900000000000"');

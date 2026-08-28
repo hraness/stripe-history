@@ -8,6 +8,7 @@ import {
 export type HistoryFilterVisualId =
   | TimelineCategoryId
   | "all"
+  | "net-revenue"
   | "payment-volume"
   | "valuation";
 
@@ -40,6 +41,9 @@ const categoryVisuals = {
 export const historyFilterVisuals = {
   ...categoryVisuals,
   all: { paletteIndex: null },
+  "net-revenue": {
+    paletteIndex: categoryVisuals["company-milestones"].paletteIndex,
+  },
   "payment-volume": {
     paletteIndex: categoryVisuals["payment-and-payout-expansion"].paletteIndex,
   },

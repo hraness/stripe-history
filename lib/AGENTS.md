@@ -3,7 +3,7 @@
 - `history-schema.ts` – strict schemas and public history types.
 - `research-schema.ts` and `research-source-identity.ts` – strict provenance, valuation, appearance, collection, and run contracts with stable source identity.
 - `automated-publication-schema.ts` – reviewed model policy and hash-only publication attestation contracts.
-- `content.ts` – deterministic loading, source resolution, validation, categorization, chronology, annual-volume extraction, and valuation selection.
+- `content.ts` – deterministic loading, source resolution, validation, categorization, chronology, annual-volume and annual-revenue extraction, and valuation selection.
 - `accept.ts` – Accept parsing and markdown negotiation decisions.
 - `history-urls.ts` – durable category paths and the internal Markdown rewrite.
 - `page-markdown.ts` and `llms-txt.ts` – Markdown representations of existing public pages and the agent index.

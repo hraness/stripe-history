@@ -35,6 +35,7 @@ describe("hraness.com/stripe public identity", () => {
     expect(urls).toEqual(expect.arrayContaining([
       SITE_ORIGIN,
       `${SITE_ORIGIN}/history/payment-volume`,
+      `${SITE_ORIGIN}/history/net-revenue`,
       `${SITE_ORIGIN}/history/valuation`,
       `${SITE_ORIGIN}/about`,
       `${SITE_ORIGIN}/contact`,

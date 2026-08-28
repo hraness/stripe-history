@@ -63,6 +63,7 @@ describe("hraness.com/stripe structured discovery", () => {
     expect(dataset.variableMeasured).toEqual(expect.arrayContaining([
       expect.objectContaining({ name: "Valuation observations", value: 25 }),
       expect.objectContaining({ name: "Annual volume disclosures", value: 5 }),
+      expect.objectContaining({ name: "Annual net-revenue disclosures", value: 3 }),
       expect.objectContaining({ name: "Leadership appearances", value: 41 }),
     ]));
     expect(dataset.distribution).toHaveLength(16);
@@ -84,6 +85,9 @@ describe("hraness.com/stripe structured discovery", () => {
       encodingFormat: "application/yaml",
       name: "Stripe valuation observations",
     });
+    expect(dataset.distribution).not.toContainEqual(expect.objectContaining({
+      contentUrl: "https://hraness.com/stripe/research/net-revenue.yml",
+    }));
   });
 
   test("anchors appearance entities in the timeline category", async () => {
