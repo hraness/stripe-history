@@ -66,7 +66,7 @@ describe("agent markdown representations", () => {
     expect(netRevenue.body).toContain("| 2021 | ~$2.5 billion | net revenue | approximate |");
     expect(netRevenue.body).toContain("| 2024 | $5.1 billion | revenue | reported |");
     expect(netRevenue.body).toContain("| 2025 | $6.8 billion | revenue | reported |");
-    expect(netRevenue.body).toContain("$3.2 billion");
+    expect(netRevenue.body).toContain("Related cash and free-cash-flow amounts stay on those disclosure cards");
     expect(netRevenue.body).toContain("Forbes reports Stripe 2021 net revenue of nearly $2.5 billion");
     expect(netRevenue.body).toContain("The Information reports Stripe 2025 revenue of $6.8 billion");
     expect(netRevenue.body).toContain("not affiliated with, endorsed by, or operated by");
