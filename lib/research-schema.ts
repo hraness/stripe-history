@@ -15,8 +15,6 @@ export const STRIPE_HISTORY_SOURCE_CATALOG_SCHEMA_VERSION =
   "stripe-history/sources/v1" as const;
 export const STRIPE_HISTORY_VALUATIONS_SCHEMA_VERSION =
   "stripe-history/valuations/v1" as const;
-export const STRIPE_HISTORY_NET_REVENUE_SCHEMA_VERSION =
-  "stripe-history/net-revenue/v1" as const;
 export const STRIPE_HISTORY_APPEARANCES_SCHEMA_VERSION =
   "stripe-history/appearances/v1" as const;
 export const STRIPE_HISTORY_RESEARCH_COLLECTIONS_SCHEMA_VERSION =
@@ -1027,131 +1025,7 @@ export const ResearchCollectionsFileSchema = z.strictObject({
   }
 });
 
-export const NetRevenueObservationSchema = z.strictObject({
-  amount: MonetaryAmountSchema,
-  calendar_year: z.number().int().min(2000).max(2100),
-  claim: z.enum(["stated-result", "target"]),
-  confidence: z.enum(["confirmed", "reported"]),
-  date_precision: z.enum(["day", "month", "year"]),
-  event_id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u).max(120).optional(),
-  id: z.string().regex(/^net-revenue-[a-z0-9]+(?:-[a-z0-9]+)*$/u).max(140),
-  metric: z.enum(["cash", "fcf", "net-revenue", "revenue"]),
-  notes: CompactTextSchema.optional(),
-  period: z.enum(["fy", "h1", "q1", "q2", "q3", "q4", "run-rate"]),
-  period_end: PartialDateSchema,
-  product: CompactTextSchema.max(120).optional(),
-  reported_at: PartialDateSchema.optional(),
-  scope: z.enum(["company", "product"]),
-  source_ids: z.array(SourceIdSchema).min(1).max(12),
-  source_wording: CompactTextSchema,
-  status: z.enum(["company-confirmed", "reported"]),
-  title: CompactTextSchema.max(180),
-}).superRefine((observation, context) => {
-  const expectedPrecision = observation.period_end.length === 4
-    ? "year"
-    : observation.period_end.length === 7
-      ? "month"
-      : "day";
-  if (observation.date_precision !== expectedPrecision) {
-    context.addIssue({
-      code: "custom",
-      message: `date_precision must be ${expectedPrecision}`,
-      path: ["date_precision"],
-    });
-  }
-  if (Number(observation.period_end.slice(0, 4)) !== observation.calendar_year) {
-    context.addIssue({
-      code: "custom",
-      message: "calendar_year must match period_end",
-      path: ["calendar_year"],
-    });
-  }
-  if ((observation.scope === "product") !== (observation.product !== undefined)) {
-    context.addIssue({
-      code: "custom",
-      message: "Only product-scope observations declare a product",
-      path: ["product"],
-    });
-  }
-  if ((observation.status === "company-confirmed") !== (observation.confidence === "confirmed")) {
-    context.addIssue({
-      code: "custom",
-      message: "Company-confirmed status requires confirmed confidence",
-      path: ["status"],
-    });
-  }
-  if (observation.period === "fy" && observation.period_end.length !== 4) {
-    context.addIssue({
-      code: "custom",
-      message: "Full-year observations must use a calendar-year period_end",
-      path: ["period_end"],
-    });
-  }
-  if (
-    observation.period === "fy"
-    && observation.scope === "company"
-    && observation.claim === "target"
-  ) {
-    context.addIssue({
-      code: "custom",
-      message: "Company full-year observations cannot be forward targets",
-      path: ["claim"],
-    });
-  }
-  uniqueValues(observation.source_ids, context, ["source_ids"]);
-});
-
-export const NetRevenueFileSchema = z.strictObject({
-  observations: z.array(NetRevenueObservationSchema).min(1).max(200),
-  schema: z.literal(STRIPE_HISTORY_NET_REVENUE_SCHEMA_VERSION),
-}).superRefine((file, context) => {
-  const ids = file.observations.map(({ id }) => id);
-  if (new Set(ids).size !== ids.length) {
-    context.addIssue({ code: "custom", message: "Net-revenue IDs must be unique" });
-  }
-  const companyYears = file.observations.filter((observation) =>
-    isCompanyFiscalRevenueObservation(observation)
-  );
-  if (companyYears.length === 0) {
-    context.addIssue({
-      code: "custom",
-      message: "At least one company full-year stated revenue observation is required",
-    });
-  }
-  for (let index = 1; index < file.observations.length; index += 1) {
-    const previous = file.observations[index - 1];
-    const current = file.observations[index];
-    if (
-      previous !== undefined
-      && current !== undefined
-      && (previous.period_end < current.period_end
-        || (previous.period_end === current.period_end && previous.id > current.id))
-    ) {
-      context.addIssue({
-        code: "custom",
-        message: "Net-revenue observations must be reverse chronological",
-        path: ["observations", index, "period_end"],
-      });
-    }
-  }
-});
-
-export function isCompanyFiscalRevenueObservation(
-  observation: Readonly<{
-    claim: "stated-result" | "target";
-    metric: "cash" | "fcf" | "net-revenue" | "revenue";
-    period: "fy" | "h1" | "q1" | "q2" | "q3" | "q4" | "run-rate";
-    scope: "company" | "product";
-  }>,
-): boolean {
-  return observation.scope === "company"
-    && observation.period === "fy"
-    && observation.claim === "stated-result"
-    && (observation.metric === "revenue" || observation.metric === "net-revenue");
-}
-
 export type Appearance = z.infer<typeof AppearanceSchema>;
-export type NetRevenueObservation = z.infer<typeof NetRevenueObservationSchema>;
 export type ResearchCollection = z.infer<typeof ResearchCollectionSchema>;
 export type ResearchRun = z.infer<typeof ResearchRunLedgerSchema>["runs"][number];
 export type ResearchSource = z.infer<typeof ResearchSourceSchema>;

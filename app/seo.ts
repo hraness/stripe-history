@@ -178,8 +178,8 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
       },
       {
         "@type": "PropertyValue",
-        name: "Net-revenue observations",
-        value: history.netRevenues.length,
+        name: "Annual net-revenue disclosures",
+        value: history.annualRevenues.length,
       },
       {
         "@type": "PropertyValue",
@@ -227,12 +227,6 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
         "@type": "DataDownload" as const,
         name: "Stripe valuation observations",
         contentUrl: `${SITE_ORIGIN}/research/valuations.yml`,
-        encodingFormat: "application/yaml",
-      },
-      {
-        "@type": "DataDownload" as const,
-        name: "Stripe net-revenue observations",
-        contentUrl: `${SITE_ORIGIN}/research/net-revenue.yml`,
         encodingFormat: "application/yaml",
       },
       {

@@ -1,4 +1,5 @@
 import { loadHistory } from "@/lib/content";
+import { historyCategoryPath } from "@/lib/history-urls";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -6,16 +7,13 @@ import Link from "next/link";
 import { breadcrumbJsonLd, historyCollectionJsonLd } from "../../seo";
 import { SiteFooter } from "../../site-footer";
 import { SiteHeader } from "../../site-header";
+import { HistoryCategoryIcon } from "../category-icon";
 import { HistoryFilters } from "../history-view";
 import {
-  deriveNetRevenueHeadlineRows,
+  deriveNetRevenueDisclosures,
   deriveNetRevenuePageMetadata,
   deriveNetRevenuePageSeo,
-  netRevenueClaimLabel,
-  netRevenueMetricLabel,
-  netRevenuePeriodLabel,
-  netRevenueScopeLabel,
-  netRevenueStatusLabel,
+  deriveNetRevenueRecords,
 } from "./net-revenue-page-model";
 
 export const dynamic = "force-static";
@@ -44,20 +42,18 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function NetRevenuePage() {
   const history = await loadHistory();
   const seo = deriveNetRevenuePageSeo(history);
-  const headlines = deriveNetRevenueHeadlineRows(history);
-  const headlineIds = new Set(headlines.map((row) => row.observationId));
-  const maximumValue = Math.max(
-    ...history.netRevenueHeadlines.map(({ valueUsd }) => valueUsd),
-  );
+  const records = deriveNetRevenueRecords(history);
+  const disclosures = deriveNetRevenueDisclosures(history);
+  const maximumValue = Math.max(...records.map(({ point }) => point.valueUsd));
 
   return (
     <>
       <JsonLdScript
         data={[
           historyCollectionJsonLd(
-            headlines.map((row) => ({
-              id: row.observationId,
-              title: `${row.calendarYear}: ${row.display}`,
+            records.map(({ event, kindLabel, point }) => ({
+              id: event.id,
+              title: `${point.calendarYear}: ${point.display} ${kindLabel}`,
             })),
             {
               description: seo.description,
@@ -90,37 +86,37 @@ export default async function NetRevenuePage() {
           </p>
 
           <section
-            aria-labelledby="net-revenue-headlines-heading"
+            aria-labelledby="net-revenue-table-heading"
             className="history-volume-table-section"
           >
-            <h2 id="net-revenue-headlines-heading">company full-year figures</h2>
+            <h2 id="net-revenue-table-heading">yearly disclosures</h2>
             <div className="history-volume-table-wrap">
               <table>
                 <thead>
                   <tr>
                     <th scope="col">year</th>
                     <th scope="col">amount</th>
-                    <th scope="col">metric</th>
-                    <th scope="col">status</th>
+                    <th scope="col">kind</th>
+                    <th scope="col">qualifier</th>
                     <th scope="col">sources</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {headlines.map((row) => (
-                    <tr id={row.observationId} key={row.observationId}>
-                      <th scope="row">{row.calendarYear}</th>
-                      <td>{row.display}</td>
-                      <td>{row.metricLabel}</td>
-                      <td>{row.statusLabel}</td>
+                  {records.map(({ event, kindLabel, point, qualifierLabel }) => (
+                    <tr id={event.id} key={event.id}>
+                      <th scope="row">{point.calendarYear}</th>
+                      <td>{point.display}</td>
+                      <td>{kindLabel}</td>
+                      <td>{qualifierLabel}</td>
                       <td>
-                        {row.sources.map((source, index) => (
-                          <span key={source.id}>
+                        {event.sources.map((source, index) => (
+                          <span key={source.url}>
                             {index === 0 ? null : <span aria-hidden="true"> · </span>}
                             <a
                               aria-label={`${source.publisher}: ${source.title}`}
                               data-analytics-event="source link opened"
-                              data-analytics-id={row.observationId}
-                              data-analytics-kind="net-revenue"
+                              data-analytics-id={event.id}
+                              data-analytics-kind="history"
                               href={source.url}
                             >
                               {source.publisher}
@@ -140,21 +136,21 @@ export default async function NetRevenuePage() {
             className="history-volume-chart"
           >
             <figcaption>
-              <h2 id="net-revenue-chart-heading">company full-year figures by year</h2>
+              <h2 id="net-revenue-chart-heading">revenue by year</h2>
               <p>
-                {seo.yearRange}, nominal USD. One sourced company full-year point
-                per year; bars use a linear scale. Missing years stay missing.
+                {seo.yearRange}, nominal USD. One sourced disclosure per year;
+                bars use a linear scale.
               </p>
             </figcaption>
             <ol role="list">
-              {history.netRevenueHeadlines.map((point) => (
+              {records.map(({ kindLabel, point }) => (
                 <li key={point.calendarYear}>
-                  <a href={`#${point.observationId}`}>
+                  <a href={`#${point.eventId}`}>
                     <time dateTime={String(point.calendarYear)}>
                       {point.calendarYear}
                     </time>
                     <strong>{point.display}</strong>
-                    <span>{netRevenueStatusLabel[point.status]}</span>
+                    <span>{kindLabel}</span>
                   </a>
                   <span aria-hidden="true" className="history-volume-chart-track">
                     <span
@@ -169,101 +165,96 @@ export default async function NetRevenuePage() {
           </figure>
 
           <section
-            aria-labelledby="net-revenue-observations-heading"
-            className="history-valuation-observations history-volume-table-section"
+            aria-labelledby="net-revenue-disclosures-heading"
+            className="history-volume-disclosures history-volume-table-section"
           >
-            <h2 id="net-revenue-observations-heading">observations and sources</h2>
-            <ol className="history-valuation-observation-list" role="list">
-              {history.netRevenues.map((observation) => (
-                <li
-                  {...(headlineIds.has(observation.id)
-                    ? {}
-                    : { id: observation.id })}
-                  key={observation.id}
-                >
-                  <article>
-                    <header>
-                      <p className="history-event-kicker">
-                        <time dateTime={observation.period_end}>
-                          {partialDateLabel(observation.period_end)}
-                        </time>
-                        <span className="history-event-status">
-                          {netRevenueScopeLabel[observation.scope]}
-                        </span>
-                        <span className="history-valuation-basis-badge">
-                          {netRevenuePeriodLabel[observation.period]}
-                        </span>
-                        {observation.confidence === "confirmed" ? null : (
-                          <span className="history-event-confidence">
-                            {observation.confidence}
+            <h2 id="net-revenue-disclosures-heading">disclosures and sources</h2>
+            <ol className="history-volume-disclosure-list" role="list">
+              {disclosures.map(({ event, kindLabel, point, qualifierLabel }) => {
+                const categoryLabel = event.categoryLabel.toLocaleLowerCase("en-US");
+                return (
+                  <li key={event.id}>
+                    <article>
+                      <header>
+                        <p className="history-event-kicker">
+                          <time dateTime={event.date}>
+                            {partialDateLabel(event.date)}
+                          </time>
+                          <Link
+                            className="history-event-type"
+                            data-analytics-event="history filter selected"
+                            data-analytics-id={event.categoryId}
+                            data-analytics-kind="history-category"
+                            href={`${historyCategoryPath(event.categoryId)}#${event.id}`}
+                          >
+                            <HistoryCategoryIcon filterId={event.categoryId} />
+                            <span>{categoryLabel}</span>
+                          </Link>
+                          <span className="history-event-status">{kindLabel}</span>
+                          <span className="history-valuation-basis-badge">
+                            {qualifierLabel}
                           </span>
-                        )}
-                      </p>
-                      <h3>{observation.title}</h3>
-                    </header>
-                    <p className="history-valuation-note">
-                      {observation.source_wording}
-                    </p>
-                    <dl className="history-event-facts">
-                      <div>
-                        <dt>amount</dt>
-                        <dd>{observation.amount.display}</dd>
-                      </div>
-                      <div>
-                        <dt>metric</dt>
-                        <dd>{netRevenueMetricLabel[observation.metric]}</dd>
-                      </div>
-                      <div>
-                        <dt>period</dt>
-                        <dd>{netRevenuePeriodLabel[observation.period]}</dd>
-                      </div>
-                      <div>
-                        <dt>status</dt>
-                        <dd>{netRevenueStatusLabel[observation.status]}</dd>
-                      </div>
-                      <div>
-                        <dt>claim</dt>
-                        <dd>{netRevenueClaimLabel[observation.claim]}</dd>
-                      </div>
-                      {observation.product === undefined ? null : (
+                        </p>
+                        <h3>{event.title}</h3>
+                      </header>
+                      <p>{event.summary}</p>
+                      <dl className="history-event-facts">
                         <div>
-                          <dt>product</dt>
-                          <dd>{observation.product}</dd>
+                          <dt>amount</dt>
+                          <dd>{point.display}</dd>
                         </div>
-                      )}
-                      {observation.reported_at === undefined ? null : (
                         <div>
-                          <dt>reported</dt>
+                          <dt>measurement</dt>
+                          <dd>{kindLabel}</dd>
+                        </div>
+                        <div>
+                          <dt>qualifier</dt>
+                          <dd>{qualifierLabel}</dd>
+                        </div>
+                        <div>
+                          <dt>disclosed</dt>
                           <dd>
-                            <time dateTime={observation.reported_at}>
-                              {partialDateLabel(observation.reported_at)}
+                            <time dateTime={event.date}>
+                              {partialDateLabel(event.date)}
                             </time>
                           </dd>
                         </div>
-                      )}
-                    </dl>
-                    {observation.notes === undefined ? null : (
-                      <p className="history-valuation-note">{observation.notes}</p>
-                    )}
-                    <p className="history-event-sources">
-                      {observation.sources.map((source, index) => (
-                        <span key={source.id}>
-                          {index === 0 ? null : <span aria-hidden="true"> · </span>}
-                          <a
-                            aria-label={`${source.publisher}: ${source.title}`}
-                            data-analytics-event="source link opened"
-                            data-analytics-id={observation.id}
-                            data-analytics-kind="net-revenue"
-                            href={source.url}
-                          >
-                            {source.publisher}
-                          </a>
-                        </span>
-                      ))}
-                    </p>
-                  </article>
-                </li>
-              ))}
+                        {event.metrics?.map((metric) => (
+                          <div key={`${event.id}-${metric.label}`}>
+                            <dt>{metric.label}</dt>
+                            <dd>
+                              {metric.value}
+                              {metric.context === undefined ? null : ` · ${metric.context}`}
+                            </dd>
+                          </div>
+                        ))}
+                        {event.details?.map((detail) => (
+                          <div key={`${event.id}-${detail.label}`}>
+                            <dt>{detail.label}</dt>
+                            <dd>{detail.value}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                      <p className="history-event-sources">
+                        {event.sources.map((source, index) => (
+                          <span key={source.url}>
+                            {index === 0 ? null : <span aria-hidden="true"> · </span>}
+                            <a
+                              aria-label={`${source.publisher}: ${source.title}`}
+                              data-analytics-event="source link opened"
+                              data-analytics-id={event.id}
+                              data-analytics-kind="history"
+                              href={source.url}
+                            >
+                              {source.publisher}
+                            </a>
+                          </span>
+                        ))}
+                      </p>
+                    </article>
+                  </li>
+                );
+              })}
             </ol>
           </section>
 

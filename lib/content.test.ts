@@ -3,10 +3,11 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
+  type AnnualRevenuePoint,
   type AnnualVolumePoint,
-  deriveNetRevenueHeadlines,
   deriveValuationHeadlines,
   loadHistory,
+  validateAnnualRevenueSeries,
   validateAnnualVolumeSeries,
   valuationTier,
 } from "./content";
@@ -156,54 +157,44 @@ describe("published YAML corpus", () => {
       tier: "financing-tender",
       valueUsd: 159_000_000_000,
     });
-    expect(history.netRevenues).toHaveLength(6);
-    expect(history.netRevenues.map(({ id }) => id)).toEqual([
-      "net-revenue-2025-company-revenue",
-      "net-revenue-2025-related-cash",
-      "net-revenue-2024-company-revenue",
-      "net-revenue-2024-related-fcf",
-      "net-revenue-2023-q3-company-net",
-      "net-revenue-2021-company-net",
-    ]);
-    expect(history.netRevenues.find(({ id }) => id === "net-revenue-2025-company-revenue"))
-      .toMatchObject({
-        amount: { display: "$6.8 billion", value_usd: 6_800_000_000 },
-        metric: "revenue",
-        period: "fy",
-        scope: "company",
-        status: "reported",
-      });
-    expect(history.netRevenues.find(({ id }) => id === "net-revenue-2023-q3-company-net"))
-      .toMatchObject({
-        amount: { display: "~$1 billion", value_usd: 1_000_000_000 },
-        metric: "net-revenue",
-        period: "q3",
-        scope: "company",
-        status: "reported",
-      });
-    expect(history.netRevenueHeadlines).toEqual([
+    expect(history.annualRevenues).toEqual([
       {
         calendarYear: 2021,
+        categoryId: "company-milestones",
         display: "~$2.5 billion",
-        observationId: "net-revenue-2021-company-net",
-        status: "reported",
+        eventId: "milestone-2022-forbes-2021-net-revenue",
+        kind: "net-revenue",
+        qualifier: "approximate",
         valueUsd: 2_500_000_000,
       },
       {
         calendarYear: 2024,
+        categoryId: "company-milestones",
         display: "$5.1 billion",
-        observationId: "net-revenue-2024-company-revenue",
-        status: "reported",
+        eventId: "milestone-2025-axios-2024-revenue",
+        kind: "revenue",
+        qualifier: "reported",
         valueUsd: 5_100_000_000,
       },
       {
         calendarYear: 2025,
+        categoryId: "company-milestones",
         display: "$6.8 billion",
-        observationId: "net-revenue-2025-company-revenue",
-        status: "reported",
+        eventId: "milestone-2026-information-2025-revenue",
+        kind: "revenue",
+        qualifier: "reported",
         valueUsd: 6_800_000_000,
       },
     ]);
+    expect(history.events.find(({ id }) => id === "milestone-2023-information-q3-net-revenue"))
+      .toMatchObject({
+        title: "The Information reports Stripe Q3 2023 net revenue of roughly $1 billion",
+      });
+    expect(
+      history.annualRevenues.some(
+        ({ eventId }) => eventId === "milestone-2023-information-q3-net-revenue",
+      ),
+    ).toBeFalse();
     expect(history.appearances.map(({ id }) => id)).toContain(
       "appearance-2024-02-patrick-collison-dwarkesh",
     );
@@ -279,6 +270,38 @@ describe("published YAML corpus", () => {
     expect(() => validateAnnualVolumeSeries([
       point(2021, 817),
       point(2022, 640),
+    ])).not.toThrow();
+  });
+
+  test("requires annual revenue years to increase and leaves gaps alone", () => {
+    const point = (
+      calendarYear: number,
+      valueUsd: number,
+    ): AnnualRevenuePoint => ({
+      calendarYear,
+      categoryId: "company-milestones",
+      display: `$${valueUsd}`,
+      eventId: `revenue-${calendarYear}`,
+      kind: "revenue",
+      qualifier: "reported",
+      valueUsd,
+    });
+
+    expect(() => validateAnnualRevenueSeries([
+      point(2021, 2_500_000_000),
+      point(2024, 5_100_000_000),
+    ])).not.toThrow();
+    expect(() => validateAnnualRevenueSeries([
+      point(2024, 5_100_000_000),
+      point(2021, 2_500_000_000),
+    ])).toThrow("years must be strictly increasing");
+    expect(() => validateAnnualRevenueSeries([
+      point(2021, 5_100_000_000),
+      point(2024, 5_100_000_000),
+    ])).not.toThrow();
+    expect(() => validateAnnualRevenueSeries([
+      point(2021, 5_100_000_000),
+      point(2024, 2_500_000_000),
     ])).not.toThrow();
   });
 
@@ -466,63 +489,4 @@ describe("published YAML corpus", () => {
     ])[0]?.observationId).toBe("valuation-2025-earlier-primary");
   });
 
-  test("selects one company full-year revenue point and excludes cash or half-year claims", () => {
-    const observation = (
-      id: string,
-      input: Readonly<{
-        calendarYear?: number;
-        metric?: "cash" | "net-revenue" | "revenue";
-        period?: "fy" | "h1";
-        status?: "company-confirmed" | "reported";
-      }> = {},
-    ) => ({
-      amount: {
-        currency: "USD" as const,
-        display: "$6.8 billion",
-        qualifier: "exact" as const,
-        value_usd: 6_800_000_000,
-      },
-      calendar_year: input.calendarYear ?? 2025,
-      claim: "stated-result" as const,
-      confidence: input.status === "company-confirmed"
-        ? "confirmed" as const
-        : "reported" as const,
-      date_precision: "year" as const,
-      id,
-      metric: input.metric ?? "revenue",
-      period: input.period ?? "fy",
-      period_end: String(input.calendarYear ?? 2025),
-      scope: "company" as const,
-      source_ids: ["source-11111111111111111111"],
-      source_wording: "A sourced dollar claim",
-      status: input.status ?? "reported" as const,
-      title: `Observation ${id}`,
-    });
-
-    expect(deriveNetRevenueHeadlines([
-      observation("net-revenue-2025-related-cash", { metric: "cash" }),
-      observation("net-revenue-2025-h1-growth", { period: "h1" }),
-      observation("net-revenue-2025-company-revenue"),
-      observation("net-revenue-2024-company-revenue", { calendarYear: 2024 }),
-    ])).toEqual([
-      {
-        calendarYear: 2024,
-        display: "$6.8 billion",
-        observationId: "net-revenue-2024-company-revenue",
-        status: "reported",
-        valueUsd: 6_800_000_000,
-      },
-      {
-        calendarYear: 2025,
-        display: "$6.8 billion",
-        observationId: "net-revenue-2025-company-revenue",
-        status: "reported",
-        valueUsd: 6_800_000_000,
-      },
-    ]);
-    expect(deriveNetRevenueHeadlines([
-      observation("net-revenue-2025-reported"),
-      observation("net-revenue-2025-confirmed", { status: "company-confirmed" }),
-    ])[0]?.observationId).toBe("net-revenue-2025-confirmed");
-  });
 });

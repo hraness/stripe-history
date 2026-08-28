@@ -10,7 +10,6 @@ import {
   AppearanceSchema,
   AppearanceFileSchema,
   ResearchCollectionsFileSchema,
-  NetRevenueFileSchema,
   ResearchSourceCatalogSchema,
   ValuationFileSchema,
 } from "./research-schema";
@@ -477,132 +476,134 @@ describe("public YAML schemas", () => {
     }).success).toBe(false);
   });
 
-  test("keeps company full-year net-revenue points distinct from cash, product, and H1 claims", () => {
-    const observation = {
-      amount: {
-        currency: "USD",
+  test("requires annual revenue to be tagged, display-matched, and a completed prior year", () => {
+    const event = {
+      annual_revenue: {
+        calendar_year: 2025,
         display: "$6.8 billion",
-        qualifier: "exact",
+        kind: "revenue",
+        qualifier: "reported",
         value_usd: 6_800_000_000,
       },
-      calendar_year: 2025,
-      claim: "stated-result",
       confidence: "reported",
-      date_precision: "year",
-      id: "net-revenue-2025-company-revenue",
-      metric: "revenue",
-      period: "fy",
-      period_end: "2025",
-      scope: "company",
+      date: "2026-07-22",
+      date_precision: "day",
+      id: "annual-revenue-example",
       source_ids: ["source-11111111111111111111"],
-      source_wording: "The payment giant's revenue jumped by a third to $6.8 billion last year",
-      status: "reported",
-      title: "The Information reports Stripe 2025 revenue of $6.8 billion",
+      summary: "A sourced outlet reported an annual revenue figure with enough concrete context to satisfy the public history contract.",
+      tags: ["net-revenue"],
+      title: "A sourced outlet reports annual revenue",
     };
     const file = {
-      observations: [observation],
-      schema: "stripe-history/net-revenue/v1",
+      category: {
+        description: "Verified company milestones.",
+        id: "company-milestones",
+        label: "Company milestones",
+        order: 11,
+      },
+      events: [event],
+      schema: "stripe-history/history/v2",
     };
 
-    expect(NetRevenueFileSchema.safeParse(file).success).toBeTrue();
-    expect(NetRevenueFileSchema.safeParse({
+    expect(HistoryFileSchema.safeParse(file).success).toBeTrue();
+    expect(HistoryFileSchema.safeParse({
       ...file,
-      observations: [{
-        ...observation,
-        amount: { ...observation.amount, value_usd: 6_900_000_000 },
-      }],
-    }).success).toBeFalse();
-    expect(NetRevenueFileSchema.safeParse({
-      ...file,
-      observations: [{
-        ...observation,
-        claim: "target",
-      }],
-    }).success).toBeFalse();
-    expect(NetRevenueFileSchema.safeParse({
-      ...file,
-      observations: [{
-        ...observation,
-        metric: "cash",
-        title: "The Information reports Stripe minted $3.2 billion in cash in 2025",
-        amount: {
-          currency: "USD",
-          display: "$3.2 billion",
-          qualifier: "exact",
-          value_usd: 3_200_000_000,
+      events: [{
+        ...event,
+        annual_revenue: {
+          calendar_year: 2021,
+          display: "~$2.5 billion",
+          kind: "net-revenue",
+          qualifier: "approximate",
+          value_usd: 2_500_000_000,
         },
+        title: "Forbes reports Stripe 2021 net revenue of nearly $2.5 billion",
       }],
-    }).success).toBeFalse();
-    expect(NetRevenueFileSchema.safeParse({
-      ...file,
-      observations: [{
-        ...observation,
-        status: "company-confirmed",
-      }],
-    }).success).toBeFalse();
-    expect(NetRevenueFileSchema.safeParse({
-      ...file,
-      observations: [{
-        ...observation,
-        product: "Billing",
-      }],
-    }).success).toBeFalse();
-    expect(NetRevenueFileSchema.safeParse({
-      ...file,
-      observations: [{
-        ...observation,
-        period_end: "2025-12",
-        date_precision: "month",
-      }],
-    }).success).toBeFalse();
-    expect(NetRevenueFileSchema.safeParse({
-      ...file,
-      observations: [
-        observation,
-        {
-          ...observation,
-          id: "net-revenue-2023-q3-company-net",
-          calendar_year: 2023,
-          date_precision: "month",
-          metric: "net-revenue",
-          period: "q3",
-          period_end: "2023-09",
-          title: "The Information reports Stripe Q3 2023 net revenue of roughly $1 billion",
-          amount: {
-            currency: "USD",
-            display: "~$1 billion",
-            qualifier: "approximate",
-            value_usd: 1_000_000_000,
-          },
-        },
-      ],
     }).success).toBeTrue();
-    expect(NetRevenueFileSchema.safeParse({
+    expect(HistoryFileSchema.safeParse({
       ...file,
-      observations: [{
-        ...observation,
-        metric: "fcf",
-        title: "Axios reports Stripe 2024 free cash flow of $2.2 billion",
-        amount: {
-          currency: "USD",
-          display: "$2.2 billion",
-          qualifier: "exact",
-          value_usd: 2_200_000_000,
+      events: [{
+        ...event,
+        annual_revenue: undefined,
+        title: "The Information reports Stripe Q3 2023 net revenue of roughly $1 billion",
+      }],
+    }).success).toBeTrue();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{ ...event, tags: [] }],
+    }).success).toBeFalse();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        annual_revenue: { ...event.annual_revenue, calendar_year: 2026 },
+      }],
+    }).success).toBeFalse();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        annual_revenue: { ...event.annual_revenue, qualifier: "published-value" },
+      }],
+    }).success).toBeFalse();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        confidence: "confirmed",
+        annual_revenue: { ...event.annual_revenue, qualifier: "reported" },
+      }],
+    }).success).toBeFalse();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        confidence: "confirmed",
+        annual_revenue: {
+          ...event.annual_revenue,
+          display: "~$6.8 billion",
+          qualifier: "approximate",
+          value_usd: 6_800_000_000,
         },
       }],
     }).success).toBeFalse();
-    expect(NetRevenueFileSchema.safeParse({
+    expect(HistoryFileSchema.safeParse({
       ...file,
-      observations: [
-        {
-          ...observation,
-          id: "net-revenue-2024-company-revenue",
-          calendar_year: 2024,
-          period_end: "2024",
-          title: "An earlier year listed first",
+      events: [{
+        ...event,
+        annual_revenue: {
+          ...event.annual_revenue,
+          display: "~$6.8 billion",
+          qualifier: "reported",
+          value_usd: 6_800_000_000,
         },
-        observation,
-      ],
+      }],
+    }).success).toBeFalse();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        annual_revenue: {
+          ...event.annual_revenue,
+          display: "$6.8 billion",
+          value_usd: 6_900_000_000,
+        },
+      }],
+    }).success).toBeFalse();
+    expect(HistoryFileSchema.safeParse({
+      ...file,
+      events: [{
+        ...event,
+        annual_volume: {
+          calendar_year: 2025,
+          display: "$1.9 trillion",
+          kind: "total-volume",
+          qualifier: "published-value",
+          value_usd: 1_900_000_000_000,
+        },
+        confidence: "confirmed",
+        tags: ["payment-volume", "net-revenue"],
+      }],
     }).success).toBeFalse();
   });
 

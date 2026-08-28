@@ -1,8 +1,8 @@
 import type {
+  AnnualRevenuePoint,
   AnnualVolumePoint,
   CategorizedHistoryEvent,
   HistoryCollection,
-  NetRevenueHeadlinePoint,
   ValuationHeadlinePoint,
 } from "@/lib/content";
 import type { TimelineCategoryId } from "@/lib/history-schema";
@@ -89,24 +89,24 @@ export function valuationBarPercent(
 }
 
 function HistoryMeasuresSidebar({
+  annualRevenues,
   annualVolumes,
-  netRevenueHeadlines,
   valuationHeadlines,
 }: Readonly<{
+  annualRevenues: readonly AnnualRevenuePoint[];
   annualVolumes: readonly AnnualVolumePoint[];
-  netRevenueHeadlines: readonly NetRevenueHeadlinePoint[];
   valuationHeadlines: readonly ValuationHeadlinePoint[];
 }>) {
   if (
     annualVolumes.length === 0
-    && netRevenueHeadlines.length === 0
+    && annualRevenues.length === 0
     && valuationHeadlines.length === 0
   ) {
     return null;
   }
   const maximumVolume = Math.max(...annualVolumes.map(({ valueUsd }) => valueUsd));
   const maximumNetRevenue = Math.max(
-    ...netRevenueHeadlines.map(({ valueUsd }) => valueUsd),
+    ...annualRevenues.map(({ valueUsd }) => valueUsd),
   );
   const maximumValuation = Math.max(
     ...valuationHeadlines.map(({ valueUsd }) => valueUsd),
@@ -149,7 +149,7 @@ function HistoryMeasuresSidebar({
           </ol>
         </figure>
       )}
-      {netRevenueHeadlines.length === 0 ? null : (
+      {annualRevenues.length === 0 ? null : (
         <figure
           data-measure="net-revenue"
           id="history-measure-net-revenue"
@@ -162,22 +162,17 @@ function HistoryMeasuresSidebar({
                 <span>net revenue</span>
               </Link>
             </h2>
-            <span>company full-year · USD</span>
+            <span>annual · USD</span>
           </figcaption>
           <ol className="history-volume-list" role="list">
-            {netRevenueHeadlines.map((point) => (
+            {annualRevenues.map((point) => (
               <li key={point.calendarYear}>
                 <a
-                  aria-label={`${point.calendarYear}: ${point.display}, ${point.status === "company-confirmed" ? "company confirmed" : "reported"}`}
-                  href={publicSitePath(`/history/net-revenue#${point.observationId}`)}
+                  aria-label={`${point.calendarYear}: ${point.display} ${point.kind === "net-revenue" ? "net revenue" : "revenue"}`}
+                  href={publicSitePath(`/history/${point.categoryId}#${point.eventId}`)}
                 >
                   <span>{point.calendarYear}</span>
                   <strong>{point.display}</strong>
-                  {point.status === "company-confirmed" ? null : (
-                    <span className="history-valuation-badge">
-                      reported
-                    </span>
-                  )}
                   <span aria-hidden="true" className="history-volume-track">
                     <span
                       className="history-volume-fill"
@@ -300,7 +295,7 @@ export function HistoryFilters({
       selected: paymentVolumeSelected,
     },
     {
-      count: history.netRevenues.length,
+      count: history.annualRevenues.length,
       href: "/history/net-revenue",
       id: "net-revenue",
       label: "net revenue",
@@ -321,9 +316,9 @@ export function HistoryFilters({
     href: "/" | `/history/${string}`,
     selected: boolean,
   ) => {
-    const countNoun = filterId === "valuation" || filterId === "net-revenue"
+    const countNoun = filterId === "valuation"
       ? "observations"
-      : filterId === "payment-volume"
+      : filterId === "payment-volume" || filterId === "net-revenue"
         ? "annual disclosures"
         : count === 1
           ? "event"
@@ -406,8 +401,8 @@ export function HistoryView({
         )}
         <div className="history-layout">
           <HistoryMeasuresSidebar
+            annualRevenues={history.annualRevenues}
             annualVolumes={history.annualVolumes}
-            netRevenueHeadlines={history.netRevenueHeadlines}
             valuationHeadlines={history.valuationHeadlines}
           />
           <div className="history-years">

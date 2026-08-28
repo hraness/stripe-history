@@ -331,7 +331,7 @@ export default async function ValuationPage() {
             <p>
               Annual payment and total volume remain on the{" "}
               <Link href="/history/payment-volume">volume record</Link>. Company
-              net-revenue and related cash observations remain on the{" "}
+              net-revenue and revenue disclosures remain on the{" "}
               <Link href="/history/net-revenue">net-revenue record</Link>.
             </p>
           </section>

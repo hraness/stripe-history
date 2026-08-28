@@ -81,6 +81,33 @@ function annualVolumeDisplayValue(
   };
 }
 
+function annualRevenueDisplayValue(
+  display: string,
+): Readonly<{
+  form: "approximate" | "exact" | "lower-bound";
+  valueUsd: number;
+}> | null {
+  const match = /^(~)?\$(\d+(?:\.\d+)?) (million|billion)(\+)?$/u.exec(display);
+  if (match?.[2] === undefined || match[3] === undefined) return null;
+  if (match[1] !== undefined && match[4] !== undefined) return null;
+  const [whole = "0", fraction = ""] = match[2].split(".");
+  const denominator = 10n ** BigInt(fraction.length);
+  const decimal = BigInt(`${whole}${fraction}`);
+  const multiplier = match[3] === "million" ? 1_000_000n : 1_000_000_000n;
+  const numerator = decimal * multiplier;
+  if (numerator % denominator !== 0n) return null;
+  const value = numerator / denominator;
+  if (value > BigInt(Number.MAX_SAFE_INTEGER)) return null;
+  return {
+    form: match[1] !== undefined
+      ? "approximate"
+      : match[4] !== undefined
+        ? "lower-bound"
+        : "exact",
+    valueUsd: Number(value),
+  };
+}
+
 export const HistorySourceSchema = z.strictObject({
   kind: z.enum(["primary", "filing", "reporting", "interview", "archive"]),
   publisher: CompactTextSchema.max(120),
@@ -94,6 +121,13 @@ export const HistoryEventSchema = z.strictObject({
     currency: z.string().regex(/^[A-Z]{3}$/u).optional(),
     display: CompactTextSchema.max(120),
     value: z.number().finite().nonnegative().optional(),
+  }).optional(),
+  annual_revenue: z.strictObject({
+    calendar_year: z.number().int().min(2000).max(2100),
+    display: CompactTextSchema.max(80),
+    kind: z.enum(["net-revenue", "revenue"]),
+    qualifier: z.enum(["approximate", "lower-bound", "published-value", "reported"]),
+    value_usd: z.number().int().safe().positive(),
   }).optional(),
   annual_volume: z.strictObject({
     calendar_year: z.number().int().min(2000).max(2100),
@@ -213,6 +247,96 @@ export const HistoryEventSchema = z.strictObject({
         code: "custom",
         message: "annual_volume must describe a completed prior calendar year",
         path: ["annual_volume", "calendar_year"],
+      });
+    }
+  }
+  if (event.annual_revenue !== undefined) {
+    if (event.annual_volume !== undefined) {
+      context.addIssue({
+        code: "custom",
+        message: "An event cannot carry both annual volume and annual revenue",
+        path: ["annual_revenue"],
+      });
+    }
+    const display = annualRevenueDisplayValue(event.annual_revenue.display);
+    if (display === null) {
+      context.addIssue({
+        code: "custom",
+        message: "annual_revenue display must be a USD million or billion value",
+        path: ["annual_revenue", "display"],
+      });
+    } else if (display.valueUsd !== event.annual_revenue.value_usd) {
+      context.addIssue({
+        code: "custom",
+        message: "annual_revenue display must equal value_usd",
+        path: ["annual_revenue", "display"],
+      });
+    } else {
+      const expectedForm = event.annual_revenue.qualifier === "approximate"
+        ? "approximate"
+        : event.annual_revenue.qualifier === "lower-bound"
+          ? "lower-bound"
+          : "exact";
+      if (display.form !== expectedForm) {
+        context.addIssue({
+          code: "custom",
+          message: "annual_revenue display must agree with qualifier",
+          path: ["annual_revenue", "qualifier"],
+        });
+      }
+    }
+    if (event.confidence === "disputed") {
+      context.addIssue({
+        code: "custom",
+        message: "annual_revenue cannot sit on a disputed event",
+        path: ["confidence"],
+      });
+    }
+    if (
+      event.annual_revenue.qualifier === "published-value"
+      && event.confidence !== "confirmed"
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "published-value annual_revenue requires a confirmed event",
+        path: ["annual_revenue", "qualifier"],
+      });
+    }
+    if (
+      event.annual_revenue.qualifier === "reported"
+      && event.confidence !== "reported"
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "reported annual_revenue requires a reported event",
+        path: ["annual_revenue", "qualifier"],
+      });
+    }
+    if (
+      event.confidence === "confirmed"
+      && event.annual_revenue.qualifier === "approximate"
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "confirmed annual_revenue cannot be approximate",
+        path: ["annual_revenue", "qualifier"],
+      });
+    }
+    if (
+      event.tags?.includes("net-revenue") !== true
+      && event.tags?.includes("financials") !== true
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "annual_revenue requires the net-revenue or financials tag",
+        path: ["tags"],
+      });
+    }
+    if (event.annual_revenue.calendar_year >= Number(event.date.slice(0, 4))) {
+      context.addIssue({
+        code: "custom",
+        message: "annual_revenue must describe a completed prior calendar year",
+        path: ["annual_revenue", "calendar_year"],
       });
     }
   }

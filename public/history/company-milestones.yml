@@ -4,6 +4,39 @@ category:
   description: Company-scale, legal, regulatory, operating-model, and other milestones that do not belong more naturally in Stripe's focused history categories.
   order: 11
 events:
+  - id: milestone-2026-information-2025-revenue
+    title: The Information reports Stripe 2025 revenue of $6.8 billion
+    date: 2026-07-22
+    date_precision: day
+    confidence: reported
+    status: reported annual figure
+    annual_revenue:
+      calendar_year: 2025
+      display: $6.8 billion
+      kind: revenue
+      qualifier: reported
+      value_usd: 6800000000
+    summary: The Information reported that Stripe's revenue jumped by a third to $6.8 billion in 2025, citing a person familiar with the company's financial figures. Stripe declined to comment. The 2025 annual letter published $1.9 trillion in total volume and did not state a company net-revenue dollar figure.
+    details:
+      - label: Label in source
+        value: revenue, not Stripe's "net revenue" phrase
+      - label: Official letter
+        value: The 2025 annual update did not publish a company net-revenue dollar figure
+    metrics:
+      - label: Company revenue
+        value: $6.8 billion
+      - label: Cash
+        value: $3.2 billion
+        context: The Information titled this as cash generated in 2025
+    organizations:
+      - Stripe
+      - The Information
+    tags:
+      - net-revenue
+      - financials
+      - reported-figure
+    source_ids:
+      - source-fc9e74a8ea6a2a5fdbcf
   - id: milestone-2026-ftc-debanking-warning
     title: FTC chairman sends Stripe a warning letter about potential debanking violations
     date: 2026-03-26
@@ -115,6 +148,41 @@ events:
     source_ids:
       - source-7209b823727c000ddf0c
       - source-519ba3de493a815c1243
+  - id: milestone-2025-axios-2024-revenue
+    title: Axios and The Information report Stripe 2024 revenue of $5.1 billion
+    date: 2025-03-27
+    date_precision: day
+    confidence: reported
+    status: reported annual figure
+    annual_revenue:
+      calendar_year: 2024
+      display: $5.1 billion
+      kind: revenue
+      qualifier: reported
+      value_usd: 5100000000
+    summary: Axios reported that Stripe grew revenue 28% to $5.1 billion in 2024 and doubled free cash flow to $2.2 billion, citing The Information. The $5.1 billion figure sits next to free cash flow, so this record treats it as the global company amount rather than Irish SPIH statutory turnover.
+    details:
+      - label: Label in source
+        value: revenue, not Stripe's "net revenue" phrase
+      - label: Not SPIH turnover
+        value: Irish SPIH 2024 statutory turnover of $5.12 billion is a regional subsidiary figure and is not merged into this series
+    metrics:
+      - label: Company revenue
+        value: $5.1 billion
+      - label: Free cash flow
+        value: $2.2 billion
+        context: Axios wrote "free-cash flow"
+    organizations:
+      - Stripe
+      - Axios
+      - The Information
+    tags:
+      - net-revenue
+      - financials
+      - reported-figure
+    source_ids:
+      - source-8ddd4f01e0e9f309416f
+      - source-ed2f69cea5410893f4d4
   - id: milestone-2025-2024-volume-1-4-trillion
     title: Stripe reports $1.4 trillion in 2024 payment volume
     date: 2025-02-27
@@ -203,6 +271,31 @@ events:
     source_ids:
       - source-8a7b0b685a7ceb93b864
       - source-ed092678fc3313192a56
+  - id: milestone-2023-information-q3-net-revenue
+    title: The Information reports Stripe Q3 2023 net revenue of roughly $1 billion
+    date: 2023-12-21
+    date_precision: day
+    confidence: reported
+    status: reported quarterly figure
+    summary: Cory Weinberg's 21 December 2023 Information article reported that Stripe's net revenues grew by about 35% to roughly $1 billion in the third quarter. Contemporaneous excerpts define net revenues as what Stripe takes in after passing a large cut to card companies and other financial institutions. This is a quarter, not a full-year company figure.
+    details:
+      - label: Period
+        value: Third quarter 2023, not a full year
+      - label: Series status
+        value: Listed on the timeline only; not plotted as a company full-year point
+    metrics:
+      - label: Net revenue
+        value: ~$1 billion
+        context: Third quarter 2023
+    organizations:
+      - Stripe
+      - The Information
+    tags:
+      - net-revenue
+      - financials
+      - reported-figure
+    source_ids:
+      - source-81088c3e0016890db48d
   - id: milestone-2023-2022-volume-817-billion
     title: Stripe reports more than $817 billion in 2022 payment volume
     date: 2023-04-05
@@ -271,6 +364,42 @@ events:
       - restructuring
     source_ids:
       - source-7974addf5e18ced26551
+  - id: milestone-2022-forbes-2021-net-revenue
+    title: Forbes reports Stripe 2021 net revenue of nearly $2.5 billion
+    date: 2022-05-26
+    date_precision: day
+    confidence: reported
+    status: reported annual figure
+    annual_revenue:
+      calendar_year: 2021
+      display: ~$2.5 billion
+      kind: net-revenue
+      qualifier: approximate
+      value_usd: 2500000000
+    summary: Forbes reported that Stripe's net revenue, which excludes the cut passed to partners such as Visa and Chase, reached nearly $2.5 billion in 2021, citing sources with knowledge of the financials. The same piece reported nearly $12 billion in 2021 gross revenue. Stripe declined to comment on the figures.
+    details:
+      - label: Working definition
+        value: Net revenue excludes the cut Stripe passes along to partners like Visa and Chase
+      - label: Gross figure
+        value: Nearly $12 billion in 2021 gross revenue; not plotted as net revenue
+    metrics:
+      - label: Company net revenue
+        value: ~$2.5 billion
+      - label: Gross revenue
+        value: ~$12 billion
+        context: Forbes; not plotted as net revenue
+    people:
+      - Patrick Collison
+      - John Collison
+    organizations:
+      - Stripe
+      - Forbes
+    tags:
+      - net-revenue
+      - financials
+      - reported-figure
+    source_ids:
+      - source-1ed73df6933e50d0d59a
   - id: milestone-2022-2021-volume-640-billion
     title: Stripe reports more than $640 billion in 2021 payment volume
     date: 2022-04

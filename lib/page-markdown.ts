@@ -34,12 +34,9 @@ import {
   deriveValuationPageSeo,
 } from "@/app/history/valuation/valuation-page-model";
 import {
-  deriveNetRevenueHeadlineRows,
+  deriveNetRevenueDisclosures,
   deriveNetRevenuePageSeo,
-  netRevenueMetricLabel,
-  netRevenuePeriodLabel,
-  netRevenueScopeLabel,
-  netRevenueStatusLabel,
+  deriveNetRevenueRecords,
 } from "@/app/history/net-revenue/net-revenue-page-model";
 import {
   loadHistory,
@@ -145,8 +142,8 @@ function historyIndexMarkdown(history: HistoryCollection): string {
       },
       {
         href: `${SITE_ORIGIN}/history/net-revenue`,
-        label: "Company net-revenue observations",
-        note: `${history.netRevenues.length} sourced observations`,
+        label: "Annual net revenue and revenue",
+        note: `${history.annualRevenues.length} disclosed years`,
       },
       {
         href: `${SITE_ORIGIN}/history/valuation`,
@@ -253,11 +250,6 @@ function dataMarkdown(history: HistoryCollection): string {
         note: `${history.valuations.length} observations`,
       },
       {
-        href: `${SITE_ORIGIN}/research/net-revenue.yml`,
-        label: "Net-revenue observations YAML",
-        note: `${history.netRevenues.length} observations`,
-      },
-      {
         href: `${SITE_ORIGIN}/research/collections.yml`,
         label: "Research collections YAML",
       },
@@ -337,39 +329,37 @@ function markdownTableCell(value: string): string {
 
 function netRevenueMarkdown(history: HistoryCollection): string {
   const seo = deriveNetRevenuePageSeo(history);
-  const rows = deriveNetRevenueHeadlineRows(history);
+  const rows = deriveNetRevenueRecords(history);
   const table = [
-    "| year | amount | metric | status | sources |",
+    "| year | amount | kind | qualifier | sources |",
     "| --- | --- | --- | --- | --- |",
-    ...rows.map((row) => {
-      const sources = row.sources
+    ...rows.map(({ event, kindLabel, point, qualifierLabel }) => {
+      const sources = event.sources
         .map((source) => `[${source.publisher}](${source.url})`)
         .join(" · ");
-      return `| ${row.calendarYear} | ${markdownTableCell(row.display)} | ${markdownTableCell(row.metricLabel)} | ${markdownTableCell(row.statusLabel)} | ${markdownTableCell(sources)} |`;
+      return `| ${point.calendarYear} | ${markdownTableCell(point.display)} | ${markdownTableCell(kindLabel)} | ${markdownTableCell(qualifierLabel)} | ${markdownTableCell(sources)} |`;
     }),
   ];
   return [
     heading(seo.title, seo.description),
     seo.lead,
     "",
-    "## Company full-year figures",
+    "## Yearly disclosures",
     "",
     ...table,
     "",
-    "## Observations and sources",
+    "## Disclosures and sources",
     "",
-    ...history.netRevenues.map((observation) => {
-      const sources = observation.sources
+    ...deriveNetRevenueDisclosures(history).map(({ event, kindLabel, qualifierLabel }) => {
+      const sources = event.sources
         .map((source) => `[${source.publisher}](${source.url})`)
         .join(" · ");
       return [
-        `### ${observation.title}`,
+        `### ${event.title}`,
         "",
-        `${observation.period_end} · ${netRevenueScopeLabel[observation.scope]} · ${netRevenuePeriodLabel[observation.period]} · ${netRevenueStatusLabel[observation.status]}`,
+        `${event.date} · ${kindLabel} · ${qualifierLabel}`,
         "",
-        observation.source_wording,
-        "",
-        `${netRevenueMetricLabel[observation.metric]}: ${observation.amount.display}`,
+        event.summary,
         "",
         `Sources: ${sources}`,
         "",

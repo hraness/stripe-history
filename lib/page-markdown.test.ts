@@ -62,8 +62,8 @@ describe("agent markdown representations", () => {
 
     const netRevenue = await markdownForPath("/history/net-revenue");
     expect(netRevenue.status).toBe(200);
-    expect(netRevenue.body).toContain("| year | amount | metric | status | sources |");
-    expect(netRevenue.body).toContain("| 2021 | ~$2.5 billion | net revenue | reported |");
+    expect(netRevenue.body).toContain("| year | amount | kind | qualifier | sources |");
+    expect(netRevenue.body).toContain("| 2021 | ~$2.5 billion | net revenue | approximate |");
     expect(netRevenue.body).toContain("| 2024 | $5.1 billion | revenue | reported |");
     expect(netRevenue.body).toContain("| 2025 | $6.8 billion | revenue | reported |");
     expect(netRevenue.body).toContain("$3.2 billion");

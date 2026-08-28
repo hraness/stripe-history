@@ -53,7 +53,7 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).toContain('class="history-event-type"');
     expect(categoryIconCount).toBeGreaterThan(eventCount);
     expect(html).toContain('data-filter-id="payment-and-payout-expansion"');
-    expect(html).toContain(`aria-label="net revenue: ${history.netRevenues.length} observations"`);
+    expect(html).toContain(`aria-label="net revenue: ${history.annualRevenues.length} annual disclosures"`);
     expect(html).toContain(`aria-label="valuation: ${history.valuations.length} observations"`);
     expect(html).toMatch(
       /class="history-event" data-category="payment-and-payout-expansion" style="--history-category-hue:[0-9.]+"/u,
@@ -65,7 +65,7 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).toContain('id="milestone-2026-2025-volume-1-9-trillion"');
     expect(html.match(/class="history-volume-track"/gu)?.length).toBe(
       history.annualVolumes.length
-        + history.netRevenueHeadlines.length
+        + history.annualRevenues.length
         + history.valuationHeadlines.length,
     );
     expect(html).not.toContain("Loading Stripe company history");

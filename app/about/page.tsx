@@ -63,7 +63,7 @@ export default function AboutPage() {
           a reverse-chronological company timeline covering acquisitions,
           products, leadership, funding, valuation, expansion, offices,
           publishing projects, founder side projects and aesthetics programs,
-          early history, annual volume, sourced net-revenue observations, and
+          early history, annual volume, sourced annual net-revenue disclosures, and
           reviewed long-form appearances by Stripe founders and senior leaders.
         </p>
 

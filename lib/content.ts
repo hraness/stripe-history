@@ -13,12 +13,9 @@ import {
 } from "./history-schema";
 import {
   AppearanceFileSchema,
-  isCompanyFiscalRevenueObservation,
-  NetRevenueFileSchema,
   ResearchSourceCatalogSchema,
   ValuationFileSchema,
   type Appearance,
-  type NetRevenueObservation,
   type ResearchSource,
   type ValuationObservation,
 } from "./research-schema";
@@ -57,20 +54,18 @@ export interface AnnualVolumePoint {
   readonly valueUsd: number;
 }
 
+export interface AnnualRevenuePoint {
+  readonly calendarYear: number;
+  readonly categoryId: HistoryFile["category"]["id"];
+  readonly display: string;
+  readonly eventId: string;
+  readonly kind: NonNullable<HistoryEvent["annual_revenue"]>["kind"];
+  readonly qualifier: NonNullable<HistoryEvent["annual_revenue"]>["qualifier"];
+  readonly valueUsd: number;
+}
+
 export interface ResolvedValuationObservation extends ValuationObservation {
   readonly sources: readonly ResearchSource[];
-}
-
-export interface ResolvedNetRevenueObservation extends NetRevenueObservation {
-  readonly sources: readonly ResearchSource[];
-}
-
-export interface NetRevenueHeadlinePoint {
-  readonly calendarYear: number;
-  readonly display: string;
-  readonly observationId: string;
-  readonly status: NetRevenueObservation["status"];
-  readonly valueUsd: number;
 }
 
 export interface ValuationHeadlinePoint {
@@ -82,13 +77,12 @@ export interface ValuationHeadlinePoint {
 }
 
 export interface HistoryCollection {
+  readonly annualRevenues: readonly AnnualRevenuePoint[];
   readonly annualVolumes: readonly AnnualVolumePoint[];
   readonly appearances: readonly Appearance[];
   readonly categories: readonly TimelineCategory[];
   readonly events: readonly CategorizedHistoryEvent[];
   readonly files: readonly HistoryFile[];
-  readonly netRevenueHeadlines: readonly NetRevenueHeadlinePoint[];
-  readonly netRevenues: readonly ResolvedNetRevenueObservation[];
   readonly sources: readonly ResearchSource[];
   readonly valuationHeadlines: readonly ValuationHeadlinePoint[];
   readonly valuations: readonly ResolvedValuationObservation[];
@@ -155,6 +149,19 @@ export function validateAnnualVolumeSeries(
     if (previous === undefined || current === undefined) continue;
     if (previous.calendarYear >= current.calendarYear) {
       throw new Error("History annual volume years must be strictly increasing");
+    }
+  }
+}
+
+export function validateAnnualRevenueSeries(
+  points: readonly AnnualRevenuePoint[],
+): void {
+  for (let index = 1; index < points.length; index += 1) {
+    const previous = points[index - 1];
+    const current = points[index];
+    if (previous === undefined || current === undefined) continue;
+    if (previous.calendarYear >= current.calendarYear) {
+      throw new Error("History annual revenue years must be strictly increasing");
     }
   }
 }
@@ -240,55 +247,6 @@ function compareValuationHeadlineCandidates(
     || left.id.localeCompare(right.id);
 }
 
-const netRevenueStatusRank: Readonly<Record<NetRevenueObservation["status"], number>> = {
-  "company-confirmed": 2,
-  reported: 1,
-};
-
-const netRevenueConfidenceRank: Readonly<Record<NetRevenueObservation["confidence"], number>> = {
-  confirmed: 2,
-  reported: 1,
-};
-
-type NetRevenueHeadlineCandidate = NetRevenueObservation & {
-  readonly sources?: readonly ResearchSource[];
-};
-
-function compareNetRevenueHeadlineCandidates(
-  left: NetRevenueHeadlineCandidate,
-  right: NetRevenueHeadlineCandidate,
-): number {
-  return netRevenueStatusRank[right.status] - netRevenueStatusRank[left.status]
-    || netRevenueConfidenceRank[right.confidence] - netRevenueConfidenceRank[left.confidence]
-    || strongestSourceAuthority(right) - strongestSourceAuthority(left)
-    || right.period_end.localeCompare(left.period_end)
-    || (right.reported_at ?? "").localeCompare(left.reported_at ?? "")
-    || left.id.localeCompare(right.id);
-}
-
-export function deriveNetRevenueHeadlines(
-  observations: readonly NetRevenueHeadlineCandidate[],
-): readonly NetRevenueHeadlinePoint[] {
-  const byYear = new Map<number, NetRevenueHeadlineCandidate[]>();
-  for (const observation of observations) {
-    if (!isCompanyFiscalRevenueObservation(observation)) continue;
-    const existing = byYear.get(observation.calendar_year) ?? [];
-    existing.push(observation);
-    byYear.set(observation.calendar_year, existing);
-  }
-  return [...byYear].map(([calendarYear, candidates]) => {
-    const selected = candidates.toSorted(compareNetRevenueHeadlineCandidates)[0];
-    if (selected === undefined) throw new Error(`Missing net revenue for ${calendarYear}`);
-    return {
-      calendarYear,
-      display: selected.amount.display,
-      observationId: selected.id,
-      status: selected.status,
-      valueUsd: selected.amount.value_usd,
-    };
-  }).toSorted((left, right) => left.calendarYear - right.calendarYear);
-}
-
 export function deriveValuationHeadlines(
   observations: readonly HeadlineCandidate[],
 ): readonly ValuationHeadlinePoint[] {
@@ -328,15 +286,12 @@ export async function loadHistory(
   directory = HISTORY_DIRECTORY,
   researchDirectory = RESEARCH_DIRECTORY,
 ): Promise<HistoryCollection> {
-  const [sourceCatalog, valuationFile, netRevenueFile, appearanceFile] = await Promise.all([
+  const [sourceCatalog, valuationFile, appearanceFile] = await Promise.all([
     parseYamlFile(join(researchDirectory, "sources.yml")).then((value) =>
       ResearchSourceCatalogSchema.parse(value)
     ),
     parseYamlFile(join(researchDirectory, "valuations.yml")).then((value) =>
       ValuationFileSchema.parse(value)
-    ),
-    parseYamlFile(join(researchDirectory, "net-revenue.yml")).then((value) =>
-      NetRevenueFileSchema.parse(value)
     ),
     parseYamlFile(join(researchDirectory, "appearances.yml")).then((value) =>
       AppearanceFileSchema.parse(value)
@@ -418,6 +373,20 @@ export async function loadHistory(
     ) {
       throw new Error(`History annual volume ${event.id} requires a primary source`);
     }
+    if (event.annual_revenue !== undefined) {
+      const hasPrimaryOrFiling = event.sources.some(
+        ({ kind }) => kind === "primary" || kind === "filing",
+      );
+      const hasReporting = event.sources.some(({ kind }) => kind === "reporting");
+      if (event.confidence === "confirmed" && !hasPrimaryOrFiling) {
+        throw new Error(
+          `History annual revenue ${event.id} requires a primary or filing source`,
+        );
+      }
+      if (event.confidence === "reported" && !hasReporting) {
+        throw new Error(`History annual revenue ${event.id} requires a reporting source`);
+      }
+    }
   }
   const annualVolumes = historyEvents.flatMap((event) =>
     event.annual_volume === undefined
@@ -433,6 +402,20 @@ export async function loadHistory(
         }]
   ).toSorted((left, right) => left.calendarYear - right.calendarYear);
   validateAnnualVolumeSeries(annualVolumes);
+  const annualRevenues = historyEvents.flatMap((event) =>
+    event.annual_revenue === undefined
+      ? []
+      : [{
+          calendarYear: event.annual_revenue.calendar_year,
+          categoryId: event.categoryId,
+          display: event.annual_revenue.display,
+          eventId: event.id,
+          kind: event.annual_revenue.kind,
+          qualifier: event.annual_revenue.qualifier,
+          valueUsd: event.annual_revenue.value_usd,
+        }]
+  ).toSorted((left, right) => left.calendarYear - right.calendarYear);
+  validateAnnualRevenueSeries(annualRevenues);
 
   const valuations = valuationFile.observations.map((observation) => ({
     ...observation,
@@ -446,21 +429,6 @@ export async function loadHistory(
     if (valuation.event_id !== undefined && !knownEventIds.has(valuation.event_id)) {
       throw new Error(
         `Valuation ${valuation.id} references unknown history event ${valuation.event_id}`,
-      );
-    }
-  }
-  const netRevenues = netRevenueFile.observations.map((observation) => ({
-    ...observation,
-    sources: resolveSources(
-      observation.source_ids,
-      sourceById,
-      `Net revenue ${observation.id}`,
-    ),
-  }));
-  for (const observation of netRevenues) {
-    if (observation.event_id !== undefined && !knownEventIds.has(observation.event_id)) {
-      throw new Error(
-        `Net revenue ${observation.id} references unknown history event ${observation.event_id}`,
       );
     }
   }
@@ -504,13 +472,12 @@ export async function loadHistory(
   );
 
   return {
+    annualRevenues,
     annualVolumes,
     appearances: appearanceFile.appearances,
     categories,
     events,
     files,
-    netRevenueHeadlines: deriveNetRevenueHeadlines(netRevenues),
-    netRevenues,
     sources: sourceCatalog.sources,
     valuationHeadlines: deriveValuationHeadlines(valuations),
     valuations,

@@ -12,7 +12,7 @@ The site renders more than 200 sourced events as one reverse-chronological histo
 - [Fundraising](https://hraness.com/stripe/history/fundraising)
 - [Company milestones](https://hraness.com/stripe/history/company-milestones)
 - [Annual payment and total volume](https://hraness.com/stripe/history/payment-volume)
-- [Company net-revenue observations](https://hraness.com/stripe/history/net-revenue)
+- [Annual net revenue and revenue](https://hraness.com/stripe/history/net-revenue)
 - [Private-company valuation history](https://hraness.com/stripe/history/valuation)
 - [Stripe leadership appearances](https://hraness.com/stripe/history/appearances)
 - [Open history and research data](https://hraness.com/stripe/data)
@@ -27,7 +27,7 @@ The site renders more than 200 sourced events as one reverse-chronological histo
 - [When did Stripe launch products and expand into new countries?](https://hraness.com/stripe/history/product-launches)
 - [How have Stripe's payment methods, settlement rails, and payout reach expanded?](https://hraness.com/stripe/history/payment-and-payout-expansion)
 
-The authored event records live in [`public/history/`](./public/history/), one file per category. The [`public/research/`](./public/research/) directory contains the canonical source catalog, valuation observations, net-revenue observations, leadership appearances, collection definitions, research-run ledger, automatic-publication policy, complete automated decision history, and accepted publication attestations. They remain ordinary YAML so corrections and provenance changes are readable in review without scraping the site.
+The authored event records live in [`public/history/`](./public/history/), one file per category. Annual volume and net-revenue disclosures sit on those events. The [`public/research/`](./public/research/) directory contains the canonical source catalog, valuation observations, leadership appearances, collection definitions, research-run ledger, automatic-publication policy, complete automated decision history, and accepted publication attestations. They remain ordinary YAML so corrections and provenance changes are readable in review without scraping the site.
 
 ## Sources and editorial method
 

@@ -187,7 +187,7 @@ describe("Stripe history research audit", () => {
     expect(report.historyFiles).toBe(11);
     expect(report.events).toBeGreaterThan(200);
     expect(report.valuations).toBeGreaterThanOrEqual(25);
-    expect(report.netRevenues).toBeGreaterThanOrEqual(2);
+    expect(report.annualRevenues).toBeGreaterThanOrEqual(2);
     expect(report.appearances).toBe(41);
     expect(report.sources).toBeGreaterThan(250);
     expect(report.datasetReferencedSources).toBeLessThanOrEqual(report.referencedSources);

@@ -65,8 +65,8 @@ export default async function DataPage() {
           record, and net-revenue record. History entries preserve chronology,
           category, summary, confidence, and status when applicable; the
           research files preserve canonical source identities, valuation
-          observations, net-revenue observations, leadership appearances,
-          collection scope, and review runs. The dataset and website code are
+          observations, leadership appearances, collection scope, and review
+          runs. The dataset and website code are
           available under the MIT License in the{" "}
           <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>.
         </p>
@@ -128,8 +128,9 @@ export default async function DataPage() {
                 <Link href="/history/net-revenue">
                   net-revenue record
                 </Link>{" "}
-                lists dated company and related cash observations with official
-                versus reported labels. Missing years stay missing.
+                charts sourced company full-year figures on a normal linear
+                scale. The annual disclosures live on company-milestone events.
+                Missing years stay missing.
               </dd>
             </div>
             <div>
@@ -196,10 +197,6 @@ export default async function DataPage() {
             <li>
               <a href={publicSitePath("/research/valuations.yml")}>valuation observations YAML</a> ·{" "}
               {history.valuations.length} observations
-            </li>
-            <li>
-              <a href={publicSitePath("/research/net-revenue.yml")}>net-revenue observations YAML</a> ·{" "}
-              {history.netRevenues.length} observations
             </li>
             <li>
               <a href={publicSitePath("/research/collections.yml")}>research collections YAML</a>

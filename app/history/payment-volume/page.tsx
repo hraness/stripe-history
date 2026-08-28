@@ -265,7 +265,7 @@ export default async function PaymentVolumePage() {
             <h2 id="payment-volume-method-heading">method</h2>
             <p>{seo.method}</p>
             <p>
-              Company net-revenue and related cash observations remain on the{" "}
+              Company net-revenue and revenue disclosures remain on the{" "}
               <Link href="/history/net-revenue">net-revenue record</Link>.
               Private valuation observations remain on the{" "}
               <Link href="/history/valuation">valuation record</Link>.
