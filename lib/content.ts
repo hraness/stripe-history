@@ -216,7 +216,9 @@ type HeadlineCandidate = ValuationObservation & {
   readonly sources?: readonly ResearchSource[];
 };
 
-function strongestSourceAuthority(observation: HeadlineCandidate): number {
+function strongestSourceAuthority(
+  observation: Readonly<{ sources?: readonly ResearchSource[] }>,
+): number {
   return Math.max(
     0,
     ...(observation.sources ?? []).map(({ kind }) => sourceAuthorityRank[kind]),

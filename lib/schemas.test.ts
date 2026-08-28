@@ -493,6 +493,7 @@ describe("public YAML schemas", () => {
       metric: "revenue",
       period: "fy",
       period_end: "2025",
+      scope: "company",
       source_ids: ["source-11111111111111111111"],
       source_wording: "The payment giant's revenue jumped by a third to $6.8 billion last year",
       status: "reported",

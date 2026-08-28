@@ -464,6 +464,7 @@ describe("published YAML corpus", () => {
       metric: input.metric ?? "revenue",
       period: input.period ?? "fy",
       period_end: String(input.calendarYear ?? 2025),
+      scope: "company" as const,
       source_ids: ["source-11111111111111111111"],
       source_wording: "A sourced dollar claim",
       status: input.status ?? "reported" as const,
