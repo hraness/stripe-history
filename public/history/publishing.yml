@@ -21,7 +21,7 @@ events:
       - newsletter
       - launch
     source_ids:
-      - source-0bbed6b5d651b1e8b07d
+      - source-45841285beb2a5ad6f70
       - source-e95a1887b6e1cf6c11a3
   - id: maintenance-published
     date: 2026-02

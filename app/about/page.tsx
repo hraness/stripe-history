@@ -84,9 +84,9 @@ export default function AboutPage() {
         </p>
         <p>
           Followed publications include{" "}
-          <a href="https://www.stripeeconomics.com">Stripe Economics</a>,{" "}
-          <a href="https://www.worksinprogress.news">Works in Progress</a>, and{" "}
-          <a href="https://press.stripe.com">Stripe Press</a>.
+          <a href="https://www.stripeeconomics.com/">Stripe Economics</a>,{" "}
+          <a href="https://www.worksinprogress.news/">Works in Progress</a>, and{" "}
+          <a href="https://press.stripe.com/">Stripe Press</a>.
         </p>
 
         <h2>Independence and corrections</h2>

@@ -56,7 +56,7 @@ export const aboutSections = [
     heading: "Publications followed",
     paragraphs: [
       "Weekly discovery reads first-party and Stripe-affiliated publication feeds. The timeline records those publications when they become part of Stripe's editorial history. It does not turn every newsletter essay into its own event.",
-      `Followed publications include [Stripe Economics](https://www.stripeeconomics.com), [Works in Progress](https://www.worksinprogress.news), and [Stripe Press](https://press.stripe.com).`,
+      `Followed publications include [Stripe Economics](https://www.stripeeconomics.com/), [Works in Progress](https://www.worksinprogress.news/), and [Stripe Press](https://press.stripe.com/).`,
     ],
   },
   {

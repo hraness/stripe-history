@@ -209,9 +209,9 @@ function dataMarkdown(history: HistoryCollection): string {
     "Weekly discovery reads first-party and Stripe-affiliated publication feeds. The timeline records those publications when they become part of Stripe's editorial history. It does not turn every newsletter essay into its own event.",
     "",
     linkList([
-      { href: "https://www.stripeeconomics.com", label: "Stripe Economics" },
-      { href: "https://www.worksinprogress.news", label: "Works in Progress" },
-      { href: "https://press.stripe.com", label: "Stripe Press" },
+      { href: "https://www.stripeeconomics.com/", label: "Stripe Economics" },
+      { href: "https://www.worksinprogress.news/", label: "Works in Progress" },
+      { href: "https://press.stripe.com/", label: "Stripe Press" },
       {
         href: `${SITE_ORIGIN}/history/publishing`,
         label: "Publishing history",
