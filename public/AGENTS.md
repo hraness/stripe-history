@@ -1,7 +1,7 @@
 # Contents
 
 - `history/*.yml` – authored category metadata and source-ID-linked events served by the website.
-- `research/*.yml` – canonical source, valuation, appearance, collection, and research-run records.
+- `research/*.yml` – canonical source, valuation, net-revenue, appearance, collection, and research-run records.
 - `research/news-monitors.yml` – reviewed first-party, publisher-feed, news-index, and leadership-appearance discovery inputs.
 - `research/publication-policy.yml`, `research/automated-decisions.yml`, and `research/automated-publications.yml` – reviewed limits, complete editorial outcomes, and hash-only accepted-publication attestations.
 

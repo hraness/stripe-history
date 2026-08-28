@@ -43,7 +43,7 @@ export const aboutSections = [
   {
     heading: "Stripe company history",
     paragraphs: [
-      `${site.domain} is an independent, sourced guide to Stripe. It publishes a reverse-chronological company timeline covering acquisitions, products, leadership, funding, valuation, expansion, offices, publishing projects, founder side projects and aesthetics programs, early history, annual volume, and reviewed long-form appearances by Stripe founders and senior leaders.`,
+      `${site.domain} is an independent, sourced guide to Stripe. It publishes a reverse-chronological company timeline covering acquisitions, products, leadership, funding, valuation, expansion, offices, publishing projects, founder side projects and aesthetics programs, early history, annual volume, sourced net-revenue observations, and reviewed long-form appearances by Stripe founders and senior leaders.`,
     ],
   },
   {
@@ -88,4 +88,4 @@ export const contactParagraphs = [
 ] as const;
 
 export const dataIntro =
-  "These reviewable YAML files power the public timeline and valuation record. History entries preserve chronology, category, summary, confidence, and status when applicable; the research files preserve canonical source identities, valuation observations, leadership appearances, collection scope, and review runs.";
+  "These reviewable YAML files power the public timeline, valuation record, and net-revenue record. History entries preserve chronology, category, summary, confidence, and status when applicable; the research files preserve canonical source identities, valuation observations, net-revenue observations, leadership appearances, collection scope, and review runs.";

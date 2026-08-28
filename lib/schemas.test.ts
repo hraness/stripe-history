@@ -10,6 +10,7 @@ import {
   AppearanceSchema,
   AppearanceFileSchema,
   ResearchCollectionsFileSchema,
+  NetRevenueFileSchema,
   ResearchSourceCatalogSchema,
   ValuationFileSchema,
 } from "./research-schema";
@@ -474,6 +475,98 @@ describe("public YAML schemas", () => {
         financing_amount: completedFinancing.financing_amount,
       }],
     }).success).toBe(false);
+  });
+
+  test("keeps company full-year net-revenue points distinct from cash, product, and H1 claims", () => {
+    const observation = {
+      amount: {
+        currency: "USD",
+        display: "$6.8 billion",
+        qualifier: "exact",
+        value_usd: 6_800_000_000,
+      },
+      calendar_year: 2025,
+      claim: "stated-result",
+      confidence: "reported",
+      date_precision: "year",
+      id: "net-revenue-2025-company-revenue",
+      metric: "revenue",
+      period: "fy",
+      period_end: "2025",
+      source_ids: ["source-11111111111111111111"],
+      source_wording: "The payment giant's revenue jumped by a third to $6.8 billion last year",
+      status: "reported",
+      title: "The Information reports Stripe 2025 revenue of $6.8 billion",
+    };
+    const file = {
+      observations: [observation],
+      schema: "stripe-history/net-revenue/v1",
+    };
+
+    expect(NetRevenueFileSchema.safeParse(file).success).toBeTrue();
+    expect(NetRevenueFileSchema.safeParse({
+      ...file,
+      observations: [{
+        ...observation,
+        amount: { ...observation.amount, value_usd: 6_900_000_000 },
+      }],
+    }).success).toBeFalse();
+    expect(NetRevenueFileSchema.safeParse({
+      ...file,
+      observations: [{
+        ...observation,
+        claim: "target",
+      }],
+    }).success).toBeFalse();
+    expect(NetRevenueFileSchema.safeParse({
+      ...file,
+      observations: [{
+        ...observation,
+        metric: "cash",
+        title: "The Information reports Stripe minted $3.2 billion in cash in 2025",
+        amount: {
+          currency: "USD",
+          display: "$3.2 billion",
+          qualifier: "exact",
+          value_usd: 3_200_000_000,
+        },
+      }],
+    }).success).toBeFalse();
+    expect(NetRevenueFileSchema.safeParse({
+      ...file,
+      observations: [{
+        ...observation,
+        status: "company-confirmed",
+      }],
+    }).success).toBeFalse();
+    expect(NetRevenueFileSchema.safeParse({
+      ...file,
+      observations: [{
+        ...observation,
+        product: "Billing",
+      }],
+    }).success).toBeFalse();
+    expect(NetRevenueFileSchema.safeParse({
+      ...file,
+      observations: [{
+        ...observation,
+        period_end: "2025-12",
+        date_precision: "month",
+      }],
+    }).success).toBeFalse();
+    expect(NetRevenueFileSchema.safeParse({
+      ...file,
+      observations: [
+        {
+          ...observation,
+          id: "net-revenue-2024-company-revenue",
+          calendar_year: 2024,
+          period_end: "2024",
+          title: "An earlier year listed first",
+        },
+        observation,
+      ],
+    }).success).toBeFalse();
   });
 
   test("orders reviewed leadership appearances by occurrence, not publication", () => {

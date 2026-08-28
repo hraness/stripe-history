@@ -25,7 +25,7 @@ test("mobile history uses a controlled full-width chart rail instead of clipped 
     /@media \(max-width: 54rem\)[\s\S]*?\.history-volume\s*\{[^}]*overflow:\s*visible;[^}]*position:\s*static;/u,
   );
   expect(globalsCss).toMatch(
-    /@media \(max-width: 54rem\)[\s\S]*?\.history-measure-controls\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\);/u,
+    /@media \(max-width: 54rem\)[\s\S]*?\.history-measure-controls\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\);/u,
   );
   expect(globalsCss).toMatch(
     /@media \(max-width: 54rem\)[\s\S]*?\.history-measure-rail\s*\{[^}]*grid-auto-columns:\s*100%;[^}]*grid-auto-flow:\s*column;[^}]*overflow-x:\s*auto;[^}]*overflow-y:\s*hidden;[^}]*scroll-snap-type:\s*inline mandatory;/u,
@@ -37,11 +37,13 @@ test("mobile history uses a controlled full-width chart rail instead of clipped 
   const html = renderToStaticMarkup(
     <HistoryMeasureRail>
       <figure data-measure="payment-volume" id="history-measure-payment-volume" />
+      <figure data-measure="net-revenue" id="history-measure-net-revenue" />
       <figure data-measure="valuation" id="history-measure-valuation" />
     </HistoryMeasureRail>,
   );
   expect(html).toContain('aria-label="Stripe scale over time"');
   expect(html).toContain('aria-controls="history-measure-payment-volume"');
+  expect(html).toContain('aria-controls="history-measure-net-revenue"');
   expect(html).toContain('aria-controls="history-measure-valuation"');
   expect(html).toContain('aria-pressed="true"');
   expect(html).toContain('class="history-measure-rail"');

@@ -60,6 +60,16 @@ describe("agent markdown representations", () => {
     expect(valuation.body).toContain("transaction implied");
     expect(valuation.body).toContain("not affiliated with, endorsed by, or operated by");
 
+    const netRevenue = await markdownForPath("/history/net-revenue");
+    expect(netRevenue.status).toBe(200);
+    expect(netRevenue.body).toContain("| year | amount | metric | status | sources |");
+    expect(netRevenue.body).toContain("| 2025 | $6.8 billion | revenue | reported |");
+    expect(netRevenue.body).toContain("$3.2 billion");
+    expect(netRevenue.body).toContain("The Information reports Stripe 2025 revenue of $6.8 billion");
+    expect(netRevenue.body).toContain("not affiliated with, endorsed by, or operated by");
+    expect(netRevenue.body).toContain("Missing years are gaps");
+    expect(netRevenue.body).not.toContain("$5.1 billion");
+
     const about = await markdownForPath("/about");
     expect(about.body).toContain("founder side projects and aesthetics programs");
     expect(about.body).toContain("## Publications followed");

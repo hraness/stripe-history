@@ -2,7 +2,7 @@
 
 [Stripe History on Hraness](https://hraness.com/stripe) is an independent, open-source timeline of Stripe company history, with sourced data on products, acquisitions, funding, valuation, leadership, expansion, milestones, and annual payment volume.
 
-The site renders more than 200 sourced events as one reverse-chronological history and as focused, crawlable category pages. It also presents sourced annual payment-volume and private-company valuation records. Each claim retains reviewable YAML provenance, including status and uncertainty where they apply.
+The site renders more than 200 sourced events as one reverse-chronological history and as focused, crawlable category pages. It also presents sourced annual payment-volume, net-revenue, and private-company valuation records. Each claim retains reviewable YAML provenance, including status and uncertainty where they apply.
 
 ## Browse the history
 
@@ -12,6 +12,7 @@ The site renders more than 200 sourced events as one reverse-chronological histo
 - [Fundraising](https://hraness.com/stripe/history/fundraising)
 - [Company milestones](https://hraness.com/stripe/history/company-milestones)
 - [Annual payment and total volume](https://hraness.com/stripe/history/payment-volume)
+- [Company net-revenue observations](https://hraness.com/stripe/history/net-revenue)
 - [Private-company valuation history](https://hraness.com/stripe/history/valuation)
 - [Stripe leadership appearances](https://hraness.com/stripe/history/appearances)
 - [Open history and research data](https://hraness.com/stripe/data)
@@ -22,10 +23,11 @@ The site renders more than 200 sourced events as one reverse-chronological histo
 - [What companies has Stripe acquired?](https://hraness.com/stripe/history/acquisitions)
 - [How have Stripe's funding and private-company valuation changed?](https://hraness.com/stripe/history/valuation)
 - [How much annual payment and total volume has Stripe disclosed?](https://hraness.com/stripe/history/payment-volume)
+- [What sourced net-revenue figures exist?](https://hraness.com/stripe/history/net-revenue)
 - [When did Stripe launch products and expand into new countries?](https://hraness.com/stripe/history/product-launches)
 - [How have Stripe's payment methods, settlement rails, and payout reach expanded?](https://hraness.com/stripe/history/payment-and-payout-expansion)
 
-The authored event records live in [`public/history/`](./public/history/), one file per category. The [`public/research/`](./public/research/) directory contains the canonical source catalog, valuation observations, leadership appearances, collection definitions, research-run ledger, automatic-publication policy, complete automated decision history, and accepted publication attestations. They remain ordinary YAML so corrections and provenance changes are readable in review without scraping the site.
+The authored event records live in [`public/history/`](./public/history/), one file per category. The [`public/research/`](./public/research/) directory contains the canonical source catalog, valuation observations, net-revenue observations, leadership appearances, collection definitions, research-run ledger, automatic-publication policy, complete automated decision history, and accepted publication attestations. They remain ordinary YAML so corrections and provenance changes are readable in review without scraping the site.
 
 ## Sources and editorial method
 

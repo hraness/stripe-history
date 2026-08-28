@@ -13,9 +13,12 @@ import {
 } from "./history-schema";
 import {
   AppearanceFileSchema,
+  isCompanyFiscalRevenueObservation,
+  NetRevenueFileSchema,
   ResearchSourceCatalogSchema,
   ValuationFileSchema,
   type Appearance,
+  type NetRevenueObservation,
   type ResearchSource,
   type ValuationObservation,
 } from "./research-schema";
@@ -58,6 +61,18 @@ export interface ResolvedValuationObservation extends ValuationObservation {
   readonly sources: readonly ResearchSource[];
 }
 
+export interface ResolvedNetRevenueObservation extends NetRevenueObservation {
+  readonly sources: readonly ResearchSource[];
+}
+
+export interface NetRevenueHeadlinePoint {
+  readonly calendarYear: number;
+  readonly display: string;
+  readonly observationId: string;
+  readonly status: NetRevenueObservation["status"];
+  readonly valueUsd: number;
+}
+
 export interface ValuationHeadlinePoint {
   readonly calendarYear: number;
   readonly display: string;
@@ -72,6 +87,8 @@ export interface HistoryCollection {
   readonly categories: readonly TimelineCategory[];
   readonly events: readonly CategorizedHistoryEvent[];
   readonly files: readonly HistoryFile[];
+  readonly netRevenueHeadlines: readonly NetRevenueHeadlinePoint[];
+  readonly netRevenues: readonly ResolvedNetRevenueObservation[];
   readonly sources: readonly ResearchSource[];
   readonly valuationHeadlines: readonly ValuationHeadlinePoint[];
   readonly valuations: readonly ResolvedValuationObservation[];
@@ -221,6 +238,55 @@ function compareValuationHeadlineCandidates(
     || left.id.localeCompare(right.id);
 }
 
+const netRevenueStatusRank: Readonly<Record<NetRevenueObservation["status"], number>> = {
+  "company-confirmed": 2,
+  reported: 1,
+};
+
+const netRevenueConfidenceRank: Readonly<Record<NetRevenueObservation["confidence"], number>> = {
+  confirmed: 2,
+  reported: 1,
+};
+
+type NetRevenueHeadlineCandidate = NetRevenueObservation & {
+  readonly sources?: readonly ResearchSource[];
+};
+
+function compareNetRevenueHeadlineCandidates(
+  left: NetRevenueHeadlineCandidate,
+  right: NetRevenueHeadlineCandidate,
+): number {
+  return netRevenueStatusRank[right.status] - netRevenueStatusRank[left.status]
+    || netRevenueConfidenceRank[right.confidence] - netRevenueConfidenceRank[left.confidence]
+    || strongestSourceAuthority(right) - strongestSourceAuthority(left)
+    || right.period_end.localeCompare(left.period_end)
+    || (right.reported_at ?? "").localeCompare(left.reported_at ?? "")
+    || left.id.localeCompare(right.id);
+}
+
+export function deriveNetRevenueHeadlines(
+  observations: readonly NetRevenueHeadlineCandidate[],
+): readonly NetRevenueHeadlinePoint[] {
+  const byYear = new Map<number, NetRevenueHeadlineCandidate[]>();
+  for (const observation of observations) {
+    if (!isCompanyFiscalRevenueObservation(observation)) continue;
+    const existing = byYear.get(observation.calendar_year) ?? [];
+    existing.push(observation);
+    byYear.set(observation.calendar_year, existing);
+  }
+  return [...byYear].map(([calendarYear, candidates]) => {
+    const selected = candidates.toSorted(compareNetRevenueHeadlineCandidates)[0];
+    if (selected === undefined) throw new Error(`Missing net revenue for ${calendarYear}`);
+    return {
+      calendarYear,
+      display: selected.amount.display,
+      observationId: selected.id,
+      status: selected.status,
+      valueUsd: selected.amount.value_usd,
+    };
+  }).toSorted((left, right) => left.calendarYear - right.calendarYear);
+}
+
 export function deriveValuationHeadlines(
   observations: readonly HeadlineCandidate[],
 ): readonly ValuationHeadlinePoint[] {
@@ -260,12 +326,15 @@ export async function loadHistory(
   directory = HISTORY_DIRECTORY,
   researchDirectory = RESEARCH_DIRECTORY,
 ): Promise<HistoryCollection> {
-  const [sourceCatalog, valuationFile, appearanceFile] = await Promise.all([
+  const [sourceCatalog, valuationFile, netRevenueFile, appearanceFile] = await Promise.all([
     parseYamlFile(join(researchDirectory, "sources.yml")).then((value) =>
       ResearchSourceCatalogSchema.parse(value)
     ),
     parseYamlFile(join(researchDirectory, "valuations.yml")).then((value) =>
       ValuationFileSchema.parse(value)
+    ),
+    parseYamlFile(join(researchDirectory, "net-revenue.yml")).then((value) =>
+      NetRevenueFileSchema.parse(value)
     ),
     parseYamlFile(join(researchDirectory, "appearances.yml")).then((value) =>
       AppearanceFileSchema.parse(value)
@@ -378,6 +447,21 @@ export async function loadHistory(
       );
     }
   }
+  const netRevenues = netRevenueFile.observations.map((observation) => ({
+    ...observation,
+    sources: resolveSources(
+      observation.source_ids,
+      sourceById,
+      `Net revenue ${observation.id}`,
+    ),
+  }));
+  for (const observation of netRevenues) {
+    if (observation.event_id !== undefined && !knownEventIds.has(observation.event_id)) {
+      throw new Error(
+        `Net revenue ${observation.id} references unknown history event ${observation.event_id}`,
+      );
+    }
+  }
   const appearanceEvents: readonly CategorizedHistoryEvent[] =
     appearanceFile.appearances.map((appearance) => ({
       categoryId: APPEARANCES_CATEGORY.id,
@@ -423,6 +507,8 @@ export async function loadHistory(
     categories,
     events,
     files,
+    netRevenueHeadlines: deriveNetRevenueHeadlines(netRevenues),
+    netRevenues,
     sources: sourceCatalog.sources,
     valuationHeadlines: deriveValuationHeadlines(valuations),
     valuations,

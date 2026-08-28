@@ -1,0 +1,44 @@
+schema: stripe-history/net-revenue/v1
+observations:
+  - id: net-revenue-2025-company-revenue
+    period_end: "2025"
+    date_precision: year
+    calendar_year: 2025
+    reported_at: 2026-07-22
+    title: The Information reports Stripe 2025 revenue of $6.8 billion
+    scope: company
+    period: fy
+    metric: revenue
+    claim: stated-result
+    status: reported
+    confidence: reported
+    amount:
+      currency: USD
+      display: $6.8 billion
+      qualifier: exact
+      value_usd: 6800000000
+    source_wording: The payment giant's revenue jumped by a third to $6.8 billion last year
+    notes: The Information wrote "revenue," citing a person familiar with Stripe's financial figures. Stripe's 2025 annual letter published $1.9 trillion in total volume and did not state a company net-revenue dollar figure.
+    source_ids:
+      - source-fc9e74a8ea6a2a5fdbcf
+  - id: net-revenue-2025-related-cash
+    period_end: "2025"
+    date_precision: year
+    calendar_year: 2025
+    reported_at: 2026-07-22
+    title: The Information reports Stripe minted $3.2 billion in cash in 2025
+    scope: company
+    period: fy
+    metric: cash
+    claim: stated-result
+    status: reported
+    confidence: reported
+    amount:
+      currency: USD
+      display: $3.2 billion
+      qualifier: exact
+      value_usd: 3200000000
+    source_wording: Stripe Minted $3.2 Billion in Cash in 2025
+    notes: The Information titled this as cash generated in 2025. The publicly visible article dek does not use Stripe's "free cash flow" wording, so this row is labeled cash rather than FCF.
+    source_ids:
+      - source-fc9e74a8ea6a2a5fdbcf

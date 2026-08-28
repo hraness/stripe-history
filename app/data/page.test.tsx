@@ -27,6 +27,7 @@ describe("Stripe company history dataset", () => {
     expect(html).toContain("What companies has Stripe acquired?");
     expect(html).toContain("How have Stripe&#x27;s funding and valuation changed?");
     expect(html).toContain("How much payment volume has Stripe processed?");
+    expect(html).toContain("What sourced net-revenue figures exist?");
     expect(html).toContain("When did Stripe launch products and expand globally?");
     expect(html).toContain('href="/history/origins-and-early-company"');
     expect(html).toContain('href="/history/executives-and-team"');
@@ -34,8 +35,10 @@ describe("Stripe company history dataset", () => {
     expect(html).toContain('href="/history/acquisitions"');
     expect(html).toContain('href="/stripe/history/acquisitions.yml"');
     expect(html).toContain('href="/history/valuation"');
+    expect(html).toContain('href="/history/net-revenue"');
     expect(html).toContain('href="/stripe/research/sources.yml"');
     expect(html).toContain('href="/stripe/research/valuations.yml"');
+    expect(html).toContain('href="/stripe/research/net-revenue.yml"');
     expect(html).toContain('href="/stripe/research/appearances.yml"');
     expect(html).toContain('href="/history/appearances"');
     expect(html).not.toContain('href="/appearances/backfill"');
@@ -52,6 +55,7 @@ describe("Stripe company history dataset", () => {
     expect(html).toContain("does not ingest every newsletter essay");
     expect(html).toContain(`${history.sources.length} canonical sources`);
     expect(html).toContain(`${history.valuations.length} observations`);
+    expect(html).toContain(`${history.netRevenues.length} observations`);
     expect(html).toContain('href="https://github.com/hraness/stripe-history"');
     expect(html).toContain('id="stripe-history-dataset-structured-data"');
   });

@@ -17,6 +17,7 @@ import {
   ResearchCollectionsFileSchema,
   ResearchRunLedgerSchema,
   ResearchSourceCatalogSchema,
+  NetRevenueFileSchema,
   ValuationFileSchema,
   type ResearchCollection,
   type ResearchRun,
@@ -55,6 +56,7 @@ export interface ResearchAuditReport {
   readonly researchRuns: number;
   readonly sources: number;
   readonly unreferencedSources: number;
+  readonly netRevenues: number;
   readonly valuations: number;
 }
 
@@ -191,6 +193,7 @@ interface LoadedResearch {
   >["mutable_sources"];
   readonly publicationPolicy: ReturnType<typeof AutomatedPublicationPolicySchema.parse>;
   readonly researchRuns: ReturnType<typeof ResearchRunLedgerSchema.parse>["runs"];
+  readonly netRevenues: ReturnType<typeof NetRevenueFileSchema.parse>["observations"];
   readonly sources: ReturnType<typeof ResearchSourceCatalogSchema.parse>["sources"];
   readonly valuations: ReturnType<typeof ValuationFileSchema.parse>["observations"];
 }
@@ -211,6 +214,7 @@ async function loadResearch(
     publicationPolicy,
     runs,
     sources,
+    netRevenues,
     valuations,
     ...historyValues
   ] = await Promise.all([
@@ -221,6 +225,7 @@ async function loadResearch(
     parseYaml(join(projectDirectory, "public", "research", "publication-policy.yml")),
     parseYaml(join(projectDirectory, "public", "research", "runs.yml")),
     parseYaml(join(projectDirectory, "public", "research", "sources.yml")),
+    parseYaml(join(projectDirectory, "public", "research", "net-revenue.yml")),
     parseYaml(join(projectDirectory, "public", "research", "valuations.yml")),
     ...historyNames.map((fileName) => parseYaml(join(historyDirectory, fileName))),
   ]);
@@ -234,6 +239,7 @@ async function loadResearch(
     collections: parsedCollections.collections,
     historyFiles: historyValues.map((value) => HistoryFileSchema.parse(value)),
     mutableSources: parsedCollections.mutable_sources,
+    netRevenues: NetRevenueFileSchema.parse(netRevenues).observations,
     publicationPolicy: AutomatedPublicationPolicySchema.parse(publicationPolicy),
     researchRuns: ResearchRunLedgerSchema.parse(runs).runs,
     sources: ResearchSourceCatalogSchema.parse(sources).sources,
@@ -1057,6 +1063,17 @@ function auditLoadedResearch(loaded: LoadedResearch): ResearchAuditReport {
       verifyReference(sourceId, sourceById, referenced, valuation.id);
     }
   }
+  const historyEventIds = new Set(historyEvents.map(({ id }) => id));
+  for (const observation of loaded.netRevenues) {
+    for (const sourceId of observation.source_ids) {
+      verifyReference(sourceId, sourceById, referenced, observation.id);
+    }
+    if (observation.event_id !== undefined && !historyEventIds.has(observation.event_id)) {
+      throw new Error(
+        `${observation.id} references unknown history event ${observation.event_id}`,
+      );
+    }
+  }
   for (const appearance of loaded.appearances) {
     for (const sourceId of appearance.source_ids) {
       verifyReference(sourceId, sourceById, referenced, appearance.id);
@@ -1093,6 +1110,7 @@ function auditLoadedResearch(loaded: LoadedResearch): ResearchAuditReport {
     historyFiles: loaded.historyFiles.length,
     mutableSourceSnapshots: mutableSourceStats.snapshots,
     mutableSourceUrls: mutableSourceStats.urls,
+    netRevenues: loaded.netRevenues.length,
     referencedSources: allReferenced.size,
     researchRuns: loaded.researchRuns.length,
     sources: loaded.sources.length,

@@ -46,22 +46,27 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).toContain('href="/history/acquisitions"');
     expect(html).toContain('href="/history/appearances"');
     expect(html).toContain('href="/history/payment-volume"');
+    expect(html).toContain('href="/history/net-revenue"');
     expect(html).toContain('href="/history/valuation"');
     expect(html).toContain('id="history-year-2026"');
     expect(html).toContain('id="history-year-2005"');
     expect(html).toContain('class="history-event-type"');
     expect(categoryIconCount).toBeGreaterThan(eventCount);
     expect(html).toContain('data-filter-id="payment-and-payout-expansion"');
+    expect(html).toContain(`aria-label="net revenue: ${history.netRevenues.length} observations"`);
     expect(html).toContain(`aria-label="valuation: ${history.valuations.length} observations"`);
     expect(html).toMatch(
       /class="history-event" data-category="payment-and-payout-expansion" style="--history-category-hue:[0-9.]+"/u,
     );
     expect(html).toContain('data-measure="payment-volume"');
+    expect(html).toContain('data-measure="net-revenue"');
     expect(html).toContain('data-measure="valuation"');
     expect(html).toContain('class="history-event-confidence">reported</span>');
     expect(html).toContain('id="milestone-2026-2025-volume-1-9-trillion"');
     expect(html.match(/class="history-volume-track"/gu)?.length).toBe(
-      history.annualVolumes.length + history.valuationHeadlines.length,
+      history.annualVolumes.length
+        + history.netRevenueHeadlines.length
+        + history.valuationHeadlines.length,
     );
     expect(html).not.toContain("Loading Stripe company history");
     expect(html).toContain("Stripe reportedly discusses acquiring OpenRouter");

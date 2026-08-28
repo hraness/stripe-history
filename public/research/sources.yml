@@ -2304,6 +2304,13 @@ sources:
     id: source-fbf3334cd29c236b7bd5
     media_type: article
   - kind: reporting
+    publisher: The Information
+    published_at: 2026-07-22
+    title: Stripe Minted $3.2 Billion in Cash in 2025, Setting Up Acquisition Hunt
+    url: https://www.theinformation.com/articles/stripe-minted-3-2-billion-cash-2025-setting-acquisition-hunt
+    id: source-fc9e74a8ea6a2a5fdbcf
+    media_type: article
+  - kind: reporting
     publisher: Axios
     published_at: 2023-02-03
     title: Stripe CFO Dhivya Suryadevara to step down

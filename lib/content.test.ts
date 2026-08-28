@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 import {
   type AnnualVolumePoint,
+  deriveNetRevenueHeadlines,
   deriveValuationHeadlines,
   loadHistory,
   validateAnnualVolumeSeries,
@@ -155,6 +156,26 @@ describe("published YAML corpus", () => {
       tier: "financing-tender",
       valueUsd: 159_000_000_000,
     });
+    expect(history.netRevenues).toHaveLength(2);
+    expect(history.netRevenues.map(({ id }) => id)).toEqual([
+      "net-revenue-2025-company-revenue",
+      "net-revenue-2025-related-cash",
+    ]);
+    expect(history.netRevenues.find(({ id }) => id === "net-revenue-2025-company-revenue"))
+      .toMatchObject({
+        amount: { display: "$6.8 billion", value_usd: 6_800_000_000 },
+        metric: "revenue",
+        period: "fy",
+        scope: "company",
+        status: "reported",
+      });
+    expect(history.netRevenueHeadlines).toEqual([{
+      calendarYear: 2025,
+      display: "$6.8 billion",
+      observationId: "net-revenue-2025-company-revenue",
+      status: "reported",
+      valueUsd: 6_800_000_000,
+    }]);
     expect(history.appearances.map(({ id }) => id)).toContain(
       "appearance-2024-02-patrick-collison-dwarkesh",
     );
@@ -415,5 +436,64 @@ describe("published YAML corpus", () => {
       reportingOnly,
       primarySource,
     ])[0]?.observationId).toBe("valuation-2025-earlier-primary");
+  });
+
+  test("selects one company full-year revenue point and excludes cash or half-year claims", () => {
+    const observation = (
+      id: string,
+      input: Readonly<{
+        calendarYear?: number;
+        metric?: "cash" | "net-revenue" | "revenue";
+        period?: "fy" | "h1";
+        status?: "company-confirmed" | "reported";
+      }> = {},
+    ) => ({
+      amount: {
+        currency: "USD" as const,
+        display: "$6.8 billion",
+        qualifier: "exact" as const,
+        value_usd: 6_800_000_000,
+      },
+      calendar_year: input.calendarYear ?? 2025,
+      claim: "stated-result" as const,
+      confidence: input.status === "company-confirmed"
+        ? "confirmed" as const
+        : "reported" as const,
+      date_precision: "year" as const,
+      id,
+      metric: input.metric ?? "revenue",
+      period: input.period ?? "fy",
+      period_end: String(input.calendarYear ?? 2025),
+      source_ids: ["source-11111111111111111111"],
+      source_wording: "A sourced dollar claim",
+      status: input.status ?? "reported" as const,
+      title: `Observation ${id}`,
+    });
+
+    expect(deriveNetRevenueHeadlines([
+      observation("net-revenue-2025-related-cash", { metric: "cash" }),
+      observation("net-revenue-2025-h1-growth", { period: "h1" }),
+      observation("net-revenue-2025-company-revenue"),
+      observation("net-revenue-2024-company-revenue", { calendarYear: 2024 }),
+    ])).toEqual([
+      {
+        calendarYear: 2024,
+        display: "$6.8 billion",
+        observationId: "net-revenue-2024-company-revenue",
+        status: "reported",
+        valueUsd: 6_800_000_000,
+      },
+      {
+        calendarYear: 2025,
+        display: "$6.8 billion",
+        observationId: "net-revenue-2025-company-revenue",
+        status: "reported",
+        valueUsd: 6_800_000_000,
+      },
+    ]);
+    expect(deriveNetRevenueHeadlines([
+      observation("net-revenue-2025-reported"),
+      observation("net-revenue-2025-confirmed", { status: "company-confirmed" }),
+    ])[0]?.observationId).toBe("net-revenue-2025-confirmed");
   });
 });

@@ -14,6 +14,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: absoluteSiteUrl("/history/payment-volume"),
     },
     {
+      url: absoluteSiteUrl("/history/net-revenue"),
+    },
+    {
       url: absoluteSiteUrl("/history/valuation"),
     },
     {

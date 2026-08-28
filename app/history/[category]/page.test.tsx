@@ -15,6 +15,7 @@ describe("hraness.com/stripe category history", () => {
     expect(params).toContainEqual({ category: "acquisitions" });
     expect(params).toContainEqual({ category: "appearances" });
     expect(params).not.toContainEqual({ category: "payment-volume" });
+    expect(params).not.toContainEqual({ category: "net-revenue" });
   });
 
   test("renders appearances inside the shared category timeline", async () => {

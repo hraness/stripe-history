@@ -63,9 +63,10 @@ describe("hraness.com/stripe structured discovery", () => {
     expect(dataset.variableMeasured).toEqual(expect.arrayContaining([
       expect.objectContaining({ name: "Valuation observations", value: 25 }),
       expect.objectContaining({ name: "Annual volume disclosures", value: 5 }),
+      expect.objectContaining({ name: "Net-revenue observations", value: 2 }),
       expect.objectContaining({ name: "Leadership appearances", value: 41 }),
     ]));
-    expect(dataset.distribution).toHaveLength(16);
+    expect(dataset.distribution).toHaveLength(17);
     expect(dataset.distribution).toContainEqual({
       "@type": "DataDownload",
       contentUrl: "https://hraness.com/stripe/history/acquisitions.yml",
@@ -83,6 +84,12 @@ describe("hraness.com/stripe structured discovery", () => {
       contentUrl: "https://hraness.com/stripe/research/valuations.yml",
       encodingFormat: "application/yaml",
       name: "Stripe valuation observations",
+    });
+    expect(dataset.distribution).toContainEqual({
+      "@type": "DataDownload",
+      contentUrl: "https://hraness.com/stripe/research/net-revenue.yml",
+      encodingFormat: "application/yaml",
+      name: "Stripe net-revenue observations",
     });
   });
 

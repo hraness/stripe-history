@@ -9,6 +9,7 @@ import CreditCardIcon from "@hugeicons/core-free-icons/CreditCardIcon";
 import Flag01Icon from "@hugeicons/core-free-icons/Flag01Icon";
 import Location01Icon from "@hugeicons/core-free-icons/Location01Icon";
 import MapsIcon from "@hugeicons/core-free-icons/MapsIcon";
+import Money01Icon from "@hugeicons/core-free-icons/Money01Icon";
 import News01Icon from "@hugeicons/core-free-icons/News01Icon";
 import PodcastIcon from "@hugeicons/core-free-icons/PodcastIcon";
 import PuzzleIcon from "@hugeicons/core-free-icons/PuzzleIcon";
@@ -30,6 +31,7 @@ const historyCategoryIcons = {
   "headquarters-and-offices": Location01Icon,
   "origins-and-early-company": RocketIcon,
   "payment-and-payout-expansion": CreditCardIcon,
+  "net-revenue": Money01Icon,
   "payment-volume": Analytics01Icon,
   "product-launches": ShoppingCart01Icon,
   publishing: News01Icon,

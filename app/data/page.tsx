@@ -61,12 +61,13 @@ export default async function DataPage() {
           <span>{history.events.length} sourced events</span>
         </div>
         <p className="stripe-history-data-intro">
-          These reviewable YAML files power the public timeline and valuation
-          record. History entries preserve chronology, category, summary,
-          confidence, and status when applicable; the research files preserve
-          canonical source identities, valuation observations, leadership
-          appearances, collection scope, and review runs. The dataset and
-          website code are available under the MIT License in the{" "}
+          These reviewable YAML files power the public timeline, valuation
+          record, and net-revenue record. History entries preserve chronology,
+          category, summary, confidence, and status when applicable; the
+          research files preserve canonical source identities, valuation
+          observations, net-revenue observations, leadership appearances,
+          collection scope, and review runs. The dataset and website code are
+          available under the MIT License in the{" "}
           <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>.
         </p>
         <section
@@ -121,6 +122,17 @@ export default async function DataPage() {
               </dd>
             </div>
             <div>
+              <dt>What sourced net-revenue figures exist?</dt>
+              <dd>
+                The{" "}
+                <Link href="/history/net-revenue">
+                  net-revenue record
+                </Link>{" "}
+                lists dated company and related cash observations with official
+                versus reported labels. Missing years stay missing.
+              </dd>
+            </div>
+            <div>
               <dt>When did Stripe launch products and expand globally?</dt>
               <dd>
                 Browse{" "}
@@ -157,7 +169,9 @@ export default async function DataPage() {
         >
           <h2 id="research-data-heading">Research and provenance</h2>
           <p>
-            Browse the <Link href="/history/valuation">valuation history</Link> or
+            Browse the <Link href="/history/valuation">valuation history</Link>
+            {" "}or the{" "}
+            <Link href="/history/net-revenue">net-revenue record</Link>, or
             inspect the machine-readable research records directly.
           </p>
           <p>
@@ -182,6 +196,10 @@ export default async function DataPage() {
             <li>
               <a href={publicSitePath("/research/valuations.yml")}>valuation observations YAML</a> ·{" "}
               {history.valuations.length} observations
+            </li>
+            <li>
+              <a href={publicSitePath("/research/net-revenue.yml")}>net-revenue observations YAML</a> ·{" "}
+              {history.netRevenues.length} observations
             </li>
             <li>
               <a href={publicSitePath("/research/collections.yml")}>research collections YAML</a>

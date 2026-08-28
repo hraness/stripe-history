@@ -21,6 +21,7 @@ const STATIC_ROUTES = [
   ["/privacy", "privacy"],
   ["/data", "data_index"],
   ["/history/payment-volume", "payment_volume"],
+  ["/history/net-revenue", "net_revenue"],
   ["/history/valuation", "valuation"],
 ] as const;
 

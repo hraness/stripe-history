@@ -34,6 +34,14 @@ import {
   deriveValuationPageSeo,
 } from "@/app/history/valuation/valuation-page-model";
 import {
+  deriveNetRevenueHeadlineRows,
+  deriveNetRevenuePageSeo,
+  netRevenueMetricLabel,
+  netRevenuePeriodLabel,
+  netRevenueScopeLabel,
+  netRevenueStatusLabel,
+} from "@/app/history/net-revenue/net-revenue-page-model";
+import {
   loadHistory,
   type CategorizedHistoryEvent,
   type HistoryCollection,
@@ -57,6 +65,7 @@ const KNOWN_STATIC_PATHS = new Set([
   "/llms.txt",
   "/privacy",
   "/history/payment-volume",
+  "/history/net-revenue",
   "/history/valuation",
 ]);
 
@@ -123,7 +132,7 @@ function historyIndexMarkdown(history: HistoryCollection): string {
     ),
     independenceSentence,
     "",
-    `This Markdown index covers the same ${history.events.length} sourced events as the HTML timeline. Category, annual-volume, and valuation pages repeat those records in a narrower view.`,
+    `This Markdown index covers the same ${history.events.length} sourced events as the HTML timeline. Category, annual-volume, net-revenue, and valuation pages repeat those records in a narrower view.`,
     "",
     "## Browse by topic",
     "",
@@ -133,6 +142,11 @@ function historyIndexMarkdown(history: HistoryCollection): string {
         href: `${SITE_ORIGIN}/history/payment-volume`,
         label: "Annual payment and total volume",
         note: `${history.annualVolumes.length} disclosed years`,
+      },
+      {
+        href: `${SITE_ORIGIN}/history/net-revenue`,
+        label: "Company net-revenue observations",
+        note: `${history.netRevenues.length} sourced observations`,
       },
       {
         href: `${SITE_ORIGIN}/history/valuation`,
@@ -239,6 +253,11 @@ function dataMarkdown(history: HistoryCollection): string {
         note: `${history.valuations.length} observations`,
       },
       {
+        href: `${SITE_ORIGIN}/research/net-revenue.yml`,
+        label: "Net-revenue observations YAML",
+        note: `${history.netRevenues.length} observations`,
+      },
+      {
         href: `${SITE_ORIGIN}/research/collections.yml`,
         label: "Research collections YAML",
       },
@@ -316,6 +335,53 @@ function markdownTableCell(value: string): string {
   return value.replaceAll("|", "\\|").replaceAll("\n", " ");
 }
 
+function netRevenueMarkdown(history: HistoryCollection): string {
+  const seo = deriveNetRevenuePageSeo(history);
+  const rows = deriveNetRevenueHeadlineRows(history);
+  const table = [
+    "| year | amount | metric | status | sources |",
+    "| --- | --- | --- | --- | --- |",
+    ...rows.map((row) => {
+      const sources = row.sources
+        .map((source) => `[${source.publisher}](${source.url})`)
+        .join(" · ");
+      return `| ${row.calendarYear} | ${markdownTableCell(row.display)} | ${markdownTableCell(row.metricLabel)} | ${markdownTableCell(row.statusLabel)} | ${markdownTableCell(sources)} |`;
+    }),
+  ];
+  return [
+    heading(seo.title, seo.description),
+    seo.lead,
+    "",
+    "## Company full-year figures",
+    "",
+    ...table,
+    "",
+    "## Observations and sources",
+    "",
+    ...history.netRevenues.map((observation) => {
+      const sources = observation.sources
+        .map((source) => `[${source.publisher}](${source.url})`)
+        .join(" · ");
+      return [
+        `### ${observation.title}`,
+        "",
+        `${observation.period_end} · ${netRevenueScopeLabel[observation.scope]} · ${netRevenuePeriodLabel[observation.period]} · ${netRevenueStatusLabel[observation.status]}`,
+        "",
+        observation.source_wording,
+        "",
+        `${netRevenueMetricLabel[observation.metric]}: ${observation.amount.display}`,
+        "",
+        `Sources: ${sources}`,
+        "",
+      ].join("\n");
+    }),
+    "## Method",
+    "",
+    seo.method,
+    "",
+  ].join("\n");
+}
+
 function valuationMarkdown(history: HistoryCollection): string {
   const seo = deriveValuationPageSeo(history);
   const rows = deriveValuationHeadlineRows(history);
@@ -379,6 +445,9 @@ export async function markdownForPath(pathname: string): Promise<MarkdownDocumen
   if (path === "/data") return { body: dataMarkdown(history), status: 200 };
   if (path === "/history/payment-volume") {
     return { body: paymentVolumeMarkdown(history), status: 200 };
+  }
+  if (path === "/history/net-revenue") {
+    return { body: netRevenueMarkdown(history), status: 200 };
   }
   if (path === "/history/valuation") {
     return { body: valuationMarkdown(history), status: 200 };
