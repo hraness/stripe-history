@@ -938,6 +938,14 @@ sources:
     language: en
     media_type: video
     native_id: youtube:F0_IKKY3HCk
+  - kind: reporting
+    publisher: Eric Newcomer
+    published_at: 2026-08-19
+    title: Here's Stripe's letter to investors explaining its acquisition of OpenRouter
+    url: https://x.com/EricNewcomer/status/2090133049291788434
+    id: source-649b2830ebba656ef903
+    media_type: webpage
+    native_id: x:2090133049291788434
   - kind: interview
     publisher: 500 Global
     published_at: 2013-08-13

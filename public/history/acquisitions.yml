@@ -30,9 +30,10 @@ events:
       - source-77bafd0ab1bf6ae03244
       - source-b82c4a1e21a701d6dc86
       - source-8d0061523211fdad0273
+      - source-649b2830ebba656ef903
       - source-ddd1bf444402af773511
     status: Agreement announced; completion not reported
-    summary: Stripe announced an agreement to acquire OpenRouter, an AI model gateway that routes requests across more than 400 models from more than 80 providers. Official terms were not disclosed. OpenRouter said the transaction remained subject to customary closing conditions and was expected to close in the coming weeks. A same-day investor letter, later published by Eric Newcomer and verified by TechCrunch, told investors that OpenRouter would join as Stripe's largest-ever acquisition.
+    summary: Stripe announced an agreement to acquire OpenRouter, an AI model gateway that routes requests across more than 400 models from more than 80 providers. Official terms were not disclosed. OpenRouter said the transaction remained subject to customary closing conditions and was expected to close in the coming weeks. A same-day investor letter, posted by Eric Newcomer on X and verified by TechCrunch, told investors that OpenRouter would join as Stripe's largest-ever acquisition.
     tags:
       - agreement-announced
       - artificial-intelligence
