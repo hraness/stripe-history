@@ -135,6 +135,7 @@ describe("hraness.com/stripe payment volume history", () => {
     expect(html).toContain('data-slot="hraness-site-footer"');
     expect(html).not.toContain('class="stripe-history-breadcrumbs"');
     expect(html).not.toContain('class="stripe-history-section-heading"');
-    expect(html).not.toContain("$400 billion");
+    expect(html).toContain("~$400 billion");
+    expect(html).not.toMatch(/2024 total payment volume of \$400 billion/u);
   });
 });

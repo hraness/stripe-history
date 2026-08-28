@@ -13,6 +13,13 @@ monitors:
       - company-history
       - sessions-product-launches
       - valuation-history
+  - id: stripe-annual-updates
+    kind: html-index
+    url: https://stripe.com/annual-updates/2025
+    link_path_prefixes:
+      - /annual-updates/
+    research_areas:
+      - company-history
   - id: stripe-blog
     kind: rss
     url: https://stripe.com/blog/feed.rss
