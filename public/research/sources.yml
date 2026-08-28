@@ -1140,6 +1140,13 @@ sources:
     media_type: article
   - kind: primary
     publisher: Stripe
+    published_at: 2024-03-13
+    title: Stripe 2023 annual letter
+    url: https://assets.stripeassets.com/fzn2n1nzq965/1gMd12owbzJaSe4Y560OEJ/0e7a27759e1b3070c5179ded5b94f525/Stripe_2023_annual_letter_enGB.pdf
+    id: source-778dec66237076ba11ec
+    media_type: pdf
+  - kind: primary
+    publisher: Stripe
     published_at: 2026-08-19
     title: Stripe agrees to acquire OpenRouter to help businesses optimize token routing and usage
     url: https://stripe.com/newsroom/news/stripe-agrees-to-acquire-openrouter
@@ -1323,13 +1330,6 @@ sources:
     title: COVID Fast Grants sped up pandemic science
     url: https://www.nature.com/articles/d41586-021-02111-7
     id: source-89af64bf0e530b9961f2
-    media_type: article
-  - kind: primary
-    publisher: Stripe
-    published_at: 2024-03-13
-    title: Stripe's 2023 annual letter
-    url: https://stripe.com/en-ca/annual-updates/2023
-    id: source-8a7b0b685a7ceb93b864
     media_type: article
   - kind: primary
     publisher: OpenRouter
@@ -2109,6 +2109,13 @@ sources:
     title: The Big Score
     url: https://press.stripe.com/the-big-score
     id: source-dda978fa29fb0e3f1ddd
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2024-03-13
+    title: Stripe's 2023 annual letter
+    url: https://stripe.com/annual-updates/2023
+    id: source-ddbe3d4d89188692563b
     media_type: article
   - kind: reporting
     publisher: TechCrunch

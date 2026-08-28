@@ -14,7 +14,7 @@ const ANNUAL_LETTER_EVENTS = [
       "https://stripe.com/newsroom/news/stripe-2025-update",
       "Stripe-annual-letter-2025-desktop.pdf",
     ],
-    metricValues: ["$1.9 trillion", "200 million+", "25%", "~$400 billion", "45%"],
+    metricValues: ["$1.9 trillion", "200 million+", "25%", "~$400 billion", "45%", "41%", "57%"],
   },
   {
     id: "milestone-2025-2024-volume-1-4-trillion",
@@ -23,16 +23,17 @@ const ANNUAL_LETTER_EVENTS = [
       "https://stripe.com/newsroom/news/stripe-2024-update",
       "Stripe-annual-letter-2024.pdf",
     ],
-    metricValues: ["$1.4 trillion", "300,000+", "~200 million", "1 in 6"],
+    metricValues: ["$1.4 trillion", "300,000+", "~200 million", "1 in 6", "700", "14,000+"],
   },
   {
     id: "milestone-2024-2023-volume-1-trillion",
     sourceUrlIncludes: [
-      "/annual-updates/2023",
+      "https://stripe.com/annual-updates/2023",
       "https://stripe.com/newsroom/news/stripe-2023-update",
+      "assets.stripeassets.com/fzn2n1nzq965/1gMd12owbzJaSe4Y560OEJ",
       "Stripe_2023_annual_letter_enGB.pdf",
     ],
-    metricValues: ["$1 trillion", "100+", "1 in 6", "$18.6 billion"],
+    metricValues: ["$1 trillion", "100+", "1 in 6", "$18.6 billion", "249%"],
   },
   {
     id: "milestone-2023-2022-volume-817-billion",
@@ -42,7 +43,7 @@ const ANNUAL_LETTER_EVENTS = [
       "stripe-2022-update.pdf",
       "stripe-2022-annual-update.pdf",
     ],
-    metricValues: ["$817 billion+", "1,000+", "55%", "75%", "10 million+"],
+    metricValues: ["$817 billion+", "1,000+", "55%", "75%", "10 million+", "155%"],
   },
   {
     id: "milestone-2022-2021-volume-640-billion",

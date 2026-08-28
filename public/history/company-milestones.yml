@@ -116,13 +116,19 @@ events:
         context: Stripe said the suite was on track to reach this annual run rate in 2026
       - label: Stablecoin payments volume
         value: ~$400 billion
-        context: Stripe said volume doubled in 2025, with 60% estimated to be B2B
+        context: Industry stablecoin payments, not Stripe total volume. Stripe said volume doubled in 2025, with 60% estimated to be B2B
       - label: Bridge volume
         value: more than quadrupled
         context: After Stripe acquired Bridge
       - label: Capital funding volume growth
         value: 45%
         context: From 2024 to 2025, supporting more than 81,000 businesses
+      - label: Atlas company formations
+        value: 41%
+        context: Increase in 2025
+      - label: New businesses outside the United States
+        value: 57%
+        context: Of companies that joined Stripe in 2025
     people:
       - Patrick Collison
       - John Collison
@@ -241,6 +247,12 @@ events:
       - label: Revenue suite run rate
         value: $500 million+
         context: Stripe said the suite, with Billing at its core, had passed this annual revenue run rate
+      - label: AI agent startups
+        value: "700"
+        context: Launched on Stripe in 2024
+      - label: Vertical SaaS platforms
+        value: 14,000+
+        context: Using Stripe to offer payments services to their customers
     people:
       - Patrick Collison
       - John Collison
@@ -270,7 +282,7 @@ events:
     summary: Stripe's 2023 annual letter reported that businesses processed $1 trillion on the platform and that the company was robustly cash-flow positive.
     details:
       - label: Profitability
-        value: Robustly cash-flow positive in 2023, with the same expected for 2024
+        value: Stripe said it was robustly cashflow positive in 2023 and expected to be again in 2024
       - label: Scale comparison
         value: Stripe described the volume as roughly 1% of global GDP
     metrics:
@@ -279,8 +291,7 @@ events:
       - label: Share of global GDP
         value: About 1%
       - label: Growth from 2022
-        value: About 25%
-        context: Comparison with the prior year's $817 billion volume
+        value: 25%
       - label: Users above $1 billion annual volume
         value: 100+
       - label: Delaware corporations formed with Atlas
@@ -296,6 +307,9 @@ events:
       - label: Black Friday and Cyber Monday volume
         value: $18.6 billion
         context: Stripe called this its largest four-day period to date, with more than 300 million transactions
+      - label: AI company revenue growth
+        value: 249%
+        context: Aggregate revenue from AI companies on Stripe in 2023
     people:
       - Patrick Collison
       - John Collison
@@ -307,8 +321,9 @@ events:
       - payment-volume
       - cash-flow-positive
     source_ids:
-      - source-8a7b0b685a7ceb93b864
+      - source-ddbe3d4d89188692563b
       - source-ed092678fc3313192a56
+      - source-778dec66237076ba11ec
       - source-cc9b12a37f2d1a496c07
   - id: milestone-2023-information-q3-net-revenue
     title: The Information reports Stripe Q3 2023 net revenue of roughly $1 billion
@@ -376,6 +391,9 @@ events:
         context: During 2022
       - label: Active in-person Terminal devices
         value: 100,000+
+      - label: Atlas company formations versus 2019
+        value: 155%
+        context: More new Atlas companies in 2022 than in 2019
     people:
       - Patrick Collison
       - John Collison
