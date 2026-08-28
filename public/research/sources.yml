@@ -260,6 +260,13 @@ sources:
     media_type: article
   - kind: primary
     publisher: Stripe
+    published_at: 2023-04-05
+    title: Stripe's 2022 annual letter
+    url: https://stripe.com/annual-updates/2022
+    id: source-1d80dbeb44c91482c943
+    media_type: article
+  - kind: primary
+    publisher: Stripe
     published_at: 2022-04-22
     title: Stripe introduces global crypto payouts
     url: https://stripe.com/en-ca/newsroom/news/crypto-payouts
@@ -622,6 +629,13 @@ sources:
     url: https://news.bloomberglaw.com/coronavirus/riding-record-valuations-fintech-companies-keep-hiring-lawyers
     id: source-3d6c52f0fa2137ac7a41
     media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-02-27
+    title: Stripe's 2024 annual letter
+    url: https://assets.stripeassets.com/fzn2n1nzq965/2pt3yIHthraqR1KwXgr98U/2d69cad44de990455e9ec8744933a446/Stripe-annual-letter-2024.pdf
+    id: source-3e4b14d0f80fefdf0c49
+    media_type: pdf
   - kind: interview
     publisher: a16z
     published_at: 2026-02-20
@@ -1086,6 +1100,13 @@ sources:
     title: Improving Instant Payouts
     url: https://stripe.com/blog/improving-instant-payouts
     id: source-734d64a5afd49a77f847
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2025-02-27
+    title: Stripe's 2024 annual letter
+    url: https://stripe.com/annual-updates/2024
+    id: source-7352cb026d7532bed248
     media_type: article
   - kind: interview
     publisher: The Tim Ferriss Show
@@ -1607,6 +1628,20 @@ sources:
     language: en
     media_type: video
     native_id: youtube:jdNwzYMtPN8
+  - kind: primary
+    publisher: Stripe
+    published_at: 2026-02-24
+    title: Stripe's 2025 annual letter
+    url: https://assets.stripeassets.com/fzn2n1nzq965/3LlGw839Q6kUwxZlLZDtH6/75ddcbada4aa7743dd8ec7d0f9ca497e/Stripe-annual-letter-2025-desktop.pdf
+    id: source-b0b89523a82f07bb5fbf
+    media_type: pdf
+  - kind: primary
+    publisher: Stripe
+    published_at: 2022-04
+    title: Stripe 2021 business update
+    url: https://stripe.com/annual-updates/2021
+    id: source-b15628b377e66a437c88
+    media_type: article
   - kind: reporting
     publisher: TechCrunch
     published_at: 2011-03-28
@@ -1867,6 +1902,13 @@ sources:
     url: https://techcrunch.com/2008/03/26/communicate-acquires-y-combinator-startup-auctomatic-unveils-new-business-strategy/
     id: source-cc05ac81f510b0f6ce86
     media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2024-03-13
+    title: Stripe publishes 2023 annual letter
+    url: https://stripe.com/newsroom/news/stripe-2023-update
+    id: source-cc9b12a37f2d1a496c07
+    media_type: article
   - kind: reporting
     publisher: TechCrunch
     published_at: 2012-05-20
@@ -1949,6 +1991,13 @@ sources:
     url: https://podcasts.apple.com/us/podcast/bonus-episode-stripe-ceo-john-collison-2-28-25/id1480890290?i=1000696834852
     id: source-d5562f80014ab418430b
     media_type: podcast
+  - kind: primary
+    publisher: Stripe
+    published_at: 2023-04-05
+    title: Stripe's 2022 annual letter
+    url: https://assets.stripeassets.com/fzn2n1nzq965/5Qj1NdQFtWO3rIE4WhAVl9/21202f8455f5a877444f91c1b48baf6e/stripe-2022-update.pdf
+    id: source-d55818d6a09a46cf8b73
+    media_type: pdf
   - kind: primary
     publisher: Stripe
     published_at: 2016-02-24

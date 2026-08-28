@@ -84,7 +84,7 @@ events:
       kind: total-volume
       qualifier: published-value
       value_usd: 1900000000000
-    summary: Stripe's 2025 annual update reported $1.9 trillion in volume, more than five million businesses, broad blue-chip adoption, and continued profitability.
+    summary: Stripe's 2025 annual update reported $1.9 trillion in volume, more than five million businesses, broad blue-chip adoption, Link use by more than 200 million people, and continued profitability.
     details:
       - label: Growth
         value: Total volume increased 34% from 2024
@@ -104,9 +104,25 @@ events:
         value: 90%
       - label: Nasdaq 100 adoption
         value: 80%
+      - label: Delaware corporations formed with Atlas
+        value: 25%
+      - label: Link users
+        value: 200 million+
+        context: Stripe said Link is now used by more than 200 million people
+      - label: Privy programmable wallets
+        value: 110 million+
       - label: Revenue suite run-rate target
         value: $1 billion
         context: Stripe said the suite was on track to reach this annual run rate in 2026
+      - label: Stablecoin payments volume
+        value: ~$400 billion
+        context: Stripe said volume doubled in 2025, with 60% estimated to be B2B
+      - label: Bridge volume
+        value: more than quadrupled
+        context: After Stripe acquired Bridge
+      - label: Capital funding volume growth
+        value: 45%
+        context: From 2024 to 2025, supporting more than 81,000 businesses
     people:
       - Patrick Collison
       - John Collison
@@ -120,6 +136,7 @@ events:
     source_ids:
       - source-bd6516ac551f19c37d33
       - source-6a0d2f89102ce3fbce2c
+      - source-b0b89523a82f07bb5fbf
   - id: milestone-2026-us-entity-converts-to-llc
     title: Stripe's US contracting entity converts from Inc. to LLC
     date: 2026-01
@@ -195,12 +212,12 @@ events:
       kind: payment-volume
       qualifier: published-value
       value_usd: 1400000000000
-    summary: Stripe's 2024 annual update reported $1.4 trillion in payment volume, durable profitability, and adoption by half of the Fortune 100.
+    summary: Stripe's 2024 annual update reported $1.4 trillion in payment volume, durable profitability, Billing use by more than 300,000 companies, and adoption by half of the Fortune 100.
     details:
       - label: Growth
         value: Total payment volume increased 38% from 2023
       - label: Profitability
-        value: Stripe said it was profitable and expected to remain so
+        value: Stripe said it was profitable in 2024 and expected to remain so
       - label: Research strategy
         value: The company emphasized reinvesting operating earnings in research and development
     metrics:
@@ -214,6 +231,13 @@ events:
         value: 80%
       - label: Forbes AI 50 adoption
         value: 78%
+      - label: Delaware corporations formed with Atlas
+        value: 1 in 6
+      - label: Billing companies
+        value: 300,000+
+      - label: Active subscriptions on Billing
+        value: ~200 million
+        context: Stripe said Billing manages nearly 200 million active subscriptions
       - label: Revenue suite run rate
         value: $500 million+
         context: Stripe said the suite, with Billing at its core, had passed this annual revenue run rate
@@ -229,6 +253,8 @@ events:
       - profitability
     source_ids:
       - source-1dc5f19b6950b5352d21
+      - source-7352cb026d7532bed248
+      - source-3e4b14d0f80fefdf0c49
   - id: milestone-2024-2023-volume-1-trillion
     title: Stripe crosses $1 trillion in annual payment volume
     date: 2024-03-13
@@ -255,9 +281,21 @@ events:
       - label: Growth from 2022
         value: About 25%
         context: Comparison with the prior year's $817 billion volume
+      - label: Users above $1 billion annual volume
+        value: 100+
+      - label: Delaware corporations formed with Atlas
+        value: 1 in 6
+      - label: Atlas companies
+        value: 50,000+
+        context: Stripe said they were on track to collectively earn $5 billion a year
+      - label: Revenue and finance automation businesses
+        value: hundreds of thousands
       - label: Revenue suite run-rate target
         value: $500 million
         context: Stripe said it expected the suite's annual revenue run rate to pass this amount over the next year
+      - label: Black Friday and Cyber Monday volume
+        value: $18.6 billion
+        context: Stripe called this its largest four-day period to date, with more than 300 million transactions
     people:
       - Patrick Collison
       - John Collison
@@ -271,6 +309,7 @@ events:
     source_ids:
       - source-8a7b0b685a7ceb93b864
       - source-ed092678fc3313192a56
+      - source-cc9b12a37f2d1a496c07
   - id: milestone-2023-information-q3-net-revenue
     title: The Information reports Stripe Q3 2023 net revenue of roughly $1 billion
     date: 2023-12-21
@@ -314,6 +353,8 @@ events:
         value: Total volume increased 26% from 2021
       - label: Large-user cohort
         value: More than 100 companies processed over $1 billion each through Stripe during the year
+      - label: Product activity
+        value: 244 user-facing features and 336 API updates
     metrics:
       - label: Total payment volume
         value: $817 billion+
@@ -321,6 +362,20 @@ events:
         value: 26%
       - label: Users above $1 billion annual volume
         value: 100+
+      - label: New businesses per day
+        value: 1,000+
+      - label: New businesses outside the United States
+        value: 55%
+      - label: Forbes Cloud 100 adoption
+        value: 75%
+      - label: People transacting with Stripe-powered businesses
+        value: 1 in 10
+        context: Worldwide, in 2022
+      - label: Payment Links created
+        value: 10 million+
+        context: During 2022
+      - label: Active in-person Terminal devices
+        value: 100,000+
     people:
       - Patrick Collison
       - John Collison
@@ -333,6 +388,8 @@ events:
     source_ids:
       - source-4c2b6be236dc25d35aff
       - source-c368358c8a9f73e7acf1
+      - source-1d80dbeb44c91482c943
+      - source-d55818d6a09a46cf8b73
   - id: milestone-2022-workforce-reduction
     title: Stripe announces a 14% workforce reduction
     date: 2022-11-03
@@ -429,6 +486,18 @@ events:
         value: "100"
       - label: Businesses crossing $1 million lifetime sales per day
         value: 100+
+      - label: Delaware C corporations formed with Atlas
+        value: about 1 in 10
+      - label: Category leaders above $1 billion
+        value: 50+
+      - label: 2021 technology IPOs on Stripe
+        value: 60%
+      - label: Daily API requests
+        value: 500 million+
+        context: Stripe reported 99.999% uptime
+      - label: Employees
+        value: 7,000
+        context: Across 23 countries
     people:
       - Patrick Collison
       - John Collison
@@ -440,6 +509,7 @@ events:
       - payment-volume
     source_ids:
       - source-7aebf381a98587d0d180
+      - source-b15628b377e66a437c88
   - id: milestone-2020-global-office-closure
     title: Stripe closes all offices during the COVID-19 pandemic
     date: 2020-03-18

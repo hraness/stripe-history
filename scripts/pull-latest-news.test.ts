@@ -94,9 +94,15 @@ describe("weekly news discovery", () => {
     expect(policy.trusted_monitors.every((id) => config.monitors.some((monitor) => monitor.id === id)))
       .toBe(true);
     const newsroom = config.monitors.find((monitor) => monitor.id === "stripe-newsroom");
+    const annualUpdates = config.monitors.find((monitor) => monitor.id === "stripe-annual-updates");
     const stripeBlog = config.monitors.find((monitor) => monitor.id === "stripe-blog");
     const cheekyPint = config.monitors.find((monitor) => monitor.id === "cheeky-pint");
     expect(newsroom).toMatchObject({ kind: "html-index", url: "https://stripe.com/newsroom" });
+    expect(annualUpdates).toMatchObject({
+      kind: "html-index",
+      link_path_prefixes: ["/annual-updates/"],
+      url: "https://stripe.com/annual-updates/2025",
+    });
     expect(stripeBlog).toMatchObject({ kind: "rss", url: "https://stripe.com/blog/feed.rss" });
     expect(cheekyPint).toMatchObject({
       kind: "rss",
@@ -105,6 +111,7 @@ describe("weekly news discovery", () => {
     });
     expect(config.monitors.map(({ id }) => id)).toEqual([
       "stripe-newsroom",
+      "stripe-annual-updates",
       "stripe-blog",
       "stripe-dev-blog",
       "stripe-economics",
@@ -277,6 +284,9 @@ describe("weekly news discovery", () => {
           title: "Stripe payment weekly candidate",
           url: "https://example.com/weekly?utm_source=gdelt",
         }] }), "application/json");
+      }
+      if (url.toString() === "https://stripe.com/annual-updates/2025") {
+        return response("<html><body><p>Stripe annual updates</p></body></html>", "text/html");
       }
       if (url.toString() === "https://stripe.com/newsroom") {
         return response(`
