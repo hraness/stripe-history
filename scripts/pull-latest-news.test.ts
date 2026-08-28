@@ -71,9 +71,47 @@ describe("weekly news discovery", () => {
     )) as unknown;
     const config = NewsMonitorFileSchema.parse(value);
     expect(config.lookback_days).toBe(8);
+    const policy = parse(await readFile(
+      join(process.cwd(), "public", "research", "publication-policy.yml"),
+      "utf8",
+    )) as Readonly<{
+      auto_publish_categories: readonly string[];
+      trusted_monitors: readonly string[];
+    }>;
+    expect(policy.auto_publish_categories).toContain("publishing");
+    expect(policy.trusted_monitors).toEqual(expect.arrayContaining([
+      "stripe-blog",
+      "stripe-dev-blog",
+      "stripe-economics",
+      "stripe-newsroom",
+      "stripe-press-newsletter",
+      "works-in-progress",
+      "works-in-progress-newsletter",
+    ]));
+    expect(policy.trusted_monitors).not.toContain("cheeky-pint");
+    expect(new Set(policy.trusted_monitors).size).toBe(policy.trusted_monitors.length);
+    expect(policy.trusted_monitors).toHaveLength(12);
+    expect(policy.trusted_monitors.every((id) => config.monitors.some((monitor) => monitor.id === id)))
+      .toBe(true);
+    const newsroom = config.monitors.find((monitor) => monitor.id === "stripe-newsroom");
+    const stripeBlog = config.monitors.find((monitor) => monitor.id === "stripe-blog");
+    const cheekyPint = config.monitors.find((monitor) => monitor.id === "cheeky-pint");
+    expect(newsroom).toMatchObject({ kind: "html-index", url: "https://stripe.com/newsroom" });
+    expect(stripeBlog).toMatchObject({ kind: "rss", url: "https://stripe.com/blog/feed.rss" });
+    expect(cheekyPint).toMatchObject({
+      kind: "rss",
+      research_areas: ["founder-appearances", "publishing"],
+      url: "https://feeds.transistor.fm/cheeky-pint-with-john-collison",
+    });
     expect(config.monitors.map(({ id }) => id)).toEqual([
       "stripe-newsroom",
       "stripe-blog",
+      "stripe-dev-blog",
+      "stripe-economics",
+      "stripe-press-newsletter",
+      "works-in-progress",
+      "works-in-progress-newsletter",
+      "cheeky-pint",
       "techcrunch-stripe",
       "techcrunch-latest",
       "exa-stripe-reporting",
@@ -165,6 +203,7 @@ describe("weekly news discovery", () => {
               "spotify.com",
               "stripe.com",
               "tim.blog",
+              "transistor.fm",
               "youtube.com",
               "youtu.be",
             ],
@@ -196,8 +235,13 @@ describe("weekly news discovery", () => {
             "ft.com",
             "reuters.com",
             "stripe.com",
+            "stripe.dev",
+            "stripeeconomics.com",
+            "stripepress.substack.com",
             "techcrunch.com",
             "theinformation.com",
+            "worksinprogress.co",
+            "worksinprogress.news",
             "wsj.com",
           ],
           moderation: true,
@@ -245,8 +289,8 @@ describe("weekly news discovery", () => {
           <script type="application/ld+json">{"@type":"NewsArticle","headline":"Stripe newsroom candidate","datePublished":"2026-08-14"}</script>
         `, "text/html");
       }
-      if (url.toString() === "https://stripe.com/blog") {
-        return response("<a href=\"/about\">About</a>", "text/html");
+      if (url.toString() === "https://stripe.com/blog/feed.rss") {
+        return response("<rss><channel></channel></rss>", "application/rss+xml");
       }
       if (url.toString() === "https://techcrunch.com/tag/stripe/feed/") {
         return response(`
@@ -262,6 +306,16 @@ describe("weekly news discovery", () => {
         `, "application/rss+xml");
       }
       if (url.hostname === "marginalrevolution.com") {
+        return response("<rss><channel></channel></rss>", "application/rss+xml");
+      }
+      if (
+        url.toString() === "https://www.stripeeconomics.com/feed"
+        || url.toString() === "https://stripe.dev/blog/feed"
+        || url.toString() === "https://stripepress.substack.com/feed"
+        || url.toString() === "https://worksinprogress.co/rss.xml"
+        || url.toString() === "https://www.worksinprogress.news/feed"
+        || url.toString() === "https://feeds.transistor.fm/cheeky-pint-with-john-collison"
+      ) {
         return response("<rss><channel></channel></rss>", "application/rss+xml");
       }
       throw new Error(`Unexpected test request ${url}`);

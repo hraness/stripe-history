@@ -75,6 +75,27 @@ export default function AboutPage() {
           when a transaction or event was only proposed or reported.
         </p>
 
+        <h2>Publications followed</h2>
+        <p>
+          Weekly discovery reads first-party and Stripe-affiliated publication
+          feeds. The timeline records those publications when they become part
+          of Stripe&apos;s editorial history. It does not turn every newsletter
+          essay into its own event.
+        </p>
+        <p>
+          Followed publications include{" "}
+          <a href="https://www.stripeeconomics.com/">Stripe Economics</a>,{" "}
+          <a href="https://worksinprogress.co/">Works in Progress</a>, and{" "}
+          <a href="https://press.stripe.com/">Stripe Press</a>. Discovery also
+          reads first-party{" "}
+          <a href="https://stripe.com/blog">Stripe Blog</a> and{" "}
+          <a href="https://stripe.dev/blog">Stripe.dev Blog</a> RSS, and the{" "}
+          <a href="https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332">
+            Cheeky Pint
+          </a>{" "}
+          episode feed.
+        </p>
+
         <h2>Independence and corrections</h2>
         <p>
           {site.domain} is not affiliated with, endorsed by, or operated by

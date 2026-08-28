@@ -4,6 +4,25 @@ category:
   description: Stripe editorial projects across books, magazines, film, podcasts, and other formats, including an event for each documented Stripe Press title.
   order: 9
 events:
+  - id: stripe-economics-begins-publishing
+    date: 2026-03-17
+    date_precision: day
+    title: Stripe Economics begins publishing
+    summary: Stripe, LLC published Stripe Economics, a newsletter of internet economics data and analysis. The earliest dated item in its public feed is Ernie Tedeschi's essay on a K-shaped economy. The feed does not identify an earlier launch announcement.
+    confidence: confirmed
+    status: Newsletter publishing
+    people:
+      - Ernie Tedeschi
+    organizations:
+      - Stripe
+      - Stripe Economics
+    tags:
+      - stripe-economics
+      - newsletter
+      - launch
+    source_ids:
+      - source-45841285beb2a5ad6f70
+      - source-e95a1887b6e1cf6c11a3
   - id: maintenance-published
     date: 2026-02
     date_precision: month

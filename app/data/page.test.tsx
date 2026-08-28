@@ -42,6 +42,14 @@ describe("Stripe company history dataset", () => {
     expect(html).not.toContain('href="/stripe/research/appearance-backfill.yml"');
     expect(html).toContain('href="/stripe/research/collections.yml"');
     expect(html).toContain('href="/stripe/research/runs.yml"');
+    expect(html).toContain('href="https://www.stripeeconomics.com/"');
+    expect(html).toContain('href="https://worksinprogress.co/"');
+    expect(html).toContain('href="https://press.stripe.com/"');
+    expect(html).toContain('href="https://stripe.com/blog"');
+    expect(html).toContain('href="https://stripe.dev/blog"');
+    expect(html).toContain('href="https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332"');
+    expect(html).toContain('href="/history/publishing"');
+    expect(html).toContain("does not ingest every newsletter essay");
     expect(html).toContain(`${history.sources.length} canonical sources`);
     expect(html).toContain(`${history.valuations.length} observations`);
     expect(html).toContain('href="https://github.com/hraness/stripe-history"');

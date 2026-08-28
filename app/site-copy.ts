@@ -53,6 +53,13 @@ export const aboutSections = [
     ],
   },
   {
+    heading: "Publications followed",
+    paragraphs: [
+      "Weekly discovery reads first-party and Stripe-affiliated publication feeds. The timeline records those publications when they become part of Stripe's editorial history. It does not turn every newsletter essay into its own event.",
+      `Followed publications include [Stripe Economics](https://www.stripeeconomics.com/), [Works in Progress](https://worksinprogress.co/), and [Stripe Press](https://press.stripe.com/). Discovery also reads first-party [Stripe Blog](https://stripe.com/blog) and [Stripe.dev Blog](https://stripe.dev/blog) RSS, and the [Cheeky Pint](https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332) episode feed.`,
+    ],
+  },
+  {
     heading: "Independence and corrections",
     paragraphs: [
       `${independenceSentence} Corrections are made in the underlying sourced records so the timeline and its focused category views stay aligned.`,
