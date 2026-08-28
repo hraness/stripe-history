@@ -336,7 +336,7 @@ export default async function ValuationPage() {
             </p>
           </section>
         </section>
-        <SiteFooter />
+        <SiteFooter path="/history/valuation" />
       </main>
     </>
   );

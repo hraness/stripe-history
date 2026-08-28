@@ -83,7 +83,7 @@ export default function PrivacyPage() {
           <Link href="/about">about page</Link>.
         </p>
       </section>
-      <SiteFooter />
+      <SiteFooter path="/privacy" />
     </main>
   );
 }

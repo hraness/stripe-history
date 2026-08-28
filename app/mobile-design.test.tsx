@@ -20,6 +20,15 @@ test("blue plain-site links stay quiet until interaction", () => {
   );
 });
 
+test("Ask AI links retain control styling inside plain pages", () => {
+  expect(globalsCss).toMatch(
+    /\.stripe-history-ask-ai \[data-slot="ask-ai-about-this-link"\]\s*\{[^}]*color:\s*var\(--ui-muted-foreground\);[^}]*text-decoration:\s*none;/u,
+  );
+  expect(globalsCss).toMatch(
+    /\.stripe-history-ask-ai \[data-slot="ask-ai-about-this-link"\]:focus-visible\s*\{[^}]*outline:\s*2px solid var\(--ui-ring\);[^}]*outline-offset:\s*2px;[^}]*text-decoration:\s*none;/u,
+  );
+});
+
 test("mobile history uses a controlled full-width chart rail instead of clipped panels", () => {
   expect(globalsCss).toMatch(
     /@media \(max-width: 54rem\)[\s\S]*?\.history-volume\s*\{[^}]*overflow:\s*visible;[^}]*position:\s*static;/u,

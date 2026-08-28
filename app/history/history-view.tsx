@@ -381,6 +381,9 @@ export function HistoryView({
   const historyHeading = selectedCategory === undefined
     ? "Stripe company history"
     : `Stripe ${selectedCategory.label.toLocaleLowerCase("en-US")} history`;
+  const path = selectedCategoryId === undefined
+    ? "/" as const
+    : historyCategoryPath(selectedCategoryId);
 
   return (
     <main
@@ -428,7 +431,7 @@ export function HistoryView({
           </div>
         </div>
       </section>
-      <SiteFooter />
+      <SiteFooter path={path} />
     </main>
   );
 }

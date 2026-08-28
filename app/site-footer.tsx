@@ -1,10 +1,26 @@
 import { HranessSiteFooter } from "@hraness/site-footer/react";
+import { AskAiAboutThis } from "@hraness/ui";
 
-import { GITHUB_REPOSITORY_URL, publicSitePath } from "./site";
+import {
+  absoluteSiteUrl,
+  GITHUB_REPOSITORY_URL,
+  publicSitePath,
+  type SitePath,
+} from "./site";
 
-export function SiteFooter() {
+interface SiteFooterProps {
+  readonly path?: SitePath;
+}
+
+export function SiteFooter({ path }: SiteFooterProps) {
   return (
     <>
+      {path === undefined ? null : (
+        <AskAiAboutThis
+          className="stripe-history-ask-ai"
+          url={absoluteSiteUrl(path)}
+        />
+      )}
       <aside aria-label="Stripe History resources" className="stripe-history-footer-resources">
         <p className="stripe-history-footer-resources__label">Stripe History</p>
         <nav aria-label="Stripe History links" className="stripe-history-footer-resources__links">

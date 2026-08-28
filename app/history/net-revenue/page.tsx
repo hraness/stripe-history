@@ -272,7 +272,7 @@ export default async function NetRevenuePage() {
             </p>
           </section>
         </section>
-        <SiteFooter />
+        <SiteFooter path="/history/net-revenue" />
       </main>
     </>
   );

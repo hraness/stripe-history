@@ -272,7 +272,7 @@ export default async function PaymentVolumePage() {
             </p>
           </section>
         </section>
-        <SiteFooter />
+        <SiteFooter path="/history/payment-volume" />
       </main>
     </>
   );

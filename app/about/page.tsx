@@ -134,7 +134,7 @@ export default function AboutPage() {
           policy for agents and other readers who look for <code>/privacy</code>.
         </p>
       </section>
-      <SiteFooter />
+      <SiteFooter path="/about" />
     </main>
   );
 }

@@ -21,6 +21,7 @@ test("keeps Stripe History resources above the canonical Hraness footer", () => 
   const html = renderToStaticMarkup(<SiteFooter />);
 
   expect(html.match(/<footer\b/gu)).toHaveLength(1);
+  expect(html).not.toContain('aria-label="Ask AI about this"');
   expect(html).toContain('aside aria-label="Stripe History resources"');
   expect(html).toContain('href="/stripe/data"');
   expect(html).toContain('href="/stripe/about"');

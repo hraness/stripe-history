@@ -869,6 +869,32 @@
   white-space: nowrap;
 }
 
+.stripe-history-ask-ai {
+  margin-top: 3.5rem;
+}
+
+.stripe-history-ask-ai [data-slot="ask-ai-about-this-link"] {
+  color: var(--ui-muted-foreground);
+  overflow-wrap: normal;
+  text-decoration: none;
+}
+
+.stripe-history-ask-ai [data-slot="ask-ai-about-this-link"]:hover {
+  color: var(--ui-foreground);
+  text-decoration: none;
+}
+
+.stripe-history-ask-ai [data-slot="ask-ai-about-this-link"]:focus-visible {
+  color: var(--ui-foreground);
+  outline: 2px solid var(--ui-ring);
+  outline-offset: 2px;
+  text-decoration: none;
+}
+
+.stripe-history-ask-ai + .stripe-history-footer-resources {
+  margin-top: 1rem;
+}
+
 .stripe-history-footer-resources {
   align-items: center;
   border-top: 1px solid var(--plain-line);

@@ -205,7 +205,7 @@ export default async function DataPage() {
           </ul>
         </section>
       </section>
-      <SiteFooter />
+      <SiteFooter path="/data" />
     </main>
   );
 }

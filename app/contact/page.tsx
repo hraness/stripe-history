@@ -89,7 +89,7 @@ export default function ContactPage() {
           <Link href="/privacy">privacy</Link> for analytics limits.
         </p>
       </section>
-      <SiteFooter />
+      <SiteFooter path="/contact" />
     </main>
   );
 }
