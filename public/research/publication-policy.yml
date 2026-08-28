@@ -16,11 +16,13 @@ trusted_monitors:
   - exa-founder-side-projects
   - exa-stripe-reporting
   - stripe-blog
+  - stripe-dev-blog
   - stripe-economics
   - stripe-newsroom
   - stripe-press-newsletter
   - techcrunch-latest
   - techcrunch-stripe
+  - works-in-progress
   - works-in-progress-newsletter
 auto_publish_categories:
   - origins-and-early-company

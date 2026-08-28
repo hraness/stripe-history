@@ -24,8 +24,11 @@ describe("hraness.com/stripe about page", () => {
     expect(html).toContain("founder side projects and aesthetics programs");
     expect(html).toContain("Publications followed");
     expect(html).toContain("href=\"https://www.stripeeconomics.com/\"");
-    expect(html).toContain("href=\"https://www.worksinprogress.news/\"");
+    expect(html).toContain("href=\"https://worksinprogress.co/\"");
     expect(html).toContain("href=\"https://press.stripe.com/\"");
+    expect(html).toContain("href=\"https://stripe.com/blog\"");
+    expect(html).toContain("href=\"https://stripe.dev/blog\"");
+    expect(html).toContain("href=\"https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332\"");
     expect(html).toContain("does not turn every newsletter essay into its own event");
     expect(html).toContain("timeline and its focused category views stay aligned");
     expect(html).toContain('aria-current="page" href="/about">about</a>');

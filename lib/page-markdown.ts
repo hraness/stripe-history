@@ -210,8 +210,14 @@ function dataMarkdown(history: HistoryCollection): string {
     "",
     linkList([
       { href: "https://www.stripeeconomics.com/", label: "Stripe Economics" },
-      { href: "https://www.worksinprogress.news/", label: "Works in Progress" },
+      { href: "https://worksinprogress.co/", label: "Works in Progress" },
       { href: "https://press.stripe.com/", label: "Stripe Press" },
+      { href: "https://stripe.com/blog", label: "Stripe Blog" },
+      { href: "https://stripe.dev/blog", label: "Stripe.dev Blog" },
+      {
+        href: "https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332",
+        label: "Cheeky Pint",
+      },
       {
         href: `${SITE_ORIGIN}/history/publishing`,
         label: "Publishing history",

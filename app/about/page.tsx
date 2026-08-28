@@ -85,8 +85,15 @@ export default function AboutPage() {
         <p>
           Followed publications include{" "}
           <a href="https://www.stripeeconomics.com/">Stripe Economics</a>,{" "}
-          <a href="https://www.worksinprogress.news/">Works in Progress</a>, and{" "}
-          <a href="https://press.stripe.com/">Stripe Press</a>.
+          <a href="https://worksinprogress.co/">Works in Progress</a>, and{" "}
+          <a href="https://press.stripe.com/">Stripe Press</a>. Discovery also
+          reads first-party{" "}
+          <a href="https://stripe.com/blog">Stripe Blog</a> and{" "}
+          <a href="https://stripe.dev/blog">Stripe.dev Blog</a> RSS, and the{" "}
+          <a href="https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332">
+            Cheeky Pint
+          </a>{" "}
+          episode feed.
         </p>
 
         <h2>Independence and corrections</h2>

@@ -163,11 +163,16 @@ export default async function DataPage() {
           <p>
             Weekly discovery also reads first-party publication feeds, including{" "}
             <a href="https://www.stripeeconomics.com/">Stripe Economics</a>,{" "}
-            <a href="https://www.worksinprogress.news/">Works in Progress</a>, and{" "}
-            <a href="https://press.stripe.com/">Stripe Press</a>. The{" "}
-            <Link href="/history/publishing">publishing history</Link> records
-            those projects. It does not ingest every newsletter essay as its own
-            event.
+            <a href="https://worksinprogress.co/">Works in Progress</a>,{" "}
+            <a href="https://press.stripe.com/">Stripe Press</a>, the{" "}
+            <a href="https://stripe.com/blog">Stripe Blog</a>, the{" "}
+            <a href="https://stripe.dev/blog">Stripe.dev Blog</a>, and{" "}
+            <a href="https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332">
+              Cheeky Pint
+            </a>
+            . The <Link href="/history/publishing">publishing history</Link>{" "}
+            records those projects. It does not ingest every newsletter essay as
+            its own event.
           </p>
           <ul>
             <li>

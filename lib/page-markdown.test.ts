@@ -64,10 +64,13 @@ describe("agent markdown representations", () => {
     expect(about.body).toContain("founder side projects and aesthetics programs");
     expect(about.body).toContain("## Publications followed");
     expect(about.body).toContain("https://www.stripeeconomics.com/");
-    expect(about.body).toContain("https://www.worksinprogress.news/");
+    expect(about.body).toContain("https://worksinprogress.co/");
+    expect(about.body).toContain("https://stripe.dev/blog");
     const data = await markdownForPath("/data");
     expect(data.body).toContain("## Publications followed");
     expect(data.body).toContain("[Stripe Economics](https://www.stripeeconomics.com/)");
+    expect(data.body).toContain("[Works in Progress](https://worksinprogress.co/)");
+    expect(data.body).toContain("[Cheeky Pint](https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332)");
     expect(visibleText((await markdownForPath("/privacy")).body).length).toBeGreaterThan(500);
     expect(visibleText((await markdownForPath("/contact")).body).length).toBeGreaterThan(500);
   });

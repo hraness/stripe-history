@@ -14,10 +14,14 @@ monitors:
       - sessions-product-launches
       - valuation-history
   - id: stripe-blog
-    kind: html-index
-    url: https://stripe.com/blog
-    link_path_prefixes:
-      - /blog/
+    kind: rss
+    url: https://stripe.com/blog/feed.rss
+    research_areas:
+      - company-history
+      - sessions-product-launches
+  - id: stripe-dev-blog
+    kind: rss
+    url: https://stripe.dev/blog/feed
     research_areas:
       - company-history
       - sessions-product-launches
@@ -27,18 +31,30 @@ monitors:
     research_areas:
       - publishing
       - company-history
-  - id: works-in-progress-newsletter
-    kind: rss
-    url: https://www.worksinprogress.news/feed
-    research_areas:
-      - publishing
-      - company-history
   - id: stripe-press-newsletter
     kind: rss
     url: https://stripepress.substack.com/feed
     research_areas:
       - publishing
       - company-history
+  - id: works-in-progress
+    kind: rss
+    url: https://worksinprogress.co/rss.xml
+    research_areas:
+      - publishing
+      - company-history
+  - id: works-in-progress-newsletter
+    kind: rss
+    url: https://www.worksinprogress.news/feed
+    research_areas:
+      - publishing
+      - company-history
+  - id: cheeky-pint
+    kind: rss
+    url: https://feeds.transistor.fm/cheeky-pint-with-john-collison
+    research_areas:
+      - founder-appearances
+      - publishing
   - id: techcrunch-stripe
     kind: rss
     url: https://techcrunch.com/tag/stripe/feed/
@@ -67,6 +83,7 @@ monitors:
       - ft.com
       - reuters.com
       - stripe.com
+      - stripe.dev
       - stripeeconomics.com
       - stripepress.substack.com
       - techcrunch.com
@@ -92,6 +109,7 @@ monitors:
       - spotify.com
       - stripe.com
       - tim.blog
+      - transistor.fm
       - youtube.com
       - youtu.be
     research_areas:
