@@ -938,6 +938,14 @@ sources:
     language: en
     media_type: video
     native_id: youtube:F0_IKKY3HCk
+  - kind: reporting
+    publisher: Eric Newcomer
+    published_at: 2026-08-19
+    title: Here's Stripe's letter to investors explaining its acquisition of OpenRouter
+    url: https://x.com/EricNewcomer/status/2090133049291788434
+    id: source-649b2830ebba656ef903
+    media_type: webpage
+    native_id: x:2090133049291788434
   - kind: interview
     publisher: 500 Global
     published_at: 2013-08-13
@@ -1101,6 +1109,13 @@ sources:
     title: Stripe Tour London 2024
     url: https://stripe.com/en-fr/newsroom/news/tour-london-2024
     id: source-751ebcf4673eda978d92
+    media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2026-08-19
+    title: Stripe agrees to acquire OpenRouter to help businesses optimize token routing and usage
+    url: https://stripe.com/newsroom/news/stripe-agrees-to-acquire-openrouter
+    id: source-77bafd0ab1bf6ae03244
     media_type: article
   - kind: filing
     publisher: City of South San Francisco
@@ -1280,6 +1295,13 @@ sources:
     title: Stripe's 2023 annual letter
     url: https://stripe.com/en-ca/annual-updates/2023
     id: source-8a7b0b685a7ceb93b864
+    media_type: article
+  - kind: primary
+    publisher: OpenRouter
+    published_at: 2026-08-19
+    title: OpenRouter is Joining Stripe
+    url: https://openrouter.ai/blog/announcements/openrouter-is-joining-stripe/
+    id: source-8d0061523211fdad0273
     media_type: article
   - kind: reporting
     publisher: Payments Dive
@@ -1606,6 +1628,13 @@ sources:
     url: https://stripe.com/en-br/newsroom/news/stripe-completes-bridge-acquisition
     id: source-b5f3dd49770d38d3cc50
     media_type: article
+  - kind: primary
+    publisher: Stripe
+    published_at: 2026-08-19
+    title: Stripe's August 2026 investor letter
+    url: https://s3.documentcloud.org/documents/28565866/stripes-august-2026-investor-letter.pdf
+    id: source-b82c4a1e21a701d6dc86
+    media_type: pdf
   - kind: primary
     publisher: Stripe
     published_at: 2023-08-02
@@ -2010,6 +2039,13 @@ sources:
     title: The Big Score
     url: https://press.stripe.com/the-big-score
     id: source-dda978fa29fb0e3f1ddd
+    media_type: article
+  - kind: reporting
+    publisher: TechCrunch
+    published_at: 2026-08-19
+    title: Stripe didn't really buy OpenRouter because of the 'singularity'
+    url: https://techcrunch.com/2026/08/19/stripe-didnt-really-buy-openrouter-because-of-the-singularity/
+    id: source-ddd1bf444402af773511
     media_type: article
   - kind: primary
     publisher: George Xing

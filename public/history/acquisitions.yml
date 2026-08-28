@@ -6,6 +6,40 @@ category:
 events:
   - amount:
       currency: USD
+      display: About $7.5 billion (reported; official terms undisclosed)
+    confidence: confirmed
+    date: 2026-08-19
+    date_precision: day
+    details:
+      - label: Official terms
+        value: Not disclosed
+      - label: Reported price
+        value: About $7.5 billion (New York Times, as cited by TechCrunch)
+      - label: Closing
+        value: Subject to customary closing conditions; expected in the coming weeks
+      - label: Investor letter
+        value: Described OpenRouter as Stripe's largest-ever acquisition
+    id: openrouter-acquisition-agreement
+    organizations:
+      - Stripe
+      - OpenRouter
+    related_events:
+      - stripe-reportedly-finalizes-a-deal-to-acquire-openrouter
+      - openrouter-acquisition-talks-reported
+    source_ids:
+      - source-77bafd0ab1bf6ae03244
+      - source-b82c4a1e21a701d6dc86
+      - source-8d0061523211fdad0273
+      - source-649b2830ebba656ef903
+      - source-ddd1bf444402af773511
+    status: Agreement announced; completion not reported
+    summary: Stripe announced an agreement to acquire OpenRouter, an AI model gateway that routes requests across more than 400 models from more than 80 providers. Official terms were not disclosed. OpenRouter said the transaction remained subject to customary closing conditions and was expected to close in the coming weeks. A same-day investor letter, posted by Eric Newcomer on X and verified by TechCrunch, told investors that OpenRouter would join as Stripe's largest-ever acquisition.
+    tags:
+      - agreement-announced
+      - artificial-intelligence
+    title: Stripe agrees to acquire OpenRouter
+  - amount:
+      currency: USD
       display: More than $7 billion
     confidence: reported
     date: 2026-08-16
@@ -21,6 +55,9 @@ events:
     organizations:
       - Stripe
       - OpenRouter
+    related_events:
+      - openrouter-acquisition-agreement
+      - openrouter-acquisition-talks-reported
     source_ids:
       - source-e850972d627be2bcc336
     status: Reported finalized agreement; completion not reported
@@ -40,6 +77,9 @@ events:
     organizations:
       - Stripe
       - OpenRouter
+    related_events:
+      - openrouter-acquisition-agreement
+      - stripe-reportedly-finalizes-a-deal-to-acquire-openrouter
     source_ids:
       - source-990ab773c6c0913272f7
       - source-cf513568945a043b22bf
