@@ -17,7 +17,7 @@ export const aboutDescription =
 export const privacyTitle = "Privacy";
 export const privacySocialTitle = `Privacy | ${site.domain}`;
 export const privacyDescription =
-  `How ${site.domain} handles analytics, cookies, accounts, and hosting logs for the independent Stripe company history.`;
+  `How ${site.domain} handles analytics, cookies, mailing consent, accounts, and hosting logs for the independent Stripe company history.`;
 
 export const contactTitle = "Contact";
 export const contactSocialTitle = `Contact ${site.domain}`;
@@ -75,7 +75,9 @@ export const aboutSections = [
 
 export const privacyParagraphs = [
   `The site sends anonymous, cookieless pageview events for public pages to PostHog. Each event contains the normalized public page path, its page category, a site identifier, an analytics schema version, and PostHog's cookieless marker. It excludes query strings, URL fragments, referrer properties, account data, and user content. The browser does not save an analytics cookie or identifier.`,
-  `The site does not use autocapture, session replay, heatmaps, surveys, feature flags, performance monitoring, or user profiles, and it has no user accounts or authentication. Requests are still subject to the ordinary logs and security controls of the hosting provider.`,
+  `The site does not use autocapture, session replay, heatmaps, surveys, feature flags, performance monitoring, or user profiles, and it has no local reader accounts or authentication. Requests are still subject to the ordinary logs and security controls of the hosting provider.`,
+  `If you use the footer subscription form, your email address, the Stripe History list choice, the form source, and a short-lived Cloudflare Turnstile proof are sent to Hraness Accounts at [account.hraness.com](https://account.hraness.com/). Cloudflare verifies the anti-abuse proof. Hraness Accounts records dated consent, and Resend sends the confirmation and later Stripe History messages from news.hraness.com. You are not subscribed until you confirm.`,
+  `Each mailing-list message includes an unsubscribe link. Using it removes only the Stripe History subscription, without changing another product subscription or a separate general Hraness subscription.`,
   `${site.domain} does not sell personal data, does not run advertising pixels, and does not keep a reader profile. Appearance preferences stay in the browser. Machine-readable copies of the public pages are available as Markdown when a client sends \`Accept: text/markdown\`, and the authored YAML records remain downloadable from the [dataset index](${SITE_ORIGIN}/data).`,
   `Questions about this policy belong on the [contact page](${SITE_ORIGIN}/contact) or in the [Stripe History repository](${GITHUB_REPOSITORY_URL}). The broader sourcing and independence statement lives on the [about page](${SITE_ORIGIN}/about).`,
 ] as const;
@@ -83,8 +85,8 @@ export const privacyParagraphs = [
 export const contactParagraphs = [
   `Use public GitHub issues for ordinary historical corrections, missing events, stronger sources, and focused software improvements. Include the event date, a concise factual claim, its category, the proposed confidence and status, and at least one source URL. Prefer primary sources. If a claim was only proposed or reported, keep that uncertainty in the record.`,
   `Report suspected vulnerabilities through GitHub's private vulnerability reporting for this repository. Do not include sensitive details in a public issue.`,
-  `There is no reader account, contact form, or product inbox on ${site.domain}. The project does not process payments, issue API keys, or operate a Stripe integration. ${independenceSentence}`,
-  `Published and maintained by [Hraness](${HRANESS_URL}). The complete sourced records and website code are in the [Stripe History repository](${GITHUB_REPOSITORY_URL}). Read [about](${SITE_ORIGIN}/about) for editorial method and [privacy](${SITE_ORIGIN}/privacy) for analytics limits.`,
+  `There is no Stripe History-owned reader login, contact form, or product inbox on ${site.domain}. An optional mailing subscription is recorded by Hraness Accounts as described on the privacy page. The project does not process payments, issue API keys, or operate a Stripe integration. ${independenceSentence}`,
+  `Published and maintained by [Hraness](${HRANESS_URL}). The complete sourced records and website code are in the [Stripe History repository](${GITHUB_REPOSITORY_URL}). Read [about](${SITE_ORIGIN}/about) for editorial method and [privacy](${SITE_ORIGIN}/privacy) for analytics and mailing-consent limits.`,
 ] as const;
 
 export const dataIntro =

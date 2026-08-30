@@ -126,8 +126,9 @@ export default function AboutPage() {
         <p>
           The site does not use autocapture, session replay, heatmaps, surveys,
           feature flags, performance monitoring, or user profiles, and it has
-          no user accounts or authentication. Requests are still subject to the
-          ordinary logs and security controls of the hosting provider.
+          no local reader accounts or authentication. Requests are still
+          subject to the ordinary logs and security controls of the hosting
+          provider. Optional mailing signup is handled by Hraness Accounts.
         </p>
         <p>
           The dedicated <Link href="/privacy">privacy page</Link> repeats this

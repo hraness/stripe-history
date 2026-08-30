@@ -19,7 +19,8 @@ describe("hraness.com/stripe about page", () => {
     expect(html).toContain("referrer properties, account data, and user content");
     expect(html).toContain("does not save an analytics cookie or identifier");
     expect(html).toContain("does not use autocapture, session replay, heatmaps, surveys");
-    expect(html).toContain("no user accounts or authentication");
+    expect(html).toContain("no local reader accounts or authentication");
+    expect(html).toContain("mailing signup is handled by Hraness Accounts");
     expect(html).toContain("ordinary logs and security controls of the hosting provider");
     expect(html).toContain("founder side projects and aesthetics programs");
     expect(html).toContain("Publications followed");
