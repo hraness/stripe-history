@@ -88,7 +88,16 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).not.toContain('class="stripe-history-selector"');
     expect(html).not.toContain('/atom.xml');
     expect(html).not.toContain('/news.yml');
-    expect(html).not.toContain("<form");
+    expect(html).toContain(
+      '<form accept-charset="UTF-8" action="https://account.hraness.com/api/mailing/subscribe"',
+    );
+    expect(html).toContain(
+      'name="audience" type="hidden" value="stripe-history"',
+    );
+    expect(html).not.toContain(
+      'name="audience" type="hidden" value="hraness"',
+    );
+    expect(html).not.toContain("hraness.substack.com");
     expect(html.indexOf('class="history-volume"')).toBeLessThan(
       html.indexOf('class="history-years"'),
     );

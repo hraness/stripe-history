@@ -4,7 +4,6 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { SiteFooter } from "./site-footer";
 
 const sharedLinkOrder = [
-  "https://hraness.substack.com/subscribe",
   "https://x.com/hraness",
   "https://www.instagram.com/hraness/",
   "https://www.linkedin.com/in/hraness",
@@ -28,6 +27,17 @@ test("keeps Stripe History resources above the canonical Hraness footer", () => 
   expect(html).toContain('href="/stripe/contact"');
   expect(html).toContain('href="/stripe/privacy"');
   expect(html).toContain('href="https://github.com/hraness/stripe-history"');
+  expect(html).toContain(
+    'action="https://account.hraness.com/api/mailing/subscribe"',
+  );
+  expect(html).toContain(
+    'name="audience" type="hidden" value="stripe-history"',
+  );
+  expect(html).toContain('data-action="mailing_stripe_history"');
+  expect(html).not.toContain(
+    'name="audience" type="hidden" value="hraness"',
+  );
+  expect(html).not.toContain("hraness.substack.com");
   expect(html.indexOf('aria-label="Stripe History resources"')).toBeLessThan(
     html.indexOf('data-slot="hraness-site-footer"'),
   );

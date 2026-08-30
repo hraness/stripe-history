@@ -18,7 +18,8 @@ describe("hraness.com/stripe contact page", () => {
     expect(html).toContain("https://github.com/hraness/stripe-history/issues");
     expect(html).toContain("private vulnerability reporting");
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
-    expect(html).toContain("There is no reader account, contact form, or product inbox");
+    expect(html).toContain("There is no Stripe History-owned reader login");
+    expect(html).toContain("mailing subscription is recorded by Hraness Accounts");
     expect(html).not.toContain("mailto:");
     expect(html).toContain('aria-label="Appearance: System"');
     expect(visibleText(html).length).toBeGreaterThan(500);

@@ -7,7 +7,7 @@
 - `about/`, `contact/`, and `privacy/` – sourcing, review, independence, corrections, public contact channels, and privacy.
 - `llms.txt/` – the agent index with when-to-use guidance.
 - Root `proxy.ts` – Accept negotiation that rewrites Markdown requests to the Node corpus handler. Do not read YAML in the proxy.
-- `site.ts`, `site-copy.ts`, `site-header.tsx`, and `site-footer.tsx` – canonical identity, shared editorial copy, and shared page chrome.
+- `site.ts`, `site-copy.ts`, `site-header.tsx`, `site-footer.tsx`, and `mailing-config.ts` – canonical identity, shared editorial copy, product-scoped mailing signup, and shared page chrome.
 - `analytics.ts`, `posthog.ts`, and `posthog-analytics.tsx` – the finite public-route analytics contract, strict PostHog boundary, and client provider.
 - `layout.tsx`, `globals.css`, and `support/` – the document, appearance, structured-data, and portable styling boundaries.
 - `robots.ts`, `sitemap.ts`, `manifest.ts`, and `opengraph-image.tsx` – public discovery and sharing surfaces.
@@ -21,5 +21,6 @@
 - Build all canonical URLs and structured data from `site.ts`.
 - Keep raw YAML indexable only as downloadable evidence, not as duplicate search results.
 - Keep the Hraness footer attribution and public repository link visible on every rendered page.
+- Bind the shared footer to the fail-closed `stripe-history` mailing configuration. Keep only the public Turnstile key here; Hraness Accounts owns its secret, dated consent, confirmation delivery, and product-specific unsubscribe authority.
 - Keep analytics limited to anonymous cookieless `$pageview` events on exact canonical public routes. Drop every other event and property before transport, and never enable analytics outside the `hraness.com/stripe` Production surface.
 - Keep ordinary proportional text and the social image on the shared Nebula Sans contract. Preserve the explicit monospace heading and data roles.

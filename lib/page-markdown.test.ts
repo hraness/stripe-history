@@ -86,8 +86,20 @@ describe("agent markdown representations", () => {
     expect(data.body).toContain("[Stripe Economics](https://www.stripeeconomics.com/)");
     expect(data.body).toContain("[Works in Progress](https://worksinprogress.co/)");
     expect(data.body).toContain("[Cheeky Pint](https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332)");
-    expect(visibleText((await markdownForPath("/privacy")).body).length).toBeGreaterThan(500);
-    expect(visibleText((await markdownForPath("/contact")).body).length).toBeGreaterThan(500);
+    const privacy = await markdownForPath("/privacy");
+    expect(privacy.body).toContain("Cloudflare Turnstile");
+    expect(privacy.body).toContain("https://account.hraness.com/");
+    expect(privacy.body).toContain("news.hraness.com");
+    expect(privacy.body).toContain("not subscribed until you confirm");
+    expect(privacy.body).toContain("only the Stripe History subscription");
+    expect(visibleText(privacy.body).length).toBeGreaterThan(500);
+
+    const contact = await markdownForPath("/contact");
+    expect(contact.body).toContain("no Stripe History-owned reader login");
+    expect(contact.body).toContain(
+      "mailing subscription is recorded by Hraness Accounts",
+    );
+    expect(visibleText(contact.body).length).toBeGreaterThan(500);
   });
 });
 

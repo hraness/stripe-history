@@ -63,8 +63,23 @@ export default function PrivacyPage() {
         <p>
           The site does not use autocapture, session replay, heatmaps, surveys,
           feature flags, performance monitoring, or user profiles, and it has
-          no user accounts or authentication. Requests are still subject to the
-          ordinary logs and security controls of the hosting provider.
+          no local reader accounts or authentication. Requests are still subject
+          to the ordinary logs and security controls of the hosting provider.
+        </p>
+        <p>
+          If you use the footer subscription form, your email address, the
+          Stripe History list choice, the form source, and a short-lived
+          Cloudflare Turnstile proof are sent to Hraness Accounts at{" "}
+          <a href="https://account.hraness.com/">account.hraness.com</a>.
+          Cloudflare verifies the anti-abuse proof. Hraness Accounts records
+          dated consent, and Resend sends the confirmation and later Stripe
+          History messages from news.hraness.com. You are not subscribed until
+          you confirm.
+        </p>
+        <p>
+          Each mailing-list message includes an unsubscribe link. Using it
+          removes only the Stripe History subscription, without changing another
+          product subscription or a separate general Hraness subscription.
         </p>
         <p>
           {site.domain} does not sell personal data, does not run advertising

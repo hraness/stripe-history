@@ -77,16 +77,18 @@ export default function ContactPage() {
         </p>
         <h2>Publisher</h2>
         <p>
-          There is no reader account, contact form, or product inbox on{" "}
-          {site.domain}. The project does not process payments, issue API keys,
-          or operate a Stripe integration. {independenceSentence}
+          There is no Stripe History-owned reader login, contact form, or product
+          inbox on {site.domain}. An optional mailing subscription is recorded by
+          Hraness Accounts as described on the privacy page. The project does not
+          process payments, issue API keys, or operate a Stripe integration. {independenceSentence}
         </p>
         <p>
           Published and maintained by <a href={HRANESS_URL}>Hraness</a>. The
           complete sourced records and website code are in the{" "}
           <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>. Read{" "}
           <Link href="/about">about</Link> for editorial method and{" "}
-          <Link href="/privacy">privacy</Link> for analytics limits.
+          <Link href="/privacy">privacy</Link> for analytics and mailing-consent
+          limits.
         </p>
       </section>
       <SiteFooter path="/contact" />

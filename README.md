@@ -88,6 +88,20 @@ bun install --frozen-lockfile
 bun run dev
 ```
 
+Copy `.env.example` to the ignored `.env.local` file and provide
+`NEXT_PUBLIC_HRANESS_MAILING_TURNSTILE_SITEKEY`. This value is the public,
+hostname-restricted Cloudflare widget key used by the footer. Production and
+Preview require the corresponding public value in Vercel. The Turnstile secret,
+mailing consent records, and delivery credentials stay in Hraness Accounts.
+
+Every shared footer offers only the Stripe History mailing list while retaining
+the generic Hraness social links. The form sends the email address,
+`stripe-history` audience, form source, and a short-lived Turnstile proof to
+Hraness Accounts at `account.hraness.com`. Cloudflare verifies the proof,
+Accounts records dated consent, and Resend sends the confirmation and later
+Stripe History messages from `news.hraness.com`. Confirmation is required. An
+unsubscribe link removes only the Stripe History subscription.
+
 Open `http://localhost:3000`. Run the complete local verification before submitting a change:
 
 ```sh

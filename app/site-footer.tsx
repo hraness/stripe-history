@@ -1,6 +1,7 @@
 import { HranessSiteFooter } from "@hraness/site-footer/react";
 import { AskAiAboutThis } from "@hraness/ui";
 
+import { stripeHistoryMailingListConfig } from "./mailing-config";
 import {
   absoluteSiteUrl,
   GITHUB_REPOSITORY_URL,
@@ -31,7 +32,7 @@ export function SiteFooter({ path }: SiteFooterProps) {
           <a href={GITHUB_REPOSITORY_URL}>github</a>
         </nav>
       </aside>
-      <HranessSiteFooter />
+      <HranessSiteFooter mailingList={stripeHistoryMailingListConfig()} />
     </>
   );
 }
