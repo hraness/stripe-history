@@ -1,4 +1,8 @@
-import { loadHistory } from "@/lib/content";
+import {
+  loadHistory,
+  loadResearchRuns,
+  summarizeHistoryEvidence,
+} from "@/lib/content";
 import { INDEXABLE_ROBOTS } from "@hraness/web-discovery";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
@@ -26,7 +30,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const history = await loadHistory();
+  const [history, researchRuns] = await Promise.all([
+    loadHistory(),
+    loadResearchRuns(),
+  ]);
+  const evidence = summarizeHistoryEvidence(history, researchRuns);
   const title = historyTitle(history.events.length);
 
   return (
@@ -39,7 +47,7 @@ export default async function Home() {
         })}
         id="stripe-history-history-structured-data"
       />
-      <HistoryView history={history} />
+      <HistoryView evidence={evidence} history={history} />
     </>
   );
 }

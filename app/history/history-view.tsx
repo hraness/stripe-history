@@ -3,6 +3,7 @@ import type {
   AnnualVolumePoint,
   CategorizedHistoryEvent,
   HistoryCollection,
+  HistoryEvidenceSummary,
   ValuationHeadlinePoint,
 } from "@/lib/content";
 import type { TimelineCategoryId } from "@/lib/history-schema";
@@ -21,8 +22,10 @@ import { HistoryMeasureRail } from "./history-measure-rail";
 import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
 import { publicSitePath } from "../site";
+import { EvidenceSnapshot } from "../evidence-snapshot";
 
 interface HistoryViewProps {
+  readonly evidence?: HistoryEvidenceSummary;
   readonly history: HistoryCollection;
   readonly selectedCategoryId?: TimelineCategoryId;
 }
@@ -368,6 +371,7 @@ export function HistoryFilters({
 }
 
 export function HistoryView({
+  evidence,
   history,
   selectedCategoryId,
 }: HistoryViewProps) {
@@ -392,9 +396,25 @@ export function HistoryView({
     >
       <SiteHeader />
       <section aria-labelledby="history-heading" className="stripe-history-section">
-        <h1 className="stripe-history-visually-hidden" id="history-heading">
-          {historyHeading}
-        </h1>
+        {selectedCategory === undefined && evidence !== undefined ? (
+          <header className="history-orientation">
+            <div className="history-orientation-copy">
+              <p>Independent · source-linked · reverse chronological</p>
+              <h1 id="history-heading">{historyHeading}</h1>
+              <p>
+                Follow dated evidence across Stripe&apos;s products, funding,
+                leadership, expansion, and company scale. Filter the timeline
+                or compare the annual charts; every entry opens its supporting
+                sources.
+              </p>
+            </div>
+            <EvidenceSnapshot summary={evidence} />
+          </header>
+        ) : (
+          <h1 className="stripe-history-visually-hidden" id="history-heading">
+            {historyHeading}
+          </h1>
+        )}
         <HistoryFilters
           history={history}
           {...(selectedCategoryId === undefined ? {} : { selectedCategoryId })}

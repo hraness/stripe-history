@@ -1,6 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import { INDEXABLE_ROBOTS } from "@hraness/web-discovery";
-import { loadHistory } from "@/lib/content";
+import {
+  loadHistory,
+  loadResearchRuns,
+  summarizeHistoryEvidence,
+} from "@/lib/content";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import Home, { generateMetadata } from "./page";
@@ -19,13 +23,27 @@ describe("canonical hraness.com/stripe history", () => {
       title: expectedTitle,
     });
     expect(metadata.openGraph).toMatchObject({
+      images: [{
+        url: "https://hraness.com/stripe/opengraph-image",
+      }],
       title: `${expectedTitle} | hraness.com/stripe`,
       url: "https://hraness.com/stripe",
+    });
+    expect(metadata.twitter).toMatchObject({
+      card: "summary_large_image",
+      images: [{
+        url: "https://hraness.com/stripe/opengraph-image",
+      }],
+      title: `${expectedTitle} | hraness.com/stripe`,
     });
   });
 
   test("renders the sourced timeline, measures, controls, and public attribution", async () => {
-    const history = await loadHistory();
+    const [history, researchRuns] = await Promise.all([
+      loadHistory(),
+      loadResearchRuns(),
+    ]);
+    const evidence = summarizeHistoryEvidence(history, researchRuns);
     const html = renderToStaticMarkup(await Home());
     const eventCount = html.match(/class="history-event"/gu)?.length ?? 0;
     const categoryIconCount = html.match(
@@ -38,10 +56,21 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).toContain('<header class="plain-header stripe-history-header">');
     expect(html).toContain('class="hraness-brand stripe-history-header-brand" href="https://hraness.com"');
     expect(html).toContain('aria-label="primary navigation" class="plain-nav"');
-    expect(html).toContain('<h1 class="stripe-history-visually-hidden" id="history-heading">Stripe company history</h1>');
-    expect(html).not.toContain(
-      "An independent, sourced timeline of Stripe products, people, funding, valuation, expansion, and milestones.",
+    expect(html).toContain('<header class="history-orientation">');
+    expect(html).toContain('<h1 id="history-heading">Stripe company history</h1>');
+    expect(html).toContain("Independent · source-linked · reverse chronological");
+    expect(html).toContain("every entry opens its supporting sources");
+    expect(html).toContain('<dl aria-label="Current evidence snapshot">');
+    expect(html).toContain(`<dt>timeline entries</dt><dd>${evidence.eventCount}</dd>`);
+    expect(html).toContain(`<dt>entry source links</dt><dd>${evidence.sourceLinkCount}</dd>`);
+    expect(html).toContain(`<dt>canonical sources</dt><dd>${evidence.canonicalSourceCount}</dd>`);
+    expect(html).toContain(
+      `<time dateTime="${evidence.latestCompletedResearchRunOn}">`,
     );
+    expect(html).toContain("does not claim that every timeline category was re-reviewed");
+    expect(html).toContain('href="/about#sources-and-review">Method &amp; limits</a>');
+    expect(html).toContain('href="/data">Export YAML</a>');
+    expect(html).toContain('href="/contact#corrections-and-sources">Report a correction</a>');
     expect(html).toContain(`aria-current="true" aria-label="all: ${history.events.length} events"`);
     expect(html).toContain('href="/history/acquisitions"');
     expect(html).toContain('href="/history/appearances"');
@@ -100,6 +129,9 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).not.toContain("hraness.substack.com");
     expect(html.indexOf('class="history-volume"')).toBeLessThan(
       html.indexOf('class="history-years"'),
+    );
+    expect(html.indexOf('class="history-orientation"')).toBeLessThan(
+      html.indexOf('class="history-filters"'),
     );
   });
 });

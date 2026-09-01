@@ -40,8 +40,11 @@ import {
 } from "@/app/history/net-revenue/net-revenue-page-model";
 import {
   loadHistory,
+  loadResearchRuns,
+  summarizeHistoryEvidence,
   type CategorizedHistoryEvent,
   type HistoryCollection,
+  type HistoryEvidenceSummary,
 } from "./content";
 import { timelineCategoryIds, type TimelineCategoryId } from "./history-schema";
 import { llmsTxt } from "./llms-txt";
@@ -113,7 +116,26 @@ function eventMarkdown(event: CategorizedHistoryEvent): string {
   ].join("\n");
 }
 
-function historyIndexMarkdown(history: HistoryCollection): string {
+function evidenceStatusMarkdown(evidence: HistoryEvidenceSummary): readonly string[] {
+  return [
+    "## Evidence status",
+    "",
+    `- Timeline entries: ${evidence.eventCount}`,
+    `- Entry source links: ${evidence.sourceLinkCount}`,
+    `- Canonical sources: ${evidence.canonicalSourceCount}`,
+    `- Review state: ${evidence.latestCompletedResearchRunOn ?? "not recorded"}`,
+    "",
+    "Review state is the latest completed structured research-ledger run. It does not claim that every timeline category was re-reviewed on that date.",
+    "",
+    `Actions: [method and limits](${SITE_ORIGIN}/about#sources-and-review) · [export YAML](${SITE_ORIGIN}/data) · [report a correction](${SITE_ORIGIN}/contact#corrections-and-sources)`,
+    "",
+  ];
+}
+
+function historyIndexMarkdown(
+  history: HistoryCollection,
+  evidence: HistoryEvidenceSummary,
+): string {
   const categoryLinks = history.categories.map((category) => {
     const count = history.events.filter(({ categoryId }) => categoryId === category.id).length;
     return {
@@ -131,6 +153,7 @@ function historyIndexMarkdown(history: HistoryCollection): string {
     "",
     `This Markdown index covers the same ${history.events.length} sourced events as the HTML timeline. Category, annual-volume, net-revenue, and valuation pages repeat those records in a narrower view.`,
     "",
+    ...evidenceStatusMarkdown(evidence),
     "## Browse by topic",
     "",
     linkList([
@@ -164,14 +187,15 @@ function historyIndexMarkdown(history: HistoryCollection): string {
   ].join("\n");
 }
 
-function aboutMarkdown(): string {
+function aboutMarkdown(evidence: HistoryEvidenceSummary): string {
   return [
     heading(aboutSocialTitle, aboutDescription),
-    ...aboutSections.flatMap((section) => [
+    ...aboutSections.flatMap((section, index) => [
       `## ${section.heading}`,
       "",
       ...section.paragraphs,
       "",
+      ...(index === 0 ? evidenceStatusMarkdown(evidence) : []),
     ]),
     "## Privacy",
     "",
@@ -427,9 +451,13 @@ export async function markdownForPath(pathname: string): Promise<MarkdownDocumen
 
   const history = await loadHistory();
   if (path === "/" || path === "/history") {
-    return { body: historyIndexMarkdown(history), status: 200 };
+    const evidence = summarizeHistoryEvidence(history, await loadResearchRuns());
+    return { body: historyIndexMarkdown(history, evidence), status: 200 };
   }
-  if (path === "/about") return { body: aboutMarkdown(), status: 200 };
+  if (path === "/about") {
+    const evidence = summarizeHistoryEvidence(history, await loadResearchRuns());
+    return { body: aboutMarkdown(evidence), status: 200 };
+  }
   if (path === "/privacy") return { body: privacyMarkdown(), status: 200 };
   if (path === "/contact") return { body: contactMarkdown(), status: 200 };
   if (path === "/data") return { body: dataMarkdown(history), status: 200 };

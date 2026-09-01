@@ -15,6 +15,7 @@ describe("hraness.com/stripe contact page", () => {
       title: "Contact",
     });
     expect(html).toContain("<h1 id=\"contact-heading\">Contact hraness.com/stripe</h1>");
+    expect(html).toContain('<h2 id="corrections-and-sources">Corrections and sources</h2>');
     expect(html).toContain("https://github.com/hraness/stripe-history/issues");
     expect(html).toContain("private vulnerability reporting");
     expect(html).toContain("not affiliated with, endorsed by, or operated by");

@@ -67,6 +67,21 @@ test("mobile filter overflow has a scroll affordance without a persistent scroll
   );
 });
 
+test("evidence orientation reflows without hiding actions or shrinking touch targets", () => {
+  expect(globalsCss).toMatch(
+    /\.stripe-history-evidence dl\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\);/u,
+  );
+  expect(globalsCss).toMatch(
+    /@media \(max-width: 54rem\)[\s\S]*?\.stripe-history-evidence dl\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\);/u,
+  );
+  expect(globalsCss).toMatch(
+    /@media \(max-width: 34rem\)[\s\S]*?\.stripe-history-evidence-actions ul\s*\{[^}]*flex-direction:\s*column;/u,
+  );
+  expect(globalsCss).toMatch(
+    /@media \(pointer: coarse\)\s*\{[\s\S]*?\.stripe-history-evidence-actions a,[\s\S]*?min-block-size:\s*var\(--plain-link-target-min, 48px\);/u,
+  );
+});
+
 test("theme control uses the unmodified shared System-first icon menu", () => {
   const html = renderToStaticMarkup(<ThemeMenuButton />);
 

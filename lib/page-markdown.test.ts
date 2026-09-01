@@ -26,6 +26,12 @@ describe("agent markdown representations", () => {
     expect(page.status).toBe(200);
     expect(page.body).toContain(`# Stripe Company History: ${history.events.length} Sourced Events`);
     expect(page.body).toContain("not affiliated with, endorsed by, or operated by");
+    expect(page.body).toContain("## Evidence status");
+    expect(page.body).toContain(`- Timeline entries: ${history.events.length}`);
+    expect(page.body).toContain(`- Canonical sources: ${history.sources.length}`);
+    expect(page.body).toContain("Review state is the latest completed structured research-ledger run");
+    expect(page.body).toContain("https://hraness.com/stripe/data");
+    expect(page.body).toContain("https://hraness.com/stripe/contact#corrections-and-sources");
     expect(page.body).toContain("https://hraness.com/stripe/history/acquisitions");
     expect(page.body).not.toContain(history.events[0]?.title ?? "missing-event");
     expect(page.body).not.toContain("/history/acquisitions/openrouter-acquisition-talks-reported");
@@ -77,6 +83,10 @@ describe("agent markdown representations", () => {
 
     const about = await markdownForPath("/about");
     expect(about.body).toContain("founder side projects and aesthetics programs");
+    expect(about.body).toContain("## Evidence status");
+    expect(about.body).toContain("not a count of independently corroborated claims");
+    expect(about.body).toContain("https://hraness.com/stripe/research/runs.yml");
+    expect(about.body).toContain("https://github.com/hraness/stripe-history/issues");
     expect(about.body).toContain("## Publications followed");
     expect(about.body).toContain("https://www.stripeeconomics.com/");
     expect(about.body).toContain("https://worksinprogress.co/");
