@@ -49,7 +49,9 @@ export const aboutSections = [
   {
     heading: "Sources and review",
     paragraphs: [
-      "History entries link to primary sources or strong contemporaneous reporting. Editorial review checks chronology, source support, category placement, and duplicate claims, and preserves uncertainty when a transaction or event was only proposed or reported.",
+      "Every history entry resolves to at least one cataloged source. Review prefers primary material and filings, uses strong contemporaneous reporting where necessary, checks chronology, category placement, source support, and duplicate claims, and preserves uncertainty when a transaction or event was only proposed or reported.",
+      `“Entry source links” counts the relationships between timeline entries and catalog records; it is not a count of independently corroborated claims. One source can support more than one entry, and one entry can cite more than one source. The [source catalog](${SITE_ORIGIN}/research/sources.yml) keeps canonical identities reviewable.`,
+      `The visible review state is the most recent completed structured run, not a claim that the whole corpus was re-reviewed that day. Collection coverage varies by research track. Inspect the [collection scope](${SITE_ORIGIN}/research/collections.yml) and [research-run ledger](${SITE_ORIGIN}/research/runs.yml) for the machine-readable boundaries.`,
     ],
   },
   {
@@ -63,6 +65,7 @@ export const aboutSections = [
     heading: "Independence and corrections",
     paragraphs: [
       `${independenceSentence} Corrections are made in the underlying sourced records so the timeline and its focused category views stay aligned.`,
+      `To inspect or reuse the current record, [export the public YAML](${SITE_ORIGIN}/data). To challenge a date, claim, status, or source, use the [public issue tracker](${GITHUB_REPOSITORY_URL}/issues) and include the affected entry, proposed correction, and supporting source. The [contact page](${SITE_ORIGIN}/contact#corrections-and-sources) keeps those requirements easy to find.`,
     ],
   },
   {

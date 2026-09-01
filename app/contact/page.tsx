@@ -54,7 +54,7 @@ export default function ContactPage() {
           <h1 id="contact-heading">Contact {site.domain}</h1>
           <span>public channels</span>
         </div>
-        <h2>Corrections and sources</h2>
+        <h2 id="corrections-and-sources">Corrections and sources</h2>
         <p>
           Use public GitHub issues for ordinary historical corrections, missing
           events, stronger sources, and focused software improvements. Include

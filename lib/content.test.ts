@@ -7,6 +7,8 @@ import {
   type AnnualVolumePoint,
   deriveValuationHeadlines,
   loadHistory,
+  loadResearchRuns,
+  summarizeHistoryEvidence,
   validateAnnualRevenueSeries,
   validateAnnualVolumeSeries,
   valuationTier,
@@ -239,6 +241,32 @@ describe("published YAML corpus", () => {
     expect(history.events.every(({ sourceIds, sources }) =>
       sourceIds.length > 0 && sources.length === sourceIds.length
     )).toBeTrue();
+  });
+
+  test("derives the public evidence snapshot from checked records and runs", async () => {
+    const [history, researchRuns] = await Promise.all([
+      loadHistory(),
+      loadResearchRuns(),
+    ]);
+    const evidence = summarizeHistoryEvidence(history, researchRuns);
+    const completedRunDates = researchRuns.flatMap((run) =>
+      "completed_on" in run && run.completed_on !== undefined
+        ? [run.completed_on]
+        : []
+    ).toSorted();
+
+    expect(evidence).toEqual({
+      canonicalSourceCount: history.sources.length,
+      eventCount: history.events.length,
+      latestCompletedResearchRunOn: completedRunDates.at(-1),
+      sourceLinkCount: history.events.reduce(
+        (count, event) => count + event.sources.length,
+        0,
+      ),
+    });
+    expect(evidence.latestCompletedResearchRunOn).toMatch(/^\d{4}-\d{2}-\d{2}$/u);
+    expect(evidence.sourceLinkCount).toBeGreaterThan(evidence.eventCount);
+    expect(evidence.canonicalSourceCount).toBeGreaterThan(evidence.eventCount);
   });
 
   test("orders annual volume years without requiring perpetual growth", () => {

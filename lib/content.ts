@@ -13,9 +13,11 @@ import {
 } from "./history-schema";
 import {
   AppearanceFileSchema,
+  ResearchRunLedgerSchema,
   ResearchSourceCatalogSchema,
   ValuationFileSchema,
   type Appearance,
+  type ResearchRun,
   type ResearchSource,
   type ValuationObservation,
 } from "./research-schema";
@@ -86,6 +88,13 @@ export interface HistoryCollection {
   readonly sources: readonly ResearchSource[];
   readonly valuationHeadlines: readonly ValuationHeadlinePoint[];
   readonly valuations: readonly ResolvedValuationObservation[];
+}
+
+export interface HistoryEvidenceSummary {
+  readonly canonicalSourceCount: number;
+  readonly eventCount: number;
+  readonly latestCompletedResearchRunOn?: string;
+  readonly sourceLinkCount: number;
 }
 
 export const APPEARANCES_CATEGORY = {
@@ -481,5 +490,38 @@ export async function loadHistory(
     sources: sourceCatalog.sources,
     valuationHeadlines: deriveValuationHeadlines(valuations),
     valuations,
+  };
+}
+
+export async function loadResearchRuns(
+  researchDirectory = RESEARCH_DIRECTORY,
+): Promise<readonly ResearchRun[]> {
+  const ledger = ResearchRunLedgerSchema.parse(
+    await parseYamlFile(join(researchDirectory, "runs.yml")),
+  );
+  return ledger.runs;
+}
+
+export function summarizeHistoryEvidence(
+  history: HistoryCollection,
+  researchRuns: readonly ResearchRun[],
+): HistoryEvidenceSummary {
+  const completedRunDates = researchRuns.flatMap((run) =>
+    "completed_on" in run && run.completed_on !== undefined
+      ? [run.completed_on]
+      : []
+  ).toSorted();
+  const latestCompletedResearchRunOn = completedRunDates.at(-1);
+
+  return {
+    canonicalSourceCount: history.sources.length,
+    eventCount: history.events.length,
+    ...(latestCompletedResearchRunOn === undefined
+      ? {}
+      : { latestCompletedResearchRunOn }),
+    sourceLinkCount: history.events.reduce(
+      (count, event) => count + event.sources.length,
+      0,
+    ),
   };
 }
