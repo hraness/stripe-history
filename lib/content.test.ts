@@ -254,11 +254,16 @@ describe("published YAML corpus", () => {
         ? [run.completed_on]
         : []
     ).toSorted();
+    const latestCompletedResearchRunOn = completedRunDates.at(-1);
+
+    if (latestCompletedResearchRunOn === undefined) {
+      throw new Error("Expected at least one completed research run");
+    }
 
     expect(evidence).toEqual({
       canonicalSourceCount: history.sources.length,
       eventCount: history.events.length,
-      latestCompletedResearchRunOn: completedRunDates.at(-1),
+      latestCompletedResearchRunOn,
       sourceLinkCount: history.events.reduce(
         (count, event) => count + event.sources.length,
         0,
