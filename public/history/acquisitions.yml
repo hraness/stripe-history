@@ -240,6 +240,7 @@ events:
       - Orum
     source_ids:
       - source-a57c4c8a77e5bed9da3c
+      - source-9c466fc8dea536980804
     status: Talent acquisition completed
     summary: Stripe acquired the team from instant bank-payment infrastructure company Orum. Orum said the team would join Stripe, while industry reporting characterized the transaction as an acquihire rather than a purchase of the full platform.
     tags:

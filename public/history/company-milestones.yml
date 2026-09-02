@@ -10,7 +10,7 @@ events:
     date_precision: day
     confidence: reported
     status: press analysis
-    summary: Fortune's Term Sheet compared Stripe's recent acquisition wave to Google's 2003-2007 purchases of DoubleClick, AdSense, Android, and YouTube. The column named Stripe's purchases of Privy, Bridge, and Metronome, the OpenRouter agreement, and a reported bid for PayPal. Finance editor Jeff John Roberts, pinch-hitting, wrote that the parallel ran for good and for bad. The column did not announce a new Stripe transaction.
+    summary: Fortune's Term Sheet compared Stripe's recent acquisition wave to Google's 2003-2007 purchases of DoubleClick, AdSense, Android, and YouTube. The column named Stripe's purchases of Privy, Bridge, and Metronome, the OpenRouter agreement, a reported bid for PayPal, and the Orum team joining Stripe, which Fortune described as a purchase of a bank-transfer and account-verification firm. Finance editor Jeff John Roberts, pinch-hitting, wrote that the parallel ran for good and for bad. The column did not announce a new Stripe transaction.
     details:
       - label: Outlet
         value: Fortune Term Sheet
@@ -19,7 +19,9 @@ events:
       - label: Google examples named
         value: DoubleClick, AdSense, Android, and YouTube
       - label: Stripe deals named
-        value: Privy, Bridge, Metronome, OpenRouter, and a reported PayPal bid
+        value: Privy, Bridge, Metronome, Orum, OpenRouter, and a reported PayPal bid
+      - label: Orum record
+        value: Existing timeline treats Orum as a talent acquisition, not a full-platform purchase
     organizations:
       - Stripe
       - Fortune
