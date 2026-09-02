@@ -10,6 +10,7 @@ import {
 } from "./analytics";
 
 const PUBLIC_PROJECT_KEY = /^phc_[A-Za-z0-9_-]{10,}$/u;
+const MAX_RAW_USER_AGENT_LENGTH = 1_000;
 
 export type AnalyticsRuntimeEvidence = Readonly<{
   href: string;
@@ -54,10 +55,13 @@ export function createPostHogBeforeSend(
   resolveHref: () => string,
 ): (capture: CaptureResult | null) => CaptureResult | null {
   return (capture) => {
+    const rawUserAgent = capture?.properties.$raw_user_agent;
     if (
       capture?.event !== "$pageview"
       || capture.properties.distinct_id !== POSTHOG_COOKILESS_DISTINCT_ID
       || capture.properties.$cookieless_mode !== true
+      || typeof rawUserAgent !== "string"
+      || rawUserAgent.length === 0
       || typeof capture.properties.token !== "string"
       || !PUBLIC_PROJECT_KEY.test(capture.properties.token)
     ) {
@@ -75,6 +79,7 @@ export function createPostHogBeforeSend(
         $host: route.canonical_domain,
         $pathname: route.canonical_path,
         $process_person_profile: false,
+        $raw_user_agent: rawUserAgent.slice(0, MAX_RAW_USER_AGENT_LENGTH),
         distinct_id: POSTHOG_COOKILESS_DISTINCT_ID,
         token: capture.properties.token,
         ...route,

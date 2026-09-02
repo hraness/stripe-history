@@ -18,7 +18,10 @@ import { publicSitePath, type SitePath } from "./site";
 function pageview(properties: CaptureResult["properties"]): CaptureResult {
   return {
     event: "$pageview",
-    properties,
+    properties: {
+      $raw_user_agent: "PostHog test browser",
+      ...properties,
+    },
     uuid: "0198c63c-e6f0-7410-8d2a-31ebd7d39f2e",
   };
 }
@@ -144,6 +147,7 @@ describe("Stripe History PostHog boundary", () => {
       $host: "hraness.com",
       $pathname: "/stripe/about",
       $process_person_profile: false,
+      $raw_user_agent: "PostHog test browser",
       analytics_schema_version: 1,
       canonical_domain: "hraness.com",
       canonical_path: "/stripe/about",
@@ -173,6 +177,12 @@ describe("Stripe History PostHog boundary", () => {
       .toBeNull();
     expect(beforeSend(pageview({ ...validProperties, $cookieless_mode: false })))
       .toBeNull();
+    expect(beforeSend(pageview({ ...validProperties, $raw_user_agent: "" })))
+      .toBeNull();
+    expect(beforeSend(pageview({
+      ...validProperties,
+      $raw_user_agent: "x".repeat(1_001),
+    }))?.properties.$raw_user_agent).toBe("x".repeat(1_000));
     expect(createPostHogBeforeSend(
       () => "https://hraness.com/stripe/history/private-account",
     )(pageview(validProperties))).toBeNull();
