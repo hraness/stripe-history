@@ -4,6 +4,49 @@ category:
   description: Company-scale, legal, regulatory, operating-model, and other milestones that do not belong more naturally in Stripe's focused history categories.
   order: 11
 events:
+  - id: milestone-2026-fortune-google-comparison
+    title: Fortune compares Stripe's recent acquisitions to early Google
+    date: 2026-09-02
+    date_precision: day
+    confidence: reported
+    status: press analysis
+    summary: Fortune's Term Sheet compared Stripe's buying since late 2024 to Google's 2003-2007 run of DoubleClick, AdSense, the firm behind Google Earth, Android, and YouTube. Finance editor Jeff John Roberts, pinch-hitting, listed Privy and Bridge (wallets and stablecoins), Orum (account verification and bank transfers), Metronome (usage-based billing), and said Stripe this month closed a deal worth around $7.5 billion for OpenRouter. The column said a PayPal bid cooked up this spring came undone after the share price rose and a $60.50 offer looked cheap. James Wester of Javelin Strategies said the miss may be for the best on cultural fit, and noted Stripe is still private, unlike Google after its 2004 IPO. The piece did not announce a new Stripe transaction.
+    details:
+      - label: Outlet
+        value: Fortune Term Sheet
+      - label: Author
+        value: Jeff John Roberts
+      - label: Google examples named
+        value: DoubleClick, AdSense, the firm behind Google Earth, Android, and YouTube
+      - label: Stripe deals named
+        value: Privy, Bridge, Metronome, Orum, OpenRouter, and a reported PayPal bid
+      - label: OpenRouter claim
+        value: Fortune described closing a deal worth around $7.5 billion; the existing record is an announced agreement, not reported completion
+      - label: PayPal claim
+        value: Fortune said a spring bid of $60.50 a share came undone after the share price rose
+      - label: Orum spelling
+        value: Fortune wrote Ourum for Orum
+      - label: Orum record
+        value: Existing timeline treats Orum as a talent acquisition, not a full-platform purchase
+      - label: Analyst named
+        value: James Wester, research director at Javelin Strategies
+      - label: Column thesis
+        value: Fortune said Stripe was absorbing firms to consolidate core payments and add blockchain and AI
+      - label: Other comparison
+        value: Also compared Stripe's public relations, including Cheeky Pint, to early Google, and flagged later antitrust risk
+    people:
+      - Jeff John Roberts
+      - James Wester
+    organizations:
+      - Stripe
+      - Fortune
+      - Google
+      - PayPal
+    tags:
+      - acquisitions
+      - reporting
+    source_ids:
+      - source-9c466fc8dea536980804
   - id: milestone-2026-information-2025-revenue
     title: The Information reports Stripe 2025 revenue of $6.8 billion
     date: 2026-07-22

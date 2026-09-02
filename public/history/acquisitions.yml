@@ -133,6 +133,7 @@ events:
       - source-ab40489a8a581a196987
       - source-d7cf2394464d8451acf0
       - source-f9148b5ae819e1e22054
+      - source-9c466fc8dea536980804
     status: Reported offer; not accepted
     summary: Stripe and Advent International submitted a joint $60.50-per-share offer for PayPal worth more than $53 billion, Reuters reported. PayPal had not accepted the proposal, and later reporting said its board considered the bid inadequate.
     tags:
@@ -240,6 +241,7 @@ events:
       - Orum
     source_ids:
       - source-a57c4c8a77e5bed9da3c
+      - source-9c466fc8dea536980804
     status: Talent acquisition completed
     summary: Stripe acquired the team from instant bank-payment infrastructure company Orum. Orum said the team would join Stripe, while industry reporting characterized the transaction as an acquihire rather than a purchase of the full platform.
     tags:

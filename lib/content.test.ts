@@ -188,6 +188,40 @@ describe("published YAML corpus", () => {
         valueUsd: 6_800_000_000,
       },
     ]);
+    expect(history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison"))
+      .toMatchObject({
+        categoryId: "company-milestones",
+        date: "2026-09-02",
+        title: "Fortune compares Stripe's recent acquisitions to early Google",
+      });
+    expect(
+      history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison")
+        ?.sources.some(({ url }) =>
+          url === "https://fortune.com/2026/09/02/stripe-is-giving-off-early-google-vibesfor-good-and-for-bad/"
+        ),
+    ).toBeTrue();
+    expect(history.events.filter(({ id }) => id.includes("orum") || id.includes("ourum")))
+      .toEqual([expect.objectContaining({ id: "orum-team-joins-stripe" })]);
+    expect(history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison")?.title)
+      .not.toMatch(/Ourum/u);
+    expect(history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison")?.summary)
+      .toMatch(/Google Earth/u);
+    expect(history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison")?.summary)
+      .toMatch(/\$60\.50/u);
+    expect(history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison")?.summary)
+      .toMatch(/Javelin Strategies/u);
+    expect(history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison")?.summary)
+      .not.toMatch(/Ourum|archive\.is/u);
+    expect(history.events.flatMap(({ sources }) => sources.map(({ url }) => url)))
+      .not.toContain("https://archive.is/bdyPs");
+    expect(
+      history.events.find(({ id }) => id === "orum-team-joins-stripe")
+        ?.sourceIds.includes("source-9c466fc8dea536980804"),
+    ).toBeTrue();
+    expect(
+      history.events.find(({ id }) => id === "paypal-stripe-advent-offer-reported")
+        ?.sourceIds.includes("source-9c466fc8dea536980804"),
+    ).toBeTrue();
     expect(history.events.find(({ id }) => id === "milestone-2023-information-q3-net-revenue"))
       .toMatchObject({
         title: "The Information reports Stripe Q3 2023 net revenue of roughly $1 billion",
