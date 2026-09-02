@@ -204,8 +204,22 @@ describe("published YAML corpus", () => {
       .toEqual([expect.objectContaining({ id: "orum-team-joins-stripe" })]);
     expect(history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison")?.title)
       .not.toMatch(/Ourum/u);
+    expect(history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison")?.summary)
+      .toMatch(/Google Earth/u);
+    expect(history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison")?.summary)
+      .toMatch(/\$60\.50/u);
+    expect(history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison")?.summary)
+      .toMatch(/Javelin Strategies/u);
+    expect(history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison")?.summary)
+      .not.toMatch(/Ourum|archive\.is/u);
+    expect(history.events.flatMap(({ sources }) => sources.map(({ url }) => url)))
+      .not.toContain("https://archive.is/bdyPs");
     expect(
       history.events.find(({ id }) => id === "orum-team-joins-stripe")
+        ?.sourceIds.includes("source-9c466fc8dea536980804"),
+    ).toBeTrue();
+    expect(
+      history.events.find(({ id }) => id === "paypal-stripe-advent-offer-reported")
         ?.sourceIds.includes("source-9c466fc8dea536980804"),
     ).toBeTrue();
     expect(history.events.find(({ id }) => id === "milestone-2023-information-q3-net-revenue"))
