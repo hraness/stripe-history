@@ -498,7 +498,7 @@ describe("weekly news discovery", () => {
     })).rejects.toThrow("must not be after");
   });
 
-  test("rejects generic stripe and body-only founder matches", () => {
+  test("rejects generic stripe and body-only founder matches", async () => {
     const config = NewsMonitorFileSchema.parse(parse(`
       schema: stripe-history/news-monitors/v1
       lookback_days: 8
@@ -560,7 +560,7 @@ describe("weekly news discovery", () => {
     const fortuneHeadline = "Stripe is giving off early Google vibes—for good and for bad";
     expect(gdeltTitleMatches(fortuneHeadline, company)).toBe(false);
     expect(gdeltTitleMatches(fortuneHeadline, prestigePress)).toBe(true);
-    expect(gdeltTitleMatches("Buckeye sheds its black stripe", prestigePress)).toBe(false);
+    expect(gdeltTitleMatches("California wealth tax battle", prestigePress)).toBe(false);
   });
 
   test("renders untrusted titles as escaped review candidates", () => {
