@@ -188,6 +188,18 @@ describe("published YAML corpus", () => {
         valueUsd: 6_800_000_000,
       },
     ]);
+    expect(history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison"))
+      .toMatchObject({
+        categoryId: "company-milestones",
+        date: "2026-09-02",
+        title: "Fortune compares Stripe's recent acquisitions to early Google",
+      });
+    expect(
+      history.events.find(({ id }) => id === "milestone-2026-fortune-google-comparison")
+        ?.sources.some(({ url }) =>
+          url === "https://fortune.com/2026/09/02/stripe-is-giving-off-early-google-vibesfor-good-and-for-bad/"
+        ),
+    ).toBeTrue();
     expect(history.events.find(({ id }) => id === "milestone-2023-information-q3-net-revenue"))
       .toMatchObject({
         title: "The Information reports Stripe Q3 2023 net revenue of roughly $1 billion",

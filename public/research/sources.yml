@@ -1458,6 +1458,13 @@ sources:
     url: https://www.nenaghguardian.ie/2024/01/13/collison-backs-new-restaurant/
     id: source-9ad888e73adc937b1c29
     media_type: article
+  - kind: reporting
+    publisher: Fortune
+    published_at: 2026-09-02
+    title: Stripe is giving off early Google vibes—for good and for bad
+    url: https://fortune.com/2026/09/02/stripe-is-giving-off-early-google-vibesfor-good-and-for-bad/
+    id: source-9c466fc8dea536980804
+    media_type: article
   - kind: primary
     publisher: Stripe
     published_at: 2019-09-09

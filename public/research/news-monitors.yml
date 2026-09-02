@@ -77,6 +77,30 @@ monitors:
     research_areas:
       - company-history
       - valuation-history
+  - id: fortune-latest
+    kind: rss
+    url: https://fortune.com/feed/
+    include_terms:
+      - Stripe
+    research_areas:
+      - company-history
+      - valuation-history
+  - id: fortune-term-sheet
+    kind: rss
+    url: https://fortune.com/newsletter/termsheet/feed/
+    include_terms:
+      - Stripe
+    research_areas:
+      - company-history
+      - valuation-history
+  - id: nytimes-technology
+    kind: rss
+    url: https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml
+    include_terms:
+      - Stripe
+    research_areas:
+      - company-history
+      - valuation-history
   - id: exa-stripe-reporting
     kind: exa-search
     query: Recent material Stripe company news about acquisitions, signed deals, product launches, leadership, funding, valuation, geographic expansion, or payment infrastructure
@@ -87,7 +111,9 @@ monitors:
     include_domains:
       - bloomberg.com
       - cnbc.com
+      - fortune.com
       - ft.com
+      - nytimes.com
       - reuters.com
       - stripe.com
       - stripe.dev
@@ -132,8 +158,10 @@ monitors:
       - bloomberg.com
       - businesspost.ie
       - euronews.com
+      - fortune.com
       - ft.com
       - marginalrevolution.com
+      - nytimes.com
       - reuters.com
       - rhinegroup.eu
       - techcrunch.com
@@ -189,6 +217,15 @@ monitors:
       - tender
       - valuation
       - volume
+    research_areas:
+      - company-history
+      - sessions-product-launches
+      - valuation-history
+  - id: gdelt-stripe-prestige-press
+    kind: gdelt
+    query: '"Stripe" sourcelang:english (domainis:fortune.com OR domainis:nytimes.com OR domainis:wsj.com OR domainis:ft.com OR domainis:bloomberg.com OR domainis:theinformation.com)'
+    title_any_terms:
+      - Stripe
     research_areas:
       - company-history
       - sessions-product-launches

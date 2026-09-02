@@ -121,14 +121,33 @@ describe("weekly news discovery", () => {
       "cheeky-pint",
       "techcrunch-stripe",
       "techcrunch-latest",
+      "fortune-latest",
+      "fortune-term-sheet",
+      "nytimes-technology",
       "exa-stripe-reporting",
       "exa-stripe-leadership-appearances",
       "exa-founder-side-projects",
       "marginal-revolution-founders",
       "gdelt-stripe",
+      "gdelt-stripe-prestige-press",
       "gdelt-founders",
       "gdelt-founder-side-projects",
     ]);
+    const reporting = config.monitors.find((monitor) => monitor.id === "exa-stripe-reporting");
+    const founders = config.monitors.find((monitor) => monitor.id === "exa-founder-side-projects");
+    const prestige = config.monitors.find((monitor) => monitor.id === "gdelt-stripe-prestige-press");
+    expect(reporting).toMatchObject({
+      include_domains: expect.arrayContaining(["fortune.com", "nytimes.com", "wsj.com"]),
+    });
+    expect(founders).toMatchObject({
+      include_domains: expect.arrayContaining(["fortune.com", "nytimes.com", "wsj.com"]),
+    });
+    expect(prestige).toMatchObject({
+      kind: "gdelt",
+      title_any_terms: ["Stripe"],
+    });
+    expect(prestige && "title_context_terms" in prestige ? prestige.title_context_terms : undefined)
+      .toBeUndefined();
   });
 
   test("canonicalizes candidate URLs without accepting non-HTTPS links", () => {
@@ -175,8 +194,10 @@ describe("weekly news discovery", () => {
               "bloomberg.com",
               "businesspost.ie",
               "euronews.com",
+              "fortune.com",
               "ft.com",
               "marginalrevolution.com",
+              "nytimes.com",
               "reuters.com",
               "rhinegroup.eu",
               "techcrunch.com",
@@ -239,7 +260,9 @@ describe("weekly news discovery", () => {
           includeDomains: [
             "bloomberg.com",
             "cnbc.com",
+            "fortune.com",
             "ft.com",
+            "nytimes.com",
             "reuters.com",
             "stripe.com",
             "stripe.dev",
@@ -275,8 +298,21 @@ describe("weekly news discovery", () => {
         }), "application/json");
       }
       if (url.hostname === "api.gdeltproject.org") {
-        const founders = url.searchParams.get("query")?.includes("Patrick") === true;
-        return response(JSON.stringify({ articles: founders ? [] : [{
+        const query = url.searchParams.get("query") ?? "";
+        if (query.includes("Patrick")) {
+          return response(JSON.stringify({ articles: [] }), "application/json");
+        }
+        if (query.includes("domainis:fortune.com")) {
+          return response(JSON.stringify({ articles: [{
+            domain: "fortune.com",
+            language: "English",
+            seendate: "20260813T121241Z",
+            sourcecountry: "United States",
+            title: "Stripe is giving off early Google vibes for good and for bad",
+            url: "https://fortune.com/2026/08/13/stripe-google-vibes-fixture",
+          }] }), "application/json");
+        }
+        return response(JSON.stringify({ articles: [{
           domain: "example.com",
           language: "English",
           seendate: "20260813T120000Z",
@@ -325,6 +361,9 @@ describe("weekly news discovery", () => {
         || url.toString() === "https://worksinprogress.co/rss.xml"
         || url.toString() === "https://www.worksinprogress.news/feed"
         || url.toString() === "https://feeds.transistor.fm/cheeky-pint-with-john-collison"
+        || url.toString() === "https://fortune.com/feed/"
+        || url.toString() === "https://fortune.com/newsletter/termsheet/feed/"
+        || url.toString() === "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml"
       ) {
         return response("<rss><channel></channel></rss>", "application/rss+xml");
       }
@@ -344,6 +383,7 @@ describe("weekly news discovery", () => {
       "https://www.rhinegroup.eu/weekly-test-candidate",
       "https://www.youtube.com/watch?v=fixture-appearance",
       "https://stripe.com/newsroom/news/weekly-test-candidate",
+      "https://fortune.com/2026/08/13/stripe-google-vibes-fixture",
       "https://example.com/weekly",
     ]);
     expect(digest.candidates[0]?.monitors).toEqual([
@@ -354,7 +394,8 @@ describe("weekly news discovery", () => {
     expect(digest.candidates[2]?.monitors).toEqual([
       "exa-stripe-leadership-appearances",
     ]);
-    expect(digest.candidates[4]?.monitors).toEqual(["gdelt-stripe", "techcrunch-stripe"]);
+    expect(digest.candidates[4]?.monitors).toEqual(["gdelt-stripe-prestige-press"]);
+    expect(digest.candidates[5]?.monitors).toEqual(["gdelt-stripe", "techcrunch-stripe"]);
     expect(digest.discoveryPlans.map(({ collection }) => collection)).toEqual([
       "valuation-history",
     ]);
@@ -507,6 +548,19 @@ describe("weekly news discovery", () => {
     )).toBe(true);
     expect(gdeltTitleMatches("Patrick Collison announces a grant", loaded)).toBe(true);
     expect(gdeltTitleMatches("California wealth tax battle", loaded)).toBe(false);
+    const live = NewsMonitorFileSchema.parse(parse(await readFile(
+      join(process.cwd(), "public", "research", "news-monitors.yml"),
+      "utf8",
+    )) as unknown);
+    const company = live.monitors.find((monitor) => monitor.id === "gdelt-stripe");
+    const prestigePress = live.monitors.find((monitor) => monitor.id === "gdelt-stripe-prestige-press");
+    if (company?.kind !== "gdelt" || prestigePress?.kind !== "gdelt") {
+      throw new Error("Expected live GDELT monitors");
+    }
+    const fortuneHeadline = "Stripe is giving off early Google vibes—for good and for bad";
+    expect(gdeltTitleMatches(fortuneHeadline, company)).toBe(false);
+    expect(gdeltTitleMatches(fortuneHeadline, prestigePress)).toBe(true);
+    expect(gdeltTitleMatches("Buckeye sheds its black stripe", prestigePress)).toBe(false);
   });
 
   test("renders untrusted titles as escaped review candidates", () => {
