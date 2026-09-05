@@ -19,10 +19,11 @@ import {
 } from "./category-visuals";
 import { HistoryStickyOffsetSync } from "./history-sticky-offset-sync";
 import { HistoryMeasureRail } from "./history-measure-rail";
+import { HistoryClosing } from "./history-closing";
+import { HistoryOrientation } from "./history-orientation";
 import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
 import { publicSitePath } from "../site";
-import { EvidenceSnapshot } from "../evidence-snapshot";
 
 interface HistoryViewProps {
   readonly evidence?: HistoryEvidenceSummary;
@@ -385,6 +386,7 @@ export function HistoryView({
   const historyHeading = selectedCategory === undefined
     ? "Stripe company history"
     : `Stripe ${selectedCategory.label.toLocaleLowerCase("en-US")} history`;
+  const orientation = selectedCategory === undefined && evidence !== undefined;
   const path = selectedCategoryId === undefined
     ? "/" as const
     : historyCategoryPath(selectedCategoryId);
@@ -395,22 +397,9 @@ export function HistoryView({
       id="main-content"
     >
       <SiteHeader />
+      {orientation ? <HistoryOrientation evidence={evidence} /> : null}
       <section aria-labelledby="history-heading" className="stripe-history-section">
-        {selectedCategory === undefined && evidence !== undefined ? (
-          <header className="history-orientation">
-            <div className="history-orientation-copy">
-              <p>Independent · source-linked · reverse chronological</p>
-              <h1 id="history-heading">{historyHeading}</h1>
-              <p>
-                Follow dated evidence across Stripe&apos;s products, funding,
-                leadership, expansion, and company scale. Filter the timeline
-                or compare the annual charts; every entry opens its supporting
-                sources.
-              </p>
-            </div>
-            <EvidenceSnapshot summary={evidence} />
-          </header>
-        ) : (
+        {orientation ? null : (
           <h1 className="stripe-history-visually-hidden" id="history-heading">
             {historyHeading}
           </h1>
@@ -451,6 +440,7 @@ export function HistoryView({
           </div>
         </div>
       </section>
+      {orientation ? <HistoryClosing /> : null}
       <SiteFooter path={path} />
     </main>
   );

@@ -103,7 +103,7 @@ test("site chrome matches the compact sticky Hraness shell and preserves coarse 
     /\.stripe-history-header\s*\{[^}]*inline-size:\s*100vw;[^}]*position:\s*sticky;[^}]*top:\s*0;/u,
   );
   expect(globalsCss).toMatch(
-    /\.stripe-history-header \.plain-header__inner\s*\{[^}]*--plain-header-block-padding:\s*0\.55rem;[^}]*align-items:\s*center;/u,
+    /\.stripe-history-header \.hraness-marketing-header__inner\s*\{[^}]*max-width:\s*64rem;[^}]*min-block-size:\s*3\.5rem;/u,
   );
   expect(plainSiteCss).toMatch(
     /@media \(pointer: coarse\)\s*\{[^}]*--plain-link-target-min:\s*var\(--interactive-target-min, 48px\);/u,

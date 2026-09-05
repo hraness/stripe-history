@@ -20,7 +20,8 @@ test("appearance starts with System and keeps the existing product preference ke
 
 test("site chrome keeps the shared appearance menu as its final header action", () => {
   const html = renderToStaticMarkup(<SiteHeader />);
-  const controlsStart = html.indexOf('class="stripe-history-header-controls"');
+  const controlsStart = html.indexOf('class="hraness-marketing-header__inner"');
+  expect(controlsStart).toBeGreaterThan(-1);
   const navigationEnd = html.indexOf("</nav>", controlsStart);
   const theme = html.indexOf('data-presentation="menu"', controlsStart);
   const controlsEnd = html.indexOf("</div>", theme);

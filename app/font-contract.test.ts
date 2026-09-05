@@ -19,15 +19,17 @@ function outlinedWordmark(svg: string): string {
   return path;
 }
 
-test("uses the released Nebula Sans default while retaining explicit mono roles", () => {
+test("uses the released Nebula Sans default for text and headings while retaining explicit mono roles", () => {
   expect(packageJson.dependencies).toMatchObject({
-    "@hraness/design-kit": "github:hraness/design-kit#v0.2.1",
+    "@hraness/design-kit": "github:hraness/design-kit#v0.4.0",
     "@hraness/ui": "github:hraness/ui#v0.4.10",
     "@hraness/web-discovery": "github:hraness/web-discovery#v0.2.0",
   });
   expect(globals).toStartWith('@import "@hraness/design-kit/styles.css";');
   expect(tokens).toContain("--ui-font-sans: var(--font-text)");
-  expect(tokens).toContain("--ui-font-heading: var(--ui-font-mono)");
+  expect(tokens).toContain("--ui-font-heading: var(--font-text)");
+  expect(styles).toContain("--font-heading: var(--font-text)");
+  expect(styles).toContain("--font-mono: ui-monospace");
   expect(styles).not.toContain("--font-text: Arial");
   expect(plainSite).toContain("font-family: var(--font-text)");
   expect(socialImage).toContain('fontFamily: "Nebula Sans"');

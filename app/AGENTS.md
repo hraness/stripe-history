@@ -23,4 +23,4 @@
 - Keep the Hraness footer attribution and public repository link visible on every rendered page.
 - Bind the shared footer to the fail-closed `stripe-history` mailing configuration. Keep only the public Turnstile key here; Hraness Accounts owns its secret, dated consent, confirmation delivery, and product-specific unsubscribe authority.
 - Keep analytics limited to anonymous cookieless `$pageview` events on exact canonical public routes. Drop every other event and property before transport, and never enable analytics outside the `hraness.com/stripe` Production surface.
-- Keep ordinary proportional text and the social image on the shared Nebula Sans contract. Preserve the explicit monospace heading and data roles.
+- Keep headings, ordinary proportional text, and the social image on the shared Nebula Sans contract. Reserve monospace for code, dates, and numeric values where alignment needs it.
