@@ -5,8 +5,9 @@
 :root {
   --background: var(--plain-background, #ffffff);
   --foreground: var(--plain-foreground, #171717);
-  --font-heading: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-  --radius-xs: 0.25rem;
+  --font-heading: var(--font-text);
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  --radius-xs: 0.625rem;
 }
 
 .stripe-history-skip-link {

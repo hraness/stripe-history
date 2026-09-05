@@ -133,7 +133,7 @@ describe("hraness.com/stripe valuation history", () => {
     expect(html).not.toContain("company priced");
     expect(html).not.toContain("company coordinated");
     expect(html).not.toContain("capital raised");
-    expect(html).toContain('class="plain-header stripe-history-header"');
+    expect(html).toContain('class="hraness-marketing-header stripe-history-header"');
     expect(html).toContain('href="/about">about</a>');
     expect(html).toContain('aria-label="Stripe History resources"');
     expect(html).toContain('data-slot="hraness-site-footer"');

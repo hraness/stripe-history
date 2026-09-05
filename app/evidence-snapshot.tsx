@@ -1,7 +1,7 @@
 import type { HistoryEvidenceSummary } from "@/lib/content";
 import Link from "next/link";
 
-function formatReviewDate(value: string): string {
+export function formatReviewDate(value: string): string {
   return new Intl.DateTimeFormat("en-US", {
     day: "numeric",
     month: "short",

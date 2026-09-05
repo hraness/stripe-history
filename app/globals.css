@@ -3,6 +3,186 @@
 @import "../support/styles.css";
 @import "../support/brand.css";
 
+/* Shared Hraness language: light paper by default, dark through the
+ * appearance control (System follows prefers-color-scheme), hairlines at
+ * about 12% ink, and one accent. The accent is a purple near Stripe's,
+ * darkened in light mode and lightened in dark mode so text and buttons pass
+ * contrast on both grounds. */
+.plain-site {
+  --hraness-site-accent: #5b54f0;
+  --hraness-site-accent-ink: #ffffff;
+  --plain-link: var(--hraness-site-accent);
+  --plain-line: color-mix(in oklch, var(--plain-foreground) 12%, transparent);
+  --plain-line-strong: color-mix(in oklch, var(--plain-foreground) 22%, transparent);
+  --plain-surface: #f6f6f7;
+}
+
+:root[data-theme="dark"] .plain-site,
+.plain-site[data-theme="dark"] {
+  --hraness-site-accent: #a9a4ff;
+  --hraness-site-accent-ink: #14123a;
+  --plain-surface: #1e1e1f;
+}
+
+/* The marketing grammar reads the plain-shell palette through these roles.
+ * The bindings sit outside the design-kit cascade layers on purpose: the
+ * plain shell is unlayered, so the values must be too. */
+:where(
+  .hraness-marketing-header,
+  .hraness-marketing-hero,
+  .hraness-marketing-stats,
+  .hraness-marketing-questions,
+  .hraness-marketing-maker
+) {
+  --hraness-marketing-ink: var(--plain-foreground);
+  --hraness-marketing-muted: var(--plain-muted);
+  --hraness-marketing-background: var(--plain-background);
+  --hraness-marketing-surface: var(--plain-surface);
+  --hraness-marketing-line: var(--plain-line);
+  --hraness-marketing-line-strong: var(--plain-line-strong);
+  --hraness-marketing-inverse: var(--plain-foreground);
+  --hraness-marketing-inverse-ink: var(--plain-background);
+  --hraness-marketing-text-font: var(--font-text);
+  --hraness-marketing-heading-font: var(--font-text);
+  --hraness-marketing-mono-font: var(--font-mono);
+  --hraness-marketing-measure: 64rem;
+  --hraness-marketing-gutter: var(--plain-shell-gutter);
+  --hraness-marketing-section-space: clamp(3rem, 7vw, 5rem);
+}
+
+/* The plain shell resets heading and paragraph sizes without layers, which
+ * would flatten the grammar's type scale. Re-assert the scale here. */
+.stripe-history-main :is(
+  .hraness-marketing-hero__heading,
+  .hraness-marketing-questions__heading,
+  .hraness-marketing-maker__heading
+) {
+  margin: 0;
+  color: var(--plain-foreground);
+  font-family: var(--font-text);
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.stripe-history-main .hraness-marketing-hero__heading {
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+  letter-spacing: -0.022em;
+  line-height: 1.05;
+  max-inline-size: 18ch;
+}
+
+.stripe-history-main :is(
+  .hraness-marketing-questions__heading,
+  .hraness-marketing-maker__heading
+) {
+  font-size: clamp(1.6rem, 2.6vw, 2.125rem);
+}
+
+.stripe-history-main .hraness-marketing-hero__summary {
+  margin: 0;
+  color: var(--plain-muted);
+  font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+  line-height: 1.45;
+  max-inline-size: 40rem;
+}
+
+.stripe-history-main :is(
+  .hraness-marketing-hero__eyebrow,
+  .hraness-marketing-questions__label,
+  .hraness-marketing-maker__label
+) {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.stripe-history-main .hraness-marketing-hero__eyebrow {
+  color: var(--hraness-site-accent);
+}
+
+.stripe-history-main :is(
+  .hraness-marketing-hero__boundary,
+  .hraness-marketing-stats__source
+) {
+  margin: 0;
+  color: var(--plain-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.stripe-history-main .hraness-marketing-hero__boundary {
+  max-inline-size: 40rem;
+}
+
+.stripe-history-main .hraness-marketing-questions__header > p:last-child {
+  margin: 0;
+  color: var(--plain-muted);
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.stripe-history-main .hraness-marketing-question__answer p {
+  margin: 0;
+  color: var(--plain-muted);
+  line-height: 1.6;
+}
+
+.stripe-history-main .hraness-marketing-question__answer p + p {
+  margin-top: 0.75rem;
+}
+
+.stripe-history-main .hraness-marketing-maker__body > p {
+  margin: 0;
+  color: var(--plain-muted);
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.stripe-history-main :is(
+  .hraness-marketing-stats,
+  .hraness-marketing-questions,
+  .hraness-marketing-maker
+) {
+  margin-top: 0;
+}
+
+.stripe-history-main .hraness-marketing-stats dd {
+  margin: 0;
+}
+
+.stripe-history-main .hraness-marketing-stats time {
+  font-size: 0.75em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Marketing controls keep their own ink; the plain shell's link color is
+ * scoped to prose and never reaches buttons or navigation. */
+.stripe-history-main .hraness-marketing-action {
+  color: var(--plain-foreground);
+  text-decoration: none;
+}
+
+.stripe-history-main .hraness-marketing-action[data-emphasis="primary"] {
+  color: var(--hraness-site-accent-ink);
+}
+
+.stripe-history-main .hraness-marketing-action:is(:hover, :focus-visible) {
+  text-decoration: none;
+}
+
+.stripe-history-main .hraness-marketing-action:focus-visible {
+  outline: 2px solid var(--hraness-site-accent);
+  outline-offset: 2px;
+}
+
+.stripe-history-main .hraness-marketing-maker__links a {
+  color: var(--plain-foreground);
+}
+
 .stripe-history-visually-hidden {
   block-size: 1px;
   clip-path: inset(50%);
@@ -18,52 +198,40 @@
 }
 
 .stripe-history-history-main {
-  --history-header-offset: 3.15rem;
-  --history-filter-stack-offset: 11rem;
+  --history-header-offset: 3.5rem;
+  --history-filter-stack-offset: 7rem;
 
   max-width: 64rem;
 }
 
 .stripe-history-history-main > .stripe-history-section {
-  margin-top: 0;
+  margin-top: 0.5rem;
 }
 
+/* Site header: the grammar's sticky translucent header, broken out of the
+ * page measure so its hairline runs edge to edge. */
 .stripe-history-header {
-  background: color-mix(in oklch, var(--plain-background) 96%, transparent);
-  border-bottom: 1px solid var(--plain-line);
   inline-size: 100vw;
   margin-inline: calc(50% - 50vw);
   position: sticky;
   top: 0;
   z-index: 50;
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
 }
 
-.stripe-history-header .plain-header__inner {
-  --plain-header-block-padding: 0.55rem;
-
-  align-items: center;
-  border-bottom: 0;
+.stripe-history-header .hraness-marketing-header__inner {
   max-width: 64rem;
-}
-
-.stripe-history-section h2,
-.history-event h3,
-.history-volume h2,
-.history-year-heading h2 {
-  font-size: inherit;
-  font-weight: 700;
-  line-height: inherit;
-  margin: 0;
+  min-block-size: 3.5rem;
+  padding-inline: var(--plain-shell-gutter);
 }
 
 .stripe-history-header .stripe-history-header-brand {
   color: var(--plain-foreground);
   font-size: 0.95rem;
+  font-weight: 600;
   gap: 0.4rem;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
   min-height: 2rem;
+  text-decoration: none;
 }
 
 .stripe-history-header .stripe-history-header-brand .hraness-ra-mark {
@@ -71,22 +239,28 @@
   width: 1.25rem;
 }
 
-.stripe-history-header-controls {
-  align-items: center;
-  display: flex;
-  flex: none;
-  gap: 0.35rem 0.65rem;
-  justify-content: flex-end;
-  margin-inline-start: auto;
-  min-inline-size: 0;
+.stripe-history-header .hraness-marketing-header__nav a {
+  color: var(--plain-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-block-size: var(--plain-link-target-min);
+  text-decoration: none;
 }
 
-.stripe-history-header .plain-nav {
-  margin-inline-start: 0;
+.stripe-history-header .hraness-marketing-header__nav a:is(:hover, :focus-visible),
+.stripe-history-header .hraness-marketing-header__nav a[aria-current="page"] {
+  color: var(--plain-foreground);
+  text-decoration: none;
 }
 
-.stripe-history-header .plain-nav a {
-  font-size: 0.8rem;
+.stripe-history-section h2,
+.history-event h3,
+.history-volume h2,
+.history-year-heading h2 {
+  font-size: inherit;
+  font-weight: 600;
+  line-height: inherit;
+  margin: 0;
 }
 
 .stripe-history-section-heading,
@@ -114,7 +288,10 @@
 .stripe-history-section-heading h2 {
   color: var(--plain-foreground);
   font-family: var(--font-heading);
-  font-size: var(--text-label);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  line-height: 1.15;
 }
 
 .stripe-history-breadcrumbs {
@@ -130,53 +307,22 @@
 
 .stripe-history-about > h2 {
   border-top: 1px solid var(--plain-line);
-  font-size: var(--text-label);
+  font-size: 1.05rem;
   margin-top: 2.25rem;
-  padding-top: 0.6rem;
+  padding-top: 0.75rem;
 }
 
 .stripe-history-about > p {
   max-width: 38rem;
 }
 
+/* Hero and evidence strip on the root timeline. */
 .history-orientation {
-  border-bottom: 1px solid var(--plain-line);
-  display: grid;
-  gap: 1.25rem;
-  padding-block: clamp(1.5rem, 4vw, 2.5rem);
+  padding-block: clamp(2.75rem, 7vw, 5rem) clamp(1.5rem, 4vw, 2.5rem);
 }
 
-.history-orientation-copy {
-  max-width: 48rem;
-}
-
-.history-orientation-copy > p,
-.history-orientation-copy h1 {
-  margin: 0;
-}
-
-.history-orientation-copy > p:first-child {
-  color: var(--plain-muted);
-  font-family: var(--font-heading);
-  font-size: var(--text-caption);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.history-orientation-copy h1 {
-  font-family: var(--font-heading);
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  letter-spacing: -0.045em;
-  line-height: 1.05;
-  margin-top: 0.4rem;
-}
-
-.history-orientation-copy > p:last-child {
-  color: var(--plain-muted);
-  font-size: 1rem;
-  line-height: 1.55;
-  margin-top: 0.75rem;
-  max-width: 44rem;
+.stripe-history-evidence-strip {
+  padding-block: 0 clamp(1.5rem, 4vw, 2.5rem);
 }
 
 .stripe-history-evidence {
@@ -204,15 +350,14 @@
 
 .stripe-history-evidence dt {
   color: var(--plain-muted);
-  font-family: var(--font-heading);
-  font-size: var(--text-caption);
+  font-size: var(--text-label);
 }
 
 .stripe-history-evidence dd {
-  font-family: var(--font-heading);
-  font-size: var(--text-label);
+  font-size: 1.25rem;
   font-variant-numeric: tabular-nums;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   line-height: 1.25;
   margin-top: 0.15rem;
 }
@@ -237,8 +382,8 @@
 .stripe-history-evidence-actions a {
   align-items: center;
   display: inline-flex;
-  font-family: var(--font-heading);
-  font-size: var(--text-caption);
+  font-size: var(--text-label);
+  font-weight: 500;
   min-block-size: 2rem;
 }
 
@@ -274,8 +419,7 @@
 }
 
 .stripe-history-data-questions dt {
-  font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .stripe-history-data-questions dd {
@@ -344,7 +488,9 @@
 }
 
 .history-event-kicker time {
-  font-family: var(--font-heading);
+  color: var(--plain-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -374,6 +520,9 @@
   flex: none;
 }
 
+/* Filter chips: hairline pills in the text face. The category icon keeps its
+ * category color so the chip still matches the entries it selects; the
+ * selected chip takes the site accent. */
 .history-filters a {
   align-items: center;
   --history-category-ink: var(--plain-foreground);
@@ -381,18 +530,29 @@
   --history-category-strong: var(--plain-foreground);
   --history-category-on-strong: var(--plain-background);
 
-  background: var(--history-category-soft);
-  border: 1px solid color-mix(in oklch, var(--history-category-ink) 46%, var(--plain-line));
+  background: var(--plain-background);
+  border: 1px solid var(--plain-line);
   border-radius: 999px;
   color: var(--plain-foreground);
   display: inline-flex;
-  font-family: var(--font-heading);
-  font-size: var(--text-caption);
-  gap: 0.45rem;
-  min-height: max(2rem, var(--plain-link-target-min));
-  padding: 0.28rem 0.65rem;
+  font-family: var(--font-text);
+  font-size: 0.85rem;
+  font-weight: 500;
+  gap: 0.4rem;
+  min-height: max(2.125rem, var(--plain-link-target-min));
+  padding: 0.3rem 0.8rem 0.3rem 0.7rem;
   text-decoration: none;
   white-space: nowrap;
+}
+
+.history-filters a:hover {
+  background: var(--plain-surface);
+  border-color: var(--plain-line-strong);
+  text-decoration: none;
+}
+
+.history-filters a .history-category-icon {
+  color: var(--history-category-ink);
 }
 
 .history-filters a:not([data-filter-id="all"]),
@@ -421,12 +581,12 @@
 }
 
 .history-filters a[aria-current="true"] {
-  background: var(--history-category-strong);
-  border-color: var(--history-category-strong);
-  color: var(--history-category-on-strong);
+  background: var(--hraness-site-accent);
+  border-color: var(--hraness-site-accent);
+  color: var(--hraness-site-accent-ink);
 }
 
-.history-filters a[aria-current="true"] .history-filter-count {
+.history-filters a[aria-current="true"] :is(.history-filter-count, .history-category-icon) {
   color: inherit;
 }
 
@@ -476,15 +636,17 @@
 
 .history-year-heading {
   align-items: baseline;
-  border-top: 2px solid var(--plain-foreground);
+  border-top: 1px solid var(--plain-line-strong);
   display: flex;
-  font-family: var(--font-heading);
   justify-content: space-between;
-  padding: 0.45rem 0 0.55rem;
+  padding: 0.6rem 0 0.6rem;
 }
 
 .history-year-heading h2 {
-  font-size: var(--text-label);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  font-variant-numeric: tabular-nums;
 }
 
 .history-year-heading h2 a {
@@ -498,9 +660,9 @@
 }
 
 .history-event {
-  border-inline-start: 0.2rem solid var(--history-category-ink);
+  border-inline-start: 3px solid var(--history-category-ink);
   border-top: 1px solid var(--plain-line);
-  padding: 1rem 0 1rem 0.8rem;
+  padding: 1rem 0 1rem 0.9rem;
 }
 
 .history-event:last-child {
@@ -525,34 +687,44 @@
 }
 
 .history-event h3 {
-  margin-top: 0.25rem;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  margin-top: 0.35rem;
 }
 
 .history-event-type {
   align-items: center;
   background: var(--history-category-soft);
-  border: 1px solid color-mix(in oklch, var(--history-category-ink) 55%, var(--plain-line));
+  border: 1px solid color-mix(in oklch, var(--history-category-ink) 30%, var(--plain-line));
   border-radius: 999px;
   color: var(--plain-foreground);
   display: inline-flex;
+  font-weight: 500;
   gap: 0.3rem;
   min-height: 1.65rem;
-  padding: 0.08rem 0.48rem;
+  padding: 0.08rem 0.55rem 0.08rem 0.45rem;
   text-decoration: none;
+}
+
+.history-event-type .history-category-icon {
+  color: var(--history-category-ink);
 }
 
 .history-event-status,
 .history-event-confidence {
   border: 1px solid var(--plain-line);
   border-radius: 999px;
+  color: var(--plain-muted);
   display: inline-flex;
-  padding: 0.08rem 0.48rem;
+  min-height: 1.65rem;
+  padding: 0.08rem 0.55rem;
   overflow-wrap: anywhere;
 }
 
 .history-event-confidence {
   color: var(--plain-foreground);
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .history-event article > p:not(.history-event-kicker) {
@@ -576,8 +748,8 @@
   margin: 0;
 }
 
-.history-event-facts dt {
-  font-family: var(--font-heading);
+.history-event-facts dd {
+  font-variant-numeric: tabular-nums;
 }
 
 .history-event-sources a {
@@ -611,11 +783,11 @@
 }
 
 .history-volume figure {
-  background: color-mix(in oklch, var(--history-category-soft) 58%, var(--plain-background));
-  border: 1px solid color-mix(in oklch, var(--history-category-ink) 35%, var(--plain-line));
-  border-radius: 0.7rem;
+  background: color-mix(in oklch, var(--history-category-soft) 40%, var(--plain-background));
+  border: 1px solid var(--plain-line);
+  border-radius: 0.875rem;
   margin: 0;
-  padding: 0.65rem;
+  padding: 0.9rem;
 }
 
 .history-volume figure + figure {
@@ -626,9 +798,16 @@
   align-items: baseline;
   display: flex;
   flex-wrap: wrap;
-  font-family: var(--font-heading);
   justify-content: space-between;
   gap: 0.5rem;
+}
+
+.history-volume figcaption h2 {
+  font-size: 0.95rem;
+}
+
+.history-volume figcaption h2 .history-category-icon {
+  color: var(--history-category-ink);
 }
 
 .history-volume figcaption h2 {
@@ -667,8 +846,8 @@
 .history-volume-list a {
   color: var(--plain-foreground);
   display: grid;
-  font-family: var(--font-heading);
-  font-size: var(--text-caption);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
   gap: 0.2rem 0.5rem;
   grid-template-areas:
     "year value"
@@ -686,17 +865,20 @@
 }
 
 .history-volume-list strong {
+  font-weight: 500;
   grid-area: value;
   justify-self: end;
   white-space: nowrap;
 }
 
 .history-volume-track {
-  background: var(--plain-surface);
+  background: color-mix(in oklch, var(--plain-foreground) 8%, transparent);
+  border-radius: 999px;
   display: block;
   grid-area: track;
-  block-size: 0.38rem;
+  block-size: 0.35rem;
   inline-size: 100%;
+  overflow: hidden;
 }
 
 .history-volume-fill {
@@ -727,7 +909,6 @@
   border-radius: 999px;
   color: var(--plain-foreground);
   display: inline-flex;
-  font-family: var(--font-heading);
   font-size: var(--text-caption);
   line-height: 1.4;
   min-height: 1.4rem;
@@ -799,9 +980,9 @@
 }
 
 .history-page-title {
-  font-family: var(--font-heading);
   font-size: var(--text-title);
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.012em;
   line-height: 1.15;
   margin: 0 0 1rem;
   max-width: 42rem;
@@ -821,14 +1002,14 @@
 .history-volume-chart figcaption,
 .history-volume-table-section > h2,
 .history-volume-method > h2 {
-  border-top: 2px solid var(--plain-foreground);
-  padding-top: 0.45rem;
+  border-top: 1px solid var(--plain-line-strong);
+  padding-top: 0.6rem;
 }
 
 .history-volume-chart figcaption h2,
 .history-volume-table-section > h2,
 .history-volume-method > h2 {
-  font-size: var(--text-label);
+  font-size: 1.05rem;
   margin: 0;
 }
 
@@ -851,8 +1032,8 @@
   align-items: baseline;
   color: var(--plain-foreground);
   display: grid;
-  font-family: var(--font-heading);
-  font-size: var(--text-caption);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
   gap: 0.5rem;
   grid-template-columns: 4rem minmax(7rem, auto) minmax(0, 1fr);
   text-decoration: none;
@@ -877,11 +1058,13 @@
 }
 
 .history-volume-chart-track {
-  background: var(--plain-surface);
-  block-size: 0.55rem;
+  background: color-mix(in oklch, var(--plain-foreground) 8%, transparent);
+  border-radius: 999px;
+  block-size: 0.5rem;
   display: block;
   inline-size: 100%;
   margin-top: 0.3rem;
+  overflow: hidden;
 }
 
 .history-volume-chart-fill {
@@ -961,7 +1144,7 @@
 
 .history-volume-table-section thead th {
   color: var(--plain-muted);
-  font-family: var(--font-heading);
+  font-weight: 500;
   white-space: nowrap;
 }
 
@@ -976,8 +1159,23 @@
   margin-top: 3.5rem;
 }
 
+/* The shared Ask AI row keeps its controls but drops the uppercase-tracked
+ * monospace label in favor of the sentence-case text face. */
+.stripe-history-ask-ai [data-slot="ask-ai-about-this-label"] {
+  color: var(--plain-muted);
+  font-family: var(--font-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
 .stripe-history-ask-ai [data-slot="ask-ai-about-this-link"] {
+  border-radius: 0.5rem;
   color: var(--ui-muted-foreground);
+  font-family: var(--font-text);
+  font-size: 0.85rem;
+  font-weight: 500;
   overflow-wrap: normal;
   text-decoration: none;
 }
@@ -1012,7 +1210,7 @@
 
 .stripe-history-footer-resources__label {
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 600;
   margin: 0;
 }
 
@@ -1125,8 +1323,9 @@
     border-radius: 999px;
     color: var(--plain-muted);
     display: inline-flex;
-    font-family: var(--font-heading);
-    font-size: var(--text-caption);
+    font-family: var(--font-text);
+    font-size: 0.8rem;
+    font-weight: 500;
     gap: 0.35rem;
     justify-content: center;
     min-block-size: max(2.5rem, var(--plain-link-target-min));
@@ -1135,9 +1334,9 @@
   }
 
   .history-measure-controls button[aria-pressed="true"] {
-    background: var(--plain-foreground);
-    border-color: var(--plain-foreground);
-    color: var(--plain-background);
+    background: var(--hraness-site-accent);
+    border-color: var(--hraness-site-accent);
+    color: var(--hraness-site-accent-ink);
   }
 
   .history-measure-controls button:focus-visible {
@@ -1183,19 +1382,41 @@
   }
 }
 
-@media (max-width: 34rem) {
-  .stripe-history-header .plain-header__inner {
-    align-items: center;
-    flex-direction: row;
+@media (max-width: 48rem) {
+  /* Three short links fit beside the brand, so the header keeps one row
+   * instead of the grammar's wrapped navigation. */
+  .stripe-history-header .hraness-marketing-header__inner {
+    flex-wrap: nowrap;
+    padding-block: 0;
   }
 
+  .stripe-history-header .hraness-marketing-header__nav {
+    inline-size: auto;
+    order: 0;
+    gap: 0.15rem 0.9rem;
+  }
+
+  .history-orientation {
+    padding-block: clamp(2rem, 8vw, 3rem) 1.5rem;
+  }
+
+  .stripe-history-main .hraness-marketing-hero__heading {
+    max-inline-size: 14ch;
+  }
+}
+
+@media (max-width: 34rem) {
   .history-filter-description {
     font-size: 0.875rem;
     line-height: 1.45;
   }
 
-  .history-orientation-copy h1 {
-    font-size: 1.65rem;
+  .stripe-history-main .hraness-marketing-hero__heading {
+    font-size: 2rem;
+  }
+
+  .stripe-history-main .hraness-marketing-hero__eyebrow {
+    font-size: 0.8rem;
   }
 
   .stripe-history-evidence-actions ul {
@@ -1213,11 +1434,11 @@
   }
 
   .history-event {
-    padding: 0.8rem 0 0.8rem 0.65rem;
+    padding: 0.8rem 0 0.8rem 0.7rem;
   }
 
   .history-event h3 {
-    font-size: 0.95rem;
+    font-size: 1rem;
     line-height: 1.4;
   }
 
