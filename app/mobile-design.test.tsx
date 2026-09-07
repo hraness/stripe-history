@@ -97,7 +97,7 @@ test("theme control uses the unmodified shared System-first icon menu", () => {
 test("site chrome matches the compact sticky Hraness shell and preserves coarse hit targets", () => {
   expect(globalsCss).toContain('@import "@hraness/site-footer/styles.css";');
   expect(globalsCss).toMatch(
-    /\.stripe-history-main\s*\{[^}]*margin-block:\s*0 clamp\(2\.5rem, 8vh, 5rem\)/u,
+    /\.stripe-history-main\s*\{[^}]*margin-block:\s*0;/u,
   );
   expect(globalsCss).toMatch(
     /\.stripe-history-header\s*\{[^}]*inline-size:\s*100vw;[^}]*position:\s*sticky;[^}]*top:\s*0;/u,
