@@ -1,7 +1,6 @@
 import { HranessSiteFooter } from "@hraness/site-footer/react";
 import { AskAiAboutThis } from "@hraness/ui";
 
-import { stripeHistoryMailingListConfig } from "./mailing-config";
 import {
   absoluteSiteUrl,
   GITHUB_REPOSITORY_URL,
@@ -32,7 +31,21 @@ export function SiteFooter({ path }: SiteFooterProps) {
           <a href={GITHUB_REPOSITORY_URL}>github</a>
         </nav>
       </aside>
-      <HranessSiteFooter mailingList={stripeHistoryMailingListConfig()} />
+      <section
+        aria-label="Subscribe to Hraness"
+        className="stripe-history-substack"
+      >
+        <iframe
+          className="stripe-history-substack__embed"
+          frameBorder="0"
+          height={150}
+          scrolling="no"
+          src="https://hraness.substack.com/embed"
+          title="subscribe to hraness on substack"
+          width={480}
+        />
+      </section>
+      <HranessSiteFooter mailingList={{ kind: "none" }} />
     </>
   );
 }

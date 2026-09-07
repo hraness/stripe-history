@@ -8,7 +8,7 @@ function visibleText(html: string): string {
 }
 
 describe("hraness.com/stripe privacy page", () => {
-  test("publishes the analytics and mailing-consent policy at /privacy", () => {
+  test("publishes the analytics and Substack policy at /privacy", () => {
     const html = renderToStaticMarkup(<PrivacyPage />);
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/privacy" },
@@ -18,12 +18,16 @@ describe("hraness.com/stripe privacy page", () => {
     expect(html).toContain("anonymous, cookieless pageview events for public pages");
     expect(html).toContain("does not save an analytics cookie or identifier");
     expect(html).toContain("no local reader accounts or authentication");
-    expect(html).toContain("Stripe History list choice");
-    expect(html).toContain("Cloudflare Turnstile");
-    expect(html).toContain('href="https://account.hraness.com/"');
+    expect(html).toContain('href="https://hraness.substack.com/"');
+    expect(html).toContain("ordinary request and delivery metadata");
+    expect(html).toContain("Substack handles that address, confirmation");
+    expect(html).toContain("does not send new footer subscriptions to Hraness Accounts");
+    expect(html).toContain("previously confirmed membership");
+    expect(html).toContain("newsletter messages through Resend");
     expect(html).toContain("news.hraness.com");
-    expect(html).toContain("not subscribed until you confirm");
-    expect(html).toContain("only the Stripe History subscription");
+    expect(html).toContain("Stripe-History-specific unsubscribe link");
+    expect(html).toContain("does not delete, cancel, or migrate that record");
+    expect(html).not.toContain("Cloudflare Turnstile");
     expect(html).toContain('href="/contact"');
     expect(html).toContain('aria-label="Appearance: System"');
     expect(visibleText(html).length).toBeGreaterThan(500);

@@ -67,19 +67,24 @@ export default function PrivacyPage() {
           to the ordinary logs and security controls of the hosting provider.
         </p>
         <p>
-          If you use the footer subscription form, your email address, the
-          Stripe History list choice, the form source, and a short-lived
-          Cloudflare Turnstile proof are sent to Hraness Accounts at{" "}
-          <a href="https://account.hraness.com/">account.hraness.com</a>.
-          Cloudflare verifies the anti-abuse proof. Hraness Accounts records
-          dated consent, and Resend sends the confirmation and later Stripe
-          History messages from news.hraness.com. You are not subscribed until
-          you confirm.
+          The footer loads the canonical Hraness subscription embed from{" "}
+          <a href="https://hraness.substack.com/">Substack</a>. Loading it sends
+          Substack the ordinary request and delivery metadata needed to serve
+          the frame. If you submit an email address, Substack handles that
+          address, confirmation, Hraness newsletter delivery, and unsubscribe
+          under its own service and privacy terms.
         </p>
         <p>
-          Each mailing-list message includes an unsubscribe link. Using it
-          removes only the Stripe History subscription, without changing another
-          product subscription or a separate general Hraness subscription.
+          Stripe History does not send new footer subscriptions to Hraness
+          Accounts and does not create new Stripe History mailing consent. If
+          you subscribed through the earlier Stripe History form, Hraness
+          Accounts retains that dated record. A previously confirmed membership
+          may remain active, and Hraness Accounts may continue to process it and
+          deliver Stripe History newsletter messages through Resend from
+          news.hraness.com until you use its Stripe-History-specific unsubscribe
+          link. That link does not change another product or general Hraness
+          subscription. Removing the earlier form does not delete, cancel, or
+          migrate that record.
         </p>
         <p>
           {site.domain} does not sell personal data, does not run advertising

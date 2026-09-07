@@ -111,4 +111,7 @@ test("site chrome matches the compact sticky Hraness shell and preserves coarse 
   expect(globalsCss).toMatch(
     /\.stripe-history-main > \.hraness-site-footer\s*\{[^}]*--hraness-site-footer-measure:\s*64rem;[^}]*inline-size:\s*100vw;[^}]*margin-inline:\s*calc\(50% - 50vw\);/u,
   );
+  expect(globalsCss).toMatch(
+    /\.stripe-history-substack__embed\s*\{[^}]*height:\s*150px;[^}]*max-inline-size:\s*100%;[^}]*width:\s*480px;/u,
+  );
 });

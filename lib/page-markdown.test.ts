@@ -97,17 +97,21 @@ describe("agent markdown representations", () => {
     expect(data.body).toContain("[Works in Progress](https://worksinprogress.co/)");
     expect(data.body).toContain("[Cheeky Pint](https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332)");
     const privacy = await markdownForPath("/privacy");
-    expect(privacy.body).toContain("Cloudflare Turnstile");
-    expect(privacy.body).toContain("https://account.hraness.com/");
+    expect(privacy.body).toContain("https://hraness.substack.com/");
+    expect(privacy.body).toContain("ordinary request and delivery metadata");
+    expect(privacy.body).toContain("does not send new footer subscriptions to Hraness Accounts");
+    expect(privacy.body).toContain("previously confirmed membership");
+    expect(privacy.body).toContain("newsletter messages through Resend");
     expect(privacy.body).toContain("news.hraness.com");
-    expect(privacy.body).toContain("not subscribed until you confirm");
-    expect(privacy.body).toContain("only the Stripe History subscription");
+    expect(privacy.body).toContain("Stripe-History-specific unsubscribe link");
+    expect(privacy.body).toContain("does not delete, cancel, or migrate that record");
+    expect(privacy.body).not.toContain("Cloudflare Turnstile");
     expect(visibleText(privacy.body).length).toBeGreaterThan(500);
 
     const contact = await markdownForPath("/contact");
     expect(contact.body).toContain("no Stripe History-owned reader login");
     expect(contact.body).toContain(
-      "mailing subscription is recorded by Hraness Accounts",
+      "canonical Hraness Substack embed",
     );
     expect(visibleText(contact.body).length).toBeGreaterThan(500);
   });

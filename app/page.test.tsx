@@ -147,15 +147,11 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).not.toContain('/atom.xml');
     expect(html).not.toContain('/news.yml');
     expect(html).toContain(
-      '<form accept-charset="UTF-8" action="https://account.hraness.com/api/mailing/subscribe"',
+      '<iframe class="stripe-history-substack__embed" frameBorder="0" height="150" scrolling="no" src="https://hraness.substack.com/embed" title="subscribe to hraness on substack" width="480"></iframe>',
     );
-    expect(html).toContain(
-      'name="audience" type="hidden" value="stripe-history"',
-    );
-    expect(html).not.toContain(
-      'name="audience" type="hidden" value="hraness"',
-    );
-    expect(html).not.toContain("hraness.substack.com");
+    expect(html).not.toContain("account.hraness.com/api/mailing/subscribe");
+    expect(html).not.toContain('name="audience"');
+    expect(html).not.toContain("cf-turnstile");
     expect(html.indexOf('class="history-volume"')).toBeLessThan(
       html.indexOf('class="history-years"'),
     );

@@ -171,7 +171,8 @@ export default async function AboutPage() {
           feature flags, performance monitoring, or user profiles, and it has
           no local reader accounts or authentication. Requests are still
           subject to the ordinary logs and security controls of the hosting
-          provider. Optional mailing signup is handled by Hraness Accounts.
+          provider. The footer carries the canonical Hraness Substack embed;
+          Stripe History does not create a separate new mailing subscription.
         </p>
         <p>
           The dedicated <Link href="/privacy">privacy page</Link> repeats this

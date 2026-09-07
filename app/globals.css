@@ -1231,6 +1231,22 @@
   min-inline-size: var(--plain-link-target-min);
 }
 
+.stripe-history-substack {
+  margin-block: 1.5rem 0;
+  max-inline-size: 30rem;
+}
+
+.stripe-history-substack__embed {
+  background: white;
+  border: 1px solid var(--plain-line);
+  box-sizing: border-box;
+  color-scheme: light;
+  display: block;
+  height: 150px;
+  max-inline-size: 100%;
+  width: 480px;
+}
+
 .stripe-history-main > .hraness-site-footer {
   --hraness-site-footer-measure: 64rem;
 

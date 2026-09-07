@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { SiteFooter } from "./site-footer";
 
 const sharedLinkOrder = [
+  "https://substack.com/@hraness",
   "https://x.com/hraness",
   "https://www.instagram.com/hraness/",
   "https://www.linkedin.com/in/hraness",
@@ -28,17 +29,19 @@ test("keeps Stripe History resources above the canonical Hraness footer", () => 
   expect(html).toContain('href="/stripe/privacy"');
   expect(html).toContain('href="https://github.com/hraness/stripe-history"');
   expect(html).toContain(
-    'action="https://account.hraness.com/api/mailing/subscribe"',
+    '<iframe class="stripe-history-substack__embed" frameBorder="0" height="150" scrolling="no" src="https://hraness.substack.com/embed" title="subscribe to hraness on substack" width="480"></iframe>',
   );
-  expect(html).toContain(
-    'name="audience" type="hidden" value="stripe-history"',
-  );
-  expect(html).toContain('data-action="mailing_stripe_history"');
+  expect(html).toContain('aria-label="Subscribe to Hraness"');
+  expect(html).not.toContain("account.hraness.com/api/mailing/subscribe");
+  expect(html).not.toContain('name="audience"');
+  expect(html).not.toContain("cf-turnstile");
   expect(html).not.toContain(
     'name="audience" type="hidden" value="hraness"',
   );
-  expect(html).not.toContain("hraness.substack.com");
   expect(html.indexOf('aria-label="Stripe History resources"')).toBeLessThan(
+    html.indexOf('aria-label="Subscribe to Hraness"'),
+  );
+  expect(html.indexOf('aria-label="Subscribe to Hraness"')).toBeLessThan(
     html.indexOf('data-slot="hraness-site-footer"'),
   );
 
@@ -48,4 +51,18 @@ test("keeps Stripe History resources above the canonical Hraness footer", () => 
     expect(linkIndex).toBeGreaterThan(previousLinkIndex);
     previousLinkIndex = linkIndex;
   }
+});
+
+test("removes the obsolete Stripe History Turnstile configuration", async () => {
+  const [environmentExample, workflow] = await Promise.all([
+    Bun.file(new URL("../.env.example", import.meta.url)).text(),
+    Bun.file(new URL("../.github/workflows/ci.yml", import.meta.url)).text(),
+  ]);
+
+  expect(environmentExample).not.toContain(
+    "NEXT_PUBLIC_HRANESS_MAILING_TURNSTILE_SITEKEY",
+  );
+  expect(workflow).not.toContain(
+    "NEXT_PUBLIC_HRANESS_MAILING_TURNSTILE_SITEKEY",
+  );
 });
