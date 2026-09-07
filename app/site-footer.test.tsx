@@ -6,21 +6,17 @@ import { SiteFooter } from "./site-footer";
 const sharedLinkOrder = [
   "https://substack.com/@hraness",
   "https://x.com/hraness",
-  "https://www.instagram.com/hraness/",
   "https://www.linkedin.com/in/hraness",
   "https://bsky.app/profile/hraness.bsky.social",
-  "https://www.threads.com/@hraness",
   "https://github.com/hraness",
-  "https://www.tiktok.com/@hraness",
-  "https://www.reddit.com/user/bgdotjpg/",
-  "https://www.twitch.tv/hranessdotcom",
-  "https://www.youtube.com/@hraness",
 ] as const;
 
 test("keeps Stripe History resources above the canonical Hraness footer", () => {
   const html = renderToStaticMarkup(<SiteFooter />);
 
   expect(html.match(/<footer\b/gu)).toHaveLength(1);
+  expect(html.match(/data-slot="social-icon"/gu)).toHaveLength(5);
+  expect(html).not.toContain("hraness-site-footer__wordmark");
   expect(html).not.toContain('aria-label="Ask AI about this"');
   expect(html).toContain('aside aria-label="Stripe History resources"');
   expect(html).toContain('href="/stripe/data"');

@@ -193,7 +193,7 @@
 }
 
 .stripe-history-main {
-  margin-block: 0 clamp(2.5rem, 8vh, 5rem);
+  margin-block: 0;
   max-width: 42rem;
 }
 
