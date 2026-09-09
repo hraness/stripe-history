@@ -3,6 +3,8 @@ import { historyCategoryPath } from "@/lib/history-urls";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
 import Link from "next/link";
+import * as stylex from "@stylexjs/stylex";
+import { historyEventStyles as eventStyles } from "../history-event.stylex";
 
 import { breadcrumbJsonLd, historyCollectionJsonLd } from "../../seo";
 import { SiteFooter } from "../../site-footer";
@@ -176,21 +178,21 @@ export default async function PaymentVolumePage() {
                   <li key={event.id}>
                     <article>
                       <header>
-                        <p className="history-event-kicker">
-                          <time dateTime={event.date}>
+                        <p className={`history-event-kicker ${stylex.props(eventStyles.kicker).className}`}>
+                          <time {...stylex.props(eventStyles.date)} dateTime={event.date}>
                             {partialDateLabel(event.date)}
                           </time>
                           <Link
-                            className="history-event-type"
+                            className={`history-event-type ${stylex.props(eventStyles.type, eventStyles.disclosureType).className}`}
                             data-analytics-event="history filter selected"
                             data-analytics-id={event.categoryId}
                             data-analytics-kind="history-category"
                             href={`${historyCategoryPath(event.categoryId)}#${event.id}`}
                           >
-                            <HistoryCategoryIcon filterId={event.categoryId} />
+                            <HistoryCategoryIcon className={stylex.props(eventStyles.typeIcon).className} filterId={event.categoryId} />
                             <span>{categoryLabel}</span>
                           </Link>
-                          <span className="history-event-status">{kindLabel}</span>
+                          <span className={`history-event-status ${stylex.props(eventStyles.status).className}`}>{kindLabel}</span>
                           <span className="history-valuation-basis-badge">
                             {qualifierLabel}
                           </span>
@@ -198,48 +200,49 @@ export default async function PaymentVolumePage() {
                         <h3>{event.title}</h3>
                       </header>
                       <p>{event.summary}</p>
-                      <dl className="history-event-facts">
-                        <div>
-                          <dt>volume</dt>
-                          <dd>{point.display}</dd>
+                      <dl className={`history-event-facts ${stylex.props(eventStyles.facts).className}`}>
+                        <div {...stylex.props(eventStyles.factRow)}>
+                          <dt {...stylex.props(eventStyles.factTerm)}>volume</dt>
+                          <dd {...stylex.props(eventStyles.factValue)}>{point.display}</dd>
                         </div>
-                        <div>
-                          <dt>measurement</dt>
-                          <dd>{kindLabel}</dd>
+                        <div {...stylex.props(eventStyles.factRow)}>
+                          <dt {...stylex.props(eventStyles.factTerm)}>measurement</dt>
+                          <dd {...stylex.props(eventStyles.factValue)}>{kindLabel}</dd>
                         </div>
-                        <div>
-                          <dt>qualifier</dt>
-                          <dd>{qualifierLabel}</dd>
+                        <div {...stylex.props(eventStyles.factRow)}>
+                          <dt {...stylex.props(eventStyles.factTerm)}>qualifier</dt>
+                          <dd {...stylex.props(eventStyles.factValue)}>{qualifierLabel}</dd>
                         </div>
-                        <div>
-                          <dt>disclosed</dt>
-                          <dd>
+                        <div {...stylex.props(eventStyles.factRow)}>
+                          <dt {...stylex.props(eventStyles.factTerm)}>disclosed</dt>
+                          <dd {...stylex.props(eventStyles.factValue)}>
                             <time dateTime={event.date}>
                               {partialDateLabel(event.date)}
                             </time>
                           </dd>
                         </div>
                         {event.metrics?.map((metric) => (
-                          <div key={`${event.id}-${metric.label}`}>
-                            <dt>{metric.label}</dt>
-                            <dd>
+                          <div {...stylex.props(eventStyles.factRow)} key={`${event.id}-${metric.label}`}>
+                            <dt {...stylex.props(eventStyles.factTerm)}>{metric.label}</dt>
+                            <dd {...stylex.props(eventStyles.factValue)}>
                               {metric.value}
                               {metric.context === undefined ? null : ` · ${metric.context}`}
                             </dd>
                           </div>
                         ))}
                         {event.details?.map((detail) => (
-                          <div key={`${event.id}-${detail.label}`}>
-                            <dt>{detail.label}</dt>
-                            <dd>{detail.value}</dd>
+                          <div {...stylex.props(eventStyles.factRow)} key={`${event.id}-${detail.label}`}>
+                            <dt {...stylex.props(eventStyles.factTerm)}>{detail.label}</dt>
+                            <dd {...stylex.props(eventStyles.factValue)}>{detail.value}</dd>
                           </div>
                         ))}
                       </dl>
-                      <p className="history-event-sources">
+                      <p className={`history-event-sources ${stylex.props(eventStyles.sources).className}`}>
                         {event.sources.map((source, index) => (
                           <span key={source.url}>
                             {index === 0 ? null : <span aria-hidden="true"> · </span>}
                             <a
+                              {...stylex.props(eventStyles.sourceLink)}
                               aria-label={`${source.publisher}: ${source.title}`}
                               data-analytics-event="source link opened"
                               data-analytics-id={event.id}

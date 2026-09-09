@@ -6,6 +6,8 @@ import type { ValuationObservation } from "@/lib/research-schema";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
 import Link from "next/link";
+import * as stylex from "@stylexjs/stylex";
+import { historyEventStyles as eventStyles } from "../history-event.stylex";
 
 import { breadcrumbJsonLd, historyCollectionJsonLd } from "../../seo";
 import { SiteFooter } from "../../site-footer";
@@ -208,8 +210,8 @@ export default async function ValuationPage() {
                   >
                     <article>
                       <header>
-                        <p className="history-event-kicker">
-                          <time dateTime={observation.effective_date}>
+                        <p className={`history-event-kicker ${stylex.props(eventStyles.kicker).className}`}>
+                          <time {...stylex.props(eventStyles.date)} dateTime={observation.effective_date}>
                             {partialDateLabel(observation.effective_date)}
                           </time>
                           <span
@@ -222,30 +224,30 @@ export default async function ValuationPage() {
                             {basisLabel[observation.valuation.basis]}
                           </span>
                           {observation.confidence === "confirmed" ? null : (
-                            <span className="history-event-confidence">
+                            <span className={`history-event-confidence ${stylex.props(eventStyles.status, eventStyles.confidence).className}`}>
                               {observation.confidence}
                             </span>
                           )}
                         </p>
                         <h3>{observation.title}</h3>
                       </header>
-                      <dl className="history-event-facts">
-                        <div>
-                          <dt>valuation</dt>
-                          <dd>{observation.valuation.display}</dd>
+                      <dl className={`history-event-facts ${stylex.props(eventStyles.facts).className}`}>
+                        <div {...stylex.props(eventStyles.factRow)}>
+                          <dt {...stylex.props(eventStyles.factTerm)}>valuation</dt>
+                          <dd {...stylex.props(eventStyles.factValue)}>{observation.valuation.display}</dd>
                         </div>
-                        <div>
-                          <dt>measurement</dt>
-                          <dd>{basisLabel[observation.valuation.basis]}</dd>
+                        <div {...stylex.props(eventStyles.factRow)}>
+                          <dt {...stylex.props(eventStyles.factTerm)}>measurement</dt>
+                          <dd {...stylex.props(eventStyles.factValue)}>{basisLabel[observation.valuation.basis]}</dd>
                         </div>
-                        <div>
-                          <dt>transaction status</dt>
-                          <dd>{statusLabel[observation.status]}</dd>
+                        <div {...stylex.props(eventStyles.factRow)}>
+                          <dt {...stylex.props(eventStyles.factTerm)}>transaction status</dt>
+                          <dd {...stylex.props(eventStyles.factValue)}>{statusLabel[observation.status]}</dd>
                         </div>
                         {observation.reported_at === undefined ? null : (
-                          <div>
-                            <dt>reported</dt>
-                            <dd>
+                          <div {...stylex.props(eventStyles.factRow)}>
+                            <dt {...stylex.props(eventStyles.factTerm)}>reported</dt>
+                            <dd {...stylex.props(eventStyles.factValue)}>
                               <time dateTime={observation.reported_at}>
                                 {partialDateLabel(observation.reported_at)}
                               </time>
@@ -253,24 +255,24 @@ export default async function ValuationPage() {
                           </div>
                         )}
                         {observation.share_price === undefined ? null : (
-                          <div>
-                            <dt>share price</dt>
-                            <dd>{observation.share_price.display}</dd>
+                          <div {...stylex.props(eventStyles.factRow)}>
+                            <dt {...stylex.props(eventStyles.factTerm)}>share price</dt>
+                            <dd {...stylex.props(eventStyles.factValue)}>{observation.share_price.display}</dd>
                           </div>
                         )}
                         {observation.financing_amount === undefined ? null : (
-                          <div>
-                            <dt>financing amount</dt>
-                            <dd>
+                          <div {...stylex.props(eventStyles.factRow)}>
+                            <dt {...stylex.props(eventStyles.factTerm)}>financing amount</dt>
+                            <dd {...stylex.props(eventStyles.factValue)}>
                               {observation.financing_amount.display}
                               {` · ${financingStageLabel[observation.financing_amount.stage]}`}
                             </dd>
                           </div>
                         )}
                         {observation.capital_transacted === undefined ? null : (
-                          <div>
-                            <dt>transaction</dt>
-                            <dd>{observation.capital_transacted.display}</dd>
+                          <div {...stylex.props(eventStyles.factRow)}>
+                            <dt {...stylex.props(eventStyles.factTerm)}>transaction</dt>
+                            <dd {...stylex.props(eventStyles.factValue)}>{observation.capital_transacted.display}</dd>
                           </div>
                         )}
                       </dl>
@@ -282,11 +284,12 @@ export default async function ValuationPage() {
                           Derived as {observation.derivation.formula}.
                         </p>
                       )}
-                      <p className="history-event-sources">
+                      <p className={`history-event-sources ${stylex.props(eventStyles.sources).className}`}>
                         {observation.sources.map((source, index) => (
                           <span key={source.id}>
                             {index === 0 ? null : <span aria-hidden="true"> · </span>}
                             <a
+                              {...stylex.props(eventStyles.sourceLink)}
                               aria-label={`${source.publisher}: ${source.title}`}
                               data-analytics-event="source link opened"
                               data-analytics-id={observation.id}

@@ -45,7 +45,7 @@ describe("canonical hraness.com/stripe history", () => {
     ]);
     const evidence = summarizeHistoryEvidence(history, researchRuns);
     const html = renderToStaticMarkup(await Home());
-    const eventCount = html.match(/class="history-event"/gu)?.length ?? 0;
+    const eventCount = html.match(/class="history-event(?: [^"]+)?"/gu)?.length ?? 0;
     const categoryIconCount = html.match(
       /class="stripe-history-icon history-category-icon(?: [^"]+)?"/gu,
     )?.length ?? 0;
@@ -99,18 +99,18 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).toContain('href="/history/valuation"');
     expect(html).toContain('id="history-year-2026"');
     expect(html).toContain('id="history-year-2005"');
-    expect(html).toContain('class="history-event-type"');
+    expect(html).toMatch(/class="history-event-type [^"]+"/u);
     expect(categoryIconCount).toBeGreaterThan(eventCount);
     expect(html).toContain('data-filter-id="payment-and-payout-expansion"');
     expect(html).toContain(`aria-label="net revenue: ${history.annualRevenues.length} annual disclosures"`);
     expect(html).toContain(`aria-label="valuation: ${history.valuations.length} observations"`);
     expect(html).toMatch(
-      /class="history-event" data-category="payment-and-payout-expansion" style="--history-category-hue:[0-9.]+"/u,
+      /class="history-event [^"]+" data-category="payment-and-payout-expansion" style="--history-category-hue:[0-9.]+"/u,
     );
     expect(html).toContain('data-measure="payment-volume"');
     expect(html).toContain('data-measure="net-revenue"');
     expect(html).toContain('data-measure="valuation"');
-    expect(html).toContain('class="history-event-confidence">reported</span>');
+    expect(html).toMatch(/class="history-event-confidence [^"]+">reported<\/span>/u);
     expect(html).toContain('id="milestone-2026-2025-volume-1-9-trillion"');
     expect(html.match(/class="history-volume-track"/gu)?.length).toBe(
       history.annualVolumes.length
@@ -125,7 +125,7 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).toContain("Tokens Are the New Dollars");
     expect(html).toContain('data-category="appearances"');
     expect(html).toContain("A month in Buenos Aires produces Stripe&#x27;s first working prototype");
-    expect(html).toContain('class="history-event-sources"');
+    expect(html).toMatch(/class="history-event-sources [^"]+"/u);
     expect(html).toContain('data-analytics-event="source link opened"');
     expect(html).toContain('id="stripe-history-history-structured-data"');
     expect(html).toContain('aria-label="Appearance: System"');

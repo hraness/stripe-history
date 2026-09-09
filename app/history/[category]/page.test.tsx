@@ -75,7 +75,7 @@ describe("hraness.com/stripe category history", () => {
     const html = renderToStaticMarkup(await HistoryCategoryPage({
       params: Promise.resolve({ category: "acquisitions" }),
     }));
-    const eventCount = html.match(/class="history-event"/gu)?.length ?? 0;
+    const eventCount = html.match(/class="history-event(?: [^"]+)?"/gu)?.length ?? 0;
     const categorizedEventCount = html.match(/data-category="acquisitions"/gu)?.length ?? 0;
 
     expect(eventCount).toBe(acquisitionCount);

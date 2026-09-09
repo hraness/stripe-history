@@ -172,14 +172,22 @@ checkout or contact the Substack embed. On managed Hraness hosts, run installs,
 full builds, and this complete browser command through the host scheduler and
 the repository resource scheduler; the preview/browser flow has one owner.
 
-This is a compiler-adoption canary. The footer resources and orientation slots
-use product-owned StyleX, and shared packages participate in one compiled union.
+The footer resources, orientation, timeline/filter/year, and event/fact/source
+slots use product-owned StyleX, and shared packages participate in one compiled
+union. The event recipes are shared by the timeline and all three metric-page
+disclosure renderers; their data, native links and chart frames keep their
+existing owners. The native canary checks these roles in the real corpus across
+light/dark, narrow, coarse-pointer and forced-color conditions before and after
+the resources-recipe rebuild. Compiler-rule tests also require attached border
+and minimum-height declarations, because unsupported shorthands can disappear
+from the pinned compiler output.
 Timeline and metric pages use the product-owned `stripe-history-page` grammar.
 They do not also opt into the design kit's unlayered `plain-page` rules, which
 would override compiled year typography and spacing. The shared foundation and
 body palette remain unchanged; ordinary pages retain their existing grammar.
-The remaining timeline presentation in `app/globals.css` and `support/` is still
-an explicit migration task. Passing this canary alone does not mean the whole
+Metric charts, rails, valuation badges, and the remaining global/shell
+presentation in `app/globals.css` and `support/` are still explicit migration
+tasks. Passing this canary alone does not mean the whole
 product or portfolio is migrated or deployment-verified.
 
 After a production update is live, notify IndexNow of the canonical HTML URLs in the sitemap:

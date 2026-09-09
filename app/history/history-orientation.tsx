@@ -99,8 +99,8 @@ export function HistoryOrientation({
           <p className={`hraness-marketing-stats__source ${stylex.props(styles.stats__source).className}`}>
             {reviewStateNote}{" "}<Link href="/about#sources-and-review">Method and limits</Link>.
           </p>
-          </section>
-        </details>
-      </>
+        </section>
+      </details>
+    </>
   );
 }

@@ -11,6 +11,7 @@ import { capturePreviewSnapshot, previewSourceInventory } from "./compiled-previ
 import { loopbackListenerPresence, previewErrorEvidence, processPresence, terminalPreviewState } from "./compiled-preview-evidence.ts";
 import { previewAcceptTypes, verifyPreviewRepresentation } from "./compiled-preview-representations.ts";
 import { proveCompiledTimeline } from "./compiled-preview-timeline.ts";
+import { proveCompiledEvents } from "./compiled-preview-events.ts";
 import { malformedRecipeSuffix, previewCompleteIdentity, proveMalformedPreviewAttempt } from "./compiled-preview-failure.ts";
 
 // Real product edit -> complete build -> owned restart -> manual refresh.
@@ -29,6 +30,7 @@ const knownPids = new Set<number>();
 const knownPorts = new Set<number>();
 const representations: { generation: unknown; responses: ReturnType<typeof verifyPreviewRepresentation>[] }[] = [];
 const timelines: { generation: unknown; observations: unknown[] }[] = [];
+const eventPresentation: { generation: unknown; proof: Awaited<ReturnType<typeof proveCompiledEvents>> }[] = [];
 const expectedFailureProofs: (Awaited<ReturnType<typeof proveMalformedPreviewAttempt>> & {
   retained: { pid: number; process: "present"; identityBefore: ReturnType<typeof previewCompleteIdentity>;
     identityAfter: ReturnType<typeof previewCompleteIdentity>; representationsUnchanged: true };
@@ -214,6 +216,7 @@ try {
   assert.ok(await page.locator('#timeline').evaluate((node) => node.getBoundingClientRect().top >= document.querySelector('.stripe-history-header')!.getBoundingClientRect().bottom), "Browse target must clear the sticky header");
   await page.setViewportSize({ width: 1280, height: 900 });
   timelines.push({ generation: first.generation, observations: await proveCompiledTimeline(page) });
+  eventPresentation.push({ generation: first.generation, proof: await proveCompiledEvents(page) });
   const identityUrl = `${origin}/stripe/__stripe_stylex_preview_generation.json`;
   const identity = await (await context.request.get(identityUrl)).json() as { generation: string };
   assert.equal(identity.generation, first.generation);
@@ -269,6 +272,7 @@ try {
   assert.equal((await (await context.request.get(identityUrl)).json() as { generation: string }).generation, second.generation);
   await proveRepresentations(second.generation);
   timelines.push({ generation: second.generation, observations: await proveCompiledTimeline(page) });
+  eventPresentation.push({ generation: second.generation, proof: await proveCompiledEvents(page) });
   assert.deepEqual(pageErrors, []);
   assert.equal(await readFile(join(root, recipePath), "utf8"), authoredRecipe, "The native canary must not edit the user's source checkout");
 
@@ -334,9 +338,9 @@ await writeFile(join(evidenceRoot, "browser-proof.json"), JSON.stringify({
   custody: { state: custodyPassed ? "complete" : "failed", ...custody },
   source: { root: source?.root ?? null, sourceInventorySha256, sourceInventoryAfterSha256, authoredRecipeSha256, authoredRecipeAfterSha256, changedRecipeSha256, invalidRecipeSha256 },
   browser: { version: browserVersion, executablePath, beforeSha256: browserExecutableSha256, afterSha256: browserExecutableAfterSha256 },
-  generations, representations, timelines, expectedFailureProofs, errors,
+  generations, representations, timelines, eventPresentation, expectedFailureProofs, errors,
   failedGenerations: events.filter((value) => value.kind === "stripe-preview-build-failed").map((value) => ({ retained: value.retained, session: value.session, diagnosticSha256: hash(String(value.message)) })),
-  requiredAssertions: ["real async corpus", "canonical /stripe", "native HTML/Markdown/406 and Vary Accept before/after rebuild", "Substack markup", "header navigation/appearance", "semantic time", "desktop/mobile compiled orientation with inherited-variable counterexample", "compiled timeline light/dark selected-hover and forced-focus, mobile scroll cue, year layout/counts before/after rebuild", "failed generation preserves server/output", "changed rule union", "old server collected", "manual refresh observes real recipe edit", "authored checkout unchanged"],
+  requiredAssertions: ["real async corpus", "canonical /stripe", "native HTML/Markdown/406 and Vary Accept before/after rebuild", "Substack markup", "header navigation/appearance", "semantic time", "desktop/mobile compiled orientation with inherited-variable counterexample", "compiled timeline light/dark selected-hover and forced-focus, mobile scroll cue, year layout/counts before/after rebuild", "all four real event/fact/source producers across light/dark, narrow and native coarse pointer before/after rebuild", "native Tab reach and focus ring on the real event chip", "category-bound timeline border and unbound metric ordinary/forced border match authored native references", "attached timeline borders and normal filter minimum height", "failed generation preserves server/output", "changed rule union", "old server collected", "manual refresh observes real recipe edit", "authored checkout unchanged"],
   noHmrOrStateContinuityClaim: true,
 }, null, 2) + "\n", { flag: "wx", mode: 0o600 });
 console.log(JSON.stringify({ kind: "stripe-preview-browser-terminal", state, evidenceRoot }));
