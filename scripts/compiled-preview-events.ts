@@ -219,15 +219,32 @@ export async function proveCompiledEvents(page: Page) {
       await coarsePage.goto(`${origin}${path}`, { waitUntil: "networkidle" });
       const coarse = await coarsePage.evaluate(() => ({ path: location.pathname, active: matchMedia("(pointer: coarse)").matches,
         roles: [...document.querySelectorAll(".history-event-type, .history-event-sources a")].map((node) => {
-          const css = getComputedStyle(node); return { minHeight: css.minHeight, display: css.display, align: css.alignItems, height: node.getBoundingClientRect().height,
-            padding: node.classList.contains("history-event-type") ? css.paddingInline : null };
+          const css = getComputedStyle(node);
+          const type = node.classList.contains("history-event-type");
+          const observed = { type, parentDisplay: getComputedStyle(node.parentElement!).display,
+            minHeight: css.minHeight, display: css.display, align: css.alignItems, height: node.getBoundingClientRect().height,
+            padding: type ? css.paddingInline : null };
+          // The original inline-flex declaration blockifies on a direct flex
+          // item. Resolve that authored declaration in this exact parent, not
+          // from the compiled class or a broad accepted-display list.
+          const reference = document.createElement("span");
+          reference.style.display = "inline-flex";
+          node.after(reference);
+          try {
+            const expectedDisplay = getComputedStyle(reference).display;
+            reference.style.display = "inline-block";
+            return { ...observed, expectedDisplay, wrongDisplay: getComputedStyle(reference).display };
+          } finally { reference.remove(); }
         }) }));
       assert.equal(coarse.path, path);
       assert.equal(coarse.active, true);
       assert.ok(coarse.roles.length > 0);
       for (const role of coarse.roles) {
         assert.equal(role.minHeight, "48px");
-        assert.equal(role.display, "inline-flex");
+        assert.equal(role.parentDisplay, role.type ? "flex" : "inline");
+        assert.equal(role.expectedDisplay, role.type ? "flex" : "inline-flex");
+        assert.equal(role.display, role.expectedDisplay);
+        assert.notEqual(role.display, role.wrongDisplay);
         assert.equal(role.align, "center");
         assert.ok(role.height >= 48);
         if (role.padding !== null) assert.equal(role.padding, "12px");
