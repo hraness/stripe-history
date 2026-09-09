@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from "next/constants.js";
 import { withStylexNext } from "@hraness/ui/stylex-build/next";
 import { stylexOptions } from "./stylex-config.ts";
+import { bindNextTemplateCache } from "./scripts/next-template-cache.ts";
 import {
   type ProductionDeliveryProofEnvironment,
   withProductionDeliveryProof,
@@ -74,6 +75,7 @@ const nextConfig = {
     ];
   },
   webpack(config) {
+    config.cache = bindNextTemplateCache(config.cache, process.cwd());
     config.resolve.extensionAlias = {
       ...config.resolve.extensionAlias,
       ".js": [".ts", ".tsx", ".js"],

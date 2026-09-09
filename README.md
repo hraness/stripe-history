@@ -142,9 +142,14 @@ as passing the native build; an empty Edge list does not skip its receipt.
 The exact Next 16.2.12 dependency has a declared Bun patch at
 `patches/next@16.2.12.patch`. Its two app-page templates append the native RSC
 `Vary` fields instead of overwriting the product's existing `Vary: Accept`.
-This fixes production HTML negotiation, not just the development proxy. Bun
+The patch targets production HTML negotiation, not just the development proxy. Bun
 applies the patch during frozen, lifecycle-disabled installation; keep its
 manifest and lock entry together. Preview snapshots retain the patch itself.
+The product namespaces Next's existing filesystem-cache version by the patch
+and both installed template hashes, without replacing its cache options or
+dependencies. This prevents a prior expanded entry from surviving a patch.
+Both production and preview builds additionally check the actual delivery map's
+expanded root-page handler before reporting a successful product generation.
 The native loader reads the patched ESM template text and generates fresh
 webpack sources and maps, which must pass the complete adapter checks. The
 package's unused distributed template maps remain unchanged: they describe the

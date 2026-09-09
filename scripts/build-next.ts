@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { runStylexNextBuild } from "@hraness/ui/stylex-build/next";
 import { stylexOptions } from "../stylex-config.ts";
+import { assertPatchedNextDelivery } from "./next-template-cache.ts";
 
 assert.equal(process.release.name, "node");
 assert.equal(process.versions.node.split(".")[0], "24", "Compiled builds require genuine Node 24.");
@@ -12,4 +13,5 @@ const record = await runStylexNextBuild({
   attemptId: `stripe-${randomUUID()}`,
   requiredSources,
 });
+assertPatchedNextDelivery(process.cwd());
 console.log(JSON.stringify({ kind: "stripe-history-compiled-build", record }));

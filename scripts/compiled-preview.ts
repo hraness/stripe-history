@@ -10,6 +10,7 @@ import { runStylexNextBuild } from "@hraness/ui/stylex-build/next";
 import { stylexOptions } from "../stylex-config.ts";
 import { collectPreviewOwner, createPreviewCommands, createPreviewSelection, hasUnprovedPreviewCustody } from "./compiled-preview-state.ts";
 import { capturePreviewSnapshot } from "./compiled-preview-snapshot.ts";
+import { assertPatchedNextDelivery } from "./next-template-cache.ts";
 
 // This is production rebuild/start/manual-refresh, not HMR. Each attempt has a
 // new application root, so unproved type files from a failed build never enter
@@ -105,6 +106,7 @@ async function main(): Promise<void> {
           const requiredSources = JSON.parse(await readFile(join(captured.root, "stylex-sources.json"), "utf8"));
           const record = await runStylexNextBuild({ ...stylexOptions(captured.root), attemptId: `preview-${captured.generation}`, requiredSources });
           assert.equal(record.state, "complete");
+          assertPatchedNextDelivery(captured.root);
           await writeFile(join(captured.root, "preview-complete.json"), JSON.stringify(record, null, 2) + "\n", { flag: "wx", mode: 0o600 });
           if (isStopping()) throw new Error("Preview cancelled after complete build");
           const reservation = createServer();
