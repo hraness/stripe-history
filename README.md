@@ -83,10 +83,11 @@ Read the full [methodology and independence statement](https://hraness.com/strip
 
 ## Run locally
 
-Use [Bun 1.3.14](https://bun.sh/):
+Use [Bun 1.3.14](https://bun.sh/) with genuine Node 24 on `PATH`. The compiled
+adapter is pinned to Next 16.2.12 and webpack 5:
 
 ```sh
-bun install --frozen-lockfile
+bun install --frozen-lockfile --ignore-scripts
 bun run dev
 ```
 
@@ -102,11 +103,84 @@ continues to honor their audience-specific unsubscribe state. Confirmed earlier
 memberships may remain active, with Resend delivering any later Stripe History
 messages from `news.hraness.com` until the recipient unsubscribes.
 
-Open `http://localhost:3000`. Run the complete local verification before submitting a change:
+Open `http://127.0.0.1:3000/stripe` after the runner prints
+`stripe-preview-ready`. Edit a recipe, enter `rebuild` in the terminal, wait for
+the next ready event, then refresh the browser manually. Enter `quit` to stop
+the owned servers. Pass another loopback port with `bun run dev 3100`.
+
+Every rebuild copies the current product source and installed dependencies into
+a fresh application root under ignored `.stylex-preview/`. The production
+adapter completes discovery and delivery builds before a new server can replace
+the previous generation. An unsuccessful generation keeps the previous server
+and output selected. A successful generation starts its own `next start`, proves
+its identity, switches the loopback proxy, and collects the old server. This
+workflow does not provide HMR or preserve application state across refreshes.
+Outputs and failed-build evidence remain available for inspection after shutdown.
+Do not remove a session while its process owns it. Restart the preview session
+after changing dependencies or runner configuration.
+
+The header uses the released compiled design-kit component with native anchors
+and explicit `/stripe` URLs. These header links perform document navigation;
+they no longer use Next's client navigation or prefetch. Timeline actions retain
+`next/link`, including the rich correction link and semantic review date.
+
+Run the complete local verification before submitting a change:
 
 ```sh
 bun run check
+bun run build
 ```
+
+`bun run build` is the checked production adapter, not a direct `next build`.
+The native `next.config.mjs` entry loads the typed product policy through Node
+24 ESM so the adapter's import-only package export is not rewritten to CommonJS.
+`stylex-sources.json` declares the complete expected source census for each
+compiler target. The adapter rejects missing, unexpected, or changed graph
+inputs. Adding a route or client module requires reviewing that census as well
+as passing the native build; an empty Edge list does not skip its receipt.
+
+The exact Next 16.2.12 dependency has a declared Bun patch at
+`patches/next@16.2.12.patch`. Its two app-page templates append the native RSC
+`Vary` fields instead of overwriting the product's existing `Vary: Accept`.
+The patch targets production HTML negotiation, not just the development proxy. Bun
+applies the patch during frozen, lifecycle-disabled installation; keep its
+manifest and lock entry together. Preview snapshots retain the patch itself.
+The product namespaces Next's existing filesystem-cache version by the patch
+and both installed template hashes, without replacing its cache options or
+dependencies. This prevents a prior expanded entry from surviving a patch.
+Both production and preview builds additionally check the actual delivery map's
+expanded root-page handler before reporting a successful product generation.
+The native loader reads the patched ESM template text and generates fresh
+webpack sources and maps, which must pass the complete adapter checks. The
+package's unused distributed template maps remain unchanged: they describe the
+upstream templates, not the patched text. No framework writer hash, version
+requirement, or generated source-map assertion is waived. Reassess and remove
+this exact-version patch only after a replacement framework passes the real
+HTML, Markdown, and unsupported-Accept response checks.
+
+The native preview canary runs the complete product in an isolated source copy:
+
+```sh
+CHROMIUM_EXECUTABLE_PATH=/path/to/reviewed/browser bun run test:compiled-preview
+```
+
+It proves a real resources-recipe edit through a fresh complete generation,
+owned server replacement, and explicit browser reload. It also injects an
+invalid recipe, checks that the last successful server and CSS remain intact,
+and verifies bounded server/browser cleanup. It does not edit the working
+checkout or contact the Substack embed. On managed Hraness hosts, run installs,
+full builds, and this complete browser command through the host scheduler and
+the repository resource scheduler; the preview/browser flow has one owner.
+
+This is a compiler-adoption canary. The footer resources and orientation slots
+use product-owned StyleX, and shared packages participate in one compiled union.
+Timeline and metric pages use the product-owned `stripe-history-page` grammar.
+They do not also opt into the design kit's unlayered `plain-page` rules, which
+would override compiled year typography and spacing. The shared foundation and
+body palette remain unchanged; ordinary pages retain their existing grammar.
+The remaining timeline presentation in `app/globals.css` and `support/` is still
+an explicit migration task. Passing this canary alone does not mean the whole
+product or portfolio is migrated or deployment-verified.
 
 After a production update is live, notify IndexNow of the canonical HTML URLs in the sitemap:
 

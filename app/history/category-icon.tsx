@@ -40,12 +40,13 @@ const historyCategoryIcons = {
 } as const satisfies Readonly<Record<HistoryFilterVisualId, typeof Calendar03Icon>>;
 
 export function HistoryCategoryIcon({
+  className,
   filterId,
-}: Readonly<{ filterId: HistoryFilterVisualId }>) {
+}: Readonly<{ className?: string | undefined; filterId: HistoryFilterVisualId }>) {
   return (
     <HugeiconsIcon
       aria-hidden="true"
-      className="stripe-history-icon history-category-icon"
+      className={`stripe-history-icon history-category-icon${className === undefined ? "" : ` ${className}`}`}
       color="currentColor"
       icon={historyCategoryIcons[filterId]}
       size={16}

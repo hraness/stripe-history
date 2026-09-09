@@ -47,57 +47,40 @@ describe("canonical hraness.com/stripe history", () => {
     const html = renderToStaticMarkup(await Home());
     const eventCount = html.match(/class="history-event"/gu)?.length ?? 0;
     const categoryIconCount = html.match(
-      /class="stripe-history-icon history-category-icon"/gu,
+      /class="stripe-history-icon history-category-icon(?: [^"]+)?"/gu,
     )?.length ?? 0;
 
     expect(eventCount).toBe(history.events.length);
     expect(eventCount).toBeGreaterThanOrEqual(200);
-    expect(html).toContain('class="plain-page stripe-history-main stripe-history-history-main"');
-    expect(html).toContain(
-      '<header class="hraness-marketing-header stripe-history-header" data-hraness-marketing="header">',
-    );
-    expect(html).toContain(
-      'class="hraness-marketing-header__brand stripe-history-header-brand" href="https://hraness.com"',
-    );
-    expect(html).toContain(
-      'aria-label="primary navigation" class="hraness-marketing-header__nav"',
-    );
-    expect(html).toContain(
-      '<header aria-labelledby="history-heading" class="hraness-marketing-hero history-orientation"',
-    );
-    expect(html).toContain(
-      '<h1 class="hraness-marketing-hero__heading" id="history-heading">Stripe’s history, dated and sourced</h1>',
-    );
+    expect(html).toContain('class="stripe-history-page stripe-history-main stripe-history-history-main"');
+    expect(html).toMatch(/<header class="hraness-marketing-header [^"]*\bstripe-history-header\b[^"]*" data-hraness-marketing="header">/u);
+    expect(html).toMatch(/class="hraness-marketing-header__brand [^"]+" href="https:\/\/hraness\.com" aria-label="hraness"/u);
+    expect(html).toMatch(/aria-label="primary navigation" class="hraness-marketing-header__nav [^"]+"/u);
+    expect(html).toMatch(/<header aria-labelledby="history-heading" class="hraness-marketing-hero history-orientation [^"]+"/u);
+    expect(html).toMatch(/<h1 class="hraness-marketing-hero__heading [^"]+" id="history-heading">Stripe’s history, dated and sourced<\/h1>/u);
     expect(html).toContain("Independent · source-linked · reverse chronological");
     expect(html).toContain(
       `${history.events.length} dated events across products, funding, leadership, expansion, and scale, each linked to the source that reported it.`,
     );
-    expect(html).toContain(
-      '<section aria-label="Current evidence snapshot" class="hraness-marketing-stats stripe-history-evidence-strip"',
-    );
-    expect(html).toContain(`<dt>Timeline entries</dt><dd><strong>${evidence.eventCount}</strong></dd>`);
-    expect(html).toContain(`<dt>Entry source links</dt><dd><strong>${evidence.sourceLinkCount}</strong></dd>`);
-    expect(html).toContain(`<dt>Canonical sources</dt><dd><strong>${evidence.canonicalSourceCount}</strong></dd>`);
+    expect(html).toMatch(/<section aria-label="Current evidence snapshot" class="hraness-marketing-stats stripe-history-evidence-strip [^"]+"/u);
+    const semanticHtml = html.replace(/ class="[^"]*"/gu, "");
+    expect(semanticHtml).toContain(`<dt>Timeline entries</dt><dd><strong>${evidence.eventCount}</strong></dd>`);
+    expect(semanticHtml).toContain(`<dt>Entry source links</dt><dd><strong>${evidence.sourceLinkCount}</strong></dd>`);
+    expect(semanticHtml).toContain(`<dt>Canonical sources</dt><dd><strong>${evidence.canonicalSourceCount}</strong></dd>`);
     expect(html).toContain(
       `<time dateTime="${evidence.latestCompletedResearchRunOn}">`,
     );
     expect(html).toContain("does not claim that every timeline category was re-reviewed");
-    expect(html).toContain(
-      'class="hraness-marketing-action" data-emphasis="primary" href="/about#sources-and-review">Method and limits</a>',
-    );
-    expect(html).toContain(
-      'class="hraness-marketing-action" data-emphasis="secondary" href="/data">Export YAML</a>',
-    );
+    expect(html).toMatch(/class="hraness-marketing-action [^"]+" data-emphasis="primary" href="\/about#sources-and-review">Method and limits<\/a>/u);
+    expect(html).toMatch(/class="hraness-marketing-action [^"]+" data-emphasis="secondary" href="\/data">Export YAML<\/a>/u);
     expect(html).toContain('href="/contact#corrections-and-sources">Report a correction</a>');
     expect(html).toContain('data-hraness-marketing="questions"');
-    expect(html).toContain("<summary>What counts as an event?</summary>");
-    expect(html).toContain("<summary>How are sources checked?</summary>");
-    expect(html).toContain("<summary>How do I report a correction?</summary>");
-    expect(html).toContain("<summary>Who made it?</summary>");
+    expect(html).toMatch(/<summary class="hraness-marketing-question__summary [^"]+">What counts as an event\?<\/summary>/u);
+    expect(html).toMatch(/<summary class="hraness-marketing-question__summary [^"]+">How are sources checked\?<\/summary>/u);
+    expect(html).toMatch(/<summary class="hraness-marketing-question__summary [^"]+">How do I report a correction\?<\/summary>/u);
+    expect(html).toMatch(/<summary class="hraness-marketing-question__summary [^"]+">Who made it\?<\/summary>/u);
     expect(html).toContain('href="https://github.com/hraness/stripe-history/issues"');
-    expect(html).toContain(
-      '<h2 class="hraness-marketing-maker__heading" id="history-maker-heading">Ben Guo</h2>',
-    );
+    expect(html).toMatch(/<h2 class="hraness-marketing-maker__heading [^"]+" id="history-maker-heading">Ben Guo<\/h2>/u);
     expect(html).toContain("formerly a founder and engineering leader at companies including Venmo and Stripe");
     expect(html).toContain('href="https://x.com/hraness">@hraness</a>');
     expect(html).toContain(`aria-current="true" aria-label="all: ${history.events.length} events"`);
@@ -153,12 +136,15 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).not.toContain('name="audience"');
     expect(html).not.toContain("cf-turnstile");
     expect(html.indexOf('class="history-volume"')).toBeLessThan(
-      html.indexOf('class="history-years"'),
+      html.indexOf('class="history-years '),
     );
-    expect(html.indexOf('class="hraness-marketing-hero history-orientation"')).toBeLessThan(
-      html.indexOf('class="history-filters"'),
+    expect(html.indexOf('class="hraness-marketing-hero history-orientation ')).toBeGreaterThan(-1);
+    expect(html.indexOf('class="hraness-marketing-hero history-orientation ')).toBeLessThan(
+      html.indexOf('class="history-filters '),
     );
-    expect(html.indexOf('class="history-years"')).toBeLessThan(
+    expect(html.indexOf('class="history-years ')).toBeGreaterThan(-1);
+    expect(html.indexOf('class="history-filters ')).toBeGreaterThan(-1);
+    expect(html.indexOf('class="history-years ')).toBeLessThan(
       html.indexOf('data-hraness-marketing="questions"'),
     );
     expect(html.indexOf('data-hraness-marketing="questions"')).toBeLessThan(

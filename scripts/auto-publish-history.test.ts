@@ -1,10 +1,11 @@
-import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
 import { afterEach, describe, expect, test } from "bun:test";
 import { parse, stringify } from "yaml";
 import { z } from "zod";
+import { copyOrdinaryFixtureTree } from "./fixture-copy";
 
 import {
   AutomatedDecisionLedgerSchema,
@@ -41,7 +42,7 @@ afterEach(async () => {
 async function fixtureProject(): Promise<string> {
   const directory = await mkdtemp(join(tmpdir(), "stripe-auto-publish-"));
   temporaryDirectories.push(directory);
-  await cp(join(process.cwd(), "public"), join(directory, "public"), { recursive: true });
+  await copyOrdinaryFixtureTree(join(process.cwd(), "public"), join(directory, "public"));
   await writeFile(
     join(directory, "public", "research", "automated-publications.yml"),
     stringify(AutomatedPublicationLedgerSchema.parse({

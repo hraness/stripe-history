@@ -1,9 +1,10 @@
 import { afterEach, describe, expect, test } from "bun:test";
 import { createHash } from "node:crypto";
-import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { parse, stringify } from "yaml";
+import { copyOrdinaryFixtureTree } from "./fixture-copy";
 
 import {
   AutomatedDecisionLedgerSchema,
@@ -60,7 +61,8 @@ const copyResearchProject = async (): Promise<string> => {
   const root = await mkdtemp(join(tmpdir(), "stripe-research-project-"));
   temporaryRoots.push(root);
   const project = join(root, "stripe-history");
-  await cp(join(projectDirectory, "public"), join(project, "public"), { recursive: true });
+  await mkdir(project);
+  await copyOrdinaryFixtureTree(join(projectDirectory, "public"), join(project, "public"));
   return project;
 };
 
@@ -68,7 +70,8 @@ const copyResearchProjectWithoutEvidence = async (): Promise<string> => {
   const root = await mkdtemp(join(tmpdir(), "stripe-research-no-evidence-"));
   temporaryRoots.push(root);
   const project = join(root, "stripe-history");
-  await cp(join(projectDirectory, "public"), join(project, "public"), { recursive: true });
+  await mkdir(project);
+  await copyOrdinaryFixtureTree(join(projectDirectory, "public"), join(project, "public"));
   return project;
 };
 

@@ -7,7 +7,10 @@ import {
   PRODUCTION_DELIVERY_PROOF_HEADER,
   productionDeliveryProofToken,
 } from "@hraness/vercel-delivery";
-import nextConfig, { createNextConfig } from "../next.config";
+import { PHASE_PRODUCTION_SERVER, PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
+import configForPhase, { createNextConfig } from "../next-config";
+
+const nextConfig = configForPhase(PHASE_PRODUCTION_SERVER);
 
 import { metadata } from "./layout";
 import manifest from "./manifest";
@@ -17,6 +20,10 @@ import sitemap from "./sitemap";
 import { SITE_BASE_PATH, SITE_HOST_ORIGIN, SITE_ORIGIN, site } from "./site";
 
 describe("hraness.com/stripe public identity", () => {
+  test("serves the unchanged production policy and rejects uncompiled development", () => {
+    expect(nextConfig.basePath).toBe("/stripe");
+    expect(() => configForPhase(PHASE_DEVELOPMENT_SERVER)).toThrow("compiled preview");
+  });
   test("states the canonical history collection", () => {
     expect(site).toMatchObject({
       applicationName: "Stripe History",
@@ -183,6 +190,8 @@ describe("hraness.com/stripe public identity", () => {
       VERCEL_URL: "stripe-history-git-example-hraness.vercel.app",
     } as const;
     const config = createNextConfig(identity);
+    expect(config.webpack).toBe(createNextConfig({}).webpack);
+    expect(config.basePath).toBe("/stripe");
     const headers = await config.headers?.();
 
     expect(headers).toContainEqual({

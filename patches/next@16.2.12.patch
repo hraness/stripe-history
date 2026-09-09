@@ -1,0 +1,24 @@
+diff --git a/dist/build/templates/app-page.js b/dist/build/templates/app-page.js
+--- a/dist/build/templates/app-page.js
++++ b/dist/build/templates/app-page.js
+@@ -443,7 +443,7 @@
+     };
+     try {
+         const varyHeader = routeModule.getVaryHeader(resolvedPathname, interceptionRoutePatterns);
+-        res.setHeader('Vary', varyHeader);
++        res.appendHeader('Vary', varyHeader);
+         let parentSpan;
+         const invokeRouteModule = async (span, context)=>{
+             const nextReq = new _node.NodeNextRequest(req);
+diff --git a/dist/esm/build/templates/app-page.js b/dist/esm/build/templates/app-page.js
+--- a/dist/esm/build/templates/app-page.js
++++ b/dist/esm/build/templates/app-page.js
+@@ -434,7 +434,7 @@
+     };
+     try {
+         const varyHeader = routeModule.getVaryHeader(resolvedPathname, interceptionRoutePatterns);
+-        res.setHeader('Vary', varyHeader);
++        res.appendHeader('Vary', varyHeader);
+         let parentSpan;
+         const invokeRouteModule = async (span, context)=>{
+             const nextReq = new NodeNextRequest(req);

@@ -1,10 +1,14 @@
 import type { NextConfig } from "next";
+import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from "next/constants.js";
+import { withStylexNext } from "@hraness/ui/stylex-build/next";
+import { stylexOptions } from "./stylex-config.ts";
+import { bindNextTemplateCache } from "./scripts/next-template-cache.ts";
 import {
   type ProductionDeliveryProofEnvironment,
   withProductionDeliveryProof,
 } from "@hraness/vercel-delivery";
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   basePath: "/stripe",
   async headers() {
     const noindexHeaders = [{ key: "X-Robots-Tag", value: "noindex, follow" }];
@@ -71,13 +75,14 @@ const nextConfig: NextConfig = {
     ];
   },
   webpack(config) {
+    config.cache = bindNextTemplateCache(config.cache, process.cwd());
     config.resolve.extensionAlias = {
       ...config.resolve.extensionAlias,
       ".js": [".ts", ".tsx", ".js"],
     };
     return config;
   },
-};
+} satisfies NextConfig;
 
 export function createNextConfig(
   environment: ProductionDeliveryProofEnvironment = process.env,
@@ -88,4 +93,14 @@ export function createNextConfig(
   });
 }
 
-export default createNextConfig();
+export default function configForPhase(phase: string): NextConfig {
+  const config = createNextConfig();
+  if (phase === PHASE_PRODUCTION_SERVER) return config;
+  if (phase !== PHASE_PRODUCTION_BUILD) {
+    throw new Error("Stripe History uses compiled preview: run bun run dev; next dev/HMR is unsupported.");
+  }
+  // The delivery wrapper changes headers/env only. Keep the concrete synchronous
+  // callback type and reject a future wrapper that silently replaces it.
+  if (config.webpack !== nextConfig.webpack) throw new Error("Delivery wrapper replaced the product webpack callback");
+  return withStylexNext({ ...config, webpack: nextConfig.webpack }, stylexOptions(process.cwd()));
+}

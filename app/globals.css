@@ -1,5 +1,3 @@
-@import "@hraness/design-kit/styles.css";
-@import "@hraness/site-footer/styles.css";
 @import "../support/styles.css";
 @import "../support/brand.css";
 
@@ -224,7 +222,7 @@
   padding-inline: var(--plain-shell-gutter);
 }
 
-.stripe-history-header .stripe-history-header-brand {
+.stripe-history-header .hraness-marketing-header__brand {
   color: var(--plain-foreground);
   font-size: 0.95rem;
   font-weight: 600;
@@ -234,7 +232,7 @@
   text-decoration: none;
 }
 
-.stripe-history-header .stripe-history-header-brand .hraness-ra-mark {
+.stripe-history-header .hraness-marketing-header__brand .hraness-ra-mark {
   height: 1.25rem;
   width: 1.25rem;
 }
@@ -253,10 +251,9 @@
   text-decoration: none;
 }
 
-.stripe-history-section h2,
+.stripe-history-section h2:where(:not(.history-year-title)),
 .history-event h3,
-.history-volume h2,
-.history-year-heading h2 {
+.history-volume h2 {
   font-size: inherit;
   font-weight: 600;
   line-height: inherit;
@@ -475,12 +472,6 @@
   padding-inline: 1rem;
 }
 
-.history-timeline {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
 .history-event-kicker,
 .history-event-sources,
 .history-event-facts {
@@ -495,66 +486,9 @@
   white-space: nowrap;
 }
 
-.history-filters {
-  background: color-mix(in oklch, var(--plain-background) 94%, transparent);
-  border-bottom: 1px solid var(--plain-line);
-  margin: 0 0 1rem;
-  padding: 0.45rem 0 0.3rem;
-  position: sticky;
-  top: var(--history-header-offset);
-  z-index: 40;
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-}
-
-.history-filters ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  list-style: none;
-  margin: 0;
-  padding: 0.2rem 0.25rem 0.25rem;
-}
-
-.history-filters li {
-  flex: none;
-}
-
-/* Filter chips: hairline pills in the text face. The category icon keeps its
- * category color so the chip still matches the entries it selects; the
- * selected chip takes the site accent. */
-.history-filters a {
-  align-items: center;
-  --history-category-ink: var(--plain-foreground);
-  --history-category-soft: var(--plain-surface);
-  --history-category-strong: var(--plain-foreground);
-  --history-category-on-strong: var(--plain-background);
-
-  background: var(--plain-background);
-  border: 1px solid var(--plain-line);
-  border-radius: 999px;
-  color: var(--plain-foreground);
-  display: inline-flex;
-  font-family: var(--font-text);
-  font-size: 0.85rem;
-  font-weight: 500;
-  gap: 0.4rem;
-  min-height: max(2.125rem, var(--plain-link-target-min));
-  padding: 0.3rem 0.8rem 0.3rem 0.7rem;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.history-filters a:hover {
-  background: var(--plain-surface);
-  border-color: var(--plain-line-strong);
-  text-decoration: none;
-}
-
-.history-filters a .history-category-icon {
-  color: var(--history-category-ink);
-}
-
+/* Shared category-role theme boundary. Hue remains an owned closed-category
+ * renderer input; formulas resolve on the category-bearing element, not an
+ * ancestor. Filter presentation itself is compiled in history-timeline. */
 .history-filters a:not([data-filter-id="all"]),
 .history-event,
 .history-volume figure {
@@ -575,88 +509,10 @@
   --history-category-on-strong: oklch(0.16 0.025 var(--history-category-hue));
 }
 
-.history-filter-count {
-  color: var(--plain-muted);
-  font-variant-numeric: tabular-nums;
-}
-
-.history-filters a[aria-current="true"] {
-  background: var(--hraness-site-accent);
-  border-color: var(--hraness-site-accent);
-  color: var(--hraness-site-accent-ink);
-}
-
-.history-filters a[aria-current="true"] :is(.history-filter-count, .history-category-icon) {
-  color: inherit;
-}
-
-.history-filters a:focus-visible {
-  box-shadow:
-    inset 0 0 0 2px var(--plain-background),
-    inset 0 0 0 4px var(--plain-link);
-  outline: none;
-}
-
 .history-category-icon {
   align-self: center;
   display: block;
   flex: none;
-}
-
-.history-filter-description {
-  color: var(--plain-muted);
-  margin: 0 0 1.5rem;
-  max-width: 42rem;
-}
-
-.history-layout {
-  align-items: start;
-  display: grid;
-  gap: clamp(2rem, 5vw, 3.5rem);
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 20rem);
-}
-
-.history-years {
-  grid-column: 1;
-  grid-row: 1;
-  min-width: 0;
-}
-
-.history-year {
-  scroll-margin-top: calc(var(--history-filter-stack-offset) + 1rem);
-}
-
-.history-years > .history-year:first-child {
-  margin-block-start: 0;
-}
-
-.history-year + .history-year {
-  margin-top: 2.75rem;
-}
-
-.history-year-heading {
-  align-items: baseline;
-  border-top: 1px solid var(--plain-line-strong);
-  display: flex;
-  justify-content: space-between;
-  padding: 0.6rem 0 0.6rem;
-}
-
-.history-year-heading h2 {
-  font-size: 1.25rem;
-  font-weight: 500;
-  letter-spacing: -0.012em;
-  font-variant-numeric: tabular-nums;
-}
-
-.history-year-heading h2 a {
-  color: var(--plain-foreground);
-  text-decoration: none;
-}
-
-.history-year-heading > span {
-  color: var(--plain-muted);
-  font-size: var(--text-caption);
 }
 
 .history-event {
@@ -1192,45 +1048,6 @@
   text-decoration: none;
 }
 
-.stripe-history-ask-ai + .stripe-history-footer-resources {
-  margin-top: 1rem;
-}
-
-.stripe-history-footer-resources {
-  align-items: center;
-  border-top: 1px solid var(--plain-line);
-  color: var(--plain-muted);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-  min-height: 2.625rem;
-  margin-top: 3.5rem;
-  padding-block: 0.625rem;
-}
-
-.stripe-history-footer-resources__label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-.stripe-history-footer-resources__links {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 0.85rem;
-  margin-inline-start: auto;
-}
-
-.stripe-history-footer-resources__links a {
-  align-items: center;
-  color: inherit;
-  display: inline-flex;
-  font-size: 0.9rem;
-  min-block-size: var(--plain-link-target-min);
-  min-inline-size: var(--plain-link-target-min);
-}
-
 .stripe-history-substack {
   margin-block: 1.5rem 0;
   max-inline-size: 30rem;
@@ -1274,47 +1091,8 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .history-layout {
-    display: block;
-  }
-
-  .history-filters {
-    margin-bottom: 0.75rem;
-    padding-block: 0.3rem 0.2rem;
-  }
-
-  .history-filters::after {
-    background: linear-gradient(
-      90deg,
-      transparent,
-      color-mix(in oklch, var(--plain-background) 96%, transparent)
-    );
-    block-size: calc(100% - 0.5rem);
-    content: "";
-    inline-size: 1.75rem;
-    inset-block-start: 0.25rem;
-    inset-inline-end: 0;
-    pointer-events: none;
-    position: absolute;
-  }
-
-  .history-filters ul {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    padding-inline-end: 2rem;
-    scroll-padding-inline: 0.25rem 2rem;
-    scroll-snap-type: inline proximity;
-    scrollbar-width: none;
-  }
-
-  .history-filters ul::-webkit-scrollbar,
   .history-measure-rail::-webkit-scrollbar {
     display: none;
-  }
-
-  .history-filters li {
-    scroll-snap-align: start;
   }
 
   .history-volume {
@@ -1386,7 +1164,6 @@
     margin-top: 0;
   }
 
-  .history-year,
   .history-event article {
     scroll-margin-top: calc(var(--history-filter-stack-offset) + 1rem);
   }
@@ -1422,11 +1199,6 @@
 }
 
 @media (max-width: 34rem) {
-  .history-filter-description {
-    font-size: 0.875rem;
-    line-height: 1.45;
-  }
-
   .stripe-history-main .hraness-marketing-hero__heading {
     font-size: 2rem;
   }
@@ -1439,14 +1211,6 @@
     align-items: start;
     flex-direction: column;
     gap: 0;
-  }
-
-  .history-filter-description {
-    margin-bottom: 1rem;
-  }
-
-  .history-year + .history-year {
-    margin-top: 2rem;
   }
 
   .history-event {
@@ -1468,12 +1232,10 @@
 }
 
 @media (pointer: coarse) {
-  .history-filters a,
   .stripe-history-evidence-actions a,
   .history-event-type,
   .history-measure-controls button,
   .history-event-sources a,
-  .history-year-heading h2 a,
   .history-volume h2 a,
   .history-volume-list a,
   .history-volume-chart li > a,
@@ -1484,7 +1246,6 @@
   .history-event-type,
   .stripe-history-evidence-actions a,
   .history-event-sources a,
-  .history-year-heading h2 a,
   .history-volume h2 a,
   .history-volume-table-section a {
     align-items: center;
@@ -1522,13 +1283,6 @@
 }
 
 @media (forced-colors: active) {
-  .history-filters {
-    background: Canvas;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-
-  .history-filters a,
   .stripe-history-evidence dl > div,
   .history-event-type,
   .history-measure-controls button,
@@ -1538,26 +1292,10 @@
     color: CanvasText;
   }
 
-  .history-filters a[aria-current="true"] {
-    background: Highlight;
-    border-color: Highlight;
-    color: HighlightText;
-  }
-
   .history-measure-controls button[aria-pressed="true"] {
     background: Highlight;
     border-color: Highlight;
     color: HighlightText;
-  }
-
-  .history-filters a:focus-visible {
-    box-shadow: none;
-    outline: 2px solid Highlight;
-    outline-offset: -4px;
-  }
-
-  .history-filters a[aria-current="true"]:focus-visible {
-    outline-color: HighlightText;
   }
 
   .history-event {

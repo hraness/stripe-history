@@ -4,6 +4,7 @@ import { expect, test } from "bun:test";
 
 const packageJson = await Bun.file(new URL("../package.json", import.meta.url)).json();
 const globals = await Bun.file(new URL("./globals.css", import.meta.url)).text();
+const layout = await Bun.file(new URL("./layout.tsx", import.meta.url)).text();
 const tokens = await Bun.file(new URL("../support/tokens.css", import.meta.url)).text();
 const styles = await Bun.file(new URL("../support/styles.css", import.meta.url)).text();
 const plainSite = await Bun.file(new URL("../support/plain-site.css", import.meta.url)).text();
@@ -21,11 +22,14 @@ function outlinedWordmark(svg: string): string {
 
 test("uses the released Nebula Sans default for text and headings while retaining explicit mono roles", () => {
   expect(packageJson.dependencies).toMatchObject({
-    "@hraness/design-kit": "github:hraness/design-kit#v0.4.0",
-    "@hraness/ui": "github:hraness/ui#v0.4.10",
+    "@hraness/design-kit": "github:hraness/design-kit#v0.6.2",
+    "@hraness/ui": "github:hraness/ui#v0.5.10",
     "@hraness/web-discovery": "github:hraness/web-discovery#v0.2.0",
   });
-  expect(globals).toStartWith('@import "@hraness/design-kit/styles.css";');
+  expect(layout).toContain('import "@hraness/ui/compiler-foundation.css";');
+  expect(layout).toContain('import "@hraness/design-kit/compiler-foundation.css";');
+  expect(layout).toContain('import "@hraness/site-footer/compiler-foundation.css";');
+  expect(globals).not.toMatch(/@hraness\/[^"\n]+\/(?:styles|stylex)\.css/u);
   expect(tokens).toContain("--ui-font-sans: var(--font-text)");
   expect(tokens).toContain("--ui-font-heading: var(--font-text)");
   expect(styles).toContain("--font-heading: var(--font-text)");
