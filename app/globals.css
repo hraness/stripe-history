@@ -316,13 +316,48 @@
   max-width: 38rem;
 }
 
-/* Hero and evidence strip on the root timeline. */
+/* A compact introduction leaves the historical record near the first fold. */
 .history-orientation {
-  padding-block: clamp(2.75rem, 7vw, 5rem) clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(1.75rem, 4vw, 3rem) 0 0.75rem;
 }
 
-.stripe-history-evidence-strip {
-  padding-block: 0 clamp(1.5rem, 4vw, 2.5rem);
+.stripe-history-main .history-orientation .hraness-marketing-hero__heading {
+  font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+  line-height: 1.15;
+  max-inline-size: 28ch;
+}
+
+.history-orientation .hraness-marketing-hero__copy {
+  gap: 0.85rem;
+}
+
+.history-source-details {
+  margin-block: 0 1.25rem;
+}
+
+.history-source-details > summary {
+  color: var(--plain-muted);
+  cursor: pointer;
+  font-size: 0.875rem;
+  min-block-size: 2.75rem;
+  padding-block: 0.6rem;
+}
+
+.history-source-details > summary:is(:hover, :focus-visible) {
+  color: var(--plain-link);
+}
+
+.history-source-details > summary:focus-visible {
+  outline: 2px solid var(--plain-link);
+  outline-offset: 2px;
+}
+
+.history-source-details > .stripe-history-evidence {
+  padding-block: 0.5rem 1rem;
+}
+
+#timeline {
+  scroll-margin-top: calc(var(--history-header-offset) + 0.5rem);
 }
 
 .stripe-history-evidence {
@@ -1267,7 +1302,7 @@
 
   .history-orientation {
     gap: 1rem;
-    padding-block: 1.25rem;
+    padding-block: 1.5rem 0.75rem;
   }
 
   .stripe-history-evidence dl {
@@ -1412,13 +1447,6 @@
     gap: 0.15rem 0.9rem;
   }
 
-  .history-orientation {
-    padding-block: clamp(2rem, 8vw, 3rem) 1.5rem;
-  }
-
-  .stripe-history-main .hraness-marketing-hero__heading {
-    max-inline-size: 14ch;
-  }
 }
 
 @media (max-width: 34rem) {
@@ -1427,13 +1455,6 @@
     line-height: 1.45;
   }
 
-  .stripe-history-main .hraness-marketing-hero__heading {
-    font-size: 2rem;
-  }
-
-  .stripe-history-main .hraness-marketing-hero__eyebrow {
-    font-size: 0.8rem;
-  }
 
   .stripe-history-evidence-actions ul {
     align-items: start;

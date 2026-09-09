@@ -69,6 +69,12 @@ test("mobile filter overflow has a scroll affordance without a persistent scroll
 
 test("evidence orientation reflows without hiding actions or shrinking touch targets", () => {
   expect(globalsCss).toMatch(
+    /\.history-source-details > summary\s*\{[^}]*min-block-size:\s*2\.75rem;/u,
+  );
+  expect(globalsCss).toMatch(
+    /#timeline\s*\{[^}]*scroll-margin-top:\s*calc\(var\(--history-header-offset\) \+ 0\.5rem\);/u,
+  );
+  expect(globalsCss).toMatch(
     /\.stripe-history-evidence dl\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\);/u,
   );
   expect(globalsCss).toMatch(

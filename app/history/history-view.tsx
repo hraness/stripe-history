@@ -398,7 +398,7 @@ export function HistoryView({
     >
       <SiteHeader />
       {orientation ? <HistoryOrientation evidence={evidence} /> : null}
-      <section aria-labelledby="history-heading" className="stripe-history-section">
+      <section aria-labelledby="history-heading" className="stripe-history-section" id="timeline">
         {orientation ? null : (
           <h1 className="stripe-history-visually-hidden" id="history-heading">
             {historyHeading}
