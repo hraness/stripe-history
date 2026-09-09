@@ -1,5 +1,7 @@
 node_modules/
 .next/
+.stylex-next/
+.stylex-preview/
 .vercel/
 next-env.d.ts
 *.tsbuildinfo

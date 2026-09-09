@@ -19,6 +19,7 @@
     "noUnusedParameters": true,
     "useUnknownInCatchVariables": true,
     "noEmit": true,
+    "allowImportingTsExtensions": true,
     "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
@@ -49,6 +50,7 @@
     "**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    ".stylex-preview"
   ]
 }

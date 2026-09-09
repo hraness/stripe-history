@@ -20,7 +20,7 @@ test("appearance starts with System and keeps the existing product preference ke
 
 test("site chrome keeps the shared appearance menu as its final header action", () => {
   const html = renderToStaticMarkup(<SiteHeader />);
-  const controlsStart = html.indexOf('class="hraness-marketing-header__inner"');
+  const controlsStart = html.indexOf('class="hraness-marketing-header__inner ');
   expect(controlsStart).toBeGreaterThan(-1);
   const navigationEnd = html.indexOf("</nav>", controlsStart);
   const theme = html.indexOf('data-presentation="menu"', controlsStart);
@@ -48,4 +48,13 @@ test("Stripe History does not keep a second theme runtime", async () => {
   expect(globalError).toContain(
     '<DesignThemeProvider storageKey="stripe-history-theme-v1">',
   );
+});
+
+test("compiled header native anchors retain /stripe and the selected about route", () => {
+  const html = renderToStaticMarkup(<SiteHeader aboutSelected />);
+  expect(html).toContain('href="/stripe"');
+  expect(html).toContain('href="/stripe/data"');
+  expect(html).toMatch(/<a aria-current="page" class="hraness-marketing-header__link [^"]+" href="\/stripe\/about">about<\/a>/u);
+  expect(html).not.toContain('href="/about"');
+  expect(html).not.toContain('href="/data"');
 });

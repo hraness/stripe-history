@@ -5,6 +5,9 @@ import {
   ThemeColorSync,
 } from "@hraness/design-kit/react";
 import type { RouteErrorPageProps } from "./error";
+import "@hraness/ui/compiler-foundation.css";
+import "@hraness/design-kit/compiler-foundation.css";
+import "@hraness/site-footer/compiler-foundation.css";
 import "./globals.css";
 
 export default function GlobalError({ reset }: RouteErrorPageProps) {
