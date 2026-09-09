@@ -10,6 +10,7 @@ import { chromium, type Browser, type BrowserContext, type BrowserServer } from 
 import { capturePreviewSnapshot, previewSourceInventory } from "./compiled-preview-snapshot.ts";
 import { loopbackListenerPresence, previewErrorEvidence, processPresence, terminalPreviewState } from "./compiled-preview-evidence.ts";
 import { previewAcceptTypes, verifyPreviewRepresentation } from "./compiled-preview-representations.ts";
+import { proveCompiledTimeline } from "./compiled-preview-timeline.ts";
 
 // Real product edit -> complete build -> owned restart -> manual refresh.
 // Run the entire canary through both host/browser and repository schedulers.
@@ -26,6 +27,7 @@ const errors: ReturnType<typeof previewErrorEvidence>[] = [];
 const knownPids = new Set<number>();
 const knownPorts = new Set<number>();
 const representations: { generation: unknown; responses: ReturnType<typeof verifyPreviewRepresentation>[] }[] = [];
+const timelines: { generation: unknown; observations: unknown[] }[] = [];
 let stage = "preflight";
 let workPassed = false;
 let cleanupErrorsStart = 0;
@@ -197,6 +199,7 @@ try {
   await page.setViewportSize({ width: 390, height: 844 });
   assert.equal((await page.locator('.hraness-marketing-stats__list').evaluate((node) => getComputedStyle(node).gridTemplateColumns)).split(" ").length, 2);
   await page.setViewportSize({ width: 1280, height: 900 });
+  timelines.push({ generation: first.generation, observations: await proveCompiledTimeline(page) });
   const identityUrl = `${origin}/stripe/__stripe_stylex_preview_generation.json`;
   const identity = await (await context.request.get(identityUrl)).json() as { generation: string };
   assert.equal(identity.generation, first.generation);
@@ -237,6 +240,7 @@ try {
   assert.equal(await resources.evaluate((node) => getComputedStyle(node).rowGap), "10px");
   assert.equal((await (await context.request.get(identityUrl)).json() as { generation: string }).generation, second.generation);
   await proveRepresentations(second.generation);
+  timelines.push({ generation: second.generation, observations: await proveCompiledTimeline(page) });
   assert.deepEqual(pageErrors, []);
   assert.equal(await readFile(join(root, recipePath), "utf8"), authoredRecipe, "The native canary must not edit the user's source checkout");
 
@@ -302,9 +306,9 @@ await writeFile(join(evidenceRoot, "browser-proof.json"), JSON.stringify({
   custody: { state: custodyPassed ? "complete" : "failed", ...custody },
   source: { root: source?.root ?? null, sourceInventorySha256, sourceInventoryAfterSha256, authoredRecipeSha256, authoredRecipeAfterSha256, changedRecipeSha256, invalidRecipeSha256 },
   browser: { version: browserVersion, executablePath, beforeSha256: browserExecutableSha256, afterSha256: browserExecutableAfterSha256 },
-  generations, representations, errors,
+  generations, representations, timelines, errors,
   failedGenerations: events.filter((value) => value.kind === "stripe-preview-build-failed").map((value) => ({ retained: value.retained, session: value.session, diagnosticSha256: hash(String(value.message)) })),
-  requiredAssertions: ["real async corpus", "canonical /stripe", "native HTML/Markdown/406 and Vary Accept before/after rebuild", "Substack markup", "header navigation/appearance", "semantic time", "desktop/mobile compiled orientation with inherited-variable counterexample", "failed generation preserves server/output", "changed rule union", "old server collected", "manual refresh observes real recipe edit", "authored checkout unchanged"],
+  requiredAssertions: ["real async corpus", "canonical /stripe", "native HTML/Markdown/406 and Vary Accept before/after rebuild", "Substack markup", "header navigation/appearance", "semantic time", "desktop/mobile compiled orientation with inherited-variable counterexample", "compiled timeline light/dark selected-hover and forced-focus, mobile scroll cue, year layout/counts before/after rebuild", "failed generation preserves server/output", "changed rule union", "old server collected", "manual refresh observes real recipe edit", "authored checkout unchanged"],
   noHmrOrStateContinuityClaim: true,
 }, null, 2) + "\n", { flag: "wx", mode: 0o600 });
 console.log(JSON.stringify({ kind: "stripe-preview-browser-terminal", state, evidenceRoot }));
