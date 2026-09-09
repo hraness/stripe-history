@@ -59,7 +59,7 @@ test("real timeline years retain order, counts, anchors, first/sibling recipes a
     expect(html).toContain(`href="#history-year-${match[1]}">${match[1]}</a>`);
     expect(html).toContain(`<span class="${stylex.props(styles.yearCount).className}">${counts.get(match[1]!)} events</span>`);
   }
-  expect(html.match(/class="history-event" data-category=/gu)).toHaveLength(history.events.length);
+  expect(html.match(/class="history-event [^"]+" data-category=/gu)).toHaveLength(history.events.length);
   expect(html.match(/class="history-timeline [^"]+" role="list"/gu)).toHaveLength(counts.size);
   expect(html).toContain(`class="history-layout ${stylex.props(styles.layout).className}"`);
   expect(html).toContain(`class="history-years ${stylex.props(styles.years).className}"`);

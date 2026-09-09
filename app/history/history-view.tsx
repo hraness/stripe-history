@@ -12,6 +12,7 @@ import Link from "next/link";
 import * as stylex from "@stylexjs/stylex";
 
 import { HistoryEventArticle } from "./history-event-article";
+import { historyEventStyles as eventStyles } from "./history-event.stylex";
 
 import { HistoryCategoryIcon } from "./category-icon";
 import {
@@ -248,10 +249,11 @@ function HistoryMeasuresSidebar({
 
 function HistoryEventItem({
   event,
-}: Readonly<{ event: CategorizedHistoryEvent }>) {
+  last,
+}: Readonly<{ event: CategorizedHistoryEvent; last: boolean }>) {
   return (
     <li
-      className="history-event"
+      className={`history-event ${stylex.props(eventStyles.frame, last && eventStyles.lastFrame).className}`}
       data-category={event.categoryId}
       style={historyFilterVisualStyle(event.categoryId)}
     >
@@ -437,8 +439,8 @@ export function HistoryView({
                   <span {...stylex.props(styles.yearCount)}>{events.length} events</span>
                 </div>
                 <ol className={`history-timeline ${stylex.props(styles.timeline).className}`} role="list">
-                  {events.map((event) => (
-                    <HistoryEventItem event={event} key={event.id} />
+                  {events.map((event, eventIndex) => (
+                    <HistoryEventItem event={event} last={eventIndex === events.length - 1} key={event.id} />
                   ))}
                 </ol>
               </section>
