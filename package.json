@@ -48,7 +48,7 @@
     "lint": "eslint .",
     "search:indexnow": "bun run scripts/submit-indexnow.ts",
     "start": "next start",
-    "test": "bun test --preload ./scripts/register-stylex-test-transform.ts ./app ./lib ./scripts",
+    "test": "bun test --preload ./scripts/register-stylex-test-transform.ts ./app ./lib ./scripts ./proxy.test.ts",
     "typecheck": "tsc --noEmit",
     "kb:refresh": "bunx --bun github:hraness/kb#v0.15.2 refresh --root kb",
     "kb:check:lane": "bunx --bun github:hraness/kb#v0.15.2 check --root kb --no-catalog",

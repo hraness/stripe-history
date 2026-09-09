@@ -9,6 +9,7 @@ import { setTimeout as wait } from "node:timers/promises";
 import { chromium, type Browser, type BrowserContext, type BrowserServer } from "playwright-core";
 import { capturePreviewSnapshot, previewSourceInventory } from "./compiled-preview-snapshot.ts";
 import { loopbackListenerPresence, previewErrorEvidence, processPresence, terminalPreviewState } from "./compiled-preview-evidence.ts";
+import { previewAcceptTypes, verifyPreviewRepresentation } from "./compiled-preview-representations.ts";
 
 // Real product edit -> complete build -> owned restart -> manual refresh.
 // Run the entire canary through both host/browser and repository schedulers.
@@ -24,6 +25,7 @@ const events: Event[] = [];
 const errors: ReturnType<typeof previewErrorEvidence>[] = [];
 const knownPids = new Set<number>();
 const knownPorts = new Set<number>();
+const representations: { generation: unknown; responses: ReturnType<typeof verifyPreviewRepresentation>[] }[] = [];
 let stage = "preflight";
 let workPassed = false;
 let cleanupErrorsStart = 0;
@@ -158,6 +160,17 @@ try {
   browser = await chromium.connect(browserServer.wsEndpoint());
   browserVersion = browser.version();
   context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  async function proveRepresentations(generation: unknown): Promise<void> {
+    assert.ok(context);
+    const responses: ReturnType<typeof verifyPreviewRepresentation>[] = [];
+    for (const accept of previewAcceptTypes) {
+      const response = await context.request.get(`${origin}/stripe`, { headers: { Accept: accept }, maxRedirects: 0, timeout: 30_000 });
+      try {
+        responses.push(verifyPreviewRepresentation(accept, { status: response.status(), headers: response.headers(), body: await response.text() }));
+      } finally { await response.dispose(); }
+    }
+    representations.push({ generation, responses });
+  }
   // Preserve the real Substack iframe markup without contacting third parties.
   await context.route("**/*", (route) => new URL(route.request().url()).origin === origin ? route.continue() : route.abort());
   const page = await context.newPage();
@@ -165,6 +178,7 @@ try {
   page.on("pageerror", (error) => pageErrors.push(error.message));
   stage = "baseline-browser-assertions";
   first = await event("stripe-preview-ready", 0);
+  await proveRepresentations(first.generation);
   await page.goto(`${origin}/stripe`, { waitUntil: "networkidle" });
   assert.equal(await page.locator("h1#history-heading").textContent(), "Stripe’s history, dated and sourced");
   assert.ok(await page.locator(".history-event").count() >= 200, "Real async corpus must render");
@@ -196,6 +210,7 @@ try {
   assert.equal(failure.retained, events.find((value) => value.kind === "stripe-preview-candidate-complete")?.root);
   assert.match(tail, /__previewBroken|Expression expected|Unexpected token/u, "Expected failure must reach the deliberately invalid recipe");
   assert.equal((await (await context.request.get(identityUrl)).json() as { generation: string }).generation, first.generation);
+  await proveRepresentations(first.generation);
   await page.reload({ waitUntil: "networkidle" });
   assert.equal(await resources.evaluate((node) => getComputedStyle(node).rowGap), "8px");
 
@@ -221,6 +236,7 @@ try {
   await page.reload({ waitUntil: "networkidle" });
   assert.equal(await resources.evaluate((node) => getComputedStyle(node).rowGap), "10px");
   assert.equal((await (await context.request.get(identityUrl)).json() as { generation: string }).generation, second.generation);
+  await proveRepresentations(second.generation);
   assert.deepEqual(pageErrors, []);
   assert.equal(await readFile(join(root, recipePath), "utf8"), authoredRecipe, "The native canary must not edit the user's source checkout");
 
@@ -286,9 +302,9 @@ await writeFile(join(evidenceRoot, "browser-proof.json"), JSON.stringify({
   custody: { state: custodyPassed ? "complete" : "failed", ...custody },
   source: { root: source?.root ?? null, sourceInventorySha256, sourceInventoryAfterSha256, authoredRecipeSha256, authoredRecipeAfterSha256, changedRecipeSha256, invalidRecipeSha256 },
   browser: { version: browserVersion, executablePath, beforeSha256: browserExecutableSha256, afterSha256: browserExecutableAfterSha256 },
-  generations, errors,
+  generations, representations, errors,
   failedGenerations: events.filter((value) => value.kind === "stripe-preview-build-failed").map((value) => ({ retained: value.retained, session: value.session, diagnosticSha256: hash(String(value.message)) })),
-  requiredAssertions: ["real async corpus", "canonical /stripe", "Substack markup", "header navigation/appearance", "semantic time", "desktop/mobile compiled orientation with inherited-variable counterexample", "failed generation preserves server/output", "changed rule union", "old server collected", "manual refresh observes real recipe edit", "authored checkout unchanged"],
+  requiredAssertions: ["real async corpus", "canonical /stripe", "native HTML/Markdown/406 and Vary Accept before/after rebuild", "Substack markup", "header navigation/appearance", "semantic time", "desktop/mobile compiled orientation with inherited-variable counterexample", "failed generation preserves server/output", "changed rule union", "old server collected", "manual refresh observes real recipe edit", "authored checkout unchanged"],
   noHmrOrStateContinuityClaim: true,
 }, null, 2) + "\n", { flag: "wx", mode: 0o600 });
 console.log(JSON.stringify({ kind: "stripe-preview-browser-terminal", state, evidenceRoot }));
