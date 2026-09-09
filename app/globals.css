@@ -252,7 +252,6 @@
 }
 
 .stripe-history-section h2:where(:not(.history-year-title)),
-.history-event h3,
 .history-volume h2 {
   font-size: inherit;
   font-weight: 600;
@@ -260,10 +259,7 @@
   margin: 0;
 }
 
-.stripe-history-section-heading,
-.history-event-kicker,
-.history-event-sources,
-.history-event-facts dt {
+.stripe-history-section-heading {
   color: var(--plain-muted);
 }
 
@@ -472,20 +468,6 @@
   padding-inline: 1rem;
 }
 
-.history-event-kicker,
-.history-event-sources,
-.history-event-facts {
-  font-size: var(--text-caption);
-}
-
-.history-event-kicker time {
-  color: var(--plain-foreground);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
 /* Shared category-role theme boundary. Hue remains an owned closed-category
  * renderer input; formulas resolve on the category-bearing element, not an
  * ancestor. Filter presentation itself is compiled in history-timeline. */
@@ -513,108 +495,6 @@
   align-self: center;
   display: block;
   flex: none;
-}
-
-.history-event {
-  border-inline-start: 3px solid var(--history-category-ink);
-  border-top: 1px solid var(--plain-line);
-  padding: 1rem 0 1rem 0.9rem;
-}
-
-.history-event:last-child {
-  border-bottom: 1px solid var(--plain-line);
-}
-
-.history-event article {
-  scroll-margin-top: calc(var(--history-filter-stack-offset) + 1rem);
-}
-
-.history-event-kicker,
-.history-event h3,
-.history-event article > p {
-  margin: 0;
-}
-
-.history-event-kicker {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 0.5rem;
-}
-
-.history-event h3 {
-  font-size: 1.05rem;
-  letter-spacing: -0.01em;
-  line-height: 1.35;
-  margin-top: 0.35rem;
-}
-
-.history-event-type {
-  align-items: center;
-  background: var(--history-category-soft);
-  border: 1px solid color-mix(in oklch, var(--history-category-ink) 30%, var(--plain-line));
-  border-radius: 999px;
-  color: var(--plain-foreground);
-  display: inline-flex;
-  font-weight: 500;
-  gap: 0.3rem;
-  min-height: 1.65rem;
-  padding: 0.08rem 0.55rem 0.08rem 0.45rem;
-  text-decoration: none;
-}
-
-.history-event-type .history-category-icon {
-  color: var(--history-category-ink);
-}
-
-.history-event-status,
-.history-event-confidence {
-  border: 1px solid var(--plain-line);
-  border-radius: 999px;
-  color: var(--plain-muted);
-  display: inline-flex;
-  min-height: 1.65rem;
-  padding: 0.08rem 0.55rem;
-  overflow-wrap: anywhere;
-}
-
-.history-event-confidence {
-  color: var(--plain-foreground);
-  font-weight: 500;
-}
-
-.history-event article > p:not(.history-event-kicker) {
-  margin-top: 0.5rem;
-}
-
-.history-event-facts {
-  display: grid;
-  gap: 0.2rem;
-  margin: 0.65rem 0 0;
-}
-
-.history-event-facts div {
-  display: grid;
-  gap: 0.75rem;
-  grid-template-columns: minmax(5.5rem, 0.3fr) minmax(0, 1fr);
-}
-
-.history-event-facts dt,
-.history-event-facts dd {
-  margin: 0;
-}
-
-.history-event-facts dd {
-  font-variant-numeric: tabular-nums;
-}
-
-.history-event-sources a {
-  display: inline-block;
-  min-height: 1.5rem;
-}
-
-.history-event-sources {
-  text-align: end;
 }
 
 .history-volume {
@@ -964,11 +844,6 @@
   margin: 0.25rem 0 0;
 }
 
-.history-valuation-observation-list .history-event-facts,
-.history-volume-disclosure-list .history-event-facts {
-  margin-top: 0.65rem;
-}
-
 .history-volume-disclosure-list article > p:not(.history-event-kicker) {
   margin-top: 0.5rem;
 }
@@ -1164,9 +1039,6 @@
     margin-top: 0;
   }
 
-  .history-event article {
-    scroll-margin-top: calc(var(--history-filter-stack-offset) + 1rem);
-  }
 }
 
 @media (max-width: 54rem) and (max-height: 32rem) {
@@ -1213,29 +1085,11 @@
     gap: 0;
   }
 
-  .history-event {
-    padding: 0.8rem 0 0.8rem 0.7rem;
-  }
-
-  .history-event h3 {
-    font-size: 1rem;
-    line-height: 1.4;
-  }
-
-  .history-event article > p:not(.history-event-kicker) {
-    line-height: 1.5;
-  }
-
-  .history-event-facts div {
-    display: block;
-  }
 }
 
 @media (pointer: coarse) {
   .stripe-history-evidence-actions a,
-  .history-event-type,
   .history-measure-controls button,
-  .history-event-sources a,
   .history-volume h2 a,
   .history-volume-list a,
   .history-volume-chart li > a,
@@ -1243,18 +1097,13 @@
     min-block-size: var(--plain-link-target-min, 48px);
   }
 
-  .history-event-type,
   .stripe-history-evidence-actions a,
-  .history-event-sources a,
   .history-volume h2 a,
   .history-volume-table-section a {
     align-items: center;
     display: inline-flex;
   }
 
-  .history-event-type {
-    padding-inline: 0.75rem;
-  }
 
   .history-valuation-badge,
   .history-valuation-basis-badge {
@@ -1284,7 +1133,6 @@
 
 @media (forced-colors: active) {
   .stripe-history-evidence dl > div,
-  .history-event-type,
   .history-measure-controls button,
   .history-volume figure {
     background: Canvas;
@@ -1298,7 +1146,4 @@
     color: HighlightText;
   }
 
-  .history-event {
-    border-inline-start-color: CanvasText;
-  }
 }

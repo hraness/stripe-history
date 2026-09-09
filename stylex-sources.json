@@ -26,6 +26,7 @@
     "app/history/category-visuals.ts",
     "app/history/history-closing.tsx",
     "app/history/history-event-article.tsx",
+    "app/history/history-event.stylex.ts",
     "app/history/history-measure-rail.tsx",
     "app/history/history-orientation.stylex.ts",
     "app/history/history-orientation.tsx",
