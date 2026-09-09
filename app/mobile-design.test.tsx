@@ -5,10 +5,11 @@ import { ThemeMenuButton } from "@/support/theme";
 
 import { HistoryMeasureRail } from "./history/history-measure-rail";
 
-const [globalsCss, plainSiteCss, supportCss] = await Promise.all([
+const [globalsCss, plainSiteCss, supportCss, layoutSource] = await Promise.all([
   Bun.file(new URL("./globals.css", import.meta.url)).text(),
   Bun.file(new URL("../support/plain-site.css", import.meta.url)).text(),
   Bun.file(new URL("../support/styles.css", import.meta.url)).text(),
+  Bun.file(new URL("./layout.tsx", import.meta.url)).text(),
 ]);
 
 test("blue plain-site links stay quiet until interaction", () => {
@@ -95,7 +96,8 @@ test("theme control uses the unmodified shared System-first icon menu", () => {
 });
 
 test("site chrome matches the compact sticky Hraness shell and preserves coarse hit targets", () => {
-  expect(globalsCss).toContain('@import "@hraness/site-footer/styles.css";');
+  expect(layoutSource).toContain('import "@hraness/site-footer/compiler-foundation.css";');
+  expect(globalsCss).not.toContain('@import "@hraness/site-footer/styles.css";');
   expect(globalsCss).toMatch(
     /\.stripe-history-main\s*\{[^}]*margin-block:\s*0;/u,
   );

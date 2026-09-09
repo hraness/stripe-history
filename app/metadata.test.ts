@@ -8,7 +8,7 @@ import {
   productionDeliveryProofToken,
 } from "@hraness/vercel-delivery";
 import { PHASE_PRODUCTION_SERVER, PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
-import configForPhase, { createNextConfig } from "../next.config";
+import configForPhase, { createNextConfig } from "../next-config";
 
 const nextConfig = configForPhase(PHASE_PRODUCTION_SERVER);
 

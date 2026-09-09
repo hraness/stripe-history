@@ -132,6 +132,8 @@ bun run build
 ```
 
 `bun run build` is the checked production adapter, not a direct `next build`.
+The native `next.config.mjs` entry loads the typed product policy through Node
+24 ESM so the adapter's import-only package export is not rewritten to CommonJS.
 `stylex-sources.json` declares the complete expected source census for each
 compiler target. The adapter rejects missing, unexpected, or changed graph
 inputs. Adding a route or client module requires reviewing that census as well

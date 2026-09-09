@@ -93,8 +93,8 @@ describe("hraness.com/stripe category history", () => {
     );
     expect(html).toContain('id="stripe-history-history-category-structured-data"');
     expect(html).not.toContain('class="stripe-history-selector"');
-    expect(html).toContain('class="hraness-marketing-header stripe-history-header"');
-    expect(html).toContain('href="/about">about</a>');
+    expect(html).toMatch(/class="hraness-marketing-header [^"]*\bstripe-history-header\b[^"]*"/u);
+    expect(html).toMatch(/href="\/stripe\/about"[^>]*>about<\/a>/u);
     expect(html).toContain('aria-label="Stripe History resources"');
     expect(html).toContain('data-slot="hraness-site-footer"');
     expect(html).not.toContain('class="stripe-history-breadcrumbs"');
