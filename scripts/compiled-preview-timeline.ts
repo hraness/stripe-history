@@ -73,6 +73,25 @@ export async function proveCompiledTimeline(page: Page) {
     assert.notEqual(paletteBackgrounds[0], paletteBackgrounds[1], "The real light and dark accent palettes must differ");
     await page.setViewportSize({ width: 390, height: 844 });
     await settle();
+    // CSSOM may omit the default proximity keyword. Compare against a native
+    // reference with the exact authored contract, not a list of accepted strings.
+    const snapReference = await page.evaluate(() => {
+      const probe = document.createElement("div");
+      document.body.append(probe);
+      try {
+        probe.style.scrollSnapType = "inline proximity";
+        const proximity = getComputedStyle(probe).scrollSnapType;
+        probe.style.scrollSnapType = "inline mandatory";
+        const mandatory = getComputedStyle(probe).scrollSnapType;
+        probe.style.scrollSnapType = "none";
+        const none = getComputedStyle(probe).scrollSnapType;
+        return { proximity, mandatory, none };
+      } finally { probe.remove(); }
+    });
+    assert.equal(snapReference.mandatory, "inline mandatory");
+    assert.equal(snapReference.none, "none");
+    assert.notEqual(snapReference.proximity, snapReference.mandatory);
+    assert.notEqual(snapReference.proximity, snapReference.none);
     const mobile = await page.evaluate(() => {
       const nav = document.querySelector<HTMLElement>('.history-filters')!;
       const list = getComputedStyle(nav.querySelector('ul')!);
@@ -86,10 +105,10 @@ export async function proveCompiledTimeline(page: Page) {
       };
     });
     assert.deepEqual(mobile, {
-      layout: "block", laterMargin: "32px", flexWrap: "nowrap", overflow: "auto", snap: "inline proximity",
+      layout: "block", laterMargin: "32px", flexWrap: "nowrap", overflow: "auto", snap: snapReference.proximity,
       scrollbar: "none", endPadding: "32px", cueContent: '""', cueWidth: "28px", cuePointerEvents: "none",
     });
-    observations.push(mobile);
+    observations.push({ ...mobile, snapReference });
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.emulateMedia({ forcedColors: "active" });
     await page.keyboard.press("Tab");
