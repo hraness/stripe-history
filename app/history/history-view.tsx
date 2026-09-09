@@ -9,6 +9,7 @@ import type {
 import type { TimelineCategoryId } from "@/lib/history-schema";
 import { historyCategoryPath } from "@/lib/history-urls";
 import Link from "next/link";
+import * as stylex from "@stylexjs/stylex";
 
 import { HistoryEventArticle } from "./history-event-article";
 
@@ -21,6 +22,7 @@ import { HistoryStickyOffsetSync } from "./history-sticky-offset-sync";
 import { HistoryMeasureRail } from "./history-measure-rail";
 import { HistoryClosing } from "./history-closing";
 import { HistoryOrientation } from "./history-orientation";
+import { historyTimelineStyles as styles } from "./history-timeline.stylex";
 import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
 import { publicSitePath } from "../site";
@@ -333,6 +335,7 @@ export function HistoryFilters({
       : `${label}: ${count} ${countNoun}`;
     return (
       <Link
+        className={`history-filter-link ${stylex.props(styles.filterLink, selected && styles.filterSelected).className}`}
         aria-current={selected ? "true" : undefined}
         aria-label={accessibleLabel}
         data-analytics-event="history filter selected"
@@ -342,19 +345,22 @@ export function HistoryFilters({
         href={deselectsToAll ? "/" : href}
         style={historyFilterVisualStyle(filterId)}
       >
-        <HistoryCategoryIcon filterId={filterId} />
+        <HistoryCategoryIcon
+          className={stylex.props(styles.filterIcon, selected && styles.selectedInk).className}
+          filterId={filterId}
+        />
         <span className="history-filter-label">{label}</span>
-        <span className="history-filter-count">{count}</span>
+        <span className={`history-filter-count ${stylex.props(styles.filterCount, selected && styles.selectedInk).className}`}>{count}</span>
       </Link>
     );
   };
 
   return (
     <>
-      <nav aria-label="Filter Stripe history" className="history-filters">
-        <ul role="list">
+      <nav aria-label="Filter Stripe history" className={`history-filters ${stylex.props(styles.filters).className}`}>
+        <ul {...stylex.props(styles.filterList)} role="list">
           {filterItems.map((item) => (
-            <li key={item.id}>
+            <li {...stylex.props(styles.filterItem)} key={item.id}>
               {filterLink(
                 item.id,
                 item.label,
@@ -409,28 +415,28 @@ export function HistoryView({
           {...(selectedCategoryId === undefined ? {} : { selectedCategoryId })}
         />
         {selectedCategory === undefined ? null : (
-          <p className="history-filter-description">{selectedCategory.description}</p>
+          <p className={`history-filter-description ${stylex.props(styles.description).className}`}>{selectedCategory.description}</p>
         )}
-        <div className="history-layout">
+        <div className={`history-layout ${stylex.props(styles.layout).className}`}>
           <HistoryMeasuresSidebar
             annualRevenues={history.annualRevenues}
             annualVolumes={history.annualVolumes}
             valuationHeadlines={history.valuationHeadlines}
           />
-          <div className="history-years">
-            {years.map(({ events, year }) => (
+          <div className={`history-years ${stylex.props(styles.years).className}`}>
+            {years.map(({ events, year }, index) => (
               <section
                 aria-labelledby={`history-year-${year}`}
-                className="history-year"
+                className={`history-year ${stylex.props(styles.year, index === 0 ? styles.firstYear : styles.subsequentYear).className}`}
                 key={year}
               >
-                <div className="history-year-heading">
-                  <h2 id={`history-year-${year}`}>
-                    <a href={`#history-year-${year}`}>{year}</a>
+                <div className={`history-year-heading ${stylex.props(styles.yearHeading).className}`}>
+                  <h2 className={`history-year-title ${stylex.props(styles.yearTitle).className}`} id={`history-year-${year}`}>
+                    <a className={`history-year-link ${stylex.props(styles.yearLink).className}`} href={`#history-year-${year}`}>{year}</a>
                   </h2>
-                  <span>{events.length} events</span>
+                  <span {...stylex.props(styles.yearCount)}>{events.length} events</span>
                 </div>
-                <ol className="history-timeline" role="list">
+                <ol className={`history-timeline ${stylex.props(styles.timeline).className}`} role="list">
                   {events.map((event) => (
                     <HistoryEventItem event={event} key={event.id} />
                   ))}

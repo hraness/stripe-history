@@ -1,9 +1,13 @@
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
+import { createStylexTransformCollector } from "@hraness/ui/stylex-build";
+import * as stylex from "@stylexjs/stylex";
+import { fileURLToPath } from "node:url";
 
 import { ThemeMenuButton } from "@/support/theme";
 
 import { HistoryMeasureRail } from "./history/history-measure-rail";
+import { historyTimelineStyles } from "./history/history-timeline.stylex";
 
 const [globalsCss, plainSiteCss, supportCss, layoutSource] = await Promise.all([
   Bun.file(new URL("./globals.css", import.meta.url)).text(),
@@ -12,12 +16,23 @@ const [globalsCss, plainSiteCss, supportCss, layoutSource] = await Promise.all([
   Bun.file(new URL("./layout.tsx", import.meta.url)).text(),
 ]);
 
+const recipePath = fileURLToPath(new URL("./history/history-timeline.stylex.ts", import.meta.url));
+const collector = createStylexTransformCollector(process.cwd());
+const { rules } = await collector.transform(await Bun.file(recipePath).text(), recipePath);
+type TimelineRecipe = (typeof historyTimelineStyles)[keyof typeof historyTimelineStyles];
+function compiledRules(...styles: readonly TimelineRecipe[]): string {
+  const className = stylex.props(styles).className;
+  if (className === undefined || className.length === 0) throw new Error("Expected compiled recipe classes");
+  const classes = new Set(className.split(" "));
+  return rules.filter(([name]) => classes.has(name)).map(([, rule]) => rule.ltr).join("\n");
+}
+
 test("blue plain-site links stay quiet until interaction", () => {
   expect(plainSiteCss).toMatch(
-    /:where\(\.plain-page a, \.plain-footer a\)\s*\{[^}]*color:\s*var\(--plain-link\);[^}]*text-decoration:\s*none;/su,
+    /:where\(\.plain-page a:not\(\.history-filter-link, \.history-year-link\), \.plain-footer a\)\s*\{[^}]*color:\s*var\(--plain-link\);[^}]*text-decoration:\s*none;/su,
   );
   expect(plainSiteCss).toMatch(
-    /\.plain-page a:is\(:hover, :focus-visible\)[\s\S]*?\{[^}]*text-decoration:\s*underline;/u,
+    /\.plain-page a:not\(\.history-filter-link, \.history-year-link\):is\(:hover, :focus-visible\)[\s\S]*?\{[^}]*text-decoration:\s*underline;/u,
   );
 });
 
@@ -60,12 +75,84 @@ test("mobile history uses a controlled full-width chart rail instead of clipped 
 });
 
 test("mobile filter overflow has a scroll affordance without a persistent scrollbar", () => {
-  expect(globalsCss).toMatch(
-    /@media \(max-width: 54rem\)[\s\S]*?\.history-filters::after\s*\{[^}]*background:\s*linear-gradient/gu,
-  );
-  expect(globalsCss).toMatch(
-    /@media \(max-width: 54rem\)[\s\S]*?\.history-filters ul\s*\{[^}]*overflow-x:\s*auto;[^}]*scroll-snap-type:\s*inline proximity;[^}]*scrollbar-width:\s*none;/u,
-  );
+  const nav = compiledRules(historyTimelineStyles.filters);
+  const list = compiledRules(historyTimelineStyles.filterList);
+  expect(nav).toMatch(/@media\s*\(max-width:\s*54rem\).*::after\{background-image:linear-gradient/u);
+  for (const declaration of ["overflow-x:auto", "scroll-snap-type:inline proximity", "scrollbar-width:none", "overscroll-behavior-inline:contain", "scroll-padding-inline-start:.25rem", "scroll-padding-inline-end:2rem"]) {
+    expect(list).toContain(declaration);
+  }
+  expect(list).toMatch(/@media\s*\(max-width:\s*54rem\).*::-webkit-scrollbar\{display:none/u);
+  expect(nav).toContain("pointer-events:none");
+  expect(nav).toContain("inset-inline-end:0");
+  expect(nav).toContain("position:absolute");
+  expect(compiledRules(historyTimelineStyles.filterItem)).toContain("scroll-snap-align:start");
+  expect(globalsCss).not.toContain(".history-filters::after");
+});
+
+test("compiled selected chips retain accent on hover and forced-color focus contrast", () => {
+  const selected = compiledRules(historyTimelineStyles.filterLink, historyTimelineStyles.filterSelected);
+  const unselected = compiledRules(historyTimelineStyles.filterLink);
+  expect(selected).toMatch(/:hover\{background-color:var\(--hraness-site-accent\)/u);
+  expect(selected).not.toContain("background-color:var(--plain-surface)");
+  expect(selected).not.toContain("border-color:var(--plain-line-strong)");
+  expect(selected).toMatch(/@media\s*\(forced-colors:\s*active\).*:hover\{background-color:Highlight/u);
+  expect(selected).toMatch(/@media\s*\(forced-colors:\s*active\).*:focus-visible\{outline-color:HighlightText/u);
+  expect(selected).toContain("outline-offset:-4px");
+  expect(selected).toContain("box-shadow:none");
+  expect(unselected).toContain("background-color:var(--plain-surface)");
+  expect(unselected).toContain("outline-color:Highlight");
+  expect(unselected).toContain("--history-category-ink:var(--plain-foreground)");
+  expect(compiledRules(historyTimelineStyles.filterIcon)).toContain("color:var(--history-category-ink)");
+  expect(compiledRules(historyTimelineStyles.filterIcon, historyTimelineStyles.selectedInk)).toContain("color:inherit");
+  expect(compiledRules(historyTimelineStyles.filterCount, historyTimelineStyles.selectedInk)).not.toContain("color:var(--plain-muted)");
+  expect(compiledRules(historyTimelineStyles.filterCount)).toContain("font-variant-numeric:tabular-nums");
+  // Keep theme role evaluation on each element with its own closed hue input.
+  expect(globalsCss).toContain('.history-filters a:not([data-filter-id="all"])');
+  expect(globalsCss).toContain('--history-category-ink: oklch(0.43 0.14 var(--history-category-hue))');
+  expect(globalsCss).toContain('--history-category-ink: oklch(0.8 0.11 var(--history-category-hue))');
+});
+
+test("compiled timeline retains sticky offsets, desktop ordering, responsive years and coarse links", () => {
+  const nav = compiledRules(historyTimelineStyles.filters);
+  expect(nav).toContain("position:sticky");
+  expect(nav).toContain("top:var(--history-header-offset)");
+  expect(nav).toContain("z-index:40");
+  expect(nav).toContain("backdrop-filter:blur(12px)");
+  expect(nav).toMatch(/@media\s*\(forced-colors:\s*active\).*backdrop-filter:none/u);
+  const layout = compiledRules(historyTimelineStyles.layout);
+  expect(layout).toContain("grid-template-columns:minmax(0,1fr) minmax(18rem,20rem)");
+  expect(layout).toMatch(/@media\s*\(max-width:\s*54rem\).*display:block/u);
+  expect(compiledRules(historyTimelineStyles.years)).toContain("grid-row:1");
+  // The released compiler resolves block-start to top for this horizontal layout.
+  expect(compiledRules(historyTimelineStyles.firstYear)).toContain("margin-top:0");
+  const later = compiledRules(historyTimelineStyles.subsequentYear);
+  expect(later).toContain("margin-top:2.75rem");
+  expect(later).toMatch(/@media\s*\(max-width:\s*34rem\).*margin-top:2rem/u);
+  expect(compiledRules(historyTimelineStyles.year)).toContain("scroll-margin-top:calc(var(--history-filter-stack-offset) + 1rem)");
+  const title = compiledRules(historyTimelineStyles.yearTitle);
+  expect(title).toContain("font-size:1.25rem");
+  expect(title).toContain("font-weight:500");
+  expect(title).toContain("line-height:inherit");
+  for (const style of [historyTimelineStyles.yearLink, historyTimelineStyles.filterLink]) {
+    expect(compiledRules(style)).toMatch(/@media\s*\(pointer:\s*coarse\).*min-height:var\(--plain-link-target-min,48px\)/u);
+  }
+  expect(compiledRules(historyTimelineStyles.yearLink)).toMatch(/@media\s*\(pointer:\s*coarse\).*display:inline-flex/u);
+  expect(compiledRules(historyTimelineStyles.yearLink)).toContain("outline:1px dotted currentColor");
+  const description = compiledRules(historyTimelineStyles.description);
+  expect(description).toMatch(/margin(?:-block|-inline)?[^:]*:0/u);
+  expect(description).toMatch(/@media\s*\(max-width:\s*34rem\).*font-size:.875rem/u);
+  expect(compiledRules(historyTimelineStyles.timeline)).toContain("list-style:none");
+});
+
+test("unlayered plain-site rules exclude only the new compiled presentation roles", () => {
+  expect(plainSiteCss).toContain('.plain-page section:where(:not(.history-year))');
+  expect(plainSiteCss).toContain('.plain-page h2:where(:not(.history-year-title))');
+  expect(plainSiteCss).toContain(':where(:not(.history-year-title, .history-filter-description))');
+  expect(plainSiteCss).toContain('.plain-site :where(.plain-page a:not(.history-filter-link, .history-year-link):focus-visible, .plain-footer a:focus-visible)');
+  expect(globalsCss).toContain('.stripe-history-section h2:where(:not(.history-year-title))');
+  expect(globalsCss).not.toContain('.history-year-heading h2');
+  expect(globalsCss).not.toContain('.history-filters a:hover');
+  expect(globalsCss).not.toContain('.history-year + .history-year');
 });
 
 test("evidence orientation reflows without hiding actions or shrinking touch targets", () => {

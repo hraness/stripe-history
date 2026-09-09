@@ -47,7 +47,7 @@ describe("canonical hraness.com/stripe history", () => {
     const html = renderToStaticMarkup(await Home());
     const eventCount = html.match(/class="history-event"/gu)?.length ?? 0;
     const categoryIconCount = html.match(
-      /class="stripe-history-icon history-category-icon"/gu,
+      /class="stripe-history-icon history-category-icon(?: [^"]+)?"/gu,
     )?.length ?? 0;
 
     expect(eventCount).toBe(history.events.length);
@@ -136,13 +136,15 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).not.toContain('name="audience"');
     expect(html).not.toContain("cf-turnstile");
     expect(html.indexOf('class="history-volume"')).toBeLessThan(
-      html.indexOf('class="history-years"'),
+      html.indexOf('class="history-years '),
     );
     expect(html.indexOf('class="hraness-marketing-hero history-orientation ')).toBeGreaterThan(-1);
     expect(html.indexOf('class="hraness-marketing-hero history-orientation ')).toBeLessThan(
-      html.indexOf('class="history-filters"'),
+      html.indexOf('class="history-filters '),
     );
-    expect(html.indexOf('class="history-years"')).toBeLessThan(
+    expect(html.indexOf('class="history-years ')).toBeGreaterThan(-1);
+    expect(html.indexOf('class="history-filters ')).toBeGreaterThan(-1);
+    expect(html.indexOf('class="history-years ')).toBeLessThan(
       html.indexOf('data-hraness-marketing="questions"'),
     );
     expect(html.indexOf('data-hraness-marketing="questions"')).toBeLessThan(

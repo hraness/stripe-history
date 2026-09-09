@@ -30,6 +30,7 @@
     "app/history/history-orientation.stylex.ts",
     "app/history/history-orientation.tsx",
     "app/history/history-sticky-offset-sync.tsx",
+    "app/history/history-timeline.stylex.ts",
     "app/history/history-view.tsx",
     "app/history/net-revenue/net-revenue-page-model.ts",
     "app/history/net-revenue/page.tsx",

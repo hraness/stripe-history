@@ -55,7 +55,9 @@ body.plain-site > main {
   box-sizing: border-box;
 }
 
-:where(.plain-page a, .plain-footer a) {
+/* Compiled history roles own their consumed link/reset declarations. Keep
+ * exclusions inside :where so every other plain-page selector is unchanged. */
+:where(.plain-page a:not(.history-filter-link, .history-year-link), .plain-footer a) {
   color: var(--plain-link);
   overflow-wrap: anywhere;
   text-decoration: none;
@@ -64,13 +66,13 @@ body.plain-site > main {
 }
 
 :where(
-  .plain-page a:is(:hover, :focus-visible),
+  .plain-page a:not(.history-filter-link, .history-year-link):is(:hover, :focus-visible),
   .plain-footer a:is(:hover, :focus-visible)
 ) {
   text-decoration: underline;
 }
 
-.plain-site :where(.plain-page a:focus-visible, .plain-footer a:focus-visible) {
+.plain-site :where(.plain-page a:not(.history-filter-link, .history-year-link):focus-visible, .plain-footer a:focus-visible) {
   border-radius: 1px;
   outline: 1px dotted currentColor;
   outline-offset: 3px;
@@ -88,7 +90,7 @@ body.plain-site > main {
   padding-inline: var(--plain-shell-gutter);
 }
 
-.plain-page :where(h1, h2, h3, p, ul, ol, pre, figure) {
+.plain-page :where(h1, h2, h3, p, ul, ol, pre, figure):where(:not(.history-year-title, .history-filter-description)) {
   font-size: inherit;
 }
 
@@ -101,11 +103,11 @@ body.plain-site > main {
   margin: 0 0 1rem;
 }
 
-.plain-page section {
+.plain-page section:where(:not(.history-year)) {
   margin-top: 2rem;
 }
 
-.plain-page h2 {
+.plain-page h2:where(:not(.history-year-title)) {
   font-weight: 700;
   margin: 0 0 0.3rem;
 }
