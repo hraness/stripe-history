@@ -100,6 +100,7 @@ async function main(): Promise<void> {
         await selection.replace(async () => {
           const captured = await capturePreviewSnapshot(root, session);
           assert.deepEqual(await Promise.all(fixedInputs.map(async (file) => sha(await readFile(join(captured.root, file))))), fixedHashes, "Captured runner/dependencies differ from this preview session");
+          diagnostic({ kind: "stripe-preview-attempt-captured", generation: captured.generation, root: captured.root });
           // Local-only identity is in this snapshot, never in authored public/.
           await writeFile(join(captured.root, "public", identityPath), JSON.stringify({ generation: captured.generation }), { flag: "wx" });
           if (isStopping()) throw new Error("Preview cancelled before build");

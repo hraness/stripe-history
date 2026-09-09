@@ -11,6 +11,7 @@ import { capturePreviewSnapshot, previewSourceInventory } from "./compiled-previ
 import { loopbackListenerPresence, previewErrorEvidence, processPresence, terminalPreviewState } from "./compiled-preview-evidence.ts";
 import { previewAcceptTypes, verifyPreviewRepresentation } from "./compiled-preview-representations.ts";
 import { proveCompiledTimeline } from "./compiled-preview-timeline.ts";
+import { malformedRecipeSuffix, previewCompleteIdentity, proveMalformedPreviewAttempt } from "./compiled-preview-failure.ts";
 
 // Real product edit -> complete build -> owned restart -> manual refresh.
 // Run the entire canary through both host/browser and repository schedulers.
@@ -28,6 +29,10 @@ const knownPids = new Set<number>();
 const knownPorts = new Set<number>();
 const representations: { generation: unknown; responses: ReturnType<typeof verifyPreviewRepresentation>[] }[] = [];
 const timelines: { generation: unknown; observations: unknown[] }[] = [];
+const expectedFailureProofs: (Awaited<ReturnType<typeof proveMalformedPreviewAttempt>> & {
+  retained: { pid: number; process: "present"; identityBefore: ReturnType<typeof previewCompleteIdentity>;
+    identityAfter: ReturnType<typeof previewCompleteIdentity>; representationsUnchanged: true };
+})[] = [];
 let stage = "preflight";
 let workPassed = false;
 let cleanupErrorsStart = 0;
@@ -83,7 +88,7 @@ try {
   const authoredRecipe = await readFile(join(root, recipePath), "utf8");
   authoredRecipeSha256 = hash(authoredRecipe);
   changedRecipeSha256 = hash(authoredRecipe.replace('rowGap: "0.5rem"', 'rowGap: "0.625rem"'));
-  invalidRecipeSha256 = hash(authoredRecipe + "\nexport const __previewBroken = ;\n");
+  invalidRecipeSha256 = hash(authoredRecipe + malformedRecipeSuffix);
   assert.equal(authoredRecipe.split('rowGap: "0.5rem"').length, 2, "Real recipe edit must be unambiguous");
   sourceInventorySha256 = hash(JSON.stringify(await previewSourceInventory(root)));
   source = await capturePreviewSnapshot(root, evidenceRoot);
@@ -205,15 +210,29 @@ try {
   assert.equal(identity.generation, first.generation);
 
   stage = "expected-red-rebuild";
+  const firstComplete = events.find((value) => value.kind === "stripe-preview-candidate-complete");
+  assert.ok(firstComplete && typeof firstComplete.root === "string" && typeof first.generation === "string" && typeof firstComplete.pid === "number");
+  const lastGoodIdentity = previewCompleteIdentity(firstComplete.root, first.generation);
   // Expected red: invalidate the actual recipe in the isolated product source.
-  await writeFile(join(source.root, recipePath), authoredRecipe + "\nexport const __previewBroken = ;\n");
+  await writeFile(join(source.root, recipePath), authoredRecipe + malformedRecipeSuffix);
   const beforeFailure = events.length;
   running.stdin.write("rebuild\n");
   const failure = await event("stripe-preview-build-failed", beforeFailure);
-  assert.equal(failure.retained, events.find((value) => value.kind === "stripe-preview-candidate-complete")?.root);
-  assert.match(tail, /__previewBroken|Expression expected|Unexpected token/u, "Expected failure must reach the deliberately invalid recipe");
+  assert.equal(failure.retained, firstComplete.root);
+  const captured = events.slice(beforeFailure).filter((value) => value.kind === "stripe-preview-attempt-captured");
+  assert.equal(captured.length, 1, "Exactly one fresh failed snapshot required");
+  const failedProof = await proveMalformedPreviewAttempt({ sourceRoot: source.root, session: failure.session,
+    failedRoot: captured[0]!.root, failedGeneration: captured[0]!.generation,
+    previousRoot: firstComplete.root, previousGeneration: first.generation, authoredRecipe });
+  const lastGoodIdentityAfter = previewCompleteIdentity(firstComplete.root, first.generation);
+  assert.deepEqual(lastGoodIdentityAfter, lastGoodIdentity);
+  assert.equal(processPresence(firstComplete.pid), "present");
+  assert.ok(!events.slice(beforeFailure).some((value) => value.kind === "stripe-preview-owner-collected" || value.kind === "stripe-preview-owner-started"));
   assert.equal((await (await context.request.get(identityUrl)).json() as { generation: string }).generation, first.generation);
   await proveRepresentations(first.generation);
+  assert.deepEqual(representations[1], representations[0], "Failed generation must leave the same public representations served");
+  expectedFailureProofs.push({ ...failedProof, retained: { pid: firstComplete.pid, process: "present",
+    identityBefore: lastGoodIdentity, identityAfter: lastGoodIdentityAfter, representationsUnchanged: true } });
   await page.reload({ waitUntil: "networkidle" });
   assert.equal(await resources.evaluate((node) => getComputedStyle(node).rowGap), "8px");
 
@@ -306,7 +325,7 @@ await writeFile(join(evidenceRoot, "browser-proof.json"), JSON.stringify({
   custody: { state: custodyPassed ? "complete" : "failed", ...custody },
   source: { root: source?.root ?? null, sourceInventorySha256, sourceInventoryAfterSha256, authoredRecipeSha256, authoredRecipeAfterSha256, changedRecipeSha256, invalidRecipeSha256 },
   browser: { version: browserVersion, executablePath, beforeSha256: browserExecutableSha256, afterSha256: browserExecutableAfterSha256 },
-  generations, representations, timelines, errors,
+  generations, representations, timelines, expectedFailureProofs, errors,
   failedGenerations: events.filter((value) => value.kind === "stripe-preview-build-failed").map((value) => ({ retained: value.retained, session: value.session, diagnosticSha256: hash(String(value.message)) })),
   requiredAssertions: ["real async corpus", "canonical /stripe", "native HTML/Markdown/406 and Vary Accept before/after rebuild", "Substack markup", "header navigation/appearance", "semantic time", "desktop/mobile compiled orientation with inherited-variable counterexample", "compiled timeline light/dark selected-hover and forced-focus, mobile scroll cue, year layout/counts before/after rebuild", "failed generation preserves server/output", "changed rule union", "old server collected", "manual refresh observes real recipe edit", "authored checkout unchanged"],
   noHmrOrStateContinuityClaim: true,
