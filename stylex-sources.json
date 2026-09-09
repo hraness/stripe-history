@@ -24,6 +24,7 @@
     "app/history/[category]/page.tsx",
     "app/history/category-icon.tsx",
     "app/history/category-visuals.ts",
+    "app/history/history-closing.stylex.ts",
     "app/history/history-closing.tsx",
     "app/history/history-event-article.tsx",
     "app/history/history-measure-rail.tsx",

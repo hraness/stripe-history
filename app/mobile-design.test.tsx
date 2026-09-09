@@ -29,10 +29,10 @@ function compiledRules(...styles: readonly TimelineRecipe[]): string {
 
 test("blue plain-site links stay quiet until interaction", () => {
   expect(plainSiteCss).toMatch(
-    /:where\(:is\(\.plain-page, \.stripe-history-page\) a:not\(\.history-filter-link, \.history-year-link\), \.plain-footer a\)\s*\{[^}]*color:\s*var\(--plain-link\);[^}]*text-decoration:\s*none;/su,
+    /:where\(:is\(\.plain-page, \.stripe-history-page\) a:not\(\.history-filter-link, \.history-year-link, \.hraness-marketing-action\), \.plain-footer a\)\s*\{[^}]*color:\s*var\(--plain-link\);[^}]*text-decoration:\s*none;/su,
   );
   expect(plainSiteCss).toMatch(
-    /:is\(\.plain-page, \.stripe-history-page\) a:not\(\.history-filter-link, \.history-year-link\):is\(:hover, :focus-visible\)[\s\S]*?\{[^}]*text-decoration:\s*underline;/u,
+    /:is\(\.plain-page, \.stripe-history-page\) a:not\(\.history-filter-link, \.history-year-link, \.hraness-marketing-action\):is\(:hover, :focus-visible\)[\s\S]*?\{[^}]*text-decoration:\s*underline;/u,
   );
 });
 
@@ -113,6 +113,7 @@ test("compiled selected chips retain accent on hover and forced-color focus cont
 });
 
 test("compiled timeline retains sticky offsets, desktop ordering, responsive years and coarse links", () => {
+  expect(compiledRules(historyTimelineStyles.section)).toContain("scroll-margin-top:calc(var(--history-header-offset) + .75rem)");
   const nav = compiledRules(historyTimelineStyles.filters);
   expect(nav).toContain("position:sticky");
   expect(nav).toContain("top:var(--history-header-offset)");
@@ -145,10 +146,10 @@ test("compiled timeline retains sticky offsets, desktop ordering, responsive yea
 });
 
 test("unlayered plain-site rules exclude only the new compiled presentation roles", () => {
-  expect(plainSiteCss).toContain(':is(.plain-page, .stripe-history-page) section:where(:not(.history-year))');
-  expect(plainSiteCss).toContain(':is(.plain-page, .stripe-history-page) h2:where(:not(.history-year-title))');
-  expect(plainSiteCss).toContain(':where(:not(.history-year-title, .history-filter-description))');
-  expect(plainSiteCss).toContain('.plain-site :where(:is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link):focus-visible, .plain-footer a:focus-visible)');
+  expect(plainSiteCss).toContain(':is(.plain-page, .stripe-history-page) section:where(:not(.history-year, .hraness-marketing-stats, .hraness-marketing-questions, .hraness-marketing-maker))');
+  expect(plainSiteCss).toContain(':is(.plain-page, .stripe-history-page) h2:where(:not(.history-year-title, .hraness-marketing-questions__heading, .hraness-marketing-maker__heading))');
+  expect(plainSiteCss).toContain(':where(:not(.history-year-title, .history-filter-description, .hraness-marketing-hero__heading');
+  expect(plainSiteCss).toContain('.plain-site :where(:is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link, .hraness-marketing-action):focus-visible, .plain-footer a:focus-visible)');
   expect(globalsCss).toContain('.stripe-history-section h2:where(:not(.history-year-title))');
   expect(globalsCss).not.toContain('.history-year-heading h2');
   expect(globalsCss).not.toContain('.history-filters a:hover');

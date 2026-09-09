@@ -8,6 +8,7 @@ const forced = "@media (forced-colors: active)";
 /** Finite presentation only. Sticky measurements and category hue inputs keep
  * their existing owners; the shared category-role theme boundary stays in CSS. */
 export const historyTimelineStyles = stylex.create({
+  section: { scrollMarginTop: "calc(var(--history-header-offset) + 0.75rem)" },
   filters: {
     backgroundAttachment: "scroll",
     backgroundClip: "border-box",
