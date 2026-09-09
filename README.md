@@ -139,6 +139,20 @@ compiler target. The adapter rejects missing, unexpected, or changed graph
 inputs. Adding a route or client module requires reviewing that census as well
 as passing the native build; an empty Edge list does not skip its receipt.
 
+The exact Next 16.2.12 dependency has a declared Bun patch at
+`patches/next@16.2.12.patch`. Its two app-page templates append the native RSC
+`Vary` fields instead of overwriting the product's existing `Vary: Accept`.
+This fixes production HTML negotiation, not just the development proxy. Bun
+applies the patch during frozen, lifecycle-disabled installation; keep its
+manifest and lock entry together. Preview snapshots retain the patch itself.
+The native loader reads the patched ESM template text and generates fresh
+webpack sources and maps, which must pass the complete adapter checks. The
+package's unused distributed template maps remain unchanged: they describe the
+upstream templates, not the patched text. No framework writer hash, version
+requirement, or generated source-map assertion is waived. Reassess and remove
+this exact-version patch only after a replacement framework passes the real
+HTML, Markdown, and unsupported-Accept response checks.
+
 The native preview canary runs the complete product in an isolated source copy:
 
 ```sh

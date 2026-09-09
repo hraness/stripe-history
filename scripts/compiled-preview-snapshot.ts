@@ -6,7 +6,7 @@ import type { Stats } from "node:fs";
 import { isAbsolute, join, relative } from "node:path";
 
 const sourceTrees = ["app", "assets", "lib", "public", "scripts", "support"];
-const sourceFiles = ["package.json", "bun.lock", "next.config.mjs", "next-config.ts", "proxy.ts", "stylex-config.ts", "stylex-sources.json", "tsconfig.json"];
+const sourceFiles = ["package.json", "bun.lock", "next.config.mjs", "next-config.ts", "proxy.ts", "stylex-config.ts", "stylex-sources.json", "tsconfig.json", "patches/next@16.2.12.patch"];
 type Source = Readonly<{ path: string; bytes: number; mode: number; sha256: string }>;
 const sha = (value: Uint8Array) => createHash("sha256").update(value).digest("hex");
 

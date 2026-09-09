@@ -73,6 +73,9 @@
     "yaml": "^2.9.0",
     "zod": "^4.4.3"
   },
+  "patchedDependencies": {
+    "next@16.2.12": "patches/next@16.2.12.patch"
+  },
   "devDependencies": {
     "@babel/core": "7.29.7",
     "@stylexjs/babel-plugin": "0.19.0",
