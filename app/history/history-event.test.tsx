@@ -78,6 +78,12 @@ test("category and confidence chips retain native focus and forced/coarse behavi
   expect(css(styles.typeIcon)).toContain("color:var(--history-category-ink)");
   expect(css(styles.status, styles.confidence)).toContain("color:var(--plain-foreground)");
   expect(css(styles.status, styles.confidence)).not.toContain("color:var(--plain-muted)");
+  const disclosure = css(styles.type, styles.disclosureType);
+  expect(disclosure).toContain("border-style:none");
+  expect(disclosure).toContain("border-width:medium");
+  expect(disclosure).toContain("border-color:currentColor");
+  expect(disclosure).not.toContain("border-style:solid");
+  expect(disclosure).not.toContain("border-width:1px");
 });
 
 test("every real timeline event retains its semantic payload and exact compiled roles", async () => {
@@ -123,6 +129,8 @@ test("each real year has exactly one final border and metrics never acquire time
     expect(metric).toContain(`<dd class="${classes(styles.factValue)}">`);
     expect(metric).toContain(`class="${classes(styles.sourceLink)}"`);
     expect(metric).toContain(`class="${classes(styles.date)}" dateTime=`);
+    if (page === ValuationPage) expect(metric).not.toContain('class="history-event-type ');
+    else expect(metric).toContain(`class="history-event-type ${classes(styles.type, styles.disclosureType)}"`);
   }
 });
 
@@ -140,4 +148,12 @@ test("only owned event rules leave legacy CSS; theme and metric owners remain", 
   expect(plain).toContain("a:not(.history-filter-link, .history-year-link, .history-event-type)");
   expect(plain).toContain(":where(h1, h2, h3):where(:not(.history-event-title))");
   expect(plain).toContain(".history-event-title, .history-event-kicker, .history-event-sources");
+});
+
+test("the explicit production census includes the real server-owned event recipe", async () => {
+  const census = await Bun.file(new URL("../../stylex-sources.json", import.meta.url)).json() as Record<string, unknown>;
+  expect(Array.isArray(census.nodeRsc)).toBe(true);
+  expect((census.nodeRsc as unknown[]).filter((path) => path === "app/history/history-event.stylex.ts")).toHaveLength(1);
+  expect(census.client).not.toContain("app/history/history-event.stylex.ts");
+  expect(census.edgeRsc).toEqual([]);
 });

@@ -98,6 +98,14 @@ export const historyEventStyles = stylex.create({
     },
   },
   typeIcon: { color: "var(--history-category-ink)" },
+  // Metric disclosures do not own category variables. Their old var-bearing
+  // border shorthand computed to initial none/medium/currentColor, including
+  // zero width under forced colors (which only replaced the border color).
+  disclosureType: {
+    borderColor: { default: "currentColor", [forced]: "CanvasText" },
+    borderStyle: "none",
+    borderWidth: "medium",
+  },
   status: {
     borderColor: "var(--plain-line)",
     borderStyle: "solid",

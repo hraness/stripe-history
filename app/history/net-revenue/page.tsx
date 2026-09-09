@@ -183,7 +183,7 @@ export default async function NetRevenuePage() {
                             {partialDateLabel(event.date)}
                           </time>
                           <Link
-                            className={`history-event-type ${stylex.props(eventStyles.type).className}`}
+                            className={`history-event-type ${stylex.props(eventStyles.type, eventStyles.disclosureType).className}`}
                             data-analytics-event="history filter selected"
                             data-analytics-id={event.categoryId}
                             data-analytics-kind="history-category"
