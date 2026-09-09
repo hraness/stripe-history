@@ -55,9 +55,10 @@ body.plain-site > main {
   box-sizing: border-box;
 }
 
-/* Compiled history roles own their consumed link/reset declarations. Keep
- * exclusions inside :where so every other plain-page selector is unchanged. */
-:where(.plain-page a:not(.history-filter-link, .history-year-link), .plain-footer a) {
+/* The compiled timeline opts into the product grammar, not the shared
+ * foundation's unlayered .plain-page grammar. :is retains the class specificity
+ * on both roots; :where exclusions let the finite recipes own their roles. */
+:where(:is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link), .plain-footer a) {
   color: var(--plain-link);
   overflow-wrap: anywhere;
   text-decoration: none;
@@ -66,16 +67,21 @@ body.plain-site > main {
 }
 
 :where(
-  .plain-page a:not(.history-filter-link, .history-year-link):is(:hover, :focus-visible),
+  :is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link):is(:hover, :focus-visible),
   .plain-footer a:is(:hover, :focus-visible)
 ) {
   text-decoration: underline;
 }
 
-.plain-site :where(.plain-page a:not(.history-filter-link, .history-year-link):focus-visible, .plain-footer a:focus-visible) {
+.plain-site :where(:is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link):focus-visible, .plain-footer a:focus-visible) {
   border-radius: 1px;
   outline: 1px dotted currentColor;
   outline-offset: 3px;
+}
+
+/* Preserve the shared grammar's pointer-focus rule after opt-in separation. */
+.plain-site :where(.stripe-history-page a:focus:not(:focus-visible)) {
+  outline: none;
 }
 
 .plain-site ::selection {
@@ -83,40 +89,46 @@ body.plain-site > main {
   color: var(--plain-foreground);
 }
 
-.plain-page {
+:is(.plain-page, .stripe-history-page) {
   inline-size: 100%;
   margin: clamp(3.5rem, 12vh, 7rem) auto;
   max-width: var(--plain-shell-measure);
   padding-inline: var(--plain-shell-gutter);
 }
 
-.plain-page :where(h1, h2, h3, p, ul, ol, pre, figure):where(:not(.history-year-title, .history-filter-description)) {
+:is(.plain-page, .stripe-history-page) :where(h1, h2, h3, p, ul, ol, pre, figure):where(:not(.history-year-title, .history-filter-description)) {
   font-size: inherit;
 }
 
-.plain-page :where(h1, h2, h3) {
+:is(.plain-page, .stripe-history-page) :where(h1, h2, h3) {
   line-height: inherit;
 }
 
-.plain-page h1 {
+:is(.plain-page, .stripe-history-page) h1 {
   font-weight: 700;
   margin: 0 0 1rem;
 }
 
-.plain-page section:where(:not(.history-year)) {
+/* These two declarations were supplied only by the shared plain-page grammar. */
+.stripe-history-page > p {
+  color: var(--plain-muted);
+  margin: 0;
+}
+
+:is(.plain-page, .stripe-history-page) section:where(:not(.history-year)) {
   margin-top: 2rem;
 }
 
-.plain-page h2:where(:not(.history-year-title)) {
+:is(.plain-page, .stripe-history-page) h2:where(:not(.history-year-title)) {
   font-weight: 700;
   margin: 0 0 0.3rem;
 }
 
-.plain-page section > p {
+:is(.plain-page, .stripe-history-page) section > p {
   margin: 0;
 }
 
-.plain-page section > p + p {
+:is(.plain-page, .stripe-history-page) section > p + p {
   margin-top: 1rem;
 }
 
@@ -178,7 +190,7 @@ body.plain-site > main {
     --plain-shell-gutter: 1rem;
   }
 
-  .plain-page {
+  :is(.plain-page, .stripe-history-page) {
     margin-block: 2.5rem;
   }
 }

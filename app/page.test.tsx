@@ -52,7 +52,7 @@ describe("canonical hraness.com/stripe history", () => {
 
     expect(eventCount).toBe(history.events.length);
     expect(eventCount).toBeGreaterThanOrEqual(200);
-    expect(html).toContain('class="plain-page stripe-history-main stripe-history-history-main"');
+    expect(html).toContain('class="stripe-history-page stripe-history-main stripe-history-history-main"');
     expect(html).toMatch(/<header class="hraness-marketing-header [^"]*\bstripe-history-header\b[^"]*" data-hraness-marketing="header">/u);
     expect(html).toMatch(/class="hraness-marketing-header__brand [^"]+" href="https:\/\/hraness\.com" aria-label="hraness"/u);
     expect(html).toMatch(/aria-label="primary navigation" class="hraness-marketing-header__nav [^"]+"/u);

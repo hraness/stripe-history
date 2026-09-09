@@ -69,7 +69,7 @@ export default async function NetRevenuePage() {
         id="stripe-history-net-revenue-structured-data"
       />
       <main
-        className="plain-page stripe-history-main stripe-history-history-main"
+        className="stripe-history-page stripe-history-main stripe-history-history-main"
         id="main-content"
       >
         <SiteHeader />

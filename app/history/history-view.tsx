@@ -399,7 +399,7 @@ export function HistoryView({
 
   return (
     <main
-      className="plain-page stripe-history-main stripe-history-history-main"
+      className="stripe-history-page stripe-history-main stripe-history-history-main"
       id="main-content"
     >
       <SiteHeader />

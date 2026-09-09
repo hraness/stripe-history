@@ -174,6 +174,10 @@ the repository resource scheduler; the preview/browser flow has one owner.
 
 This is a compiler-adoption canary. The footer resources and orientation slots
 use product-owned StyleX, and shared packages participate in one compiled union.
+Timeline and metric pages use the product-owned `stripe-history-page` grammar.
+They do not also opt into the design kit's unlayered `plain-page` rules, which
+would override compiled year typography and spacing. The shared foundation and
+body palette remain unchanged; ordinary pages retain their existing grammar.
 The remaining timeline presentation in `app/globals.css` and `support/` is still
 an explicit migration task. Passing this canary alone does not mean the whole
 product or portfolio is migrated or deployment-verified.

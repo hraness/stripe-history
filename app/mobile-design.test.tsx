@@ -29,10 +29,10 @@ function compiledRules(...styles: readonly TimelineRecipe[]): string {
 
 test("blue plain-site links stay quiet until interaction", () => {
   expect(plainSiteCss).toMatch(
-    /:where\(\.plain-page a:not\(\.history-filter-link, \.history-year-link\), \.plain-footer a\)\s*\{[^}]*color:\s*var\(--plain-link\);[^}]*text-decoration:\s*none;/su,
+    /:where\(:is\(\.plain-page, \.stripe-history-page\) a:not\(\.history-filter-link, \.history-year-link\), \.plain-footer a\)\s*\{[^}]*color:\s*var\(--plain-link\);[^}]*text-decoration:\s*none;/su,
   );
   expect(plainSiteCss).toMatch(
-    /\.plain-page a:not\(\.history-filter-link, \.history-year-link\):is\(:hover, :focus-visible\)[\s\S]*?\{[^}]*text-decoration:\s*underline;/u,
+    /:is\(\.plain-page, \.stripe-history-page\) a:not\(\.history-filter-link, \.history-year-link\):is\(:hover, :focus-visible\)[\s\S]*?\{[^}]*text-decoration:\s*underline;/u,
   );
 });
 
@@ -145,14 +145,29 @@ test("compiled timeline retains sticky offsets, desktop ordering, responsive yea
 });
 
 test("unlayered plain-site rules exclude only the new compiled presentation roles", () => {
-  expect(plainSiteCss).toContain('.plain-page section:where(:not(.history-year))');
-  expect(plainSiteCss).toContain('.plain-page h2:where(:not(.history-year-title))');
+  expect(plainSiteCss).toContain(':is(.plain-page, .stripe-history-page) section:where(:not(.history-year))');
+  expect(plainSiteCss).toContain(':is(.plain-page, .stripe-history-page) h2:where(:not(.history-year-title))');
   expect(plainSiteCss).toContain(':where(:not(.history-year-title, .history-filter-description))');
-  expect(plainSiteCss).toContain('.plain-site :where(.plain-page a:not(.history-filter-link, .history-year-link):focus-visible, .plain-footer a:focus-visible)');
+  expect(plainSiteCss).toContain('.plain-site :where(:is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link):focus-visible, .plain-footer a:focus-visible)');
   expect(globalsCss).toContain('.stripe-history-section h2:where(:not(.history-year-title))');
   expect(globalsCss).not.toContain('.history-year-heading h2');
   expect(globalsCss).not.toContain('.history-filters a:hover');
   expect(globalsCss).not.toContain('.history-year + .history-year');
+});
+
+test("all compiled timeline/filter producers avoid the shared unlayered page opt-in", async () => {
+  for (const path of ["history-view.tsx", "payment-volume/page.tsx", "net-revenue/page.tsx", "valuation/page.tsx"]) {
+    const source = await Bun.file(new URL(`./history/${path}`, import.meta.url)).text();
+    expect(source).toContain('className="stripe-history-page stripe-history-main stripe-history-history-main"');
+    expect(source).not.toMatch(/className="[^"]*\bplain-page\b/u);
+  }
+  // The real immutable foundation still contains the old rule. Local exclusions
+  // alone cannot cancel it while the shared opt-in class remains on an ancestor.
+  const shared = await Bun.file(new URL("../node_modules/@hraness/design-kit/src/plain-site.css", import.meta.url)).text();
+  expect(shared).toMatch(/\.plain-page section\s*\{\s*margin-top:\s*2rem;/u);
+  expect(shared).not.toContain(".stripe-history-page");
+  expect(plainSiteCss).toMatch(/\.stripe-history-page > p\s*\{\s*color: var\(--plain-muted\);\s*margin: 0;/u);
+  expect(plainSiteCss).toMatch(/\.plain-site :where\(\.stripe-history-page a:focus:not\(:focus-visible\)\)\s*\{\s*outline: none;/u);
 });
 
 test("evidence orientation reflows without hiding actions or shrinking touch targets", () => {
