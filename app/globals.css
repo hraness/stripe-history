@@ -70,6 +70,12 @@
   max-width: 64rem;
 }
 
+/* Native focus scrolls the control, not its article's hash target. Keep all
+ * content controls below the measured sticky stack; its own controls stay put. */
+.stripe-history-history-main :where(a, button, summary, input, select, textarea, [tabindex]):not(:where(.stripe-history-header *, .history-filters *)) {
+  scroll-margin-top: calc(var(--history-filter-stack-offset) + 1rem);
+}
+
 .stripe-history-history-main > .stripe-history-section {
   margin-top: 0.5rem;
 }

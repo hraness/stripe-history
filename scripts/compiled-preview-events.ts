@@ -187,6 +187,34 @@ export async function proveCompiledEvents(page: Page) {
     for (const dimension of [focus.visibility.width, focus.visibility.height, focus.visibility.visibleWidth, focus.visibility.visibleHeight]) assert.ok(dimension > 0);
     assert.equal(focus.visibility.hit, true, "The natively focused chip must be visible and hit-testable");
     observations.push({ focus, nativeTabPresses: tabPresses });
+    // The compact introduction can leave the first links inside the viewport
+    // but behind the wrapped sticky filters. Check real forward/backward Tab,
+    // not scripted focus or a test-side scroll that hides the product defect.
+    const sourceLink = page.locator(".history-event-sources a").first();
+    const yearLink = page.locator(".history-year-link").first();
+    for (const [target, key, role] of [[sourceLink, "Tab", "source"], [yearLink, "Shift+Tab", "year"], [chip, "Tab", "category"]] as const) {
+      let presses = 0;
+      const deadline = Date.now() + 10000;
+      while (!(await target.evaluate(node => node === document.activeElement)) && presses < 64) {
+        assert.ok(Date.now() < deadline, `${role} native keyboard traversal exceeded its bound`);
+        await page.keyboard.press(key);
+        presses++;
+      }
+      assert.equal(await target.evaluate(node => node === document.activeElement), true, `${role} reachable with ${key}`);
+      await settle();
+      const visibility = await target.evaluate(node => {
+        const rect = node.getBoundingClientRect();
+        const x = (Math.max(0, rect.left) + Math.min(innerWidth, rect.right)) / 2;
+        const y = (Math.max(0, rect.top) + Math.min(innerHeight, rect.bottom)) / 2;
+        const hit = document.elementFromPoint(x, y);
+        return { focusVisible: node.matches(":focus-visible"), top: rect.top, bottom: rect.bottom,
+          hit: hit !== null && node.contains(hit), clearance: getComputedStyle(node).scrollMarginTop };
+      });
+      assert.equal(visibility.focusVisible, true);
+      assert.equal(visibility.hit, true, `${role} must not be covered after native ${key}`);
+      assert.ok(parseFloat(visibility.clearance) > 0);
+      observations.push({ nativeFocus: role, direction: key, presses, visibility });
+    }
     await page.emulateMedia({ forcedColors: "active" });
     await settle();
     const forced = await chip.evaluate((node) => {

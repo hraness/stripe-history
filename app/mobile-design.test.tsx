@@ -89,6 +89,12 @@ test("mobile filter overflow has a scroll affordance without a persistent scroll
   expect(globalsCss).not.toContain(".history-filters::after");
 });
 
+test("history content focus targets clear the measured sticky stack without moving its own controls", () => {
+  expect(globalsCss).toMatch(
+    /\.stripe-history-history-main :where\(a, button, summary, input, select, textarea, \[tabindex\]\):not\(:where\(\.stripe-history-header \*, \.history-filters \*\)\)\s*\{\s*scroll-margin-top:\s*calc\(var\(--history-filter-stack-offset\) \+ 1rem\);\s*\}/u,
+  );
+});
+
 test("compiled selected chips retain accent on hover and forced-color focus contrast", () => {
   const selected = compiledRules(historyTimelineStyles.filterLink, historyTimelineStyles.filterSelected);
   const unselected = compiledRules(historyTimelineStyles.filterLink);
