@@ -4,7 +4,9 @@ import * as stylex from "@stylexjs/stylex";
 // required eyebrow labels or a second unlayered stylesheet.
 const section = {
   paddingBlock: "var(--hraness-marketing-section-space)",
-  borderBlockStart: "var(--hraness-marketing-rule)",
+  borderBlockStartColor: "var(--hraness-marketing-line)",
+  borderBlockStartStyle: "solid",
+  borderBlockStartWidth: "1px",
   scrollMarginBlockStart: "4rem",
   display: "grid",
   gap: "clamp(1.5rem, 4vw, 3rem)",
@@ -23,7 +25,11 @@ export const closingStyles = stylex.create({
   header: { display: "grid", maxInlineSize: "var(--hraness-marketing-copy-measure)", gap: "0.75rem" },
   heading: { margin: 0, fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 500, lineHeight: 1.15 },
   list: { display: "grid" },
-  question: { borderBlockStart: "var(--hraness-marketing-rule)" },
+  question: {
+    borderBlockStartColor: "var(--hraness-marketing-line)",
+    borderBlockStartStyle: "solid",
+    borderBlockStartWidth: "1px",
+  },
   summary: {
     minBlockSize: "3.25rem",
     paddingBlock: "1rem",

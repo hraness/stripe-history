@@ -6,7 +6,7 @@ import { createServer } from "node:net";
 import { join } from "node:path";
 import { promisify } from "node:util";
 import { setTimeout as wait } from "node:timers/promises";
-import { chromium, type Browser, type BrowserContext, type BrowserServer } from "playwright-core";
+import { chromium, type Browser, type BrowserContext, type BrowserServer, type Page } from "playwright-core";
 import { capturePreviewSnapshot, previewSourceInventory } from "./compiled-preview-snapshot.ts";
 import { loopbackListenerPresence, previewErrorEvidence, processPresence, terminalPreviewState } from "./compiled-preview-evidence.ts";
 import { previewAcceptTypes, verifyPreviewRepresentation } from "./compiled-preview-representations.ts";
@@ -31,6 +31,7 @@ const knownPorts = new Set<number>();
 const representations: { generation: unknown; responses: ReturnType<typeof verifyPreviewRepresentation>[] }[] = [];
 const timelines: { generation: unknown; observations: unknown[] }[] = [];
 const eventPresentation: { generation: unknown; proof: Awaited<ReturnType<typeof proveCompiledEvents>> }[] = [];
+const closingPresentation: { generation: unknown; observations: Awaited<ReturnType<typeof proveClosingBorders>> }[] = [];
 const expectedFailureProofs: (Awaited<ReturnType<typeof proveMalformedPreviewAttempt>> & {
   retained: { pid: number; process: "present"; identityBefore: ReturnType<typeof previewCompleteIdentity>;
     identityAfter: ReturnType<typeof previewCompleteIdentity>; representationsUnchanged: true };
@@ -82,6 +83,52 @@ async function cleanupAttempt(label: string, operation: () => Promise<unknown>, 
   try { await Promise.race([operation(), wait(deadlineMs, undefined, { ref: false }).then(() => { throw new Error("Bounded cleanup did not settle"); })]); }
   catch (error) { errors.push(previewErrorEvidence(label, error)); }
 }
+
+async function proveClosingBorders(page: Page) {
+  const originalTheme = await page.locator("html").getAttribute("data-theme");
+  const originalViewport = page.viewportSize();
+  const observations = [];
+  try {
+    for (const theme of ["light", "dark"] as const) {
+      await page.locator("html").evaluate((node, value) => node.setAttribute("data-theme", value), theme);
+      for (const width of [390, 1280]) {
+        await page.setViewportSize({ width, height: 900 });
+        const borders = await page.evaluate(() => {
+          return [...document.querySelectorAll<HTMLElement>(".stripe-history-footer-resources, .stripe-history-questions, .stripe-history-maker, .hraness-marketing-question")].map((node) => {
+            const reference = document.createElement("span");
+            reference.style.borderTop = node.matches(".stripe-history-footer-resources")
+              ? "1px solid var(--plain-line)"
+              : "var(--hraness-marketing-rule)";
+            node.append(reference);
+            try {
+              const css = getComputedStyle(node);
+              const expected = getComputedStyle(reference);
+              return {
+                width: css.borderTopWidth, style: css.borderTopStyle, color: css.borderTopColor,
+                expectedWidth: expected.borderTopWidth, expectedStyle: expected.borderTopStyle,
+                expectedColor: expected.borderTopColor,
+              };
+            } finally { reference.remove(); }
+          });
+        });
+        assert.equal(borders.length, 6, "Observe resources, both closing sections and all three questions");
+        for (const border of borders) {
+          assert.equal(border.expectedWidth, "1px");
+          assert.equal(border.expectedStyle, "solid");
+          assert.equal(border.width, border.expectedWidth);
+          assert.equal(border.style, border.expectedStyle);
+          assert.equal(border.color, border.expectedColor);
+        }
+        observations.push({ theme, width, borders });
+      }
+    }
+    return observations;
+  } finally {
+    await page.locator("html").evaluate((node, value) => value === null ? node.removeAttribute("data-theme") : node.setAttribute("data-theme", value), originalTheme);
+    if (originalViewport) await page.setViewportSize(originalViewport);
+  }
+}
+
 try {
   executablePath = process.env.CHROMIUM_EXECUTABLE_PATH;
   assert.ok(executablePath, "Set CHROMIUM_EXECUTABLE_PATH to the reviewed browser executable");
@@ -217,6 +264,7 @@ try {
   await page.setViewportSize({ width: 1280, height: 900 });
   timelines.push({ generation: first.generation, observations: await proveCompiledTimeline(page) });
   eventPresentation.push({ generation: first.generation, proof: await proveCompiledEvents(page) });
+  closingPresentation.push({ generation: first.generation, observations: await proveClosingBorders(page) });
   const identityUrl = `${origin}/stripe/__stripe_stylex_preview_generation.json`;
   const identity = await (await context.request.get(identityUrl)).json() as { generation: string };
   assert.equal(identity.generation, first.generation);
@@ -273,6 +321,7 @@ try {
   await proveRepresentations(second.generation);
   timelines.push({ generation: second.generation, observations: await proveCompiledTimeline(page) });
   eventPresentation.push({ generation: second.generation, proof: await proveCompiledEvents(page) });
+  closingPresentation.push({ generation: second.generation, observations: await proveClosingBorders(page) });
   assert.deepEqual(pageErrors, []);
   assert.equal(await readFile(join(root, recipePath), "utf8"), authoredRecipe, "The native canary must not edit the user's source checkout");
 
@@ -338,7 +387,7 @@ await writeFile(join(evidenceRoot, "browser-proof.json"), JSON.stringify({
   custody: { state: custodyPassed ? "complete" : "failed", ...custody },
   source: { root: source?.root ?? null, sourceInventorySha256, sourceInventoryAfterSha256, authoredRecipeSha256, authoredRecipeAfterSha256, changedRecipeSha256, invalidRecipeSha256 },
   browser: { version: browserVersion, executablePath, beforeSha256: browserExecutableSha256, afterSha256: browserExecutableAfterSha256 },
-  generations, representations, timelines, eventPresentation, expectedFailureProofs, errors,
+  generations, representations, timelines, eventPresentation, closingPresentation, expectedFailureProofs, errors,
   failedGenerations: events.filter((value) => value.kind === "stripe-preview-build-failed").map((value) => ({ retained: value.retained, session: value.session, diagnosticSha256: hash(String(value.message)) })),
   requiredAssertions: ["real async corpus", "canonical /stripe", "native HTML/Markdown/406 and Vary Accept before/after rebuild", "Substack markup", "header navigation/appearance", "semantic time", "desktop/mobile compiled orientation with inherited-variable counterexample", "compiled timeline light/dark selected-hover and forced-focus, mobile scroll cue, year layout/counts before/after rebuild", "all four real event/fact/source producers across light/dark, narrow and native coarse pointer before/after rebuild", "native Tab reach and focus ring on the real event chip", "category-bound timeline border and unbound metric ordinary/forced border match authored native references", "attached timeline borders and normal filter minimum height", "failed generation preserves server/output", "changed rule union", "old server collected", "manual refresh observes real recipe edit", "authored checkout unchanged"],
   noHmrOrStateContinuityClaim: true,

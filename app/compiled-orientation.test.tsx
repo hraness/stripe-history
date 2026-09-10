@@ -3,6 +3,10 @@ import * as stylex from "@stylexjs/stylex";
 import { renderToStaticMarkup } from "react-dom/server";
 import { HistoryOrientation } from "./history/history-orientation";
 import { orientationStyles } from "./history/history-orientation.stylex";
+import { HistoryClosing } from "./history/history-closing";
+import { closingStyles } from "./history/history-closing.stylex";
+import { SiteFooter } from "./site-footer";
+import { footerResourcesStyles } from "./site-footer.stylex";
 import { createStylexTransformCollector } from "@hraness/ui/stylex-build";
 import { fileURLToPath } from "node:url";
 
@@ -42,4 +46,33 @@ test("compact orientation and source disclosure use compiled geometry without ra
   const globals = await Bun.file(new URL("./globals.css", import.meta.url)).text();
   expect(globals).not.toContain(".history-orientation {");
   expect(globals).not.toContain(".stripe-history-main .hraness-marketing-hero__heading {");
+});
+
+test("closing and resource borders bind supported longhands to the rendered elements", async () => {
+  for (const { file, markup, styles, color } of [
+    {
+      file: "./history/history-closing.stylex.ts",
+      markup: renderToStaticMarkup(<HistoryClosing />),
+      styles: [closingStyles.section, closingStyles.maker, closingStyles.question],
+      color: "var(--hraness-marketing-line)",
+    },
+    {
+      file: "./site-footer.stylex.ts",
+      markup: renderToStaticMarkup(<SiteFooter />),
+      styles: [footerResourcesStyles.root],
+      color: "var(--plain-line)",
+    },
+  ]) {
+    const path = fileURLToPath(new URL(file, import.meta.url));
+    const { rules } = await createStylexTransformCollector(process.cwd()).transform(await Bun.file(path).text(), path);
+    for (const style of styles) {
+      const className = stylex.props(style).className!;
+      expect(markup).toContain(className);
+      const names = new Set(className.split(" "));
+      const css = rules.filter(([name]) => names.has(name)).map(([, rule]) => rule.ltr).join("\n");
+      expect(css).toContain("border-top-width:1px");
+      expect(css).toContain("border-top-style:solid");
+      expect(css).toContain(`border-top-color:${color}`);
+    }
+  }
 });
