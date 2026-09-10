@@ -4,7 +4,9 @@ import * as stylex from "@stylexjs/stylex";
 export const footerResourcesStyles = stylex.create({
   root: {
     alignItems: "center",
-    borderTop: "1px solid var(--plain-line)",
+    borderTopColor: "var(--plain-line)",
+    borderTopStyle: "solid",
+    borderTopWidth: "1px",
     color: "var(--plain-muted)",
     display: "flex",
     flexWrap: "wrap",

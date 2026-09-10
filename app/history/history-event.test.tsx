@@ -145,8 +145,8 @@ test("only owned event rules leave legacy CSS; theme and metric owners remain", 
   expect(globals).toContain("--history-category-ink: oklch(0.8 0.11 var(--history-category-hue))");
   expect(globals).toContain(".history-volume-disclosure-list > li");
   expect(globals).toContain(".history-valuation-observation-list h3");
-  expect(plain).toContain("a:not(.history-filter-link, .history-year-link, .history-event-type)");
-  expect(plain).toContain(":where(h1, h2, h3):where(:not(.history-event-title))");
+  expect(plain).toContain("a:not(.history-filter-link, .history-year-link, .history-event-type, .hraness-marketing-action)");
+  expect(plain).toContain(":where(h1, h2, h3):where(:not(.history-event-title, .hraness-marketing-hero__heading, .hraness-marketing-questions__heading, .hraness-marketing-maker__heading))");
   expect(plain).toContain(".history-event-title, .history-event-kicker, .history-event-sources");
 });
 

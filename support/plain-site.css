@@ -58,7 +58,7 @@ body.plain-site > main {
 /* The compiled timeline opts into the product grammar, not the shared
  * foundation's unlayered .plain-page grammar. :is retains the class specificity
  * on both roots; :where exclusions let the finite recipes own their roles. */
-:where(:is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link, .history-event-type), .plain-footer a) {
+:where(:is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link, .history-event-type, .hraness-marketing-action), .plain-footer a) {
   color: var(--plain-link);
   overflow-wrap: anywhere;
   text-decoration: none;
@@ -67,13 +67,13 @@ body.plain-site > main {
 }
 
 :where(
-  :is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link, .history-event-type):is(:hover, :focus-visible),
+  :is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link, .history-event-type, .hraness-marketing-action):is(:hover, :focus-visible),
   .plain-footer a:is(:hover, :focus-visible)
 ) {
   text-decoration: underline;
 }
 
-.plain-site :where(:is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link, .history-event-type):focus-visible, .plain-footer a:focus-visible) {
+.plain-site :where(:is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link, .history-event-type, .hraness-marketing-action):focus-visible, .plain-footer a:focus-visible) {
   border-radius: 1px;
   outline: 1px dotted currentColor;
   outline-offset: 3px;
@@ -96,15 +96,15 @@ body.plain-site > main {
   padding-inline: var(--plain-shell-gutter);
 }
 
-:is(.plain-page, .stripe-history-page) :where(h1, h2, h3, p, ul, ol, pre, figure):where(:not(.history-year-title, .history-filter-description, .history-event-title, .history-event-kicker, .history-event-sources)) {
+:is(.plain-page, .stripe-history-page) :where(h1, h2, h3, p, ul, ol, pre, figure):where(:not(.history-year-title, .history-filter-description, .history-event-title, .history-event-kicker, .history-event-sources, .hraness-marketing-hero__heading, .hraness-marketing-hero__summary, .hraness-marketing-hero__boundary, .hraness-marketing-stats__source, .hraness-marketing-questions__heading, .hraness-marketing-maker__heading, .hraness-marketing-maker__links)) {
   font-size: inherit;
 }
 
-:is(.plain-page, .stripe-history-page) :where(h1, h2, h3):where(:not(.history-event-title)) {
+:is(.plain-page, .stripe-history-page) :where(h1, h2, h3):where(:not(.history-event-title, .hraness-marketing-hero__heading, .hraness-marketing-questions__heading, .hraness-marketing-maker__heading)) {
   line-height: inherit;
 }
 
-:is(.plain-page, .stripe-history-page) h1 {
+:is(.plain-page, .stripe-history-page) h1:where(:not(.hraness-marketing-hero__heading)) {
   font-weight: 700;
   margin: 0 0 1rem;
 }
@@ -115,11 +115,11 @@ body.plain-site > main {
   margin: 0;
 }
 
-:is(.plain-page, .stripe-history-page) section:where(:not(.history-year)) {
+:is(.plain-page, .stripe-history-page) section:where(:not(.history-year, .hraness-marketing-stats, .hraness-marketing-questions, .hraness-marketing-maker)) {
   margin-top: 2rem;
 }
 
-:is(.plain-page, .stripe-history-page) h2:where(:not(.history-year-title)) {
+:is(.plain-page, .stripe-history-page) h2:where(:not(.history-year-title, .hraness-marketing-questions__heading, .hraness-marketing-maker__heading)) {
   font-weight: 700;
   margin: 0 0 0.3rem;
 }

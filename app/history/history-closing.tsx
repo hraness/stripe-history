@@ -1,141 +1,99 @@
-import {
-  MarketingMaker,
-  MarketingQuestionList,
-} from "@hraness/design-kit/react/server";
 import Link from "next/link";
+import * as stylex from "@stylexjs/stylex";
+import { closingStyles as styles } from "./history-closing.stylex";
 
-import {
-  GITHUB_REPOSITORY_URL,
-  HRANESS_URL,
-  publicSitePath,
-  site,
-} from "../site";
-import { independenceSentence } from "../site-copy";
+import { GITHUB_REPOSITORY_URL, HRANESS_URL, publicSitePath } from "../site";
 
-/**
- * The questions and maker sections that close the root timeline. Every
- * answer repeats text the about and contact pages already publish.
- */
 export function HistoryClosing() {
   return (
     <>
-      <MarketingQuestionList
-        className="stripe-history-questions"
-        heading="What the timeline includes and how it is checked."
-        headingId="history-questions-heading"
+      <section
+        aria-labelledby="history-questions-heading"
+        className={`hraness-marketing-questions stripe-history-questions ${stylex.props(styles.section).className}`}
+        data-hraness-marketing="questions"
         id="questions"
-        label="Questions"
-        questions={[
-          {
-            answer: (
-              <>
-                <p>
-                  {site.domain} publishes a reverse-chronological company
-                  timeline covering acquisitions, products, leadership, funding,
-                  valuation, expansion, offices, publishing projects, founder
-                  side projects and aesthetics programs, early history, annual
-                  volume, sourced annual net-revenue disclosures, and reviewed
-                  long-form appearances by Stripe founders and senior leaders.
-                </p>
-                <p>
-                  Weekly discovery reads first-party and Stripe-affiliated
-                  publication feeds. The timeline records those publications
-                  when they become part of Stripe&apos;s editorial history. It
-                  does not turn every newsletter essay into its own event.
-                </p>
-              </>
-            ),
-            question: "What counts as an event?",
-          },
-          {
-            answer: (
-              <>
-                <p>
-                  Every history entry resolves to at least one cataloged source.
-                  Review prefers primary material and filings, uses strong
-                  contemporaneous reporting where necessary, checks chronology,
-                  category placement, source support, and duplicate claims, and
-                  preserves uncertainty when a transaction or event was only
-                  proposed or reported.
-                </p>
-                <p>
-                  “Entry source links” counts the relationships between timeline
-                  entries and catalog records; it is not a count of
-                  independently corroborated claims. One source can support
-                  more than one entry, and one entry can cite more than one
-                  source. The{" "}
-                  <a href={publicSitePath("/research/sources.yml")}>source catalog</a>
-                  {" "}keeps canonical identities reviewable, and the{" "}
-                  <Link href="/about#sources-and-review">about page</Link>
-                  {" "}explains the review limits.
-                </p>
-              </>
-            ),
-            question: "How are sources checked?",
-          },
-          {
-            answer: (
-              <>
-                <p>
-                  Use public GitHub issues for ordinary historical corrections,
-                  missing events, stronger sources, and focused software
-                  improvements. Include the event date, a concise factual
-                  claim, its category, the proposed confidence and status, and
-                  at least one source URL. Prefer primary sources. If a claim
-                  was only proposed or reported, keep that uncertainty in the
-                  record.
-                </p>
-                <p>
-                  Open those reports in the{" "}
-                  <a href={`${GITHUB_REPOSITORY_URL}/issues`}>
-                    Stripe History issue tracker
-                  </a>. The{" "}
-                  <Link href="/contact#corrections-and-sources">contact page</Link>
-                  {" "}keeps those requirements easy to find.
-                </p>
-              </>
-            ),
-            question: "How do I report a correction?",
-          },
-          {
-            answer: (
-              <>
-                <p>
-                  Published and maintained by <a href={HRANESS_URL}>Hraness</a>.
-                  {" "}{independenceSentence}
-                </p>
-                <p>
-                  The complete sourced records and website code are in the{" "}
-                  <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>.
-                  To inspect or reuse the current record,{" "}
-                  <Link href="/data">export the public YAML</Link>.
-                </p>
-              </>
-            ),
-            question: "Who made it?",
-          },
-        ]}
-      />
-      <MarketingMaker
-        className="stripe-history-maker"
-        heading="Ben Guo"
-        headingId="history-maker-heading"
-        id="maker"
-        label="Built by"
-        links={[
-          { href: HRANESS_URL, label: "hraness.com" },
-          { href: "https://x.com/hraness", label: "@hraness" },
-          { href: GITHUB_REPOSITORY_URL, label: "GitHub" },
-        ]}
       >
-        <p>
-          Stripe History is built and maintained by Ben Guo, a musician and
-          builder, formerly a founder and engineering leader at companies
-          including Venmo and Stripe, now building from Puerto Rico. He
-          publishes it through Hraness as an independent project: it is not
-          affiliated with, endorsed by, or operated by Stripe, Inc.
-        </p>
-      </MarketingMaker>
+        <header className={`hraness-marketing-questions__header ${stylex.props(styles.header).className}`}>
+          <h2 className={`hraness-marketing-questions__heading ${stylex.props(styles.heading).className}`} id="history-questions-heading">
+            About the record
+          </h2>
+        </header>
+        <div className={`hraness-marketing-question-list ${stylex.props(styles.list).className}`}>
+          <details className={`hraness-marketing-question ${stylex.props(styles.question).className}`}>
+            <summary className={`hraness-marketing-question__summary ${stylex.props(styles.summary).className}`}>What counts as an event?</summary>
+            <div className={`hraness-marketing-question__answer ${stylex.props(styles.answer).className}`}>
+              <p {...stylex.props(styles.paragraph)}>
+                The timeline follows Stripe’s products, acquisitions, people,
+                funding, expansion, and scale. It also covers its publications,
+                founder projects, and long-form leadership appearances. Events
+                run from newest to oldest.
+              </p>
+              <p {...stylex.props(styles.paragraph)}>
+                A publication’s launch or acquisition can be an event. Every
+                essay it publishes does not become a separate timeline entry.
+                The <Link href="/about">about page</Link> describes the full scope.
+              </p>
+            </div>
+          </details>
+          <details className={`hraness-marketing-question ${stylex.props(styles.question).className}`}>
+            <summary className={`hraness-marketing-question__summary ${stylex.props(styles.summary).className}`}>How are sources checked?</summary>
+            <div className={`hraness-marketing-question__answer ${stylex.props(styles.answer).className}`}>
+              <p {...stylex.props(styles.paragraph)}>
+                Every entry links to a source. Research favors primary material
+                and filings, with contemporaneous reporting where needed.
+                Proposed and reported events keep those labels; an announcement
+                is not treated as a completed transaction.
+              </p>
+              <p {...stylex.props(styles.paragraph)}>
+                Source-link counts are not independent confirmations. One source
+                can support several entries. You can inspect the{" "}
+                <a href={publicSitePath("/research/sources.yml")}>source catalog</a>
+                {" "}and read the <Link href="/about#sources-and-review">review method and limits</Link>.
+              </p>
+            </div>
+          </details>
+          <details className={`hraness-marketing-question ${stylex.props(styles.question).className}`}>
+            <summary className={`hraness-marketing-question__summary ${stylex.props(styles.summary).className}`}>How do I report a correction?</summary>
+            <div className={`hraness-marketing-question__answer ${stylex.props(styles.answer).className}`}>
+              <p {...stylex.props(styles.paragraph)}>
+                Open an issue in the{" "}
+                <a href={`${GITHUB_REPOSITORY_URL}/issues`}>Stripe History issue tracker</a>
+                {" "}with the affected event, the proposed correction, and a
+                supporting source. Keep uncertainty explicit if something was
+                only proposed or reported.
+              </p>
+              <p {...stylex.props(styles.paragraph)}>
+                The <Link href="/contact#corrections-and-sources">contact page</Link>
+                {" "}lists the details to include and the private channel for
+                security reports.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+      <section
+        aria-labelledby="history-maker-heading"
+        className={`hraness-marketing-maker stripe-history-maker ${stylex.props(styles.maker).className}`}
+        data-hraness-marketing="maker"
+        id="maker"
+      >
+        <header className={`hraness-marketing-maker__header ${stylex.props(styles.header).className}`}>
+          <h2 className={`hraness-marketing-maker__heading ${stylex.props(styles.heading).className}`} id="history-maker-heading">Ben Guo</h2>
+        </header>
+        <div className={`hraness-marketing-maker__body ${stylex.props(styles.body).className}`}>
+          <p {...stylex.props(styles.paragraph)}>
+            Ben is a musician and builder, formerly a founder and engineering
+            leader at companies including Venmo and Stripe, now based in Puerto
+            Rico. He maintains Stripe History through Hraness as an independent
+            project, not affiliated with or endorsed by Stripe, Inc.
+          </p>
+          <ul className={`hraness-marketing-maker__links ${stylex.props(styles.links).className}`}>
+            <li><a href={HRANESS_URL}>hraness.com</a></li>
+            <li><a href="https://x.com/hraness">@hraness</a></li>
+            <li><a href={GITHUB_REPOSITORY_URL}>Source and data on GitHub</a></li>
+          </ul>
+        </div>
+      </section>
     </>
   );
 }

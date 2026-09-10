@@ -4,7 +4,7 @@
 
 The site renders hundreds of sourced events as one reverse-chronological history and as focused, crawlable category pages. It also presents sourced annual payment-volume, net-revenue, and private-company valuation records. Each claim retains reviewable YAML provenance, including status and uncertainty where they apply.
 
-The homepage opens with a compact evidence snapshot generated from that checked corpus: exact timeline-entry, entry-source-link, and canonical-source counts, plus the date of the latest completed structured research-ledger run. That review-state date is deliberately narrow; it does not claim every category was re-reviewed that day. The same surface links directly to the [method and limits](https://hraness.com/stripe/about#sources-and-review), [YAML exports](https://hraness.com/stripe/data), and [correction instructions](https://hraness.com/stripe/contact#corrections-and-sources).
+Open Sources and review on the homepage for an evidence snapshot generated from the checked corpus: exact timeline-entry, entry-source-link, and canonical-source counts, plus the date of the latest completed structured research-ledger run. That review-state date is deliberately narrow; it does not claim every category was re-reviewed that day. The same surface links directly to the [method and limits](https://hraness.com/stripe/about#sources-and-review), [YAML exports](https://hraness.com/stripe/data), and [correction instructions](https://hraness.com/stripe/contact#corrections-and-sources).
 
 ## Browse the history
 

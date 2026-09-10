@@ -4,6 +4,7 @@ import { mkdtemp, mkdir, readFile, realpath, rm, symlink, writeFile } from "node
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { compilerSha256 } from "@hraness/ui/stylex-build";
+import { STYLEX_NEXT_ADAPTER_VERSION } from "@hraness/ui/stylex-build/next";
 import { malformedRecipeSuffix, proveMalformedPreviewAttempt, validateFailedRecipeCensus } from "./compiled-preview-failure";
 
 const recipe = "app/site-footer.stylex.ts";
@@ -11,12 +12,22 @@ const sha = (text: string) => createHash("sha256").update(text).digest("hex");
 const firstId = "11111111-1111-4111-8111-111111111111";
 const failedId = "22222222-2222-4222-8222-222222222222";
 const plan = (id = failedId) => ({ kind: "hraness-stylex-next-attempt", schemaVersion: 2,
-  adapterVersion: "hraness-stylex-next-v2", compilerSha256, nextVersion: "16.2.12",
+  adapterVersion: STYLEX_NEXT_ADAPTER_VERSION, compilerSha256, nextVersion: "16.2.12",
   attemptId: `preview-${id}`, requiredSources: { "node-rsc": ["app/other.ts", recipe] } });
 const receipt = (path = "app/other.ts") => ({ kind: "hraness-stylex-next-module", schemaVersion: 1,
-  adapterVersion: "hraness-stylex-next-v2", compilerSha256, attemptId: `preview-${failedId}`,
+  adapterVersion: STYLEX_NEXT_ADAPTER_VERSION, compilerSha256, attemptId: `preview-${failedId}`,
   mode: "discovery", graphId: "node-rsc", target: "node-rsc",
   input: { path, bytes: Buffer.byteLength("export const other = true;"), sha256: sha("export const other = true;") } });
+
+test("failed-build census accepts the released Next v3 contract and rejects stale v2 evidence", () => {
+  expect(STYLEX_NEXT_ADAPTER_VERSION).toBe("hraness-stylex-next-v3");
+  expect(validateFailedRecipeCensus(plan(), [receipt()])).toEqual(["app/other.ts"]);
+  const stalePlan = { ...plan(), adapterVersion: "hraness-stylex-next-v2" };
+  const staleReceipt = { ...receipt(), adapterVersion: "hraness-stylex-next-v2" };
+  for (const [attempt, module] of [[stalePlan, staleReceipt], [stalePlan, receipt()], [plan(), staleReceipt]]) {
+    expect(() => validateFailedRecipeCensus(attempt, [module])).toThrow();
+  }
+});
 
 test("only the exact sole malformed recipe may lack a loader receipt", () => {
   expect(validateFailedRecipeCensus(plan(), [receipt()])).toEqual(["app/other.ts"]);

@@ -57,9 +57,9 @@
   },
   "dependencies": {
     "@ai-sdk/gateway-v4": "npm:@ai-sdk/gateway@^4.0.27",
-    "@hraness/design-kit": "github:hraness/design-kit#v0.6.2",
-    "@hraness/site-footer": "github:hraness/site-footer#v0.6.1",
-    "@hraness/ui": "github:hraness/ui#v0.5.10",
+    "@hraness/design-kit": "github:hraness/design-kit#v0.6.3",
+    "@hraness/site-footer": "github:hraness/site-footer#v0.6.3",
+    "@hraness/ui": "github:hraness/ui#v0.5.13",
     "@hraness/vercel-delivery": "github:hraness/vercel-delivery#v0.1.2",
     "@hraness/web-discovery": "github:hraness/web-discovery#v0.2.0",
     "@hugeicons/core-free-icons": "^4.2.2",
