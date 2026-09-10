@@ -148,7 +148,7 @@ sources:
   - kind: interview
     publisher: Replit
     published_at: 2026-05-21
-    title: "The Best Time in History to Start a Company | Patrick Collison & Amjad Masad"
+    title: The Best Time in History to Start a Company | Patrick Collison & Amjad Masad
     url: https://www.youtube.com/watch?v=YgYiF86h0yU
     id: source-119db9dd4efb34c354fa
     language: en
@@ -166,7 +166,7 @@ sources:
   - kind: interview
     publisher: Seedcamp
     published_at: 2022-07-13
-    title: "Stripe's David Singleton on technology innovation, customers, and the CTO role"
+    title: Stripe's David Singleton on technology innovation, customers, and the CTO role
     url: https://podcasts.apple.com/us/podcast/stripes-david-singleton-on-technology-innovation-putting/id962121995?i=1000569774533
     id: source-15f3382443f13e368075
     media_type: podcast
@@ -187,7 +187,7 @@ sources:
   - kind: interview
     publisher: Stripe
     published_at: 2026-05-19
-    title: "Nat Friedman and Daniel Gross in conversation with John and Patrick Collison"
+    title: Nat Friedman and Daniel Gross in conversation with John and Patrick Collison
     url: https://www.youtube.com/watch?v=l9wzs_QIyp0
     id: source-18b5f3a0d6c6c83811f7
     language: en
@@ -550,7 +550,7 @@ sources:
   - kind: interview
     publisher: Lenny's Podcast
     published_at: 2023-03-05
-    title: "Lessons from scaling Stripe | Claire Hughes Johnson"
+    title: Lessons from scaling Stripe | Claire Hughes Johnson
     url: https://podcasts.apple.com/us/podcast/lessons-from-scaling-stripe-claire-hughes-johnson-ex/id1627920305?i=1000602823726
     id: source-34e9256f6b05d1c012cb
     media_type: podcast
@@ -605,7 +605,7 @@ sources:
   - kind: interview
     publisher: The Logan Bartlett Show
     published_at: 2024-09-20
-    title: "Will Gaybrick on capital allocation, org design, AI, and global growth"
+    title: Will Gaybrick on capital allocation, org design, AI, and global growth
     url: https://podcasts.apple.com/us/podcast/ep-118-will-gaybrick-president-of-product-and/id1606770839?i=1000670156025
     id: source-39cb086a5372e02b17bc
     media_type: podcast
@@ -639,14 +639,14 @@ sources:
   - kind: interview
     publisher: a16z
     published_at: 2026-02-20
-    title: "Patrick Collison on Stripe's early choices, Smalltalk, and what comes after coding"
+    title: Patrick Collison on Stripe's early choices, Smalltalk, and what comes after coding
     url: https://a16z.com/podcast/patrick-collison-on-stripes-early-choices-smalltalk-and-what-comes-after-coding
     id: source-3e4c405e9bd479571d83
     media_type: podcast
   - kind: interview
     publisher: The Gray Area
     published_at: 2016-12-06
-    title: "Stripe CEO Patrick Collison on management, rationalism, and the Enlightenment"
+    title: Stripe CEO Patrick Collison on management, rationalism, and the Enlightenment
     url: https://podcasts.apple.com/no/podcast/stripe-ceo-patrick-collison-on-management-rationalism/id1081584611?i=1000378637097
     id: source-4091456d98a90957fe07
     media_type: podcast
@@ -684,7 +684,7 @@ sources:
   - kind: interview
     publisher: "The #ANGELS Podcast"
     published_at: 2021-05-10
-    title: "Claire Hughes Johnson, COO of Stripe"
+    title: Claire Hughes Johnson, COO of Stripe
     url: https://podcasts.apple.com/us/podcast/claire-hughes-johnson-coo-of-stripe/id1550832941?i=1000521087003
     id: source-472eb2b12343ba3fa8e5
     media_type: podcast
@@ -807,9 +807,9 @@ sources:
     title: Tokens Are the New Dollars | Stripe's Will Gaybrick & David George
     url: https://www.youtube.com/watch?v=P5iICDVn5gc
     id: source-523815a4d8be2b7368b9
+    language: en
     media_type: video
     native_id: youtube:P5iICDVn5gc
-    language: en
   - kind: interview
     publisher: Storied San Francisco
     title: Saikat Chakrabarti
@@ -846,7 +846,7 @@ sources:
   - kind: interview
     publisher: Stanford eCorner
     published_at: 2023-05-24
-    title: "Claire Hughes Johnson on scaling operations and culture at Stripe"
+    title: Claire Hughes Johnson on scaling operations and culture at Stripe
     url: https://podcasts.apple.com/us/podcast/claire-hughes-johnson-stripe-scaling-operations-and/id80867514?i=1000614322138
     id: source-57a7fe4d5d7acd711d7b
     media_type: podcast
@@ -939,7 +939,7 @@ sources:
   - kind: interview
     publisher: The David McWilliams Podcast
     published_at: 2022-06-20
-    title: "The future of the internet economy with John Collison"
+    title: The future of the internet economy with John Collison
     url: https://podcasts.apple.com/ca/podcast/the-future-of-the-internet-economy-with-stripe/id1462649946?i=1000567104995
     id: source-6321e360d21ebafc1539
     media_type: podcast
@@ -953,7 +953,7 @@ sources:
   - kind: interview
     publisher: Lenny's Podcast
     published_at: 2023-05-04
-    title: "Building a culture of excellence | David Singleton"
+    title: Building a culture of excellence | David Singleton
     url: https://www.youtube.com/watch?v=F0_IKKY3HCk
     id: source-644e7df552ad28028b3a
     language: en
@@ -1027,7 +1027,7 @@ sources:
   - kind: interview
     publisher: Cursor
     published_at: 2025-07-17
-    title: "Patrick Collison on programming languages, AI, and Stripe's biggest engineering decisions"
+    title: Patrick Collison on programming languages, AI, and Stripe's biggest engineering decisions
     url: https://podcasts.apple.com/id/podcast/patrick-collison-on-programming-languages-ai-and/id1819406817?i=1000717598878
     id: source-6c270caf7a0f7aea8142
     media_type: podcast
@@ -1424,7 +1424,7 @@ sources:
   - kind: interview
     publisher: Bloomberg Odd Lots
     published_at: 2026-05-16
-    title: "Stripe's John Collison on how agentic commerce will reshape the internet"
+    title: Stripe's John Collison on how agentic commerce will reshape the internet
     url: https://www.youtube.com/watch?v=QhGqLqCzFac
     id: source-98566fabeed1b3474821
     language: en
@@ -1488,7 +1488,7 @@ sources:
   - kind: interview
     publisher: Grit
     published_at: 2023-03-06
-    title: "Former Stripe COO Claire Hughes Johnson on scaling people"
+    title: Former Stripe COO Claire Hughes Johnson on scaling people
     url: https://podcasts.apple.com/us/podcast/128-former-coo-corporate-officer-at-stripe-claire-hughes/id1510985491?i=1000602919224
     id: source-9dee161b28ef4003aeb3
     media_type: podcast
@@ -1580,7 +1580,7 @@ sources:
   - kind: interview
     publisher: Newcomer
     published_at: 2023-08-08
-    title: "Scaling People with Claire Hughes Johnson"
+    title: Scaling People with Claire Hughes Johnson
     url: https://www.newcomer.co/p/scaling-people-with-claire-hughes
     id: source-a83d235b649d61ebd04a
     media_type: article
@@ -1629,7 +1629,7 @@ sources:
   - kind: interview
     publisher: Hard Fork
     published_at: 2025-06-27
-    title: "Hard Fork Live, with Patrick Collison, Kathryn Zealand, Sam Altman & Brad Lightcap"
+    title: Hard Fork Live, with Patrick Collison, Kathryn Zealand, Sam Altman & Brad Lightcap
     url: https://www.youtube.com/watch?v=jdNwzYMtPN8
     id: source-af973a63a7068c0ccff9
     language: en
@@ -1848,7 +1848,7 @@ sources:
   - kind: interview
     publisher: YC Root Access
     published_at: 2014-10-28
-    title: "Hiring and Culture, Part 2 | Patrick and John Collison"
+    title: Hiring and Culture, Part 2 | Patrick and John Collison
     url: https://www.youtube.com/watch?v=H8Dl8rZ6qwE
     id: source-c7d664518b9bba629716
     language: en
@@ -1864,7 +1864,7 @@ sources:
   - kind: interview
     publisher: a16z
     published_at: 2026-04-28
-    title: "John and Patrick Collison on Stripe's growth, agent commerce, and the future of software"
+    title: John and Patrick Collison on Stripe's growth, agent commerce, and the future of software
     url: https://a16z.com/podcast/john-and-patrick-collison-on-stripes-growth-agent-commerce-and-the-future-of-software
     id: source-c8cf9fc9a738a7673ab5
     media_type: podcast
@@ -1946,7 +1946,7 @@ sources:
   - kind: interview
     publisher: The Minor Consult
     published_at: 2023-05-15
-    title: "Stripe CEO Patrick Collison on innovating e-commerce and accelerating biomedical research"
+    title: Stripe CEO Patrick Collison on innovating e-commerce and accelerating biomedical research
     url: https://podcasts.apple.com/us/podcast/stripe-ceo-patrick-collison-on-innovating-e-commerce/id1610419911?i=1000613083611
     id: source-d09d6a2687fa0f13d64c
     media_type: podcast
@@ -2057,7 +2057,7 @@ sources:
   - kind: interview
     publisher: Stripe
     published_at: 2023-10-06
-    title: "Arthur Mensch and John Collison | Stripe AI Day Paris"
+    title: Arthur Mensch and John Collison | Stripe AI Day Paris
     url: https://www.youtube.com/watch?v=yXN5xSXJ1Is
     id: source-daf244691067ecfd0a84
     language: en
@@ -2254,6 +2254,14 @@ sources:
     url: https://press.stripe.com/maintenance
     id: source-ec08d50c1141dbc46e6d
     media_type: article
+  - kind: reporting
+    publisher: www.stripeeconomics.com
+    published_at: 2026-09-10
+    title: The SaaSpocalypse was more like a RenaiSaaS
+    url: https://www.stripeeconomics.com/p/the-saaspocalypse-was-more-like-a
+    id: source-ec1ad6d84c91062e9d20
+    language: en
+    media_type: article
   - kind: primary
     publisher: Stripe
     published_at: 2025-05-07
@@ -2425,7 +2433,7 @@ sources:
   - kind: interview
     publisher: SaaStr
     published_at: 2023-02-22
-    title: "Extreme Product Design with Stripe CTO David Singleton"
+    title: Extreme Product Design with Stripe CTO David Singleton
     url: https://podcasts.apple.com/us/podcast/saastr-636-extreme-product-design-building-things-people/id1089973241?i=1000601129097
     id: source-ff6b00bcb15ca05ca7f4
     media_type: podcast

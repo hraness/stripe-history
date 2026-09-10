@@ -1,4 +1,53 @@
 runs:
+  - candidate_digest_sha256: 385fd0b8ebff9b580ff789e54feb96debc50395c65e47f7c0311f7e421ed8d84
+    decided_on: 2026-09-10
+    decisions:
+      - basis: proposal
+        candidate_url: https://fortune.com/2026/09/09/exclusive-latitude-stripe-uber-alums-35-million-stablecoins-local-payments
+        outcome: needs-review
+        proposal_sha256: 6e0acf80627aa7dca7167ff79e478d0e059554f7bfdad4fbfb62633dc81016f1
+        reason: The article's main event is Latitude's fundraising, not a Stripe event. It contains a potentially material historical claim that Cyril Mathew's Stripe team launched stablecoin payouts in 100 countries, but gives no launch date and does not clearly match an existing event. Because this appears to be an older event discovered during the current review window and its timing and scope are ambiguous, it requires human review.
+        title: "Exclusive: Latitude, founded by Stripe and Uber alums, raises $35 million to turn stablecoins into local payments | Fortune"
+      - basis: automatic-policy
+        candidate_url: https://stripe.com/newsroom/news/stripe-helps-meta-muse-shop-with-link
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Stripe helps Muse, Meta’s new personal AI agent, shop across the internet with Link
+      - basis: automatic-policy
+        candidate_url: https://stripe.dev/blog/what-if-stripe-could-work-the-way-your-business-does
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: What if Stripe could work the way your business does
+      - basis: automatic-policy
+        candidate_url: https://worksinprogress.co/issue/all-the-microbes-you-cant-have
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: All the microbes you can’t have
+      - basis: automatic-policy
+        candidate_url: https://worksinprogress.co/issue/virtual-worlds
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Virtual worlds
+      - basis: review
+        candidate_url: https://www.stripeeconomics.com/p/the-saaspocalypse-was-more-like-a
+        category: publishing
+        event_id: stripe-economics-introduces-the-stripe-saas-index
+        outcome: published-new-event
+        proposal_sha256: 00b826e8743bd986704c1664b3727f1b2f5be0d8eddd6a3513378b8987909069
+        reason: The September 10 article explicitly introduces the Stripe SaaS Index, identifies its author, methodology, scope, sample size, limitations, and planned online updates. Launching a recurring Stripe-data index is a material publishing event and is distinct from the existing March 2026 event covering the launch of Stripe Economics itself. The proposed category and reported confidence are appropriately calibrated, and no duplicate index-introduction event exists.
+        review_sha256: e171e0dd37b463da7863e06c588fdc768b406667941ccc816215b59f4b02df2e
+        title: The SaaSpocalypse was more like a RenaiSaaS
+      - basis: proposal
+        candidate_url: https://www.worksinprogress.news/p/the-invention-of-the-mmo
+        outcome: rejected
+        proposal_sha256: 0b6c31b862997b08698d4926134d0574a62a1ed1e3aa8e04caac328e21cd6983
+        reason: This is a routine Works in Progress article about the history of Habitat and massively multiplayer virtual worlds. It does not report a discrete, material event involving Stripe or a consequential change to the publication itself.
+        title: The invention of the MMO
+    id: decision-run-9fd36843df70846636e7
+    model: openai/gpt-5.6-sol
+    proposal_prompt_version: stripe-history/weekly-proposal/v6
+    reasoning_effort: max
+    review_prompt_version: stripe-history/weekly-review/v1
   - candidate_digest_sha256: 96df26af5880117afe8008beaeadc9375d2f311c33b35e32c41d87f48dd4a3c6
     decided_on: 2026-08-27
     decisions:

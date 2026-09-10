@@ -1,4 +1,28 @@
 runs:
+  - candidate_digest_sha256: 385fd0b8ebff9b580ff789e54feb96debc50395c65e47f7c0311f7e421ed8d84
+    decisions:
+      - candidate_url: https://www.stripeeconomics.com/p/the-saaspocalypse-was-more-like-a
+        category: publishing
+        disposition: published-new-event
+        evidence_quote_sha256:
+          - 23866bc009ffb792b08bb568f16043e6558c06e56de5480f32483296e170492a
+          - 4c3d8cb752c9fbbced32035611d5fe628d9480a5f91842da1f12f06914547477
+          - a132e184ee1142d4aa3564d6fc6b75a9844dbb789aba3a22d43a067c9829eaf9
+          - b3e01634dfd8d8d3106351ac073e6d32edf39c15904e883bf4bbd723f065fba6
+          - c59e47cda1cdb4d435522afca864354402c4f3dee8461cf018cd946b526ef7ad
+          - cee4d64f618254371693434f5acb8a9aeb438dba278c40b479112414664da04c
+        evidence_sha256: c441a9c483e03e498b7626d45f9b91f456250666ce6a1a5eb32984ae60f5f989
+        event_id: stripe-economics-introduces-the-stripe-saas-index
+        proposal_sha256: 00b826e8743bd986704c1664b3727f1b2f5be0d8eddd6a3513378b8987909069
+        review_sha256: e171e0dd37b463da7863e06c588fdc768b406667941ccc816215b59f4b02df2e
+        source_id: source-ec1ad6d84c91062e9d20
+    id: publication-efed28fb2e003c514d7c
+    model: openai/gpt-5.6-sol
+    proposal_prompt_version: stripe-history/weekly-proposal/v6
+    published_on: 2026-09-10
+    reasoning_effort: max
+    review_mode: independent-grounded-second-pass
+    review_prompt_version: stripe-history/weekly-review/v1
   - candidate_digest_sha256: 3436afe3ac0fd1474254f66431924d8b8461390b24f6be6675576bb58b9fa56c
     decisions:
       - candidate_url: https://techcrunch.com/2026/08/16/stripe-will-reportedly-acquire-ai-gateway-startup-openrouter-for-7b
