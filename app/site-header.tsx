@@ -15,7 +15,7 @@ export function SiteHeader({
       brand={<><RaMark /><span>hraness</span></>}
       brandHref="https://hraness.com"
       brandLabel="hraness"
-      className="stripe-history-header"
+      className="stripe-history-header hraness-material-chrome"
       links={[
         { href: publicSitePath("/"), label: "stripe" },
         { href: publicSitePath("/data"), label: "data" },

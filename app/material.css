@@ -1,0 +1,31 @@
+/* Bind material where the existing plain-site palette is actually declared.
+ * Category hues, selected measure colors, and timeline geometry stay local. */
+.plain-site[data-hraness-material="lantern"] {
+  --hraness-material-plane: var(--plain-surface);
+  --hraness-material-ink: var(--plain-foreground);
+  --hraness-material-muted: var(--plain-muted);
+  --hraness-material-focus: var(--plain-link);
+}
+
+[data-hraness-material="lantern"] .stripe-history-header.hraness-material-chrome {
+  --surface: var(--plain-background);
+  --hraness-marketing-header-background: var(--hraness-material-chrome-paint);
+  --hraness-marketing-header-backdrop: var(--hraness-material-chrome-blur);
+  border-block-end-color: var(--hraness-material-seam);
+}
+
+[data-hraness-material="lantern"] .history-measure-controls button:not([aria-pressed="true"]) {
+  background-image: linear-gradient(to bottom, var(--hraness-material-edge), transparent 2px);
+}
+
+@media (forced-colors: active) {
+  .plain-site[data-hraness-material="lantern"] {
+    --hraness-material-plane: Canvas;
+    --hraness-material-ink: CanvasText;
+    --hraness-material-muted: CanvasText;
+    --hraness-material-focus: Highlight;
+  }
+  [data-hraness-material="lantern"] .history-measure-controls button {
+    background-image: none;
+  }
+}

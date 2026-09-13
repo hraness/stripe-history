@@ -11,6 +11,7 @@ import "@hraness/ui/compiler-foundation.css";
 import "@hraness/design-kit/compiler-foundation.css";
 import "@hraness/site-footer/compiler-foundation.css";
 import "./globals.css";
+import "./material.css";
 import { PostHogAnalytics } from "./posthog-analytics";
 import { siteOrganizationJsonLd, websiteJsonLd } from "./seo";
 import { absoluteSiteUrl, SITE_HOST_ORIGIN, site } from "./site";
@@ -51,7 +52,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html data-theme="light" lang="en-US" suppressHydrationWarning>
-      <body className={siteThemes.plain.bodyClassName}>
+      <body className={siteThemes.plain.bodyClassName} data-hraness-material="lantern">
         <JsonLdScript
           data={[websiteJsonLd(), siteOrganizationJsonLd()]}
           id="stripe-history-website-structured-data"
