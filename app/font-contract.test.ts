@@ -23,7 +23,7 @@ function outlinedWordmark(svg: string): string {
 test("uses the released Nebula Sans default for text and headings while retaining explicit mono roles", () => {
   expect(packageJson.dependencies).toMatchObject({
     "@hraness/design-kit": "github:hraness/design-kit#v0.8.0",
-    "@hraness/site-footer": "github:hraness/site-footer#v0.9.2",
+    "@hraness/site-footer": "github:hraness/site-footer#v0.11.1",
     "@hraness/ui": "github:hraness/ui#v0.5.13",
     "@hraness/web-discovery": "github:hraness/web-discovery#v0.2.0",
   });
