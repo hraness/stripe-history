@@ -37,7 +37,8 @@
   ],
   "scripts": {
     "build": "node scripts/build-next.ts",
-    "check": "bun run typecheck && bun run lint && bun run test",
+    "check:cost-surfaces": "bun ./scripts/check-cost-surfaces.mjs",
+    "check": "bun run check:cost-surfaces && bun run typecheck && bun run lint && bun run test",
     "dev": "node scripts/compiled-preview.ts",
     "test:compiled-preview": "node scripts/compiled-preview-browser.ts",
     "history:sessions:update": "bun run scripts/update-sessions-history.ts",
