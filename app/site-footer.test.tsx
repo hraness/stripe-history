@@ -23,20 +23,14 @@ test("keeps Stripe History resources above the canonical Hraness footer", () => 
   expect(html).toContain('href="/stripe/contact"');
   expect(html).toContain('href="/stripe/privacy"');
   expect(html).toContain('href="https://github.com/hraness/stripe-history"');
-  expect(html).toContain(
-    '<iframe class="stripe-history-substack__embed" frameBorder="0" height="150" scrolling="no" src="https://hraness.substack.com/embed" title="subscribe to hraness on substack" width="480"></iframe>',
-  );
-  expect(html).toContain('aria-label="Subscribe to Hraness"');
-  expect(html).not.toContain("account.hraness.com/api/mailing/subscribe");
-  expect(html).not.toContain('name="audience"');
+  expect(html).not.toContain("hraness.substack.com/embed");
+  expect(html.match(/<form\b/gu)).toHaveLength(1);
+  expect(html).toContain('action="https://account.hraness.com/api/mailing/subscribe"');
+  expect(html).toContain('name="audience" type="hidden" value="hraness"');
+  expect(html).toContain("https://account.hraness.com/support?product=hraness&amp;source=web#support");
+  expect(html).not.toContain('value="stripe-history"');
   expect(html).not.toContain("cf-turnstile");
-  expect(html).not.toContain(
-    'name="audience" type="hidden" value="hraness"',
-  );
   expect(html.indexOf('aria-label="Stripe History resources"')).toBeLessThan(
-    html.indexOf('aria-label="Subscribe to Hraness"'),
-  );
-  expect(html.indexOf('aria-label="Subscribe to Hraness"')).toBeLessThan(
     html.indexOf('data-slot="hraness-site-footer"'),
   );
 

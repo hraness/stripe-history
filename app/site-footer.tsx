@@ -33,21 +33,15 @@ export function SiteFooter({ path }: SiteFooterProps) {
           <a {...stylex.props(styles.link)} href={GITHUB_REPOSITORY_URL}>github</a>
         </nav>
       </aside>
-      <section
-        aria-label="Subscribe to Hraness"
-        className="stripe-history-substack"
-      >
-        <iframe
-          className="stripe-history-substack__embed"
-          frameBorder="0"
-          height={150}
-          scrolling="no"
-          src="https://hraness.substack.com/embed"
-          title="subscribe to hraness on substack"
-          width={480}
-        />
-      </section>
-      <HranessSiteFooter mailingList={{ kind: "none" }} />
+      <HranessSiteFooter
+        mailingList={{ kind: "signup", audience: "hraness" }}
+        support={{
+          id: "hraness",
+          name: "Hraness",
+          updates: true,
+          valueProposition: "Support independent writing and ongoing development of Hraness tools.",
+        }}
+      />
     </>
   );
 }

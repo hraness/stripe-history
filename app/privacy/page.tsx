@@ -61,22 +61,31 @@ export default function PrivacyPage() {
           browser does not save an analytics cookie or identifier.
         </p>
         <p>
-          The site does not use autocapture, session replay, heatmaps, surveys,
-          feature flags, performance monitoring, or user profiles, and it has
+          The PostHog integration does not use autocapture, session replay,
+          heatmaps, surveys, feature flags, performance monitoring, or user
+          profiles. The site has
           no local reader accounts or authentication. Requests are still subject
           to the ordinary logs and security controls of the hosting provider.
         </p>
         <p>
-          The footer loads the canonical Hraness subscription embed from{" "}
-          <a href="https://hraness.substack.com/">Substack</a>. Loading it sends
-          Substack the ordinary request and delivery metadata needed to serve
-          the frame. If you submit an email address, Substack handles that
-          address, confirmation, Hraness newsletter delivery, and unsubscribe
-          under its own service and privacy terms.
+          The footer offers the general Hraness newsletter. Before submission,
+          it may contact <a href="https://account.hraness.com">Hraness Accounts</a>
+          {" "}for anonymous form presentation and measurement. These requests
+          send the list choice, language, compact or wide viewport category,
+          and presentation version, then an opaque token when the form becomes
+          visible. They omit account credentials and do not send your email
+          address. If you submit the form, your email address, the Hraness list
+          choice, form source, and any presentation token are sent to Accounts.
+          Accounts records dated consent, and Resend sends confirmation and
+          subscribed messages from news.hraness.com. You are not subscribed
+          until you confirm. Each newsletter message has a Hraness-specific
+          unsubscribe link that does not change another product subscription.
+          Optional paid support opens Accounts separately, where you review
+          the plan and price before confirming payment.
         </p>
         <p>
-          Stripe History does not send new footer subscriptions to Hraness
-          Accounts and does not create new Stripe History mailing consent. If
+          This general newsletter signup does not create new Stripe History
+          mailing consent. If
           you subscribed through the earlier Stripe History form, Hraness
           Accounts retains that dated record. A previously confirmed membership
           may remain active, and Hraness Accounts may continue to process it and

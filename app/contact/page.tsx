@@ -78,8 +78,8 @@ export default function ContactPage() {
         <h2>Publisher</h2>
         <p>
           There is no Stripe History-owned reader login, contact form, or product
-          inbox on {site.domain}. The footer carries the canonical Hraness
-          Substack embed described on the privacy page; this site does not create
+          inbox on {site.domain}. The footer offers the general Hraness
+          newsletter and optional support described on the privacy page; this site does not create
           a new Stripe History mailing subscription. The project does not process
           payments, issue API keys, or operate a Stripe integration. {independenceSentence}
         </p>
@@ -88,7 +88,7 @@ export default function ContactPage() {
           complete sourced records and website code are in the{" "}
           <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>. Read{" "}
           <Link href="/about">about</Link> for editorial method and{" "}
-          <Link href="/privacy">privacy</Link> for analytics, the Substack embed,
+          <Link href="/privacy">privacy</Link> for analytics, the Hraness newsletter,
           and historical mailing-consent limits.
         </p>
       </section>

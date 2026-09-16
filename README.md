@@ -94,11 +94,18 @@ bun run dev
 Copy `.env.example` to the ignored `.env.local` file only when configuring the
 optional Production analytics values.
 
-Every rendered page carries the canonical Hraness Substack subscription embed
-and the generic Hraness social links. Loading the embed contacts Substack.
-Substack handles submitted email addresses, confirmation, newsletter delivery,
-and unsubscribe. Stripe History does not create new Hraness Accounts mailing
-consent. Accounts retains earlier `stripe-history` subscription records and
+Every rendered page carries one shared Hraness footer with the general Hraness
+newsletter, optional paid support, and social links. Before submission, anonymous
+form presentation and measurement requests send Accounts the list choice, language,
+compact or wide viewport category, and presentation version, then an opaque token
+when the form becomes visible. They omit account credentials and email addresses.
+Submitting the newsletter form sends the email address, `hraness` list choice,
+form source, and any presentation token to Accounts,
+which records dated consent. Resend delivers confirmation and subscribed messages
+from `news.hraness.com`; subscription starts only after inbox confirmation.
+Paid support opens Accounts separately for a human to review and confirm.
+No separate Stripe History newsletter is created. Accounts retains earlier
+`stripe-history` subscription records and
 continues to honor their audience-specific unsubscribe state. Confirmed earlier
 memberships may remain active, with Resend delivering any later Stripe History
 messages from `news.hraness.com` until the recipient unsubscribes.
@@ -168,7 +175,7 @@ It proves a real resources-recipe edit through a fresh complete generation,
 owned server replacement, and explicit browser reload. It also injects an
 invalid recipe, checks that the last successful server and CSS remain intact,
 and verifies bounded server/browser cleanup. It does not edit the working
-checkout or contact the Substack embed. On managed Hraness hosts, run installs,
+checkout or submit a newsletter or payment form. On managed Hraness hosts, run installs,
 full builds, and this complete browser command through the host scheduler and
 the repository resource scheduler; the preview/browser flow has one owner.
 

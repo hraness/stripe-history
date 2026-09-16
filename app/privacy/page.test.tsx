@@ -8,7 +8,7 @@ function visibleText(html: string): string {
 }
 
 describe("hraness.com/stripe privacy page", () => {
-  test("publishes the analytics and Substack policy at /privacy", () => {
+  test("publishes the analytics and general Hraness newsletter policy at /privacy", () => {
     const html = renderToStaticMarkup(<PrivacyPage />);
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/privacy" },
@@ -18,10 +18,13 @@ describe("hraness.com/stripe privacy page", () => {
     expect(html).toContain("anonymous, cookieless pageview events for public pages");
     expect(html).toContain("does not save an analytics cookie or identifier");
     expect(html).toContain("no local reader accounts or authentication");
-    expect(html).toContain('href="https://hraness.substack.com/"');
-    expect(html).toContain("ordinary request and delivery metadata");
-    expect(html).toContain("Substack handles that address, confirmation");
-    expect(html).toContain("does not send new footer subscriptions to Hraness Accounts");
+    expect(html).toContain('href="https://account.hraness.com"');
+    expect(html).toContain("the general Hraness newsletter");
+    expect(html).toContain("anonymous form presentation and measurement");
+    expect(html).toContain("omit account credentials and do not send your email address");
+    expect(html).toContain("Accounts records dated consent");
+    expect(html).toContain("You are not subscribed until you confirm");
+    expect(html).toContain("does not create new Stripe History mailing consent");
     expect(html).toContain("previously confirmed membership");
     expect(html).toContain("newsletter messages through Resend");
     expect(html).toContain("news.hraness.com");

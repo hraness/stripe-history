@@ -239,7 +239,9 @@ try {
   assert.equal(await page.locator("h1#history-heading").textContent(), "Stripe’s history, dated and sourced");
   assert.ok(await page.locator(".history-event").count() >= 200, "Real async corpus must render");
   assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://hraness.com/stripe");
-  assert.equal(await page.locator('iframe[title="subscribe to hraness on substack"]').getAttribute("src"), "https://hraness.substack.com/embed");
+  assert.equal(await page.locator('iframe[src="https://hraness.substack.com/embed"]').count(), 0);
+  assert.equal(await page.locator('form[action="https://account.hraness.com/api/mailing/subscribe"]').count(), 1);
+  assert.equal(await page.locator('input[name="audience"]').inputValue(), "hraness");
   assert.equal(await page.locator('.hraness-marketing-header__nav a').nth(1).getAttribute("href"), "/stripe/data");
   assert.equal(await page.locator('.hraness-marketing-header [data-presentation="menu"]').count(), 1);
   assert.equal(await page.locator('.stripe-history-evidence-strip time[datetime]').count(), 1);
