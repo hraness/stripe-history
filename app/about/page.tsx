@@ -31,7 +31,7 @@ function TopicIcon({ slug }: Readonly<{ slug: string }>) {
   // Decorative local SVG; next/image cannot optimize vector sources.
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img className="sh-topic-icon" src={`/icons/${slug}.svg`} alt="" aria-hidden="true" width="48" height="48" loading="lazy" decoding="async" />
+    <img className="sh-topic-icon" src={`/icons/${slug}.svg`} alt="" aria-hidden="true" width="88" height="88" loading="lazy" decoding="async" />
   );
 }
 
