@@ -1,6 +1,7 @@
 import { siteThemes } from "@/support/design-kit";
+import { getDesignPaletteTheme } from "@hraness/design-kit";
 import {
-  DesignThemeProvider,
+  DesignPaletteProvider,
   ThemeColorSync,
 } from "@hraness/design-kit/react";
 import { SkipLink } from "@/support/theme";
@@ -49,9 +50,27 @@ export const viewport: Viewport = {
   ],
 };
 
+/**
+ * Paper is the default palette; the initial class supplies its compiled
+ * values and the blocking bootstrap adds a concrete `data-theme` before
+ * paint. With JavaScript disabled no `data-theme` is rendered, so the
+ * light defaults in `globals.css` keep the page readable.
+ */
+const initialPalette = getDesignPaletteTheme("paper", "light");
+
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html data-theme="light" lang="en-US" suppressHydrationWarning>
+    <html
+      className={initialPalette.className}
+      data-palette="paper"
+      lang="en-US"
+      suppressHydrationWarning
+    >
+      <head>
+        {/* The blocking external bootstrap applies a saved palette before first paint. */}
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script src="/theme-bootstrap.js" />
+      </head>
       <body className={siteThemes.plain.bodyClassName} data-hraness-material="lantern">
         <JsonLdScript
           data={[websiteJsonLd(), siteOrganizationJsonLd()]}
@@ -61,11 +80,14 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           apiHost={process.env.NEXT_PUBLIC_POSTHOG_HOST}
           apiKey={process.env.NEXT_PUBLIC_POSTHOG_KEY}
         />
-        <DesignThemeProvider storageKey="stripe-history-theme-v1">
+        <DesignPaletteProvider
+          defaultPreference={{ palette: "paper", mode: "system" }}
+          legacyStorageKey="stripe-history-theme-v1"
+        >
           <ThemeColorSync darkColor="#151515" lightColor="#ffffff" />
           <SkipLink href="#main-content">Skip to content</SkipLink>
           {children}
-        </DesignThemeProvider>
+        </DesignPaletteProvider>
       </body>
     </html>
   );

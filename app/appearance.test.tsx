@@ -1,21 +1,21 @@
 import { expect, test } from "bun:test";
-import { DesignThemeProvider } from "@hraness/design-kit/react";
+import { DesignPaletteProvider } from "@hraness/design-kit/react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { ThemeMenuButton } from "@/support/theme";
 import { SiteHeader } from "./site-header";
 
-test("appearance starts with System and keeps the existing product preference key", () => {
+test("appearance starts with the Paper palette in System mode", () => {
   const html = renderToStaticMarkup(
-    <DesignThemeProvider storageKey="stripe-history-theme-v1">
+    <DesignPaletteProvider
+      defaultPreference={{ palette: "paper", mode: "system" }}
+      legacyStorageKey="stripe-history-theme-v1"
+    >
       <ThemeMenuButton />
-    </DesignThemeProvider>,
+    </DesignPaletteProvider>,
   );
 
-  expect(html).toContain("stripe-history-theme-v1");
-  expect(html).toContain('data-hraness-design-theme-guard=""');
-  expect(html).toContain('data-theme-value="system"');
-  expect(html).toContain('aria-label="Appearance: System"');
+  expect(html).toContain('aria-label="Appearance: Paper, System"');
 });
 
 test("site chrome keeps the shared appearance menu as its final header action", () => {
@@ -42,12 +42,13 @@ test("Stripe History does not keep a second theme runtime", async () => {
   expect(source).not.toContain("localStorage");
   expect(source).not.toContain("MutationObserver");
   expect(source).not.toContain("useSyncExternalStore");
-  expect(layout).toContain(
-    '<DesignThemeProvider storageKey="stripe-history-theme-v1">',
-  );
-  expect(globalError).toContain(
-    '<DesignThemeProvider storageKey="stripe-history-theme-v1">',
-  );
+  for (const page of [layout, globalError]) {
+    expect(page).toContain("DesignPaletteProvider");
+    expect(page).toContain('legacyStorageKey="stripe-history-theme-v1"');
+    expect(page).toContain('data-palette="paper"');
+    expect(page).not.toContain("DesignThemeProvider");
+  }
+  expect(layout).toContain('src="/theme-bootstrap.js"');
 });
 
 test("compiled header native anchors retain /stripe and the selected about route", () => {

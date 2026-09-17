@@ -1,7 +1,8 @@
 "use client";
 
+import { getDesignPaletteTheme } from "@hraness/design-kit";
 import {
-  DesignThemeProvider,
+  DesignPaletteProvider,
   ThemeColorSync,
 } from "@hraness/design-kit/react";
 import type { RouteErrorPageProps } from "./error";
@@ -10,9 +11,16 @@ import "@hraness/design-kit/compiler-foundation.css";
 import "@hraness/site-footer/compiler-foundation.css";
 import "./globals.css";
 
+const initialPalette = getDesignPaletteTheme("paper", "light");
+
 export default function GlobalError({ reset }: RouteErrorPageProps) {
   return (
-    <html data-theme="light" lang="en-US" suppressHydrationWarning>
+    <html
+      className={initialPalette.className}
+      data-palette="paper"
+      lang="en-US"
+      suppressHydrationWarning
+    >
       <head>
         <meta content="light dark" name="color-scheme" />
         <meta
@@ -27,14 +35,17 @@ export default function GlobalError({ reset }: RouteErrorPageProps) {
         />
       </head>
       <body className="plain-site">
-        <DesignThemeProvider storageKey="stripe-history-theme-v1">
+        <DesignPaletteProvider
+          defaultPreference={{ palette: "paper", mode: "system" }}
+          legacyStorageKey="stripe-history-theme-v1"
+        >
           <ThemeColorSync darkColor="#151515" lightColor="#ffffff" />
           <main className="plain-page stripe-history-main stripe-history-state" id="main-content">
             <h1>Stripe History is temporarily unavailable</h1>
             <p>The site could not finish loading.</p>
             <button onClick={reset} type="button">Try again</button>
           </main>
-        </DesignThemeProvider>
+        </DesignPaletteProvider>
       </body>
     </html>
   );

@@ -36,10 +36,11 @@
     "bun"
   ],
   "scripts": {
-    "build": "node scripts/build-next.ts",
+    "build": "bun scripts/build-theme-bootstrap.ts && node scripts/build-next.ts",
+    "build:theme": "bun scripts/build-theme-bootstrap.ts",
     "check:cost-surfaces": "bun ./scripts/check-cost-surfaces.mjs",
     "check": "bun run check:cost-surfaces && bun run typecheck && bun run lint && bun run test",
-    "dev": "node scripts/compiled-preview.ts",
+    "dev": "bun scripts/build-theme-bootstrap.ts && node scripts/compiled-preview.ts",
     "test:compiled-preview": "node scripts/compiled-preview-browser.ts",
     "history:sessions:update": "bun run scripts/update-sessions-history.ts",
     "history:research:audit": "bun run scripts/audit-history-research.ts",

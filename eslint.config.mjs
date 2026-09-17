@@ -5,5 +5,11 @@ import nextTypescript from "eslint-config-next/typescript";
 export default defineConfig([
   ...nextVitals,
   ...nextTypescript,
-  globalIgnores([".next/**", ".stylex-next/**", ".stylex-preview/**", "next-env.d.ts"]),
+  globalIgnores([
+    ".next/**",
+    ".stylex-next/**",
+    ".stylex-preview/**",
+    "next-env.d.ts",
+    "public/theme-bootstrap.js",
+  ]),
 ]);

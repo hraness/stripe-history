@@ -9,17 +9,25 @@
 .plain-site {
   --hraness-site-accent: #5b54f0;
   --hraness-site-accent-ink: #ffffff;
+  --plain-background: var(--background, #ffffff);
+  --plain-foreground: var(--foreground, #171717);
   --plain-link: var(--hraness-site-accent);
-  --plain-line: color-mix(in oklch, var(--plain-foreground) 12%, transparent);
-  --plain-line-strong: color-mix(in oklch, var(--plain-foreground) 22%, transparent);
-  --plain-surface: #f6f6f7;
+  --plain-line: var(--line, color-mix(in oklch, var(--plain-foreground) 12%, transparent));
+  --plain-line-strong: var(--control-border, color-mix(in oklch, var(--plain-foreground) 22%, transparent));
+  --plain-muted: var(--muted, #666666);
+  --plain-surface: var(--surface, #f6f6f7);
 }
 
 :root[data-theme="dark"] .plain-site,
 .plain-site[data-theme="dark"] {
   --hraness-site-accent: #a9a4ff;
   --hraness-site-accent-ink: #14123a;
-  --plain-surface: #1e1e1f;
+  --plain-background: var(--background, #151515);
+  --plain-foreground: var(--foreground, #f2f2f2);
+  --plain-line: var(--line, #484848);
+  --plain-line-strong: var(--control-border, #5c5c5c);
+  --plain-muted: var(--muted, #b6b6b6);
+  --plain-surface: var(--surface, #1e1e1f);
 }
 
 /* The marketing grammar reads the plain-shell palette through these roles.
