@@ -2,6 +2,7 @@
   "client": [
     "app/analytics.ts",
     "app/error.tsx",
+    "app/foil-controller.tsx",
     "app/global-error.tsx",
     "app/history/category-icon.tsx",
     "app/history/history-measure-rail.tsx",
@@ -20,6 +21,7 @@
     "app/data/page.tsx",
     "app/error.tsx",
     "app/evidence-snapshot.tsx",
+    "app/foil-controller.tsx",
     "app/global-error.tsx",
     "app/history/[category]/page.tsx",
     "app/history/category-icon.tsx",
