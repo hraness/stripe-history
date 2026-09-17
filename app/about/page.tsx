@@ -27,6 +27,14 @@ const aboutDescription =
 
 export const dynamic = "force-static";
 
+function TopicIcon({ slug }: Readonly<{ slug: string }>) {
+  // Decorative local SVG; next/image cannot optimize vector sources.
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img className="sh-topic-icon" src={`/icons/${slug}.svg`} alt="" aria-hidden="true" width="48" height="48" loading="lazy" decoding="async" />
+  );
+}
+
 export const metadata: Metadata = {
   title: aboutTitle,
   description: aboutDescription,
@@ -70,6 +78,7 @@ export default async function AboutPage() {
           <span>independent</span>
         </div>
 
+        <TopicIcon slug="company-history" />
         <h2>Stripe company history</h2>
         <p>
           {site.domain} is an independent, sourced guide to Stripe. It publishes
@@ -80,9 +89,11 @@ export default async function AboutPage() {
           reviewed long-form appearances by Stripe founders and senior leaders.
         </p>
 
+        <TopicIcon slug="evidence" />
         <h2 id="evidence-status">Evidence status</h2>
         <EvidenceSnapshot summary={evidence} />
 
+        <TopicIcon slug="sources" />
         <h2 id="sources-and-review">Sources and review</h2>
         <p>
           Every history entry resolves to at least one cataloged source. Review
@@ -109,6 +120,7 @@ export default async function AboutPage() {
           {" "}for the machine-readable boundaries.
         </p>
 
+        <TopicIcon slug="publications" />
         <h2>Publications followed</h2>
         <p>
           Weekly discovery reads first-party and Stripe-affiliated publication
@@ -130,6 +142,7 @@ export default async function AboutPage() {
           episode feed.
         </p>
 
+        <TopicIcon slug="independence" />
         <h2 id="independence-and-corrections">Independence and corrections</h2>
         <p>
           {site.domain} is not affiliated with, endorsed by, or operated by
@@ -157,6 +170,7 @@ export default async function AboutPage() {
           <Link href="/contact">contact page</Link>.
         </p>
 
+        <TopicIcon slug="privacy" />
         <h2>Privacy</h2>
         <p>
           The site sends anonymous, cookieless pageview events for public pages
