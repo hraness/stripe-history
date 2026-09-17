@@ -13,6 +13,7 @@ import "@hraness/design-kit/compiler-foundation.css";
 import "@hraness/site-footer/compiler-foundation.css";
 import "./globals.css";
 import "./material.css";
+import { FoilController } from "./foil-controller";
 import { PostHogAnalytics } from "./posthog-analytics";
 import { siteOrganizationJsonLd, websiteJsonLd } from "./seo";
 import { absoluteSiteUrl, SITE_HOST_ORIGIN, site } from "./site";
@@ -87,6 +88,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           <ThemeColorSync darkColor="#151515" lightColor="#ffffff" />
           <SkipLink href="#main-content">Skip to content</SkipLink>
           {children}
+          <FoilController />
         </DesignPaletteProvider>
       </body>
     </html>
