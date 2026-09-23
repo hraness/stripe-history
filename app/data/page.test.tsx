@@ -2,13 +2,14 @@ import { describe, expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { loadHistory } from "@/lib/content";
 
+import { dataIntro } from "../site-copy";
 import DataPage, { metadata } from "./page";
 
 describe("Stripe company history dataset", () => {
   test("publishes a canonical dataset search result", () => {
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/data" },
-      title: "Stripe Company History Dataset",
+      title: "Stripe company history dataset",
     });
     expect(metadata.openGraph).toMatchObject({
       url: "https://hraness.com/stripe/data",
@@ -19,9 +20,9 @@ describe("Stripe company history dataset", () => {
     const html = renderToStaticMarkup(await DataPage());
     const history = await loadHistory();
 
-    expect(html).toContain('<h1 id="data-heading">Stripe Company History Dataset</h1>');
+    expect(html).toContain('<h1 id="data-heading">Stripe company history dataset</h1>');
     expect(html).toContain(`${history.events.length} sourced events`);
-    expect(html).toContain("confidence, and status when applicable");
+    expect(html).toContain(dataIntro);
     expect(html).toContain("Questions this history answers");
     expect(html).toContain("How did Stripe start, and who has led the company?");
     expect(html).toContain("What companies has Stripe acquired?");

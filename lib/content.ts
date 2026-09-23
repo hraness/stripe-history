@@ -99,7 +99,7 @@ export interface HistoryEvidenceSummary {
 
 export const APPEARANCES_CATEGORY = {
   description:
-    "Reviewed podcasts, interviews, talks, and testimony from Stripe founders and senior leaders, with source-linked editorial summaries and transcripts when available.",
+    "Reviewed podcasts, interviews, talks, and testimony from Stripe founders and senior leaders, each with a short summary and a link to its source.",
   id: "appearances",
   label: "Appearances",
   order: 2.5,

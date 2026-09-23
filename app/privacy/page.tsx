@@ -23,9 +23,7 @@ export const metadata: Metadata = {
   title: privacyTitle,
   description: privacyDescription,
   alternates: { canonical: absoluteSiteUrl("/privacy") },
-  ...socialMetadata(privacySocialTitle, privacyDescription, "/privacy", {
-    alt: `Privacy practices for the independent Stripe company history at ${site.domain}`,
-  }),
+  ...socialMetadata(privacySocialTitle, privacyDescription, "/privacy"),
 };
 
 export default function PrivacyPage() {
@@ -50,7 +48,6 @@ export default function PrivacyPage() {
       >
         <div className="stripe-history-section-heading">
           <h1 id="privacy-heading">{privacyTitle}</h1>
-          <span>public pages</span>
         </div>
         <p>
           The site sends anonymous, cookieless pageview events for public pages

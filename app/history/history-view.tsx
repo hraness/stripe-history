@@ -27,6 +27,7 @@ import { historyTimelineStyles as styles } from "./history-timeline.stylex";
 import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
 import { publicSitePath } from "../site";
+import { historyCategoryHeading } from "../site-copy";
 
 interface HistoryViewProps {
   readonly evidence?: HistoryEvidenceSummary;
@@ -133,7 +134,7 @@ function HistoryMeasuresSidebar({
                 <span>annual volume</span>
               </Link>
             </h2>
-            <span>annual · USD</span>
+            <span>by year · USD</span>
           </figcaption>
           <ol className="history-volume-list" role="list">
             {annualVolumes.map((point) => (
@@ -169,7 +170,7 @@ function HistoryMeasuresSidebar({
                 <span>net revenue</span>
               </Link>
             </h2>
-            <span>annual · USD</span>
+            <span>by year · USD</span>
           </figcaption>
           <ol className="history-volume-list" role="list">
             {annualRevenues.map((point) => (
@@ -205,7 +206,7 @@ function HistoryMeasuresSidebar({
                 <span>valuation</span>
               </Link>
             </h2>
-            <span>annual headline · USD</span>
+            <span>one figure per year · USD</span>
           </figcaption>
           <ol className="history-volume-list history-valuation-list" role="list">
             {valuationHeadlines.map((point) => (
@@ -393,7 +394,7 @@ export function HistoryView({
   const years = groupEventsByYear(visibleEvents);
   const historyHeading = selectedCategory === undefined
     ? "Stripe company history"
-    : `Stripe ${selectedCategory.label.toLocaleLowerCase("en-US")} history`;
+    : historyCategoryHeading(selectedCategory.label);
   const orientation = selectedCategory === undefined && evidence !== undefined;
   const path = selectedCategoryId === undefined
     ? "/" as const
@@ -408,7 +409,7 @@ export function HistoryView({
       {orientation ? <HistoryOrientation evidence={evidence} /> : null}
       <section aria-labelledby="history-heading" className={`stripe-history-section ${stylex.props(styles.section).className}`} id="timeline">
         {orientation ? null : (
-          <h1 className="stripe-history-visually-hidden" id="history-heading">
+          <h1 className="history-page-title" id="history-heading">
             {historyHeading}
           </h1>
         )}
@@ -436,7 +437,7 @@ export function HistoryView({
                   <h2 className={`history-year-title ${stylex.props(styles.yearTitle).className}`} id={`history-year-${year}`}>
                     <a className={`history-year-link ${stylex.props(styles.yearLink).className}`} href={`#history-year-${year}`}>{year}</a>
                   </h2>
-                  <span {...stylex.props(styles.yearCount)}>{events.length} events</span>
+                  <span {...stylex.props(styles.yearCount)}>{events.length} {events.length === 1 ? "event" : "events"}</span>
                 </div>
                 <ol className={`history-timeline ${stylex.props(styles.timeline).className}`} role="list">
                   {events.map((event, eventIndex) => (

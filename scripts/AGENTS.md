@@ -6,6 +6,7 @@
 - `bounded-http.ts` – response-size and content-type limits.
 - `pull-latest-news.ts` – bounded weekly candidate discovery and review-digest generation.
 - `auto-publish-history.ts` – dual-pass grounded model review and deterministic history compilation.
+- `summarize-appearance.ts` – leadership-appearance digest proposals from a captured transcript.
 - `*.test.ts` – credentials, untrusted input, source inventory, and output-contract regressions.
 
 # Guidelines
@@ -15,5 +16,6 @@
 - Keep the model away from Git, files, and provider credentials. Automatic publication requires a separate grounded fact-check pass, literal evidence quotes, reviewed source and category allowlists, and deterministic compilation before committing.
 - Route valuation-only claims, leadership appearances, old events, ambiguous evidence, untrusted-monitor-only candidates, and anything outside the automatic policy to manual review. Launched founder side-quest projects from trusted monitors may publish into `side-quests` when they otherwise match policy.
 - Keep accepted records deterministic and write updates atomically.
+- Start every prompt that writes published text with `stripeHistoryPrompt` from `lib/generation-style.ts`, which adds the shared `hraness-generation-style/v1` block and the form rules. When a prompt changes, bump its version: the weekly prompts in `public/research/publication-policy.yml`, with the previous version kept under `historical_*`, and the Sessions and appearance prompts in their exported version constants and gateway tags. Read a sample of real outputs before relying on the new version.
 - Keep the ordinary research audit self-contained. Require an explicit `--capture-root` before verifying external retained evidence.
 - Do not restore the retired embedded-source migrator. The published corpus is source-ID-only; strict history and research schemas, catalog resolution, and the corpus audit are its continuing executable boundary.

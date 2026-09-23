@@ -55,6 +55,27 @@ export interface ValuationHeadlineRow {
   readonly statusLabel: string;
 }
 
+function latestValuationSource(
+  mechanism: string,
+  basis: ValuationObservation["valuation"]["basis"],
+): string {
+  const withArticle = `${indefiniteArticle(mechanism)} ${mechanism}`;
+  switch (basis) {
+    case "common-stock-409a":
+      return `the common-stock value in ${withArticle}`;
+    case "market-indication":
+      return `a market indication from ${withArticle}`;
+    case "post-money":
+      return `the post-money value of ${withArticle}`;
+    case "pre-money":
+      return `the pre-money value of ${withArticle}`;
+    case "transaction-implied":
+      return `implied by ${withArticle}`;
+    case "unspecified":
+      return `from ${withArticle}`;
+  }
+}
+
 function indefiniteArticle(phrase: string): "a" | "an" {
   return /^[aeiou]/iu.test(phrase) ? "an" : "a";
 }
@@ -91,17 +112,23 @@ export function deriveValuationPageSeo(
   const yearRange = valuationYearRange(headlines);
   const latestMechanism = mechanismLabel[latestObservation.mechanism];
   const latestStatus = statusLabel[latestObservation.status];
-  const latestBasis = basisLabel[latestObservation.valuation.basis];
+  const latestSource = latestValuationSource(
+    latestMechanism,
+    latestObservation.valuation.basis,
+  );
+  const firstYear = headlines[0]?.calendarYear;
   return {
     description:
-      `Stripe valuation history from its early venture rounds through the ${latestHeadline.display} ${latestHeadline.calendarYear} ${latestMechanism}, with sourced financing, tender, 409A, investor-secondary, and market observations.`,
+      `Stripe’s private valuation by year, from early venture rounds to the ${latestHeadline.display} ${latestHeadline.calendarYear} ${latestMechanism}, with each figure’s type and source labeled.`,
     lead: [
-      `Stripe’s latest sourced private-company valuation headline is ${latestHeadline.display} in ${latestHeadline.calendarYear}, from ${indefiniteArticle(latestMechanism)} ${latestMechanism} with ${latestStatus} status, recorded as ${latestBasis}.`,
-      `This page selects one observation per year from ${yearRange}.`,
-      "Financing, tender, 409A, secondary, and market-indication figures are not interchangeable.",
+      `Stripe’s latest sourced valuation is ${latestHeadline.display} in ${latestHeadline.calendarYear}, ${latestSource} (${latestStatus}).`,
+      firstYear === latestHeadline.calendarYear
+        ? `The chart shows one observation for ${firstYear}.`
+        : `The chart shows at most one observation per year from ${firstYear} to ${latestHeadline.calendarYear}.`,
+      "Financing rounds, tender offers, 409A appraisals, secondary trades, and market signals measure different things, so each figure keeps its label.",
       independenceSentence,
     ].join(" "),
-    title: `Stripe Valuation History by Year, ${yearRange}`,
+    title: `Stripe valuation history by year, ${yearRange}`,
     yearRange,
   };
 }

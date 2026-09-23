@@ -41,7 +41,7 @@ export default function OpenGraphImage() {
               maxWidth: "940px",
             }}
           >
-            Stripe company history
+            A dated, sourced timeline of the company
           </div>
         </div>
       </div>

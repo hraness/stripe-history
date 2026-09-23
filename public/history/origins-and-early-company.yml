@@ -78,7 +78,7 @@ events:
       - label: Approximate launch team
         value: 8 people
       - label: User-to-employee hires
-        value: 4-5 people
+        value: 4–5 people
         context: Patrick Collison's recollection in a 2012 interview.
     tags:
       - launch
@@ -95,7 +95,7 @@ events:
     confidence: confirmed
     amount:
       currency: USD
-      display: $10,000-$20,000 for stripe.com
+      display: $10,000–$20,000 for stripe.com
     people:
       - Patrick Collison
       - John Collison
@@ -201,7 +201,7 @@ events:
     date: 2009-10
     date_precision: month
     title: YC Startup School prompts the decision to build payments infrastructure
-    summary: After attending Y Combinator's Startup School in Berkeley, Patrick and John Collison discussed the difficulty of accepting payments online. On the walk back from dinner, John argued that they should build a prototype themselves, turning Patrick's 'SliceHost for payments' idea into a concrete project.
+    summary: After attending Y Combinator's Startup School in Berkeley, Patrick and John Collison discussed the difficulty of accepting payments online. On the walk back from dinner, John argued that they should build a prototype themselves, turning Patrick's “SliceHost for payments” idea into a concrete project.
     confidence: confirmed
     people:
       - Patrick Collison
@@ -319,7 +319,7 @@ events:
     date: "2006"
     date_precision: year
     title: Patrick starts at MIT as John uses transition year to build with him
-    summary: Patrick Collison began studying at MIT at 17. John Collison, then 16, used Ireland's transition year to align his schedule with Patrick's and work on internet-business ideas, creating the opening that led to their first startup together.
+    summary: Patrick Collison began studying at MIT at 17. John Collison, then 16, used Ireland's transition year to align his schedule with Patrick's and work with him on internet-business ideas.
     confidence: confirmed
     people:
       - Patrick Collison
@@ -340,7 +340,7 @@ events:
     date_precision: month
     title: Patrick makes his first US trip for a Lisp conference
     status: Approximate month based on the conference season
-    summary: As a teenager, Patrick Collison traveled to Stanford for the International Lisp Conference after emailing the organizers to explain that he could not afford the trip. The visit connected his self-taught programming interests in rural Ireland with the wider software community.
+    summary: As a teenager, Patrick Collison traveled to Stanford for the International Lisp Conference after emailing the organizers to explain that he could not afford the trip.
     confidence: reported
     people:
       - Patrick Collison
@@ -360,7 +360,7 @@ events:
     date: 2005-01-14
     date_precision: day
     title: Patrick wins Ireland's Young Scientist competition
-    summary: At 16, Patrick Collison won the Esat BT Young Scientist and Technology Exhibition with CROMA, a Lisp-like programming language he designed. The award is the clearest public milestone in his technical work before college and his first startups.
+    summary: At 16, Patrick Collison won the Esat BT Young Scientist and Technology Exhibition with CROMA, a Lisp-like programming language he designed.
     confidence: confirmed
     people:
       - Patrick Collison

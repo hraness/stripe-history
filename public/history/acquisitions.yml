@@ -82,7 +82,7 @@ events:
     source_ids:
       - source-e850972d627be2bcc336
     status: Reported finalized agreement; completion not reported
-    summary: TechCrunch, citing Bloomberg, reported that Stripe had finalized a deal to acquire OpenRouter for more than $7 billion. Stripe declined to comment, and the report did not establish transaction completion.
+    summary: TechCrunch, citing Bloomberg, reported that Stripe had finalized a deal to acquire OpenRouter for more than $7 billion. Stripe declined to comment, and the report did not say the deal had closed.
     tags:
       - acquisition
       - artificial-intelligence

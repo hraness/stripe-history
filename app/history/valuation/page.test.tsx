@@ -55,15 +55,15 @@ describe("hraness.com/stripe valuation history", () => {
       lead: expect.stringMatching(
         /\$200 billion in 2027.*not affiliated with, endorsed by, or operated by/su,
       ),
-      title: "Stripe Valuation History by Year, 2011–2027",
+      title: "Stripe valuation history by year, 2011–2027",
       yearRange: "2011–2027",
     });
     expect(updatedMetadata).toMatchObject({
       description: expect.stringContaining("$200 billion 2027 company tender"),
       openGraph: {
-        title: "Stripe Valuation History by Year, 2011–2027 | hraness.com/stripe",
+        title: "Stripe valuation history by year, 2011–2027 | hraness.com/stripe",
       },
-      title: "Stripe Valuation History by Year, 2011–2027",
+      title: "Stripe valuation history by year, 2011–2027",
     });
     expect(updatedSeo).not.toEqual(priorSeo);
   });
@@ -114,7 +114,7 @@ describe("hraness.com/stripe valuation history", () => {
     expect(html).toContain("transaction status");
     expect(html).toContain("Sep 2025");
     expect(html).toContain("Sep 23, 2025");
-    expect(html).toContain("source authority");
+    expect(html).toContain("then the more authoritative source");
     expect(html).toContain("Missing years stay missing");
     expect(html).toContain('href="/history/payment-volume"');
     expect(html).toContain('href="/history/net-revenue"');

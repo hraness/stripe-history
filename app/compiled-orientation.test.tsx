@@ -28,7 +28,7 @@ test("compiled evidence slots bind four columns locally and retain rich Link/tim
   expect(html).toContain('href="#timeline">Browse the timeline</a>');
   expect(html).toContain('href="/data">Download the data</a>');
   expect(html).toContain('href="/about#sources-and-review">Method and limits</a>');
-  expect(html).toContain("does not claim that every timeline category was re-reviewed");
+  expect(html).toContain("Each run covers one research collection, such as founder appearances or valuation history, not the whole timeline.");
 });
 
 test("compact orientation and source disclosure use compiled geometry without raw overrides", async () => {

@@ -24,12 +24,12 @@ describe("agent markdown representations", () => {
     const history = await loadHistory();
     const page = await markdownForPath("/");
     expect(page.status).toBe(200);
-    expect(page.body).toContain(`# Stripe Company History: ${history.events.length} Sourced Events`);
+    expect(page.body).toContain(`# Stripe company history: ${history.events.length} sourced events`);
     expect(page.body).toContain("not affiliated with, endorsed by, or operated by");
     expect(page.body).toContain("## Evidence status");
     expect(page.body).toContain(`- Timeline entries: ${history.events.length}`);
-    expect(page.body).toContain(`- Canonical sources: ${history.sources.length}`);
-    expect(page.body).toContain("Review state is the latest completed structured research-ledger run");
+    expect(page.body).toContain(`- Sources: ${history.sources.length}`);
+    expect(page.body).toContain("Each run covers one research collection, such as founder appearances or valuation history, not the whole timeline.");
     expect(page.body).toContain("https://hraness.com/stripe/data");
     expect(page.body).toContain("https://hraness.com/stripe/contact#corrections-and-sources");
     expect(page.body).toContain("https://hraness.com/stripe/history/acquisitions");
@@ -82,7 +82,8 @@ describe("agent markdown representations", () => {
     expect(netRevenue.body).not.toContain("| $5.12 billion |");
 
     const about = await markdownForPath("/about");
-    expect(about.body).toContain("founder side projects and aesthetics programs");
+    expect(about.body).toContain("the founders' projects outside Stripe");
+    expect(about.body).toContain("proposed or reported.\n\n“Citations” counts");
     expect(about.body).toContain("## Evidence status");
     expect(about.body).toContain("not a count of independently corroborated claims");
     expect(about.body).toContain("https://hraness.com/stripe/research/runs.yml");

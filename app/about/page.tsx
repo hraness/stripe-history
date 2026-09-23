@@ -39,9 +39,7 @@ export const metadata: Metadata = {
   title: aboutTitle,
   description: aboutDescription,
   alternates: { canonical: absoluteSiteUrl("/about") },
-  ...socialMetadata(aboutSocialTitle, aboutDescription, "/about", {
-    alt: `About the independent Stripe company history at ${site.domain}`,
-  }),
+  ...socialMetadata(aboutSocialTitle, aboutDescription, "/about"),
 };
 
 export default async function AboutPage() {
@@ -75,7 +73,6 @@ export default async function AboutPage() {
       >
         <div className="stripe-history-section-heading">
           <h1 id="about-heading">About {site.domain}</h1>
-          <span>independent</span>
         </div>
 
         <TopicIcon slug="company-history" />
@@ -84,8 +81,8 @@ export default async function AboutPage() {
           {site.domain} is an independent, sourced guide to Stripe. It publishes
           a reverse-chronological company timeline covering acquisitions,
           products, leadership, funding, valuation, expansion, offices,
-          publishing projects, founder side projects and aesthetics programs,
-          early history, annual volume, sourced annual net-revenue disclosures, and
+          publishing projects, the founders&apos; projects outside Stripe such as
+          grant programs, early history, annual volume, sourced annual net-revenue disclosures, and
           reviewed long-form appearances by Stripe founders and senior leaders.
         </p>
 
@@ -103,21 +100,21 @@ export default async function AboutPage() {
           a transaction or event was only proposed or reported.
         </p>
         <p>
-          “Entry source links” counts the relationships between timeline entries
-          and catalog records; it is not a count of independently corroborated
-          claims. One source can support more than one entry, and one entry can
-          cite more than one source. The{" "}
+          “Citations” counts each link between a timeline entry and a source in
+          the catalog. It is not a count of independently corroborated claims:
+          one source can support more than one entry, and one entry can cite
+          more than one source. The{" "}
           <a href={publicSitePath("/research/sources.yml")}>source catalog</a>
-          {" "}keeps canonical identities reviewable.
+          {" "}lists every source.
         </p>
         <p>
-          The visible review state is the most recent completed structured run,
-          not a claim that the whole corpus was re-reviewed that day. Collection
-          coverage varies by research track. Inspect the{" "}
-          <a href={publicSitePath("/research/collections.yml")}>collection scope</a>
-          {" "}and{" "}
-          <a href={publicSitePath("/research/runs.yml")}>research-run ledger</a>
-          {" "}for the machine-readable boundaries.
+          “Last research run” is the date of the most recent completed research
+          run. Each run covers one research collection, not the whole timeline.
+          The{" "}
+          <a href={publicSitePath("/research/collections.yml")}>collection definitions</a>
+          {" "}and the{" "}
+          <a href={publicSitePath("/research/runs.yml")}>research-run log</a>,
+          both YAML, show what each run covered.
         </p>
 
         <TopicIcon slug="publications" />

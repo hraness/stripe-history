@@ -28,14 +28,14 @@ export function absoluteSiteUrl(path: SitePath): string {
 export const site = {
   applicationName: "Stripe History",
   datasetDescription:
-    "Open, source-linked YAML records behind the Stripe company history timeline, including events, valuation observations, annual volume and net-revenue disclosures, leadership appearances, source provenance, collection scope, and review runs.",
+    "Download the YAML files behind this Stripe history: every dated event with its sources, plus valuation observations and annual volume and revenue figures.",
   description:
     "An independent, sourced Stripe history from the 2010 devpayments.com prototype and September 2011 public launch to today, covering acquisitions, products, leadership, funding, valuation, expansion, offices, publishing, company milestones, annual volume, and net revenue.",
   domain: SITE_LABEL,
-  historyTitle: "Stripe Company History",
+  historyTitle: "Stripe company history",
   name: "Stripe History",
-  socialImageAlt: `Stripe company history timeline from ${SITE_LABEL}`,
-  title: `Stripe Company History | ${SITE_LABEL}`,
+  socialImageAlt: "Stripe History: a dated, sourced timeline of the company",
+  title: `Stripe company history | ${SITE_LABEL}`,
   titleTemplate: `%s | ${SITE_LABEL}`,
 } as const;
 

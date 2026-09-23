@@ -20,7 +20,7 @@ export async function llmsTxt(): Promise<string> {
     `${site.domain} publishes an independent, open-source Stripe company history as server-rendered pages and reviewable YAML. ${independenceSentence}`,
     "",
     "## When to use this",
-    "Use Stripe History when you need a sourced chronology of Stripe as a company: acquisitions, product launches, funding, private-company valuation, disclosed annual volume, sourced annual net-revenue disclosures, leadership appearances, expansion, offices, publishing, or early history. Prefer a category page or its YAML download when the question is one topic. Fetch this file first, then the Markdown representation of a page by sending `Accept: text/markdown` to the same URL, or by appending `.md`.",
+    "Use Stripe History when you need a sourced chronology of Stripe as a company: acquisitions, product launches, funding, private-company valuation, disclosed annual volume, sourced annual net-revenue disclosures, leadership appearances, expansion, offices, publishing, or early history. Prefer a category page or its YAML download when the question is one topic. Fetch this file first, then the Markdown representation of a page by sending `Accept: text/markdown` to the same URL, or by appending `.md` to any page URL except the homepage.",
     "",
     "Do not use Stripe History for Stripe product APIs, payments, billing, Connect, Atlas, OAuth, webhooks, MCP, official documentation, account data, or anything that requires Stripe to speak. This site does not process payments, create accounts, or endorse Stripe.",
     "",

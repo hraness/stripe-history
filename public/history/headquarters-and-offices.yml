@@ -245,8 +245,8 @@ events:
     confidence: reported
     status: Engineering office established; later designated a global hub
     details:
-      - label: Date basis
-        value: Year precision because contemporary reporting documents setup in October 2016 rather than a definitive opening day
+      - label: Reported setup
+        value: October 2016
     locations:
       - Seattle, Washington
     organizations:
@@ -348,7 +348,7 @@ events:
     date: "2014"
     date_precision: year
     title: Stripe opens its first London office in Shoreditch
-    summary: Stripe opened its first London office in Shoreditch in 2014, one year after launching in the United Kingdom. The local base became the foundation for Stripe's largest market outside the United States.
+    summary: Stripe opened its first London office in Shoreditch in 2014, one year after launching in the United Kingdom. In May 2024, Stripe said the UK was its second-largest market.
     confidence: confirmed
     status: Country office opened
     locations:

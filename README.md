@@ -1,10 +1,10 @@
 # Stripe History
 
-[Stripe History on Hraness](https://hraness.com/stripe) is an independent, open-source timeline of Stripe company history, with sourced data on products, acquisitions, funding, valuation, leadership, expansion, milestones, and annual payment volume.
+[Stripe History](https://hraness.com/stripe) is an independent, open-source timeline of Stripe company history. Every event links to its sources, and the data behind the site is open YAML.
 
-The site renders hundreds of sourced events as one reverse-chronological history and as focused, crawlable category pages. It also presents sourced annual payment-volume, net-revenue, and private-company valuation records. Each claim retains reviewable YAML provenance, including status and uncertainty where they apply.
+The site shows every event on one reverse-chronological timeline and on a page for each category, such as acquisitions, product launches, and fundraising. Separate pages chart Stripe's annual payment volume, its revenue, and its private valuation by year. Each event's YAML record keeps its status and any uncertainty, such as whether a deal was reported, announced, or completed.
 
-Open Sources and review on the homepage for an evidence snapshot generated from the checked corpus: exact timeline-entry, entry-source-link, and canonical-source counts, plus the date of the latest completed structured research-ledger run. That review-state date is deliberately narrow; it does not claim every category was re-reviewed that day. The same surface links directly to the [method and limits](https://hraness.com/stripe/about#sources-and-review), [YAML exports](https://hraness.com/stripe/data), and [correction instructions](https://hraness.com/stripe/contact#corrections-and-sources).
+The homepage's “Sources and review” panel shows how many entries, citations, and sources the timeline has, and the date of the most recent research run. It links to the [method and limits](https://hraness.com/stripe/about#sources-and-review), the [YAML downloads](https://hraness.com/stripe/data), and [how to report a correction](https://hraness.com/stripe/contact#corrections-and-sources).
 
 ## Browse the history
 
@@ -63,13 +63,13 @@ The manual [leadership appearance backfill](./.github/workflows/appearance-backf
 bun run history:news:pull -- --from 2020-01-01 --as-of 2020-12-31 --monitor exa-stripe-leadership-appearances --json-out /tmp/stripe-appearances-2020.json --markdown-out /tmp/stripe-appearances-2020.md
 ```
 
-After capturing and reviewing a candidate's complete transcript in Jungle's KB, generate a grounded digest proposal with the strong-model summarizer:
+After capturing and reviewing a candidate's complete transcript, generate a grounded digest proposal with the strong-model summarizer:
 
 ```sh
 STRIPE_HISTORY_LLM_API_KEY=... bun run history:appearances:summarize -- --capture /absolute/path/to/capture.md --json-out /tmp/appearance-summary.json
 ```
 
-The summarizer uses `openai/gpt-5.6-sol` at `max` reasoning by default, emits a Reading-style gist and three to five ideas, and fails unless every private audit quote is an exact 6–25-word transcript passage. It never edits the appearance corpus. A reviewer reconciles the proposed digest, participant role, date, canonical source, and transcript status before adding YAML and a research-run decision.
+The summarizer uses `openai/gpt-5.6-sol` at `max` reasoning by default, emits a short summary (gist) and three to five ideas, and fails unless every private audit quote is an exact 6–25-word transcript passage. It never edits the appearance corpus. A reviewer reconciles the proposed digest, participant role, date, canonical source, and transcript status before adding YAML and a research-run decision.
 
 Preview model decisions without editing the corpus by omitting `--write`:
 

@@ -25,9 +25,7 @@ export const metadata: Metadata = {
   title: contactTitle,
   description: contactDescription,
   alternates: { canonical: absoluteSiteUrl("/contact") },
-  ...socialMetadata(contactSocialTitle, contactDescription, "/contact", {
-    alt: `Contact channels for the independent Stripe company history at ${site.domain}`,
-  }),
+  ...socialMetadata(contactSocialTitle, contactDescription, "/contact"),
 };
 
 export default function ContactPage() {
@@ -52,7 +50,6 @@ export default function ContactPage() {
       >
         <div className="stripe-history-section-heading">
           <h1 id="contact-heading">Contact {site.domain}</h1>
-          <span>public channels</span>
         </div>
         <h2 id="corrections-and-sources">Corrections and sources</h2>
         <p>

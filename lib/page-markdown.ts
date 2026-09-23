@@ -10,6 +10,10 @@ import {
   contactTitle,
   dataIntro,
   dataTitle,
+  evidenceLabels,
+  historyCategoryHeading,
+  historyCategoryTitle,
+  historyPageTitle,
   independenceSentence,
   notFoundDescription,
   notFoundTitle,
@@ -17,6 +21,7 @@ import {
   privacyParagraphs,
   privacyTitle,
   recoveryLinks,
+  researchRunNote,
 } from "@/app/site-copy";
 import {
   absoluteSiteUrl,
@@ -120,12 +125,12 @@ function evidenceStatusMarkdown(evidence: HistoryEvidenceSummary): readonly stri
   return [
     "## Evidence status",
     "",
-    `- Timeline entries: ${evidence.eventCount}`,
-    `- Entry source links: ${evidence.sourceLinkCount}`,
-    `- Canonical sources: ${evidence.canonicalSourceCount}`,
-    `- Review state: ${evidence.latestCompletedResearchRunOn ?? "not recorded"}`,
+    `- ${evidenceLabels.eventCount}: ${evidence.eventCount}`,
+    `- ${evidenceLabels.sourceLinkCount}: ${evidence.sourceLinkCount}`,
+    `- ${evidenceLabels.canonicalSourceCount}: ${evidence.canonicalSourceCount}`,
+    `- ${evidenceLabels.latestCompletedResearchRunOn}: ${evidence.latestCompletedResearchRunOn ?? "not recorded"}`,
     "",
-    "Review state is the latest completed structured research-ledger run. It does not claim that every timeline category was re-reviewed on that date.",
+    researchRunNote,
     "",
     `Actions: [method and limits](${SITE_ORIGIN}/about#sources-and-review) · [export YAML](${SITE_ORIGIN}/data) · [report a correction](${SITE_ORIGIN}/contact#corrections-and-sources)`,
     "",
@@ -140,13 +145,13 @@ function historyIndexMarkdown(
     const count = history.events.filter(({ categoryId }) => categoryId === category.id).length;
     return {
       href: `${SITE_ORIGIN}/history/${category.id}`,
-      label: `Stripe ${category.label.toLocaleLowerCase("en-US")} history`,
+      label: historyCategoryHeading(category.label),
       note: `${count} sourced events. ${category.description}`,
     };
   });
   return [
     heading(
-      `${site.historyTitle}: ${history.events.length} Sourced Events`,
+      historyPageTitle(history.events.length),
       site.description,
     ),
     independenceSentence,
@@ -193,13 +198,13 @@ function aboutMarkdown(evidence: HistoryEvidenceSummary): string {
     ...aboutSections.flatMap((section, index) => [
       `## ${section.heading}`,
       "",
-      ...section.paragraphs,
+      section.paragraphs.join("\n\n"),
       "",
       ...(index === 0 ? evidenceStatusMarkdown(evidence) : []),
     ]),
     "## Privacy",
     "",
-    ...privacyParagraphs.slice(0, 2),
+    privacyParagraphs.slice(0, 2).join("\n\n"),
     "",
     `The dedicated [privacy page](${SITE_ORIGIN}/privacy) repeats this policy.`,
     "",
@@ -209,7 +214,7 @@ function aboutMarkdown(evidence: HistoryEvidenceSummary): string {
 function privacyMarkdown(): string {
   return [
     heading(`${privacyTitle} | ${site.domain}`, privacyDescription),
-    ...privacyParagraphs,
+    privacyParagraphs.join("\n\n"),
     "",
   ].join("\n");
 }
@@ -217,7 +222,7 @@ function privacyMarkdown(): string {
 function contactMarkdown(): string {
   return [
     heading(`${contactTitle} ${site.domain}`, contactDescription),
-    ...contactParagraphs,
+    contactParagraphs.join("\n\n"),
     "",
   ].join("\n");
 }
@@ -295,7 +300,7 @@ function categoryMarkdown(
   const events = history.events.filter(({ categoryId: id }) => id === categoryId);
   return [
     heading(
-      `Stripe ${category.label} Timeline: ${events.length} Sourced Events`,
+      historyCategoryTitle(category.label, events.length),
       category.description,
     ),
     ...events.flatMap((event) => [eventMarkdown(event)]),

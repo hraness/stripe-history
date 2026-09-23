@@ -42,7 +42,7 @@ describe("Node markdown corpus handler", () => {
     expect(root.status).toBe(200);
     expect(root.headers.get("content-type")).toBe(MARKDOWN_CONTENT_TYPE);
     expect(await root.text()).toContain(
-      `# Stripe Company History: ${history.events.length} Sourced Events`,
+      `# Stripe company history: ${history.events.length} sourced events`,
     );
     expect(acquisitions.status).toBe(200);
     expect(await acquisitions.text()).toContain(

@@ -58,17 +58,17 @@ describe("hraness.com/stripe payment volume history", () => {
     expect(updatedSeo).toMatchObject({
       description: expect.stringContaining("$2.5 trillion 2026 total volume"),
       lead: expect.stringMatching(
-        /\$2\.5 trillion in 2026.*not affiliated with, endorsed by, or operated by/su,
+        /\$2\.5 trillion in total volume for 2026.*not affiliated with, endorsed by, or operated by/su,
       ),
-      title: "Stripe Payment and Total Volume by Year, 2021–2026",
+      title: "Stripe payment and total volume by year, 2021–2026",
       yearRange: "2021–2026",
     });
     expect(updatedMetadata).toMatchObject({
       description: expect.stringContaining("$2.5 trillion 2026 total volume"),
       openGraph: {
-        title: "Stripe Payment and Total Volume by Year, 2021–2026 | hraness.com/stripe",
+        title: "Stripe payment and total volume by year, 2021–2026 | hraness.com/stripe",
       },
-      title: "Stripe Payment and Total Volume by Year, 2021–2026",
+      title: "Stripe payment and total volume by year, 2021–2026",
     });
     expect(updatedSeo).not.toEqual(priorSeo);
   });
@@ -110,7 +110,9 @@ describe("hraness.com/stripe payment volume history", () => {
     expect(html).toContain("1.6%");
     expect(html).toContain("Apr 2022");
     expect(html).toContain("Feb 24, 2026");
-    expect(html).toContain("Stripe calls the 2025 figure");
+    expect(html).toContain("Stripe calls the 2022 and 2025 figures “total volume.”");
+    expect(html).toContain("Stripe reports more than $817 billion in 2022 total volume");
+    expect(html).toContain("Payment volume and total volume are different measures");
     expect(html).toContain("2021 and 2022 figures are lower bounds");
     expect(html).toContain("Missing years are not inferred");
     expect(html).toContain('href="/history/net-revenue"');
@@ -126,8 +128,8 @@ describe("hraness.com/stripe payment volume history", () => {
     expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
       html.indexOf('data-filter-id="payment-volume"'),
     );
-    expect(html.indexOf('yearly disclosures')).toBeLessThan(html.indexOf("volume by year"));
-    expect(html.indexOf("volume by year")).toBeLessThan(html.indexOf("disclosures and sources"));
+    expect(html.indexOf('yearly disclosures')).toBeLessThan(html.indexOf('id="payment-volume-chart-heading"'));
+    expect(html.indexOf('id="payment-volume-chart-heading"')).toBeLessThan(html.indexOf("disclosures and sources"));
     expect(html).not.toContain('class="stripe-history-selector"');
     expect(html).toMatch(/class="hraness-marketing-header [^"]*\bstripe-history-header\b[^"]*"/u);
     expect(html).toMatch(/href="\/stripe\/about"[^>]*>about<\/a>/u);

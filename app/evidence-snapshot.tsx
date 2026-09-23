@@ -1,6 +1,8 @@
 import type { HistoryEvidenceSummary } from "@/lib/content";
 import Link from "next/link";
 
+import { evidenceLabels, researchRunNote } from "./site-copy";
+
 export function formatReviewDate(value: string): string {
   return new Intl.DateTimeFormat("en-US", {
     day: "numeric",
@@ -19,19 +21,19 @@ export function EvidenceSnapshot({
     <div className="stripe-history-evidence">
       <dl aria-label="Current evidence snapshot">
         <div>
-          <dt>timeline entries</dt>
+          <dt>{evidenceLabels.eventCount.toLocaleLowerCase("en-US")}</dt>
           <dd>{summary.eventCount}</dd>
         </div>
         <div>
-          <dt>entry source links</dt>
+          <dt>{evidenceLabels.sourceLinkCount.toLocaleLowerCase("en-US")}</dt>
           <dd>{summary.sourceLinkCount}</dd>
         </div>
         <div>
-          <dt>canonical sources</dt>
+          <dt>{evidenceLabels.canonicalSourceCount.toLocaleLowerCase("en-US")}</dt>
           <dd>{summary.canonicalSourceCount}</dd>
         </div>
         <div>
-          <dt>review state</dt>
+          <dt>{evidenceLabels.latestCompletedResearchRunOn.toLocaleLowerCase("en-US")}</dt>
           <dd>
             {reviewDate === undefined
               ? "not recorded"
@@ -40,12 +42,11 @@ export function EvidenceSnapshot({
         </div>
       </dl>
       <p className="stripe-history-evidence-note">
-        Review state is the latest completed structured research-ledger run. It
-        does not claim that every timeline category was re-reviewed on that date.
+        {researchRunNote}
       </p>
       <nav aria-label="Evidence actions" className="stripe-history-evidence-actions">
         <ul role="list">
-          <li><Link href="/about#sources-and-review">Method &amp; limits</Link></li>
+          <li><Link href="/about#sources-and-review">Method and limits</Link></li>
           <li><Link href="/data">Export YAML</Link></li>
           <li>
             <Link href="/contact#corrections-and-sources">
