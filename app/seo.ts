@@ -1,4 +1,4 @@
-import type { HistoryCollection } from "@/lib/content";
+import { APPEARANCES_CATEGORY, type HistoryCollection } from "@/lib/content";
 
 import {
   GITHUB_REPOSITORY_URL,
@@ -254,8 +254,7 @@ export function appearanceCollectionJsonLd(history: HistoryCollection) {
     "@id": `${url}#collection`,
     url,
     name: "Stripe Leadership Appearances",
-    description:
-      "Reviewed podcasts, interviews, talks, and testimony from Stripe founders and senior leaders, with source-linked summaries and transcripts when available.",
+    description: APPEARANCES_CATEGORY.description,
     inLanguage: "en-US",
     isPartOf: { "@id": `${absoluteSiteUrl("/")}#website` },
     publisher: publisherJsonLd,

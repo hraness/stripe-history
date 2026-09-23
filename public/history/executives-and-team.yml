@@ -75,8 +75,8 @@ events:
     organizations:
       - Stripe
     details:
-      - label: Date basis
-        value: The Org reports May 2024, but Stripe's leadership page confirms the role without an appointment month; this record therefore uses year precision.
+      - label: Appointment month
+        value: The Org reports May 2024; Stripe's leadership page gives no month
     tags:
       - executive-appointment
       - people
@@ -148,7 +148,7 @@ events:
     date: 2022-11
     date_precision: month
     title: Jeff Titterton becomes chief marketing officer
-    summary: Stripe appointed Jeff Titterton chief marketing officer after his tenure as Zendesk's chief operating officer. His remit placed global marketing and brand leadership under an executive with prior product and operating experience.
+    summary: Stripe appointed Jeff Titterton chief marketing officer after his tenure as Zendesk's chief operating officer.
     confidence: reported
     people:
       - Jeff Titterton

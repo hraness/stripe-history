@@ -10,12 +10,9 @@ import type { Metadata } from "next";
 import { HistoryView } from "./history/history-view";
 import { historyCollectionJsonLd } from "./seo";
 import { absoluteSiteUrl, site, socialMetadata } from "./site";
+import { historyPageTitle as historyTitle } from "./site-copy";
 
 export const dynamic = "force-static";
-
-function historyTitle(eventCount: number): string {
-  return `${site.historyTitle}: ${eventCount} Sourced Events`;
-}
 
 export async function generateMetadata(): Promise<Metadata> {
   const history = await loadHistory();

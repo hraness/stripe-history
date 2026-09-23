@@ -28,9 +28,9 @@ describe("hraness.com/stripe public identity", () => {
     expect(site).toMatchObject({
       applicationName: "Stripe History",
       domain: "hraness.com/stripe",
-      historyTitle: "Stripe Company History",
+      historyTitle: "Stripe company history",
       name: "Stripe History",
-      title: "Stripe Company History | hraness.com/stripe",
+      title: "Stripe company history | hraness.com/stripe",
     });
     expect(site.description).toContain("independent, sourced Stripe history");
   });

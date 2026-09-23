@@ -13,8 +13,8 @@ import {
   site,
   socialMetadata,
 } from "../site";
+import { dataIntro, dataTitle } from "../site-copy";
 
-const dataTitle = "Stripe Company History Dataset";
 const dataDescription = site.datasetDescription;
 
 export const dynamic = "force-static";
@@ -23,9 +23,7 @@ export const metadata: Metadata = {
   title: dataTitle,
   description: dataDescription,
   alternates: { canonical: absoluteSiteUrl("/data") },
-  ...socialMetadata(`${dataTitle} | ${site.domain}`, dataDescription, "/data", {
-    alt: `Open Stripe company history data from ${site.domain}`,
-  }),
+  ...socialMetadata(`${dataTitle} | ${site.domain}`, dataDescription, "/data"),
 };
 
 export default async function DataPage() {
@@ -61,12 +59,7 @@ export default async function DataPage() {
           <span>{history.events.length} sourced events</span>
         </div>
         <p className="stripe-history-data-intro">
-          These reviewable YAML files power the public timeline, valuation
-          record, and net-revenue record. History entries preserve chronology,
-          category, summary, confidence, and status when applicable; the
-          research files preserve canonical source identities, valuation
-          observations, leadership appearances, collection scope, and review
-          runs. The dataset and website code are
+          {dataIntro} The dataset and website code are
           available under the MIT License in the{" "}
           <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>.
         </p>
@@ -118,7 +111,7 @@ export default async function DataPage() {
                 <Link href="/history/payment-volume">
                   annual payment and total volume record
                 </Link>{" "}
-                charts disclosed figures on a normal linear scale.
+                charts each disclosed figure on a linear scale.
               </dd>
             </div>
             <div>
@@ -128,9 +121,9 @@ export default async function DataPage() {
                 <Link href="/history/net-revenue">
                   net-revenue record
                 </Link>{" "}
-                charts sourced company full-year figures on a normal linear
-                scale. The annual disclosures live on company-milestone events.
-                Missing years stay missing.
+                charts sourced company full-year figures on a linear scale.
+                Each figure comes from an event in the company milestones
+                category, and years without a disclosed figure are left out.
               </dd>
             </div>
             <div>

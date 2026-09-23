@@ -12,10 +12,8 @@ events:
         value: Non-AI SaaS companies with payments processed through Stripe
       - label: Method
         value: Weekly, same-business indices based on pay-in volume
-      - label: Interpretation
-        value: A measure of gross SaaS demand trends, not a replacement for an income statement
-      - label: Publication plan
-        value: The indices will be hosted and updated online
+      - label: Limits
+        value: Tracks gross SaaS demand trends and does not replace an income statement
     id: stripe-economics-introduces-the-stripe-saas-index
     metrics:
       - context: Flagship aggregate index so far in 2026
@@ -28,7 +26,7 @@ events:
       - Ernie Tedeschi
     source_ids:
       - source-ec1ad6d84c91062e9d20
-    status: Index introduced; updates planned
+    status: introduced
     summary: Stripe Economics introduced the Stripe SaaS Index, a weekly same-business measure based on pay-in volumes processed through Stripe for non-AI SaaS companies. Its flagship aggregate index covered an average of 72,000 businesses per week in 2026 to date. The publication said it would host and update the indices online.
     tags:
       - stripe-economics
@@ -120,7 +118,7 @@ events:
     source_ids:
       - source-2b9798bb1521325a716a
     status: Podcast launched
-    summary: Stripe released the trailer for Cheeky Pint, a long-form technology interview podcast hosted by John Collison. The show extended Stripe's editorial work into a conversational audio and video format.
+    summary: Stripe released the trailer for Cheeky Pint, a long-form technology interview podcast hosted by John Collison.
     tags:
       - cheeky-pint
       - podcast

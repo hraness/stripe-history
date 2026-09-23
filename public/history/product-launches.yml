@@ -755,8 +755,8 @@ events:
     details:
       - label: Launch kind
         value: New fraud-prevention product
-      - label: Date note
-        value: Stripe identifies the launch as fall 2016; this record uses month precision
+      - label: Launch timing
+        value: Stripe describes the launch as fall 2016
     metrics:
       - label: Businesses at launch
         value: 100,000+

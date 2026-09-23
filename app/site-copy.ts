@@ -24,7 +24,33 @@ export const contactSocialTitle = `Contact ${site.domain}`;
 export const contactDescription =
   `How to send a correction, source, or security report for the independent Stripe company history at ${site.domain}.`;
 
-export const dataTitle = "Stripe Company History Dataset";
+export const dataTitle = "Stripe company history dataset";
+
+function sourcedEventCount(eventCount: number): string {
+  return `${eventCount} sourced ${eventCount === 1 ? "event" : "events"}`;
+}
+
+export function historyPageTitle(eventCount: number): string {
+  return `${site.historyTitle}: ${sourcedEventCount(eventCount)}`;
+}
+
+export function historyCategoryHeading(label: string): string {
+  return `Stripe ${label.toLocaleLowerCase("en-US")} history`;
+}
+
+export function historyCategoryTitle(label: string, eventCount: number): string {
+  return `${historyCategoryHeading(label)}: ${sourcedEventCount(eventCount)}`;
+}
+
+export const evidenceLabels = {
+  canonicalSourceCount: "Sources",
+  eventCount: "Timeline entries",
+  latestCompletedResearchRunOn: "Last research run",
+  sourceLinkCount: "Citations",
+} as const;
+
+export const researchRunNote =
+  "“Last research run” is the date of the most recent completed research run. Each run covers one research collection, such as founder appearances or valuation history, not the whole timeline.";
 
 export const independenceSentence =
   `${site.domain} is not affiliated with, endorsed by, or operated by Stripe, Inc. Stripe names and trademarks belong to their respective owners.`;
@@ -43,15 +69,15 @@ export const aboutSections = [
   {
     heading: "Stripe company history",
     paragraphs: [
-      `${site.domain} is an independent, sourced guide to Stripe. It publishes a reverse-chronological company timeline covering acquisitions, products, leadership, funding, valuation, expansion, offices, publishing projects, founder side projects and aesthetics programs, early history, annual volume, sourced annual net-revenue disclosures, and reviewed long-form appearances by Stripe founders and senior leaders.`,
+      `${site.domain} is an independent, sourced guide to Stripe. It publishes a reverse-chronological company timeline covering acquisitions, products, leadership, funding, valuation, expansion, offices, publishing projects, the founders' projects outside Stripe such as grant programs, early history, annual volume, sourced annual net-revenue disclosures, and reviewed long-form appearances by Stripe founders and senior leaders.`,
     ],
   },
   {
     heading: "Sources and review",
     paragraphs: [
       "Every history entry resolves to at least one cataloged source. Review prefers primary material and filings, uses strong contemporaneous reporting where necessary, checks chronology, category placement, source support, and duplicate claims, and preserves uncertainty when a transaction or event was only proposed or reported.",
-      `“Entry source links” counts the relationships between timeline entries and catalog records; it is not a count of independently corroborated claims. One source can support more than one entry, and one entry can cite more than one source. The [source catalog](${SITE_ORIGIN}/research/sources.yml) keeps canonical identities reviewable.`,
-      `The visible review state is the most recent completed structured run, not a claim that the whole corpus was re-reviewed that day. Collection coverage varies by research track. Inspect the [collection scope](${SITE_ORIGIN}/research/collections.yml) and [research-run ledger](${SITE_ORIGIN}/research/runs.yml) for the machine-readable boundaries.`,
+      `“Citations” counts each link between a timeline entry and a source in the catalog. It is not a count of independently corroborated claims: one source can support more than one entry, and one entry can cite more than one source. The [source catalog](${SITE_ORIGIN}/research/sources.yml) lists every source.`,
+      `“Last research run” is the date of the most recent completed research run. Each run covers one research collection, not the whole timeline. The [collection definitions](${SITE_ORIGIN}/research/collections.yml) and the [research-run log](${SITE_ORIGIN}/research/runs.yml), both YAML, show what each run covered.`,
     ],
   },
   {
@@ -93,4 +119,4 @@ export const contactParagraphs = [
 ] as const;
 
 export const dataIntro =
-  "These reviewable YAML files power the public timeline, valuation record, and net-revenue record. History entries preserve chronology, category, summary, confidence, and status when applicable; the research files preserve canonical source identities, valuation observations, leadership appearances, collection scope, and review runs.";
+  "These YAML files hold the data behind the timeline and the valuation, volume, and revenue pages. Each history entry has a date, title, category, summary, confidence level, and at least one source, plus a status where one applies. The research files hold the source catalog, valuation observations, leadership appearances, the definition of each research collection, and the log of research runs.";

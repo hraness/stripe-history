@@ -33,7 +33,7 @@ describe("hraness.com/stripe category history", () => {
     expect(appearanceCount).toBe(history.appearances.length);
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/history/appearances" },
-      title: `Stripe Appearances Timeline: ${appearanceCount} Sourced Events`,
+      title: `Stripe appearances history: ${appearanceCount} sourced events`,
     });
     expect(html.match(/data-category="appearances"/gu)).toHaveLength(appearanceCount);
     expect(html).toContain('data-filter-id="appearances"');
@@ -59,12 +59,31 @@ describe("hraness.com/stripe category history", () => {
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/history/acquisitions" },
       description: "Completed acquisitions, talent acquisitions, announced agreements, and credibly reported deal discussions involving Stripe.",
-      title: `Stripe Acquisitions Timeline: ${acquisitionCount} Sourced Events`,
+      title: `Stripe acquisitions history: ${acquisitionCount} sourced events`,
     });
     expect(metadata.openGraph).toMatchObject({
-      title: `Stripe Acquisitions Timeline: ${acquisitionCount} Sourced Events | hraness.com/stripe`,
+      title: `Stripe acquisitions history: ${acquisitionCount} sourced events | hraness.com/stripe`,
       url: "https://hraness.com/stripe/history/acquisitions",
     });
+  });
+
+  test("keeps multi-word category titles in one consistent case", async () => {
+    const history = await loadHistory();
+    for (const category of history.categories) {
+      const count = history.events.filter(
+        ({ categoryId }) => categoryId === category.id,
+      ).length;
+      const metadata = await generateMetadata({
+        params: Promise.resolve({ category: category.id }),
+      });
+      expect(metadata.title).toBe(
+        `Stripe ${category.label.toLocaleLowerCase("en-US")} history: ${count} sourced events`,
+      );
+    }
+    const origins = await generateMetadata({
+      params: Promise.resolve({ category: "origins-and-early-company" }),
+    });
+    expect(origins.title).toMatch(/^Stripe origins and early company history: \d+ sourced events$/u);
   });
 
   test("renders a crawlable category-only timeline", async () => {
@@ -80,11 +99,15 @@ describe("hraness.com/stripe category history", () => {
 
     expect(eventCount).toBe(acquisitionCount);
     expect(categorizedEventCount).toBe(eventCount);
-    expect(html).toContain('<h1 class="stripe-history-visually-hidden" id="history-heading">Stripe acquisitions history</h1>');
+    expect(html).toContain('<h1 class="history-page-title" id="history-heading">Stripe acquisitions history</h1>');
     expect(html).toContain(`aria-current="true" aria-label="acquisitions: ${acquisitionCount} events, selected; activate to show all history" data-analytics-event="history filter selected" data-analytics-id="all"`);
     expect(html).toMatch(/data-filter-id="acquisitions"[^>]* href="\/"/u);
     expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
       html.indexOf('data-filter-id="acquisitions"'),
+    );
+    expect(html).not.toContain('class="stripe-history-visually-hidden"');
+    expect(html.indexOf('id="history-heading"')).toBeLessThan(
+      html.indexOf('data-filter-id="all"'),
     );
     expect(html).not.toContain("Loading Stripe company history");
     expect(html).toContain("Stripe reportedly discusses acquiring OpenRouter");

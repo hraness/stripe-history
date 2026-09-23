@@ -50,7 +50,7 @@ describe("published YAML corpus", () => {
         categoryId: "company-milestones",
         display: "$817 billion+",
         eventId: "milestone-2023-2022-volume-817-billion",
-        kind: "payment-volume",
+        kind: "total-volume",
         qualifier: "lower-bound",
         valueUsd: 817_000_000_000,
       },

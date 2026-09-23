@@ -319,9 +319,10 @@ export default async function ValuationPage() {
               evidence order: financing or tender with signed, confirmed, or
               completed terms; internal 409A mark; completed investor
               secondary; then reported or unfinalized financing and market
-              indications. Within the same tier, transaction status,
-              confidence, source authority, and stated rather than inferred
-              values rank before observation date. Missing years stay missing,
+              indications. Within a tier, the chart prefers the stronger
+              transaction status, then the higher confidence, then the more
+              authoritative source, then a stated figure over an inferred one,
+              then the later observation date. Missing years stay missing,
               and the chart never carries a prior value forward.
             </p>
             <p>

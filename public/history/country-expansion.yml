@@ -1,7 +1,7 @@
 category:
   id: country-expansion
   label: Country expansion
-  description: Stripe market launches and material geographic expansions, with beta, invite-only, and full-stack availability kept distinct.
+  description: When Stripe opened to businesses in new countries or expanded there, with beta, invite-only, and full launches labeled separately.
   order: 5
 events:
   - id: country-2022-thailand-general-availability
@@ -38,8 +38,6 @@ events:
         value: Croatia, Gibraltar, and Liechtenstein
       - label: Product scope
         value: Payments, subscriptions, fraud management, and related Stripe tools
-      - label: Total caution
-        value: Stripe did not publish a new global market total in this changelog item
     locations:
       - Croatia
       - Gibraltar
@@ -90,8 +88,8 @@ events:
     details:
       - label: Local payment method
         value: Boleto Bancario
-      - label: Scope caution
-        value: The recap described expansion without claiming identical product availability across every market
+      - label: Scope
+        value: The recap described an expansion; it did not claim the same product availability in every market
     locations:
       - Brazil
     organizations:
@@ -169,9 +167,6 @@ events:
     confidence: confirmed
     status: launched
     summary: Stripe counted Hungary among six European markets launched since the previous Sessions conference, although its 2021 recap did not give a precise launch date.
-    details:
-      - label: Date basis
-        value: Year precision because the Sessions recap grouped the launch with other markets without a day
     locations:
       - Hungary
     organizations:
@@ -300,8 +295,6 @@ events:
         value: Invite-only for a small group of businesses
       - label: Local capability
         value: Indian bank-account connection and rupee payouts were part of the local operating goal
-      - label: Current caution
-        value: The historical beta should not be read as evidence of unrestricted present-day signup
     locations:
       - India
     organizations:
@@ -472,10 +465,7 @@ events:
     date_precision: year
     confidence: confirmed
     status: launched
-    summary: Stripe launched in Japan in 2016, establishing a local market that later became a major base for enterprise and Japan-specific product development.
-    details:
-      - label: Date basis
-        value: Stripe's 2024 retrospective confirms the year but does not state a launch day
+    summary: Stripe launched in Japan in 2016. In July 2024, Stripe said it served many of Japan's leading enterprises, including Toyota, Nikkei, and ANA Group.
     locations:
       - Japan
     organizations:
@@ -495,8 +485,6 @@ events:
     details:
       - label: New markets
         value: Denmark, Finland, Norway, and Sweden
-      - label: Date basis
-        value: Month precision because contemporaneous coverage described a launch week rather than one shared availability day
       - label: Availability basis
         value: A 2017 market review described all four countries as fully available before Stripe's next European expansion
     locations:

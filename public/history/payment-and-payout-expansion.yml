@@ -1,7 +1,7 @@
 category:
   id: payment-and-payout-expansion
   label: Payment and payout expansion
-  description: Material additions and contractions in the payment methods, settlement rails, and payout reach available through Stripe.
+  description: Payment methods, settlement options, and payout destinations Stripe added over time, and the ones it dropped, such as Bitcoin in 2018.
   order: 6
 events:
   - id: payment-2026-global-payouts-expanded-preview
@@ -17,7 +17,7 @@ events:
       - label: Stablecoin reach
         value: Previewed for recipients in 160 countries
       - label: Availability
-        value: Preview; the figures should not be read as fully launched coverage
+        value: Preview; the country counts describe previewed coverage, not general availability
     metrics:
       - label: Fiat recipient countries
         value: 100+
@@ -307,7 +307,7 @@ events:
         value: UnionPay, WeChat Pay, Konbini, and GrabPay
       - label: Roadmap examples
         value: PayNow, PromptPay, UPI, and PayTo were described as upcoming rather than launched
-      - label: Availability caution
+      - label: Availability
         value: Method eligibility depended on merchant and buyer location
     metrics:
       - label: Payment methods
@@ -388,8 +388,6 @@ events:
     details:
       - label: Example merchant markets
         value: Australia, Canada, Singapore, United States, Hong Kong, United Kingdom, and the European Union
-      - label: Availability caution
-        value: The announcement named more than 30 merchant markets rather than universal availability
     metrics:
       - label: Merchant markets
         value: 30+

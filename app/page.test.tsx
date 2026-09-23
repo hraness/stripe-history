@@ -14,7 +14,7 @@ describe("canonical hraness.com/stripe history", () => {
   test("publishes root-canonical history metadata", async () => {
     const history = await loadHistory();
     const metadata = await generateMetadata();
-    const expectedTitle = `Stripe Company History: ${history.events.length} Sourced Events`;
+    const expectedTitle = `Stripe company history: ${history.events.length} sourced events`;
 
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe" },
@@ -64,17 +64,18 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).toMatch(/<details class="history-source-details [^"]+"><summary class="[^"]+">Sources and review<\/summary>/u);
     expect(html).toMatch(/<section aria-labelledby="history-heading" class="stripe-history-section [^"]+" id="timeline">/u);
     expect(html).toContain(
-      `${history.events.length} dated events across products, funding, leadership, expansion, and scale, each linked to the source that reported it.`,
+      `The timeline lists ${history.events.length} dated events across products, funding, leadership, expansion, and scale, and links each one to its sources.`,
     );
     expect(html).toMatch(/<section aria-label="Current evidence snapshot" class="hraness-marketing-stats stripe-history-evidence-strip [^"]+"/u);
     const semanticHtml = html.replace(/ class="[^"]*"/gu, "");
     expect(semanticHtml).toContain(`<dt>Timeline entries</dt><dd><strong>${evidence.eventCount}</strong></dd>`);
-    expect(semanticHtml).toContain(`<dt>Entry source links</dt><dd><strong>${evidence.sourceLinkCount}</strong></dd>`);
-    expect(semanticHtml).toContain(`<dt>Canonical sources</dt><dd><strong>${evidence.canonicalSourceCount}</strong></dd>`);
+    expect(semanticHtml).toContain(`<dt>Citations</dt><dd><strong>${evidence.sourceLinkCount}</strong></dd>`);
+    expect(semanticHtml).toContain(`<dt>Sources</dt><dd><strong>${evidence.canonicalSourceCount}</strong></dd>`);
+    expect(semanticHtml).toContain("<dt>Last research run</dt>");
     expect(html).toContain(
       `<time dateTime="${evidence.latestCompletedResearchRunOn}">`,
     );
-    expect(html).toContain("does not claim that every timeline category was re-reviewed");
+    expect(html).toContain("Each run covers one research collection, such as founder appearances or valuation history, not the whole timeline.");
     expect(html).toMatch(/class="hraness-marketing-action [^"]+" data-emphasis="primary" href="#timeline">Browse the timeline<\/a>/u);
     expect(html).toMatch(/class="hraness-marketing-action [^"]+" data-emphasis="secondary" href="\/data">Download the data<\/a>/u);
     expect(html).toContain('href="/about#sources-and-review">Method and limits</a>');

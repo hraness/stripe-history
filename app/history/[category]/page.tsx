@@ -15,6 +15,7 @@ import {
   historyCollectionJsonLd,
 } from "../../seo";
 import { absoluteSiteUrl, site, socialMetadata } from "../../site";
+import { historyCategoryTitle as categoryTitle } from "../../site-copy";
 import { HistoryView } from "../history-view";
 
 interface HistoryCategoryPageProps {
@@ -32,10 +33,6 @@ async function resolveCategory(categoryId: string) {
   const history = await loadHistory();
   const category = history.categories.find(({ id }) => id === categoryId);
   return category === undefined ? undefined : { category, history };
-}
-
-function categoryTitle(label: string, eventCount: number): string {
-  return `Stripe ${label} Timeline: ${eventCount} Sourced Events`;
 }
 
 export async function generateMetadata({

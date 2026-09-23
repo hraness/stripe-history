@@ -58,17 +58,17 @@ describe("hraness.com/stripe net-revenue history", () => {
     expect(updatedSeo).toMatchObject({
       description: expect.stringContaining("$9 billion 2026 revenue"),
       lead: expect.stringMatching(
-        /\$9 billion in 2026.*not affiliated with, endorsed by, or operated by/su,
+        /\$9 billion in revenue for 2026.*not affiliated with, endorsed by, or operated by/su,
       ),
-      title: "Stripe Net Revenue and Revenue by Year, 2021–2026",
+      title: "Stripe net revenue and revenue by year, 2021–2026",
       yearRange: "2021–2026",
     });
     expect(updatedMetadata).toMatchObject({
       description: expect.stringContaining("$9 billion 2026 revenue"),
       openGraph: {
-        title: "Stripe Net Revenue and Revenue by Year, 2021–2026 | hraness.com/stripe",
+        title: "Stripe net revenue and revenue by year, 2021–2026 | hraness.com/stripe",
       },
-      title: "Stripe Net Revenue and Revenue by Year, 2021–2026",
+      title: "Stripe net revenue and revenue by year, 2021–2026",
     });
     expect(updatedSeo).not.toEqual(priorSeo);
   });
@@ -116,7 +116,8 @@ describe("hraness.com/stripe net-revenue history", () => {
     expect(html).toContain("H1 2026 growth rates stay on the events");
     expect(html).toContain("publicly visible Information article does not state that quarter");
     expect(html).toContain("The Q3 2023 figure of roughly $1 billion stays on its timeline event");
-    expect(html).toContain("take rates are never computed");
+    expect(html).toContain("The page does not calculate take rates.");
+    expect(html).toContain("according to The Information");
     expect(html).toContain('href="/history/payment-volume"');
     expect(html).toContain('href="/history/valuation"');
     expect(html).toContain("bars use a linear scale");
@@ -133,8 +134,8 @@ describe("hraness.com/stripe net-revenue history", () => {
     expect(html.indexOf('data-filter-id="payment-volume"')).toBeLessThan(
       html.indexOf('data-filter-id="net-revenue"'),
     );
-    expect(html.indexOf("yearly disclosures")).toBeLessThan(html.indexOf("revenue by year"));
-    expect(html.indexOf("revenue by year")).toBeLessThan(html.indexOf("disclosures and sources"));
+    expect(html.indexOf("yearly disclosures")).toBeLessThan(html.indexOf('id="net-revenue-chart-heading"'));
+    expect(html.indexOf('id="net-revenue-chart-heading"')).toBeLessThan(html.indexOf("disclosures and sources"));
     expect(html).toContain("$5.12 billion");
     expect(html).not.toContain("<td>$5.12 billion</td>");
     expect(html).not.toContain("<td>$6.9 billion</td>");

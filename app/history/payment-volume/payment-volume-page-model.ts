@@ -37,10 +37,6 @@ export interface PaymentVolumePageSeo {
   readonly yearRange: string;
 }
 
-function indefiniteArticle(phrase: string): "a" | "an" {
-  return /^[aeiou]/iu.test(phrase) ? "an" : "a";
-}
-
 function formatYearList(years: readonly number[]): string {
   const firstYear = years[0];
   if (firstYear === undefined) {
@@ -68,16 +64,16 @@ function volumeYearRange(records: readonly PaymentVolumeRecord[]): string {
 
 function seriesTitle(
   records: readonly PaymentVolumeRecord[],
-): "Payment and Total Volume" | "Payment Volume" | "Total Volume" {
+): "payment and total volume" | "payment volume" | "total volume" {
   const hasPaymentVolume = records.some(
     ({ point }) => point.kind === "payment-volume",
   );
   const hasTotalVolume = records.some(
     ({ point }) => point.kind === "total-volume",
   );
-  if (hasPaymentVolume && hasTotalVolume) return "Payment and Total Volume";
-  if (hasTotalVolume) return "Total Volume";
-  return "Payment Volume";
+  if (hasPaymentVolume && hasTotalVolume) return "payment and total volume";
+  if (hasTotalVolume) return "total volume";
+  return "payment volume";
 }
 
 function valuesStrictlyIncrease(records: readonly PaymentVolumeRecord[]): boolean {
@@ -123,7 +119,6 @@ export function derivePaymentVolumePageSeo(
   const yearRange = volumeYearRange(records);
   const firstKind = firstRecord.kindLabel;
   const latestKind = latestRecord.kindLabel;
-  const latestQualifier = latestRecord.qualifierLabel;
   const hasBothKinds = records.some(({ point }) => point.kind === "payment-volume")
     && records.some(({ point }) => point.kind === "total-volume");
   const lowerBoundYears = records
@@ -155,18 +150,19 @@ export function derivePaymentVolumePageSeo(
     description:
       `Stripe annual volume history from ${firstRecord.point.display} ${firstKind} in ${firstRecord.point.calendarYear} through the ${latestRecord.point.display} ${latestRecord.point.calendarYear} ${latestKind}, with source-linked Stripe disclosures.`,
     lead: [
-      `Stripe’s latest sourced annual volume disclosure is ${latestRecord.point.display} in ${latestRecord.point.calendarYear}, recorded as ${latestKind} with ${indefiniteArticle(latestQualifier)} ${latestQualifier}.`,
-      `This page covers disclosed calendar years from ${yearRange}.`,
+      `Stripe’s latest annual figure is ${latestRecord.point.display} in ${latestKind} for ${latestRecord.point.calendarYear}.`,
+      firstRecord === latestRecord
+        ? `This page shows the one year Stripe has disclosed.`
+        : valuesStrictlyIncrease(records)
+          ? `This page shows each year Stripe disclosed from ${firstRecord.point.calendarYear} to ${latestRecord.point.calendarYear}, and each figure is higher than the one before.`
+          : `This page shows each year Stripe disclosed from ${firstRecord.point.calendarYear} to ${latestRecord.point.calendarYear}, as published, without inferring a trend.`,
       ...(hasBothKinds
-        ? ["Payment volume and total volume are not interchangeable."]
+        ? ["Payment volume and total volume are different measures, so each figure keeps its own label."]
         : []),
-      valuesStrictlyIncrease(records)
-        ? "The disclosed values increase across every year in this series."
-        : "The series preserves each disclosed value without inferring a growth trend.",
       independenceSentence,
     ].join(" "),
     method: methodClauses.join(" "),
-    title: `Stripe ${seriesTitle(records)} by Year, ${yearRange}`,
+    title: `Stripe ${seriesTitle(records)} by year, ${yearRange}`,
     yearRange,
   };
 }

@@ -4,15 +4,13 @@ import * as stylex from "@stylexjs/stylex";
 import { orientationStyles as styles } from "./history-orientation.stylex";
 
 import { formatReviewDate } from "../evidence-snapshot";
+import { evidenceLabels, researchRunNote } from "../site-copy";
 
 export const historyHeadline = "Stripe’s history, dated and sourced";
 
 export function historyLead(eventCount: number): string {
-  return `${eventCount} dated events across products, funding, leadership, expansion, and scale, each linked to the source that reported it. Filter the timeline by category or compare the annual charts.`;
+  return `The timeline lists ${eventCount} dated events across products, funding, leadership, expansion, and scale, and links each one to its sources. Filter it by category or compare the annual charts.`;
 }
-
-export const reviewStateNote =
-  "Review state is the latest completed structured research-ledger run. It does not claim that every timeline category was re-reviewed on that date.";
 
 /**
  * The root introduction and native source disclosure on the design-kit marketing
@@ -74,19 +72,19 @@ export function HistoryOrientation({
             className={`hraness-marketing-stats__list ${stylex.props(styles.stats__list, styles.factColumns4).className}`}
           >
             <div {...stylex.props(styles.facts__item)}>
-              <dt {...stylex.props(styles.facts__label)}>Timeline entries</dt>
+              <dt {...stylex.props(styles.facts__label)}>{evidenceLabels.eventCount}</dt>
               <dd {...stylex.props(styles.facts__body)}><strong {...stylex.props(styles.stats__value)}>{evidence.eventCount}</strong></dd>
             </div>
             <div {...stylex.props(styles.facts__itemLater)}>
-              <dt {...stylex.props(styles.facts__label)}>Entry source links</dt>
+              <dt {...stylex.props(styles.facts__label)}>{evidenceLabels.sourceLinkCount}</dt>
               <dd {...stylex.props(styles.facts__body)}><strong {...stylex.props(styles.stats__value)}>{evidence.sourceLinkCount}</strong></dd>
             </div>
             <div {...stylex.props(styles.facts__itemRowOdd)}>
-              <dt {...stylex.props(styles.facts__label)}>Canonical sources</dt>
+              <dt {...stylex.props(styles.facts__label)}>{evidenceLabels.canonicalSourceCount}</dt>
               <dd {...stylex.props(styles.facts__body)}><strong {...stylex.props(styles.stats__value)}>{evidence.canonicalSourceCount}</strong></dd>
             </div>
             <div {...stylex.props(styles.facts__itemRow)}>
-              <dt {...stylex.props(styles.facts__label)}>Review state</dt>
+              <dt {...stylex.props(styles.facts__label)}>{evidenceLabels.latestCompletedResearchRunOn}</dt>
               <dd {...stylex.props(styles.facts__body)}>
                 <strong {...stylex.props(styles.stats__value)}>
                   {reviewDate === undefined
@@ -97,7 +95,7 @@ export function HistoryOrientation({
             </div>
           </dl>
           <p className={`hraness-marketing-stats__source ${stylex.props(styles.stats__source).className}`}>
-            {reviewStateNote}{" "}<Link href="/about#sources-and-review">Method and limits</Link>.
+            {researchRunNote}{" "}<Link href="/about#sources-and-review">Method and limits</Link>.
           </p>
         </section>
       </details>

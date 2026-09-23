@@ -1,7 +1,7 @@
 category:
   id: company-milestones
   label: Company milestones
-  description: Company-scale, legal, regulatory, operating-model, and other milestones that do not belong more naturally in Stripe's focused history categories.
+  description: Company-wide Stripe events, from annual volume and revenue figures to licenses, regulatory actions, and changes to how the company operates.
   order: 11
 events:
   - id: milestone-2026-fortune-google-comparison
@@ -10,7 +10,7 @@ events:
     date_precision: day
     confidence: reported
     status: press analysis
-    summary: Fortune's Term Sheet compared Stripe's buying since late 2024 to Google's 2003-2007 run of DoubleClick, AdSense, the firm behind Google Earth, Android, and YouTube. Finance editor Jeff John Roberts, pinch-hitting, listed Privy and Bridge (wallets and stablecoins), Orum (account verification and bank transfers), Metronome (usage-based billing), and said Stripe this month closed a deal worth around $7.5 billion for OpenRouter. The column said a PayPal bid cooked up this spring came undone after the share price rose and a $60.50 offer looked cheap. James Wester of Javelin Strategies said the miss may be for the best on cultural fit, and noted Stripe is still private, unlike Google after its 2004 IPO. The piece did not announce a new Stripe transaction.
+    summary: Fortune's Term Sheet newsletter compared Stripe's acquisitions since late 2024 with Google's buying from 2003 to 2007, which included DoubleClick, AdSense, the company behind Google Earth, Android, and YouTube. Finance editor Jeff John Roberts, filling in as the newsletter's writer, listed Privy and Bridge (wallets and stablecoins), Orum (account verification and bank transfers), and Metronome (usage-based billing), and wrote that Stripe had closed a deal worth around $7.5 billion for OpenRouter. He also wrote that a PayPal bid made that spring fell apart after PayPal's share price rose and a $60.50 offer looked cheap. James Wester of Javelin Strategies said the miss may be for the best on cultural fit, and noted that Stripe is still private, unlike Google after its 2004 IPO. The column did not announce a new Stripe transaction.
     details:
       - label: Outlet
         value: Fortune Term Sheet
@@ -20,14 +20,12 @@ events:
         value: DoubleClick, AdSense, the firm behind Google Earth, Android, and YouTube
       - label: Stripe deals named
         value: Privy, Bridge, Metronome, Orum, OpenRouter, and a reported PayPal bid
-      - label: OpenRouter claim
-        value: Fortune described closing a deal worth around $7.5 billion; the existing record is an announced agreement, not reported completion
-      - label: PayPal claim
-        value: Fortune said a spring bid of $60.50 a share came undone after the share price rose
-      - label: Orum spelling
-        value: Fortune wrote Ourum for Orum
-      - label: Orum record
-        value: Existing timeline treats Orum as a talent acquisition, not a full-platform purchase
+      - label: OpenRouter
+        value: Fortune described the deal, worth around $7.5 billion, as closed. Stripe had announced an agreement on August 19, 2026, and no completion had been reported.
+      - label: PayPal
+        value: Fortune said a spring bid of $60.50 a share fell apart after the share price rose
+      - label: Orum
+        value: Stripe hired Orum's team; industry reporting described it as an acquihire, not a purchase of the full platform
       - label: Analyst named
         value: James Wester, research director at Javelin Strategies
       - label: Column thesis
@@ -62,7 +60,7 @@ events:
     summary: The Information reported that Stripe's revenue jumped by a third to $6.8 billion in 2025, citing a person familiar with the company's financial figures. Stripe declined to comment. The 2025 annual letter published $1.9 trillion in total volume and did not state a company net-revenue dollar figure.
     details:
       - label: Label in source
-        value: revenue, not Stripe's "net revenue" phrase
+        value: “Revenue,” not “net revenue”
       - label: Official letter
         value: The 2025 annual update did not publish a company net-revenue dollar figure
     metrics:
@@ -92,8 +90,8 @@ events:
         value: Warning letter from the FTC chairman
       - label: Legal framing
         value: Potential violations related to debanking under Section 5 of the FTC Act
-      - label: Scope caution
-        value: The letter raised concerns and possible consequences; it did not announce a factual finding, investigation result, or penalty
+      - label: Findings
+        value: The letter raised concerns and possible consequences; it announced no factual finding, investigation result, or penalty
       - label: Other recipients
         value: PayPal, Visa, and Mastercard
     people:
@@ -199,9 +197,9 @@ events:
       - label: New entity
         value: Stripe, LLC
       - label: Scope
-        value: US contracting entity; this record does not imply a change to every Stripe affiliate worldwide
-      - label: Date discrepancy
-        value: Stripe's user-terms notice says January 5, while its service-provider list says January 3; month precision avoids choosing between them
+        value: Stripe's US contracting entity
+      - label: Dates
+        value: Stripe's user-terms notice says January 5; its service-provider list says January 3
     organizations:
       - Stripe, Inc.
       - Stripe, LLC
@@ -226,10 +224,10 @@ events:
       kind: revenue
       qualifier: reported
       value_usd: 5100000000
-    summary: Axios reported that Stripe grew revenue 28% to $5.1 billion in 2024 and doubled free cash flow to $2.2 billion, citing The Information. The $5.1 billion figure sits next to free cash flow, so this record treats it as the global company amount rather than Irish SPIH statutory turnover.
+    summary: Axios reported that Stripe grew revenue 28% to $5.1 billion in 2024 and doubled free cash flow to $2.2 billion, citing The Information.
     details:
       - label: Label in source
-        value: revenue, not Stripe's "net revenue" phrase
+        value: “Revenue,” not “net revenue”
       - label: Not SPIH turnover
         value: Irish SPIH 2024 statutory turnover of $5.12 billion is a regional subsidiary figure and is not merged into this series
     metrics:
@@ -237,7 +235,7 @@ events:
         value: $5.1 billion
       - label: Free cash flow
         value: $2.2 billion
-        context: Axios wrote "free-cash flow"
+        context: Axios wrote “free-cash flow”
     organizations:
       - Stripe
       - Axios
@@ -374,12 +372,10 @@ events:
     date_precision: day
     confidence: reported
     status: reported quarterly figure
-    summary: Cory Weinberg's 21 December 2023 Information article reported that Stripe's net revenues grew by about 35% to roughly $1 billion in the third quarter. Contemporaneous excerpts define net revenues as what Stripe takes in after passing a large cut to card companies and other financial institutions. This is a quarter, not a full-year company figure.
+    summary: Cory Weinberg's December 21, 2023, Information article reported that Stripe's net revenues grew by about 35% to roughly $1 billion in the third quarter. Contemporaneous excerpts define net revenues as what Stripe takes in after passing a large cut to card companies and other financial institutions.
     details:
       - label: Period
         value: Third quarter 2023, not a full year
-      - label: Series status
-        value: Listed on the timeline only; not plotted as a company full-year point
     metrics:
       - label: Net revenue
         value: ~$1 billion
@@ -394,7 +390,7 @@ events:
     source_ids:
       - source-81088c3e0016890db48d
   - id: milestone-2023-2022-volume-817-billion
-    title: Stripe reports more than $817 billion in 2022 payment volume
+    title: Stripe reports more than $817 billion in 2022 total volume
     date: 2023-04-05
     date_precision: day
     confidence: confirmed
@@ -402,7 +398,7 @@ events:
     annual_volume:
       calendar_year: 2022
       display: $817 billion+
-      kind: payment-volume
+      kind: total-volume
       qualifier: lower-bound
       value_usd: 817000000000
     summary: Stripe's 2022 annual letter reported more than $817 billion in total volume, slower growth than 2021, and more than 100 companies each processing over $1 billion annually.
@@ -414,7 +410,7 @@ events:
       - label: Product activity
         value: 244 user-facing features and 336 API updates
     metrics:
-      - label: Total payment volume
+      - label: Total volume
         value: $817 billion+
       - label: Year-over-year growth
         value: 26%
@@ -498,14 +494,12 @@ events:
     details:
       - label: Working definition
         value: Net revenue excludes the cut Stripe passes along to partners like Visa and Chase
-      - label: Gross figure
-        value: Nearly $12 billion in 2021 gross revenue; not plotted as net revenue
     metrics:
       - label: Company net revenue
         value: ~$2.5 billion
       - label: Gross revenue
         value: ~$12 billion
-        context: Forbes; not plotted as net revenue
+        context: Reported by Forbes; a different measure from net revenue
     people:
       - Patrick Collison
       - John Collison
@@ -690,14 +684,12 @@ events:
     date_precision: year
     confidence: confirmed
     status: licensed
-    summary: Stripe Payments Company obtained a California money transmitter license, creating a regulated foundation for US money-movement products beyond ordinary card acquiring.
+    summary: Stripe Payments Company obtained a California money transmitter license.
     details:
       - label: Licensed entity
         value: Stripe Payments Company
       - label: Regulator
         value: California Department of Business Oversight, now the Department of Financial Protection and Innovation
-      - label: Date precision
-        value: Stripe's regulatory submission confirms 2016 but does not provide the license date
     organizations:
       - Stripe Payments Company
       - California Department of Financial Protection and Innovation

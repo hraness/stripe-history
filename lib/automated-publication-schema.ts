@@ -21,6 +21,7 @@ const ExactDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/u);
 
 export const AutomatedPublicationPolicySchema = z.strictObject({
   auto_publish_categories: z.array(z.enum(automatedHistoryCategoryIds)).min(1).max(11),
+  generation_style_version: z.literal("hraness-generation-style/v1").optional(),
   historical_proposal_prompt_versions: z.array(CompactTextSchema.max(120)).max(20),
   historical_review_prompt_versions: z.array(CompactTextSchema.max(120)).max(20),
   max_candidates_per_run: z.number().int().min(1).max(6),

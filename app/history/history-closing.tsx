@@ -29,9 +29,9 @@ export function HistoryClosing() {
                 run from newest to oldest.
               </p>
               <p {...stylex.props(styles.paragraph)}>
-                A publication’s launch or acquisition can be an event. Every
-                essay it publishes does not become a separate timeline entry.
-                The <Link href="/about">about page</Link> describes the full scope.
+                A publication’s launch or acquisition can be an event. Its
+                individual essays are not. The <Link href="/about">about page</Link>
+                {" "}describes the full scope.
               </p>
             </div>
           </details>
@@ -45,7 +45,7 @@ export function HistoryClosing() {
                 is not treated as a completed transaction.
               </p>
               <p {...stylex.props(styles.paragraph)}>
-                Source-link counts are not independent confirmations. One source
+                Citation counts are not independent confirmations. One source
                 can support several entries. You can inspect the{" "}
                 <a href={publicSitePath("/research/sources.yml")}>source catalog</a>
                 {" "}and read the <Link href="/about#sources-and-review">review method and limits</Link>.

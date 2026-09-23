@@ -93,7 +93,7 @@ events:
     date: 2025-04-15
     date_precision: day
     title: Patrick Collison joins Meta's board of directors
-    summary: Meta appointed Patrick Collison and Dina Powell McCormick to its board, with both appointments effective April 15. The role added public-company governance at one of the world's largest technology platforms to Collison's work outside Stripe.
+    summary: Meta appointed Patrick Collison and Dina Powell McCormick to its board, with both appointments effective April 15.
     confidence: confirmed
     people:
       - Patrick Collison
@@ -196,7 +196,7 @@ events:
     date: 2019-07-30
     date_precision: day
     title: Patrick Collison and Tyler Cowen propose progress studies
-    summary: Patrick Collison and economist Tyler Cowen argued for a focused discipline studying how economic, technological, scientific, cultural, and organizational progress happens. The essay supplied a name and research agenda for a broader movement concerned with increasing society's capacity to produce useful advances.
+    summary: Patrick Collison and economist Tyler Cowen argued for a focused discipline studying how economic, technological, scientific, cultural, and organizational progress happens.
     confidence: confirmed
     people:
       - Patrick Collison
