@@ -50,7 +50,7 @@ export const evidenceLabels = {
 } as const;
 
 export const researchRunNote =
-  "The date of the most recent completed research run. Each run covers one research collection, such as founder appearances or valuation history, not the whole timeline.";
+  "“Last research run” is the date of the most recent completed research run. Each run covers one research collection, such as founder appearances or valuation history, not the whole timeline.";
 
 export const independenceSentence =
   `${site.domain} is not affiliated with, endorsed by, or operated by Stripe, Inc. Stripe names and trademarks belong to their respective owners.`;

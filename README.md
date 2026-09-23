@@ -2,7 +2,7 @@
 
 [Stripe History](https://hraness.com/stripe) is an independent, open-source timeline of Stripe company history. Every event links to its sources, and the data behind the site is open YAML.
 
-The site shows every event on one reverse-chronological timeline and on a page for each category, such as acquisitions, product launches, and fundraising. Separate pages chart Stripe's annual payment volume, its revenue, and its private valuation by year. Each event's YAML record keeps its status and any uncertainty, such as whether a deal was reported, announced, or completed.
+The site shows every event on one reverse-chronological timeline and on a page for each category, such as acquisitions, product launches, and fundraising. Separate pages chart Stripe's annual payment and total volume, its revenue, and its private valuation by year. Each event's YAML record keeps its status and any uncertainty, such as whether a deal was reported, announced, or completed.
 
 The homepage's “Sources and review” panel shows how many entries, citations, and sources the timeline has, and the date of the most recent research run. It links to the [method and limits](https://hraness.com/stripe/about#sources-and-review), the [YAML downloads](https://hraness.com/stripe/data), and [how to report a correction](https://hraness.com/stripe/contact#corrections-and-sources).
 
