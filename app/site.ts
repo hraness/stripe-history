@@ -30,7 +30,7 @@ export const site = {
   datasetDescription:
     "Open, source-linked YAML records behind the Stripe company history timeline, including events, valuation observations, annual volume and net-revenue disclosures, leadership appearances, source provenance, collection scope, and review runs.",
   description:
-    "An independent, sourced timeline of Stripe acquisitions, products, leadership, funding, valuation, expansion, offices, publishing, company milestones, annual volume, and net revenue.",
+    "An independent, sourced Stripe history from the 2010 devpayments.com prototype and September 2011 public launch to today, covering acquisitions, products, leadership, funding, valuation, expansion, offices, publishing, company milestones, annual volume, and net revenue.",
   domain: SITE_LABEL,
   historyTitle: "Stripe Company History",
   name: "Stripe History",

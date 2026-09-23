@@ -32,7 +32,7 @@ describe("hraness.com/stripe public identity", () => {
       name: "Stripe History",
       title: "Stripe Company History | hraness.com/stripe",
     });
-    expect(site.description).toContain("independent, sourced timeline of Stripe");
+    expect(site.description).toContain("independent, sourced Stripe history");
   });
 
   test("publishes only canonical history, category, scale, and editorial routes", async () => {
