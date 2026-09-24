@@ -1,4 +1,70 @@
 runs:
+  - candidate_digest_sha256: 54d5df7e8bc3433ad2dcaedf2795d93f03666fc8ffd464ec0af8aefef523e7dd
+    decided_on: 2026-09-24
+    decisions:
+      - basis: automatic-policy
+        candidate_url: https://stripe.com/blog/analyzing-rising-fraud-attempts-among-travel-and-leisure-businesses-on-stripe
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Analyzing rising fraud attempts among travel and leisure businesses on Stripe
+      - basis: proposal
+        candidate_url: https://stripe.com/blog/new-trends-in-global-card-fraud-how-3d-secure-and-regional-mandates-are-affecting-risk
+        outcome: needs-review
+        proposal_sha256: 2a823af5015542388d959e46aaf34098d12ccddbc4e8f393e849e5dcf15d17f9
+        reason: Stripe's September 22, 2026 post says it recently expanded Radar to protect all supported payment volume globally, including bank debits, stablecoin payments, digital wallets, real-time payments, and cash vouchers. The post does not give the expansion date, so the timing needs review.
+        title: "New trends in global card fraud: How 3D Secure and regional mandates are affecting risk"
+      - basis: automatic-policy
+        candidate_url: https://stripe.com/blog/saas-platforms-are-surging-despite-the-saaspocalypse
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: SaaS platforms are surging despite the SaaSpocalypse
+      - basis: automatic-policy
+        candidate_url: https://stripe.dev/blog/building-custom-financial-reconciliation-workflows-with-stripe
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Building custom financial reconciliation workflows with Stripe
+      - basis: proposal
+        candidate_url: https://stripe.dev/blog/how-stripe-is-designing-checkout-for-ai-agents
+        outcome: rejected
+        proposal_sha256: 5579b264f4e60e81262e29376ebe1cdb4975b5ad712d1ac6cb2c2c96a657ad73
+        reason: Stripe's September 22, 2026 engineering post concerns the design of Checkout for AI agents, not an announced launch or other discrete company event.
+        title: How Stripe is designing Checkout for AI agents
+      - basis: proposal
+        candidate_url: https://worksinprogress.co/issue/weapons-of-mass-decentralization
+        outcome: rejected
+        proposal_sha256: 46db1f1fc8d1da132e5850db50a2cac976b9012b3cb75d0ffc74256b24cc6a63
+        reason: Works in Progress published Patrick Fitzsimmons's essay about iron weaponry and decentralized military power on September 23, 2026. It does not establish a new publishing program or another consequential Stripe-related event.
+        title: Weapons of mass decentralization
+      - basis: automatic-policy
+        candidate_url: https://worksinprogress.co/issue/why-arab-armies-dont-win-wars
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Why Arab armies don’t win wars
+      - basis: automatic-policy
+        candidate_url: https://www.businesspost.ie/politics/stripe-chief-patrick-collison-joins-finance-ministers-in-dublin-castle
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Stripe chief Patrick Collison joins finance ministers in Dublin Castle | Business Post
+      - basis: automatic-policy
+        candidate_url: https://www.con-telegraph.ie/2026/09/20/the-john-collison-theory-and-how-mayo-is-impacted
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: The John Collison theory and how Mayo is impacted
+      - basis: automatic-policy
+        candidate_url: https://www.worksinprogress.news/p/all-the-microbes-you-cant-have
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: The 1970s law holding back modern biotechnology
+      - basis: automatic-policy
+        candidate_url: https://www.worksinprogress.news/p/the-nimby-problem
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Why housing reforms keep failing
+    id: decision-run-f8eebb9a8af77fbad862
+    model: openai/gpt-5.6-sol
+    proposal_prompt_version: stripe-history/weekly-proposal/v7
+    reasoning_effort: max
+    review_prompt_version: stripe-history/weekly-review/v1
   - candidate_digest_sha256: 385fd0b8ebff9b580ff789e54feb96debc50395c65e47f7c0311f7e421ed8d84
     decided_on: 2026-09-10
     decisions:
