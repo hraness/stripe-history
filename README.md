@@ -215,6 +215,8 @@ Corrections, additional primary sources, and focused improvements are welcome. T
 
 Stripe History is not affiliated with, endorsed by, or operated by Stripe, Inc. Stripe names and trademarks belong to their respective owners.
 
+Every event in this timeline links to its sources and the data behind the site is open YAML you can download, which is the design every Hraness project shares: work leaves a record anyone can check. [The thread through hraness](https://hraness.com/writing/the-thread-through-hraness) follows that design across the projects, and the [ALGAL vision](https://algal.computer/docs/vision/) states the bet behind it.
+
 ## License
 
 Code and authored history data in this repository are available under the [MIT License](./LICENSE).
