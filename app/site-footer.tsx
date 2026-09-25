@@ -9,6 +9,7 @@ import {
   publicSitePath,
   type SitePath,
 } from "./site";
+import { independenceSentence } from "./site-copy";
 
 interface SiteFooterProps {
   readonly path?: SitePath;
@@ -32,6 +33,7 @@ export function SiteFooter({ path }: SiteFooterProps) {
           <a {...stylex.props(styles.link)} href={publicSitePath("/privacy")}>privacy</a>
           <a {...stylex.props(styles.link)} href={GITHUB_REPOSITORY_URL}>github</a>
         </nav>
+        <p className={`stripe-history-footer-resources__note ${stylex.props(styles.label).className}`}>{independenceSentence}</p>
       </aside>
       <HranessSiteFooter
         mailingList={{ kind: "signup", audience: "hraness" }}
@@ -39,7 +41,7 @@ export function SiteFooter({ path }: SiteFooterProps) {
           id: "hraness",
           name: "Hraness",
           updates: true,
-          valueProposition: "Support independent writing and ongoing development of Hraness tools.",
+          valueProposition: "Support Hraness and the free, open records it publishes, including Stripe History.",
         }}
       />
     </>

@@ -51,7 +51,7 @@ export async function generateMetadata({
     title,
     description,
     alternates: { canonical: absoluteSiteUrl(path) },
-    ...socialMetadata(`${title} | ${site.domain}`, description, path),
+    ...socialMetadata(`${title} | ${site.name}`, description, path),
   };
 }
 

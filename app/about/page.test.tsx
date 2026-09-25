@@ -21,7 +21,8 @@ describe("hraness.com/stripe about page", () => {
       alternates: { canonical: "https://hraness.com/stripe/about" },
       title: "About",
     });
-    expect(html).toContain("<h1 id=\"about-heading\">About hraness.com/stripe</h1>");
+    expect(html).toContain("<h1 id=\"about-heading\">About Stripe History</h1>");
+    expect(html).toContain("gathers those pieces into one dated record");
     expect(html).toContain('aria-label="Breadcrumb"');
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
     expect(html).toContain("anonymous, cookieless pageview events for public pages");

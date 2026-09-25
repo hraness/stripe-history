@@ -27,12 +27,13 @@ describe("hraness.com/stripe public identity", () => {
   test("states the canonical history collection", () => {
     expect(site).toMatchObject({
       applicationName: "Stripe History",
+      category: "Independent company history",
       domain: "hraness.com/stripe",
-      historyTitle: "Stripe company history",
       name: "Stripe History",
-      title: "Stripe company history | hraness.com/stripe",
+      tagline: "Every event in Stripe’s history, dated and sourced.",
+      titleTemplate: "%s | Stripe History",
     });
-    expect(site.description).toContain("independent, sourced Stripe history");
+    expect(site.description).toContain("independent record of how Stripe grew");
   });
 
   test("publishes only canonical history, category, scale, and editorial routes", async () => {
@@ -76,7 +77,7 @@ describe("hraness.com/stripe public identity", () => {
     expect(manifest()).toMatchObject({
       description: site.description,
       id: SITE_BASE_PATH,
-      name: site.historyTitle,
+      name: site.name,
       short_name: site.applicationName,
       start_url: SITE_BASE_PATH,
     });

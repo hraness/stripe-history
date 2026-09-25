@@ -26,7 +26,7 @@ export function verifyPreviewRepresentation(accept: AcceptType, response: Respon
       assert.ok(response.body.includes('id="history-heading"'), "HTML must contain the real timeline heading");
       assert.ok(response.body.includes('href="https://hraness.com/stripe"'), "HTML must retain the canonical mounted identity");
     } else {
-      assert.ok(/^# Stripe company history: \d+ sourced events$/mu.test(response.body), "Markdown must come from the real history index");
+      assert.ok(/^# Stripe History: Every event in Stripe’s history, dated and sourced\.$/mu.test(response.body), "Markdown must come from the real history index");
       assert.ok(response.body.includes("## Evidence status"), "Markdown must retain evidence provenance");
     }
   }

@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 test("compiled evidence slots bind four columns locally and retain rich Link/time semantics", () => {
   const html = renderToStaticMarkup(<HistoryOrientation evidence={{
     eventCount: 201, sourceLinkCount: 302, canonicalSourceCount: 103,
-    latestCompletedResearchRunOn: "2026-09-09",
+    newestEventOn: "2026-09-09",
   }} />);
   const list = html.match(/<dl class="([^"]+)">/u);
   expect(list).not.toBeNull();
@@ -23,12 +23,12 @@ test("compiled evidence slots bind four columns locally and retain rich Link/tim
   expect(list![0]).not.toContain("style=");
   expect(html).toContain('<time dateTime="2026-09-09">');
   expect(html).toContain('href="/contact#corrections-and-sources">Report a correction</a>');
-  expect(html).toMatch(/<details class="history-source-details [^"]+"><summary class="[^"]+">Sources and review<\/summary>/u);
+  expect(html).toMatch(/<details class="history-source-details [^"]+"><summary class="[^"]+">How this record is kept<\/summary>/u);
   expect(html).not.toMatch(/<details[^>]*\bopen(?:[\s=>])/u);
   expect(html).toContain('href="#timeline">Browse the timeline</a>');
   expect(html).toContain('href="/data">Download the data</a>');
   expect(html).toContain('href="/about#sources-and-review">Method and limits</a>');
-  expect(html).toContain("Each run covers one research collection, such as founder appearances or valuation history, not the whole timeline.");
+  expect(html).toContain("Every event links to at least one source.");
 });
 
 test("compact orientation and source disclosure use compiled geometry without raw overrides", async () => {

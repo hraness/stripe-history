@@ -12,21 +12,20 @@ import { site } from "./site";
 
 describe("canonical hraness.com/stripe history", () => {
   test("publishes root-canonical history metadata", async () => {
-    const history = await loadHistory();
     const metadata = await generateMetadata();
-    const expectedTitle = `Stripe company history: ${history.events.length} sourced events`;
+    const expectedTitle = `${site.name}: ${site.tagline}`;
 
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe" },
       description: site.description,
       robots: INDEXABLE_ROBOTS,
-      title: expectedTitle,
+      title: { absolute: expectedTitle },
     });
     expect(metadata.openGraph).toMatchObject({
       images: [{
         url: "https://hraness.com/stripe/opengraph-image",
       }],
-      title: `${expectedTitle} | hraness.com/stripe`,
+      title: expectedTitle,
       url: "https://hraness.com/stripe",
     });
     expect(metadata.twitter).toMatchObject({
@@ -34,7 +33,7 @@ describe("canonical hraness.com/stripe history", () => {
       images: [{
         url: "https://hraness.com/stripe/opengraph-image",
       }],
-      title: `${expectedTitle} | hraness.com/stripe`,
+      title: expectedTitle,
     });
   });
 
@@ -57,25 +56,27 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).toMatch(/class="hraness-marketing-header__brand [^"]+" data-foil="" href="https:\/\/hraness\.com" aria-label="hraness"/u);
     expect(html).toMatch(/aria-label="primary navigation" class="hraness-marketing-header__nav [^"]+"/u);
     expect(html).toMatch(/<header aria-labelledby="history-heading" class="hraness-marketing-hero history-orientation [^"]+"/u);
-    expect(html).toMatch(/<h1 class="hraness-marketing-hero__heading [^"]+" id="history-heading">Stripe’s history, dated and sourced<\/h1>/u);
+    expect(html).toMatch(/<h1 class="hraness-marketing-hero__heading [^"]+" id="history-heading">Every event in Stripe’s history, dated and sourced\.<\/h1>/u);
     expect(html).toContain('data-align="start"');
-    expect(html).not.toContain("hraness-marketing-hero__eyebrow");
+    expect(html).toMatch(/<p class="hraness-marketing-hero__eyebrow [^"]+">Independent company history<\/p>/u);
     expect(html).not.toContain("hraness-marketing-hero__name");
-    expect(html).toMatch(/<details class="history-source-details [^"]+"><summary class="[^"]+">Sources and review<\/summary>/u);
+    expect(html).toMatch(/<details class="history-source-details [^"]+"><summary class="[^"]+">How this record is kept<\/summary>/u);
     expect(html).toMatch(/<section aria-labelledby="history-heading" class="stripe-history-section [^"]+" id="timeline">/u);
     expect(html).toContain(
-      `The timeline lists ${history.events.length} dated events across products, funding, leadership, expansion, and scale, and links each one to its sources.`,
+      "An independent, dated record of how Stripe grew, from the 2010 Buenos Aires prototype to the latest reported volume. Open data throughout.",
     );
-    expect(html).toMatch(/<section aria-label="Current evidence snapshot" class="hraness-marketing-stats stripe-history-evidence-strip [^"]+"/u);
-    const semanticHtml = html.replace(/ class="[^"]*"/gu, "");
-    expect(semanticHtml).toContain(`<dt>Timeline entries</dt><dd><strong>${evidence.eventCount}</strong></dd>`);
-    expect(semanticHtml).toContain(`<dt>Citations</dt><dd><strong>${evidence.sourceLinkCount}</strong></dd>`);
-    expect(semanticHtml).toContain(`<dt>Sources</dt><dd><strong>${evidence.canonicalSourceCount}</strong></dd>`);
-    expect(semanticHtml).toContain("<dt>Last research run</dt>");
+    expect(html).toMatch(/<section aria-label="How this record is kept" class="hraness-marketing-stats stripe-history-evidence-strip [^"]+"/u);
     expect(html).toContain(
-      `<time dateTime="${evidence.latestCompletedResearchRunOn}">`,
+      "Every event links to at least one source. Primary material and filings come first",
     );
-    expect(html).toContain("Each run covers one research collection, such as founder appearances or valuation history, not the whole timeline.");
+    const semanticHtml = html.replace(/ class="[^"]*"/gu, "");
+    expect(semanticHtml).toContain(`<dt>Events</dt><dd><strong>${evidence.eventCount}</strong></dd>`);
+    expect(semanticHtml).toContain(`<dt>Source links</dt><dd><strong>${evidence.sourceLinkCount}</strong></dd>`);
+    expect(semanticHtml).toContain(`<dt>Sources</dt><dd><strong>${evidence.canonicalSourceCount}</strong></dd>`);
+    expect(semanticHtml).toContain("<dt>Newest entry</dt>");
+    expect(html).toContain(
+      `<time dateTime="${evidence.newestEventOn}">`,
+    );
     expect(html).toMatch(/class="hraness-marketing-action [^"]+" data-emphasis="primary" href="#timeline">Browse the timeline<\/a>/u);
     expect(html).toMatch(/class="hraness-marketing-action [^"]+" data-emphasis="secondary" href="\/data">Download the data<\/a>/u);
     expect(html).toContain('href="/about#sources-and-review">Method and limits</a>');
@@ -89,8 +90,9 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).not.toContain("hraness-marketing-maker__eyebrow");
     expect(html).not.toContain("hraness-marketing-questions__eyebrow");
     expect(html).toContain('href="https://github.com/hraness/stripe-history/issues"');
-    expect(html).toMatch(/<h2 class="hraness-marketing-maker__heading [^"]+" id="history-maker-heading">Ben Guo<\/h2>/u);
-    expect(html).toMatch(/formerly a founder and engineering\s+leader at companies including Venmo and Stripe/u);
+    expect(html).toMatch(/<h2 class="hraness-marketing-maker__heading [^"]+" id="history-maker-heading">Built by Hraness<\/h2>/u);
+    expect(html).toContain("We publish Stripe History as an independent record.");
+    expect(html).not.toMatch(/formerly a founder and engineering\s+leader/u);
     expect(html).toContain('href="https://x.com/hraness">@hraness</a>');
     expect(html).toContain(`aria-current="true" aria-label="all: ${history.events.length} events"`);
     expect(html).toContain('href="/history/acquisitions"');

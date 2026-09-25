@@ -94,6 +94,7 @@ export interface HistoryEvidenceSummary {
   readonly canonicalSourceCount: number;
   readonly eventCount: number;
   readonly latestCompletedResearchRunOn?: string;
+  readonly newestEventOn?: string;
   readonly sourceLinkCount: number;
 }
 
@@ -512,6 +513,7 @@ export function summarizeHistoryEvidence(
       : []
   ).toSorted();
   const latestCompletedResearchRunOn = completedRunDates.at(-1);
+  const newestEventOn = history.events[0]?.date;
 
   return {
     canonicalSourceCount: history.sources.length,
@@ -519,6 +521,7 @@ export function summarizeHistoryEvidence(
     ...(latestCompletedResearchRunOn === undefined
       ? {}
       : { latestCompletedResearchRunOn }),
+    ...(newestEventOn === undefined ? {} : { newestEventOn }),
     sourceLinkCount: history.events.reduce(
       (count, event) => count + event.sources.length,
       0,

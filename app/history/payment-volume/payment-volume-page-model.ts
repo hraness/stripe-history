@@ -5,7 +5,6 @@ import {
 } from "@/lib/content";
 import type { Metadata } from "next";
 
-import { independenceSentence } from "../../site-copy";
 import { absoluteSiteUrl, site, socialMetadata } from "../../site";
 
 export const volumeKindLabel: Readonly<
@@ -159,7 +158,6 @@ export function derivePaymentVolumePageSeo(
       ...(hasBothKinds
         ? ["Payment volume and total volume are different measures, so each figure keeps its own label."]
         : []),
-      independenceSentence,
     ].join(" "),
     method: methodClauses.join(" "),
     title: `Stripe ${seriesTitle(records)} by year, ${yearRange}`,
@@ -176,7 +174,7 @@ export function derivePaymentVolumePageMetadata(
     description: seo.description,
     alternates: { canonical: absoluteSiteUrl("/history/payment-volume") },
     ...socialMetadata(
-      `${seo.title} | ${site.domain}`,
+      `${seo.title} | ${site.name}`,
       seo.description,
       "/history/payment-volume",
     ),

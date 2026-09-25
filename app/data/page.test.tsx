@@ -5,11 +5,11 @@ import { loadHistory } from "@/lib/content";
 import { dataIntro } from "../site-copy";
 import DataPage, { metadata } from "./page";
 
-describe("Stripe company history dataset", () => {
+describe("Stripe History dataset", () => {
   test("publishes a canonical dataset search result", () => {
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/data" },
-      title: "Stripe company history dataset",
+      title: "Stripe History dataset",
     });
     expect(metadata.openGraph).toMatchObject({
       url: "https://hraness.com/stripe/data",
@@ -20,7 +20,7 @@ describe("Stripe company history dataset", () => {
     const html = renderToStaticMarkup(await DataPage());
     const history = await loadHistory();
 
-    expect(html).toContain('<h1 id="data-heading">Stripe company history dataset</h1>');
+    expect(html).toContain('<h1 id="data-heading">Stripe History dataset</h1>');
     expect(html).toContain(`${history.events.length} sourced events`);
     expect(html).toContain(dataIntro);
     expect(html).toContain("Questions this history answers");
@@ -54,7 +54,9 @@ describe("Stripe company history dataset", () => {
     expect(html).toContain('href="https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332"');
     expect(html).toContain('href="/history/publishing"');
     expect(html).toContain("does not ingest every newsletter essay");
-    expect(html).toContain(`${history.sources.length} canonical sources`);
+    expect(html).toContain(`${history.sources.length} sources`);
+    expect(html).toContain("Sources and research files");
+    expect(html).toContain("research log (YAML)");
     expect(html).toContain(`${history.valuations.length} observations`);
     expect(html).toContain("charts sourced company full-year figures");
     expect(html).toContain('href="https://github.com/hraness/stripe-history"');

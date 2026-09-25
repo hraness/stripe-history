@@ -13,7 +13,7 @@ export default function ErrorPage({ reset }: RouteErrorPageProps) {
       <h1>Something went wrong</h1>
       <p>The requested Stripe history view could not be rendered.</p>
       <button onClick={reset} type="button">Try again</button>
-      <p><Link href="/">Return to Stripe company history</Link></p>
+      <p><Link href="/">Return to Stripe History</Link></p>
     </main>
   );
 }

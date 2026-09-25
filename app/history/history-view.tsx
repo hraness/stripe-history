@@ -26,7 +26,7 @@ import { HistoryOrientation } from "./history-orientation";
 import { historyTimelineStyles as styles } from "./history-timeline.stylex";
 import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
-import { publicSitePath } from "../site";
+import { publicSitePath, site } from "../site";
 import { historyCategoryHeading } from "../site-copy";
 
 interface HistoryViewProps {
@@ -393,7 +393,7 @@ export function HistoryView({
     : history.events.filter(({ categoryId }) => categoryId === selectedCategoryId);
   const years = groupEventsByYear(visibleEvents);
   const historyHeading = selectedCategory === undefined
-    ? "Stripe company history"
+    ? site.name
     : historyCategoryHeading(selectedCategory.label);
   const orientation = selectedCategory === undefined && evidence !== undefined;
   const path = selectedCategoryId === undefined

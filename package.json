@@ -2,7 +2,7 @@
   "name": "@hraness/stripe-history",
   "version": "0.1.0",
   "private": true,
-  "description": "An independent, open-source timeline of Stripe company history, with open YAML data for its events, valuations, and annual volume and revenue figures.",
+  "description": "Stripe History is an independent record of how Stripe grew. Every event is dated and linked to its sources, and the data downloads as open YAML.",
   "license": "MIT",
   "type": "module",
   "packageManager": "bun@1.3.14",

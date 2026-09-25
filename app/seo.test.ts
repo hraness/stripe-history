@@ -50,13 +50,13 @@ describe("hraness.com/stripe structured discovery", () => {
     expect(dataset).toMatchObject({
       "@type": "Dataset",
       "@id": "https://hraness.com/stripe/data#dataset",
-      alternateName: "Stripe History Dataset",
+      alternateName: "Stripe Company History Dataset",
       creator: { name: "Hraness" },
       identifier: "https://hraness.com/stripe/data#dataset",
       inLanguage: "en-US",
       license: "https://github.com/hraness/stripe-history/blob/main/LICENSE",
       measurementTechnique: expect.stringContaining("Source-linked editorial review"),
-      name: "Stripe Company History Dataset",
+      name: "Stripe History Dataset",
       sameAs: "https://github.com/hraness/stripe-history/tree/main/public",
       temporalCoverage: "2005/2026",
     });
@@ -115,7 +115,7 @@ describe("hraness.com/stripe structured discovery", () => {
       {
         description: "One sourced event.",
         path: "/",
-        title: "Stripe company history",
+        title: "Stripe History",
       },
     );
     expect(rootHistory.mainEntity).toMatchObject({

@@ -19,11 +19,12 @@ import {
   site,
   socialMetadata,
 } from "../site";
-
-const aboutTitle = "About";
-const aboutSocialTitle = `About ${site.domain}`;
-const aboutDescription =
-  `How ${site.domain} selects, summarizes, sources, reviews, corrects, and measures its independent Stripe company history.`;
+import {
+  aboutDescription,
+  aboutSocialTitle,
+  aboutTitle,
+  independenceSentence,
+} from "../site-copy";
 
 export const dynamic = "force-static";
 
@@ -63,7 +64,7 @@ export default async function AboutPage() {
       />
       <SiteHeader aboutSelected />
       <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
-        <Link href="/">history</Link>
+        <Link href="/">stripe history</Link>
         <span aria-hidden="true"> / </span>
         <span>about</span>
       </nav>
@@ -72,18 +73,22 @@ export default async function AboutPage() {
         className="stripe-history-about stripe-history-section"
       >
         <div className="stripe-history-section-heading">
-          <h1 id="about-heading">About {site.domain}</h1>
+          <h1 id="about-heading">About {site.name}</h1>
         </div>
 
         <TopicIcon slug="company-history" />
-        <h2>Stripe company history</h2>
+        <h2>Stripe history</h2>
         <p>
-          {site.domain} is an independent, sourced guide to Stripe. It publishes
-          a reverse-chronological company timeline covering acquisitions,
-          products, leadership, funding, valuation, expansion, offices,
-          publishing projects, the founders&apos; projects outside Stripe such as
-          grant programs, early history, annual volume, sourced annual net-revenue disclosures, and
-          reviewed long-form appearances by Stripe founders and senior leaders.
+          Stripe is private, so its history arrives in pieces: annual letters,
+          tender offers, press reports, interviews, and blog posts.{" "}
+          {site.name} gathers those pieces into one dated record, from the
+          founders&apos; first projects in 2005 to today, and links every event
+          to its sources. It publishes a reverse-chronological company timeline
+          covering acquisitions, products, leadership, funding, valuation,
+          expansion, offices, publishing projects, the founders&apos; projects
+          outside Stripe such as grant programs, early history, annual volume,
+          sourced annual net-revenue disclosures, and reviewed long-form
+          appearances by Stripe founders and senior leaders.
         </p>
 
         <TopicIcon slug="evidence" />
@@ -142,10 +147,8 @@ export default async function AboutPage() {
         <TopicIcon slug="independence" />
         <h2 id="independence-and-corrections">Independence and corrections</h2>
         <p>
-          {site.domain} is not affiliated with, endorsed by, or operated by
-          Stripe, Inc. Stripe names and trademarks belong to their respective
-          owners. Corrections are made in the underlying sourced records so the
-          timeline and its focused category views stay aligned.
+          {independenceSentence} Corrections are made in the underlying sourced
+          records so the timeline and its focused category views stay aligned.
         </p>
         <p>
           To inspect or reuse the current record,{" "}

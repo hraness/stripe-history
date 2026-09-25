@@ -21,7 +21,7 @@ describe("hraness.com/stripe payment volume history", () => {
       title: seo.title,
     });
     expect(metadata.openGraph).toMatchObject({
-      title: `${seo.title} | hraness.com/stripe`,
+      title: `${seo.title} | Stripe History`,
       url: "https://hraness.com/stripe/history/payment-volume",
     });
   });
@@ -57,16 +57,14 @@ describe("hraness.com/stripe payment volume history", () => {
 
     expect(updatedSeo).toMatchObject({
       description: expect.stringContaining("$2.5 trillion 2026 total volume"),
-      lead: expect.stringMatching(
-        /\$2\.5 trillion in total volume for 2026.*not affiliated with, endorsed by, or operated by/su,
-      ),
+      lead: expect.stringMatching(/\$2\.5 trillion in total volume for 2026/u),
       title: "Stripe payment and total volume by year, 2021–2026",
       yearRange: "2021–2026",
     });
     expect(updatedMetadata).toMatchObject({
       description: expect.stringContaining("$2.5 trillion 2026 total volume"),
       openGraph: {
-        title: "Stripe payment and total volume by year, 2021–2026 | hraness.com/stripe",
+        title: "Stripe payment and total volume by year, 2021–2026 | Stripe History",
       },
       title: "Stripe payment and total volume by year, 2021–2026",
     });

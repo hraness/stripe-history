@@ -10,29 +10,27 @@ export const notFoundTitle = "Page not found";
 export const notFoundDescription = "The requested Stripe history page does not exist.";
 
 export const aboutTitle = "About";
-export const aboutSocialTitle = `About ${site.domain}`;
+export const aboutSocialTitle = `About | ${site.name}`;
 export const aboutDescription =
-  `How ${site.domain} selects, summarizes, sources, reviews, corrects, and measures its independent Stripe company history.`;
+  `How ${site.name} selects, summarizes, sources, reviews, corrects, and measures its independent history of Stripe.`;
 
 export const privacyTitle = "Privacy";
-export const privacySocialTitle = `Privacy | ${site.domain}`;
+export const privacySocialTitle = `Privacy | ${site.name}`;
 export const privacyDescription =
-  `How ${site.domain} handles analytics, cookies, the Hraness newsletter, optional support, historical mailing consent, and hosting logs for the independent Stripe company history.`;
+  `How ${site.name} handles analytics, cookies, the Hraness newsletter, optional support, historical mailing consent, and hosting logs.`;
 
 export const contactTitle = "Contact";
-export const contactSocialTitle = `Contact ${site.domain}`;
+export const contactSocialTitle = `Contact | ${site.name}`;
 export const contactDescription =
-  `How to send a correction, source, or security report for the independent Stripe company history at ${site.domain}.`;
+  `How to send a correction, source, or security report for ${site.name}, an independent record of how Stripe grew.`;
 
-export const dataTitle = "Stripe company history dataset";
+export const dataTitle = `${site.name} dataset`;
 
 function sourcedEventCount(eventCount: number): string {
   return `${eventCount} sourced ${eventCount === 1 ? "event" : "events"}`;
 }
 
-export function historyPageTitle(eventCount: number): string {
-  return `${site.historyTitle}: ${sourcedEventCount(eventCount)}`;
-}
+export const historyPageTitle = `${site.name}: ${site.tagline}`;
 
 export function historyCategoryHeading(label: string): string {
   return `Stripe ${label.toLocaleLowerCase("en-US")} history`;
@@ -52,11 +50,21 @@ export const evidenceLabels = {
 export const researchRunNote =
   "“Last research run” is the date of the most recent completed research run. Each run covers one research collection, such as founder appearances or valuation history, not the whole timeline.";
 
+export const recordKeepingLabels = {
+  canonicalSourceCount: "Sources",
+  eventCount: "Events",
+  newestEventOn: "Newest entry",
+  sourceLinkCount: "Source links",
+} as const;
+
+export const recordKeepingNote =
+  "Every event links to at least one source. Primary material and filings come first, with contemporaneous reporting where needed. Reported talks, announced agreements, and completed deals keep separate labels, and each figure keeps its source's term, such as payment volume or total volume. Corrections come through public GitHub issues.";
+
 export const independenceSentence =
-  `${site.domain} is not affiliated with, endorsed by, or operated by Stripe, Inc. Stripe names and trademarks belong to their respective owners.`;
+  `${site.name} is not affiliated with, endorsed by, or operated by Stripe, Inc. Stripe names and trademarks belong to their respective owners.`;
 
 export const recoveryLinks = [
-  { href: absoluteSiteUrl("/"), label: "Stripe company history" },
+  { href: absoluteSiteUrl("/"), label: site.name },
   { href: `${SITE_ORIGIN}/llms.txt`, label: "Agent index (llms.txt)" },
   { href: `${SITE_ORIGIN}/sitemap.xml`, label: "Sitemap" },
   { href: `${SITE_ORIGIN}/about`, label: "About" },
@@ -67,9 +75,9 @@ export const recoveryLinks = [
 
 export const aboutSections = [
   {
-    heading: "Stripe company history",
+    heading: "Stripe history",
     paragraphs: [
-      `${site.domain} is an independent, sourced guide to Stripe. It publishes a reverse-chronological company timeline covering acquisitions, products, leadership, funding, valuation, expansion, offices, publishing projects, the founders' projects outside Stripe such as grant programs, early history, annual volume, sourced annual net-revenue disclosures, and reviewed long-form appearances by Stripe founders and senior leaders.`,
+      `Stripe is private, so its history arrives in pieces: annual letters, tender offers, press reports, interviews, and blog posts. ${site.name} gathers those pieces into one dated record, from the founders' first projects in 2005 to today, and links every event to its sources. It publishes a reverse-chronological company timeline covering acquisitions, products, leadership, funding, valuation, expansion, offices, publishing projects, the founders' projects outside Stripe such as grant programs, early history, annual volume, sourced annual net-revenue disclosures, and reviewed long-form appearances by Stripe founders and senior leaders.`,
     ],
   },
   {
@@ -107,14 +115,14 @@ export const privacyParagraphs = [
   `The PostHog integration does not use autocapture, session replay, heatmaps, surveys, feature flags, performance monitoring, or user profiles. The site has no local reader accounts or authentication. Requests are still subject to the ordinary logs and security controls of the hosting provider.`,
   `The footer offers the general Hraness newsletter. Before submission, it may contact [Hraness Accounts](https://account.hraness.com) for anonymous form presentation and measurement. These requests send the list choice, language, compact or wide viewport category, and presentation version, then an opaque token when the form becomes visible. They omit account credentials and do not send your email address. If you submit the form, your email address, the Hraness list choice, form source, and any presentation token are sent to Accounts. Accounts records dated consent, and Resend sends confirmation and subscribed messages from news.hraness.com. You are not subscribed until you confirm. Each newsletter message has a Hraness-specific unsubscribe link that does not change another product subscription. Optional paid support opens Accounts separately, where you review the plan and price before confirming payment.`,
   `This general newsletter signup does not create new Stripe History mailing consent. If you subscribed through the earlier Stripe History form, Hraness Accounts retains that dated record. A previously confirmed membership may remain active, and Hraness Accounts may continue to process it and deliver Stripe History newsletter messages through Resend from news.hraness.com until you use its Stripe-History-specific unsubscribe link. That link does not change another product or general Hraness subscription. Removing the earlier form does not delete, cancel, or migrate that record.`,
-  `${site.domain} does not sell personal data, does not run advertising pixels, and does not keep a reader profile. Appearance preferences stay in the browser. Machine-readable copies of the public pages are available as Markdown when a client sends \`Accept: text/markdown\`, and the authored YAML records remain downloadable from the [dataset index](${SITE_ORIGIN}/data).`,
+  `${site.name} does not sell personal data, does not run advertising pixels, and does not keep a reader profile. Appearance preferences stay in the browser. Machine-readable copies of the public pages are available as Markdown when a client sends \`Accept: text/markdown\`, and the authored YAML records remain downloadable from the [dataset index](${SITE_ORIGIN}/data).`,
   `Questions about this policy belong on the [contact page](${SITE_ORIGIN}/contact) or in the [Stripe History repository](${GITHUB_REPOSITORY_URL}). The broader sourcing and independence statement lives on the [about page](${SITE_ORIGIN}/about).`,
 ] as const;
 
 export const contactParagraphs = [
   `Use public GitHub issues for ordinary historical corrections, missing events, stronger sources, and focused software improvements. Include the event date, a concise factual claim, its category, the proposed confidence and status, and at least one source URL. Prefer primary sources. If a claim was only proposed or reported, keep that uncertainty in the record.`,
   `Report suspected vulnerabilities through GitHub's private vulnerability reporting for this repository. Do not include sensitive details in a public issue.`,
-  `There is no Stripe History-owned reader login, contact form, product inbox, or new product-specific mailing signup on ${site.domain}. The footer offers the general Hraness newsletter and optional support described on the privacy page. The project does not process payments, issue API keys, or operate a Stripe integration. ${independenceSentence}`,
+  `There is no Stripe History-owned reader login, contact form, product inbox, or new product-specific mailing signup on ${site.name}. The footer offers the general Hraness newsletter and optional support described on the privacy page. The project does not process payments, issue API keys, or operate a Stripe integration. ${independenceSentence}`,
   `Published and maintained by [Hraness](${HRANESS_URL}). The complete sourced records and website code are in the [Stripe History repository](${GITHUB_REPOSITORY_URL}). Read [about](${SITE_ORIGIN}/about) for editorial method and [privacy](${SITE_ORIGIN}/privacy) for analytics, the Hraness newsletter, and historical mailing-consent limits.`,
 ] as const;
 

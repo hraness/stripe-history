@@ -24,7 +24,7 @@ describe("agent markdown representations", () => {
     const history = await loadHistory();
     const page = await markdownForPath("/");
     expect(page.status).toBe(200);
-    expect(page.body).toContain(`# Stripe company history: ${history.events.length} sourced events`);
+    expect(page.body).toContain("# Stripe History: Every event in Stripe’s history, dated and sourced.");
     expect(page.body).toContain("not affiliated with, endorsed by, or operated by");
     expect(page.body).toContain("## Evidence status");
     expect(page.body).toContain(`- Timeline entries: ${history.events.length}`);

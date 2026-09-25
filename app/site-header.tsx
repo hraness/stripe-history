@@ -17,7 +17,7 @@ export function SiteHeader({
       brandLabel="hraness"
       className="stripe-history-header hraness-material-chrome"
       links={[
-        { href: publicSitePath("/"), label: "stripe" },
+        { href: publicSitePath("/"), label: "stripe history" },
         { href: publicSitePath("/data"), label: "data" },
         { href: publicSitePath("/about"), label: "about", current: aboutSelected },
       ]}

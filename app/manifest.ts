@@ -4,7 +4,7 @@ import { publicSitePath, site } from "./site";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: publicSitePath("/"),
-    name: site.historyTitle,
+    name: site.name,
     short_name: site.applicationName,
     description: site.description,
     start_url: publicSitePath("/"),

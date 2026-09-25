@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   title: dataTitle,
   description: dataDescription,
   alternates: { canonical: absoluteSiteUrl("/data") },
-  ...socialMetadata(`${dataTitle} | ${site.domain}`, dataDescription, "/data"),
+  ...socialMetadata(`${dataTitle} | ${site.name}`, dataDescription, "/data"),
 };
 
 export default async function DataPage() {
@@ -49,7 +49,7 @@ export default async function DataPage() {
       />
       <SiteHeader />
       <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
-        <Link href="/">history</Link>
+        <Link href="/">stripe history</Link>
         <span aria-hidden="true"> / </span>
         <span>data</span>
       </nav>
@@ -161,7 +161,7 @@ export default async function DataPage() {
           aria-labelledby="research-data-heading"
           className="stripe-history-data-research"
         >
-          <h2 id="research-data-heading">Research and provenance</h2>
+          <h2 id="research-data-heading">Sources and research files</h2>
           <p>
             Browse the <Link href="/history/valuation">valuation history</Link>
             {" "}or the{" "}
@@ -185,7 +185,7 @@ export default async function DataPage() {
           <ul>
             <li>
               <a href={publicSitePath("/research/sources.yml")}>source catalog YAML</a> ·{" "}
-              {history.sources.length} canonical sources
+              {history.sources.length} sources
             </li>
             <li>
               <a href={publicSitePath("/research/valuations.yml")}>valuation observations YAML</a> ·{" "}
@@ -194,7 +194,7 @@ export default async function DataPage() {
             <li>
               <a href={publicSitePath("/research/collections.yml")}>research collections YAML</a>
             </li>
-            <li><a href={publicSitePath("/research/runs.yml")}>research run ledger YAML</a></li>
+            <li><a href={publicSitePath("/research/runs.yml")}>research log (YAML)</a></li>
           </ul>
         </section>
       </section>

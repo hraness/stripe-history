@@ -1,14 +1,14 @@
 # Stripe History
 
-[Stripe History](https://hraness.com/stripe) is an independent, open-source timeline of Stripe company history. Every event links to its sources, and the data behind the site is open YAML.
+[Stripe History](https://hraness.com/stripe) is an independent record of how Stripe grew, from the Collison brothers' first projects to today. Every event is dated and linked to its sources, and reported deals stay separate from completed ones. It is not affiliated with Stripe, Inc.
 
 The site shows every event on one reverse-chronological timeline and on a page for each category, such as acquisitions, product launches, and fundraising. Separate pages chart Stripe's annual payment and total volume, its revenue, and its private valuation by year. Each event's YAML record keeps its status and any uncertainty, such as whether a deal was reported, announced, or completed.
 
-The homepage's “Sources and review” panel shows how many entries, citations, and sources the timeline has, and the date of the most recent research run. It links to the [method and limits](https://hraness.com/stripe/about#sources-and-review), the [YAML downloads](https://hraness.com/stripe/data), and [how to report a correction](https://hraness.com/stripe/contact#corrections-and-sources).
+The homepage's “How this record is kept” panel shows how many events, sources, and source links the timeline has, and the date of the newest entry. It links to the [method and limits](https://hraness.com/stripe/about#sources-and-review), the [YAML downloads](https://hraness.com/stripe/data), and [how to report a correction](https://hraness.com/stripe/contact#corrections-and-sources).
 
 ## Browse the history
 
-- [Complete Stripe company history](https://hraness.com/stripe)
+- [Stripe History timeline](https://hraness.com/stripe)
 - [Acquisitions](https://hraness.com/stripe/history/acquisitions)
 - [Product launches](https://hraness.com/stripe/history/product-launches)
 - [Fundraising](https://hraness.com/stripe/history/fundraising)

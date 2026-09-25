@@ -298,6 +298,9 @@ describe("published YAML corpus", () => {
       canonicalSourceCount: history.sources.length,
       eventCount: history.events.length,
       latestCompletedResearchRunOn,
+      ...(history.events[0]?.date === undefined
+        ? {}
+        : { newestEventOn: history.events[0].date }),
       sourceLinkCount: history.events.reduce(
         (count, event) => count + event.sources.length,
         0,
