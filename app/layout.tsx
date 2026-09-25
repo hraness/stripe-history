@@ -68,9 +68,13 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       suppressHydrationWarning
     >
       <head>
-        {/* The blocking external bootstrap applies a saved palette before first paint. */}
+        {/* The blocking external bootstrap applies a saved palette before first paint.
+            Next.js does not prefix raw script URLs with `basePath`, so the path carries
+            `/stripe` explicitly; the bare `/theme-bootstrap.js` is hraness.com's own
+            bootstrap, whose different palette configuration makes the shared runtime
+            throw and the whole document fall to the global error page. */}
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script src="/theme-bootstrap.js" />
+        <script src="/stripe/theme-bootstrap.js" />
       </head>
       <body className={siteThemes.plain.bodyClassName} data-hraness-material="lantern">
         <JsonLdScript
