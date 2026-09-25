@@ -62,7 +62,7 @@ describe("hraness.com/stripe category history", () => {
       title: `Stripe acquisitions history: ${acquisitionCount} sourced events`,
     });
     expect(metadata.openGraph).toMatchObject({
-      title: `Stripe acquisitions history: ${acquisitionCount} sourced events | hraness.com/stripe`,
+      title: `Stripe acquisitions history: ${acquisitionCount} sourced events | Stripe History`,
       url: "https://hraness.com/stripe/history/acquisitions",
     });
   });

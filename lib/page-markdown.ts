@@ -151,7 +151,7 @@ function historyIndexMarkdown(
   });
   return [
     heading(
-      historyPageTitle(history.events.length),
+      historyPageTitle,
       site.description,
     ),
     independenceSentence,
@@ -213,7 +213,7 @@ function aboutMarkdown(evidence: HistoryEvidenceSummary): string {
 
 function privacyMarkdown(): string {
   return [
-    heading(`${privacyTitle} | ${site.domain}`, privacyDescription),
+    heading(`${privacyTitle} | ${site.name}`, privacyDescription),
     privacyParagraphs.join("\n\n"),
     "",
   ].join("\n");
@@ -221,7 +221,7 @@ function privacyMarkdown(): string {
 
 function contactMarkdown(): string {
   return [
-    heading(`${contactTitle} ${site.domain}`, contactDescription),
+    heading(`${contactTitle} | ${site.name}`, contactDescription),
     contactParagraphs.join("\n\n"),
     "",
   ].join("\n");
@@ -265,13 +265,13 @@ function dataMarkdown(history: HistoryCollection): string {
       },
     ]),
     "",
-    "## Research files",
+    "## Sources and research files",
     "",
     linkList([
       {
         href: `${SITE_ORIGIN}/research/sources.yml`,
         label: "Source catalog YAML",
-        note: `${history.sources.length} canonical sources`,
+        note: `${history.sources.length} sources`,
       },
       {
         href: `${SITE_ORIGIN}/research/valuations.yml`,
@@ -284,7 +284,7 @@ function dataMarkdown(history: HistoryCollection): string {
       },
       {
         href: `${SITE_ORIGIN}/research/runs.yml`,
-        label: "Research run ledger YAML",
+        label: "Research log (YAML)",
       },
     ]),
     "",
@@ -349,6 +349,8 @@ function paymentVolumeMarkdown(history: HistoryCollection): string {
     "",
     seo.method,
     "",
+    independenceSentence,
+    "",
   ].join("\n");
 }
 
@@ -398,6 +400,8 @@ function netRevenueMarkdown(history: HistoryCollection): string {
     "",
     seo.method,
     "",
+    independenceSentence,
+    "",
   ].join("\n");
 }
 
@@ -435,6 +439,8 @@ function valuationMarkdown(history: HistoryCollection): string {
         "",
       ].join("\n");
     }),
+    independenceSentence,
+    "",
   ].join("\n");
 }
 

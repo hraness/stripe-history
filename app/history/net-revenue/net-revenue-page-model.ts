@@ -5,7 +5,6 @@ import {
 } from "@/lib/content";
 import type { Metadata } from "next";
 
-import { independenceSentence } from "../../site-copy";
 import { absoluteSiteUrl, site, socialMetadata } from "../../site";
 
 export const revenueKindLabel: Readonly<
@@ -126,7 +125,6 @@ export function deriveNetRevenuePageSeo(
       ...(hasBothKinds
         ? ["Sources use both “net revenue” and “revenue,” so each figure keeps its source’s label. The page does not calculate take rates."]
         : []),
-      independenceSentence,
     ].join(" "),
     method: [
       "Years refer to the calendar year measured, not the later disclosure date.",
@@ -167,7 +165,7 @@ export function deriveNetRevenuePageMetadata(
     description: seo.description,
     alternates: { canonical: absoluteSiteUrl("/history/net-revenue") },
     ...socialMetadata(
-      `${seo.title} | ${site.domain}`,
+      `${seo.title} | ${site.name}`,
       seo.description,
       "/history/net-revenue",
     ),

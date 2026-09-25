@@ -40,7 +40,7 @@ export default function ContactPage() {
       />
       <SiteHeader />
       <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
-        <Link href="/">history</Link>
+        <Link href="/">stripe history</Link>
         <span aria-hidden="true"> / </span>
         <span>contact</span>
       </nav>
@@ -49,7 +49,7 @@ export default function ContactPage() {
         className="stripe-history-about stripe-history-section"
       >
         <div className="stripe-history-section-heading">
-          <h1 id="contact-heading">Contact {site.domain}</h1>
+          <h1 id="contact-heading">Contact {site.name}</h1>
         </div>
         <h2 id="corrections-and-sources">Corrections and sources</h2>
         <p>
@@ -75,7 +75,7 @@ export default function ContactPage() {
         <h2>Publisher</h2>
         <p>
           There is no Stripe History-owned reader login, contact form, or product
-          inbox on {site.domain}. The footer offers the general Hraness
+          inbox on {site.name}. The footer offers the general Hraness
           newsletter and optional support described on the privacy page; this site does not create
           a new Stripe History mailing subscription. The project does not process
           payments, issue API keys, or operate a Stripe integration. {independenceSentence}

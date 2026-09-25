@@ -10,19 +10,17 @@ import type { Metadata } from "next";
 import { HistoryView } from "./history/history-view";
 import { historyCollectionJsonLd } from "./seo";
 import { absoluteSiteUrl, site, socialMetadata } from "./site";
-import { historyPageTitle as historyTitle } from "./site-copy";
+import { historyPageTitle } from "./site-copy";
 
 export const dynamic = "force-static";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const history = await loadHistory();
-  const title = historyTitle(history.events.length);
   return {
-    title,
+    title: { absolute: historyPageTitle },
     description: site.description,
     alternates: { canonical: absoluteSiteUrl("/") },
     robots: INDEXABLE_ROBOTS,
-    ...socialMetadata(`${title} | ${site.domain}`, site.description, "/"),
+    ...socialMetadata(historyPageTitle, site.description, "/"),
   };
 }
 
@@ -32,7 +30,7 @@ export default async function Home() {
     loadResearchRuns(),
   ]);
   const evidence = summarizeHistoryEvidence(history, researchRuns);
-  const title = historyTitle(history.events.length);
+  const title = historyPageTitle;
 
   return (
     <>

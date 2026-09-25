@@ -25,18 +25,24 @@ export function absoluteSiteUrl(path: SitePath): string {
   return path === "/" ? SITE_ORIGIN : `${SITE_ORIGIN}${path}`;
 }
 
+const tagline = "Every event in Stripe’s history, dated and sourced.";
+
 export const site = {
   applicationName: "Stripe History",
+  category: "Independent company history",
   datasetDescription:
     "Download the YAML files behind this Stripe history: every dated event with its sources, plus valuation observations and annual volume and revenue figures.",
   description:
-    "An independent, sourced Stripe history from the 2010 devpayments.com prototype and September 2011 public launch to today, covering acquisitions, products, leadership, funding, valuation, expansion, offices, publishing, company milestones, annual volume, and net revenue.",
+    "Stripe History is an independent record of how Stripe grew. Every event is dated and linked to its sources, and the data downloads as open YAML.",
   domain: SITE_LABEL,
-  historyTitle: "Stripe company history",
+  heroSummary:
+    "An independent, dated record of how Stripe grew, from the 2010 Buenos Aires prototype to the latest reported volume. Open data throughout.",
+  long:
+    "Stripe is private, so its history arrives in pieces: annual letters, tender offers, press reports, podcasts, and blog posts. Stripe History, built by Hraness, gathers those pieces into one dated record, from Patrick Collison’s 2005 Young Scientist win and the 2010 prototype built in Buenos Aires cafes to the $1.9 trillion in total volume Stripe reported for 2025. Every event links to its sources, reported talks stay distinct from completed deals, and each valuation keeps its type. Charts follow volume, revenue, and valuation by year, and the whole record downloads as YAML under the MIT License. It is not affiliated with Stripe, Inc.",
   name: "Stripe History",
-  socialImageAlt: "Stripe History: a dated, sourced timeline of the company",
-  title: `Stripe company history | ${SITE_LABEL}`,
-  titleTemplate: `%s | ${SITE_LABEL}`,
+  socialImageAlt: `Stripe History: ${tagline}`,
+  tagline,
+  titleTemplate: `%s | Stripe History`,
 } as const;
 
 export function socialMetadata(

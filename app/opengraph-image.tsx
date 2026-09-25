@@ -41,7 +41,7 @@ export default function OpenGraphImage() {
               maxWidth: "940px",
             }}
           >
-            A dated, sourced timeline of the company
+            {site.tagline}
           </div>
         </div>
       </div>

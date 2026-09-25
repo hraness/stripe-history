@@ -38,7 +38,7 @@ export default function PrivacyPage() {
       />
       <SiteHeader />
       <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
-        <Link href="/">history</Link>
+        <Link href="/">stripe history</Link>
         <span aria-hidden="true"> / </span>
         <span>privacy</span>
       </nav>
@@ -93,7 +93,7 @@ export default function PrivacyPage() {
           migrate that record.
         </p>
         <p>
-          {site.domain} does not sell personal data, does not run advertising
+          {site.name} does not sell personal data, does not run advertising
           pixels, and does not keep a reader profile. Appearance preferences
           stay in the browser. Machine-readable copies of the public pages are
           available as Markdown when a client sends{" "}

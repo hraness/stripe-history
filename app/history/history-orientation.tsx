@@ -4,12 +4,12 @@ import * as stylex from "@stylexjs/stylex";
 import { orientationStyles as styles } from "./history-orientation.stylex";
 
 import { formatReviewDate } from "../evidence-snapshot";
-import { evidenceLabels, researchRunNote } from "../site-copy";
+import { site } from "../site";
+import { recordKeepingLabels, recordKeepingNote } from "../site-copy";
 
-export const historyHeadline = "Stripe’s history, dated and sourced";
-
-export function historyLead(eventCount: number): string {
-  return `The timeline lists ${eventCount} dated events across products, funding, leadership, expansion, and scale, and links each one to its sources. Filter it by category or compare the annual charts.`;
+function formatEventDate(value: string): string {
+  // Event dates keep source precision: a bare year or year-month stays verbatim.
+  return value.length === 10 ? formatReviewDate(value) : value;
 }
 
 /**
@@ -21,7 +21,7 @@ export function historyLead(eventCount: number): string {
 export function HistoryOrientation({
   evidence,
 }: Readonly<{ evidence: HistoryEvidenceSummary }>) {
-  const reviewDate = evidence.latestCompletedResearchRunOn;
+  const newestEventOn = evidence.newestEventOn;
 
   return (
     <>
@@ -33,11 +33,14 @@ export function HistoryOrientation({
         data-tone="paper"
       >
         <div className={`hraness-marketing-hero__copy ${stylex.props(styles.hero__copy).className}`}>
+          <p className={`hraness-marketing-hero__eyebrow ${stylex.props(styles.hero__eyebrow).className}`}>
+            {site.category}
+          </p>
           <h1 className={`hraness-marketing-hero__heading ${stylex.props(styles.hero__heading).className}`} id="history-heading">
-            {historyHeadline}
+            {site.tagline}
           </h1>
           <p className={`hraness-marketing-hero__summary ${stylex.props(styles.hero__summary).className}`}>
-            {historyLead(evidence.eventCount)}
+            {site.heroSummary}
           </p>
           <div className={`hraness-marketing-hero__actions ${stylex.props(styles.hero__actions).className}`}>
             <a
@@ -62,40 +65,43 @@ export function HistoryOrientation({
         </div>
       </header>
       <details className={`history-source-details ${stylex.props(styles.sourceDetails).className}`}>
-        <summary {...stylex.props(styles.sourceSummary)}>Sources and review</summary>
+        <summary {...stylex.props(styles.sourceSummary)}>How this record is kept</summary>
         <section
-          aria-label="Current evidence snapshot"
+          aria-label="How this record is kept"
           className={`hraness-marketing-stats stripe-history-evidence-strip ${stylex.props(styles.stats).className}`}
           data-hraness-marketing="stats"
         >
+          <p className={`hraness-marketing-stats__source ${stylex.props(styles.stats__source).className}`}>
+            {recordKeepingNote}
+          </p>
           <dl
             className={`hraness-marketing-stats__list ${stylex.props(styles.stats__list, styles.factColumns4).className}`}
           >
             <div {...stylex.props(styles.facts__item)}>
-              <dt {...stylex.props(styles.facts__label)}>{evidenceLabels.eventCount}</dt>
+              <dt {...stylex.props(styles.facts__label)}>{recordKeepingLabels.eventCount}</dt>
               <dd {...stylex.props(styles.facts__body)}><strong {...stylex.props(styles.stats__value)}>{evidence.eventCount}</strong></dd>
             </div>
             <div {...stylex.props(styles.facts__itemLater)}>
-              <dt {...stylex.props(styles.facts__label)}>{evidenceLabels.sourceLinkCount}</dt>
-              <dd {...stylex.props(styles.facts__body)}><strong {...stylex.props(styles.stats__value)}>{evidence.sourceLinkCount}</strong></dd>
-            </div>
-            <div {...stylex.props(styles.facts__itemRowOdd)}>
-              <dt {...stylex.props(styles.facts__label)}>{evidenceLabels.canonicalSourceCount}</dt>
+              <dt {...stylex.props(styles.facts__label)}>{recordKeepingLabels.canonicalSourceCount}</dt>
               <dd {...stylex.props(styles.facts__body)}><strong {...stylex.props(styles.stats__value)}>{evidence.canonicalSourceCount}</strong></dd>
             </div>
+            <div {...stylex.props(styles.facts__itemRowOdd)}>
+              <dt {...stylex.props(styles.facts__label)}>{recordKeepingLabels.sourceLinkCount}</dt>
+              <dd {...stylex.props(styles.facts__body)}><strong {...stylex.props(styles.stats__value)}>{evidence.sourceLinkCount}</strong></dd>
+            </div>
             <div {...stylex.props(styles.facts__itemRow)}>
-              <dt {...stylex.props(styles.facts__label)}>{evidenceLabels.latestCompletedResearchRunOn}</dt>
+              <dt {...stylex.props(styles.facts__label)}>{recordKeepingLabels.newestEventOn}</dt>
               <dd {...stylex.props(styles.facts__body)}>
                 <strong {...stylex.props(styles.stats__value)}>
-                  {reviewDate === undefined
+                  {newestEventOn === undefined
                     ? "not recorded"
-                    : <time dateTime={reviewDate}>{formatReviewDate(reviewDate)}</time>}
+                    : <time dateTime={newestEventOn}>{formatEventDate(newestEventOn)}</time>}
                 </strong>
               </dd>
             </div>
           </dl>
           <p className={`hraness-marketing-stats__source ${stylex.props(styles.stats__source).className}`}>
-            {researchRunNote}{" "}<Link href="/about#sources-and-review">Method and limits</Link>.
+            <Link href="/about#sources-and-review">Method and limits</Link>.
           </p>
         </section>
       </details>

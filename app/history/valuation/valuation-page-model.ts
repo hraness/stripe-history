@@ -6,7 +6,6 @@ import {
 import type { ValuationObservation } from "@/lib/research-schema";
 import type { Metadata } from "next";
 
-import { independenceSentence } from "../../site-copy";
 import { absoluteSiteUrl, site, socialMetadata } from "../../site";
 
 export const mechanismLabel: Readonly<
@@ -126,7 +125,6 @@ export function deriveValuationPageSeo(
         ? `The chart shows one observation for ${firstYear}.`
         : `The chart shows at most one observation per year from ${firstYear} to ${latestHeadline.calendarYear}.`,
       "Financing rounds, tender offers, 409A appraisals, secondary trades, and market signals measure different things, so each figure keeps its label.",
-      independenceSentence,
     ].join(" "),
     title: `Stripe valuation history by year, ${yearRange}`,
     yearRange,
@@ -165,7 +163,7 @@ export function deriveValuationPageMetadata(
     description: seo.description,
     alternates: { canonical: absoluteSiteUrl("/history/valuation") },
     ...socialMetadata(
-      `${seo.title} | ${site.domain}`,
+      `${seo.title} | ${site.name}`,
       seo.description,
       "/history/valuation",
     ),

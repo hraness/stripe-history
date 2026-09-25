@@ -24,7 +24,7 @@ export function HistoryClosing() {
             <div className={`hraness-marketing-question__answer ${stylex.props(styles.answer).className}`}>
               <p {...stylex.props(styles.paragraph)}>
                 The timeline follows Stripe’s products, acquisitions, people,
-                funding, expansion, and scale. It also covers its publications,
+                funding, and expansion. It also covers its publications,
                 founder projects, and long-form leadership appearances. Events
                 run from newest to oldest.
               </p>
@@ -78,14 +78,13 @@ export function HistoryClosing() {
         id="maker"
       >
         <header className={`hraness-marketing-maker__header ${stylex.props(styles.header).className}`}>
-          <h2 className={`hraness-marketing-maker__heading ${stylex.props(styles.heading).className}`} id="history-maker-heading">Ben Guo</h2>
+          <h2 className={`hraness-marketing-maker__heading ${stylex.props(styles.heading).className}`} id="history-maker-heading">Built by Hraness</h2>
         </header>
         <div className={`hraness-marketing-maker__body ${stylex.props(styles.body).className}`}>
           <p {...stylex.props(styles.paragraph)}>
-            Ben is a musician and builder, formerly a founder and engineering
-            leader at companies including Venmo and Stripe, now based in Puerto
-            Rico. He maintains Stripe History through Hraness as an independent
-            project, not affiliated with or endorsed by Stripe, Inc.
+            We publish Stripe History as an independent record. Every entry,
+            source, and correction lives in a public repository, so anyone can
+            check our work.
           </p>
           <ul className={`hraness-marketing-maker__links ${stylex.props(styles.links).className}`}>
             <li><a href={HRANESS_URL}>hraness.com</a></li>

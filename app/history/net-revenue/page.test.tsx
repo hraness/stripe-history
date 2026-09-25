@@ -21,7 +21,7 @@ describe("hraness.com/stripe net-revenue history", () => {
       title: seo.title,
     });
     expect(metadata.openGraph).toMatchObject({
-      title: `${seo.title} | hraness.com/stripe`,
+      title: `${seo.title} | Stripe History`,
       url: "https://hraness.com/stripe/history/net-revenue",
     });
   });
@@ -57,16 +57,14 @@ describe("hraness.com/stripe net-revenue history", () => {
 
     expect(updatedSeo).toMatchObject({
       description: expect.stringContaining("$9 billion 2026 revenue"),
-      lead: expect.stringMatching(
-        /\$9 billion in revenue for 2026.*not affiliated with, endorsed by, or operated by/su,
-      ),
+      lead: expect.stringMatching(/\$9 billion in revenue for 2026/u),
       title: "Stripe net revenue and revenue by year, 2021–2026",
       yearRange: "2021–2026",
     });
     expect(updatedMetadata).toMatchObject({
       description: expect.stringContaining("$9 billion 2026 revenue"),
       openGraph: {
-        title: "Stripe net revenue and revenue by year, 2021–2026 | hraness.com/stripe",
+        title: "Stripe net revenue and revenue by year, 2021–2026 | Stripe History",
       },
       title: "Stripe net revenue and revenue by year, 2021–2026",
     });
