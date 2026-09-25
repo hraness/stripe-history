@@ -36,6 +36,8 @@
     "bun"
   ],
   "scripts": {
+    "kb:search": "bunx --bun --package https://github.com/hraness/wordcell/releases/download/v0.22.0/hraness-wordcell-0.22.0.tgz wordcell search --root kb --mode exact --rerank typesafe --rerank-limit 25",
+    "kb:search:local": "bunx --bun --package https://github.com/hraness/wordcell/releases/download/v0.22.0/hraness-wordcell-0.22.0.tgz wordcell search --root kb --mode exact",
     "build": "bun scripts/build-theme-bootstrap.ts && node scripts/build-next.ts",
     "build:theme": "bun scripts/build-theme-bootstrap.ts",
     "check:cost-surfaces": "bun ./scripts/check-cost-surfaces.mjs",
