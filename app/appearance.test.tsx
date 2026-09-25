@@ -48,7 +48,12 @@ test("Stripe History does not keep a second theme runtime", async () => {
     expect(page).toContain('data-palette="paper"');
     expect(page).not.toContain("DesignThemeProvider");
   }
-  expect(layout).toContain('src="/theme-bootstrap.js"');
+  // The document is served under the `/stripe` base path behind hraness.com, and
+  // Next.js leaves raw script URLs unprefixed. The bare root path resolves to the
+  // hraness.com bootstrap, whose different palette configuration crashes the shared
+  // palette runtime into the global error page.
+  expect(layout).toContain('src="/stripe/theme-bootstrap.js"');
+  expect(layout).not.toContain('src="/theme-bootstrap.js"');
 });
 
 test("compiled header native anchors retain /stripe and the selected about route", () => {
