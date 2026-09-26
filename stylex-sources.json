@@ -71,7 +71,6 @@
     "lib/research-source-identity.ts",
     "proxy.ts",
     "support/design-kit.ts",
-    "support/hraness-brand.tsx",
     "support/theme.tsx"
   ]
 }

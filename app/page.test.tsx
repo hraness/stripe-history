@@ -52,8 +52,10 @@ describe("canonical hraness.com/stripe history", () => {
     expect(eventCount).toBe(history.events.length);
     expect(eventCount).toBeGreaterThanOrEqual(200);
     expect(html).toContain('class="stripe-history-page stripe-history-main stripe-history-history-main"');
-    expect(html).toMatch(/<header class="hraness-marketing-header [^"]*\bstripe-history-header\b[^"]*" data-hraness-marketing="header">/u);
+    expect(html).toMatch(/<header class="hraness-marketing-header [^"]*\bstripe-history-header\b[^"]*" data-hraness-marketing="header"[^>]*>/u);
     expect(html).toMatch(/class="hraness-marketing-header__brand [^"]+" data-foil="" href="https:\/\/hraness\.com" aria-label="hraness"/u);
+    expect(html).toMatch(/<span aria-hidden="true" class="hraness-foil-mark [^"]+" data-foil=""[^>]*><img alt="" class="hraness-foil-mark__image [^"]+"[^>]*src="\/stripe\/marks\/hraness-ra\.svg"[^>]*\/>/u);
+    expect(html).toContain('hraness-foil-mark__paint');
     expect(html).toMatch(/aria-label="primary navigation" class="hraness-marketing-header__nav [^"]+"/u);
     expect(html).toMatch(/<header aria-labelledby="history-heading" class="hraness-marketing-hero history-orientation [^"]+"/u);
     expect(html).toMatch(/<h1 class="hraness-marketing-hero__heading [^"]+" id="history-heading">Every event in Stripe’s history, dated and sourced\.<\/h1>/u);

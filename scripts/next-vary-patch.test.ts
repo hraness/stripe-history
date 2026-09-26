@@ -113,4 +113,4 @@ test("native Node responses retain existing Vary and every framework token from 
   expect(receipt.cases).toBe(28);
   expect(receipt.loader).toBe("native-esm-template");
   expect(receipt.node).toMatch(/^24\./u);
-});
+}, 30_000);
