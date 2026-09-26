@@ -1,5 +1,4 @@
 import { ThemeMenuButton } from "@/support/theme";
-import { RaMark } from "@/support/hraness-brand";
 import { MarketingSiteHeader } from "@hraness/design-kit/react/server";
 import { publicSitePath } from "./site";
 
@@ -12,9 +11,10 @@ export function SiteHeader({
   return (
     <MarketingSiteHeader
       ariaLabel="primary navigation"
-      brand={<><RaMark /><span>hraness</span></>}
+      brand={<span>hraness</span>}
       brandHref="https://hraness.com"
       brandLabel="hraness"
+      brandMark={publicSitePath("/marks/hraness-ra.svg")}
       className="stripe-history-header hraness-material-chrome"
       links={[
         { href: publicSitePath("/"), label: "stripe history" },

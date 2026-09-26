@@ -1,5 +1,4 @@
 @import "../support/styles.css";
-@import "../support/brand.css";
 
 /* Shared Hraness language: light paper by default, dark through the
  * appearance control (System follows prefers-color-scheme), hairlines at
@@ -112,11 +111,6 @@
   letter-spacing: -0.02em;
   min-height: 2rem;
   text-decoration: none;
-}
-
-.stripe-history-header .hraness-marketing-header__brand .hraness-ra-mark {
-  height: 1.25rem;
-  width: 1.25rem;
 }
 
 .stripe-history-header .hraness-marketing-header__nav a {

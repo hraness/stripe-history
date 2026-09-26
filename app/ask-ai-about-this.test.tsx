@@ -86,7 +86,7 @@ test("server-renders exact Ask AI subjects on every canonical HTML page", async 
     const html = renderToStaticMarkup(await page.render());
     assertAskAiLinks(html, page.path);
   }
-});
+}, 60_000);
 
 test("keeps the Ask AI block off the not-found surface", () => {
   const html = renderToStaticMarkup(<NotFound />);

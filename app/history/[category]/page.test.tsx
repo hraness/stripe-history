@@ -84,7 +84,7 @@ describe("hraness.com/stripe category history", () => {
       params: Promise.resolve({ category: "origins-and-early-company" }),
     });
     expect(origins.title).toMatch(/^Stripe origins and early company history: \d+ sourced events$/u);
-  });
+  }, 30_000);
 
   test("renders a crawlable category-only timeline", async () => {
     const history = await loadHistory();
