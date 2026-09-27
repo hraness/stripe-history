@@ -70,6 +70,7 @@ export function HistoryEventArticle({
           </dl>
         )}
       <p className={`history-event-sources ${stylex.props(styles.sources, styles.summary).className}`}>
+        <span {...stylex.props(styles.sourcesLabel)}>{event.sources.length === 1 ? "Source" : "Sources"}</span>
         {event.sources.map((source, index) => (
           <span key={source.url}>
             {index === 0 ? null : <span aria-hidden="true"> · </span>}

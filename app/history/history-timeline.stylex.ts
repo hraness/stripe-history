@@ -9,11 +9,14 @@ const forced = "@media (forced-colors: active)";
  * their existing owners; the shared category-role theme boundary stays in CSS. */
 export const historyTimelineStyles = stylex.create({
   section: { scrollMarginTop: "calc(var(--history-header-offset) + 0.75rem)" },
+  // Desktop shows every filter as wrapped rows above the timeline and lets them
+  // scroll away, so reading space is not lost to a four-row sticky block. On
+  // narrow screens the filters become one opaque sticky row.
   filters: {
     backgroundAttachment: "scroll",
     backgroundClip: "border-box",
     backgroundColor: {
-      default: "color-mix(in oklch, var(--plain-background) 94%, transparent)",
+      default: "var(--plain-background)",
       [forced]: "Canvas",
     },
     backgroundImage: "none",
@@ -32,11 +35,9 @@ export const historyTimelineStyles = stylex.create({
     paddingRight: 0,
     paddingBottom: { default: "0.3rem", [mobile]: "0.2rem" },
     paddingLeft: 0,
-    position: "sticky",
-    top: "var(--history-header-offset)",
+    position: { default: "relative", [mobile]: "sticky" },
+    top: { default: null, [mobile]: "var(--history-header-offset)" },
     zIndex: 40,
-    WebkitBackdropFilter: { default: "blur(12px)", [forced]: "none" },
-    backdropFilter: { default: "blur(12px)", [forced]: "none" },
     "::after": {
       backgroundImage: {
         default: null,
@@ -54,7 +55,7 @@ export const historyTimelineStyles = stylex.create({
   filterList: {
     display: "flex",
     flexWrap: { default: "wrap", [mobile]: "nowrap" },
-    gap: "0.45rem",
+    gap: "0.4rem",
     listStyle: "none",
     margin: 0,
     paddingTop: "0.2rem",
@@ -101,17 +102,17 @@ export const historyTimelineStyles = stylex.create({
     color: { default: "var(--plain-foreground)", [forced]: "CanvasText" },
     display: "inline-flex",
     fontFamily: "var(--font-text)",
-    fontSize: "0.85rem",
+    fontSize: "0.8125rem",
     fontWeight: 500,
-    gap: "0.4rem",
+    gap: "0.35rem",
     minHeight: {
-      default: "max(2.125rem, var(--plain-link-target-min))",
+      default: "max(2rem, var(--plain-link-target-min))",
       [coarse]: "var(--plain-link-target-min, 48px)",
     },
-    paddingTop: "0.3rem",
-    paddingRight: "0.8rem",
-    paddingBottom: "0.3rem",
-    paddingLeft: "0.7rem",
+    paddingTop: "0.25rem",
+    paddingRight: "0.7rem",
+    paddingBottom: "0.25rem",
+    paddingLeft: "0.6rem",
     overflowWrap: "anywhere",
     textDecorationLine: "none",
     textDecorationStyle: "solid",

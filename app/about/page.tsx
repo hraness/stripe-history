@@ -32,7 +32,7 @@ function TopicIcon({ slug }: Readonly<{ slug: string }>) {
   // Decorative local SVG; next/image cannot optimize vector sources.
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img className="sh-topic-icon" src={publicSitePath(`/icons/${slug}.svg`)} alt="" aria-hidden="true" width="88" height="88" loading="lazy" decoding="async" />
+    <img className="sh-topic-icon" src={publicSitePath(`/icons/${slug}.svg`)} alt="" aria-hidden="true" width="40" height="40" loading="lazy" decoding="async" />
   );
 }
 
@@ -76,8 +76,10 @@ export default async function AboutPage() {
           <h1 id="about-heading">About {site.name}</h1>
         </div>
 
-        <TopicIcon slug="company-history" />
-        <h2>Stripe history</h2>
+        <div className="stripe-history-about-topic">
+          <TopicIcon slug="company-history" />
+          <h2>Stripe history</h2>
+        </div>
         <p>
           Stripe is private, so its history arrives in pieces: annual letters,
           tender offers, press reports, interviews, and blog posts.{" "}
@@ -91,12 +93,16 @@ export default async function AboutPage() {
           appearances by Stripe founders and senior leaders.
         </p>
 
-        <TopicIcon slug="evidence" />
-        <h2 id="evidence-status">Evidence status</h2>
+        <div className="stripe-history-about-topic">
+          <TopicIcon slug="evidence" />
+          <h2 id="evidence-status">Evidence status</h2>
+        </div>
         <EvidenceSnapshot summary={evidence} />
 
-        <TopicIcon slug="sources" />
-        <h2 id="sources-and-review">Sources and review</h2>
+        <div className="stripe-history-about-topic">
+          <TopicIcon slug="sources" />
+          <h2 id="sources-and-review">Sources and review</h2>
+        </div>
         <p>
           Every history entry resolves to at least one cataloged source. Review
           prefers primary material and filings, uses strong contemporaneous
@@ -122,8 +128,10 @@ export default async function AboutPage() {
           both YAML, show what each run covered.
         </p>
 
-        <TopicIcon slug="publications" />
-        <h2>Publications followed</h2>
+        <div className="stripe-history-about-topic">
+          <TopicIcon slug="publications" />
+          <h2>Publications followed</h2>
+        </div>
         <p>
           Weekly discovery reads first-party and Stripe-affiliated publication
           feeds. The timeline records those publications when they become part
@@ -144,8 +152,10 @@ export default async function AboutPage() {
           episode feed.
         </p>
 
-        <TopicIcon slug="independence" />
-        <h2 id="independence-and-corrections">Independence and corrections</h2>
+        <div className="stripe-history-about-topic">
+          <TopicIcon slug="independence" />
+          <h2 id="independence-and-corrections">Independence and corrections</h2>
+        </div>
         <p>
           {independenceSentence} Corrections are made in the underlying sourced
           records so the timeline and its focused category views stay aligned.
@@ -170,8 +180,10 @@ export default async function AboutPage() {
           <Link href="/contact">contact page</Link>.
         </p>
 
-        <TopicIcon slug="privacy" />
-        <h2>Privacy</h2>
+        <div className="stripe-history-about-topic">
+          <TopicIcon slug="privacy" />
+          <h2>Privacy</h2>
+        </div>
         <p>
           The site sends anonymous, cookieless pageview events for public pages
           to PostHog. Each event contains the normalized public page path, its

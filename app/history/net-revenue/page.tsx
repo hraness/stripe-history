@@ -238,6 +238,7 @@ export default async function NetRevenuePage() {
                         ))}
                       </dl>
                       <p className={`history-event-sources ${stylex.props(eventStyles.sources).className}`}>
+                        <span {...stylex.props(eventStyles.sourcesLabel)}>{event.sources.length === 1 ? "Source" : "Sources"}</span>
                         {event.sources.map((source, index) => (
                           <span key={source.url}>
                             {index === 0 ? null : <span aria-hidden="true"> · </span>}

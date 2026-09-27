@@ -50,21 +50,18 @@ test("event recipes preserve frame, typography, responsive facts and source targ
   expect(css(styles.factRow)).toMatch(/@media\s*\(max-width:\s*34rem\).*display:block/u);
   expect(css(styles.factTerm)).toContain("color:var(--plain-muted)");
   expect(css(styles.factValue)).toContain("font-variant-numeric:tabular-nums");
-  expect(css(styles.sources)).toContain("text-align:end");
+  expect(css(styles.sources)).toContain("text-align:start");
   expect(css(styles.sourceLink)).toContain("min-height:1.5rem");
   expect(css(styles.sourceLink)).toMatch(/@media\s*\(pointer:\s*coarse\).*display:inline-flex/u);
 });
 
-test("category and confidence chips retain native focus and forced/coarse behavior", () => {
+test("plain category and confidence labels retain native focus and forced/coarse behavior", () => {
   const type = css(styles.type);
-  expect(type).toContain("background-color:var(--history-category-soft)");
+  expect(type).toContain("background-color:transparent");
   expect(type).toContain("text-decoration-line:none");
-  expect(type).toContain("min-height:1.65rem");
-  for (const recipe of [styles.type, styles.status]) {
-    expect(css(recipe)).toContain("border-style:solid");
-    expect(css(recipe)).toContain("border-width:1px");
-    expect(css(recipe)).toContain("border-image-source:none");
-  }
+  expect(type).toContain("min-height:1.5rem");
+  expect(type).toContain("border-style:none");
+  expect(type).toContain("border-width:0");
   expect(type).toContain(":focus-visible{border-radius:1px");
   expect(type).toContain("outline-style:dotted");
   expect(type).toContain("outline-width:1px");
@@ -77,7 +74,7 @@ test("category and confidence chips retain native focus and forced/coarse behavi
   }
   expect(css(styles.typeIcon)).toContain("color:var(--history-category-ink)");
   expect(css(styles.status, styles.confidence)).toContain("color:var(--plain-foreground)");
-  expect(css(styles.status, styles.confidence)).not.toContain("color:var(--plain-muted)");
+  expect(css(styles.confidence)).not.toContain("color:var(--plain-muted)");
   const disclosure = css(styles.type, styles.disclosureType);
   expect(disclosure).toContain("border-style:none");
   expect(disclosure).toContain("border-width:medium");
