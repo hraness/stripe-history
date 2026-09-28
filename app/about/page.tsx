@@ -104,6 +104,15 @@ export default async function AboutPage() {
           <h2 id="sources-and-review">Sources and review</h2>
         </div>
         <p>
+          For a short overview of Stripe, read{" "}
+          <a href="https://en.wikipedia.org/wiki/Stripe,_Inc.">Wikipedia</a>.
+          For analyst revenue estimates, see{" "}
+          <a href="https://sacra.com/c/stripe/">Sacra</a>. Stripe History is
+          narrower: a dated record in which every entry links to its sources,
+          and the whole record{" "}
+          <Link href="/data">downloads as YAML</Link>.
+        </p>
+        <p>
           Every history entry resolves to at least one cataloged source. Review
           prefers primary material and filings, uses strong contemporaneous
           reporting where necessary, checks chronology, category placement,

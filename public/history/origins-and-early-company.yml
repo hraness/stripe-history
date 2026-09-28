@@ -1,7 +1,7 @@
 category:
   id: origins-and-early-company
   label: Origins and early company
-  description: Founder backgrounds, pre-Stripe projects, the first prototype, and the people who formed Stripe's earliest team.
+  description: Patrick and John Collison built Stripe's first prototype in January 2010. Stripe launched publicly on September 30, 2011. Entries run from Patrick Collison's 2005 Young Scientist win to Stripe's early team in 2012.
   order: 1
 events:
   - id: origins-early-cohort-expands-after-launch

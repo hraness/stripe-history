@@ -83,6 +83,7 @@ export const aboutSections = [
   {
     heading: "Sources and review",
     paragraphs: [
+      `For a short overview of Stripe, read [Wikipedia](https://en.wikipedia.org/wiki/Stripe,_Inc.). For analyst revenue estimates, see [Sacra](https://sacra.com/c/stripe/). ${site.name} is narrower: a dated record in which every entry links to its sources, and the whole record [downloads as YAML](${SITE_ORIGIN}/data).`,
       "Every history entry resolves to at least one cataloged source. Review prefers primary material and filings, uses strong contemporaneous reporting where necessary, checks chronology, category placement, source support, and duplicate claims, and preserves uncertainty when a transaction or event was only proposed or reported.",
       `“Citations” counts each link between a timeline entry and a source in the catalog. It is not a count of independently corroborated claims: one source can support more than one entry, and one entry can cite more than one source. The [source catalog](${SITE_ORIGIN}/research/sources.yml) lists every source.`,
       `“Last research run” is the date of the most recent completed research run. Each run covers one research collection, not the whole timeline. The [collection definitions](${SITE_ORIGIN}/research/collections.yml) and the [research-run log](${SITE_ORIGIN}/research/runs.yml), both YAML, show what each run covered.`,

@@ -41,6 +41,9 @@ describe("hraness.com/stripe about page", () => {
     expect(html).toContain(`<dt>sources</dt><dd>${evidence.canonicalSourceCount}</dd>`);
     expect(html).toContain(`<dt>last research run</dt><dd><time dateTime="${evidence.latestCompletedResearchRunOn}">`);
     expect(html).toContain('id="sources-and-review"');
+    expect(html).toContain('href="https://en.wikipedia.org/wiki/Stripe,_Inc."');
+    expect(html).toContain('href="https://sacra.com/c/stripe/"');
+    expect(html).toContain('href="/data">downloads as YAML</a>');
     expect(html).toContain("not a count of independently corroborated claims");
     expect(html).toContain("Each run covers one research collection, not the whole timeline.");
     expect(html).toContain('href="/stripe/research/sources.yml"');
