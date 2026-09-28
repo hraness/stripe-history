@@ -133,9 +133,9 @@ test("compiled timeline retains sticky offsets, desktop ordering, responsive yea
     expect(borders).toContain(`border-${side}-style:solid`);
     expect(borders).toContain(`border-${side}-color:${color}`);
   }
-  expect(compiledRules(historyTimelineStyles.filterLink)).toContain("min-height:max(2.125rem,var(--plain-link-target-min))");
-  expect(nav).toContain("backdrop-filter:blur(12px)");
-  expect(nav).toMatch(/@media\s*\(forced-colors:\s*active\).*backdrop-filter:none/u);
+  expect(compiledRules(historyTimelineStyles.filterLink)).toContain("min-height:max(2rem,var(--plain-link-target-min))");
+  expect(nav).toContain("background-color:var(--plain-background)");
+  expect(nav).not.toContain("backdrop-filter:");
   const layout = compiledRules(historyTimelineStyles.layout);
   expect(layout).toContain("grid-template-columns:minmax(0,1fr) minmax(18rem,20rem)");
   expect(layout).toMatch(/@media\s*\(max-width:\s*54rem\).*display:block/u);

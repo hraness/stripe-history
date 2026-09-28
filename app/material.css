@@ -9,13 +9,9 @@
 
 [data-hraness-material="lantern"] .stripe-history-header.hraness-material-chrome {
   --surface: var(--plain-background);
-  --hraness-marketing-header-background: var(--hraness-material-chrome-paint);
-  --hraness-marketing-header-backdrop: var(--hraness-material-chrome-blur);
+  --hraness-marketing-header-background: var(--plain-background);
+  --hraness-marketing-header-backdrop: none;
   border-block-end-color: var(--hraness-material-seam);
-}
-
-[data-hraness-material="lantern"] .history-measure-controls button:not([aria-pressed="true"]) {
-  background-image: linear-gradient(to bottom, var(--hraness-material-edge), transparent 2px);
 }
 
 @media (forced-colors: active) {
@@ -24,8 +20,5 @@
     --hraness-material-ink: CanvasText;
     --hraness-material-muted: CanvasText;
     --hraness-material-focus: Highlight;
-  }
-  [data-hraness-material="lantern"] .history-measure-controls button {
-    background-image: none;
   }
 }

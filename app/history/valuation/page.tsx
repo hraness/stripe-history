@@ -285,6 +285,7 @@ export default async function ValuationPage() {
                         </p>
                       )}
                       <p className={`history-event-sources ${stylex.props(eventStyles.sources).className}`}>
+                        <span {...stylex.props(eventStyles.sourcesLabel)}>{observation.sources.length === 1 ? "Source" : "Sources"}</span>
                         {observation.sources.map((source, index) => (
                           <span key={source.id}>
                             {index === 0 ? null : <span aria-hidden="true"> · </span>}

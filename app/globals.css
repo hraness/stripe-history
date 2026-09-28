@@ -70,9 +70,11 @@
   max-width: 42rem;
 }
 
+/* Pre-script fallbacks; history-sticky-offset-sync measures the real stack.
+ * Wide screens stick only the header; narrow screens stick only the filters. */
 .stripe-history-history-main {
   --history-header-offset: 3.5rem;
-  --history-filter-stack-offset: 7rem;
+  --history-filter-stack-offset: 3.5rem;
 
   max-width: 64rem;
 }
@@ -109,7 +111,7 @@
   font-weight: 600;
   gap: 0.4rem;
   letter-spacing: -0.02em;
-  min-height: 2rem;
+  min-height: 2.75rem;
   text-decoration: none;
 }
 
@@ -117,7 +119,8 @@
   color: var(--plain-muted);
   font-size: 0.9rem;
   font-weight: 500;
-  min-block-size: var(--plain-link-target-min);
+  min-block-size: max(2.75rem, var(--plain-link-target-min));
+  min-inline-size: 2.75rem;
   text-decoration: none;
 }
 
@@ -174,11 +177,25 @@
   color: inherit;
 }
 
-.stripe-history-about > h2 {
+.stripe-history-about > h2,
+.stripe-history-about-topic {
   border-top: 1px solid var(--plain-line);
   font-size: 1.05rem;
   margin-top: 2.25rem;
   padding-top: 0.75rem;
+}
+
+/* A small topic icon sits beside its heading, below the section rule. */
+.stripe-history-about-topic {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.stripe-history-about-topic > h2 {
+  font-size: inherit;
+  margin: 0;
 }
 
 .stripe-history-about > p {
@@ -386,9 +403,9 @@
 }
 
 .history-volume figure {
-  background: color-mix(in oklch, var(--history-category-soft) 40%, var(--plain-background));
+  background: var(--plain-background);
   border: 1px solid var(--plain-line);
-  border-radius: 0.875rem;
+  border-radius: 0.5rem;
   margin: 0;
   padding: 0.9rem;
 }
@@ -526,14 +543,8 @@
 }
 
 .history-valuation-badge[data-tier="internal-mark"] {
-  background: repeating-linear-gradient(
-    135deg,
-    transparent 0,
-    transparent 3px,
-    var(--plain-surface) 3px,
-    var(--plain-surface) 6px
-  );
   border-style: double;
+  border-width: 3px;
 }
 
 .history-valuation-badge[data-tier="secondary"] {
@@ -582,13 +593,18 @@
   text-decoration: none;
 }
 
-.history-page-title {
-  font-size: var(--text-title);
-  font-weight: 500;
-  letter-spacing: -0.012em;
+/* One page-title role for every non-home page. The plain-page h1 rule is more
+ * specific than a single class, so these selectors carry the page root. */
+.stripe-history-page .history-page-title,
+.stripe-history-main .stripe-history-section-heading h1 {
+  font-family: var(--font-text);
+  font-size: clamp(1.75rem, 4.5vw, 2.25rem);
+  font-weight: 550;
+  letter-spacing: -0.02em;
   line-height: 1.15;
   margin: 0 0 1rem;
   max-width: 42rem;
+  text-wrap: balance;
 }
 
 .history-volume-intro {
@@ -696,6 +712,7 @@
   scroll-margin-top: calc(var(--history-filter-stack-offset) + 1rem);
 }
 
+.history-year-title,
 .history-volume-table-section tr[id] {
   scroll-margin-top: calc(var(--history-filter-stack-offset) + 1rem);
 }
@@ -799,7 +816,8 @@
 
 @media (max-width: 54rem) {
   .stripe-history-history-main {
-    --history-filter-stack-offset: 4rem;
+    --history-header-offset: 0px;
+    --history-filter-stack-offset: 3.5rem;
 
     max-width: 42rem;
   }
@@ -894,19 +912,52 @@
 }
 
 @media (max-width: 48rem) {
-  /* Three short links fit beside the brand, so the header keeps one row
-   * instead of the grammar's wrapped navigation. */
+  /* Phones: brand and appearance control share the first row; the links take
+   * their own row and scroll sideways instead of squeezing the wordmark. */
   .stripe-history-header .hraness-marketing-header__inner {
-    flex-wrap: nowrap;
-    padding-block: 0;
+    column-gap: 0.75rem;
+    padding-block: 0.25rem 0;
+    row-gap: 0;
+  }
+
+  .stripe-history-header .hraness-marketing-header__brand {
+    flex: none;
+    white-space: nowrap;
+  }
+
+  .stripe-history-header .hraness-marketing-header__actions {
+    margin-inline-start: auto;
   }
 
   .stripe-history-header .hraness-marketing-header__nav {
-    inline-size: auto;
-    order: 0;
-    gap: 0.15rem 0.9rem;
+    flex-wrap: nowrap;
+    gap: 0 1.25rem;
+    margin-inline: calc(-1 * var(--plain-shell-gutter));
+    overflow-x: auto;
+    padding-inline: var(--plain-shell-gutter);
+    scrollbar-width: none;
+    inline-size: calc(100% + 2 * var(--plain-shell-gutter));
   }
 
+  .stripe-history-header .hraness-marketing-header__nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .stripe-history-header .hraness-marketing-header__nav a {
+    align-items: center;
+    display: inline-flex;
+    flex: none;
+    min-block-size: max(2.5rem, var(--plain-link-target-min));
+    white-space: nowrap;
+  }
+}
+
+/* Narrow timeline pages: the header scrolls away and only the one-row filter
+ * bar sticks, so a phone keeps most of its height for the record itself. */
+@media (max-width: 54rem) {
+  .stripe-history-history-main > .stripe-history-header {
+    position: relative;
+  }
 }
 
 @media (max-width: 34rem) {
@@ -952,13 +1003,13 @@
 
 @media (max-width: 54rem) and (pointer: coarse) {
   .stripe-history-history-main {
-    --history-filter-stack-offset: 5rem;
+    --history-filter-stack-offset: 4rem;
   }
 }
 
 @media (max-width: 54rem) {
   :root[data-verification-pointer="coarse"] .stripe-history-history-main {
-    --history-filter-stack-offset: 5rem;
+    --history-filter-stack-offset: 4rem;
   }
 }
 
@@ -980,4 +1031,4 @@
 }
 
 /* Decorative topic icons (agent-generated line art, public/icons/). */
-.sh-topic-icon { display: block; width: 88px; height: 88px; margin: 0 0 18px; }
+.sh-topic-icon { display: block; flex: none; width: 40px; height: 40px; margin: 0; }
