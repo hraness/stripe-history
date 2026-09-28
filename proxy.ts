@@ -9,13 +9,39 @@ import {
   appendVaryAccept,
   decideRepresentation,
   isNextRscRequest,
+  MARKDOWN_CONTENT_TYPE,
   NOT_ACCEPTABLE_BODY,
 } from "./lib/accept";
-import { markdownRewritePath } from "./lib/history-urls";
+import {
+  isKnownMarkdownPath,
+  markdownRewritePath,
+  publicPathFromMarkdownRewrite,
+} from "./lib/history-urls";
+import { notFoundMarkdown } from "./lib/not-found-markdown";
+
+function markdownNotFound(method: string): NextResponse {
+  return new NextResponse(method === "HEAD" ? null : notFoundMarkdown(), {
+    headers: {
+      "Content-Type": MARKDOWN_CONTENT_TYPE,
+      Vary: "Accept",
+    },
+    status: 404,
+  });
+}
 
 export async function proxy(request: NextRequest) {
   const appPath = appPathFromPublicSitePath(request.nextUrl.pathname);
   const representationPath = appPath ?? request.nextUrl.pathname;
+
+  // A direct request for the internal Markdown route of an unknown page.
+  const directMarkdownPath = publicPathFromMarkdownRewrite(representationPath);
+  if (
+    directMarkdownPath !== null
+    && !isKnownMarkdownPath(directMarkdownPath)
+    && (request.method === "GET" || request.method === "HEAD")
+  ) {
+    return markdownNotFound(request.method);
+  }
   const decision = decideRepresentation({
     accept: request.headers.get("accept"),
     method: request.method,
@@ -38,6 +64,7 @@ export async function proxy(request: NextRequest) {
   }
 
   if (decision.kind === "markdown") {
+    if (!isKnownMarkdownPath(decision.pathname)) return markdownNotFound(request.method);
     const url = request.nextUrl.clone();
     const rewritePath = markdownRewritePath(decision.pathname) as SitePath;
     url.pathname = appPath === null ? rewritePath : publicSitePath(rewritePath);
