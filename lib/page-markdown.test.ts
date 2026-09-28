@@ -156,6 +156,6 @@ describe("llms.txt", () => {
     const about = await markdownForPath("/about");
     expect(about.body).toContain("## Other Stripe references");
     expect(about.body).toContain("Checked September 28, 2026. [Wikipedia](https://en.wikipedia.org/wiki/Stripe,_Inc.) is better for a short overview");
-    expect(about.body).toContain("makes no estimates of its own.");
+    expect(about.body).toContain("makes no revenue estimates. A valuation it derives from reported share prices shows its formula.");
   });
 });

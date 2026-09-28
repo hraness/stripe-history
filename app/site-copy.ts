@@ -96,7 +96,7 @@ export const otherReferencesParts: readonly Readonly<{ href?: string; text: stri
   { href: "https://research.contrary.com/company/stripe", text: "Contrary Research" },
   { text: " and " },
   { href: "https://sacra.com/c/stripe/", text: "Sacra" },
-  { text: ` analyze the business, and Sacra publishes revenue estimates. ${site.name} records only disclosed or reported figures and makes no estimates of its own.` },
+  { text: ` analyze the business, and Sacra publishes revenue estimates. ${site.name} records disclosed and reported figures and makes no revenue estimates. A valuation it derives from reported share prices shows its formula.` },
 ];
 
 export function otherReferencesMarkdown(): string {

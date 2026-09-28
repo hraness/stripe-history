@@ -27,6 +27,14 @@ const revenueKindLabel = {
   revenue: "revenue",
 } as const;
 
+/** Qualifiers the row must repeat so a reported or bounded figure never reads as disclosed. */
+const qualifierNote = {
+  approximate: ", approximate",
+  "lower-bound": ", lower bound",
+  "published-value": "",
+  reported: ", reported",
+} as const;
+
 function latestByYear<T extends { readonly calendarYear: number }>(
   points: readonly T[],
   name: string,
@@ -95,14 +103,14 @@ export function deriveAtAGlance(
       label: "Annual volume",
       value: [{
         target: { kind: "page", path: "/history/payment-volume" },
-        text: `${volume.display} ${volumeKindLabel[volume.kind]} (${volume.calendarYear})`,
+        text: `${volume.display} ${volumeKindLabel[volume.kind]} (${volume.calendarYear}${qualifierNote[volume.qualifier]})`,
       }],
     },
     {
       label: "Annual revenue",
       value: [{
         target: { kind: "page", path: "/history/net-revenue" },
-        text: `${revenue.display} ${revenueKindLabel[revenue.kind]} (${revenue.calendarYear})`,
+        text: `${revenue.display} ${revenueKindLabel[revenue.kind]} (${revenue.calendarYear}${qualifierNote[revenue.qualifier]})`,
       }],
     },
     {

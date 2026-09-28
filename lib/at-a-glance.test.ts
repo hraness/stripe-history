@@ -19,7 +19,7 @@ describe("Stripe at a glance", () => {
       ["Public launch", "September 30, 2011"],
       ["Headquarters", "South San Francisco and Dublin"],
       ["Annual volume", `${latestVolume?.display} total volume (${latestVolume?.calendarYear})`],
-      ["Annual revenue", `${latestRevenue?.display} revenue (${latestRevenue?.calendarYear})`],
+      ["Annual revenue", `${latestRevenue?.display} revenue (${latestRevenue?.calendarYear}, reported)`],
       ["Latest valuation", `${latestValuation?.display} (${latestValuation?.calendarYear}, company tender)`],
     ]);
     expect(rows.map(({ label }) => label)).not.toContain("IPO");
@@ -48,5 +48,20 @@ describe("Stripe at a glance", () => {
       })).toThrow(id);
     }
     expect(() => deriveAtAGlance({ ...history, annualVolumes: [] })).toThrow("annual volume");
+  });
+
+  test("repeats a figure's qualifier unless it is a published value", async () => {
+    const history = await loadHistory();
+    const revenue = history.annualRevenues.at(-1);
+    const volume = history.annualVolumes.at(-1);
+    if (revenue === undefined || volume === undefined) throw new Error("fixture needs figures");
+    const rows = deriveAtAGlance({
+      ...history,
+      annualRevenues: [{ ...revenue, qualifier: "published-value" }],
+      annualVolumes: [{ ...volume, qualifier: "lower-bound" }],
+    });
+    const text = (label: string) => plainText(rows.find((row) => row.label === label)?.value ?? []);
+    expect(text("Annual revenue")).toBe(`${revenue.display} revenue (${revenue.calendarYear})`);
+    expect(text("Annual volume")).toBe(`${volume.display} total volume (${volume.calendarYear}, lower bound)`);
   });
 });
