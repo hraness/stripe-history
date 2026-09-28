@@ -111,7 +111,7 @@
   font-weight: 600;
   gap: 0.4rem;
   letter-spacing: -0.02em;
-  min-height: 2rem;
+  min-height: 2.75rem;
   text-decoration: none;
 }
 
@@ -119,7 +119,8 @@
   color: var(--plain-muted);
   font-size: 0.9rem;
   font-weight: 500;
-  min-block-size: var(--plain-link-target-min);
+  min-block-size: max(2.75rem, var(--plain-link-target-min));
+  min-inline-size: 2.75rem;
   text-decoration: none;
 }
 
