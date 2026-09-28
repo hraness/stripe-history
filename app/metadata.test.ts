@@ -33,7 +33,9 @@ describe("hraness.com/stripe public identity", () => {
       tagline: "Every event in Stripe’s history, dated and sourced.",
       titleTemplate: "%s | Stripe History",
     });
-    expect(site.description).toContain("independent record of how Stripe grew");
+    expect(site.description).toBe(
+      "Independent, sourced timeline of Stripe since the Collisons’ 2010 prototype: acquisitions, funding, valuation, volume and leadership, with open YAML data.",
+    );
   });
 
   test("publishes only canonical history, category, scale, and editorial routes", async () => {

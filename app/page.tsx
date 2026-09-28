@@ -7,6 +7,7 @@ import { INDEXABLE_ROBOTS } from "@hraness/web-discovery";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
 
+import { AtAGlance } from "./history/history-answers";
 import { HistoryView } from "./history/history-view";
 import { historyCollectionJsonLd } from "./seo";
 import { absoluteSiteUrl, site, socialMetadata } from "./site";
@@ -42,7 +43,11 @@ export default async function Home() {
         })}
         id="stripe-history-history-structured-data"
       />
-      <HistoryView evidence={evidence} history={history} />
+      <HistoryView
+        answer={<AtAGlance history={history} />}
+        evidence={evidence}
+        history={history}
+      />
     </>
   );
 }

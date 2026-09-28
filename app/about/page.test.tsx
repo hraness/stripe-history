@@ -23,6 +23,9 @@ describe("hraness.com/stripe about page", () => {
     });
     expect(html).toContain("<h1 id=\"about-heading\">About Stripe History</h1>");
     expect(html).toContain("gathers those pieces into one dated record");
+    expect(html).toContain('<h2 id="other-stripe-references">Other Stripe references</h2>');
+    expect(html).toContain('Checked September 28, 2026. <a href="https://en.wikipedia.org/wiki/Stripe,_Inc.">Wikipedia</a> is better for a short overview');
+    expect(html).toContain('<a href="https://sacra.com/c/stripe/">Sacra</a> analyze the business, and Sacra publishes revenue estimates.');
     expect(html).toContain('aria-label="Breadcrumb"');
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
     expect(html).toContain("anonymous, cookieless pageview events for public pages");

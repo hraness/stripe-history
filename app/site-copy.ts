@@ -1,3 +1,5 @@
+import { formatEventDate } from "@/lib/event-date";
+
 import {
   absoluteSiteUrl,
   GITHUB_REPOSITORY_URL,
@@ -73,6 +75,36 @@ export const recoveryLinks = [
   { href: `${SITE_ORIGIN}/privacy`, label: "Privacy" },
 ] as const;
 
+/** Date the comparison below was last checked against each named reference. */
+export const otherReferencesCheckedOn = "2026-09-28" as const;
+
+export const otherReferencesHeading = "Other Stripe references" as const;
+
+/** One paragraph comparing other Stripe references, as text and optional links. */
+export const otherReferencesParts: readonly Readonly<{ href?: string; text: string }>[] = [
+  { text: `Checked ${formatEventDate(otherReferencesCheckedOn)}. ` },
+  { href: "https://en.wikipedia.org/wiki/Stripe,_Inc.", text: "Wikipedia" },
+  { text: " is better for a short overview and is cited far more widely. " },
+  { href: "https://stripe.com/newsroom", text: "Stripe’s newsroom" },
+  { text: " and annual letters are the primary source for many entries here; this site adds reported events Stripe did not announce and puts everything in one timeline. " },
+  { href: "https://www.crunchbase.com/organization/stripe", text: "Crunchbase" },
+  { text: ", " },
+  { href: "https://pitchbook.com", text: "PitchBook" },
+  { text: " and " },
+  { href: "https://tracxn.com/d/acquisitions/acquisitions-by-stripe/__uahG_IGnVgsUsOG-f8otYHLkOkliWg7YFhJ5ZkNIkpI", text: "Tracxn" },
+  { text: " are better for investor lists and comparing companies, and much of their data is paywalled. " },
+  { href: "https://research.contrary.com/company/stripe", text: "Contrary Research" },
+  { text: " and " },
+  { href: "https://sacra.com/c/stripe/", text: "Sacra" },
+  { text: ` analyze the business, and Sacra publishes revenue estimates. ${site.name} records only disclosed or reported figures and makes no estimates of its own.` },
+];
+
+export function otherReferencesMarkdown(): string {
+  return otherReferencesParts
+    .map(({ href, text }) => (href === undefined ? text : `[${text}](${href})`))
+    .join("");
+}
+
 export const aboutSections = [
   {
     heading: "Stripe history",
@@ -108,6 +140,10 @@ export const aboutSections = [
     paragraphs: [
       `Published and maintained by [Hraness](${HRANESS_URL}). To suggest a correction, add a source, or improve the project, open an issue or contribution in the [Stripe History repository](${GITHUB_REPOSITORY_URL}). Use the [contact page](${SITE_ORIGIN}/contact) for the same public channels.`,
     ],
+  },
+  {
+    heading: otherReferencesHeading,
+    paragraphs: [otherReferencesMarkdown()],
   },
 ] as const;
 

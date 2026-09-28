@@ -1,5 +1,7 @@
+import { historyCategoryPageCopy } from "@/lib/category-page-copy";
 import {
   loadHistory,
+  type CategorizedHistoryEvent,
 } from "@/lib/content";
 import {
   timelineCategoryIds,
@@ -15,7 +17,7 @@ import {
   historyCollectionJsonLd,
 } from "../../seo";
 import { absoluteSiteUrl, site, socialMetadata } from "../../site";
-import { historyCategoryTitle as categoryTitle } from "../../site-copy";
+import { AcquisitionsAnswer, OriginsLead } from "../history-answers";
 import { HistoryView } from "../history-view";
 
 interface HistoryCategoryPageProps {
@@ -35,6 +37,15 @@ async function resolveCategory(categoryId: string) {
   return category === undefined ? undefined : { category, history };
 }
 
+function categoryAnswer(
+  categoryId: string,
+  events: readonly CategorizedHistoryEvent[],
+) {
+  if (categoryId === "origins-and-early-company") return <OriginsLead events={events} />;
+  if (categoryId === "acquisitions") return <AcquisitionsAnswer events={events} />;
+  return undefined;
+}
+
 export async function generateMetadata({
   params,
 }: HistoryCategoryPageProps): Promise<Metadata> {
@@ -42,10 +53,7 @@ export async function generateMetadata({
   const resolved = await resolveCategory(categoryId);
   if (resolved === undefined) return {};
   const path = `/history/${resolved.category.id}` as const;
-  const eventCount = resolved.history.events.filter(
-    ({ categoryId: eventCategoryId }) => eventCategoryId === resolved.category.id,
-  ).length;
-  const title = categoryTitle(resolved.category.label, eventCount);
+  const { title } = historyCategoryPageCopy(resolved.category, resolved.history.events);
   const description = resolved.category.description;
   return {
     title,
@@ -65,7 +73,10 @@ export default async function HistoryCategoryPage({
   const visibleEvents = resolved.history.events.filter(
     ({ categoryId: eventCategoryId }) => eventCategoryId === resolved.category.id,
   );
-  const title = categoryTitle(resolved.category.label, visibleEvents.length);
+  const { heading, title } = historyCategoryPageCopy(
+    resolved.category,
+    resolved.history.events,
+  );
 
   return (
     <>
@@ -86,6 +97,8 @@ export default async function HistoryCategoryPage({
         id="stripe-history-history-category-structured-data"
       />
       <HistoryView
+        answer={categoryAnswer(resolved.category.id, resolved.history.events)}
+        heading={heading}
         history={resolved.history}
         selectedCategoryId={resolved.category.id as TimelineCategoryId}
       />

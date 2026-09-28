@@ -618,6 +618,62 @@
   max-width: 42rem;
 }
 
+/* Record-derived answer blocks: the home fact table, origins lead, and acquisitions list. */
+.history-answer-lead {
+  margin: 1rem 0 0;
+  max-width: 42rem;
+}
+
+.history-answer {
+  margin: 1.5rem 0 0;
+  max-width: 48rem;
+}
+
+.history-at-a-glance {
+  margin-block: 1.5rem;
+  max-width: 42rem;
+}
+
+.history-answer-table-wrap {
+  overflow-x: auto;
+}
+
+.history-answer-table {
+  border-collapse: collapse;
+  font-size: var(--text-caption);
+  margin-top: 1rem;
+  text-align: left;
+  width: 100%;
+}
+
+.history-answer-table caption {
+  font-weight: 550;
+  padding-bottom: 0.4rem;
+  text-align: left;
+}
+
+.history-answer-table th,
+.history-answer-table td {
+  border-top: 1px solid var(--plain-line);
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  vertical-align: top;
+}
+
+.history-answer-table thead th,
+.history-answer-table tbody th {
+  font-weight: 500;
+}
+
+.history-answer-table thead th {
+  color: var(--plain-muted);
+  white-space: nowrap;
+}
+
+.history-answer-nowrap {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 .history-volume-chart figcaption,
 .history-volume-table-section > h2,
 .history-volume-method > h2 {
@@ -975,7 +1031,8 @@
   .history-volume h2 a,
   .history-volume-list a,
   .history-volume-chart li > a,
-  .history-volume-table-section a {
+  .history-volume-table-section a,
+  .history-answer-table a {
     min-block-size: var(--plain-link-target-min, 48px);
   }
 

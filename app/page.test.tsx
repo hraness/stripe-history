@@ -65,8 +65,15 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).toMatch(/<details class="history-source-details [^"]+"><summary class="[^"]+">How this record is kept<\/summary>/u);
     expect(html).toMatch(/<section aria-labelledby="history-heading" class="stripe-history-section [^"]+" id="timeline">/u);
     expect(html).toContain(
-      "An independent, dated record of how Stripe grew, from the 2010 Buenos Aires prototype to the latest reported volume. Open data throughout.",
+      "An independent timeline of Stripe, from the Collisons’ 2010 Buenos Aires prototype to its latest reported volume. The full record downloads as YAML.",
     );
+    const glanceHtml = html.replace(/ class="[^"]*"/gu, "");
+    expect(glanceHtml).toContain("<caption>Stripe at a glance</caption>");
+    expect(glanceHtml).toContain('<th scope="row">Founders</th><td><a href="#origins-buenos-aires-prototype">Patrick and John Collison</a></td>');
+    expect(glanceHtml).toContain('<th scope="row">Public launch</th><td><a href="#origins-stripe-public-launch">September 30, 2011</a></td>');
+    expect(glanceHtml).toMatch(/<th scope="row">Latest valuation<\/th><td><a href="\/stripe\/history\/valuation#[a-z0-9-]+">\$[0-9.]+ billion \(\d{4}, [a-z0-9 ]+\)<\/a><\/td>/u);
+    expect(html.indexOf('data-answer="at-a-glance"')).toBeGreaterThan(html.indexOf('id="history-heading"'));
+    expect(html.indexOf('data-answer="at-a-glance"')).toBeLessThan(html.indexOf("How this record is kept"));
     expect(html).toMatch(/<section aria-label="How this record is kept" class="hraness-marketing-stats stripe-history-evidence-strip [^"]+"/u);
     expect(html).toContain(
       "Every event links to at least one source. Primary material and filings come first",

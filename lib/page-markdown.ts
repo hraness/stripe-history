@@ -12,11 +12,8 @@ import {
   dataTitle,
   evidenceLabels,
   historyCategoryHeading,
-  historyCategoryTitle,
   historyPageTitle,
   independenceSentence,
-  notFoundDescription,
-  notFoundTitle,
   privacyDescription,
   privacyParagraphs,
   privacyTitle,
@@ -51,28 +48,26 @@ import {
   type HistoryCollection,
   type HistoryEvidenceSummary,
 } from "./content";
+import {
+  ACQUISITIONS_TABLE_CAPTION,
+  deriveAcquisitionsSummary,
+} from "./acquisitions-table";
+import { AT_A_GLANCE_CAPTION, deriveAtAGlance } from "./at-a-glance";
+import { historyCategoryPageCopy } from "./category-page-copy";
 import { timelineCategoryIds, type TimelineCategoryId } from "./history-schema";
+import { isKnownMarkdownPath } from "./history-urls";
+import { type LinkedTextPart, linkedTextHref } from "./linked-text";
 import { llmsTxt } from "./llms-txt";
+import { notFoundMarkdown } from "./not-found-markdown";
+import { deriveOriginsLead } from "./origins-lead";
 
 export { MARKDOWN_CONTENT_TYPE, NOT_ACCEPTABLE_BODY } from "./accept";
+export { notFoundMarkdown } from "./not-found-markdown";
 
 export interface MarkdownDocument {
   readonly body: string;
   readonly status: 200 | 404;
 }
-
-const KNOWN_STATIC_PATHS = new Set([
-  "/",
-  "/about",
-  "/contact",
-  "/data",
-  "/history",
-  "/llms.txt",
-  "/privacy",
-  "/history/payment-volume",
-  "/history/net-revenue",
-  "/history/valuation",
-]);
 
 function normalizePathname(pathname: string): string {
   if (pathname === "" || pathname === "/") return "/";
@@ -91,6 +86,55 @@ function linkList(
       ? `- [${item.label}](${item.href})`
       : `- [${item.label}](${item.href}): ${item.note}`
   )).join("\n");
+}
+
+function linkedMarkdown(
+  parts: readonly LinkedTextPart[],
+  events: readonly CategorizedHistoryEvent[],
+): string {
+  return parts.map((part) => (
+    part.target === undefined
+      ? part.text
+      : `[${part.text}](${SITE_ORIGIN}${linkedTextHref(part.target, events, "category-page")})`
+  )).join("");
+}
+
+function atAGlanceMarkdown(history: HistoryCollection): readonly string[] {
+  return [
+    `## ${AT_A_GLANCE_CAPTION}`,
+    "",
+    "| fact | value |",
+    "| --- | --- |",
+    ...deriveAtAGlance(history).map((row) => (
+      `| ${markdownTableCell(row.label)} | ${markdownTableCell(linkedMarkdown(row.value, history.events))} |`
+    )),
+    "",
+  ];
+}
+
+function categoryAnswerMarkdown(
+  history: HistoryCollection,
+  categoryId: TimelineCategoryId,
+): readonly string[] {
+  if (categoryId === "origins-and-early-company") {
+    return [linkedMarkdown(deriveOriginsLead(history.events), history.events), ""];
+  }
+  if (categoryId !== "acquisitions") return [];
+  const summary = deriveAcquisitionsSummary(history.events);
+  return [
+    summary.lead,
+    "",
+    `## ${ACQUISITIONS_TABLE_CAPTION}`,
+    "",
+    "| date | deal | status | price |",
+    "| --- | --- | --- | --- |",
+    ...summary.rows.map((row) => (
+      `| ${markdownTableCell(row.dateLabel)} | [${markdownTableCell(row.deal)}](${SITE_ORIGIN}/history/acquisitions#${row.eventId}) | ${markdownTableCell(row.status)} | ${markdownTableCell(row.price)} |`
+    )),
+    "",
+    "## Events",
+    "",
+  ];
 }
 
 function eventMarkdown(event: CategorizedHistoryEvent): string {
@@ -158,6 +202,7 @@ function historyIndexMarkdown(
     "",
     `This Markdown index covers the same ${history.events.length} sourced events as the HTML timeline. Category, annual-volume, net-revenue, and valuation pages repeat those records in a narrower view.`,
     "",
+    ...atAGlanceMarkdown(history),
     ...evidenceStatusMarkdown(evidence),
     "## Browse by topic",
     "",
@@ -300,9 +345,10 @@ function categoryMarkdown(
   const events = history.events.filter(({ categoryId: id }) => id === categoryId);
   return [
     heading(
-      historyCategoryTitle(category.label, events.length),
+      historyCategoryPageCopy(category, history.events).title,
       category.description,
     ),
+    ...categoryAnswerMarkdown(history, categoryId),
     ...events.flatMap((event) => [eventMarkdown(event)]),
   ].join("\n");
 }
@@ -444,21 +490,13 @@ function valuationMarkdown(history: HistoryCollection): string {
   ].join("\n");
 }
 
-export function notFoundMarkdown(): string {
-  return [
-    heading(notFoundTitle, notFoundDescription),
-    "Continue from:",
-    "",
-    linkList(recoveryLinks),
-    "",
-  ].join("\n");
-}
-
 export async function markdownForPath(pathname: string): Promise<MarkdownDocument> {
   const path = normalizePathname(pathname);
   if (path === "/llms.txt") {
     return { body: await llmsTxt(), status: 200 };
   }
+  // Answer unknown paths before any corpus I/O.
+  if (!isKnownMarkdownPath(path)) return { body: notFoundMarkdown(), status: 404 };
 
   const history = await loadHistory();
   if (path === "/" || path === "/history") {
@@ -489,9 +527,6 @@ export async function markdownForPath(pathname: string): Promise<MarkdownDocumen
     }
   }
 
-  if (!KNOWN_STATIC_PATHS.has(path) && !path.startsWith("/history/")) {
-    return { body: notFoundMarkdown(), status: 404 };
-  }
   return { body: notFoundMarkdown(), status: 404 };
 }
 

@@ -24,6 +24,8 @@ import {
   aboutSocialTitle,
   aboutTitle,
   independenceSentence,
+  otherReferencesHeading,
+  otherReferencesParts,
 } from "../site-copy";
 
 export const dynamic = "force-static";
@@ -187,6 +189,13 @@ export default async function AboutPage() {
           <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>. The same
           public channels are listed on the{" "}
           <Link href="/contact">contact page</Link>.
+        </p>
+
+        <h2 id="other-stripe-references">{otherReferencesHeading}</h2>
+        <p>
+          {otherReferencesParts.map(({ href, text }) => (
+            href === undefined ? text : <a href={href} key={href}>{text}</a>
+          ))}
         </p>
 
         <div className="stripe-history-about-topic">
