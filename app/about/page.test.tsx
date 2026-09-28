@@ -23,6 +23,9 @@ describe("hraness.com/stripe about page", () => {
     });
     expect(html).toContain("<h1 id=\"about-heading\">About Stripe History</h1>");
     expect(html).toContain("gathers those pieces into one dated record");
+    expect(html).toContain('<h2 id="other-stripe-references">Other Stripe references</h2>');
+    expect(html).toContain('Checked September 28, 2026. <a href="https://en.wikipedia.org/wiki/Stripe,_Inc.">Wikipedia</a> is better for a short overview');
+    expect(html).toContain('<a href="https://sacra.com/c/stripe/">Sacra</a> analyze the business, and Sacra publishes revenue estimates.');
     expect(html).toContain('aria-label="Breadcrumb"');
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
     expect(html).toContain("anonymous, cookieless pageview events for public pages");
@@ -44,6 +47,8 @@ describe("hraness.com/stripe about page", () => {
     expect(html).toContain('href="https://en.wikipedia.org/wiki/Stripe,_Inc."');
     expect(html).toContain('href="https://sacra.com/c/stripe/"');
     expect(html).toContain('href="/data">downloads as YAML</a>');
+    expect(html).toContain('<a href="#other-stripe-references">Other Stripe references</a> lists');
+    expect(html.match(/href="https:\/\/sacra\.com\/c\/stripe\/"/g)).toHaveLength(1);
     expect(html).toContain("not a count of independently corroborated claims");
     expect(html).toContain("Each run covers one research collection, not the whole timeline.");
     expect(html).toContain('href="/stripe/research/sources.yml"');

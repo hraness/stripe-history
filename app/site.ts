@@ -33,10 +33,10 @@ export const site = {
   datasetDescription:
     "Download the YAML files behind this Stripe history: every dated event with its sources, plus valuation observations and annual volume and revenue figures.",
   description:
-    "Stripe History is an independent record of how Stripe grew. Every event is dated and linked to its sources, and the data downloads as open YAML.",
+    "Independent, sourced timeline of Stripe since the Collisons’ 2010 prototype: acquisitions, funding, valuation, volume and leadership, with open YAML data.",
   domain: SITE_LABEL,
   heroSummary:
-    "An independent, dated record of how Stripe grew, from the 2010 Buenos Aires prototype to the latest reported volume. Open data throughout.",
+    "An independent timeline of Stripe, from the Collisons’ 2010 Buenos Aires prototype to its latest reported volume. The full record downloads as YAML.",
   long:
     "Stripe is private, so its history arrives in pieces: annual letters, tender offers, press reports, podcasts, and blog posts. Stripe History, built by Hraness, gathers those pieces into one dated record, from Patrick Collison’s 2005 Young Scientist win and the 2010 prototype built in Buenos Aires cafes to the $1.9 trillion in total volume Stripe reported for 2025. Every event links to its sources, reported talks stay distinct from completed deals, and each valuation keeps its type. Charts follow volume, revenue, and valuation by year, and the whole record downloads as YAML under the MIT License. It is not affiliated with Stripe, Inc.",
   name: "Stripe History",

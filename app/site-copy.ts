@@ -1,3 +1,5 @@
+import { formatEventDate } from "@/lib/event-date";
+
 import {
   absoluteSiteUrl,
   GITHUB_REPOSITORY_URL,
@@ -73,6 +75,36 @@ export const recoveryLinks = [
   { href: `${SITE_ORIGIN}/privacy`, label: "Privacy" },
 ] as const;
 
+/** Date the comparison below was last checked against each named reference. */
+export const otherReferencesCheckedOn = "2026-09-28" as const;
+
+export const otherReferencesHeading = "Other Stripe references" as const;
+
+/** One paragraph comparing other Stripe references, as text and optional links. */
+export const otherReferencesParts: readonly Readonly<{ href?: string; text: string }>[] = [
+  { text: `Checked ${formatEventDate(otherReferencesCheckedOn)}. ` },
+  { href: "https://en.wikipedia.org/wiki/Stripe,_Inc.", text: "Wikipedia" },
+  { text: " is better for a short overview and is cited far more widely. " },
+  { href: "https://stripe.com/newsroom", text: "Stripe’s newsroom" },
+  { text: " and annual letters are the primary source for many entries here; this site adds reported events Stripe did not announce and puts everything in one timeline. " },
+  { href: "https://www.crunchbase.com/organization/stripe", text: "Crunchbase" },
+  { text: ", " },
+  { href: "https://pitchbook.com", text: "PitchBook" },
+  { text: " and " },
+  { href: "https://tracxn.com/d/acquisitions/acquisitions-by-stripe/__uahG_IGnVgsUsOG-f8otYHLkOkliWg7YFhJ5ZkNIkpI", text: "Tracxn" },
+  { text: " are better for investor lists and comparing companies, and much of their data is paywalled. " },
+  { href: "https://research.contrary.com/company/stripe", text: "Contrary Research" },
+  { text: " and " },
+  { href: "https://sacra.com/c/stripe/", text: "Sacra" },
+  { text: ` analyze the business, and Sacra publishes revenue estimates. ${site.name} records disclosed and reported figures and makes no revenue estimates. A valuation it derives from reported share prices shows its formula.` },
+];
+
+export function otherReferencesMarkdown(): string {
+  return otherReferencesParts
+    .map(({ href, text }) => (href === undefined ? text : `[${text}](${href})`))
+    .join("");
+}
+
 export const aboutSections = [
   {
     heading: "Stripe history",
@@ -83,7 +115,7 @@ export const aboutSections = [
   {
     heading: "Sources and review",
     paragraphs: [
-      `For a short overview of Stripe, read [Wikipedia](https://en.wikipedia.org/wiki/Stripe,_Inc.). For analyst revenue estimates, see [Sacra](https://sacra.com/c/stripe/). ${site.name} is narrower: a dated record in which every entry links to its sources, and the whole record [downloads as YAML](${SITE_ORIGIN}/data).`,
+      `${site.name} is a dated record in which every entry links to its sources, and the whole record [downloads as YAML](${SITE_ORIGIN}/data). The “${otherReferencesHeading}” section below lists where Wikipedia, Sacra and others serve a reader better.`,
       "Every history entry resolves to at least one cataloged source. Review prefers primary material and filings, uses strong contemporaneous reporting where necessary, checks chronology, category placement, source support, and duplicate claims, and preserves uncertainty when a transaction or event was only proposed or reported.",
       `“Citations” counts each link between a timeline entry and a source in the catalog. It is not a count of independently corroborated claims: one source can support more than one entry, and one entry can cite more than one source. The [source catalog](${SITE_ORIGIN}/research/sources.yml) lists every source.`,
       `“Last research run” is the date of the most recent completed research run. Each run covers one research collection, not the whole timeline. The [collection definitions](${SITE_ORIGIN}/research/collections.yml) and the [research-run log](${SITE_ORIGIN}/research/runs.yml), both YAML, show what each run covered.`,
@@ -108,6 +140,10 @@ export const aboutSections = [
     paragraphs: [
       `Published and maintained by [Hraness](${HRANESS_URL}). To suggest a correction, add a source, or improve the project, open an issue or contribution in the [Stripe History repository](${GITHUB_REPOSITORY_URL}). Use the [contact page](${SITE_ORIGIN}/contact) for the same public channels.`,
     ],
+  },
+  {
+    heading: otherReferencesHeading,
+    paragraphs: [otherReferencesMarkdown()],
   },
 ] as const;
 

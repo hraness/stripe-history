@@ -1,5 +1,6 @@
 import type { HistoryEvidenceSummary } from "@/lib/content";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import * as stylex from "@stylexjs/stylex";
 import { orientationStyles as styles } from "./history-orientation.stylex";
 
@@ -19,8 +20,9 @@ function formatEventDate(value: string): string {
  * value props cannot express those contracts. Numbers still come from records.
  */
 export function HistoryOrientation({
+  afterHero,
   evidence,
-}: Readonly<{ evidence: HistoryEvidenceSummary }>) {
+}: Readonly<{ afterHero?: ReactNode; evidence: HistoryEvidenceSummary }>) {
   const newestEventOn = evidence.newestEventOn;
 
   return (
@@ -64,6 +66,7 @@ export function HistoryOrientation({
           </p>
         </div>
       </header>
+      {afterHero}
       <details className={`history-source-details ${stylex.props(styles.sourceDetails).className}`}>
         <summary {...stylex.props(styles.sourceSummary)}>How this record is kept</summary>
         <section

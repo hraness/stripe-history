@@ -2,7 +2,9 @@ import { describe, expect, test } from "bun:test";
 import { loadHistory } from "@/lib/content";
 import { MARKDOWN_CONTENT_TYPE } from "@/lib/accept";
 
-import { GET, HEAD, generateStaticParams } from "./route";
+import { GET, HEAD, dynamicParams, generateStaticParams } from "./route";
+import { isKnownMarkdownPath } from "@/lib/history-urls";
+import { markdownForPath } from "@/lib/page-markdown";
 
 describe("Node markdown corpus handler", () => {
   test("serves homepage, category, and recovery markdown", async () => {
@@ -70,5 +72,19 @@ describe("Node markdown corpus handler", () => {
       path: ["history", "acquisitions", "openrouter-acquisition-talks-reported"],
     });
     expect(params.length).toBe(9 + history.categories.length);
+  });
+
+  test("never renders unknown Markdown paths on demand", async () => {
+    expect(dynamicParams).toBe(false);
+    const params = generateStaticParams();
+    for (const { path } of params) {
+      const pathname = path.length === 0 ? "/" : `/${path.join("/")}`;
+      expect(isKnownMarkdownPath(pathname)).toBe(true);
+      expect((await markdownForPath(pathname)).status).toBe(200);
+    }
+    for (const pathname of ["/foo", "/history/nope", "/history/acquisitions/kickoff"]) {
+      expect(isKnownMarkdownPath(pathname)).toBe(false);
+      expect((await markdownForPath(pathname)).status).toBe(404);
+    }
   });
 });

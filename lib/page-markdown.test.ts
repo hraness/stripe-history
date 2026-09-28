@@ -132,4 +132,30 @@ describe("llms.txt", () => {
     expect(body).not.toContain("openapi");
     expect(body).not.toContain("MCP server");
   });
+
+  test("repeats the answer blocks and reference comparison in Markdown", async () => {
+    const index = await markdownForPath("/");
+    expect(index.body).toContain("## Stripe at a glance");
+    expect(index.body).toContain(
+      "| Founders | [Patrick and John Collison](https://hraness.com/stripe/history/origins-and-early-company#origins-buenos-aires-prototype) |",
+    );
+
+    const origins = await markdownForPath("/history/origins-and-early-company");
+    expect(origins.body).toStartWith("# Stripe founding history: founders, first prototype and 2011 launch\n");
+    expect(origins.body).toContain(
+      "[launched publicly on September 30, 2011](https://hraness.com/stripe/history/origins-and-early-company#origins-stripe-public-launch).",
+    );
+
+    const acquisitions = await markdownForPath("/history/acquisitions");
+    expect(acquisitions.body).toStartWith("# Stripe acquisitions list, 2013–2026\n");
+    expect(acquisitions.body).toContain("## Stripe acquisition events");
+    expect(acquisitions.body).toContain(
+      "| March 11, 2013 | [Stripe makes its first acquisition with Kickoff](https://hraness.com/stripe/history/acquisitions#kickoff-acquisition-completed) | Talent acquisition completed | Not disclosed |",
+    );
+
+    const about = await markdownForPath("/about");
+    expect(about.body).toContain("## Other Stripe references");
+    expect(about.body).toContain("Checked September 28, 2026. [Wikipedia](https://en.wikipedia.org/wiki/Stripe,_Inc.) is better for a short overview");
+    expect(about.body).toContain("makes no revenue estimates. A valuation it derives from reported share prices shows its formula.");
+  });
 });

@@ -1,33 +1,22 @@
 import { MARKDOWN_CONTENT_TYPE } from "@/lib/accept";
-import { loadHistory } from "@/lib/content";
 import {
+  MARKDOWN_PAGE_PATHS,
   markdownRewritePath,
   publicPathFromMarkdownRewrite,
 } from "@/lib/history-urls";
 import { markdownForPath, markdownHeaders } from "@/lib/page-markdown";
 
 export const dynamic = "force-static";
-export const dynamicParams = true;
+// Every Markdown page is prerendered. Unknown paths never render on demand;
+// the proxy answers them with a Markdown 404.
+export const dynamicParams = false;
 
 function pathnameFromSegments(path: readonly string[] | undefined): string {
   return path === undefined || path.length === 0 ? "/" : `/${path.join("/")}`;
 }
 
-export async function generateStaticParams() {
-  const history = await loadHistory();
-  const publicPaths = [
-    "/",
-    "/about",
-    "/contact",
-    "/data",
-    "/history",
-    "/privacy",
-    "/history/payment-volume",
-    "/history/net-revenue",
-    "/history/valuation",
-    ...history.categories.map(({ id }) => `/history/${id}`),
-  ];
-  return publicPaths.map((pathname) => {
+export function generateStaticParams() {
+  return MARKDOWN_PAGE_PATHS.map((pathname) => {
     const rewrite = markdownRewritePath(pathname);
     const publicPath = publicPathFromMarkdownRewrite(rewrite);
     const segments = publicPath === "/"

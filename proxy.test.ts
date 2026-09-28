@@ -38,10 +38,35 @@ describe("Accept negotiation proxy", () => {
     const sibling = await proxy(request("/stripe/about.md", "text/html"));
     expect(sibling.headers.get("x-middleware-rewrite")).toContain("/stripe/x-markdown/about");
 
-    const missing = await proxy(request("/stripe/this-does-not-exist", "text/markdown"));
-    expect(missing.headers.get("x-middleware-rewrite")).toContain(
-      "/stripe/x-markdown/this-does-not-exist",
+    const category = await proxy(request("/stripe/history/acquisitions.md", "text/html"));
+    expect(category.headers.get("x-middleware-rewrite")).toContain(
+      "/stripe/x-markdown/history/acquisitions",
     );
+  });
+
+  test("answers unknown Markdown paths with a Markdown 404 instead of rendering on demand", async () => {
+    for (const [path, accept] of [
+      ["/stripe/this-does-not-exist", "text/markdown"],
+      ["/stripe/history/nope", "text/markdown"],
+      ["/stripe/foo.md", "text/html"],
+      ["/stripe/x-markdown/foo", "text/html"],
+      ["/stripe/x-markdown/history/nope", "*/*"],
+    ] as const) {
+      for (const method of ["GET", "HEAD"] as const) {
+        const response = await proxy(request(path, accept, method));
+        expect(response.status).toBe(404);
+        expect(response.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+        expect(response.headers.get("vary")).toBe("Accept");
+        expect(response.headers.get("x-middleware-rewrite")).toBeNull();
+        const body = await response.text();
+        if (method === "GET") expect(body).toContain("# Page not found");
+        else expect(body).toBe("");
+      }
+    }
+
+    const known = await proxy(request("/stripe/x-markdown/about", "text/html"));
+    expect(known.status).toBe(200);
+    expect(known.headers.get("content-type")).toBeNull();
   });
 
   test("returns 406 without inventing an API when no produced type is accepted", async () => {

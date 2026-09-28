@@ -24,7 +24,7 @@ describe("hraness.com/stripe public identity", () => {
     expect(nextConfig.basePath).toBe("/stripe");
     expect(() => configForPhase(PHASE_DEVELOPMENT_SERVER)).toThrow("compiled preview");
   });
-  test("states the canonical history collection", () => {
+  test("states the canonical history collection", async () => {
     expect(site).toMatchObject({
       applicationName: "Stripe History",
       category: "Independent company history",
@@ -33,7 +33,11 @@ describe("hraness.com/stripe public identity", () => {
       tagline: "Every event in Stripe’s history, dated and sourced.",
       titleTemplate: "%s | Stripe History",
     });
-    expect(site.description).toContain("independent record of how Stripe grew");
+    expect(site.description).toBe(
+      "Independent, sourced timeline of Stripe since the Collisons’ 2010 prototype: acquisitions, funding, valuation, volume and leadership, with open YAML data.",
+    );
+    const manifest = await Bun.file(new URL("../package.json", import.meta.url)).json() as { description?: unknown };
+    expect(manifest.description).toBe(site.description);
   });
 
   test("publishes only canonical history, category, scale, and editorial routes", async () => {

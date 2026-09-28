@@ -56,20 +56,22 @@ describe("hraness.com/stripe category history", () => {
     const metadata = await generateMetadata({
       params: Promise.resolve({ category: "acquisitions" }),
     });
+    expect(acquisitionCount).toBeGreaterThan(0);
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/history/acquisitions" },
       description: "Completed acquisitions, talent acquisitions, announced agreements, and credibly reported deal discussions involving Stripe.",
-      title: `Stripe acquisitions history: ${acquisitionCount} sourced events`,
+      title: "Stripe acquisitions list, 2013–2026",
     });
     expect(metadata.openGraph).toMatchObject({
-      title: `Stripe acquisitions history: ${acquisitionCount} sourced events | Stripe History`,
+      title: "Stripe acquisitions list, 2013–2026 | Stripe History",
       url: "https://hraness.com/stripe/history/acquisitions",
     });
   });
 
   test("keeps multi-word category titles in one consistent case", async () => {
     const history = await loadHistory();
-    for (const category of history.categories) {
+    const answerCategories = new Set(["acquisitions", "fundraising", "origins-and-early-company"]);
+    for (const category of history.categories.filter(({ id }) => !answerCategories.has(id))) {
       const count = history.events.filter(
         ({ categoryId }) => categoryId === category.id,
       ).length;
@@ -83,7 +85,11 @@ describe("hraness.com/stripe category history", () => {
     const origins = await generateMetadata({
       params: Promise.resolve({ category: "origins-and-early-company" }),
     });
-    expect(origins.title).toMatch(/^Stripe origins and early company history: \d+ sourced events$/u);
+    expect(origins.title).toBe("Stripe founding history: founders, first prototype and 2011 launch");
+    const fundraising = await generateMetadata({
+      params: Promise.resolve({ category: "fundraising" }),
+    });
+    expect(fundraising.title).toBe("Stripe funding rounds and tender offers, 2011–2026");
   }, 30_000);
 
   test("renders a crawlable category-only timeline", async () => {
@@ -99,7 +105,7 @@ describe("hraness.com/stripe category history", () => {
 
     expect(eventCount).toBe(acquisitionCount);
     expect(categorizedEventCount).toBe(eventCount);
-    expect(html).toContain('<h1 class="history-page-title" id="history-heading">Stripe acquisitions history</h1>');
+    expect(html).toContain('<h1 class="history-page-title" id="history-heading">Stripe acquisitions</h1>');
     expect(html).toContain(`aria-current="true" aria-label="acquisitions: ${acquisitionCount} events, selected; activate to show all history" data-analytics-event="history filter selected" data-analytics-id="all"`);
     expect(html).toMatch(/data-filter-id="acquisitions"[^>]* href="\/"/u);
     expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
@@ -124,5 +130,39 @@ describe("hraness.com/stripe category history", () => {
     expect(html).not.toContain('class="stripe-history-section-heading"');
     expect(html).not.toMatch(/\d+ of \d+ events/u);
     expect(html).not.toContain("A month in Buenos Aires");
+  });
+
+  test("answers when Stripe started before the origins timeline", async () => {
+    const html = renderToStaticMarkup(await HistoryCategoryPage({
+      params: Promise.resolve({ category: "origins-and-early-company" }),
+    }));
+    const semanticHtml = html.replace(/ class="[^"]*"/gu, "");
+
+    expect(html).toContain('<h1 class="history-page-title" id="history-heading">How Stripe started</h1>');
+    expect(semanticHtml).toContain(
+      '<p data-answer="origins">Patrick and John Collison <a href="#origins-buenos-aires-prototype">built Stripe’s first working prototype in Buenos Aires in January 2010</a>. John <a href="#origins-founders-go-full-time-and-first-hires-arrive">took leave from Harvard to work on it full time that fall</a>. The product, first called /dev/payments, <a href="#origins-devpayments-becomes-stripe">became Stripe in January 2011</a> and <a href="#origins-stripe-public-launch">launched publicly on September 30, 2011</a>.</p>',
+    );
+    expect(html.indexOf('data-answer="origins"')).toBeLessThan(html.indexOf('data-measure="payment-volume"'));
+    expect(html).toContain('id="origins-stripe-public-launch"');
+  });
+
+  test("lists every acquisition event with its recorded status before the timeline", async () => {
+    const history = await loadHistory();
+    const acquisitions = history.events.filter(({ categoryId }) => categoryId === "acquisitions");
+    const html = renderToStaticMarkup(await HistoryCategoryPage({
+      params: Promise.resolve({ category: "acquisitions" }),
+    }));
+    const semanticHtml = html.replace(/ class="[^"]*"/gu, "");
+
+    expect(semanticHtml).toContain(
+      `Stripe’s first acquisition was the Kickoff team in March 2013. This page lists ${acquisitions.length} acquisition events, from completed deals and team hires to announced agreements and reported talks, each with its status.`,
+    );
+    expect(semanticHtml).toContain("<caption>Stripe acquisition events</caption>");
+    expect(semanticHtml).toContain('<th scope="col">Date</th><th scope="col">Deal</th><th scope="col">Status</th><th scope="col">Price</th>');
+    expect(semanticHtml.match(/<th scope="row"><a href="#[a-z0-9-]+">/gu)).toHaveLength(acquisitions.length);
+    expect(semanticHtml).toContain(
+      '<th scope="row"><a href="#kickoff-acquisition-completed">Stripe makes its first acquisition with Kickoff</a></th><td>Talent acquisition completed</td><td>Not disclosed</td>',
+    );
+    expect(html.indexOf('data-answer="acquisitions"')).toBeLessThan(html.indexOf('data-measure="payment-volume"'));
   });
 });

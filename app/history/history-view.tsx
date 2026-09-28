@@ -9,6 +9,7 @@ import type {
 import type { TimelineCategoryId } from "@/lib/history-schema";
 import { historyCategoryPath } from "@/lib/history-urls";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import * as stylex from "@stylexjs/stylex";
 
 import { HistoryEventArticle } from "./history-event-article";
@@ -30,7 +31,11 @@ import { publicSitePath, site } from "../site";
 import { historyCategoryHeading } from "../site-copy";
 
 interface HistoryViewProps {
+  /** Record-derived answer content shown under the hero or category description. */
+  readonly answer?: ReactNode;
   readonly evidence?: HistoryEvidenceSummary;
+  /** Overrides the generated category H1. */
+  readonly heading?: string;
   readonly history: HistoryCollection;
   readonly selectedCategoryId?: TimelineCategoryId;
 }
@@ -381,7 +386,9 @@ export function HistoryFilters({
 }
 
 export function HistoryView({
+  answer,
   evidence,
+  heading,
   history,
   selectedCategoryId,
 }: HistoryViewProps) {
@@ -394,7 +401,7 @@ export function HistoryView({
   const years = groupEventsByYear(visibleEvents);
   const historyHeading = selectedCategory === undefined
     ? site.name
-    : historyCategoryHeading(selectedCategory.label);
+    : heading ?? historyCategoryHeading(selectedCategory.label);
   const orientation = selectedCategory === undefined && evidence !== undefined;
   const path = selectedCategoryId === undefined
     ? "/" as const
@@ -406,7 +413,7 @@ export function HistoryView({
       id="main-content"
     >
       <SiteHeader />
-      {orientation ? <HistoryOrientation evidence={evidence} /> : null}
+      {orientation ? <HistoryOrientation afterHero={answer} evidence={evidence} /> : null}
       <section aria-labelledby="history-heading" className={`stripe-history-section ${stylex.props(styles.section).className}`} id="timeline">
         {orientation ? null : (
           <h1 className="history-page-title" id="history-heading">
@@ -420,6 +427,7 @@ export function HistoryView({
         {selectedCategory === undefined ? null : (
           <p className={`history-filter-description ${stylex.props(styles.description).className}`}>{selectedCategory.description}</p>
         )}
+        {orientation ? null : answer}
         <div className={`history-layout ${stylex.props(styles.layout).className}`}>
           <HistoryMeasuresSidebar
             annualRevenues={history.annualRevenues}

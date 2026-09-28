@@ -2,7 +2,7 @@
   "name": "@hraness/stripe-history",
   "version": "0.1.0",
   "private": true,
-  "description": "Stripe History is an independent record of how Stripe grew. Every event is dated and linked to its sources, and the data downloads as open YAML.",
+  "description": "Independent, sourced timeline of Stripe since the Collisons’ 2010 prototype: acquisitions, funding, valuation, volume and leadership, with open YAML data.",
   "license": "MIT",
   "type": "module",
   "packageManager": "bun@1.3.14",
