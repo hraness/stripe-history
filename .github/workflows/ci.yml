@@ -30,6 +30,19 @@ jobs:
       - run: bun install --frozen-lockfile --ignore-scripts
       - run: bun run check
       - run: bun run build
+      - name: Install Chromium for public layout checks
+        run: node node_modules/playwright-core/cli.js install --with-deps chromium
+      - name: Check public layouts
+        env:
+          SITE_BROWSER_ARTIFACTS: ${{ runner.temp }}/site-browser
+        run: node scripts/verify-site-browser.mjs
+      - name: Save public layout evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: site-browser
+          path: ${{ runner.temp }}/site-browser
+          retention-days: 7
       - run: git diff --exit-code
 
   required:
