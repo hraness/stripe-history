@@ -47,6 +47,8 @@ describe("hraness.com/stripe about page", () => {
     expect(html).toContain('href="https://en.wikipedia.org/wiki/Stripe,_Inc."');
     expect(html).toContain('href="https://sacra.com/c/stripe/"');
     expect(html).toContain('href="/data">downloads as YAML</a>');
+    expect(html).toContain('<a href="#other-stripe-references">Other Stripe references</a> lists');
+    expect(html.match(/href="https:\/\/sacra\.com\/c\/stripe\/"/g)).toHaveLength(1);
     expect(html).toContain("not a count of independently corroborated claims");
     expect(html).toContain("Each run covers one research collection, not the whole timeline.");
     expect(html).toContain('href="/stripe/research/sources.yml"');
