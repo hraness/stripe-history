@@ -85,6 +85,23 @@ try {
         results.push({ route, width, theme });
       }
       await page.goto(origin + routes[0]);
+      // Check the header/filter breakpoint and real year-link anchor clearance.
+      for (const anchorWidth of width === 1440 ? [848, 880, 1440] : [width]) {
+        await page.setViewportSize({ width: anchorWidth, height: 900 });
+        await page.goto(origin + "/stripe");
+        await page.locator(".history-year-link").first().click();
+        await page.waitForFunction(() => {
+          const target = document.querySelector(location.hash);
+          if (!target) return false;
+          const obstruction = [...document.querySelectorAll(".stripe-history-header, .history-filters")]
+            .filter(element => getComputedStyle(element).position === "sticky")
+            .reduce((bottom, element) => Math.max(bottom, element.getBoundingClientRect().bottom), 0);
+          return target.getBoundingClientRect().top >= obstruction - 1;
+        }, null, { timeout: 5_000 });
+        await page.screenshot({ path: resolve(artifacts, `${anchorWidth}-${theme}-anchor.png`), animations: "disabled" });
+      }
+      await page.setViewportSize({ width, height: width === 360 ? 740 : width === 390 ? 844 : 900 });
+      await page.goto(origin + routes[0]);
       const themeMenu = page.locator(".hraness-design-palette-menu");
       await page.waitForFunction(() => document.querySelector(".hraness-design-palette-menu")?.dataset.ready === "true");
       await themeMenu.locator(":scope > summary").click();

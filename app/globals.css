@@ -705,6 +705,7 @@
   padding: 0;
 }
 
+.history-year-title,
 .history-valuation-observation-list > li,
 .history-volume-disclosure-list > li {
   border-top: 1px solid var(--plain-line);
