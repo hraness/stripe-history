@@ -3,12 +3,16 @@ on:
   workflow_dispatch:
   # Vercel reports each deployment through the Deployments API. Check Production
   # as soon as it is live instead of waiting for someone to dispatch this run.
+  # deployment_status runs the workflow file at the deployment's sha, so this
+  # relies on Vercel Git Fork Protection staying on (no fork preview builds).
   deployment_status:
 permissions:
   contents: read
 # One run per deployed commit; a later deployment never cancels an earlier check.
+# A manual dispatch for the same commit queues behind the deployment_status run
+# (and replaces any still-pending duplicate) instead of running beside it.
 concurrency:
-  group: production-site-browser-${{ github.sha }}-${{ github.event_name }}
+  group: production-site-browser-${{ github.sha }}
   cancel-in-progress: false
 jobs:
   browser:
