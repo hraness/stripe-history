@@ -1,5 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { socialImageAlt, socialImageSiteDetails } from "@hraness/web-discovery/social-image";
+import {
+  createSocialImageCard,
+  socialImageAlt,
+  socialImageFit,
+  socialImageSiteDetails,
+} from "@hraness/web-discovery/social-image";
 import OpenGraphImage, { alt, contentType, size } from "./opengraph-image";
 import { SITE_LABEL, site } from "./site";
 import { socialSite } from "./social";
@@ -16,6 +21,17 @@ describe("share image", () => {
     expect(socialSite.icon?.src).toStartWith("data:image/svg+xml,");
     expect(decodeURIComponent(socialSite.icon?.src ?? "")).toContain("viewBox='0 0 541 581'");
     expect(socialImageSiteDetails(socialSite)).toMatchObject({ title: site.name, domain: SITE_LABEL });
+  });
+
+  test("fits the home card copy as written", () => {
+    const details = socialImageSiteDetails(socialSite);
+    const fit = socialImageFit(details);
+    expect(fit.issues).toEqual([]);
+    expect(fit.removed).toEqual([]);
+    expect(fit.layout).toBe("product");
+    expect(fit.description?.cut).toBe("none");
+    expect(fit.headline).toMatchObject({ reduced: false, threeLine: false, truncated: false });
+    expect(() => createSocialImageCard({ ...details, strict: true })).not.toThrow();
   });
 
   test("serves the shared template card with matching alt text", async () => {
