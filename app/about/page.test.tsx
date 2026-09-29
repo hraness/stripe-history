@@ -30,7 +30,7 @@ describe("hraness.com/stripe about page", () => {
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
     expect(html).toContain("anonymous, cookieless pageview events for public pages");
     expect(html).toContain("normalized public page path, its page category, a site identifier");
-    expect(html).toContain("referrer properties, account data, and user content");
+    expect(html).toContain("never the full referring address");
     expect(html).toContain("does not save an analytics cookie or identifier");
     expect(html).toContain("does not use autocapture, session replay, heatmaps, surveys");
     expect(html).toContain("no local reader accounts or authentication");

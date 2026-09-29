@@ -7,6 +7,7 @@ import {
   classifyPublicAnalyticsRoute,
   POSTHOG_API_HOST,
   POSTHOG_COOKILESS_DISTINCT_ID,
+  referrerHost,
 } from "./analytics";
 
 const PUBLIC_PROJECT_KEY = /^phc_[A-Za-z0-9_-]{10,}$/u;
@@ -53,6 +54,7 @@ export function isPostHogEligible(
 
 export function createPostHogBeforeSend(
   resolveHref: () => string,
+  resolveReferrer: () => string,
 ): (capture: CaptureResult | null) => CaptureResult | null {
   return (capture) => {
     const rawUserAgent = capture?.properties.$raw_user_agent;
@@ -70,6 +72,7 @@ export function createPostHogBeforeSend(
 
     const route = classifyPublicAnalyticsRoute(resolveHref());
     if (route === null) return null;
+    const referringDomain = referrerHost(resolveReferrer());
 
     return {
       event: "$pageview",
@@ -79,6 +82,7 @@ export function createPostHogBeforeSend(
         $host: route.canonical_domain,
         $pathname: route.canonical_path,
         $process_person_profile: false,
+        ...(referringDomain === null ? {} : { $referring_domain: referringDomain }),
         $raw_user_agent: rawUserAgent.slice(0, MAX_RAW_USER_AGENT_LENGTH),
         distinct_id: POSTHOG_COOKILESS_DISTINCT_ID,
         token: capture.properties.token,
@@ -92,6 +96,7 @@ export function createPostHogBeforeSend(
 
 export function createPostHogConfig(
   resolveHref: () => string,
+  resolveReferrer: () => string,
   apiHost: string = POSTHOG_API_HOST,
 ): Partial<PostHogConfig> {
   return {
@@ -100,7 +105,7 @@ export function createPostHogConfig(
     advanced_disable_flags: true,
     api_host: apiHost,
     autocapture: false,
-    before_send: createPostHogBeforeSend(resolveHref),
+    before_send: createPostHogBeforeSend(resolveHref, resolveReferrer),
     capture_dead_clicks: false,
     capture_exceptions: false,
     capture_heatmaps: false,
@@ -142,7 +147,11 @@ export async function initializePostHog(
 
   initialization = import("posthog-js")
     .then(({ default: posthog }) => {
-      posthog.init(apiKey, createPostHogConfig(() => window.location.href, apiHost));
+      posthog.init(apiKey, createPostHogConfig(
+        () => window.location.href,
+        () => document.referrer,
+        apiHost,
+      ));
       return true;
     })
     .catch(() => {

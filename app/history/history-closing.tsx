@@ -3,6 +3,7 @@ import * as stylex from "@stylexjs/stylex";
 import { closingStyles as styles } from "./history-closing.stylex";
 
 import { GITHUB_REPOSITORY_URL, HRANESS_URL, publicSitePath } from "../site";
+import { maintainerSentence } from "../site-copy";
 
 export function HistoryClosing() {
   return (
@@ -84,7 +85,7 @@ export function HistoryClosing() {
           <p {...stylex.props(styles.paragraph)}>
             We publish Stripe History as an independent record. Every entry,
             source, and correction lives in a public repository, so anyone can
-            check our work.
+            check our work. {maintainerSentence}
           </p>
           <ul className={`hraness-marketing-maker__links ${stylex.props(styles.links).className}`}>
             <li><a href={HRANESS_URL}>hraness.com</a></li>

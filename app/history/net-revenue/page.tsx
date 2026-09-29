@@ -10,6 +10,7 @@ import { breadcrumbJsonLd, historyCollectionJsonLd } from "../../seo";
 import { SiteFooter } from "../../site-footer";
 import { SiteHeader } from "../../site-header";
 import { HistoryCategoryIcon } from "../category-icon";
+import { HistoryByline } from "../history-byline";
 import { HistoryFilters } from "../history-view";
 import {
   deriveNetRevenueDisclosures,
@@ -82,6 +83,7 @@ export default async function NetRevenuePage() {
           <h1 className="history-page-title" id="net-revenue-page-heading">
             {seo.title}
           </h1>
+          <HistoryByline />
           <HistoryFilters history={history} netRevenueSelected />
           <p className="history-volume-intro">
             {seo.lead}

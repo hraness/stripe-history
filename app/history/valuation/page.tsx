@@ -12,6 +12,7 @@ import { historyEventStyles as eventStyles } from "../history-event.stylex";
 import { breadcrumbJsonLd, historyCollectionJsonLd } from "../../seo";
 import { SiteFooter } from "../../site-footer";
 import { SiteHeader } from "../../site-header";
+import { HistoryByline } from "../history-byline";
 import {
   HistoryFilters,
   valuationBarPercent,
@@ -101,6 +102,7 @@ export default async function ValuationPage() {
           <h1 className="history-page-title" id="valuation-page-heading">
             {seo.title}
           </h1>
+          <HistoryByline />
           <HistoryFilters history={history} valuationSelected />
           <p className="history-volume-intro">
             {seo.lead}

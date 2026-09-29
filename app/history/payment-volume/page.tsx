@@ -10,6 +10,7 @@ import { breadcrumbJsonLd, historyCollectionJsonLd } from "../../seo";
 import { SiteFooter } from "../../site-footer";
 import { SiteHeader } from "../../site-header";
 import { HistoryCategoryIcon } from "../category-icon";
+import { HistoryByline } from "../history-byline";
 import { HistoryFilters } from "../history-view";
 import {
   derivePaymentVolumeDisclosures,
@@ -82,6 +83,7 @@ export default async function PaymentVolumePage() {
           <h1 className="history-page-title" id="payment-volume-heading">
             {seo.title}
           </h1>
+          <HistoryByline />
           <HistoryFilters history={history} paymentVolumeSelected />
           <p className="history-volume-intro">
             {seo.lead}
