@@ -12,6 +12,7 @@ import "@hraness/ui/compiler-foundation.css";
 import "@hraness/design-kit/compiler-foundation.css";
 import "@hraness/site-footer/compiler-foundation.css";
 import "./globals.css";
+import "../support/vendor/hraness-forced-colors/marketing-forced-colors.css";
 import "./material.css";
 import { FoilController } from "./foil-controller";
 import { PostHogAnalytics } from "./posthog-analytics";
