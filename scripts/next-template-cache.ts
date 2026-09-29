@@ -4,9 +4,11 @@ import { closeSync, constants, fstatSync, openSync, readFileSync, realpathSync }
 import { join } from "node:path";
 
 const inputs = [
-  "patches/next@16.2.12.patch",
+  "patches/next@16.3.3.patch",
   "node_modules/next/dist/build/templates/app-page.js",
   "node_modules/next/dist/esm/build/templates/app-page.js",
+  "node_modules/next/dist/build/templates/app-page-runtime.js",
+  "node_modules/next/dist/esm/build/templates/app-page-runtime.js",
 ] as const;
 type Cache = boolean | undefined | { type?: string; version?: string; [key: string]: unknown };
 const sha = (bytes: Uint8Array | string) => createHash("sha256").update(bytes).digest("hex");
@@ -32,7 +34,7 @@ export function bindNextTemplateCache(cache: Cache, root: string): Cache {
   if (!cache || cache === true || cache.type !== "filesystem") return cache;
   assert.ok(cache.version === undefined || typeof cache.version === "string");
   const inventory = inputs.map((path) => ({ path, sha256: sha(ordinaryBytes(root, path, 2 * 1024 * 1024)) }));
-  return { ...cache, version: JSON.stringify([cache.version ?? "", "stripe-next-vary-v1", sha(JSON.stringify(inventory))]) };
+  return { ...cache, version: JSON.stringify([cache.version ?? "", "stripe-next-vary-v2", sha(JSON.stringify(inventory))]) };
 }
 
 /** Additional product proof after the complete adapter graph/map gate. The
