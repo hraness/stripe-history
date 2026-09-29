@@ -92,6 +92,33 @@ export function classifyPublicAnalyticsRoute(value: string | URL): AnalyticsRout
   }
 }
 
+/** PostHog's marker for a pageview with no referring site. */
+export const DIRECT_REFERRER = "$direct" as const;
+/** The longest DNS host name, which is also the byte ceiling for the referrer property. */
+export const MAX_REFERRER_HOST_LENGTH = 253;
+const MAX_RAW_REFERRER_LENGTH = 2_048;
+const HOST_NAME =
+  /^(?=.{1,253}$)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*$/u;
+
+/**
+ * Reduce a browser referrer to its host name. The path, query, fragment,
+ * port, and credentials never leave this function. An empty referrer is a
+ * direct visit; anything that is not an http(s) URL with an ordinary host
+ * name returns null so the property is dropped.
+ */
+export function referrerHost(value: unknown): string | null {
+  if (value === undefined || value === null || value === "") return DIRECT_REFERRER;
+  if (typeof value !== "string" || value.length > MAX_RAW_REFERRER_LENGTH) return null;
+  try {
+    const url = new URL(value);
+    if (url.protocol !== "https:" && url.protocol !== "http:") return null;
+    const host = url.hostname.toLowerCase();
+    return HOST_NAME.test(host) ? host : null;
+  } catch {
+    return null;
+  }
+}
+
 export function canonicalAnalyticsUrl(route: AnalyticsRoute): string {
   return `${CANONICAL_ORIGIN}${route.canonical_path}`;
 }

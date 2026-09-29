@@ -27,6 +27,7 @@
     "app/history/category-icon.tsx",
     "app/history/category-visuals.ts",
     "app/history/history-answers.tsx",
+    "app/history/history-byline.tsx",
     "app/history/history-closing.stylex.ts",
     "app/history/history-closing.tsx",
     "app/history/history-event-article.tsx",

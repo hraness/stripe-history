@@ -5,8 +5,11 @@ import type { CaptureResult } from "posthog-js";
 import {
   canonicalAnalyticsUrl,
   classifyPublicAnalyticsRoute,
+  DIRECT_REFERRER,
+  MAX_REFERRER_HOST_LENGTH,
   POSTHOG_COOKILESS_DISTINCT_ID,
   PUBLIC_ANALYTICS_PATHS,
+  referrerHost,
 } from "./analytics";
 import {
   createPostHogBeforeSend,
@@ -103,7 +106,7 @@ describe("Stripe History PostHog boundary", () => {
   });
 
   test("disables every PostHog surface except cookieless pageviews", () => {
-    expect(createPostHogConfig(() => evidence.href)).toMatchObject({
+    expect(createPostHogConfig(() => evidence.href, () => "")).toMatchObject({
       advanced_disable_feature_flags: true,
       advanced_disable_flags: true,
       api_host: "https://us.i.posthog.com",
@@ -128,7 +131,10 @@ describe("Stripe History PostHog boundary", () => {
   });
 
   test("before-send emits only an anonymous, canonical pageview", () => {
-    const beforeSend = createPostHogBeforeSend(() => evidence.href);
+    const beforeSend = createPostHogBeforeSend(
+      () => evidence.href,
+      () => "https://Example.com:8443/account/private?token=secret#frag",
+    );
     const result = beforeSend(pageview({
       $cookieless_mode: true,
       $current_url: evidence.href,
@@ -148,6 +154,7 @@ describe("Stripe History PostHog boundary", () => {
       $pathname: "/stripe/about",
       $process_person_profile: false,
       $raw_user_agent: "PostHog test browser",
+      $referring_domain: "example.com",
       analytics_schema_version: 1,
       canonical_domain: "hraness.com",
       canonical_path: "/stripe/about",
@@ -158,11 +165,14 @@ describe("Stripe History PostHog boundary", () => {
     });
     expect(JSON.stringify(result)).not.toContain("reader@example.com");
     expect(JSON.stringify(result)).not.toContain("private-account");
-    expect(JSON.stringify(result)).not.toContain("referrer");
+    expect(JSON.stringify(result)).not.toContain("$referrer");
+    expect(JSON.stringify(result)).not.toContain("account/private");
+    expect(JSON.stringify(result)).not.toContain("secret");
+    expect(JSON.stringify(result)).not.toContain("8443");
   });
 
   test("before-send rejects every other event and identity mode", () => {
-    const beforeSend = createPostHogBeforeSend(() => evidence.href);
+    const beforeSend = createPostHogBeforeSend(() => evidence.href, () => "");
     const validProperties = {
       $cookieless_mode: true,
       distinct_id: POSTHOG_COOKILESS_DISTINCT_ID,
@@ -185,6 +195,37 @@ describe("Stripe History PostHog boundary", () => {
     }))?.properties.$raw_user_agent).toBe("x".repeat(1_000));
     expect(createPostHogBeforeSend(
       () => "https://hraness.com/stripe/history/private-account",
+      () => "",
     )(pageview(validProperties))).toBeNull();
+  });
+});
+
+describe("referrer host", () => {
+  test("keeps only the host name of an http(s) referrer", () => {
+    expect(referrerHost("https://www.Google.com/search?q=stripe")).toBe("www.google.com");
+    expect(referrerHost("http://news.ycombinator.com/item?id=1")).toBe("news.ycombinator.com");
+    expect(referrerHost("https://user:pass@example.org:8080/a#b")).toBe("example.org");
+  });
+
+  test("marks an empty referrer as a direct visit", () => {
+    expect(referrerHost("")).toBe(DIRECT_REFERRER);
+    expect(referrerHost(undefined)).toBe(DIRECT_REFERRER);
+  });
+
+  test("drops referrers that are not ordinary web host names", () => {
+    expect(referrerHost("android-app://com.google.android.gm/")).toBeNull();
+    expect(referrerHost("file:///Users/reader/notes.html")).toBeNull();
+    expect(referrerHost("https://[::1]/")).toBeNull();
+    expect(referrerHost("not a url")).toBeNull();
+    expect(referrerHost(42)).toBeNull();
+    expect(referrerHost(`https://${"a".repeat(3_000)}.com/`)).toBeNull();
+  });
+
+  test("accepts a host at the byte ceiling and rejects one past it", () => {
+    const label = "a".repeat(63);
+    const atCeiling = `${label}.${label}.${label}.${"b".repeat(61)}`;
+    expect(atCeiling.length).toBe(MAX_REFERRER_HOST_LENGTH);
+    expect(referrerHost(`https://${atCeiling}/`)).toBe(atCeiling);
+    expect(referrerHost(`https://${atCeiling}c/`)).toBeNull();
   });
 });
