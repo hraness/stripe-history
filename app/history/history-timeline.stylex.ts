@@ -136,6 +136,8 @@ export const historyTimelineStyles = stylex.create({
     },
   },
   filterSelected: {
+    // Keep the system-color pair intact without opaque browser text backplates.
+    forcedColorAdjust: { default: null, [forced]: "none" },
     backgroundColor: { default: "var(--hraness-site-accent)", [forced]: "Highlight" },
     borderColor: { default: "var(--hraness-site-accent)", [forced]: "Highlight" },
     color: { default: "var(--hraness-site-accent-ink)", [forced]: "HighlightText" },
