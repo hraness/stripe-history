@@ -61,6 +61,7 @@
     "app/site-header.tsx",
     "app/site.ts",
     "app/sitemap.ts",
+    "app/social.ts",
     "app/x-markdown/[[...path]]/route.ts",
     "lib/accept.ts",
     "lib/acquisitions-table.ts",

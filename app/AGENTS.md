@@ -10,7 +10,7 @@
 - `site.ts`, `site-copy.ts`, `site-header.tsx`, and `site-footer.tsx` – canonical identity, shared editorial copy, the general Hraness newsletter and optional support handoff, and shared page chrome.
 - `analytics.ts`, `posthog.ts`, and `posthog-analytics.tsx` – the finite public-route analytics contract, strict PostHog boundary, and client provider.
 - `layout.tsx`, `globals.css`, and `support/` – the document, appearance, structured-data, and portable styling boundaries.
-- `robots.ts`, `sitemap.ts`, `manifest.ts`, and `opengraph-image.tsx` – public discovery and sharing surfaces.
+- `robots.ts`, `sitemap.ts`, `manifest.ts`, `social.ts`, and `opengraph-image.tsx` – public discovery and sharing surfaces.
 - `*.test.ts` and `*.test.tsx` – rendering, redirects, and metadata contracts.
 
 # Guidelines
@@ -23,4 +23,5 @@
 - Keep the Hraness footer attribution and public repository link visible on every rendered page.
 - Render one shared Hraness footer on every page, with the general `hraness` newsletter audience and optional Hraness support handoff. The owner explicitly selected the general newsletter because this site lives at `hraness.com/stripe`. Do not create a separate Stripe History mailing signup or add a Substack embed. Preserve historical `stripe-history` consent and unsubscribe state in Hraness Accounts without routing new subscriptions there.
 - Keep analytics limited to anonymous cookieless `$pageview` events on exact canonical public routes. Drop every other event and property before transport, and never enable analytics outside the `hraness.com/stripe` Production surface.
+- Share images come only from the shared `@hraness/web-discovery` social-image template via the single `defineSocialImageSite` declaration in `social.ts`. Pages pass copy only (`headline`, `description`, `eyebrow`); add no per-site drawing code.
 - Keep headings, ordinary proportional text, and the social image on the shared Nebula Sans contract. Reserve monospace for code, dates, and numeric values where alignment needs it.
