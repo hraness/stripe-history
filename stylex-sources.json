@@ -9,6 +9,7 @@
     "app/history/history-sticky-offset-sync.tsx",
     "app/posthog-analytics.tsx",
     "app/posthog.ts",
+    "app/product-messaging.ts",
     "app/site.ts",
     "support/theme.tsx"
   ],
@@ -54,6 +55,7 @@
     "app/posthog-analytics.tsx",
     "app/posthog.ts",
     "app/privacy/page.tsx",
+    "app/product-messaging.ts",
     "app/robots.ts",
     "app/seo.ts",
     "app/site-copy.ts",
