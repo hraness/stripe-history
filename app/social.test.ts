@@ -16,7 +16,7 @@ describe("share image", () => {
       domain: SITE_LABEL,
       icon: { kind: "mark" },
       name: site.name,
-      theme: { accent: "#2474D4", background: "#FFFFFF", foreground: "#171717", muted: "#666666" },
+      theme: { accent: "#2474D4", background: "#FFFFFF", foreground: "#171717", muted: "#666666", wash: "#6653C6" },
     });
     expect(socialSite.icon?.src).toStartWith("data:image/svg+xml,");
     expect(decodeURIComponent(socialSite.icon?.src ?? "")).toContain("viewBox='0 0 541 581'");
