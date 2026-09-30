@@ -46,7 +46,10 @@ export async function proveCompiledTimeline(page: Page) {
             countColor: getComputedStyle(requireElement('.history-filters a[data-filter-id="all"] .history-filter-count')).color,
             iconColor: getComputedStyle(requireElement('.history-filters a[data-filter-id="all"] .history-category-icon')).color,
             categoryHue: category.style.getPropertyValue("--history-category-hue"),
-            yearCountsMatch: years.every((year) => year.querySelector('.history-year-heading > span')?.textContent === `${year.querySelectorAll('.history-timeline > .history-event').length} events`),
+            yearCountsMatch: years.every((year) => {
+              const count = year.querySelectorAll('.history-timeline > .history-event').length;
+              return year.querySelector('.history-year-heading > span')?.textContent === `${count} ${count === 1 ? "event" : "events"}`;
+            }),
           };
         } finally { probe.remove(); }
       });
@@ -57,7 +60,7 @@ export async function proveCompiledTimeline(page: Page) {
       assert.equal(desktop.laterMargin, "44px");
       assert.equal(desktop.titleSize, "20px");
       assert.equal(desktop.titleWeight, "500");
-      assert.equal(desktop.filterPosition, "sticky");
+      assert.equal(desktop.filterPosition, "relative");
       assert.equal(desktop.filterCount, 16);
       assert.equal(desktop.selected, "true");
       assert.equal(desktop.selectedPath, "/stripe");
@@ -98,6 +101,7 @@ export async function proveCompiledTimeline(page: Page) {
       const cue = getComputedStyle(nav, "::after");
       return {
         layout: getComputedStyle(document.querySelector('.history-layout')!).display,
+        filterPosition: getComputedStyle(nav).position,
         laterMargin: getComputedStyle(document.querySelectorAll('.history-year')[1]!).marginTop,
         flexWrap: list.flexWrap, overflow: list.overflowX, snap: list.scrollSnapType,
         scrollbar: list.scrollbarWidth, endPadding: list.paddingInlineEnd,
@@ -105,7 +109,7 @@ export async function proveCompiledTimeline(page: Page) {
       };
     });
     assert.deepEqual(mobile, {
-      layout: "block", laterMargin: "32px", flexWrap: "nowrap", overflow: "auto", snap: snapReference.proximity,
+      layout: "block", filterPosition: "sticky", laterMargin: "32px", flexWrap: "nowrap", overflow: "auto", snap: snapReference.proximity,
       scrollbar: "none", endPadding: "32px", cueContent: '""', cueWidth: "28px", cuePointerEvents: "none",
     });
     observations.push({ ...mobile, snapReference });

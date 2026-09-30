@@ -248,7 +248,8 @@ try {
   const resources = page.locator('.stripe-history-footer-resources');
   assert.equal(await resources.evaluate((node) => getComputedStyle(node).rowGap), "8px");
   assert.equal(await page.locator('.hraness-marketing-hero__copy').evaluate((node) => getComputedStyle(node).display), "grid");
-  assert.equal(await page.locator('.hraness-marketing-hero__name, .hraness-marketing-hero__eyebrow').count(), 0);
+  assert.equal(await page.locator('.hraness-marketing-hero__name').count(), 0);
+  assert.equal(await page.locator('.hraness-marketing-hero__eyebrow').textContent(), "Independent company history");
   assert.equal(await page.locator('.hraness-marketing-hero__copy').evaluate((node) => getComputedStyle(node).textAlign), "start");
   const sourceDetails = page.locator('.history-source-details');
   assert.equal(await sourceDetails.evaluate((node) => (node as HTMLDetailsElement).open), false);
@@ -264,8 +265,11 @@ try {
   await page.getByRole('link', { name: 'Browse the timeline', exact: true }).click();
   assert.ok(await page.locator('#timeline').evaluate((node) => node.getBoundingClientRect().top >= document.querySelector('.stripe-history-header')!.getBoundingClientRect().bottom), "Browse target must clear the sticky header");
   await page.setViewportSize({ width: 1280, height: 900 });
+  stage = "baseline-compiled-timeline";
   timelines.push({ generation: first.generation, observations: await proveCompiledTimeline(page) });
+  stage = "baseline-compiled-events";
   eventPresentation.push({ generation: first.generation, proof: await proveCompiledEvents(page) });
+  stage = "baseline-closing-borders";
   closingPresentation.push({ generation: first.generation, observations: await proveClosingBorders(page) });
   const identityUrl = `${origin}/stripe/__stripe_stylex_preview_generation.json`;
   const identity = await (await context.request.get(identityUrl)).json() as { generation: string };

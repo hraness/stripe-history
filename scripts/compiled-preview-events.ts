@@ -38,11 +38,11 @@ export async function proveCompiledEvents(page: Page) {
           const sample = frame ?? facts;
           const probe = document.createElement("span");
           probe.style.color = "var(--history-category-ink)";
-          probe.style.backgroundColor = "var(--history-category-soft)";
+          probe.style.backgroundColor = "transparent";
           probe.style.fontSize = "var(--text-caption)";
           sample.append(probe);
           const borderProbe = document.createElement("span");
-          borderProbe.style.border = "1px solid color-mix(in oklch, var(--history-category-ink) 30%, var(--plain-line))";
+          borderProbe.style.border = "0px none currentColor";
           type?.append(borderProbe);
           try {
             const date = getComputedStyle(kicker.querySelector("time")!);
@@ -90,14 +90,14 @@ export async function proveCompiledEvents(page: Page) {
         assert.equal(desktop.valueNumeric, "tabular-nums");
         assert.equal(desktop.sourceDisplay, "inline-block");
         assert.equal(desktop.sourceMinHeight, "24px");
-        assert.equal(desktop.sourceAlign, "end");
+        assert.equal(desktop.sourceAlign, "start");
         if (path === "/stripe/history/valuation") assert.equal(desktop.type, null);
         else {
           assert.ok(desktop.type);
-          assert.equal(desktop.type.minHeight, "26.4px");
-          assert.equal(desktop.type.radius, "999px");
+          assert.equal(desktop.type.minHeight, "24px");
+          assert.equal(desktop.type.radius, "0px");
           assert.equal(desktop.type.border, desktop.type.expectedBorder);
-          assert.equal(desktop.type.expectedBorder, path === "/stripe" ? "1px" : "0px");
+          assert.equal(desktop.type.expectedBorder, "0px");
           assert.equal(desktop.type.categoryInk.length > 0, path === "/stripe");
         }
         if (path === "/stripe") {
@@ -115,7 +115,7 @@ export async function proveCompiledEvents(page: Page) {
           assert.equal(desktop.timeline.lastBorders, true);
           assert.equal(desktop.timeline.navBorder, "1px");
           assert.equal(desktop.timeline.yearBorder, "1px");
-          assert.equal(desktop.timeline.filterMinHeight, "34px");
+          assert.equal(desktop.timeline.filterMinHeight, "32px");
           palettes.push(desktop.timeline.expectedInk);
         } else assert.equal(desktop.timeline, null);
         observations.push(desktop);
@@ -158,7 +158,7 @@ export async function proveCompiledEvents(page: Page) {
     await page.setViewportSize({ width: 1280, height: 900 });
     const chip = page.locator(".history-event-type").first();
     await chip.hover();
-    assert.equal(await chip.evaluate((node) => getComputedStyle(node).textDecorationLine), "none");
+    assert.equal(await chip.evaluate((node) => getComputedStyle(node).textDecorationLine), "underline");
     let tabPresses = 0;
     let reached = false;
     const traversalDeadline = Date.now() + 10000;
@@ -275,7 +275,7 @@ export async function proveCompiledEvents(page: Page) {
         assert.notEqual(role.display, role.wrongDisplay);
         assert.equal(role.align, "center");
         assert.ok(role.height >= 48);
-        if (role.padding !== null) assert.equal(role.padding, "12px");
+        if (role.padding !== null) assert.equal(role.padding, "0px");
       }
       observations.push(coarse);
     }
