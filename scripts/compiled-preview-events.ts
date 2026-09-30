@@ -14,7 +14,7 @@ export async function proveCompiledEvents(page: Page) {
   const palettes: string[] = [];
   let coarseContext: BrowserContext | undefined;
   let coarseClosed = false;
-  const settle = () => page.evaluate(() => new Promise<void>((done) => requestAnimationFrame(() => requestAnimationFrame(() => done()))));
+  const settle = (target: Page = page) => target.evaluate(() => new Promise<void>((done) => requestAnimationFrame(() => requestAnimationFrame(() => done()))));
   try {
     for (const path of paths) {
       await page.goto(`${origin}${path}`, { waitUntil: "networkidle" });
@@ -38,11 +38,11 @@ export async function proveCompiledEvents(page: Page) {
           const sample = frame ?? facts;
           const probe = document.createElement("span");
           probe.style.color = "var(--history-category-ink)";
-          probe.style.backgroundColor = "var(--history-category-soft)";
+          probe.style.backgroundColor = "transparent";
           probe.style.fontSize = "var(--text-caption)";
           sample.append(probe);
           const borderProbe = document.createElement("span");
-          borderProbe.style.border = "1px solid color-mix(in oklch, var(--history-category-ink) 30%, var(--plain-line))";
+          borderProbe.style.border = "0px none currentColor";
           type?.append(borderProbe);
           try {
             const date = getComputedStyle(kicker.querySelector("time")!);
@@ -90,14 +90,14 @@ export async function proveCompiledEvents(page: Page) {
         assert.equal(desktop.valueNumeric, "tabular-nums");
         assert.equal(desktop.sourceDisplay, "inline-block");
         assert.equal(desktop.sourceMinHeight, "24px");
-        assert.equal(desktop.sourceAlign, "end");
+        assert.equal(desktop.sourceAlign, "start");
         if (path === "/stripe/history/valuation") assert.equal(desktop.type, null);
         else {
           assert.ok(desktop.type);
-          assert.equal(desktop.type.minHeight, "26.4px");
-          assert.equal(desktop.type.radius, "999px");
+          assert.equal(desktop.type.minHeight, "24px");
+          assert.equal(desktop.type.radius, "0px");
           assert.equal(desktop.type.border, desktop.type.expectedBorder);
-          assert.equal(desktop.type.expectedBorder, path === "/stripe" ? "1px" : "0px");
+          assert.equal(desktop.type.expectedBorder, "0px");
           assert.equal(desktop.type.categoryInk.length > 0, path === "/stripe");
         }
         if (path === "/stripe") {
@@ -115,7 +115,7 @@ export async function proveCompiledEvents(page: Page) {
           assert.equal(desktop.timeline.lastBorders, true);
           assert.equal(desktop.timeline.navBorder, "1px");
           assert.equal(desktop.timeline.yearBorder, "1px");
-          assert.equal(desktop.timeline.filterMinHeight, "34px");
+          assert.equal(desktop.timeline.filterMinHeight, "32px");
           palettes.push(desktop.timeline.expectedInk);
         } else assert.equal(desktop.timeline, null);
         observations.push(desktop);
@@ -154,67 +154,112 @@ export async function proveCompiledEvents(page: Page) {
       }
     }
     assert.notEqual(palettes[0], palettes[1], "Both real category palettes must be observed");
-    await page.goto(`${origin}/stripe`, { waitUntil: "networkidle" });
-    await page.setViewportSize({ width: 1280, height: 900 });
-    const chip = page.locator(".history-event-type").first();
-    await chip.hover();
-    assert.equal(await chip.evaluate((node) => getComputedStyle(node).textDecorationLine), "none");
-    let tabPresses = 0;
-    let reached = false;
-    const traversalDeadline = Date.now() + 10000;
-    // Keep input serial: a detached timeout race could otherwise continue
-    // sending Tab while the enclosing failure cleanup restores the page.
-    while (tabPresses < 128 && !reached) {
-      assert.ok(Date.now() < traversalDeadline, "Native keyboard traversal exceeded its bound");
-      await page.keyboard.press("Tab");
-      tabPresses++;
-      reached = await chip.evaluate((node) => node === document.activeElement);
-    }
-    assert.equal(reached, true, "The real first event chip must be reachable with native Tab input");
-    await settle();
-    const focus = await chip.evaluate((node) => {
-      const css = getComputedStyle(node);
-      const rect = node.getBoundingClientRect();
-      const left = Math.max(0, rect.left), right = Math.min(innerWidth, rect.right);
-      const top = Math.max(0, rect.top), bottom = Math.min(innerHeight, rect.bottom);
-      const hit = document.elementFromPoint((left + right) / 2, (top + bottom) / 2);
-      return {
-        ring: { focusVisible: node.matches(":focus-visible"), radius: css.borderRadius, style: css.outlineStyle, width: css.outlineWidth, offset: css.outlineOffset },
-        visibility: { width: rect.width, height: rect.height, visibleWidth: right - left, visibleHeight: bottom - top, hit: hit !== null && node.contains(hit) },
-      };
-    });
-    assert.deepEqual(focus.ring, { focusVisible: true, radius: "1px", style: "dotted", width: "1px", offset: "3px" });
-    for (const dimension of [focus.visibility.width, focus.visibility.height, focus.visibility.visibleWidth, focus.visibility.visibleHeight]) assert.ok(dimension > 0);
-    assert.equal(focus.visibility.hit, true, "The natively focused chip must be visible and hit-testable");
-    observations.push({ focus, nativeTabPresses: tabPresses });
-    // The compact introduction can leave the first links inside the viewport
-    // but behind the wrapped sticky filters. Check real forward/backward Tab,
-    // not scripted focus or a test-side scroll that hides the product defect.
-    const sourceLink = page.locator(".history-event-sources a").first();
-    const yearLink = page.locator(".history-year-link").first();
-    for (const [target, key, role] of [[sourceLink, "Tab", "source"], [yearLink, "Shift+Tab", "year"], [chip, "Tab", "category"]] as const) {
-      let presses = 0;
-      const deadline = Date.now() + 10000;
-      while (!(await target.evaluate(node => node === document.activeElement)) && presses < 64) {
-        assert.ok(Date.now() < deadline, `${role} native keyboard traversal exceeded its bound`);
-        await page.keyboard.press(key);
-        presses++;
-      }
-      assert.equal(await target.evaluate(node => node === document.activeElement), true, `${role} reachable with ${key}`);
-      await settle();
-      const visibility = await target.evaluate(node => {
+    async function proveNativeFocus(focusPage: Page, viewport: { width: number; height: number }, stickyFilters: boolean) {
+      await focusPage.goto(`${origin}/stripe`, { waitUntil: "networkidle" });
+      await focusPage.setViewportSize(viewport);
+      await settle(focusPage);
+      const filterReference = await focusPage.locator(".history-filters").evaluate(node => {
         const rect = node.getBoundingClientRect();
-        const x = (Math.max(0, rect.left) + Math.min(innerWidth, rect.right)) / 2;
-        const y = (Math.max(0, rect.top) + Math.min(innerHeight, rect.bottom)) / 2;
-        const hit = document.elementFromPoint(x, y);
-        return { focusVisible: node.matches(":focus-visible"), top: rect.top, bottom: rect.bottom,
-          hit: hit !== null && node.contains(hit), clearance: getComputedStyle(node).scrollMarginTop };
+        const probe = document.createElement("span");
+        probe.style.position = "absolute";
+        probe.style.top = "var(--history-header-offset)";
+        node.append(probe);
+        try { return { naturalTop: rect.top + scrollY, initialTop: rect.top,
+          authoredInset: parseFloat(getComputedStyle(probe).top) }; }
+        finally { probe.remove(); }
       });
-      assert.equal(visibility.focusVisible, true);
-      assert.equal(visibility.hit, true, `${role} must not be covered after native ${key}`);
-      assert.ok(parseFloat(visibility.clearance) > 0);
-      observations.push({ nativeFocus: role, direction: key, presses, visibility });
+      if (stickyFilters) assert.ok(filterReference.initialTop > filterReference.authoredInset + 1,
+        "The mobile filter must start in normal flow before native keyboard traversal");
+      const chip = focusPage.locator(".history-event-type").first();
+      if (!stickyFilters) {
+        await chip.hover();
+        assert.equal(await chip.evaluate((node) => getComputedStyle(node).textDecorationLine), "underline");
+      }
+      let tabPresses = 0;
+      let reached = false;
+      const traversalDeadline = Date.now() + 10000;
+      // Keep input serial: a detached timeout race could otherwise continue
+      // sending Tab while the enclosing failure cleanup restores the page.
+      while (tabPresses < 128 && !reached) {
+        assert.ok(Date.now() < traversalDeadline, "Native keyboard traversal exceeded its bound");
+        await focusPage.keyboard.press("Tab");
+        tabPresses++;
+        reached = await chip.evaluate((node) => node === document.activeElement);
+      }
+      assert.equal(reached, true, "The real first event chip must be reachable with native Tab input");
+      await settle(focusPage);
+      const focus = await chip.evaluate((node) => {
+        const css = getComputedStyle(node);
+        const rect = node.getBoundingClientRect();
+        const left = Math.max(0, rect.left), right = Math.min(innerWidth, rect.right);
+        const top = Math.max(0, rect.top), bottom = Math.min(innerHeight, rect.bottom);
+        const hit = document.elementFromPoint((left + right) / 2, (top + bottom) / 2);
+        return {
+          ring: { focusVisible: node.matches(":focus-visible"), radius: css.borderRadius, style: css.outlineStyle, width: css.outlineWidth, offset: css.outlineOffset },
+          visibility: { width: rect.width, height: rect.height, visibleWidth: right - left, visibleHeight: bottom - top, hit: hit !== null && node.contains(hit) },
+        };
+      });
+      assert.deepEqual(focus.ring, { focusVisible: true, radius: "1px", style: "dotted", width: "1px", offset: "3px" });
+      for (const dimension of [focus.visibility.width, focus.visibility.height, focus.visibility.visibleWidth, focus.visibility.visibleHeight]) assert.ok(dimension > 0);
+      assert.equal(focus.visibility.hit, true, "The natively focused chip must be visible and hit-testable");
+      observations.push({ viewport, focus, nativeTabPresses: tabPresses });
+      // At mobile widths the filters are sticky. Check real forward/backward Tab,
+      // not scripted focus or a test-side scroll that hides the product defect.
+      const sourceLink = focusPage.locator(".history-event-sources a").first();
+      const yearLink = focusPage.locator(".history-year-link").first();
+      for (const [target, key, role] of [[sourceLink, "Tab", "source"], [yearLink, "Shift+Tab", "year"], [chip, "Tab", "category"]] as const) {
+        let presses = 0;
+        const deadline = Date.now() + 10000;
+        while (!(await target.evaluate(node => node === document.activeElement)) && presses < 64) {
+          assert.ok(Date.now() < deadline, `${role} native keyboard traversal exceeded its bound`);
+          await focusPage.keyboard.press(key);
+          presses++;
+        }
+        assert.equal(await target.evaluate(node => node === document.activeElement), true, `${role} reachable with ${key}`);
+        await settle(focusPage);
+        const visibility = await target.evaluate(node => {
+          const rect = node.getBoundingClientRect();
+          const css = getComputedStyle(node);
+          const header = document.querySelector(".stripe-history-header")!;
+          const filters = document.querySelector(".history-filters")!;
+          const filterRect = filters.getBoundingClientRect();
+          const filterCss = getComputedStyle(filters);
+          const x = (Math.max(0, rect.left) + Math.min(innerWidth, rect.right)) / 2;
+          const y = (Math.max(0, rect.top) + Math.min(innerHeight, rect.bottom)) / 2;
+          const hit = document.elementFromPoint(x, y);
+          const topHit = document.elementFromPoint(x, rect.top + Math.min(1, rect.height / 2));
+          const outlineExtent = Math.max(0, parseFloat(css.outlineOffset) + parseFloat(css.outlineWidth));
+          const outlineTop = rect.top - outlineExtent;
+          const outlineHit = document.elementFromPoint(x, outlineTop + 0.5);
+          return { focusVisible: node.matches(":focus-visible"), top: rect.top, bottom: rect.bottom,
+            hit: hit !== null && node.contains(hit), topHit: topHit !== null && node.contains(topHit),
+            clearance: css.scrollMarginTop, outlineTop, outlineWidth: parseFloat(css.outlineWidth),
+            outlineUncovered: outlineHit !== null && !header.contains(outlineHit) && !filters.contains(outlineHit),
+            headerBottom: header.getBoundingClientRect().bottom, scrollY,
+            filterBottom: filterRect.bottom, filterTop: filterRect.top,
+            filterInset: filterCss.top, filterPosition: filterCss.position };
+        });
+        assert.equal(visibility.focusVisible, true);
+        assert.equal(visibility.hit, true, `${role} must not be covered after native ${key}`);
+        assert.ok(parseFloat(visibility.clearance) > 0);
+        assert.equal(visibility.filterPosition, stickyFilters ? "sticky" : "relative");
+        if (stickyFilters) {
+          assert.equal(parseFloat(visibility.filterInset), filterReference.authoredInset);
+          assert.ok(Math.abs(visibility.filterTop - filterReference.authoredInset) <= 0.5,
+            `${role} must exercise the mobile filter at its authored sticky inset`);
+          assert.ok(filterReference.naturalTop - visibility.scrollY < filterReference.authoredInset - 1,
+            `${role} must exercise a filter displaced from its natural position`);
+          assert.ok(visibility.outlineWidth > 0);
+          assert.ok(visibility.outlineTop >= Math.max(visibility.headerBottom, visibility.filterBottom),
+            `${role}'s outline must clear the mobile header and pinned filter row after native ${key}: ${JSON.stringify(visibility)}`);
+          assert.equal(visibility.topHit, true);
+          assert.equal(visibility.outlineUncovered, true);
+        }
+        observations.push({ viewport, filterReference, nativeFocus: role, direction: key, presses, visibility });
+      }
     }
+    await proveNativeFocus(page, { width: 1280, height: 900 }, false);
+    const chip = page.locator(".history-event-type").first();
     await page.emulateMedia({ forcedColors: "active" });
     await settle();
     const forced = await chip.evaluate((node) => {
@@ -275,10 +320,11 @@ export async function proveCompiledEvents(page: Page) {
         assert.notEqual(role.display, role.wrongDisplay);
         assert.equal(role.align, "center");
         assert.ok(role.height >= 48);
-        if (role.padding !== null) assert.equal(role.padding, "12px");
+        if (role.padding !== null) assert.equal(role.padding, "0px");
       }
       observations.push(coarse);
     }
+    await proveNativeFocus(coarsePage, { width: 390, height: 844 }, true);
     assert.deepEqual(pageErrors, []);
   } finally {
     // The outer harness also closes the browser and proves all PID/listener

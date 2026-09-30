@@ -236,7 +236,7 @@ try {
   first = await event("stripe-preview-ready", 0);
   await proveRepresentations(first.generation);
   await page.goto(`${origin}/stripe`, { waitUntil: "networkidle" });
-  assert.equal(await page.locator("h1#history-heading").textContent(), "Stripe’s history, dated and sourced");
+  assert.equal(await page.locator("h1#history-heading").textContent(), "Every event in Stripe’s history, dated and sourced.");
   assert.ok(await page.locator(".history-event").count() >= 200, "Real async corpus must render");
   assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://hraness.com/stripe");
   assert.equal(await page.locator('iframe[src="https://hraness.substack.com/embed"]').count(), 0);
@@ -248,7 +248,8 @@ try {
   const resources = page.locator('.stripe-history-footer-resources');
   assert.equal(await resources.evaluate((node) => getComputedStyle(node).rowGap), "8px");
   assert.equal(await page.locator('.hraness-marketing-hero__copy').evaluate((node) => getComputedStyle(node).display), "grid");
-  assert.equal(await page.locator('.hraness-marketing-hero__name, .hraness-marketing-hero__eyebrow').count(), 0);
+  assert.equal(await page.locator('.hraness-marketing-hero__name').count(), 0);
+  assert.equal(await page.locator('.hraness-marketing-hero__eyebrow').textContent(), "Independent company history");
   assert.equal(await page.locator('.hraness-marketing-hero__copy').evaluate((node) => getComputedStyle(node).textAlign), "start");
   const sourceDetails = page.locator('.history-source-details');
   assert.equal(await sourceDetails.evaluate((node) => (node as HTMLDetailsElement).open), false);
@@ -264,8 +265,11 @@ try {
   await page.getByRole('link', { name: 'Browse the timeline', exact: true }).click();
   assert.ok(await page.locator('#timeline').evaluate((node) => node.getBoundingClientRect().top >= document.querySelector('.stripe-history-header')!.getBoundingClientRect().bottom), "Browse target must clear the sticky header");
   await page.setViewportSize({ width: 1280, height: 900 });
+  stage = "baseline-compiled-timeline";
   timelines.push({ generation: first.generation, observations: await proveCompiledTimeline(page) });
+  stage = "baseline-compiled-events";
   eventPresentation.push({ generation: first.generation, proof: await proveCompiledEvents(page) });
+  stage = "baseline-closing-borders";
   closingPresentation.push({ generation: first.generation, observations: await proveClosingBorders(page) });
   const identityUrl = `${origin}/stripe/__stripe_stylex_preview_generation.json`;
   const identity = await (await context.request.get(identityUrl)).json() as { generation: string };
@@ -391,7 +395,7 @@ await writeFile(join(evidenceRoot, "browser-proof.json"), JSON.stringify({
   browser: { version: browserVersion, executablePath, beforeSha256: browserExecutableSha256, afterSha256: browserExecutableAfterSha256 },
   generations, representations, timelines, eventPresentation, closingPresentation, expectedFailureProofs, errors,
   failedGenerations: events.filter((value) => value.kind === "stripe-preview-build-failed").map((value) => ({ retained: value.retained, session: value.session, diagnosticSha256: hash(String(value.message)) })),
-  requiredAssertions: ["real async corpus", "canonical /stripe", "native HTML/Markdown/406 and Vary Accept before/after rebuild", "Substack markup", "header navigation/appearance", "semantic time", "desktop/mobile compiled orientation with inherited-variable counterexample", "compiled timeline light/dark selected-hover and forced-focus, mobile scroll cue, year layout/counts before/after rebuild", "all four real event/fact/source producers across light/dark, narrow and native coarse pointer before/after rebuild", "native Tab reach and focus ring on the real event chip", "category-bound timeline border and unbound metric ordinary/forced border match authored native references", "attached timeline borders and normal filter minimum height", "failed generation preserves server/output", "changed rule union", "old server collected", "manual refresh observes real recipe edit", "authored checkout unchanged"],
+  requiredAssertions: ["real async corpus", "canonical /stripe", "native HTML/Markdown/406 and Vary Accept before/after rebuild", "Substack markup", "header navigation/appearance", "semantic time", "desktop/mobile compiled orientation with inherited-variable counterexample", "compiled timeline light/dark selected-hover and forced-focus, mobile scroll cue, year layout/counts before/after rebuild", "all four real event/fact/source producers across light/dark, narrow and native coarse pointer before/after rebuild", "desktop/mobile native Tab reach and category focus rings; mobile sticky-filter clearance", "category-bound timeline border and unbound metric ordinary/forced border match authored native references", "attached timeline borders and normal filter minimum height", "failed generation preserves server/output", "changed rule union", "old server collected", "manual refresh observes real recipe edit", "authored checkout unchanged"],
   noHmrOrStateContinuityClaim: true,
 }, null, 2) + "\n", { flag: "wx", mode: 0o600 });
 console.log(JSON.stringify({ kind: "stripe-preview-browser-terminal", state, evidenceRoot }));

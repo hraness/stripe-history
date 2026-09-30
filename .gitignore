@@ -1,6 +1,8 @@
 node_modules/
 .next/
 .stylex-next/
+.hraness-stylex-next-*-discovery.json
+.hraness-stylex-next-*-delivery.json
 .stylex-preview/
 public/theme-bootstrap.js
 .vercel/

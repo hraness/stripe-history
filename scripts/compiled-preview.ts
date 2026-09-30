@@ -11,6 +11,7 @@ import { stylexOptions } from "../stylex-config.ts";
 import { collectPreviewOwner, createPreviewCommands, createPreviewSelection, hasUnprovedPreviewCustody } from "./compiled-preview-state.ts";
 import { capturePreviewSnapshot } from "./compiled-preview-snapshot.ts";
 import { assertPatchedNextDelivery } from "./next-template-cache.ts";
+import { withVercelToolbarSource } from "./next-build-sources.ts";
 
 // This is production rebuild/start/manual-refresh, not HMR. Each attempt has a
 // new application root, so unproved type files from a failed build never enter
@@ -66,7 +67,7 @@ async function main(): Promise<void> {
   await mkdir(state, { recursive: true, mode: 0o700 });
   assert.equal(await realpath(state), state);
   const session = await mkdtemp(join(state, "session-"));
-  const fixedInputs = ["package.json", "bun.lock", "stylex-config.ts", "scripts/compiled-preview.ts", "scripts/compiled-preview-state.ts", "scripts/compiled-preview-snapshot.ts"];
+  const fixedInputs = ["package.json", "bun.lock", "stylex-config.ts", "scripts/compiled-preview.ts", "scripts/compiled-preview-state.ts", "scripts/compiled-preview-snapshot.ts", "scripts/next-template-cache.ts", "scripts/next-build-sources.ts"];
   const fixedHashes = await Promise.all(fixedInputs.map(async (file) => sha(await readFile(join(root, file)))));
   const selection = createPreviewSelection<Backend>();
   const owned = new Set<Backend>();
@@ -105,9 +106,9 @@ async function main(): Promise<void> {
           await writeFile(join(captured.root, "public", identityPath), JSON.stringify({ generation: captured.generation }), { flag: "wx" });
           if (isStopping()) throw new Error("Preview cancelled before build");
           const requiredSources = JSON.parse(await readFile(join(captured.root, "stylex-sources.json"), "utf8"));
-          const record = await runStylexNextBuild({ ...stylexOptions(captured.root), attemptId: `preview-${captured.generation}`, requiredSources });
+          const record = await runStylexNextBuild({ ...stylexOptions(captured.root), attemptId: `preview-${captured.generation}`, requiredSources: withVercelToolbarSource(requiredSources, process.env) });
           assert.equal(record.state, "complete");
-          assertPatchedNextDelivery(captured.root);
+          assertPatchedNextDelivery(captured.root, record);
           await writeFile(join(captured.root, "preview-complete.json"), JSON.stringify(record, null, 2) + "\n", { flag: "wx", mode: 0o600 });
           if (isStopping()) throw new Error("Preview cancelled after complete build");
           const reservation = createServer();

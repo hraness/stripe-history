@@ -12,7 +12,7 @@ const sha = (text: string) => createHash("sha256").update(text).digest("hex");
 const firstId = "11111111-1111-4111-8111-111111111111";
 const failedId = "22222222-2222-4222-8222-222222222222";
 const plan = (id = failedId) => ({ kind: "hraness-stylex-next-attempt", schemaVersion: 2,
-  adapterVersion: STYLEX_NEXT_ADAPTER_VERSION, compilerSha256, nextVersion: "16.2.12",
+  adapterVersion: STYLEX_NEXT_ADAPTER_VERSION, compilerSha256, nextVersion: "16.3.3",
   attemptId: `preview-${id}`, requiredSources: { "node-rsc": ["app/other.ts", recipe] } });
 const receipt = (path = "app/other.ts") => ({ kind: "hraness-stylex-next-module", schemaVersion: 1,
   adapterVersion: STYLEX_NEXT_ADAPTER_VERSION, compilerSha256, attemptId: `preview-${failedId}`,
@@ -41,7 +41,7 @@ test("only the exact sole malformed recipe may lack a loader receipt", () => {
   for (const path of ["../escape", "/absolute", "app//other.ts", "app/./other.ts"]) {
     expect(() => validateFailedRecipeCensus(plan(), [receipt(path)])).toThrow();
   }
-  expect(() => validateFailedRecipeCensus({ ...plan(), nextVersion: "16.3.3" }, [receipt()])).toThrow();
+  expect(() => validateFailedRecipeCensus({ ...plan(), nextVersion: "16.2.12" }, [receipt()])).toThrow();
   expect(() => validateFailedRecipeCensus({ ...plan(), requiredSources: { "node-rsc": [recipe, recipe] } }, [])).toThrow();
 });
 

@@ -3,26 +3,32 @@ import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { previewSourceInventory } from "./compiled-preview-snapshot";
+import { stylexOptions } from "../stylex-config";
 
 const sha = (bytes: Uint8Array | string) => createHash("sha256").update(bytes).digest("hex");
-const patchPath = "patches/next@16.2.12.patch";
+const patchPath = "patches/next@16.3.3.patch";
 const originalStatement = "res.setHeader('Vary', varyHeader);";
 const patchedStatement = "res.appendHeader('Vary', varyHeader);";
 const templates = [
-  { path: "dist/build/templates/app-page.js", before: "4a5a857b99f9aa25f9960fc780f17be701b02794a682d78855e654167d93a262", after: "9796990767d3656b72b810679c0642d8a19285269cd0716c697322a3b97b3bb4", map: "425e3b5f7197e44aabe6b07a78e7112692b84e36b1c90dfdbd1d1ace5acb60f9" },
-  { path: "dist/esm/build/templates/app-page.js", before: "dbe2e20d7183b106cd72f77073a7e9d17e4b4d324abada7b4d80ad51c8354ab2", after: "94eae627e2d90b982758669f57e9a9c2fee58b4207cf76cd71d26e74b4ca6d4e", map: "6fdfac460c2f0a7694e27c305f2976ca3aba2ff304edc1d312cdffb0c4045759" },
+  { path: "dist/build/templates/app-page-runtime.js", before: "379ec94e6493f454cf8f21ead0bf43f366f911ba9f25b5e12e4fde0401dcca6e", after: "a408052bc3b76041c6e2664827f8f3fd35d470007a74d0f51327899f1817dc55", map: "56bfa27a88d9ad9a78da1b09d68a851e8898e1fe86f80f84d5cf01403063d840" },
+  { path: "dist/esm/build/templates/app-page-runtime.js", before: "3d3338d5bbd34a298d14026b385ac782153ef36a5068849bdac96beff0fc4a29", after: "1293c2743fd57a0c50c1223f3f01109ff6e75c6d739d7911d545abbc26506f82", map: "3102b2e451dc90bec43eb47218297e0d5ea81497ac3e084e609de81cd1fa28e5" },
+] as const;
+const entries = [
+  { path: "dist/build/templates/app-page.js", sha256: "91aed782b425996d1baea340a4b2752ca9397c8de19a8a67d36b3b5aa4fecb04", map: "88d12b97f7a80f93aec503d65f7d7a3ea6a991582fddf6c882a5abe4c4d76e24" },
+  { path: "dist/esm/build/templates/app-page.js", sha256: "dda08235f21b762af2d7679916dc8c873996f566597fba60fdab86141027fbcc", map: "4555a464a76b6774ec69ad57a762cea9d9218b5239618d5ef054f176564a528e" },
 ] as const;
 
 test("the exact installed Next patch changes only the two declared template statements", async () => {
   const manifest = JSON.parse(await readFile("package.json", "utf8"));
   const next = JSON.parse(await readFile("node_modules/next/package.json", "utf8"));
-  expect(manifest.dependencies.next).toBe("16.2.12");
-  expect(next.version).toBe("16.2.12");
-  expect(manifest.patchedDependencies).toEqual({ "next@16.2.12": patchPath });
+  expect(manifest.dependencies.next).toBe("16.3.3");
+  expect(next.version).toBe("16.3.3");
+  expect(stylexOptions(process.cwd()).nextVersion).toBe(next.version);
+  expect(manifest.patchedDependencies).toEqual({ "next@16.3.3": patchPath });
   const patch = await readFile(patchPath, "utf8");
   expect(patch.split("\n").filter((line) => line.startsWith("diff --git "))).toEqual(templates.map(({ path }) => `diff --git a/${path} b/${path}`));
-  expect(patch.split("\n").filter((line) => line.startsWith("+") && !line.startsWith("+++"))).toEqual(templates.map(() => `+        ${patchedStatement}`));
-  expect(patch.split("\n").filter((line) => line.startsWith("-") && !line.startsWith("---"))).toEqual(templates.map(() => `-        ${originalStatement}`));
+  expect(patch.split("\n").filter((line) => line.startsWith("+") && !line.startsWith("+++"))).toEqual(templates.map(() => `+            ${patchedStatement}`));
+  expect(patch.split("\n").filter((line) => line.startsWith("-") && !line.startsWith("---"))).toEqual(templates.map(() => `-            ${originalStatement}`));
   for (const template of templates) {
     const source = await readFile(`node_modules/next/${template.path}`, "utf8");
     expect(sha(source)).toBe(template.after);
@@ -30,8 +36,12 @@ test("the exact installed Next patch changes only the two declared template stat
     expect(source).not.toContain(originalStatement);
     expect(sha(source.replace(patchedStatement, originalStatement))).toBe(template.before);
     // These unused upstream maps are retained, not claimed as patched-byte maps.
-    // Native Next expands ESM text and webpack emits new maps under the adapter.
+    // Native Next expands the ESM entry and webpack maps the imported runtime.
     expect(sha(await readFile(`node_modules/next/${template.path}.map`))).toBe(template.map);
+  }
+  for (const entry of entries) {
+    expect(sha(await readFile(`node_modules/next/${entry.path}`))).toBe(entry.sha256);
+    expect(sha(await readFile(`node_modules/next/${entry.path}.map`))).toBe(entry.map);
   }
 });
 
@@ -103,14 +113,24 @@ test("native Node responses retain existing Vary and every framework token from 
     const generated = await loadEntrypoint("app-page", { VAR_DEFINITION_PAGE: "app/page", VAR_DEFINITION_PATHNAME: "/stripe" }, {
       tree: "[]", __next_app_require__: "__webpack_require__", __next_app_load_chunk__: "() => Promise.resolve()"
     });
-    assert.match(generated, /res\\.appendHeader\\(['"]Vary['"], varyHeader\\)/);
+    // The pinned ESM entry now delegates its exported handler to a shared
+    // runtime. Resolve the loader's actual import to one of the patched files.
+    const runtimeImport = generated.match(/import\\s*\\{\\s*createAppPageEntrypoint\\s*\\}\\s*from\\s*["'](next\\/dist\\/(?:esm\\/)?build\\/templates\\/app-page-runtime(?:\\.js)?)["']/);
+    assert.ok(runtimeImport, "Native entry must import the runtime factory");
+    const runtimePath = require.resolve(runtimeImport[1]);
+    const runtime = templates.find(({ path }) => require.resolve("next/" + path) === runtimePath);
+    assert.ok(runtime, "Native entry must resolve a declared patched runtime");
+    assert.equal(hash(readFileSync(runtimePath)), runtime.after);
+    assert.match(generated, /const entrypoint\\s*=\\s*createAppPageEntrypoint\\(/);
+    assert.match(generated, /export const handler\\s*=\\s*entrypoint\\.handler/);
     assert.doesNotMatch(generated, /res\\.setHeader\\(['"]Vary['"], varyHeader\\)/);
-    console.log(JSON.stringify({ cases, loader: "native-esm-template", node: process.versions.node }));
+    console.log(JSON.stringify({ cases, loader: "native-esm-entry-runtime", runtime: runtime.path, node: process.versions.node }));
   `, JSON.stringify(templates)], { cwd: process.cwd(), encoding: "utf8", timeout: 15_000, maxBuffer: 65_536 });
   expect(result.error).toBeUndefined();
   expect(result.status, result.stderr).toBe(0);
   const receipt = JSON.parse(result.stdout);
   expect(receipt.cases).toBe(28);
-  expect(receipt.loader).toBe("native-esm-template");
+  expect(receipt.loader).toBe("native-esm-entry-runtime");
+  expect(templates.map(({ path }) => path)).toContain(receipt.runtime);
   expect(receipt.node).toMatch(/^24\./u);
 }, 30_000);
