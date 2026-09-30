@@ -5,6 +5,7 @@ import { MARKDOWN_CONTENT_TYPE } from "@/lib/accept";
 import { GET, HEAD, dynamicParams, generateStaticParams } from "./route";
 import { isKnownMarkdownPath } from "@/lib/history-urls";
 import { markdownForPath } from "@/lib/page-markdown";
+import { site } from "@/app/site";
 
 describe("Node markdown corpus handler", () => {
   test("serves homepage, category, and recovery markdown", async () => {
@@ -44,7 +45,7 @@ describe("Node markdown corpus handler", () => {
     expect(root.status).toBe(200);
     expect(root.headers.get("content-type")).toBe(MARKDOWN_CONTENT_TYPE);
     expect(await root.text()).toContain(
-      "# Stripe History: Every event in Stripe’s history, dated and sourced.",
+      `# ${site.name}: ${site.tagline}`,
     );
     expect(acquisitions.status).toBe(200);
     expect(await acquisitions.text()).toContain(

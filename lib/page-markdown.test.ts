@@ -3,6 +3,7 @@ import { loadHistory } from "./content";
 
 import { MARKDOWN_CONTENT_TYPE, markdownForPath, notFoundMarkdown } from "./page-markdown";
 import { llmsTxt } from "./llms-txt";
+import { site } from "../app/site";
 
 function visibleText(markdown: string): string {
   return markdown.replace(/[#>*`\[\]()]/gu, " ").replace(/\s+/gu, " ").trim();
@@ -24,7 +25,7 @@ describe("agent markdown representations", () => {
     const history = await loadHistory();
     const page = await markdownForPath("/");
     expect(page.status).toBe(200);
-    expect(page.body).toContain("# Stripe History: Every event in Stripe’s history, dated and sourced.");
+    expect(page.body).toContain(`# ${site.name}: ${site.tagline}`);
     expect(page.body).toContain("not affiliated with, endorsed by, or operated by");
     expect(page.body).toContain("## Evidence status");
     expect(page.body).toContain(`- Timeline entries: ${history.events.length}`);

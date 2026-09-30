@@ -18,6 +18,7 @@ import { alt as socialImageAlt } from "./opengraph-image";
 import robots from "./robots";
 import sitemap from "./sitemap";
 import { SITE_BASE_PATH, SITE_HOST_ORIGIN, SITE_ORIGIN, site } from "./site";
+import { productMessaging } from "./product-messaging";
 
 describe("hraness.com/stripe public identity", () => {
   test("serves the unchanged production policy and rejects uncompiled development", () => {
@@ -30,12 +31,10 @@ describe("hraness.com/stripe public identity", () => {
       category: "Independent company history",
       domain: "hraness.com/stripe",
       name: "Stripe History",
-      tagline: "Every event in Stripe’s history, dated and sourced.",
+      tagline: productMessaging.tagline,
       titleTemplate: "%s | Stripe History",
     });
-    expect(site.description).toBe(
-      "Independent, sourced timeline of Stripe since the Collisons’ 2010 prototype: acquisitions, funding, valuation, volume and leadership, with open YAML data.",
-    );
+    expect(site.description).toBe(productMessaging.meta);
     const manifest = await Bun.file(new URL("../package.json", import.meta.url)).json() as { description?: unknown };
     expect(manifest.description).toBe(site.description);
   });

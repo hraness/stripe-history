@@ -203,3 +203,17 @@ Code and authored history data in this repository are available under the [MIT L
 
 [![Hraness](./assets/hraness-wordmark-dark.svg#gh-light-mode-only)](https://hraness.com/)
 [![Hraness](./assets/hraness-wordmark-light.svg#gh-dark-mode-only)](https://hraness.com/)
+
+## Shared website copy
+
+The website imports `portfolio-messaging.generated.json` at build time for its product name, description, hero, and marketing headings. The snapshot records its revision of [the Hraness portfolio](https://hraness.com/portfolio.json), plus canonical facts for related products. Ordinary builds use the checked-in file without a network request.
+
+Change shared copy in the canonical portfolio, refresh the snapshot through the portfolio refresh workflow, review the generated diff, and run `bun run check`. Keep historical records, research findings, and methodology in their repository-owned sources.
+
+From the company repository, include the package projection when refreshing:
+
+```sh
+bun scripts/sync-product-messaging.ts --product stripe-history --output /path/to/stripe-history/portfolio-messaging.generated.json --package-json /path/to/stripe-history/package.json --write
+```
+
+Replace `--write` with `--check` to verify both files without changing them. During a coordinated unpublished update, add `--portfolio portfolio.public.generated.json` to select the validated local portfolio revision. Package description derives from canonical `messaging.meta`; package identity, version, and other fields stay intact.
