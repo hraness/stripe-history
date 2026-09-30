@@ -80,6 +80,9 @@ export async function capturePreviewSnapshot(root: string, session: string): Pro
   assert.equal(await realpath(dependencies), dependencies, "Preview dependencies must belong to this ordinary checkout");
   await cp(dependencies, join(target, "node_modules"), {
     recursive: true, errorOnExist: true, force: false, verbatimSymlinks: true,
+    // Clone on copy-on-write filesystems (APFS, Btrfs); plain copy elsewhere.
+    // Each generation stays an isolated copy without duplicating the bytes.
+    mode: constants.COPYFILE_FICLONE,
     async filter(path) {
       const info = await lstat(path);
       assert.ok(info.isDirectory() || info.isFile() || info.isSymbolicLink(), "Unsupported dependency file type");

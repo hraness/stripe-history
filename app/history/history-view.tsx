@@ -22,6 +22,7 @@ import {
 } from "./category-visuals";
 import { HistoryStickyOffsetSync } from "./history-sticky-offset-sync";
 import { HistoryMeasureRail } from "./history-measure-rail";
+import { HistoryByline } from "./history-byline";
 import { HistoryClosing } from "./history-closing";
 import { HistoryOrientation } from "./history-orientation";
 import { historyTimelineStyles as styles } from "./history-timeline.stylex";
@@ -416,9 +417,12 @@ export function HistoryView({
       {orientation ? <HistoryOrientation afterHero={answer} evidence={evidence} /> : null}
       <section aria-labelledby="history-heading" className={`stripe-history-section ${stylex.props(styles.section).className}`} id="timeline">
         {orientation ? null : (
-          <h1 className="history-page-title" id="history-heading">
-            {historyHeading}
-          </h1>
+          <>
+            <h1 className="history-page-title" id="history-heading">
+              {historyHeading}
+            </h1>
+            <HistoryByline />
+          </>
         )}
         <HistoryFilters
           history={history}

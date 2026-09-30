@@ -62,6 +62,12 @@ export const recordKeepingLabels = {
 export const recordKeepingNote =
   "Every event links to at least one source. Primary material and filings come first, with contemporaneous reporting where needed. Reported talks, announced agreements, and completed deals keep separate labels, and each figure keeps its source's term, such as payment volume or total volume. Corrections come through public GitHub issues.";
 
+/** Visible byline. Pages are drafted with AI assistance and credited to Hraness, never to a named human author. */
+export const bylineText = "By Hraness · Drafted with AI assistance.";
+
+export const maintainerSentence =
+  "The maintainer, Ben Guo, was an early engineer at Stripe from 2015 to 2023.";
+
 export const independenceSentence =
   `${site.name} is not affiliated with, endorsed by, or operated by Stripe, Inc. Stripe names and trademarks belong to their respective owners.`;
 
@@ -138,7 +144,7 @@ export const aboutSections = [
   {
     heading: "Publisher and contributions",
     paragraphs: [
-      `Published and maintained by [Hraness](${HRANESS_URL}). To suggest a correction, add a source, or improve the project, open an issue or contribution in the [Stripe History repository](${GITHUB_REPOSITORY_URL}). Use the [contact page](${SITE_ORIGIN}/contact) for the same public channels.`,
+      `Published and maintained by [Hraness](${HRANESS_URL}). ${maintainerSentence} To suggest a correction, add a source, or improve the project, open an issue or contribution in the [Stripe History repository](${GITHUB_REPOSITORY_URL}). Use the [contact page](${SITE_ORIGIN}/contact) for the same public channels.`,
     ],
   },
   {
@@ -148,7 +154,7 @@ export const aboutSections = [
 ] as const;
 
 export const privacyParagraphs = [
-  `The site sends anonymous, cookieless pageview events for public pages to PostHog. Each event contains the normalized public page path, its page category, a site identifier, an analytics schema version, and PostHog's cookieless marker. It excludes query strings, URL fragments, referrer properties, account data, and user content. The browser does not save an analytics cookie or identifier.`,
+  `The site sends anonymous, cookieless pageview events for public pages to PostHog. Each event contains the normalized public page path, its page category, a site identifier, an analytics schema version, and PostHog's cookieless marker. It also carries the host name of the site that linked to the page, such as google.com, but never the full referring address. It excludes query strings, URL fragments, account data, and user content. The browser does not save an analytics cookie or identifier.`,
   `The PostHog integration does not use autocapture, session replay, heatmaps, surveys, feature flags, performance monitoring, or user profiles. The site has no local reader accounts or authentication. Requests are still subject to the ordinary logs and security controls of the hosting provider.`,
   `The footer offers the general Hraness newsletter. Before submission, it may contact [Hraness Accounts](https://account.hraness.com) for anonymous form presentation and measurement. These requests send the list choice, language, compact or wide viewport category, and presentation version, then an opaque token when the form becomes visible. They omit account credentials and do not send your email address. If you submit the form, your email address, the Hraness list choice, form source, and any presentation token are sent to Accounts. Accounts records dated consent, and Resend sends confirmation and subscribed messages from news.hraness.com. You are not subscribed until you confirm. Each newsletter message has a Hraness-specific unsubscribe link that does not change another product subscription. Optional paid support opens Accounts separately, where you review the plan and price before confirming payment.`,
   `This general newsletter signup does not create new Stripe History mailing consent. If you subscribed through the earlier Stripe History form, Hraness Accounts retains that dated record. A previously confirmed membership may remain active, and Hraness Accounts may continue to process it and deliver Stripe History newsletter messages through Resend from news.hraness.com until you use its Stripe-History-specific unsubscribe link. That link does not change another product or general Hraness subscription. Removing the earlier form does not delete, cancel, or migrate that record.`,

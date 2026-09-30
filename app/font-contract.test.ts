@@ -25,7 +25,7 @@ test("uses the released Nebula Sans default for text and headings while retainin
     "@hraness/design-kit": "github:hraness/design-kit#v0.23.0",
     "@hraness/site-footer": "github:hraness/site-footer#v0.20.1",
     "@hraness/ui": "github:hraness/ui#v0.5.19",
-    "@hraness/web-discovery": "github:hraness/web-discovery#v0.10.0",
+    "@hraness/web-discovery": "github:hraness/web-discovery#v0.11.0",
   });
   expect(layout).toContain('import "@hraness/ui/compiler-foundation.css";');
   expect(layout).toContain('import "@hraness/design-kit/compiler-foundation.css";');

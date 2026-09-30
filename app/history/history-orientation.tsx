@@ -6,7 +6,7 @@ import { orientationStyles as styles } from "./history-orientation.stylex";
 
 import { formatReviewDate } from "../evidence-snapshot";
 import { site } from "../site";
-import { recordKeepingLabels, recordKeepingNote } from "../site-copy";
+import { bylineText, recordKeepingLabels, recordKeepingNote } from "../site-copy";
 
 function formatEventDate(value: string): string {
   // Event dates keep source precision: a bare year or year-month stays verbatim.
@@ -60,6 +60,9 @@ export function HistoryOrientation({
               Download the data
             </Link>
           </div>
+          <p className={`hraness-marketing-hero__boundary ${stylex.props(styles.hero__boundary).className}`}>
+            {bylineText}
+          </p>
           <p className={`hraness-marketing-hero__boundary ${stylex.props(styles.hero__boundary).className}`}>
             Not affiliated with, endorsed by, or operated by Stripe, Inc.{" "}
             <Link href="/contact#corrections-and-sources">Report a correction</Link>.

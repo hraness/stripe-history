@@ -1,13 +1,24 @@
 name: Production site browser
 on:
   workflow_dispatch:
+  # Vercel reports each deployment through the Deployments API. Check Production
+  # as soon as it is live instead of waiting for someone to dispatch this run.
+  # deployment_status runs the workflow file at the deployment's sha, so this
+  # relies on Vercel Git Fork Protection staying on (no fork preview builds).
+  deployment_status:
 permissions:
   contents: read
+# One run per deployed commit; a later deployment never cancels an earlier check.
+# A manual dispatch for the same commit queues behind the deployment_status run
+# (and replaces any still-pending duplicate) instead of running beside it.
 concurrency:
-  group: production-site-browser-${{ github.ref }}
-  cancel-in-progress: true
+  group: production-site-browser-${{ github.sha }}
+  cancel-in-progress: false
 jobs:
   browser:
+    # Preview deployments also emit deployment_status on PR heads. Skip them
+    # here and in the aggregate so this workflow never reports on a PR head.
+    if: github.event_name == 'workflow_dispatch' || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production')
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -46,9 +57,10 @@ jobs:
           path: ${{ runner.temp }}/site-browser
           retention-days: 7
 
-  required:
-    name: Required
-    if: always()
+  production-browser:
+    # Not named Required: the pull request gate must never read this result.
+    name: Production browser
+    if: always() && (github.event_name == 'workflow_dispatch' || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production'))
     needs: browser
     runs-on: ubuntu-24.04
     timeout-minutes: 5

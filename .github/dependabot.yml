@@ -1,0 +1,25 @@
+version: 2
+updates:
+  # Next is exact-pinned with a declared Bun patch, so a Next update must also
+  # port patches/next@<version>.patch. Keep it out of the group so it cannot
+  # hold every other dependency update behind that port.
+  - package-ecosystem: bun
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 2
+    groups:
+      dependencies:
+        patterns: ["*"]
+        exclude-patterns: ["next", "eslint-config-next"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 2
+    groups:
+      github-actions:
+        patterns: ["*"]

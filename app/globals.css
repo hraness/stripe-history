@@ -607,6 +607,13 @@
   text-wrap: balance;
 }
 
+.history-byline {
+  color: var(--plain-muted);
+  font-size: 0.875rem;
+  margin: 0 0 1rem;
+  max-width: 42rem;
+}
+
 .history-volume-intro {
   color: var(--plain-muted);
   margin: 0 0 2.5rem;

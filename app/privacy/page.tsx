@@ -53,8 +53,10 @@ export default function PrivacyPage() {
           The site sends anonymous, cookieless pageview events for public pages
           to PostHog. Each event contains the normalized public page path, its
           page category, a site identifier, an analytics schema version, and
-          PostHog&apos;s cookieless marker. It excludes query strings, URL
-          fragments, referrer properties, account data, and user content. The
+          PostHog&apos;s cookieless marker. It also carries the host name of
+          the site that linked to the page, such as google.com, but never the
+          full referring address. It excludes query strings, URL fragments,
+          account data, and user content. The
           browser does not save an analytics cookie or identifier.
         </p>
         <p>
