@@ -44,7 +44,19 @@ jobs:
           path: ~/.cache/ms-playwright
           key: site-chromium-${{ runner.os }}-1.62.0
       - name: Install Chromium
-        run: node node_modules/playwright-core/cli.js install --with-deps chromium
+        timeout-minutes: 5
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Helper and fixtures copied from hraness/ui at 07feaf58c57938f6a7368d7c10d1a8e05d3985a0.
+          sudo python3 scripts/ci-ubuntu-mirror.py
+          sudo tee /etc/apt/apt.conf.d/99hraness-browser-acquisition >/dev/null <<'APT'
+          Acquire::http::Timeout "20";
+          Acquire::https::Timeout "20";
+          Acquire::Retries "1";
+          APT
+          sudo apt-config shell HRANESS_APT_HTTP_TIMEOUT Acquire::http::Timeout HRANESS_APT_HTTPS_TIMEOUT Acquire::https::Timeout HRANESS_APT_RETRIES Acquire::Retries
+          node node_modules/playwright-core/cli.js install --with-deps chromium
       - name: Check public pages in a browser
         env:
           SITE_BROWSER_ARTIFACTS: ${{ runner.temp }}/site-browser
