@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test";
+import { readFileSync } from "node:fs";
 import {
   createSocialImageCard,
   socialImageAlt,
@@ -7,30 +8,41 @@ import {
 } from "@hraness/web-discovery/social-image";
 import OpenGraphImage, { alt, contentType, size } from "./opengraph-image";
 import { SITE_LABEL, site } from "./site";
-import { socialSite } from "./social";
+import { headerMark, homeSocialPage, socialSite } from "./social";
 
 describe("share image", () => {
   test("declares the site once from the canonical identity", () => {
     expect(socialSite).toMatchObject({
+      brand: "hraness",
       description: site.tagline,
       domain: SITE_LABEL,
-      icon: { kind: "mark" },
       name: site.name,
-      theme: { accent: "#2474D4", background: "#FFFFFF", foreground: "#171717", muted: "#666666", wash: "#6653C6" },
+      palette: "paper",
     });
-    expect(socialSite.icon?.src).toStartWith("data:image/svg+xml,");
-    expect(decodeURIComponent(socialSite.icon?.src ?? "")).toContain("viewBox='0 0 541 581'");
+    expect(socialSite).not.toHaveProperty("icon");
+    expect(socialSite).not.toHaveProperty("theme");
+    expect(homeSocialPage).toEqual({
+      description: "",
+      eyebrow: site.category,
+      headline: site.heroHeading,
+      layout: "product",
+    });
     expect(socialImageSiteDetails(socialSite)).toMatchObject({ title: site.name, domain: SITE_LABEL });
   });
 
+  test("paints the header's own Ra mark", () => {
+    expect(socialSite.brandMark).toBe(headerMark);
+    expect(headerMark).toBe(readFileSync(new URL("../public/marks/hraness-ra.svg", import.meta.url), "utf8").trim());
+  });
+
   test("fits the home card copy as written", () => {
-    const details = socialImageSiteDetails(socialSite);
+    const details = socialImageSiteDetails(socialSite, homeSocialPage);
     const fit = socialImageFit(details);
     expect(fit.issues).toEqual([]);
     expect(fit.findings).toEqual([]);
     expect(fit.removed).toEqual([]);
     expect(fit.layout).toBe("product");
-    expect(fit.description?.cut).toBe("none");
+    expect(fit.description).toBeUndefined();
     expect(fit.headline).toMatchObject({ reduced: false, threeLine: false, truncated: false });
     expect(() => createSocialImageCard({ ...details, strict: true })).not.toThrow();
   });

@@ -25,7 +25,7 @@ test("uses the released Nebula Sans default for text and headings while retainin
     "@hraness/design-kit": "github:hraness/design-kit#v0.23.0",
     "@hraness/site-footer": "github:hraness/site-footer#v0.20.1",
     "@hraness/ui": "github:hraness/ui#v0.5.19",
-    "@hraness/web-discovery": "github:hraness/web-discovery#v0.12.0",
+    "@hraness/web-discovery": "github:hraness/web-discovery#v0.13.0",
   });
   expect(layout).toContain('import "@hraness/ui/compiler-foundation.css";');
   expect(layout).toContain('import "@hraness/design-kit/compiler-foundation.css";');
@@ -38,7 +38,7 @@ test("uses the released Nebula Sans default for text and headings while retainin
   expect(styles).not.toContain("--font-text: Arial");
   expect(plainSite).toContain("font-family: var(--font-text)");
   expect(socialImage).toContain('from "@hraness/web-discovery/social-image"');
-  expect(socialImage).toContain("createSiteSocialImageResponse(socialSite)");
+  expect(socialImage).toContain("createSiteSocialImageResponse(socialSite, homeSocialPage)");
   expect(socialImage).not.toMatch(/new ImageResponse|fontFamily|nebulaSansSocialFonts/u);
 });
 
