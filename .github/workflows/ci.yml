@@ -32,6 +32,8 @@ jobs:
         with:
           bun-version: "1.3.14"
       - run: bun install --frozen-lockfile --ignore-scripts
+      - name: Check Ubuntu mirror fixtures
+        run: python3 scripts/ci-ubuntu-mirror.test.py
       - run: bun run check
       - run: git diff --exit-code
 
@@ -53,10 +55,23 @@ jobs:
       # Only the layout check needs Chromium. Install it (apt deps plus the
       # browser download) while Next builds, and check its exit status before use.
       - name: Start the Chromium install in the background
+        shell: bash
         run: |
+          set -euo pipefail
+          # Helper and fixtures copied from hraness/ui at 07feaf58c57938f6a7368d7c10d1a8e05d3985a0.
+          sudo python3 scripts/ci-ubuntu-mirror.py
+          sudo tee /etc/apt/apt.conf.d/99hraness-browser-acquisition >/dev/null <<'APT'
+          Acquire::http::Timeout "20";
+          Acquire::https::Timeout "20";
+          Acquire::Retries "1";
+          APT
+          sudo apt-config shell HRANESS_APT_HTTP_TIMEOUT Acquire::http::Timeout HRANESS_APT_HTTPS_TIMEOUT Acquire::https::Timeout HRANESS_APT_RETRIES Acquire::Retries
           (
-            node node_modules/playwright-core/cli.js install --with-deps chromium > "$RUNNER_TEMP/chromium-install.log" 2>&1
-            echo $? > "$RUNNER_TEMP/chromium-install.rc"
+            install_status=0
+            # TERM at 295 s plus a 5 s kill grace bounds the full install to 300 s.
+            timeout --kill-after=5s 295s node node_modules/playwright-core/cli.js install --with-deps chromium > "$RUNNER_TEMP/chromium-install.log" 2>&1 || install_status=$?
+            printf '%s\n' "$install_status" > "$RUNNER_TEMP/chromium-install.rc.tmp"
+            mv "$RUNNER_TEMP/chromium-install.rc.tmp" "$RUNNER_TEMP/chromium-install.rc"
           ) &
       - run: bun run build
       - name: Finish the Chromium install
