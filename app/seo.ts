@@ -139,7 +139,7 @@ export function historyDatasetJsonLd(history: HistoryCollection) {
     "@context": "https://schema.org",
     "@type": "Dataset",
     "@id": `${SITE_ORIGIN}/data#dataset`,
-    name: "Stripe History Dataset",
+    name: `${site.name} Dataset`,
     alternateName: "Stripe Company History Dataset",
     description: site.datasetDescription,
     url: `${SITE_ORIGIN}/data`,

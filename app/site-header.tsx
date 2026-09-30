@@ -1,6 +1,6 @@
 import { ThemeMenuButton } from "@/support/theme";
 import { MarketingSiteHeader } from "@hraness/design-kit/react/server";
-import { publicSitePath } from "./site";
+import { publicSitePath, site } from "./site";
 
 /**
  * Shared compiled slots; native anchors use explicit canonical /stripe paths.
@@ -17,7 +17,7 @@ export function SiteHeader({
       brandMark={publicSitePath("/marks/hraness-ra.svg")}
       className="stripe-history-header hraness-material-chrome"
       links={[
-        { href: publicSitePath("/"), label: "stripe history" },
+        { href: publicSitePath("/"), label: site.name },
         { href: publicSitePath("/data"), label: "data" },
         { href: publicSitePath("/about"), label: "about", current: aboutSelected },
       ]}

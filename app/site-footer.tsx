@@ -7,6 +7,7 @@ import {
   absoluteSiteUrl,
   GITHUB_REPOSITORY_URL,
   publicSitePath,
+  site,
   type SitePath,
 } from "./site";
 import { independenceSentence } from "./site-copy";
@@ -24,9 +25,9 @@ export function SiteFooter({ path }: SiteFooterProps) {
           url={absoluteSiteUrl(path)}
         />
       )}
-      <aside aria-label="Stripe History resources" className={`stripe-history-footer-resources ${stylex.props(styles.root, path !== undefined && styles.afterAskAi).className}`}>
-        <p className={`stripe-history-footer-resources__label ${stylex.props(styles.label).className}`}>Stripe History</p>
-        <nav aria-label="Stripe History links" className={`stripe-history-footer-resources__links ${stylex.props(styles.links).className}`}>
+      <aside aria-label={`${site.name} resources`} className={`stripe-history-footer-resources ${stylex.props(styles.root, path !== undefined && styles.afterAskAi).className}`}>
+        <p className={`stripe-history-footer-resources__label ${stylex.props(styles.label).className}`}>{site.name}</p>
+        <nav aria-label={`${site.name} links`} className={`stripe-history-footer-resources__links ${stylex.props(styles.links).className}`}>
           <a {...stylex.props(styles.link)} href={publicSitePath("/data")}>data</a>
           <a {...stylex.props(styles.link)} href={publicSitePath("/about")}>about</a>
           <a {...stylex.props(styles.link)} href={publicSitePath("/contact")}>contact</a>
@@ -41,7 +42,7 @@ export function SiteFooter({ path }: SiteFooterProps) {
           id: "hraness",
           name: "Hraness",
           updates: true,
-          valueProposition: "Support Hraness and the free, open records it publishes, including Stripe History.",
+          valueProposition: `Support Hraness and the free, open records it publishes, including ${site.name}.`,
         }}
       />
     </>

@@ -1,8 +1,19 @@
 import { expect, test } from "bun:test";
-import { mkdir, mkdtemp, rm, symlink } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { mkdir, mkdtemp, readFile, rm, symlink } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { assertPreviewSourcePath, previewSourceInventory, previewSourceKind } from "./compiled-preview-snapshot";
+
+test("isolated previews admit and fingerprint the canonical product copy used by the app", async () => {
+  const root = join(import.meta.dir, "..");
+  const bytes = await readFile(join(root, "portfolio-messaging.generated.json"));
+  const source = (await previewSourceInventory(root)).find(item => item.path === "portfolio-messaging.generated.json");
+  expect(source).toMatchObject({
+    bytes: bytes.length,
+    sha256: createHash("sha256").update(bytes).digest("hex"),
+  });
+});
 
 test("special-file metadata is rejected before any descriptor open", () => {
   const special = { isSymbolicLink: () => false, isDirectory: () => false, isFile: () => false };

@@ -6,6 +6,7 @@ import { orientationStyles as styles } from "./history-orientation.stylex";
 
 import { formatReviewDate } from "../evidence-snapshot";
 import { site } from "../site";
+import { productHeadings, productMessaging } from "../product-messaging";
 import { bylineText, recordKeepingLabels, recordKeepingNote } from "../site-copy";
 
 function formatEventDate(value: string): string {
@@ -39,7 +40,7 @@ export function HistoryOrientation({
             {site.category}
           </p>
           <h1 className={`hraness-marketing-hero__heading ${stylex.props(styles.hero__heading).className}`} id="history-heading">
-            {site.tagline}
+            {site.heroHeading}
           </h1>
           <p className={`hraness-marketing-hero__summary ${stylex.props(styles.hero__summary).className}`}>
             {site.heroSummary}
@@ -50,14 +51,14 @@ export function HistoryOrientation({
               data-emphasis="primary"
               href="#timeline"
             >
-              Browse the timeline
+              {productMessaging.hero.primaryAction}
             </a>
             <Link
               className={`hraness-marketing-action ${stylex.props(styles.action, styles.actionFocus).className}`}
               data-emphasis="secondary"
               href="/data"
             >
-              Download the data
+              {productMessaging.hero.secondaryAction}
             </Link>
           </div>
           <p className={`hraness-marketing-hero__boundary ${stylex.props(styles.hero__boundary).className}`}>
@@ -71,9 +72,9 @@ export function HistoryOrientation({
       </header>
       {afterHero}
       <details className={`history-source-details ${stylex.props(styles.sourceDetails).className}`}>
-        <summary {...stylex.props(styles.sourceSummary)}>How this record is kept</summary>
+        <summary {...stylex.props(styles.sourceSummary)}>{productHeadings["record-keeping"]}</summary>
         <section
-          aria-label="How this record is kept"
+          aria-label={productHeadings["record-keeping"]}
           className={`hraness-marketing-stats stripe-history-evidence-strip ${stylex.props(styles.stats).className}`}
           data-hraness-marketing="stats"
         >
