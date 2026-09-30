@@ -27,6 +27,7 @@ describe("share image", () => {
     const details = socialImageSiteDetails(socialSite);
     const fit = socialImageFit(details);
     expect(fit.issues).toEqual([]);
+    expect(fit.findings).toEqual([]);
     expect(fit.removed).toEqual([]);
     expect(fit.layout).toBe("product");
     expect(fit.description?.cut).toBe("none");
