@@ -20,5 +20,6 @@ export const socialSite = defineSocialImageSite({
     background: "#FFFFFF",
     foreground: "#171717",
     muted: "#666666",
+    wash: "#6653C6",
   },
 });
