@@ -236,7 +236,7 @@ try {
   first = await event("stripe-preview-ready", 0);
   await proveRepresentations(first.generation);
   await page.goto(`${origin}/stripe`, { waitUntil: "networkidle" });
-  assert.equal(await page.locator("h1#history-heading").textContent(), "Stripe’s history, dated and sourced");
+  assert.equal(await page.locator("h1#history-heading").textContent(), "Every event in Stripe’s history, dated and sourced.");
   assert.ok(await page.locator(".history-event").count() >= 200, "Real async corpus must render");
   assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://hraness.com/stripe");
   assert.equal(await page.locator('iframe[src="https://hraness.substack.com/embed"]').count(), 0);
