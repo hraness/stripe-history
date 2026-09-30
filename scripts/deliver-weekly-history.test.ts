@@ -28,6 +28,7 @@ class Fixture {
   untracked = "weekly-news/delivery.json\0weekly-news/publication.md\0";
   staged = "";
   environment: NodeJS.ProcessEnv = {
+    NODE_ENV: "test",
     GITHUB_REPOSITORY: REPO, GITHUB_REF: "refs/heads/main", GITHUB_EVENT_NAME: "schedule",
     GITHUB_RUN_ATTEMPT: "1", GITHUB_RUN_ID: "123", GITHUB_SHA: SOURCE, WEEKLY_AS_OF: "2026-09-30", WEEKLY_PUBLISHED: "0",
   };
