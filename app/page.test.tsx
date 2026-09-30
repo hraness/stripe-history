@@ -58,15 +58,13 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).toContain('hraness-foil-mark__paint');
     expect(html).toMatch(/aria-label="primary navigation" class="hraness-marketing-header__nav [^"]+"/u);
     expect(html).toMatch(/<header aria-labelledby="history-heading" class="hraness-marketing-hero history-orientation [^"]+"/u);
-    expect(html).toMatch(/<h1 class="hraness-marketing-hero__heading [^"]+" id="history-heading">Every event in Stripe’s history, dated and sourced\.<\/h1>/u);
+    expect(html.match(/<h1 class="hraness-marketing-hero__heading [^"]+" id="history-heading">([^<]*)<\/h1>/u)?.[1]).toBe(renderToStaticMarkup(<>{site.heroHeading}</>));
     expect(html).toContain('data-align="start"');
     expect(html).toMatch(/<p class="hraness-marketing-hero__eyebrow [^"]+">Independent company history<\/p>/u);
     expect(html).not.toContain("hraness-marketing-hero__name");
     expect(html).toMatch(/<details class="history-source-details [^"]+"><summary class="[^"]+">How this record is kept<\/summary>/u);
     expect(html).toMatch(/<section aria-labelledby="history-heading" class="stripe-history-section [^"]+" id="timeline">/u);
-    expect(html).toContain(
-      "An independent timeline of Stripe, from the Collisons’ 2010 Buenos Aires prototype to its latest reported volume. The full record downloads as YAML.",
-    );
+    expect(html).toContain(renderToStaticMarkup(<>{site.heroSummary}</>));
     const glanceHtml = html.replace(/ class="[^"]*"/gu, "");
     expect(glanceHtml).toContain("<caption>Stripe at a glance</caption>");
     expect(glanceHtml).toContain('<th scope="row">Founders</th><td><a href="#origins-buenos-aires-prototype">Patrick and John Collison</a></td>');

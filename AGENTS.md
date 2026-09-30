@@ -7,6 +7,8 @@
 <!-- kb:context scopes/repository--cdb4ee2aea69 -->
 # Contents
 
+- `portfolio-messaging.generated.json` and `app/product-messaging.ts` – the checked-in canonical product copy and related-product facts consumed at build time.
+
 - `app/` – the public timeline, category, annual-volume, valuation, data, and methodology pages, plus crawl metadata, social image, and framework shell.
 - `lib/` – strict history and research YAML contracts with validated content loading.
 - `public/history/` – the authored, source-linked Stripe history records.
@@ -21,6 +23,8 @@
 - `package.json`, `tsconfig.json`, `eslint.config.mjs`, and `bun.lock` – the standalone Next.js application and verification configuration.
 
 # Guidelines
+
+- Keep shared product names, descriptions, hero copy, and marketing section headings in the canonical Hraness portfolio. Import the pinned `portfolio-messaging.generated.json` through `app/product-messaging.ts`; refresh it explicitly and never fetch or rewrite it during a normal build.
 
 - Use Bun 1.3.14 for installs, scripts, and checks.
 - Follow `WRITING.md` for internal prose and `STYLE.md` for public prose.
