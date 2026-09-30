@@ -157,14 +157,29 @@ export async function proveCompiledEvents(page: Page) {
     async function proveNativeFocus(focusPage: Page, viewport: { width: number; height: number }, stickyFilters: boolean) {
       await focusPage.goto(`${origin}/stripe`, { waitUntil: "networkidle" });
       await focusPage.setViewportSize(viewport);
+      await settle(focusPage);
+      const filterReference = await focusPage.locator(".history-filters").evaluate(node => {
+        const rect = node.getBoundingClientRect();
+        const probe = document.createElement("span");
+        probe.style.position = "absolute";
+        probe.style.top = "var(--history-header-offset)";
+        node.append(probe);
+        try { return { naturalTop: rect.top + scrollY, initialTop: rect.top,
+          authoredInset: parseFloat(getComputedStyle(probe).top) }; }
+        finally { probe.remove(); }
+      });
+      if (stickyFilters) assert.ok(filterReference.initialTop > filterReference.authoredInset + 1,
+        "The mobile filter must start in normal flow before native keyboard traversal");
       const chip = focusPage.locator(".history-event-type").first();
-      await chip.hover();
-      assert.equal(await chip.evaluate((node) => getComputedStyle(node).textDecorationLine), "underline");
+      if (!stickyFilters) {
+        await chip.hover();
+        assert.equal(await chip.evaluate((node) => getComputedStyle(node).textDecorationLine), "underline");
+      }
       let tabPresses = 0;
       let reached = false;
       const traversalDeadline = Date.now() + 10000;
       // Keep input serial: a detached timeout race could otherwise continue
-      // sending Tab while the enclosing failure cleanup restores the focusPage.
+      // sending Tab while the enclosing failure cleanup restores the page.
       while (tabPresses < 128 && !reached) {
         assert.ok(Date.now() < traversalDeadline, "Native keyboard traversal exceeded its bound");
         await focusPage.keyboard.press("Tab");
@@ -204,24 +219,43 @@ export async function proveCompiledEvents(page: Page) {
         await settle(focusPage);
         const visibility = await target.evaluate(node => {
           const rect = node.getBoundingClientRect();
+          const css = getComputedStyle(node);
+          const header = document.querySelector(".stripe-history-header")!;
+          const filters = document.querySelector(".history-filters")!;
+          const filterRect = filters.getBoundingClientRect();
+          const filterCss = getComputedStyle(filters);
           const x = (Math.max(0, rect.left) + Math.min(innerWidth, rect.right)) / 2;
           const y = (Math.max(0, rect.top) + Math.min(innerHeight, rect.bottom)) / 2;
           const hit = document.elementFromPoint(x, y);
+          const topHit = document.elementFromPoint(x, rect.top + Math.min(1, rect.height / 2));
+          const outlineExtent = Math.max(0, parseFloat(css.outlineOffset) + parseFloat(css.outlineWidth));
+          const outlineTop = rect.top - outlineExtent;
+          const outlineHit = document.elementFromPoint(x, outlineTop + 0.5);
           return { focusVisible: node.matches(":focus-visible"), top: rect.top, bottom: rect.bottom,
-            hit: hit !== null && node.contains(hit), clearance: getComputedStyle(node).scrollMarginTop,
-            headerBottom: document.querySelector(".stripe-history-header")!.getBoundingClientRect().bottom,
-            filterBottom: document.querySelector(".history-filters")!.getBoundingClientRect().bottom,
-            filterPosition: getComputedStyle(document.querySelector(".history-filters")!).position };
+            hit: hit !== null && node.contains(hit), topHit: topHit !== null && node.contains(topHit),
+            clearance: css.scrollMarginTop, outlineTop, outlineWidth: parseFloat(css.outlineWidth),
+            outlineUncovered: outlineHit !== null && !header.contains(outlineHit) && !filters.contains(outlineHit),
+            headerBottom: header.getBoundingClientRect().bottom, scrollY,
+            filterBottom: filterRect.bottom, filterTop: filterRect.top,
+            filterInset: filterCss.top, filterPosition: filterCss.position };
         });
         assert.equal(visibility.focusVisible, true);
         assert.equal(visibility.hit, true, `${role} must not be covered after native ${key}`);
         assert.ok(parseFloat(visibility.clearance) > 0);
         assert.equal(visibility.filterPosition, stickyFilters ? "sticky" : "relative");
         if (stickyFilters) {
-          assert.ok(visibility.top >= Math.max(visibility.headerBottom, visibility.filterBottom),
-            `${role} must clear the sticky mobile header and filter row after native ${key}: ${JSON.stringify(visibility)}`);
+          assert.equal(parseFloat(visibility.filterInset), filterReference.authoredInset);
+          assert.ok(Math.abs(visibility.filterTop - filterReference.authoredInset) <= 0.5,
+            `${role} must exercise the mobile filter at its authored sticky inset`);
+          assert.ok(filterReference.naturalTop - visibility.scrollY < filterReference.authoredInset - 1,
+            `${role} must exercise a filter displaced from its natural position`);
+          assert.ok(visibility.outlineWidth > 0);
+          assert.ok(visibility.outlineTop >= Math.max(visibility.headerBottom, visibility.filterBottom),
+            `${role}'s outline must clear the mobile header and pinned filter row after native ${key}: ${JSON.stringify(visibility)}`);
+          assert.equal(visibility.topHit, true);
+          assert.equal(visibility.outlineUncovered, true);
         }
-        observations.push({ viewport, nativeFocus: role, direction: key, presses, visibility });
+        observations.push({ viewport, filterReference, nativeFocus: role, direction: key, presses, visibility });
       }
     }
     await proveNativeFocus(page, { width: 1280, height: 900 }, false);
