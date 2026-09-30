@@ -14,7 +14,7 @@ export async function proveCompiledEvents(page: Page) {
   const palettes: string[] = [];
   let coarseContext: BrowserContext | undefined;
   let coarseClosed = false;
-  const settle = () => page.evaluate(() => new Promise<void>((done) => requestAnimationFrame(() => requestAnimationFrame(() => done()))));
+  const settle = (target: Page = page) => target.evaluate(() => new Promise<void>((done) => requestAnimationFrame(() => requestAnimationFrame(() => done()))));
   try {
     for (const path of paths) {
       await page.goto(`${origin}${path}`, { waitUntil: "networkidle" });
@@ -154,67 +154,78 @@ export async function proveCompiledEvents(page: Page) {
       }
     }
     assert.notEqual(palettes[0], palettes[1], "Both real category palettes must be observed");
-    await page.goto(`${origin}/stripe`, { waitUntil: "networkidle" });
-    await page.setViewportSize({ width: 1280, height: 900 });
-    const chip = page.locator(".history-event-type").first();
-    await chip.hover();
-    assert.equal(await chip.evaluate((node) => getComputedStyle(node).textDecorationLine), "underline");
-    let tabPresses = 0;
-    let reached = false;
-    const traversalDeadline = Date.now() + 10000;
-    // Keep input serial: a detached timeout race could otherwise continue
-    // sending Tab while the enclosing failure cleanup restores the page.
-    while (tabPresses < 128 && !reached) {
-      assert.ok(Date.now() < traversalDeadline, "Native keyboard traversal exceeded its bound");
-      await page.keyboard.press("Tab");
-      tabPresses++;
-      reached = await chip.evaluate((node) => node === document.activeElement);
-    }
-    assert.equal(reached, true, "The real first event chip must be reachable with native Tab input");
-    await settle();
-    const focus = await chip.evaluate((node) => {
-      const css = getComputedStyle(node);
-      const rect = node.getBoundingClientRect();
-      const left = Math.max(0, rect.left), right = Math.min(innerWidth, rect.right);
-      const top = Math.max(0, rect.top), bottom = Math.min(innerHeight, rect.bottom);
-      const hit = document.elementFromPoint((left + right) / 2, (top + bottom) / 2);
-      return {
-        ring: { focusVisible: node.matches(":focus-visible"), radius: css.borderRadius, style: css.outlineStyle, width: css.outlineWidth, offset: css.outlineOffset },
-        visibility: { width: rect.width, height: rect.height, visibleWidth: right - left, visibleHeight: bottom - top, hit: hit !== null && node.contains(hit) },
-      };
-    });
-    assert.deepEqual(focus.ring, { focusVisible: true, radius: "1px", style: "dotted", width: "1px", offset: "3px" });
-    for (const dimension of [focus.visibility.width, focus.visibility.height, focus.visibility.visibleWidth, focus.visibility.visibleHeight]) assert.ok(dimension > 0);
-    assert.equal(focus.visibility.hit, true, "The natively focused chip must be visible and hit-testable");
-    observations.push({ focus, nativeTabPresses: tabPresses });
-    // The compact introduction can leave the first links inside the viewport
-    // but behind the wrapped sticky filters. Check real forward/backward Tab,
-    // not scripted focus or a test-side scroll that hides the product defect.
-    const sourceLink = page.locator(".history-event-sources a").first();
-    const yearLink = page.locator(".history-year-link").first();
-    for (const [target, key, role] of [[sourceLink, "Tab", "source"], [yearLink, "Shift+Tab", "year"], [chip, "Tab", "category"]] as const) {
-      let presses = 0;
-      const deadline = Date.now() + 10000;
-      while (!(await target.evaluate(node => node === document.activeElement)) && presses < 64) {
-        assert.ok(Date.now() < deadline, `${role} native keyboard traversal exceeded its bound`);
-        await page.keyboard.press(key);
-        presses++;
+    async function proveNativeFocus(focusPage: Page, viewport: { width: number; height: number }, stickyFilters: boolean) {
+      await focusPage.goto(`${origin}/stripe`, { waitUntil: "networkidle" });
+      await focusPage.setViewportSize(viewport);
+      const chip = focusPage.locator(".history-event-type").first();
+      await chip.hover();
+      assert.equal(await chip.evaluate((node) => getComputedStyle(node).textDecorationLine), "underline");
+      let tabPresses = 0;
+      let reached = false;
+      const traversalDeadline = Date.now() + 10000;
+      // Keep input serial: a detached timeout race could otherwise continue
+      // sending Tab while the enclosing failure cleanup restores the focusPage.
+      while (tabPresses < 128 && !reached) {
+        assert.ok(Date.now() < traversalDeadline, "Native keyboard traversal exceeded its bound");
+        await focusPage.keyboard.press("Tab");
+        tabPresses++;
+        reached = await chip.evaluate((node) => node === document.activeElement);
       }
-      assert.equal(await target.evaluate(node => node === document.activeElement), true, `${role} reachable with ${key}`);
-      await settle();
-      const visibility = await target.evaluate(node => {
+      assert.equal(reached, true, "The real first event chip must be reachable with native Tab input");
+      await settle(focusPage);
+      const focus = await chip.evaluate((node) => {
+        const css = getComputedStyle(node);
         const rect = node.getBoundingClientRect();
-        const x = (Math.max(0, rect.left) + Math.min(innerWidth, rect.right)) / 2;
-        const y = (Math.max(0, rect.top) + Math.min(innerHeight, rect.bottom)) / 2;
-        const hit = document.elementFromPoint(x, y);
-        return { focusVisible: node.matches(":focus-visible"), top: rect.top, bottom: rect.bottom,
-          hit: hit !== null && node.contains(hit), clearance: getComputedStyle(node).scrollMarginTop };
+        const left = Math.max(0, rect.left), right = Math.min(innerWidth, rect.right);
+        const top = Math.max(0, rect.top), bottom = Math.min(innerHeight, rect.bottom);
+        const hit = document.elementFromPoint((left + right) / 2, (top + bottom) / 2);
+        return {
+          ring: { focusVisible: node.matches(":focus-visible"), radius: css.borderRadius, style: css.outlineStyle, width: css.outlineWidth, offset: css.outlineOffset },
+          visibility: { width: rect.width, height: rect.height, visibleWidth: right - left, visibleHeight: bottom - top, hit: hit !== null && node.contains(hit) },
+        };
       });
-      assert.equal(visibility.focusVisible, true);
-      assert.equal(visibility.hit, true, `${role} must not be covered after native ${key}`);
-      assert.ok(parseFloat(visibility.clearance) > 0);
-      observations.push({ nativeFocus: role, direction: key, presses, visibility });
+      assert.deepEqual(focus.ring, { focusVisible: true, radius: "1px", style: "dotted", width: "1px", offset: "3px" });
+      for (const dimension of [focus.visibility.width, focus.visibility.height, focus.visibility.visibleWidth, focus.visibility.visibleHeight]) assert.ok(dimension > 0);
+      assert.equal(focus.visibility.hit, true, "The natively focused chip must be visible and hit-testable");
+      observations.push({ viewport, focus, nativeTabPresses: tabPresses });
+      // At mobile widths the filters are sticky. Check real forward/backward Tab,
+      // not scripted focus or a test-side scroll that hides the product defect.
+      const sourceLink = focusPage.locator(".history-event-sources a").first();
+      const yearLink = focusPage.locator(".history-year-link").first();
+      for (const [target, key, role] of [[sourceLink, "Tab", "source"], [yearLink, "Shift+Tab", "year"], [chip, "Tab", "category"]] as const) {
+        let presses = 0;
+        const deadline = Date.now() + 10000;
+        while (!(await target.evaluate(node => node === document.activeElement)) && presses < 64) {
+          assert.ok(Date.now() < deadline, `${role} native keyboard traversal exceeded its bound`);
+          await focusPage.keyboard.press(key);
+          presses++;
+        }
+        assert.equal(await target.evaluate(node => node === document.activeElement), true, `${role} reachable with ${key}`);
+        await settle(focusPage);
+        const visibility = await target.evaluate(node => {
+          const rect = node.getBoundingClientRect();
+          const x = (Math.max(0, rect.left) + Math.min(innerWidth, rect.right)) / 2;
+          const y = (Math.max(0, rect.top) + Math.min(innerHeight, rect.bottom)) / 2;
+          const hit = document.elementFromPoint(x, y);
+          return { focusVisible: node.matches(":focus-visible"), top: rect.top, bottom: rect.bottom,
+            hit: hit !== null && node.contains(hit), clearance: getComputedStyle(node).scrollMarginTop,
+            headerBottom: document.querySelector(".stripe-history-header")!.getBoundingClientRect().bottom,
+            filterBottom: document.querySelector(".history-filters")!.getBoundingClientRect().bottom,
+            filterPosition: getComputedStyle(document.querySelector(".history-filters")!).position };
+        });
+        assert.equal(visibility.focusVisible, true);
+        assert.equal(visibility.hit, true, `${role} must not be covered after native ${key}`);
+        assert.ok(parseFloat(visibility.clearance) > 0);
+        assert.equal(visibility.filterPosition, stickyFilters ? "sticky" : "relative");
+        if (stickyFilters) {
+          assert.ok(visibility.top >= Math.max(visibility.headerBottom, visibility.filterBottom),
+            `${role} must clear the sticky mobile header and filter row after native ${key}: ${JSON.stringify(visibility)}`);
+        }
+        observations.push({ viewport, nativeFocus: role, direction: key, presses, visibility });
+      }
     }
+    await proveNativeFocus(page, { width: 1280, height: 900 }, false);
+    const chip = page.locator(".history-event-type").first();
     await page.emulateMedia({ forcedColors: "active" });
     await settle();
     const forced = await chip.evaluate((node) => {
@@ -279,6 +290,7 @@ export async function proveCompiledEvents(page: Page) {
       }
       observations.push(coarse);
     }
+    await proveNativeFocus(coarsePage, { width: 390, height: 844 }, true);
     assert.deepEqual(pageErrors, []);
   } finally {
     // The outer harness also closes the browser and proves all PID/listener
