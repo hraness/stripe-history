@@ -126,6 +126,11 @@ compiler target. The adapter rejects missing, unexpected, or changed graph
 inputs. Adding a route or client module requires reviewing that census as well
 as passing the native build; an empty Edge list does not skip its receipt.
 
+Vercel's build adapter can inject a feedback toolbar.
+`scripts/next-build-sources.ts` declares its generated script as a client input
+when that adapter and feature flag are enabled. The generated source passes
+the same receipt and map checks during discovery and delivery.
+
 The exact Next 16.3.3 dependency has a declared Bun patch at
 `patches/next@16.3.3.patch`. Its two app-page runtime templates append the native RSC
 `Vary` fields instead of overwriting the product's existing `Vary: Accept`.

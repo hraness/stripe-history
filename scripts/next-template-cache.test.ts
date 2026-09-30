@@ -59,7 +59,7 @@ test("cache identity fails closed on missing, linked or non-file inputs", async 
 const digest = (value: string | Buffer) => createHash("sha256").update(value).digest("hex");
 const expandedEntry = 'import { createAppPageEntrypoint } from "next/dist/build/templates/app-page-runtime";\nconst entrypoint = createAppPageEntrypoint({});\nexport const handler = entrypoint.handler;';
 type DeliveryOptions = {
-  unpatched?: boolean; unrelated?: boolean; duplicateRuntime?: boolean; wrongImport?: boolean; externalSource?: boolean;
+  unpatched?: boolean; unrelated?: boolean; duplicateRuntime?: boolean; wrongImport?: boolean; externalSource?: boolean; staleCompiledRuntime?: boolean;
   graph?: Record<string, unknown>; record?: Record<string, unknown>;
 };
 async function deliveryFixture(options: DeliveryOptions = {}) {
@@ -70,7 +70,7 @@ async function deliveryFixture(options: DeliveryOptions = {}) {
   const files = new Map([
     ["server/app/page.js", "compiled root JavaScript"],
     ["server/app/page.js.map", JSON.stringify({ version: 3, sources: ["webpack://fixture/?entry"], sourcesContent: [options.wrongImport ? expandedEntry.replace("app-page-runtime", "unpatched-runtime") : expandedEntry] })],
-    ["server/chunks/runtime.js", "compiled runtime JavaScript"],
+    ["server/chunks/runtime.js", options.staleCompiledRuntime ? 'function runtime(res,varyHeader){res.setHeader("Vary",varyHeader)}' : 'function runtime(res,varyHeader){res.appendHeader("Vary",varyHeader)}'],
     ["server/chunks/runtime.js.map", JSON.stringify({ version: 3, sources: options.duplicateRuntime ? [name, name] : options.externalSource ? [name, "webpack://fixture/external-bootstrap"] : [name], sourcesContent: options.duplicateRuntime ? [runtime, runtime] : [runtime] })],
   ]);
   for (const [path, source] of files) {
@@ -109,6 +109,7 @@ test("delivery maps may omit text for external sources but must contain the runt
 for (const [name, options] of [
   ["unreachable runtime, even when present elsewhere in the graph", { unrelated: true }],
   ["stale unpatched runtime", { unpatched: true }],
+  ["patched map paired with stale compiled runtime", { staleCompiledRuntime: true }],
   ["duplicated runtime", { duplicateRuntime: true }],
   ["entry importing another runtime", { wrongImport: true }],
   ["discovery graph", { graph: { mode: "discovery" } }],

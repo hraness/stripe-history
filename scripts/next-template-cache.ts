@@ -90,7 +90,7 @@ export function assertPatchedNextDelivery(root: string, record: DeliveryBuild): 
   const runtimes: string[] = [];
   for (const path of javascript) {
     assert.ok(path.endsWith(".js"));
-    readOutput(path);
+    const emitted = readOutput(path).toString("utf8");
     const map = object(JSON.parse(readOutput(`${path}.map`).toString("utf8")));
     assert.equal(map.version, 3);
     assert.ok(Array.isArray(map.sources) && Array.isArray(map.sourcesContent));
@@ -109,6 +109,7 @@ export function assertPatchedNextDelivery(root: string, record: DeliveryBuild): 
       const content: unknown = map.sourcesContent[index];
       if (typeof name === "string" && name.endsWith("/node_modules/next/dist/build/templates/app-page-runtime.js")) {
         assert.equal(typeof content, "string");
+        assert.match(emitted, /\.\s*appendHeader\s*\(\s*(["'])Vary\1\s*,/u, "Patched runtime chunk must retain the emitted Vary append call");
         if (typeof content === "string") runtimes.push(content);
       }
     }
