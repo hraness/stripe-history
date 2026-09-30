@@ -107,7 +107,7 @@ async function main(): Promise<void> {
           const requiredSources = JSON.parse(await readFile(join(captured.root, "stylex-sources.json"), "utf8"));
           const record = await runStylexNextBuild({ ...stylexOptions(captured.root), attemptId: `preview-${captured.generation}`, requiredSources });
           assert.equal(record.state, "complete");
-          assertPatchedNextDelivery(captured.root);
+          assertPatchedNextDelivery(captured.root, record);
           await writeFile(join(captured.root, "preview-complete.json"), JSON.stringify(record, null, 2) + "\n", { flag: "wx", mode: 0o600 });
           if (isStopping()) throw new Error("Preview cancelled after complete build");
           const reservation = createServer();

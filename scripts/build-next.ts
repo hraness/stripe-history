@@ -13,5 +13,5 @@ const record = await runStylexNextBuild({
   attemptId: `stripe-${randomUUID()}`,
   requiredSources,
 });
-assertPatchedNextDelivery(process.cwd());
+assertPatchedNextDelivery(process.cwd(), record);
 console.log(JSON.stringify({ kind: "stripe-history-compiled-build", record }));

@@ -57,7 +57,7 @@ export function validateFailedRecipeCensus(planValue: unknown, receiptValues: un
   assert.equal(plan.schemaVersion, 2);
   assert.equal(plan.adapterVersion, "hraness-stylex-next-v3");
   assert.equal(plan.compilerSha256, compilerSha256);
-  assert.equal(plan.nextVersion, "16.2.12");
+  assert.equal(plan.nextVersion, "16.3.3");
   const required = array(object(plan.requiredSources)["node-rsc"]).map(path);
   assert.equal(new Set(required).size, required.length);
   assert.ok(required.includes(recipe));
