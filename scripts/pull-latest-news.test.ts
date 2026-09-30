@@ -584,7 +584,7 @@ describe("weekly news discovery", () => {
     expect(markdown).toContain("discovery candidates, not accepted historical facts");
   });
 
-  test("keeps the Thursday publisher bounded, validated, and fast-forward-only", async () => {
+  test("keeps the Thursday publisher bounded, validated, and protected by a pull request", async () => {
     const workflow = await readFile(
       join(process.cwd(), ".github", "workflows", "weekly-news.yml"),
       "utf8",
@@ -593,9 +593,11 @@ describe("weekly news discovery", () => {
     expect(workflow).toContain("timezone: America/Puerto_Rico");
     expect(workflow).toContain("issues: write");
     expect(workflow).toContain("actions: write");
+    expect(workflow).toContain("checks: read");
     expect(workflow).toContain("contents: write");
-    expect(workflow).not.toContain("pull-requests: write");
-    expect(workflow).toContain("persist-credentials: true");
+    expect(workflow).toContain("pull-requests: write");
+    expect(workflow).toContain("permissions:\n  contents: read");
+    expect(workflow).toContain("persist-credentials: false");
     expect(workflow).toContain(
       "STRIPE_HISTORY_LLM_API_KEY: ${{ secrets.STRIPE_HISTORY_LLM_API_KEY }}",
     );
@@ -611,14 +613,11 @@ describe("weekly news discovery", () => {
     expect(workflow).toContain("bun run history:research:audit");
     expect(workflow).toContain("bun run check");
     expect(workflow).toContain("bun run build");
-    expect(workflow).toContain('test "$(git rev-parse HEAD^)" = "$(git rev-parse origin/main)"');
-    expect(workflow).toContain('git push origin "HEAD:main"');
-    expect(workflow).toContain('test "$remote_sha" = "$candidate_sha"');
-    expect(workflow).toContain('.headSha == $sha');
-    expect(workflow).toContain('.name == "Required" and .conclusion == "success"');
-    expect(workflow).toContain('if gh workflow run ci.yml --repo "$GH_REPO" --ref main');
-    expect(workflow).toContain('gh run watch "$main_run_id" --repo "$GH_REPO" --exit-status');
-    expect(workflow).toContain("if [ '${{ steps.push.outcome }}' != 'success' ]");
+    expect(workflow).toContain("bun scripts/deliver-weekly-history.ts preflight");
+    expect(workflow).toContain("bun scripts/deliver-weekly-history.ts deliver");
+    expect(workflow).toContain("steps.scope.outcome == 'success' && steps.validate.outcome == 'success'");
+    expect(workflow).not.toContain("HEAD:main");
+    expect(workflow).toContain("if [ '${{ steps.delivery.outcome }}' != 'success' ]");
     expect(workflow).toContain("grep -Fq '## Workflow delivery failure'");
     expect(workflow).toContain("sed -n '/^## Workflow delivery failure/,$p'");
     expect(workflow).toContain("review-issue-preserved.md");
