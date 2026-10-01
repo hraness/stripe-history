@@ -171,6 +171,7 @@ export async function publishPostHogMaps(
   assert.deepEqual(before.filter(({ path }) => path.endsWith(".map")), [...maps.values()].sort((a, b) => a.path.localeCompare(b.path)), "Unknown, changed or missing delivery maps");
   const providerBefore = await providerInventory(output);
   const providerMaps = providerBefore.files.filter(({ path }) => path.endsWith(".map"));
+  const providerOriginals = new Map<string, Artifact[]>();
   for (const copy of providerMaps) {
     const originals = [...maps.values()].filter((map) => map.bytes === copy.bytes && map.sha256 === copy.sha256);
     assert.ok(originals.length > 0, `Unknown or stale provider map: ${JSON.stringify(copy.path)}`);
@@ -179,9 +180,26 @@ export async function publishPostHogMaps(
       const source = sources.get(map.path.slice(0, -4))!;
       return source.bytes === associated.bytes && source.sha256 === associated.sha256;
     }), `Provider map source differs from compiler: ${JSON.stringify(copy.path)}`);
+    providerOriginals.set(copy.path, originals.filter((map) => {
+      const source = sources.get(map.path.slice(0, -4))!;
+      return source.bytes === associated!.bytes && source.sha256 === associated!.sha256;
+    }));
   }
-  const removedMaps = [...maps.values(), ...providerMaps];
-  const mapPaths = new Set(removedMaps.map(({ path }) => join(output, path)));
+  const allMaps = [...maps.values(), ...providerMaps];
+  const mapPaths = new Map(allMaps.map((entry) => [join(output, entry.path), entry]));
+  const retainedCompiler = new Set<string>();
+  const traceReferences: { trace: string; map: string }[] = [];
+  const privateFunctionMap = async (path: string) => {
+    assert.ok(path.startsWith("output/functions/"), `Traced map is outside private functions: ${path}`);
+    const marker = path.indexOf(".func/");
+    assert.ok(marker >= "output/functions/".length, "Private map needs a concrete function root");
+    const configPath = `${path.slice(0, marker + 5)}/.vc-config.json`;
+    const config = providerBefore.files.find((entry) => entry.path === configPath);
+    assert.ok(config, "Private map needs its inventoried runtime config");
+    const value = object(JSON.parse((await bytes(output, configPath, config)).toString()));
+    assert.ok(typeof value.runtime === "string" && /^(?:nodejs[0-9]+\.x|edge)$/u.test(value.runtime), "Private map requires a function runtime");
+    assert.ok(typeof value.handler === "string" && !logical(value.handler).endsWith(".map"), "Private map requires a non-map function handler");
+  };
   for (const entry of [...before, ...providerBefore.files].filter(({ path }) => path.endsWith(".nft.json"))) {
     const trace = object(JSON.parse((await bytes(output, entry.path, entry)).toString()));
     assert.ok(Array.isArray(trace.files) && trace.files.every((path) => typeof path === "string"));
@@ -191,13 +209,28 @@ export async function publishPostHogMaps(
       try { resolved = await realpath(target); } catch (error) {
         if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
       }
-      assert.ok(!mapPaths.has(resolved), `Runtime file trace requires a private map: ${JSON.stringify(entry.path)} -> ${JSON.stringify(resolved.slice(output.length + 1))}`);
+      const required = mapPaths.get(resolved);
+      if (!required) continue;
+      const originals = maps.has(required.path) ? [required] : providerOriginals.get(required.path)!;
+      assert.ok(originals.length > 0 && originals.every((map) => map.path.startsWith("server/")), `Runtime trace requires a public or unclassified map: ${entry.path} -> ${required.path}`);
+      if (!maps.has(required.path)) await privateFunctionMap(required.path);
+      for (const original of originals) retainedCompiler.add(original.path);
+      traceReferences.push({ trace: entry.path, map: required.path });
     }
   }
   for (const config of providerBefore.files.filter(({ path }) => path.endsWith("/.vc-config.json"))) {
     const value = object(JSON.parse((await bytes(output, config.path, config)).toString()));
     if (typeof value.handler === "string") assert.ok(!value.handler.endsWith(".map"), "Provider handler requires a private map");
   }
+  const retainedMaps = [...maps.values()].filter(({ path }) => retainedCompiler.has(path));
+  for (const copy of providerMaps) {
+    if (!providerOriginals.get(copy.path)!.some(({ path }) => retainedCompiler.has(path))) continue;
+    await privateFunctionMap(copy.path); // Even identical public copies must never be retained.
+    retainedMaps.push(copy);
+  }
+  const retainedPaths = new Set(retainedMaps.map(({ path }) => path));
+  const removedMaps = allMaps.filter(({ path }) => !retainedPaths.has(path));
+  const removedPaths = new Set(removedMaps.map(({ path }) => path));
   const staging = `${state}/posthog-upload`;
   await mkdir(join(root, staging)); // Exclusive task-owned directory, never reused.
   const files: string[] = [];
@@ -227,17 +260,18 @@ export async function publishPostHogMaps(
       await bytes(join(root, staging), `${original}.map`, maps.get(`${original}.map`)!);
     }
     const receiptPath = `${state}/posthog-publication.json`;
-    const receipt = { kind: "stripe-history-posthog-publication", schemaVersion: 1, compilerRecordSha256: sha(JSON.stringify(record)), compilerRecordPhase: "before-map-removal", uploadedJavascriptFiles: files.length, before, providerBefore, removedMaps, status: "uploaded-verified-before-map-removal" };
+    const receipt = { kind: "stripe-history-posthog-publication", schemaVersion: 1, compilerRecordSha256: sha(JSON.stringify(record)), compilerRecordPhase: "before-map-removal", uploadedJavascriptFiles: files.length, before, providerBefore, removedMaps, retainedMaps, traceReferences, status: "uploaded-verified-before-map-removal" };
     await writeFile(join(root, receiptPath), JSON.stringify(receipt) + "\n", { flag: "wx" });
     for (const entry of removedMaps) {
       await bytes(output, entry.path, entry);
       await unlink(join(output, entry.path));
     }
     const after = await inventory(output);
-    assert.deepEqual(after, before.filter(({ path }) => !path.endsWith(".map")), "Publication changed JavaScript or retained maps");
+    assert.deepEqual(after, before.filter(({ path }) => !removedPaths.has(path)), "Publication changed compiler output or required private maps");
     const providerAfter = await providerInventory(output);
-    assert.deepEqual(providerAfter, { ...providerBefore, files: providerBefore.files.filter(({ path }) => !path.endsWith(".map")) }, "Publication changed provider output or retained maps");
+    assert.deepEqual(providerAfter, { ...providerBefore, files: providerBefore.files.filter(({ path }) => !removedPaths.has(path)) }, "Publication changed provider output or required private maps");
     await writeFile(join(root, receiptPath), JSON.stringify({ ...receipt, status: "complete", after, providerAfter }) + "\n");
+    console.log(JSON.stringify({ kind: "stripe-history-map-publication-summary", status: "complete", compilerRecordSha256: receipt.compilerRecordSha256, uploadedJavascriptFiles: files.length, removedMaps: removedMaps.map(({ path }) => path), retainedMaps: retainedMaps.map(({ path }) => path), traceReferences }));
     return receiptPath;
   } finally {
     assert.ok((await lstat(join(root, staging))).isDirectory());
