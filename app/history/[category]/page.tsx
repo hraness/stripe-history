@@ -16,7 +16,7 @@ import {
   breadcrumbJsonLd,
   historyCollectionJsonLd,
 } from "../../seo";
-import { absoluteSiteUrl, site, socialMetadata } from "../../site";
+import { absoluteSiteUrl, socialMetadata } from "../../site";
 import { AcquisitionsAnswer, OriginsLead } from "../history-answers";
 import { HistoryView } from "../history-view";
 
@@ -53,13 +53,13 @@ export async function generateMetadata({
   const resolved = await resolveCategory(categoryId);
   if (resolved === undefined) return {};
   const path = `/history/${resolved.category.id}` as const;
-  const { title } = historyCategoryPageCopy(resolved.category, resolved.history.events);
-  const description = resolved.category.description;
+  const { metaDescription, metaTitle } = historyCategoryPageCopy(resolved.category, resolved.history.events);
+  const description = metaDescription ?? resolved.category.description;
   return {
-    title,
+    title: { absolute: metaTitle },
     description,
     alternates: { canonical: absoluteSiteUrl(path) },
-    ...socialMetadata(`${title} | ${site.name}`, description, path),
+    ...socialMetadata(metaTitle, description, path),
   };
 }
 

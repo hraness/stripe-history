@@ -42,7 +42,7 @@ function TopicIcon({ slug }: Readonly<{ slug: string }>) {
 }
 
 export const metadata: Metadata = {
-  title: aboutTitle,
+  title: { absolute: aboutTitle },
   description: aboutDescription,
   alternates: { canonical: absoluteSiteUrl("/about") },
   ...socialMetadata(aboutSocialTitle, aboutDescription, "/about"),

@@ -19,7 +19,7 @@ describe("hraness.com/stripe about page", () => {
 
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/about" },
-      title: "About",
+      title: { absolute: "How Stripe History selects and reviews sources" },
     });
     expect(html).toContain("<h1 id=\"about-heading\">About Stripe History</h1>");
     expect(html).toContain('<h2 id="other-stripe-references">Other Stripe references</h2>');

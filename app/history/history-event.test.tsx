@@ -95,6 +95,7 @@ test("every real timeline event retains its semantic payload and exact compiled 
     expect(html).toContain(`data-analytics-id="${event.categoryId}"`);
     expect(html).toContain(`href="/history/${event.categoryId}#${event.id}"`);
     expect(html.match(/data-analytics-event="source link opened"/gu)).toHaveLength(event.sources.length);
+    for (const source of event.sources) expect(html).toContain(`href="${source.url.replaceAll("&", "&amp;")}"`);
     expect(html.match(new RegExp(`class="${classes(styles.sourceLink)}"`, "gu"))).toHaveLength(event.sources.length);
     const factCount = Number(event.amount !== undefined) + (event.metrics?.length ?? 0) + (event.details?.length ?? 0);
     expect(html.match(new RegExp(`<dt class="${classes(styles.factTerm)}">`, "gu")) ?? []).toHaveLength(factCount);
@@ -147,10 +148,16 @@ test("only owned event rules leave legacy CSS; theme and metric owners remain", 
   expect(plain).toContain(".history-event-title, .history-event-kicker, .history-event-sources");
 });
 
-test("the explicit production census includes the real server-owned event recipe", async () => {
+test("the explicit production census covers SSR and client articles without corpus modules", async () => {
   const census = await Bun.file(new URL("../../stylex-sources.json", import.meta.url)).json() as Record<string, unknown>;
   expect(Array.isArray(census.nodeRsc)).toBe(true);
-  expect((census.nodeRsc as unknown[]).filter((path) => path === "app/history/history-event.stylex.ts")).toHaveLength(1);
-  expect(census.client).not.toContain("app/history/history-event.stylex.ts");
+  expect(Array.isArray(census.client)).toBe(true);
+  for (const path of ["app/history/history-event-article.tsx", "app/history/history-event.stylex.ts"]) {
+    expect((census.nodeRsc as unknown[]).filter((input) => input === path)).toHaveLength(1);
+    expect((census.client as unknown[]).filter((input) => input === path)).toHaveLength(1);
+  }
+  for (const path of ["lib/content.ts", "lib/history-schema.ts", "lib/research-schema.ts", "lib/history-urls.ts"]) {
+    expect(census.client).not.toContain(path);
+  }
   expect(census.edgeRsc).toEqual([]);
 });

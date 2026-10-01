@@ -11,28 +11,31 @@ import {
 export const notFoundTitle = "Page not found";
 export const notFoundDescription = "The requested Stripe history page does not exist.";
 
-export const aboutTitle = "About";
-export const aboutSocialTitle = `About | ${site.name}`;
+export const aboutTitle = "How Stripe History selects and reviews sources";
+export const aboutSocialTitle = aboutTitle;
 export const aboutDescription =
   `How ${site.name} selects, summarizes, sources, reviews, corrects, and measures its independent history of Stripe.`;
 
 export const privacyTitle = "Privacy";
-export const privacySocialTitle = `Privacy | ${site.name}`;
+export const privacyMetaTitle = "Stripe History privacy: analytics and data handling";
+export const privacySocialTitle = privacyMetaTitle;
 export const privacyDescription =
   `How ${site.name} handles analytics, cookies, the Hraness newsletter, optional support, historical mailing consent, and hosting logs.`;
 
-export const contactTitle = "Contact";
-export const contactSocialTitle = `Contact | ${site.name}`;
+export const contactTitle = "Contact Stripe History: corrections and sources";
+export const contactSocialTitle = contactTitle;
 export const contactDescription =
   `How to send a correction, source, or security report for ${site.name}, an independent record of how Stripe grew.`;
 
 export const dataTitle = `${site.name} dataset`;
+export const dataMetaTitle = `${site.name} dataset: sourced events and financials`;
 
 function sourcedEventCount(eventCount: number): string {
   return `${eventCount} sourced ${eventCount === 1 ? "event" : "events"}`;
 }
 
 export const historyPageTitle = `${site.name}: ${site.tagline}`;
+export const historyMetaTitle = "Stripe History: founders, funding and a sourced timeline";
 
 export function historyCategoryHeading(label: string): string {
   return `Stripe ${label.toLocaleLowerCase("en-US")} history`;

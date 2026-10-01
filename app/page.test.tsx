@@ -13,7 +13,7 @@ import { site } from "./site";
 describe("canonical hraness.com/stripe history", () => {
   test("publishes root-canonical history metadata", async () => {
     const metadata = await generateMetadata();
-    const expectedTitle = `${site.name}: ${site.tagline}`;
+    const expectedTitle = "Stripe History: founders, funding and a sourced timeline";
 
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe" },
@@ -136,6 +136,7 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).toContain('data-category="appearances"');
     expect(html).toContain("A month in Buenos Aires produces Stripe&#x27;s first working prototype");
     expect(html).toMatch(/class="history-event-sources [^"]+"/u);
+    expect(html.match(/class="history-event-sources [^"]+"/gu)).toHaveLength(history.events.length);
     expect(html).toContain('data-analytics-event="source link opened"');
     expect(html).toContain('id="stripe-history-history-structured-data"');
     expect(html).toContain('aria-label="Appearance: System"');

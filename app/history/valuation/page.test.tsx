@@ -18,10 +18,10 @@ describe("hraness.com/stripe valuation history", () => {
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/history/valuation" },
       description: seo.description,
-      title: seo.title,
+      title: { absolute: seo.title },
     });
     expect(metadata.openGraph).toMatchObject({
-      title: `${seo.title} | Stripe History`,
+      title: seo.title,
       url: "https://hraness.com/stripe/history/valuation",
     });
   });
@@ -59,9 +59,9 @@ describe("hraness.com/stripe valuation history", () => {
     expect(updatedMetadata).toMatchObject({
       description: expect.stringContaining("$200 billion 2027 company tender"),
       openGraph: {
-        title: "Stripe valuation history by year, 2011–2027 | Stripe History",
+        title: "Stripe valuation history by year, 2011–2027",
       },
-      title: "Stripe valuation history by year, 2011–2027",
+      title: { absolute: "Stripe valuation history by year, 2011–2027" },
     });
     expect(updatedSeo).not.toEqual(priorSeo);
   });

@@ -22,7 +22,7 @@ import {
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: contactTitle,
+  title: { absolute: contactTitle },
   description: contactDescription,
   alternates: { canonical: absoluteSiteUrl("/contact") },
   ...socialMetadata(contactSocialTitle, contactDescription, "/contact"),

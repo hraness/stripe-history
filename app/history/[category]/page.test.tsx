@@ -33,7 +33,7 @@ describe("hraness.com/stripe category history", () => {
     expect(appearanceCount).toBe(history.appearances.length);
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/history/appearances" },
-      title: `Stripe appearances history: ${appearanceCount} sourced events`,
+      title: { absolute: `Stripe appearances: ${appearanceCount} sourced events` },
     });
     expect(html.match(/data-category="appearances"/gu)).toHaveLength(appearanceCount);
     expect(html).toContain('data-filter-id="appearances"');
@@ -60,10 +60,10 @@ describe("hraness.com/stripe category history", () => {
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/history/acquisitions" },
       description: "Completed acquisitions, talent acquisitions, announced agreements, and credibly reported deal discussions involving Stripe.",
-      title: "Stripe acquisitions list, 2013–2026",
+      title: { absolute: "Stripe acquisitions list, 2013–2026" },
     });
     expect(metadata.openGraph).toMatchObject({
-      title: "Stripe acquisitions list, 2013–2026 | Stripe History",
+      title: "Stripe acquisitions list, 2013–2026",
       url: "https://hraness.com/stripe/history/acquisitions",
     });
   });
@@ -78,18 +78,18 @@ describe("hraness.com/stripe category history", () => {
       const metadata = await generateMetadata({
         params: Promise.resolve({ category: category.id }),
       });
-      expect(metadata.title).toBe(
-        `Stripe ${category.label.toLocaleLowerCase("en-US")} history: ${count} sourced events`,
-      );
+      expect(metadata.title).toEqual({
+        absolute: `Stripe ${category.label.toLocaleLowerCase("en-US")}: ${count} sourced events`,
+      });
     }
     const origins = await generateMetadata({
       params: Promise.resolve({ category: "origins-and-early-company" }),
     });
-    expect(origins.title).toBe("Stripe founding history: founders, first prototype and 2011 launch");
+    expect(origins.title).toEqual({ absolute: "Stripe founding: founders, first prototype and 2011 launch" });
     const fundraising = await generateMetadata({
       params: Promise.resolve({ category: "fundraising" }),
     });
-    expect(fundraising.title).toBe("Stripe funding rounds and tender offers, 2011–2026");
+    expect(fundraising.title).toEqual({ absolute: "Stripe funding rounds and tender offers, 2011–2026" });
   }, 30_000);
 
   test("renders a crawlable category-only timeline", async () => {

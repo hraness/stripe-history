@@ -109,6 +109,20 @@ describe("hraness.com/stripe structured discovery", () => {
     });
   });
 
+  test("links podcasts, testimony and articles as source pages instead of media bytes", async () => {
+    const history = await loadHistory();
+    const entries = appearanceCollectionJsonLd(history).mainEntity.itemListElement;
+    const podcast = entries.find(({ item }) => item["@id"].endsWith("#appearance-2023-11-patrick-john-collison-social-radars"))?.item;
+    expect(podcast).toMatchObject({ "@type": "PodcastEpisode", duration: "PT4294S", url: expect.stringContaining("http") });
+    for (const id of ["appearance-2025-03-patrick-collison-congress-testimony", "appearance-2023-08-claire-hughes-johnson-newcomer"]) {
+      const work = entries.find(({ item }) => item["@id"].endsWith(`#${id}`))?.item;
+      expect(work).toMatchObject({ "@type": "CreativeWork", url: expect.stringContaining("http") });
+      expect(work).not.toHaveProperty("duration");
+    }
+    expect(entries).toHaveLength(history.appearances.length);
+    for (const { item } of entries) expect(item).not.toHaveProperty("contentUrl");
+  });
+
   test("describes canonical history items and breadcrumbs", () => {
     const rootHistory = historyCollectionJsonLd(
       [{ id: "example-event", title: "Stripe reaches an example milestone" }],

@@ -86,6 +86,10 @@ async function verifyCombination({ width, theme }) {
     for (const route of routes) {
       const response = await page.goto(origin + route);
       assert.equal(response?.status(), 200, route);
+      if (route === "/stripe") {
+        const htmlBytes = Buffer.byteLength(await response.text());
+        assert.ok(htmlBytes < 2_000_000, `${route}: ${htmlBytes} HTML bytes exceed the crawl budget`);
+      }
       await page.locator("main").waitFor();
       await page.evaluate(() => document.fonts.ready);
       // Full-page captures include portraits below the lazy-loading threshold.
@@ -93,6 +97,10 @@ async function verifyCombination({ width, theme }) {
       await page.locator("img").evaluateAll(images => images.forEach(image => { image.loading = "eager"; }));
       await page.waitForFunction(() => [...document.images].every(image => image.complete && image.naturalWidth > 0), null, { timeout: 10_000 });
       await page.locator("img").evaluateAll(images => Promise.all(images.map(image => image.decode())));
+      await page.waitForFunction(() => [...document.querySelectorAll(".history-category-icon use")].every(glyph => {
+        const box = glyph.getBBox();
+        return box.width > 0 && box.height > 0;
+      }), null, { timeout: 10_000 });
       const state = await page.evaluate(() => {
         const footer = document.querySelector("#hraness-site-footer");
         return {

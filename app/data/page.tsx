@@ -13,17 +13,17 @@ import {
   site,
   socialMetadata,
 } from "../site";
-import { dataIntro, dataTitle } from "../site-copy";
+import { dataIntro, dataMetaTitle, dataTitle } from "../site-copy";
 
 const dataDescription = site.datasetDescription;
 
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: dataTitle,
+  title: { absolute: dataMetaTitle },
   description: dataDescription,
   alternates: { canonical: absoluteSiteUrl("/data") },
-  ...socialMetadata(`${dataTitle} | ${site.name}`, dataDescription, "/data"),
+  ...socialMetadata(dataMetaTitle, dataDescription, "/data"),
 };
 
 export default async function DataPage() {

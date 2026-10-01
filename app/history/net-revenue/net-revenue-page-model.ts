@@ -5,7 +5,7 @@ import {
 } from "@/lib/content";
 import type { Metadata } from "next";
 
-import { absoluteSiteUrl, site, socialMetadata } from "../../site";
+import { absoluteSiteUrl, socialMetadata } from "../../site";
 
 export const revenueKindLabel: Readonly<
   Record<AnnualRevenuePoint["kind"], string>
@@ -161,11 +161,11 @@ export function deriveNetRevenuePageMetadata(
 ): Metadata {
   const seo = deriveNetRevenuePageSeo(history);
   return {
-    title: seo.title,
+    title: { absolute: seo.title },
     description: seo.description,
     alternates: { canonical: absoluteSiteUrl("/history/net-revenue") },
     ...socialMetadata(
-      `${seo.title} | ${site.name}`,
+      seo.title,
       seo.description,
       "/history/net-revenue",
     ),

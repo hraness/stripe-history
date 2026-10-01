@@ -12,7 +12,7 @@ describe("hraness.com/stripe contact page", () => {
     const html = renderToStaticMarkup(<ContactPage />);
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/contact" },
-      title: "Contact",
+      title: { absolute: "Contact Stripe History: corrections and sources" },
     });
     expect(html).toContain("<h1 id=\"contact-heading\">Contact Stripe History</h1>");
     expect(html).toContain('<h2 id="corrections-and-sources">Corrections and sources</h2>');

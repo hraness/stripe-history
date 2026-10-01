@@ -264,7 +264,11 @@ export function appearanceCollectionJsonLd(history: HistoryCollection) {
       numberOfItems: history.appearances.length,
       itemListElement: history.appearances.map((appearance, index) => {
         const source = sourceById.get(appearance.source_ids[0] ?? "");
-        const itemType = appearance.media.includes("video") ? "VideoObject" : "PodcastEpisode";
+        const itemType = appearance.media.includes("video")
+          ? "VideoObject"
+          : appearance.media.includes("podcast")
+            ? "PodcastEpisode"
+            : "CreativeWork";
         return {
           "@type": "ListItem",
           position: index + 1,
@@ -274,10 +278,10 @@ export function appearanceCollectionJsonLd(history: HistoryCollection) {
             name: appearance.title,
             description: appearance.digest?.gist ?? appearance.significance,
             datePublished: appearance.published_at ?? appearance.occurred_at,
-            ...(appearance.duration_seconds === undefined
+            ...(appearance.duration_seconds === undefined || itemType === "CreativeWork"
               ? {}
               : { duration: `PT${appearance.duration_seconds}S` }),
-            ...(source === undefined ? {} : { contentUrl: source.url }),
+            ...(source === undefined ? {} : { url: source.url }),
             about: { "@type": "Organization", name: "Stripe" },
             contributor: appearance.participants.map((participant) => ({
               "@type": "Person",
