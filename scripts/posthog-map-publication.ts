@@ -271,7 +271,10 @@ export async function publishPostHogMaps(
     const providerAfter = await providerInventory(output);
     assert.deepEqual(providerAfter, { ...providerBefore, files: providerBefore.files.filter(({ path }) => !removedPaths.has(path)) }, "Publication changed provider output or required private maps");
     await writeFile(join(root, receiptPath), JSON.stringify({ ...receipt, status: "complete", after, providerAfter }) + "\n");
-    console.log(JSON.stringify({ kind: "stripe-history-map-publication-summary", status: "complete", compilerRecordSha256: receipt.compilerRecordSha256, uploadedJavascriptFiles: files.length, removedMaps: removedMaps.map(({ path }) => path), retainedMaps: retainedMaps.map(({ path }) => path), traceReferences }));
+    // Provider build logs truncate individual events at 4096 bytes. Keep the
+    // summary bounded and emit each retained artifact separately for live probes.
+    console.log(JSON.stringify({ kind: "stripe-history-map-publication-summary", status: "complete", compilerRecordSha256: receipt.compilerRecordSha256, uploadedJavascriptFiles: files.length, removedMapCount: removedMaps.length, removedPublicMapCount: removedMaps.filter(({ path }) => path.startsWith("static/") || path.startsWith("output/static/")).length, retainedPrivateMapCount: retainedMaps.length, traceReferenceCount: traceReferences.length }));
+    for (const map of retainedMaps) console.log(JSON.stringify({ kind: "stripe-history-retained-private-map", compilerRecordSha256: receipt.compilerRecordSha256, map }));
     return receiptPath;
   } finally {
     assert.ok((await lstat(join(root, staging))).isDirectory());
