@@ -72,6 +72,8 @@
     "@hraness/web-discovery": "github:hraness/web-discovery#v0.13.0",
     "@hugeicons/core-free-icons": "^4.2.2",
     "@hugeicons/react": "^1.1.9",
+    "@posthog/nextjs-config": "1.10.0",
+    "@posthog/plugin-utils": "1.2.0",
     "@stylexjs/stylex": "0.19.0",
     "ai-v7": "npm:ai@^7.0.36",
     "next": "16.3.3",

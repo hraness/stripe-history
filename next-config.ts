@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
-import { withPostHogSourceMaps } from "@hraness/posthog/next-config";
+import { resolvePostHogSourceMapConfig } from "@hraness/posthog/next-config";
+import { withPostHogConfig } from "@posthog/nextjs-config";
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from "next/constants.js";
 import { withStylexNext } from "@hraness/ui/stylex-build/next";
 import { stylexOptions } from "./stylex-config.ts";
@@ -111,10 +112,16 @@ export default function configForPhase(
   // The delivery wrapper changes headers/env only. Keep the concrete synchronous
   // callback type and reject a future wrapper that silently replaces it.
   if (config.webpack !== nextConfig.webpack) throw new Error("Delivery wrapper replaced the product webpack callback");
-  const sourceMapConfig = withPostHogSourceMaps(
-    withStylexNext({ ...config, webpack: nextConfig.webpack }, stylexOptions(process.cwd())),
-    { siteId: "stripe-history" },
-  ) as NextConfig | ConfigCallback;
+  const compiledConfig = withStylexNext({ ...config, webpack: nextConfig.webpack }, stylexOptions(process.cwd()));
+  const uploadConfig = resolvePostHogSourceMapConfig({ siteId: "stripe-history" });
+  if (!uploadConfig) return compiledConfig;
+  // The adapter always invokes webpack. PostHog otherwise assumes Next 16's
+  // Turbopack default and rewrites files after the compiler has recorded them.
+  if (process.env.WEBPACK !== "1") throw new Error("PostHog must use the compiled webpack path");
+  const sourceMapConfig = withPostHogConfig(compiledConfig, {
+    ...uploadConfig,
+    sourcemaps: { ...uploadConfig.sourcemaps, deleteAfterUpload: false, releaseMode: "symbol-set" },
+  }) as NextConfig | ConfigCallback;
   // The upstream declaration says NextConfig, but enabled uploads return an
   // async config callback. Next resolves our outer callback only once.
   return typeof sourceMapConfig === "function"

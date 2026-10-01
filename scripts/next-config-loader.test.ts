@@ -28,12 +28,14 @@ test("the production phase resolves the configured production source-map wrapper
   const environment = { ...process.env };
   for (const key of ["VERCEL", "VERCEL_URL", "VERCEL_PROJECT_ID", "VERCEL_DEPLOYMENT_ID", "TURBOPACK"]) delete environment[key];
   Object.assign(environment, {
+    WEBPACK: "1",
     VERCEL_ENV: "production",
     VERCEL_PROJECT_ID: "prj_fixture",
     VERCEL_DEPLOYMENT_ID: "dpl_fixture",
     VERCEL_GIT_COMMIT_SHA: "fbe959de6d5bd730d2c2edd9fd78377995bc8870",
     POSTHOG_API_KEY: "phx_test_not_a_real_credential",
     POSTHOG_PROJECT_ID: "543691",
+    POSTHOG_RELEASE_MODE: "event",
     POSTHOG_UI_HOST: "https://us.posthog.com",
   });
   const result = spawnSync(process.execPath, ["--eval", `
@@ -49,7 +51,12 @@ test("the production phase resolves the configured production source-map wrapper
     assert.equal(config.reactStrictMode, true);
     assert.equal(typeof config.webpack, "function");
     assert.notEqual(config.webpack, createNextConfig({}).webpack);
-    assert.equal(typeof config.compiler, "object");
+    assert.equal(config.compiler?.runAfterProductionCompile, undefined);
+    const webpackConfig = config.webpack({ resolve: {}, plugins: [] }, { isServer: false });
+    const plugin = webpackConfig.plugins.find((plugin) => plugin.constructor.name === "PosthogWebpackPlugin");
+    assert.ok(plugin);
+    assert.equal(plugin.resolvedConfig.sourcemaps.deleteAfterUpload, false);
+    assert.equal(plugin.resolvedConfig.sourcemaps.releaseMode, "symbol-set");
     console.log("configured-source-map-config-ok");
   `], { cwd: process.cwd(), env: environment, encoding: "utf8", timeout: 15_000, maxBuffer: 16_384 });
   expect(result.error).toBeUndefined();
