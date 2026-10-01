@@ -44,7 +44,7 @@ async function inventory(root: string, prefix = ""): Promise<Artifact[]> {
   const result: Artifact[] = [];
   for (const entry of await readdir(join(root, prefix), { withFileTypes: true })) {
     const path = prefix ? `${prefix}/${entry.name}` : entry.name;
-    assert.ok(!entry.isSymbolicLink(), "Publication output contains a symlink");
+    assert.ok(!entry.isSymbolicLink(), `Publication output contains a symlink: ${JSON.stringify(path)}`);
     if (entry.isDirectory()) result.push(...await inventory(root, path));
     else {
       assert.ok(entry.isFile(), "Publication output contains a non-file");
