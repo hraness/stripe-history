@@ -90,7 +90,7 @@ for (const mutate of ["before", "during", "staging", "unknown", "symlink", "esca
       uploadCalls++;
       if (mutate === "during") await writeFile(join(f.root, ".next", f.clientJs.path), "changed");
       if (mutate === "staging") await writeFile(files[0]!, "changed");
-    })).rejects.toThrow();
+    })).rejects.toThrow(mutate === "symlink" ? `Publication output contains a symlink: ${JSON.stringify(f.clientMap.path)}` : undefined);
     expect(await readFile(join(f.root, ".next", f.serverMap.path), "utf8")).toBe(f.map);
     expect(await readFile(outside, "utf8")).toBe("preserve");
     expect(uploadCalls).toBe(mutate === "during" || mutate === "staging" ? 1 : 0);
