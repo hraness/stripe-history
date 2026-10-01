@@ -397,7 +397,7 @@ events:
     source_ids:
       - source-dce3e584b843eb876619
     status: Divested to founder
-    summary: Six years after Stripe acquired Indie Hackers, founder Courtland Allen announced that he had bought it back. Stripe remained involved as a seed investor, making the event a reversal of the 2017 acquisition rather than another purchase.
+    summary: Six years after Stripe acquired Indie Hackers, founder Courtland Allen announced that he had bought it back. Stripe remained involved as a seed investor.
     tags:
       - divestiture
       - community

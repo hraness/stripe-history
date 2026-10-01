@@ -370,7 +370,7 @@ events:
     source_ids:
       - source-68ef23b66125c4fd22f9
     status: Print subscription launched
-    summary: Increment made annual print subscriptions available after previously distributing issues through selected channels. The move gave Stripe's software magazine a direct, recurring physical-publication model.
+    summary: Increment made annual print subscriptions available after previously distributing issues through selected channels.
     tags:
       - increment
       - magazine

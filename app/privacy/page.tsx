@@ -3,17 +3,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { breadcrumbJsonLd } from "../seo";
+import { EditorialParagraph } from "../editorial-paragraph";
 import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
 import {
+  privacyContent,
   privacyDescription,
   privacySocialTitle,
   privacyTitle,
 } from "../site-copy";
 import {
   absoluteSiteUrl,
-  GITHUB_REPOSITORY_URL,
-  site,
   socialMetadata,
 } from "../site";
 
@@ -49,78 +49,7 @@ export default function PrivacyPage() {
         <div className="stripe-history-section-heading">
           <h1 id="privacy-heading">{privacyTitle}</h1>
         </div>
-        <p>
-          The site sends anonymous, cookieless pageview and page-exit events for public pages
-          to PostHog. Each event contains the normalized public page path, its
-          page category, a site identifier, an analytics schema version, and
-          PostHog&apos;s cookieless marker. It also carries the host name of
-          the site that linked to the page, such as google.com, but never the
-          full referring address. It excludes query strings, URL fragments,
-          account data, and user content. The
-          browser does not save an analytics cookie or persistent identifier. Browser
-          and device details support aggregate compatibility checks. Temporary session markers
-          let us measure visits. We also collect page-load performance measurements,
-          missing-page paths and a limited number of errors, with emails, credentials
-          and private URL parameters removed.
-        </p>
-        <p>
-          The shared footer asks Hraness Accounts whether a consent notice applies
-          in your region. If consent is required or the region cannot be determined,
-          analytics stays off until you accept. Your choice is saved in this
-          browser&apos;s local storage. Do Not Track keeps analytics off even after
-          acceptance.
-        </p>
-        <p>
-          The PostHog integration does not use autocapture, session replay,
-          heatmaps, surveys, feature flags, or user
-          profiles. The site has
-          no local reader accounts or authentication. Requests are still subject
-          to the ordinary logs and security controls of the hosting provider.
-        </p>
-        <p>
-          The footer offers the general Hraness newsletter. Before submission,
-          it may contact <a href="https://account.hraness.com">Hraness Accounts</a>
-          {" "}for anonymous form presentation and measurement. These requests
-          send the list choice, language, compact or wide viewport category,
-          and presentation version, then an opaque token when the form becomes
-          visible. They omit account credentials and do not send your email
-          address. If you submit the form, your email address, the Hraness list
-          choice, form source, and any presentation token are sent to Accounts.
-          Accounts records dated consent, and Resend sends confirmation and
-          subscribed messages from news.hraness.com. You are not subscribed
-          until you confirm. Each newsletter message has a Hraness-specific
-          unsubscribe link that does not change another product subscription.
-          Optional paid support opens Accounts separately, where you review
-          the plan and price before confirming payment.
-        </p>
-        <p>
-          This general newsletter signup does not create new Stripe History
-          mailing consent. If
-          you subscribed through the earlier Stripe History form, Hraness
-          Accounts retains that dated record. A previously confirmed membership
-          may remain active, and Hraness Accounts may continue to process it and
-          deliver Stripe History newsletter messages through Resend from
-          news.hraness.com until you use its Stripe-History-specific unsubscribe
-          link. That link does not change another product or general Hraness
-          subscription. Removing the earlier form does not delete, cancel, or
-          migrate that record.
-        </p>
-        <p>
-          {site.name} does not sell personal data, does not run advertising
-          pixels, and does not keep a reader profile. Appearance preferences
-          stay in the browser. Machine-readable copies of the public pages are
-          available as Markdown when a client sends{" "}
-          <code>Accept: text/markdown</code>, and the authored YAML records
-          remain downloadable from the{" "}
-          <Link href="/data">dataset index</Link>.
-        </p>
-        <p>
-          Questions about this policy belong on the{" "}
-          <Link href="/contact">contact page</Link> or in the{" "}
-          <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>. The broader
-          sourcing and independence statement lives on the{" "}
-          <Link href="/about">about page</Link>.
-        </p>
+        {privacyContent.map((parts, index) => <EditorialParagraph parts={parts} key={index} />)}
       </section>
       <SiteFooter path="/privacy" />
     </main>

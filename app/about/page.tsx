@@ -7,6 +7,7 @@ import {
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { EditorialParagraph } from "../editorial-paragraph";
 import { EvidenceSnapshot } from "../evidence-snapshot";
 import { aboutPageJsonLd, breadcrumbJsonLd } from "../seo";
 import { SiteHeader } from "../site-header";
@@ -27,6 +28,7 @@ import {
   maintainerSentence,
   otherReferencesHeading,
   otherReferencesParts,
+  privacySummary,
 } from "../site-copy";
 
 export const dynamic = "force-static";
@@ -83,18 +85,7 @@ export default async function AboutPage() {
           <TopicIcon slug="company-history" />
           <h2>Stripe history</h2>
         </div>
-        <p>
-          Stripe is private, so its history arrives in pieces: annual letters,
-          tender offers, press reports, interviews, and blog posts.{" "}
-          {site.name} gathers those pieces into one dated record, from the
-          founders&apos; first projects in 2005 to today, and links every event
-          to its sources. It publishes a reverse-chronological company timeline
-          covering acquisitions, products, leadership, funding, valuation,
-          expansion, offices, publishing projects, the founders&apos; projects
-          outside Stripe such as grant programs, early history, annual volume,
-          sourced annual net-revenue disclosures, and reviewed long-form
-          appearances by Stripe founders and senior leaders.
-        </p>
+        <p>Stripe History follows the company from the founders&apos; projects in 2005 through its products, acquisitions, funding, and expansion. It also covers the founders&apos; projects outside Stripe, annual financial disclosures, and leadership interviews. Each event links to its sources.</p>
 
         <div className="stripe-history-about-topic">
           <TopicIcon slug="evidence" />
@@ -166,29 +157,17 @@ export default async function AboutPage() {
           <TopicIcon slug="independence" />
           <h2 id="independence-and-corrections">Independence and corrections</h2>
         </div>
+        <p>{independenceSentence}</p>
         <p>
-          {independenceSentence} Corrections are made in the underlying sourced
-          records so the timeline and its focused category views stay aligned.
-        </p>
-        <p>
-          To inspect or reuse the current record,{" "}
-          <Link href="/data">export the public YAML</Link>. To challenge a date,
-          claim, status, or source, use the{" "}
-          <a href={GITHUB_REPOSITORY_URL + "/issues"}>public issue tracker</a>
-          {" "}and include the affected entry, proposed correction, and supporting
-          source. The <Link href="/contact#corrections-and-sources">contact page</Link>
-          {" "}keeps those requirements easy to find.
+          Send the affected entry, proposed correction, and supporting source through the{" "}
+          <a href={`${GITHUB_REPOSITORY_URL}/issues`}>public issue tracker</a>.
+          See <Link href="/contact#security">contact</Link> for security reports.
         </p>
 
         <h2>Publisher and contributions</h2>
         <p>
-          Published and maintained by <a href={HRANESS_URL}>Hraness</a>.{" "}
-          {maintainerSentence} To
-          suggest a correction, add a source, or improve the project, open an
-          issue or contribution in the{" "}
-          <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>. The same
-          public channels are listed on the{" "}
-          <Link href="/contact">contact page</Link>.
+          Published by <a href={HRANESS_URL}>Hraness</a>. {maintainerSentence}{" "}
+          The <a href={GITHUB_REPOSITORY_URL}>source and data</a> are public.
         </p>
 
         <h2 id="other-stripe-references">{otherReferencesHeading}</h2>
@@ -202,29 +181,7 @@ export default async function AboutPage() {
           <TopicIcon slug="privacy" />
           <h2>Privacy</h2>
         </div>
-        <p>
-          The site sends anonymous, cookieless pageview events for public pages
-          to PostHog. Each event contains the normalized public page path, its
-          page category, a site identifier, an analytics schema version, and
-          PostHog&apos;s cookieless marker. It also carries the host name of
-          the site that linked to the page, such as google.com, but never the
-          full referring address. It excludes query strings, URL fragments,
-          account data, and user content. The
-          browser does not save an analytics cookie or identifier.
-        </p>
-        <p>
-          The site does not use autocapture, session replay, heatmaps, surveys,
-          feature flags, performance monitoring, or user profiles, and it has
-          no local reader accounts or authentication. Requests are still
-          subject to the ordinary logs and security controls of the hosting
-          provider. The footer offers the general Hraness newsletter and
-          optional support through Hraness Accounts; Stripe History does not
-          create a separate product newsletter subscription.
-        </p>
-        <p>
-          The dedicated <Link href="/privacy">privacy page</Link> repeats this
-          policy for agents and other readers who look for <code>/privacy</code>.
-        </p>
+        <EditorialParagraph parts={privacySummary} />
       </section>
       <SiteFooter path="/about" />
     </main>

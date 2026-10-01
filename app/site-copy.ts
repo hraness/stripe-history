@@ -115,7 +115,7 @@ export const aboutSections = [
   {
     heading: "Stripe history",
     paragraphs: [
-      `Stripe is private, so its history arrives in pieces: annual letters, tender offers, press reports, interviews, and blog posts. ${site.name} gathers those pieces into one dated record, from the founders' first projects in 2005 to today, and links every event to its sources. It publishes a reverse-chronological company timeline covering acquisitions, products, leadership, funding, valuation, expansion, offices, publishing projects, the founders' projects outside Stripe such as grant programs, early history, annual volume, sourced annual net-revenue disclosures, and reviewed long-form appearances by Stripe founders and senior leaders.`,
+      "Stripe History follows the company from the founders' projects in 2005 through its products, acquisitions, funding, and expansion. It also covers the founders' projects outside Stripe, annual financial disclosures, and leadership interviews. Each event links to its sources.",
     ],
   },
   {
@@ -137,14 +137,14 @@ export const aboutSections = [
   {
     heading: "Independence and corrections",
     paragraphs: [
-      `${independenceSentence} Corrections are made in the underlying sourced records so the timeline and its focused category views stay aligned.`,
-      `To inspect or reuse the current record, [export the public YAML](${SITE_ORIGIN}/data). To challenge a date, claim, status, or source, use the [public issue tracker](${GITHUB_REPOSITORY_URL}/issues) and include the affected entry, proposed correction, and supporting source. The [contact page](${SITE_ORIGIN}/contact#corrections-and-sources) keeps those requirements easy to find.`,
+      independenceSentence,
+      `Send the affected entry, proposed correction, and supporting source through the [public issue tracker](${GITHUB_REPOSITORY_URL}/issues). See [contact](${SITE_ORIGIN}/contact#security) for security reports.`,
     ],
   },
   {
     heading: "Publisher and contributions",
     paragraphs: [
-      `Published and maintained by [Hraness](${HRANESS_URL}). ${maintainerSentence} To suggest a correction, add a source, or improve the project, open an issue or contribution in the [Stripe History repository](${GITHUB_REPOSITORY_URL}). Use the [contact page](${SITE_ORIGIN}/contact) for the same public channels.`,
+      `Published by [Hraness](${HRANESS_URL}). ${maintainerSentence} The [source and data](${GITHUB_REPOSITORY_URL}) are public.`,
     ],
   },
   {
@@ -153,20 +153,38 @@ export const aboutSections = [
   },
 ] as const;
 
-export const privacyParagraphs = [
-  `The site sends anonymous, cookieless pageview events for public pages to PostHog. Each event contains the normalized public page path, its page category, a site identifier, an analytics schema version, and PostHog's cookieless marker. It also carries the host name of the site that linked to the page, such as google.com, but never the full referring address. It excludes query strings, URL fragments, account data, and user content. The browser does not save an analytics cookie or identifier.`,
-  `The PostHog integration does not use autocapture, session replay, heatmaps, surveys, feature flags, performance monitoring, or user profiles. The site has no local reader accounts or authentication. Requests are still subject to the ordinary logs and security controls of the hosting provider.`,
-  `The footer offers the general Hraness newsletter. Before submission, it may contact [Hraness Accounts](https://account.hraness.com) for anonymous form presentation and measurement. These requests send the list choice, language, compact or wide viewport category, and presentation version, then an opaque token when the form becomes visible. They omit account credentials and do not send your email address. If you submit the form, your email address, the Hraness list choice, form source, and any presentation token are sent to Accounts. Accounts records dated consent, and Resend sends confirmation and subscribed messages from news.hraness.com. You are not subscribed until you confirm. Each newsletter message has a Hraness-specific unsubscribe link that does not change another product subscription. Optional paid support opens Accounts separately, where you review the plan and price before confirming payment.`,
-  `This general newsletter signup does not create new Stripe History mailing consent. If you subscribed through the earlier Stripe History form, Hraness Accounts retains that dated record. A previously confirmed membership may remain active, and Hraness Accounts may continue to process it and deliver Stripe History newsletter messages through Resend from news.hraness.com until you use its Stripe-History-specific unsubscribe link. That link does not change another product or general Hraness subscription. Removing the earlier form does not delete, cancel, or migrate that record.`,
-  `${site.name} does not sell personal data, does not run advertising pixels, and does not keep a reader profile. Appearance preferences stay in the browser. Machine-readable copies of the public pages are available as Markdown when a client sends \`Accept: text/markdown\`, and the authored YAML records remain downloadable from the [dataset index](${SITE_ORIGIN}/data).`,
-  `Questions about this policy belong on the [contact page](${SITE_ORIGIN}/contact) or in the [Stripe History repository](${GITHUB_REPOSITORY_URL}). The broader sourcing and independence statement lives on the [about page](${SITE_ORIGIN}/about).`,
-] as const;
+export type EditorialPart = string | Readonly<{ text: string; href: string }> | Readonly<{ code: string }>;
+
+export const privacyContent: readonly (readonly EditorialPart[])[] = [
+  [`The site sends anonymous, cookieless pageview and page-exit events for public pages to PostHog. Each event contains the normalized public page path, its page category, a site identifier, an analytics schema version, and PostHog's cookieless marker. It also carries the host name of the site that linked to the page, such as google.com, but never the full referring address. It excludes query strings, URL fragments, account data, and user content. The browser does not save an analytics cookie or persistent identifier. Browser and device details support aggregate compatibility checks. Temporary session markers let us measure visits. We also collect page-load performance measurements, missing-page paths and a limited number of errors, with emails, credentials and private URL parameters removed.`],
+  [`The shared footer asks Hraness Accounts whether a consent notice applies in your region. If consent is required or the region cannot be determined, analytics stays off until you accept. Your choice is saved in this browser's local storage. Do Not Track keeps analytics off even after acceptance.`],
+  [`The PostHog integration does not use autocapture, session replay, heatmaps, surveys, feature flags, or user profiles. The site has no local reader accounts or authentication. Requests are still subject to the ordinary logs and security controls of the hosting provider.`],
+  [`The footer offers the general Hraness newsletter. Before submission, it may contact `, { text: `Hraness Accounts`, href: `https://account.hraness.com` }, ` for anonymous form presentation and measurement. These requests send the list choice, language, compact or wide viewport category, and presentation version, then an opaque token when the form becomes visible. They omit account credentials and do not send your email address. If you submit the form, your email address, the Hraness list choice, form source, and any presentation token are sent to Accounts. Accounts records dated consent, and Resend sends confirmation and subscribed messages from news.hraness.com. You are not subscribed until you confirm. Each newsletter message has a Hraness-specific unsubscribe link that does not change another product subscription. Optional paid support opens Accounts separately, where you review the plan and price before confirming payment.`],
+  [`This general newsletter signup does not create new Stripe History mailing consent. If you subscribed through the earlier Stripe History form, Hraness Accounts retains that dated record. A previously confirmed membership may remain active, and Hraness Accounts may continue to process it and deliver Stripe History newsletter messages through Resend from news.hraness.com until you use its Stripe-History-specific unsubscribe link. That link does not change another product or general Hraness subscription. Removing the earlier form does not delete, cancel, or migrate that record.`],
+  [`${site.name} does not sell personal data, does not run advertising pixels, and does not keep a reader profile. Appearance preferences stay in the browser. Machine-readable copies of the public pages are available as Markdown when a client sends `, { code: `Accept: text/markdown` }, `, and the authored YAML records remain downloadable from the `, { text: `dataset index`, href: `${SITE_ORIGIN}/data` }, `.`],
+  [`Questions about this policy belong on the `, { text: `contact page`, href: `${SITE_ORIGIN}/contact` }, ` or in the `, { text: `Stripe History repository`, href: `${GITHUB_REPOSITORY_URL}` }, `. The broader sourcing and independence statement lives on the `, { text: `about page`, href: `${SITE_ORIGIN}/about` }, `.`],
+];
+
+export function editorialMarkdown(parts: readonly EditorialPart[]): string {
+  return parts.map((part) => typeof part === "string" ? part : "code" in part
+    ? "`" + part.code + "`"
+    : `[${part.text}](${part.href})`).join("");
+}
+
+export const privacyParagraphs = privacyContent.map(editorialMarkdown);
+
+export const privacySummary: readonly EditorialPart[] = [
+  "The site uses PostHog for visits, selected browser details, performance, and errors. The ",
+  { text: "privacy policy", href: absoluteSiteUrl("/privacy") },
+  " explains analytics preferences, newsletter signup, optional support, and historical mailing consent.",
+];
+
 
 export const contactParagraphs = [
-  `Use public GitHub issues for ordinary historical corrections, missing events, stronger sources, and focused software improvements. Include the event date, a concise factual claim, its category, the proposed confidence and status, and at least one source URL. Prefer primary sources. If a claim was only proposed or reported, keep that uncertainty in the record.`,
-  `Report suspected vulnerabilities through GitHub's private vulnerability reporting for this repository. Do not include sensitive details in a public issue.`,
-  `There is no Stripe History-owned reader login, contact form, product inbox, or new product-specific mailing signup on ${site.name}. The footer offers the general Hraness newsletter and optional support described on the privacy page. The project does not process payments, issue API keys, or operate a Stripe integration. ${independenceSentence}`,
-  `Published and maintained by [Hraness](${HRANESS_URL}). The complete sourced records and website code are in the [Stripe History repository](${GITHUB_REPOSITORY_URL}). Read [about](${SITE_ORIGIN}/about) for editorial method and [privacy](${SITE_ORIGIN}/privacy) for analytics, the Hraness newsletter, and historical mailing-consent limits.`,
+  `Send corrections, missing events, or better sources through the [Stripe History issue tracker](${GITHUB_REPOSITORY_URL}/issues). Include the affected entry, the proposed correction, and a supporting source.`,
+  `Report suspected vulnerabilities through [GitHub's private vulnerability reporting](${GITHUB_REPOSITORY_URL}/security/advisories/new). Keep sensitive details out of public issues.`,
+  `Published by [Hraness](${HRANESS_URL}). ${independenceSentence}`,
+  `Read [about](${SITE_ORIGIN}/about) for the editorial method and [privacy](${SITE_ORIGIN}/privacy) for analytics, newsletter signup, optional support, and historical mailing consent.`,
 ] as const;
 
 export const dataIntro =

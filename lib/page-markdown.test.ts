@@ -110,14 +110,15 @@ describe("agent markdown representations", () => {
     expect(privacy.body).toContain("Stripe-History-specific unsubscribe link");
     expect(privacy.body).toContain("does not delete, cancel, or migrate that record");
     expect(privacy.body).not.toContain("Cloudflare Turnstile");
+    expect(privacy.body).toContain("pageview and page-exit events");
+    expect(privacy.body).toContain("page-load performance measurements");
+    expect(privacy.body).toContain("analytics stays off until you accept");
+    expect(privacy.body).not.toContain("feature flags, performance monitoring, or user profiles");
     expect(visibleText(privacy.body).length).toBeGreaterThan(500);
 
     const contact = await markdownForPath("/contact");
-    expect(contact.body).toContain("no Stripe History-owned reader login");
-    expect(contact.body).toContain(
-      "general Hraness newsletter and optional support",
-    );
-    expect(visibleText(contact.body).length).toBeGreaterThan(500);
+    expect(contact.body).toContain("https://github.com/hraness/stripe-history/issues");
+    expect(contact.body).toContain("https://github.com/hraness/stripe-history/security/advisories/new");
   });
 });
 

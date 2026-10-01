@@ -7,8 +7,8 @@ events:
   - id: origins-early-cohort-expands-after-launch
     date: "2012"
     date_precision: year
-    title: Early employees broaden Stripe's engineering and operating bench
-    summary: Stripe continued to recruit unusually hands-on generalists after launch. Alex MacCaw joined after meeting John Collison through San Francisco's startup community, while Amber Feng joined as one of the company's first ten employees and went on to write much of the original Stripe Connect implementation.
+    title: Alex MacCaw and Amber Feng join Stripe
+    summary: Alex MacCaw joined after meeting John Collison through San Francisco's startup community, while Amber Feng joined as one of the company's first ten employees and went on to write much of the original Stripe Connect implementation.
     confidence: confirmed
     people:
       - Alex MacCaw
@@ -222,7 +222,7 @@ events:
     date: 2009-09
     date_precision: month
     title: John begins at Harvard as Patrick returns to MIT
-    summary: John Collison entered Harvard after completing Ireland's Leaving Certificate with top marks, while Patrick Collison returned to MIT after his post-acquisition period with Auctomatic in Vancouver. Their overlapping time in Cambridge set the stage for the payments project they began that academic year.
+    summary: John Collison entered Harvard after completing Ireland's Leaving Certificate with top marks, while Patrick Collison returned to MIT after his post-acquisition period with Auctomatic in Vancouver.
     confidence: reported
     people:
       - John Collison

@@ -53,40 +53,22 @@ export default function ContactPage() {
         </div>
         <h2 id="corrections-and-sources">Corrections and sources</h2>
         <p>
-          Use public GitHub issues for ordinary historical corrections, missing
-          events, stronger sources, and focused software improvements. Include
-          the event date, a concise factual claim, its category, the proposed
-          confidence and status, and at least one source URL. Prefer primary
-          sources. If a claim was only proposed or reported, keep that
-          uncertainty in the record.
+          Send corrections, missing events, or better sources through the{" "}
+          <a href={`${GITHUB_REPOSITORY_URL}/issues`}>Stripe History issue tracker</a>.
+          Include the affected entry, the proposed correction, and a supporting source.
         </p>
+        <h2 id="security">Security</h2>
         <p>
-          Open those reports in the{" "}
-          <a href={`${GITHUB_REPOSITORY_URL}/issues`}>
-            Stripe History issue tracker
-          </a>.
-        </p>
-        <h2>Security</h2>
-        <p>
-          Report suspected vulnerabilities through GitHub&apos;s private
-          vulnerability reporting for this repository. Do not include sensitive
-          details in a public issue.
+          Report suspected vulnerabilities through{" "}
+          <a href={`${GITHUB_REPOSITORY_URL}/security/advisories/new`}>GitHub&apos;s private vulnerability reporting</a>.
+          Keep sensitive details out of public issues.
         </p>
         <h2>Publisher</h2>
+        <p>Published by <a href={HRANESS_URL}>Hraness</a>. {independenceSentence}</p>
         <p>
-          There is no Stripe History-owned reader login, contact form, or product
-          inbox on {site.name}. The footer offers the general Hraness
-          newsletter and optional support described on the privacy page; this site does not create
-          a new Stripe History mailing subscription. The project does not process
-          payments, issue API keys, or operate a Stripe integration. {independenceSentence}
-        </p>
-        <p>
-          Published and maintained by <a href={HRANESS_URL}>Hraness</a>. The
-          complete sourced records and website code are in the{" "}
-          <a href={GITHUB_REPOSITORY_URL}>Stripe History repository</a>. Read{" "}
-          <Link href="/about">about</Link> for editorial method and{" "}
-          <Link href="/privacy">privacy</Link> for analytics, the Hraness newsletter,
-          and historical mailing-consent limits.
+          Read <Link href="/about">about</Link> for the editorial method and{" "}
+          <Link href="/privacy">privacy</Link> for analytics, newsletter signup,
+          optional support, and historical mailing consent.
         </p>
       </section>
       <SiteFooter path="/contact" />
