@@ -191,7 +191,7 @@ export async function publishPostHogMaps(
       try { resolved = await realpath(target); } catch (error) {
         if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
       }
-      assert.ok(!mapPaths.has(resolved), "Runtime file trace requires a private map");
+      assert.ok(!mapPaths.has(resolved), `Runtime file trace requires a private map: ${JSON.stringify(entry.path)} -> ${JSON.stringify(resolved.slice(output.length + 1))}`);
     }
   }
   for (const config of providerBefore.files.filter(({ path }) => path.endsWith("/.vc-config.json"))) {

@@ -145,7 +145,7 @@ for (const mutate of ["escape", "chain", "cycle", "static-link", "executable-lin
       if (mutate === "config-during") await put(f.root, ".next/output/config.json", "{}");
       if (mutate === "alias-during") { await rm(alias); await symlink(".././root.func", alias); }
       if (mutate === "failure") throw new Error("provider upload failed");
-    })).rejects.toThrow();
+    })).rejects.toThrow(mutate === "trace" ? `Runtime file trace requires a private map: "output/functions/stripe/root.func/entry.js.nft.json" -> "output/functions/stripe/root.func/entry.js.map"` : undefined);
     expect(calls).toBe(["config-during", "alias-during", "failure"].includes(mutate) ? 1 : 0);
     expect(await readFile(join(f.root, ".next", f.clientMap.path), "utf8")).toBe(f.map);
     expect(await readFile(join(output, "static/stripe/_next/client.js.map"), "utf8")).toBe(f.map);
