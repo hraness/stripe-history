@@ -1,18 +1,16 @@
 import {
-  appPathFromPublicSitePath,
-  publicSitePath,
-  SITE_DOMAIN,
-  SITE_HOST_ORIGIN,
-  type SitePath,
-} from "./site";
+  classifyAnalyticsRoute,
+  POSTHOG_SCHEMA_VERSION,
+  type AnalyticsRouteContext,
+  type AnalyticsRouteRule,
+  type PostHogSiteDefinition,
+} from "@hraness/posthog/site";
+import { publicSitePath, SITE_DOMAIN, type SitePath } from "./site";
 
-export const POSTHOG_ANALYTICS_SCHEMA_VERSION = 1 as const;
 export const POSTHOG_SITE_ID = "stripe-history" as const;
 export const POSTHOG_API_HOST = "https://us.i.posthog.com" as const;
 export const POSTHOG_COOKILESS_DISTINCT_ID = "$posthog_cookieless" as const;
-
-const CANONICAL_DOMAIN = SITE_DOMAIN;
-const CANONICAL_ORIGIN = SITE_HOST_ORIGIN;
+export const NOT_FOUND_PAGE_KIND = "not_found" as const;
 
 const STATIC_ROUTES = [
   ["/", "history_timeline"],
@@ -23,10 +21,9 @@ const STATIC_ROUTES = [
   ["/history/payment-volume", "payment_volume"],
   ["/history/net-revenue", "net_revenue"],
   ["/history/valuation", "valuation"],
-] as const;
+] as const satisfies readonly (readonly [SitePath, string])[];
 
-const staticPageKindByPath = new Map<string, string>(STATIC_ROUTES);
-const categoryPaths = new Set<string>([
+const CATEGORY_PATHS = [
   "/history/origins-and-early-company",
   "/history/executives-and-team",
   "/history/acquisitions",
@@ -39,86 +36,59 @@ const categoryPaths = new Set<string>([
   "/history/side-quests",
   "/history/company-milestones",
   "/history/appearances",
-] as const);
+] as const satisfies readonly SitePath[];
 
+/** App-relative paths of every public page that analytics classifies by name. */
 export const PUBLIC_ANALYTICS_PATHS = [
   ...STATIC_ROUTES.map(([path]) => path),
-  ...categoryPaths,
+  ...CATEGORY_PATHS,
 ] as const;
 
-export type AnalyticsRoute = Readonly<{
-  analytics_schema_version: typeof POSTHOG_ANALYTICS_SCHEMA_VERSION;
-  canonical_domain: typeof CANONICAL_DOMAIN;
-  canonical_path: string;
-  page_kind: string;
-  site_id: typeof POSTHOG_SITE_ID;
-}>;
-
-function canonicalPathname(pathname: string): string {
-  return pathname.length > 1 ? pathname.replace(/\/+$/u, "") : pathname;
-}
-
-export function classifyPublicAnalyticsRoute(value: string | URL): AnalyticsRoute | null {
-  try {
-    const url = value instanceof URL ? value : new URL(value);
-    if (
-      url.origin !== CANONICAL_ORIGIN
-      || url.username !== ""
-      || url.password !== ""
-      || url.port !== ""
-    ) {
-      return null;
-    }
-
-    const publicPath = canonicalPathname(url.pathname);
-    const appPath = appPathFromPublicSitePath(publicPath);
-    if (appPath === null) return null;
-    const staticPageKind = staticPageKindByPath.get(appPath);
-    const pageKind = staticPageKind
-      ?? (categoryPaths.has(appPath) ? "history_category" : null);
-    if (pageKind === null) return null;
-
-    const canonicalPath = publicSitePath(appPath as SitePath);
-
-    return {
-      analytics_schema_version: POSTHOG_ANALYTICS_SCHEMA_VERSION,
-      canonical_domain: CANONICAL_DOMAIN,
-      canonical_path: canonicalPath,
-      page_kind: pageKind,
-      site_id: POSTHOG_SITE_ID,
-    };
-  } catch {
-    return null;
-  }
-}
-
-/** PostHog's marker for a pageview with no referring site. */
-export const DIRECT_REFERRER = "$direct" as const;
-/** The longest DNS host name, which is also the byte ceiling for the referrer property. */
-export const MAX_REFERRER_HOST_LENGTH = 253;
-const MAX_RAW_REFERRER_LENGTH = 2_048;
-const HOST_NAME =
-  /^(?=.{1,253}$)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*$/u;
+const ROUTES: readonly AnalyticsRouteRule[] = [
+  ...STATIC_ROUTES.map(([path, pageKind]) => ({
+    match: "exact" as const,
+    path: publicSitePath(path),
+    pageKind,
+  })),
+  ...CATEGORY_PATHS.map((path) => ({
+    match: "exact" as const,
+    path: publicSitePath(path),
+    pageKind: "history_category",
+  })),
+];
 
 /**
- * Reduce a browser referrer to its host name. The path, query, fragment,
- * port, and credentials never leave this function. An empty referrer is a
- * direct visit; anything that is not an http(s) URL with an ordinary host
- * name returns null so the property is dropped.
+ * The PostHog site definition for hraness.com/stripe (portfolio observability
+ * standard, version 2). The existing referrer-only policy excludes campaign attribution.
  */
-export function referrerHost(value: unknown): string | null {
-  if (value === undefined || value === null || value === "") return DIRECT_REFERRER;
-  if (typeof value !== "string" || value.length > MAX_RAW_REFERRER_LENGTH) return null;
-  try {
-    const url = new URL(value);
-    if (url.protocol !== "https:" && url.protocol !== "http:") return null;
-    const host = url.hostname.toLowerCase();
-    return HOST_NAME.test(host) ? host : null;
-  } catch {
+export const analyticsSite: PostHogSiteDefinition = {
+  id: POSTHOG_SITE_ID,
+  canonicalDomain: SITE_DOMAIN,
+  allowedHosts: [SITE_DOMAIN, `www.${SITE_DOMAIN}`],
+  schemaVersion: POSTHOG_SCHEMA_VERSION,
+  routes: ROUTES,
+  customEvents: [],
+  attributionMode: "referrer_only",
+  allowedPaths: [{ match: "prefix", path: "/stripe" }],
+  excludedPaths: ["/stripe/api", "/stripe/auth", "/stripe/account", "/stripe/dashboard"].map((path) => ({ match: "prefix", path })),
+};
+
+const SITE_BASE_PATH_PREFIX = publicSitePath("/");
+
+/**
+ * Classifies a URL on this site. Paths under `/stripe` that match no public
+ * page are the 404 page, so they carry `page_kind: "not_found"`. URLs on other
+ * hosts or outside `/stripe` return null.
+ */
+export function classifyStripeHistoryRoute(
+  value: string | URL,
+  site: PostHogSiteDefinition = analyticsSite,
+): AnalyticsRouteContext | null {
+  const route = classifyAnalyticsRoute(site, value);
+  if (route === null) return null;
+  const path = route.canonical_path;
+  if (path !== SITE_BASE_PATH_PREFIX && !path.startsWith(`${SITE_BASE_PATH_PREFIX}/`)) {
     return null;
   }
-}
-
-export function canonicalAnalyticsUrl(route: AnalyticsRoute): string {
-  return `${CANONICAL_ORIGIN}${route.canonical_path}`;
+  return route.page_kind === "other" ? { ...route, page_kind: NOT_FOUND_PAGE_KIND } : route;
 }

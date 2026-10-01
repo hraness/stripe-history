@@ -15,8 +15,8 @@ describe("hraness.com/stripe privacy page", () => {
       title: "Privacy",
     });
     expect(html).toContain('<h1 id="privacy-heading">Privacy</h1>');
-    expect(html).toContain("anonymous, cookieless pageview events for public pages");
-    expect(html).toContain("does not save an analytics cookie or identifier");
+    expect(html).toContain("anonymous, cookieless pageview and page-exit events for public pages");
+    expect(html).toContain("does not save an analytics cookie or persistent identifier");
     expect(html).toContain("no local reader accounts or authentication");
     expect(html).toContain('href="https://account.hraness.com"');
     expect(html).toContain("the general Hraness newsletter");

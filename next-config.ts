@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withPostHogSourceMaps } from "@hraness/posthog/next-config";
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from "next/constants.js";
 import { withStylexNext } from "@hraness/ui/stylex-build/next";
 import { stylexOptions } from "./stylex-config.ts";
@@ -102,5 +103,8 @@ export default function configForPhase(phase: string): NextConfig {
   // The delivery wrapper changes headers/env only. Keep the concrete synchronous
   // callback type and reject a future wrapper that silently replaces it.
   if (config.webpack !== nextConfig.webpack) throw new Error("Delivery wrapper replaced the product webpack callback");
-  return withStylexNext({ ...config, webpack: nextConfig.webpack }, stylexOptions(process.cwd()));
+  return withPostHogSourceMaps(
+    withStylexNext({ ...config, webpack: nextConfig.webpack }, stylexOptions(process.cwd())),
+    { siteId: "stripe-history" },
+  );
 }

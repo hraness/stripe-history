@@ -1,1 +1,46 @@
-{"version":1,"surfaces":{},"exempt":[]}
+{
+  "version": 1,
+  "surfaces": {
+    "posthog:$pageview": {
+      "store": "PostHog project543691",
+      "kind": "telemetry",
+      "retention": "persistent",
+      "owner": "app/posthog.ts",
+      "maxBytesPerEvent": 32768,
+      "budget": "2 events/second; burst12; exceptions20/minute and2/fingerprint"
+    },
+    "posthog:$pageleave": {
+      "store": "PostHog project543691",
+      "kind": "telemetry",
+      "retention": "persistent",
+      "owner": "app/posthog.ts",
+      "maxBytesPerEvent": 32768,
+      "budget": "2 events/second; burst12; exceptions20/minute and2/fingerprint"
+    },
+    "posthog:$web_vitals": {
+      "store": "PostHog project543691",
+      "kind": "telemetry",
+      "retention": "persistent",
+      "owner": "app/posthog.ts",
+      "maxBytesPerEvent": 32768,
+      "budget": "2 events/second; burst12; exceptions20/minute and2/fingerprint"
+    },
+    "posthog:$exception": {
+      "store": "PostHog project543691",
+      "kind": "telemetry",
+      "retention": "persistent",
+      "owner": "app/posthog.ts",
+      "maxBytesPerEvent": 32768,
+      "budget": "2 events/second; burst12; exceptions20/minute and2/fingerprint"
+    },
+    "posthog:page not found": {
+      "store": "PostHog project543691",
+      "kind": "telemetry",
+      "retention": "persistent",
+      "owner": "app/posthog.ts",
+      "maxBytesPerEvent": 32768,
+      "budget": "2 events/second; burst12; exceptions20/minute and2/fingerprint"
+    }
+  },
+  "exempt": []
+}

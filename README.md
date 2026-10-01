@@ -74,6 +74,22 @@ bun run dev
 Copy `.env.example` to the ignored `.env.local` file only when configuring the
 optional Production analytics values.
 
+Optional analytics uses `@hraness/posthog` for public `/stripe` routes only.
+It preserves the consent gate and referrer-only attribution: campaign parameters,
+search keywords and full referring paths are discarded. Cookieless page views,
+page exits, core web vitals, bounded errors and missing-page events use schema 2.
+Private routes and nonproduction hosts cannot send events, including after
+navigation by an already initialized client. The boundary caps events at 32 KiB;
+errors are limited to 20 per minute and two per fingerprint. The real-SDK
+transport contract is tested in `app/analytics.test.ts`.
+
+Production builds can upload source maps using server-only `POSTHOG_API_KEY`,
+`POSTHOG_PROJECT_ID=543691` and `POSTHOG_UI_HOST=https://us.posthog.com`.
+The key needs only `error_tracking:write` for that project. The shared wrapper
+binds each upload to Vercel's commit SHA and deletes the uploaded map files;
+local, preview and unconfigured builds leave uploads disabled. Never put this
+key in a `NEXT_PUBLIC_` variable or commit an environment file.
+
 Every rendered page carries one shared Hraness footer with the general Hraness
 newsletter, optional paid support, and social links. Before submission, anonymous
 form presentation and measurement requests send Accounts the list choice, language,
