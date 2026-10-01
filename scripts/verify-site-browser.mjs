@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { verifyPublicationLinks } from "./verify-publication-links.mjs";
 import { spawn } from "node:child_process";
 import { once } from "node:events";
 import { mkdir, writeFile } from "node:fs/promises";
@@ -122,7 +123,11 @@ async function verifyCombination({ width, theme }) {
       assert.ok(state.footerPositions.every(position => position === "static" || position === "relative"), `${route}: footer not in normal flow`);
       assert.deepEqual(state.smallHeaderTargets, [], `${route}: phone targets below 44px`);
       assert.deepEqual(errors, [], `${route}: browser errors; responses >= 400: ${JSON.stringify(failedResponses)}`);
-      results.push({ route, width, theme });
+      const links = route === "/stripe/about" ? await verifyPublicationLinks(page, [
+        { name: "article", selector: ".stripe-history-about p a[href]:not([href$='/research/sources.yml'])" },
+        { name: "sources", selector: ".stripe-history-about a[href$='/research/sources.yml']" },
+      ]) : undefined;
+      results.push({ route, width, theme, links });
     }
     await page.goto(origin + routes[0]);
     // Check the header/filter breakpoint and real year-link anchor clearance.

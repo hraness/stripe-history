@@ -1100,8 +1100,13 @@
 /* Shared studio convention for text links; controls retain their own decoration line. */
 a[href] {
   text-decoration-style: dotted;
-  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
 }
-a[href]:where(:hover, :focus-visible) { text-decoration-color: currentColor; }
+/* Let shared system-color rules own high-contrast source and footer links. */
+@media (forced-colors: none) {
+  a[href] {
+    text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
+  a[href]:where(:hover, :focus-visible) { text-decoration-color: currentColor; }
+}
