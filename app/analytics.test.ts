@@ -336,7 +336,7 @@ describe("real posthog-js through the production before_send", () => {
       },
       {
         event: "$exception",
-        error: { name: "TypeError", message: `failed for ${LEAK_EMAIL}`, stack: leakStack },
+        error: { name: "TypeError", message: `failed for ${LEAK_EMAIL}, +@a.aa, %2B%40a.aa`, stack: leakStack },
         exceptionOrigin: "window_error",
       },
       { event: "$identify", properties: { email: LEAK_EMAIL } },
@@ -466,6 +466,8 @@ describe("real posthog-js through the production before_send", () => {
     expect(String(exception && property(exception, "error_fingerprint"))).toMatch(/^e_[0-9a-f]{8}$/u);
     expect(JSON.stringify(exception)).toContain("[email]");
     expect(JSON.stringify(exception)).not.toContain("phc_secretvalue123");
+    expect(JSON.stringify(exception)).not.toContain("+@a.aa");
+    expect(JSON.stringify(exception)).not.toContain("%2B%40a.aa");
   });
 
   test("drops emails, OAuth values, private parameters, fragments, and referrer paths", () => {
