@@ -1,4 +1,4 @@
-import { afterEach, expect, test } from "bun:test";
+import { afterEach, expect, spyOn, test } from "bun:test";
 import { createHash } from "node:crypto";
 import { mkdtemp, mkdir, readFile, realpath, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -197,3 +197,27 @@ for (const mutate of ["public-copy", "public-trace", "no-runtime", "static-runti
     expect(await readFile(join(f.root, ".next", f.serverMap.path), "utf8")).toBe(f.serverMapData);
   });
 }
+
+
+test("emits bounded complete summary and individually verifiable retained-map identities", async () => {
+  const f = await privateRuntimeFixture();
+  const events: string[] = [];
+  const log = spyOn(console, "log").mockImplementation((value) => { events.push(String(value)); });
+  try { await publishPostHogMaps(f.root, f.record, async () => {}); } finally { log.mockRestore(); }
+  expect(events.every((event) => Buffer.byteLength(event) < 4096)).toBe(true);
+  const [summary, ...maps] = events.map((event) => JSON.parse(event));
+  expect(summary.kind).toBe("stripe-history-map-publication-summary");
+  expect(summary.status).toBe("complete");
+  expect(summary.uploadedJavascriptFiles).toBe(2);
+  expect(summary.removedMapCount).toBe(3);
+  expect(summary.removedPublicMapCount).toBe(3);
+  expect(summary.retainedPrivateMapCount).toBe(2);
+  expect(summary.traceReferenceCount).toBe(2);
+  expect(maps).toHaveLength(summary.retainedPrivateMapCount);
+  for (const event of maps) {
+    expect(event.kind).toBe("stripe-history-retained-private-map");
+    expect(event.compilerRecordSha256).toBe(summary.compilerRecordSha256);
+    expect(event.map.sha256).toBe(hash(f.serverMapData));
+    expect(event.map.bytes).toBe(Buffer.byteLength(f.serverMapData));
+  }
+});
