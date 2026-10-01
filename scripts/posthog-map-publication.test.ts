@@ -97,3 +97,57 @@ for (const mutate of ["before", "during", "staging", "unknown", "symlink", "esca
     expect(await Bun.file(join(f.root, f.state, "posthog-publication.json")).exists()).toBe(false);
   });
 }
+
+async function providerFixture() {
+  const f = await fixture();
+  const base = "output/functions/stripe/root.func";
+  await put(f.root, `.next/${base}/entry.js`, f.javascript);
+  await put(f.root, `.next/${base}/entry.js.map`, f.map);
+  await put(f.root, `.next/${base}/.vc-config.json`, JSON.stringify({ runtime: "nodejs24.x", handler: "entry.js" }));
+  await put(f.root, ".next/output/config.json", JSON.stringify({ version: 3, routes: [] }));
+  await put(f.root, ".next/output/static/stripe/_next/client.js", f.javascript);
+  await put(f.root, ".next/output/static/stripe/_next/client.js.map", f.map);
+  await mkdir(join(f.root, ".next/output/functions/stripe/segments"));
+  await symlink("../root.func", join(f.root, ".next/output/functions/stripe/segments/full.rsc.func"));
+  return { ...f, base };
+}
+
+test("projects verified provider map copies while preserving function aliases and every other file", async () => {
+  const f = await providerFixture();
+  const path = await publishPostHogMaps(f.root, f.record, async () => {});
+  const receipt = JSON.parse(await readFile(join(f.root, path), "utf8"));
+  expect(receipt.removedMaps).toHaveLength(5);
+  expect(receipt.providerBefore.aliases).toHaveLength(1);
+  expect(receipt.providerAfter.aliases).toEqual(receipt.providerBefore.aliases);
+  expect(receipt.providerAfter.files).toEqual(receipt.providerBefore.files.filter((file: { path: string }) => !file.path.endsWith(".map")));
+  expect(await readFile(join(f.root, ".next/output/functions/stripe/segments/full.rsc.func/entry.js"), "utf8")).toBe(f.javascript);
+  expect(await Bun.file(join(f.root, ".next/output/functions/stripe/segments/full.rsc.func/entry.js.map")).exists()).toBe(false);
+});
+
+for (const mutate of ["escape", "chain", "cycle", "static-link", "executable-link", "stale-map", "source", "trace", "alias-trace", "handler", "config-during", "alias-during", "failure"] as const) {
+  test(`provider projection refuses ${mutate} and preserves maps`, async () => {
+    const f = await providerFixture();
+    const output = join(f.root, ".next/output");
+    const alias = join(output, "functions/stripe/segments/full.rsc.func");
+    if (mutate === "escape") { await mkdir(join(f.root, "outside.func")); await rm(alias); await symlink("../../../../../outside.func", alias); }
+    if (mutate === "chain") await symlink("segments/full.rsc.func", join(output, "functions/stripe/chain.func"));
+    if (mutate === "cycle") { await rm(alias); await symlink("full.rsc.func", alias); }
+    if (mutate === "static-link") await symlink("../../functions/stripe/root.func", join(output, "static/stripe/link"));
+    if (mutate === "executable-link") { await rm(join(f.root, `.next/${f.base}/entry.js`)); await symlink("../../../../static/chunks/client.js", join(f.root, `.next/${f.base}/entry.js`)); }
+    if (mutate === "stale-map") await put(f.root, `.next/${f.base}/entry.js.map`, "stale discovery map");
+    if (mutate === "source") await put(f.root, `.next/${f.base}/entry.js`, "changed source");
+    if (mutate === "trace") await put(f.root, `.next/${f.base}/entry.js.nft.json`, JSON.stringify({ files: ["entry.js.map"] }));
+    if (mutate === "alias-trace") await put(f.root, ".next/output/functions/stripe/runtime.nft.json", JSON.stringify({ files: ["segments/full.rsc.func/entry.js.map"] }));
+    if (mutate === "handler") await put(f.root, `.next/${f.base}/.vc-config.json`, JSON.stringify({ handler: "entry.js.map" }));
+    let calls = 0;
+    await expect(publishPostHogMaps(f.root, f.record, async () => {
+      calls++;
+      if (mutate === "config-during") await put(f.root, ".next/output/config.json", "{}");
+      if (mutate === "alias-during") { await rm(alias); await symlink(".././root.func", alias); }
+      if (mutate === "failure") throw new Error("provider upload failed");
+    })).rejects.toThrow();
+    expect(calls).toBe(["config-during", "alias-during", "failure"].includes(mutate) ? 1 : 0);
+    expect(await readFile(join(f.root, ".next", f.clientMap.path), "utf8")).toBe(f.map);
+    expect(await readFile(join(output, "static/stripe/_next/client.js.map"), "utf8")).toBe(f.map);
+  });
+}

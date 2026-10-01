@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { constants } from "node:fs";
-import { lstat, mkdir, open, readdir, realpath, rm, unlink, writeFile } from "node:fs/promises";
+import { lstat, mkdir, open, readdir, readlink, realpath, rm, unlink, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import type { runStylexNextBuild } from "@hraness/ui/stylex-build/next";
 import { determineChunkIdFromSource } from "@posthog/plugin-utils";
@@ -44,6 +44,10 @@ async function inventory(root: string, prefix = ""): Promise<Artifact[]> {
   const result: Artifact[] = [];
   for (const entry of await readdir(join(root, prefix), { withFileTypes: true })) {
     const path = prefix ? `${prefix}/${entry.name}` : entry.name;
+    if (!prefix && entry.name === "output") {
+      assert.ok(entry.isDirectory(), "Provider output must be an ordinary directory");
+      continue; // Separately inventoried with the provider function-alias contract.
+    }
     assert.ok(!entry.isSymbolicLink(), `Publication output contains a symlink: ${JSON.stringify(path)}`);
     if (entry.isDirectory()) result.push(...await inventory(root, path));
     else {
@@ -55,6 +59,57 @@ async function inventory(root: string, prefix = ""): Promise<Artifact[]> {
     }
   }
   return result.sort((a, b) => a.path.localeCompare(b.path));
+}
+
+type ProviderInventory = {
+  files: Artifact[];
+  aliases: { path: string; link: string; target: string; dev: number; ino: number; linkDev: number; linkIno: number }[];
+  directories: { path: string; dev: number; ino: number }[];
+};
+/** Vercel Build Output API function aliases are directory links. Do not follow
+ * them: their concrete targets must be independently visited exactly once. */
+async function providerInventory(root: string): Promise<ProviderInventory> {
+  const result: ProviderInventory = { files: [], aliases: [], directories: [] };
+  try { await lstat(join(root, "output")); } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return result;
+    throw error;
+  }
+  let entries = 0, totalBytes = 0;
+  async function walk(prefix: string) {
+    assert.ok(prefix.split("/").length <= 64, "Provider tree depth exceeded");
+    const absolute = join(root, prefix);
+    const stat = await lstat(absolute);
+    assert.ok(stat.isDirectory() && !stat.isSymbolicLink());
+    assert.equal(await realpath(absolute), absolute);
+    result.directories.push({ path: prefix, dev: stat.dev, ino: stat.ino });
+    for (const entry of await readdir(absolute, { withFileTypes: true })) {
+      assert.ok(++entries <= 50000, "Provider inventory entry bound exceeded");
+      const path = `${prefix}/${entry.name}`;
+      if (entry.isSymbolicLink()) {
+        assert.ok(path.startsWith("output/functions/") && path.endsWith(".func"), `Unapproved provider symlink: ${JSON.stringify(path)}`);
+        const linkStat = await lstat(join(root, path));
+        const link = await readlink(join(root, path));
+        assert.ok(link.length <= 4096 && !link.startsWith("/") && !link.includes("\\") && !link.includes("\0"));
+        const target = resolve(dirname(join(root, path)), link);
+        assert.ok(target.startsWith(`${join(root, "output/functions")}/`) && target.endsWith(".func"), "Provider alias escapes function output");
+        assert.equal(await realpath(target), target, "Provider alias must target a concrete directory without chains");
+        const targetStat = await lstat(target);
+        assert.ok(targetStat.isDirectory() && !targetStat.isSymbolicLink());
+        result.aliases.push({ path, link, target: target.slice(root.length + 1), dev: targetStat.dev, ino: targetStat.ino, linkDev: linkStat.dev, linkIno: linkStat.ino });
+      } else if (entry.isDirectory()) await walk(path);
+      else {
+        assert.ok(entry.isFile(), "Provider inventory needs ordinary files");
+        const data = await bytes(root, path);
+        totalBytes += data.length;
+        assert.ok(totalBytes <= 2 * 1024 * 1024 * 1024, "Provider inventory byte bound exceeded");
+        result.files.push({ path, bytes: data.length, sha256: sha(data) });
+      }
+    }
+  }
+  await walk("output");
+  for (const alias of result.aliases) assert.ok(result.directories.some((dir) => dir.path === alias.target && dir.dev === alias.dev && dir.ino === alias.ino), "Provider alias target was not inventoried");
+  for (const values of [result.files, result.aliases, result.directories]) values.sort((a, b) => a.path.localeCompare(b.path));
+  return result;
 }
 
 /** Called only after the complete compiler and native delivery proofs pass.
@@ -114,11 +169,34 @@ export async function publishPostHogMaps(
   assert.ok(maps.size > 0, "Configured source-map upload needs compiler maps");
   const before = await inventory(output);
   assert.deepEqual(before.filter(({ path }) => path.endsWith(".map")), [...maps.values()].sort((a, b) => a.path.localeCompare(b.path)), "Unknown, changed or missing delivery maps");
-  const mapPaths = new Set([...maps.keys()].map((path) => join(output, path)));
-  for (const entry of before.filter(({ path }) => path.endsWith(".nft.json"))) {
+  const providerBefore = await providerInventory(output);
+  const providerMaps = providerBefore.files.filter(({ path }) => path.endsWith(".map"));
+  for (const copy of providerMaps) {
+    const originals = [...maps.values()].filter((map) => map.bytes === copy.bytes && map.sha256 === copy.sha256);
+    assert.ok(originals.length > 0, `Unknown or stale provider map: ${JSON.stringify(copy.path)}`);
+    const associated = providerBefore.files.find(({ path }) => path === copy.path.slice(0, -4));
+    assert.ok(associated && originals.some((map) => {
+      const source = sources.get(map.path.slice(0, -4))!;
+      return source.bytes === associated.bytes && source.sha256 === associated.sha256;
+    }), `Provider map source differs from compiler: ${JSON.stringify(copy.path)}`);
+  }
+  const removedMaps = [...maps.values(), ...providerMaps];
+  const mapPaths = new Set(removedMaps.map(({ path }) => join(output, path)));
+  for (const entry of [...before, ...providerBefore.files].filter(({ path }) => path.endsWith(".nft.json"))) {
     const trace = object(JSON.parse((await bytes(output, entry.path, entry)).toString()));
     assert.ok(Array.isArray(trace.files) && trace.files.every((path) => typeof path === "string"));
-    for (const file of trace.files) assert.ok(!mapPaths.has(resolve(dirname(join(output, entry.path)), file)), "Runtime file trace requires a private map");
+    for (const file of trace.files) {
+      const target = resolve(dirname(join(output, entry.path)), file);
+      let resolved = target;
+      try { resolved = await realpath(target); } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+      }
+      assert.ok(!mapPaths.has(resolved), "Runtime file trace requires a private map");
+    }
+  }
+  for (const config of providerBefore.files.filter(({ path }) => path.endsWith("/.vc-config.json"))) {
+    const value = object(JSON.parse((await bytes(output, config.path, config)).toString()));
+    if (typeof value.handler === "string") assert.ok(!value.handler.endsWith(".map"), "Provider handler requires a private map");
   }
   const staging = `${state}/posthog-upload`;
   await mkdir(join(root, staging)); // Exclusive task-owned directory, never reused.
@@ -142,21 +220,24 @@ export async function publishPostHogMaps(
     assert.ok(files.length > 0);
     await upload(files); // Upload-only: production implementation must reject nonzero CLI exit.
     assert.deepEqual(await inventory(output), before, "Upload changed delivery bytes");
+    assert.deepEqual(await providerInventory(output), providerBefore, "Upload changed provider output");
     for (const file of files) {
       const original = file.slice(join(root, staging).length + 1);
       await bytes(join(root, staging), original, sources.get(original)!);
       await bytes(join(root, staging), `${original}.map`, maps.get(`${original}.map`)!);
     }
     const receiptPath = `${state}/posthog-publication.json`;
-    const receipt = { kind: "stripe-history-posthog-publication", schemaVersion: 1, compilerRecordSha256: sha(JSON.stringify(record)), compilerRecordPhase: "before-map-removal", uploadedJavascriptFiles: files.length, before, removedMaps: [...maps.values()], status: "uploaded-verified-before-map-removal" };
+    const receipt = { kind: "stripe-history-posthog-publication", schemaVersion: 1, compilerRecordSha256: sha(JSON.stringify(record)), compilerRecordPhase: "before-map-removal", uploadedJavascriptFiles: files.length, before, providerBefore, removedMaps, status: "uploaded-verified-before-map-removal" };
     await writeFile(join(root, receiptPath), JSON.stringify(receipt) + "\n", { flag: "wx" });
-    for (const entry of maps.values()) {
+    for (const entry of removedMaps) {
       await bytes(output, entry.path, entry);
       await unlink(join(output, entry.path));
     }
     const after = await inventory(output);
     assert.deepEqual(after, before.filter(({ path }) => !path.endsWith(".map")), "Publication changed JavaScript or retained maps");
-    await writeFile(join(root, receiptPath), JSON.stringify({ ...receipt, status: "complete", after }) + "\n");
+    const providerAfter = await providerInventory(output);
+    assert.deepEqual(providerAfter, { ...providerBefore, files: providerBefore.files.filter(({ path }) => !path.endsWith(".map")) }, "Publication changed provider output or retained maps");
+    await writeFile(join(root, receiptPath), JSON.stringify({ ...receipt, status: "complete", after, providerAfter }) + "\n");
     return receiptPath;
   } finally {
     assert.ok((await lstat(join(root, staging))).isDirectory());
