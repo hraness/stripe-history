@@ -15,7 +15,7 @@ async function put(root: string, path: string, data: string) {
   await mkdir(dirname(join(root, path)), { recursive: true });
   await writeFile(join(root, path), data);
 }
-async function fixture() {
+async function fixture(distinctServer = false) {
   const root = await realpath(await mkdtemp(join(tmpdir(), "stripe-posthog-map-test-"))); roots.push(root);
   const id = "11111111-1111-4111-8111-111111111111";
   const javascript = `console.log("compiled");${createChunkIdComment(id)}`;
@@ -24,11 +24,13 @@ async function fixture() {
   const state = ".stylex-next/test-build";
   const clientJs = identity("static/chunks/client.js", javascript);
   const clientMap = identity(`${clientJs.path}.map`, map);
-  const serverJs = identity("server/proxy.js", javascript);
-  const serverMap = identity(`${serverJs.path}.map`, map);
+  const serverJavascript = distinctServer ? `console.log("server");${createChunkIdComment("22222222-2222-4222-8222-222222222222")}` : javascript;
+  const serverMapData = distinctServer ? map.replace(id, "22222222-2222-4222-8222-222222222222") : map;
+  const serverJs = identity("server/proxy.js", serverJavascript);
+  const serverMap = identity(`${serverJs.path}.map`, serverMapData);
   const finalServer = { ...serverJs, path: "server/middleware.js" };
   const cssArtifact = identity("static/style.css", css), cssMapArtifact = identity("static/style.css.map", cssMap);
-  for (const [path, content] of [[clientJs.path, javascript], [clientMap.path, map], [finalServer.path, javascript], [serverMap.path, map], [cssArtifact.path, css], [cssMapArtifact.path, cssMap], ["server/native.js", "// native generated"]] as const) await put(root, `.next/${path}`, content);
+  for (const [path, content] of [[clientJs.path, javascript], [clientMap.path, map], [finalServer.path, serverJavascript], [serverMap.path, serverMapData], [cssArtifact.path, css], [cssMapArtifact.path, cssMap], ["server/native.js", "// native generated"]] as const) await put(root, `.next/${path}`, content);
   const delivery = [];
   for (const [target, outputs, sourceMaps] of [
     ["client", [clientJs, clientMap, cssArtifact, cssMapArtifact], [clientMap, cssMapArtifact]],
@@ -42,7 +44,7 @@ async function fixture() {
   const postPath = `${state}/postprocessing.json`;
   await put(root, postPath, post);
   const record: Record = { kind: "hraness-stylex-next-build", attemptId: "test-build", outputDirectory: ".next", delivery, state: "complete", postprocessing: { delivery: identity(postPath, post), discovery: identity(postPath, post) } , adapterVersion: "hraness-stylex-next-v3", nextVersion: "16.3.3", compilerSha256: hash("compiler"), rulesSha256: hash("rules"), unionPolicySha256: hash("union"), finalCss: cssArtifact, packages: [], discovery: [], schemaVersion: 2 } satisfies Record;
-  return { root, record, state, javascript, map, clientJs, clientMap, serverMap };
+  return { root, record, state, javascript, map, clientJs, clientMap, serverMap, serverJavascript, serverMapData };
 }
 
 test("uploads all JS targets with original bytes, removes only proven maps, records private projection", async () => {
@@ -145,9 +147,53 @@ for (const mutate of ["escape", "chain", "cycle", "static-link", "executable-lin
       if (mutate === "config-during") await put(f.root, ".next/output/config.json", "{}");
       if (mutate === "alias-during") { await rm(alias); await symlink(".././root.func", alias); }
       if (mutate === "failure") throw new Error("provider upload failed");
-    })).rejects.toThrow(mutate === "trace" ? `Runtime file trace requires a private map: "output/functions/stripe/root.func/entry.js.nft.json" -> "output/functions/stripe/root.func/entry.js.map"` : undefined);
+    })).rejects.toThrow(mutate === "trace" ? `Runtime trace requires a public or unclassified map: output/functions/stripe/root.func/entry.js.nft.json -> output/functions/stripe/root.func/entry.js.map` : undefined);
     expect(calls).toBe(["config-during", "alias-during", "failure"].includes(mutate) ? 1 : 0);
     expect(await readFile(join(f.root, ".next", f.clientMap.path), "utf8")).toBe(f.map);
     expect(await readFile(join(output, "static/stripe/_next/client.js.map"), "utf8")).toBe(f.map);
+  });
+}
+
+async function privateRuntimeFixture() {
+  const f = await fixture(true), base = "output/functions/stripe/root.func";
+  await put(f.root, ".next/server/app/_global-error/page.js.nft.json", JSON.stringify({ files: ["../../proxy.js.map"] }));
+  await put(f.root, `.next/${base}/server.js`, f.serverJavascript);
+  await put(f.root, `.next/${base}/server.js.map`, f.serverMapData);
+  await put(f.root, `.next/${base}/.vc-config.json`, JSON.stringify({ runtime: "nodejs24.x", handler: "server.js" }));
+  await put(f.root, `.next/${base}/entry.nft.json`, JSON.stringify({ files: ["server.js.map"] }));
+  await put(f.root, ".next/output/static/stripe/_next/client.js", f.javascript);
+  await put(f.root, ".next/output/static/stripe/_next/client.js.map", f.map);
+  return { ...f, base };
+}
+
+test("preserves exact traced server maps and private function copies while removing public maps", async () => {
+  const f = await privateRuntimeFixture();
+  const path = await publishPostHogMaps(f.root, f.record, async (files) => { expect(files).toHaveLength(2); });
+  const receipt = JSON.parse(await readFile(join(f.root, path), "utf8"));
+  expect(receipt.retainedMaps.map((file: { path: string }) => file.path)).toEqual([f.serverMap.path, `${f.base}/server.js.map`]);
+  expect(receipt.traceReferences).toHaveLength(2);
+  expect(receipt.removedMaps).toHaveLength(3);
+  for (const file of receipt.retainedMaps) expect(await readFile(join(f.root, ".next", file.path), "utf8")).toBe(f.serverMapData);
+  for (const file of receipt.removedMaps) expect(await Bun.file(join(f.root, ".next", file.path)).exists()).toBe(false);
+  expect(receipt.after).toEqual(receipt.before.filter((file: { path: string }) => !receipt.removedMaps.some((removed: { path: string }) => removed.path === file.path)));
+  expect(receipt.providerAfter.files).toEqual(receipt.providerBefore.files.filter((file: { path: string }) => !receipt.removedMaps.some((removed: { path: string }) => removed.path === file.path)));
+});
+
+for (const mutate of ["public-copy", "public-trace", "no-runtime", "static-runtime", "failure", "private-during"] as const) {
+  test(`private runtime contract rejects ${mutate} without removing maps`, async () => {
+    const f = await privateRuntimeFixture();
+    if (mutate === "public-copy") {
+      await put(f.root, ".next/output/static/server.js", f.serverJavascript);
+      await put(f.root, ".next/output/static/server.js.map", f.serverMapData);
+    }
+    if (mutate === "public-trace") await put(f.root, `.next/${f.base}/entry.nft.json`, JSON.stringify({ files: ["../../../static/stripe/_next/client.js.map"] }));
+    if (mutate === "no-runtime") await rm(join(f.root, ".next", f.base, ".vc-config.json"));
+    if (mutate === "static-runtime") await put(f.root, `.next/${f.base}/.vc-config.json`, JSON.stringify({ runtime: "static", handler: "server.js" }));
+    await expect(publishPostHogMaps(f.root, f.record, async () => {
+      if (mutate === "failure") throw new Error("upload denied");
+      if (mutate === "private-during") await put(f.root, `.next/${f.base}/server.js.map`, "tampered");
+    })).rejects.toThrow();
+    expect(await readFile(join(f.root, ".next", f.clientMap.path), "utf8")).toBe(f.map);
+    expect(await readFile(join(f.root, ".next", f.serverMap.path), "utf8")).toBe(f.serverMapData);
   });
 }
