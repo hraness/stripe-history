@@ -168,7 +168,7 @@ events:
     date: 2020-04
     date_precision: month
     title: Fast Grants launches an accelerated model for COVID-19 research funding
-    summary: Patrick Collison, Tyler Cowen, and Patrick Hsu organized Fast Grants as the pandemic exposed the speed limits of conventional research funding. The program made many decisions within 48 hours and aimed to deliver funds within a week, drawing roughly 4,000 applications in its first week.
+    summary: Patrick Collison, Tyler Cowen, and Patrick Hsu organized Fast Grants to fund COVID-19 research. The program made many decisions within 48 hours and aimed to deliver funds within a week, drawing roughly 4,000 applications in its first week.
     confidence: confirmed
     people:
       - Patrick Collison

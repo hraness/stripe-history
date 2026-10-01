@@ -68,7 +68,7 @@ events:
     date: "2024"
     date_precision: year
     title: Rob McIntosh becomes chief people officer
-    summary: After serving in the role on an interim basis, Rob McIntosh became Stripe's chief people officer while continuing to lead corporate development. The combined remit joined workforce leadership with the team responsible for acquisitions and strategic transactions.
+    summary: After serving in the role on an interim basis, Rob McIntosh became Stripe's chief people officer while continuing to lead corporate development.
     confidence: reported
     people:
       - Rob McIntosh
@@ -215,7 +215,7 @@ events:
     date: 2017-12-01
     date_precision: day
     title: David Singleton joins to lead engineering
-    summary: Stripe hired Google engineering vice president David Singleton to lead engineering. Singleton had overseen Android Wear and Google Fit, and joined as Stripe's headcount approached 1,000 and its engineering organization moved into a new stage of scale.
+    summary: Stripe hired Google engineering vice president David Singleton to lead engineering. Singleton had overseen Android Wear and Google Fit, and joined as Stripe's headcount approached 1,000.
     confidence: reported
     people:
       - David Singleton

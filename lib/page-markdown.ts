@@ -15,7 +15,9 @@ import {
   historyPageTitle,
   independenceSentence,
   privacyDescription,
+  editorialMarkdown,
   privacyParagraphs,
+  privacySummary,
   privacyTitle,
   recoveryLinks,
   researchRunNote,
@@ -249,9 +251,7 @@ function aboutMarkdown(evidence: HistoryEvidenceSummary): string {
     ]),
     "## Privacy",
     "",
-    privacyParagraphs.slice(0, 2).join("\n\n"),
-    "",
-    `The dedicated [privacy page](${SITE_ORIGIN}/privacy) repeats this policy.`,
+    editorialMarkdown(privacySummary),
     "",
   ].join("\n");
 }

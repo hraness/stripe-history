@@ -11,11 +11,6 @@ events:
     confidence: confirmed
     status: preview
     summary: At Sessions 2026, Stripe previewed a managed, hosted, read-only Postgres database that can expose real-time Stripe data after one-click Dashboard or CLI setup.
-    details:
-      - label: Launch kind
-        value: New product preview
-      - label: Access
-        value: Preview; not represented as generally available
     organizations:
       - Stripe
     tags:
@@ -32,11 +27,6 @@ events:
     confidence: confirmed
     status: preview
     summary: Stripe previewed Checkout studio, a visual checkout configuration and optimization product with an AI assistant, transaction replay, A/B testing, and personalized recommendations.
-    details:
-      - label: Launch kind
-        value: New product preview
-      - label: Availability
-        value: Preview
     organizations:
       - Stripe
     tags:
@@ -54,8 +44,6 @@ events:
     status: launched
     summary: Stripe launched Link's agent wallet, allowing an authorized agent to pay with a one-time-use card or Shared Payment Token while the customer retains approvals and purchase visibility.
     details:
-      - label: Launch kind
-        value: New product capability
       - label: Control model
         value: Customer approvals, purchase visibility, and task-specific credentials
     metrics:
@@ -81,12 +69,8 @@ events:
     status: announced
     summary: Stripe introduced streaming payments for AI-native usage, combining Metronome metering with stablecoin micropayments on Tempo so businesses can collect payment as value is delivered.
     details:
-      - label: Launch kind
-        value: New business-model infrastructure
       - label: Components
         value: Metronome usage tracking and Tempo stablecoin settlement
-      - label: Availability
-        value: Announced at Sessions; broad availability was not stated
     organizations:
       - Stripe
       - Metronome
@@ -107,8 +91,6 @@ events:
     status: launched
     summary: Stripe launched a single integration for product discovery, checkout, payments, and fraud controls inside AI applications, extending its earlier agentic-commerce work into a named suite.
     details:
-      - label: Launch kind
-        value: New product suite
       - label: Initial scope
         value: Businesses selling through supported AI applications
     organizations:
@@ -127,8 +109,6 @@ events:
     status: released
     summary: Stripe and OpenAI released the open Agentic Commerce Protocol and used it to power Instant Checkout in ChatGPT, establishing a shared interface for AI agents and merchants.
     details:
-      - label: Launch kind
-        value: Open protocol and production integration
       - label: Initial surface
         value: Instant Checkout in ChatGPT
     organizations:
@@ -149,8 +129,6 @@ events:
     status: introduced
     summary: Stripe and Paradigm introduced Tempo, a Layer 1 blockchain incubated for scalable, low-cost stablecoin payments rather than general-purpose crypto workloads.
     details:
-      - label: Launch kind
-        value: Incubated infrastructure project
       - label: Network
         value: Layer 1 blockchain purpose-built for payments
     organizations:
@@ -171,8 +149,6 @@ events:
     status: launched
     summary: Stripe launched Global Payouts so businesses could pay customers, contractors, and other third parties using an email address without requiring those recipients to become Stripe sellers.
     details:
-      - label: Launch kind
-        value: New payout product
       - label: Initial positioning
         value: Third-party payouts using hosted, no-code, or API paths
     organizations:
@@ -192,11 +168,6 @@ events:
     confidence: confirmed
     status: announced
     summary: Stripe announced Managed Payments, a merchant-of-record offering intended to handle global taxes, fraud, disputes, fulfillment obligations, and market entry for digital businesses.
-    details:
-      - label: Launch kind
-        value: New merchant-of-record product
-      - label: Availability
-        value: Announced at Sessions; the source did not claim universal availability
     organizations:
       - Stripe
     tags:
@@ -213,8 +184,6 @@ events:
     status: launched
     summary: Stripe launched Orchestration for enterprises to configure, manage, compare, and optimize payments across multiple processors from the Stripe Dashboard.
     details:
-      - label: Launch kind
-        value: Multiprocessor payments product
       - label: Audience
         value: Enterprises with complex payment-provider stacks
     organizations:
@@ -232,10 +201,8 @@ events:
     date_precision: day
     confidence: confirmed
     status: announced and deploying
-    summary: Stripe unveiled a foundation model trained on tens of billions of transactions for reuse across fraud, authorization, and other payment tasks, with early deployment improving card-testing detection.
+    summary: Stripe unveiled a foundation model trained on tens of billions of transactions for fraud detection, payment authorization, and other payment tasks. Stripe reported that early deployment improved card-testing detection.
     details:
-      - label: Launch kind
-        value: Shared AI model for payments
       - label: Rollout
         value: Announced for deployment across the payments suite
     metrics:
@@ -261,8 +228,6 @@ events:
     status: rollout announced
     summary: Stripe announced stablecoin-powered financial accounts for businesses in 101 countries, initially supporting USDC and Bridge's USDB with fiat and crypto receiving rails.
     details:
-      - label: Launch kind
-        value: Treasury expansion
       - label: Initial assets
         value: USDC and USDB
       - label: Availability
@@ -288,8 +253,6 @@ events:
     status: announced
     summary: Stripe announced that its Optimized Checkout Suite, Billing, and Radar would become usable by companies that process payments with other providers, a major change from its earlier integrated-stack requirement.
     details:
-      - label: Launch kind
-        value: Platform strategy and product availability change
       - label: Products
         value: Optimized Checkout Suite, Billing, and Radar
       - label: Availability
@@ -311,8 +274,6 @@ events:
     status: launched
     summary: Stripe launched Radar Assistant to draft fraud rules from natural-language prompts and test their likely fraud and false-positive effects against historical payments.
     details:
-      - label: Launch kind
-        value: AI-powered product capability
       - label: Product
         value: Stripe Radar
     organizations:
@@ -332,8 +293,6 @@ events:
     status: launched
     summary: Stripe launched full usage-based billing support so businesses could meter customer usage inside Stripe and translate it into charges for consumption-based products.
     details:
-      - label: Launch kind
-        value: Major product capability
       - label: Product
         value: Stripe Billing
     organizations:
@@ -352,8 +311,6 @@ events:
     status: launched
     summary: Stripe launched a Stripe-hosted crypto onramp that let web3 companies direct users to a hosted purchase flow, complementing the previously released embeddable onramp.
     details:
-      - label: Launch kind
-        value: New hosted product surface
       - label: Product
         value: Stripe Crypto Onramp
     organizations:
@@ -372,8 +329,6 @@ events:
     status: launched
     summary: Stripe launched Reader S700, a Stripe-designed Android smart reader for handheld or countertop use that can run customized point-of-sale experiences.
     details:
-      - label: Launch kind
-        value: New hardware product
       - label: Platform
         value: Stripe Terminal
     organizations:
@@ -393,8 +348,6 @@ events:
     status: launched
     summary: Stripe launched the Enhanced Issuer Network to share richer transaction signals with participating card issuers and improve authorization and fraud outcomes.
     details:
-      - label: Launch kind
-        value: Payments network product
       - label: Objective
         value: Reduce fraud and improve authorization rates
     organizations:
@@ -413,9 +366,6 @@ events:
     confidence: confirmed
     status: launched
     summary: At Sessions 2022, Stripe launched Stripe Apps so developers could extend Dashboard workflows and businesses could install third-party tools from an app marketplace.
-    details:
-      - label: Launch kind
-        value: Developer platform and marketplace
     organizations:
       - Stripe
     tags:
@@ -434,8 +384,6 @@ events:
     status: launched
     summary: Stripe launched Data Pipeline to synchronize Stripe data and reports into customers' Snowflake or Amazon Redshift warehouses without a custom extraction pipeline.
     details:
-      - label: Launch kind
-        value: New data product
       - label: Initial destinations
         value: Snowflake and Amazon Redshift
     organizations:
@@ -455,9 +403,6 @@ events:
     confidence: confirmed
     status: launched
     summary: Stripe launched Financial Connections so businesses could let customers link bank accounts and share permissioned financial data for payments and financial-services workflows.
-    details:
-      - label: Launch kind
-        value: New bank-account connectivity product
     organizations:
       - Stripe
     tags:
@@ -473,9 +418,6 @@ events:
     confidence: confirmed
     status: launched
     summary: Stripe launched Revenue Recognition to automate accrual accounting, reporting, and audit-ready revenue schedules for Stripe and non-Stripe transactions.
-    details:
-      - label: Launch kind
-        value: New finance automation product
     organizations:
       - Stripe
     tags:
@@ -492,8 +434,6 @@ events:
     status: launched
     summary: Stripe launched Identity as a self-serve identity-verification product built on its own onboarding infrastructure, initially supporting government documents from more than 30 countries.
     details:
-      - label: Launch kind
-        value: New identity product
       - label: Initial methods
         value: Government ID, selfie matching, and record checks
     metrics:
@@ -516,8 +456,6 @@ events:
     status: launched
     summary: Stripe launched Tax to calculate and collect sales tax, VAT, and GST and generate filing reports, initially covering more than 30 countries and every US state.
     details:
-      - label: Launch kind
-        value: New tax compliance product
       - label: Initial scope
         value: Calculation, collection, nexus monitoring, and reports
     metrics:
@@ -540,8 +478,6 @@ events:
     status: launched
     summary: Stripe launched Payment Links so a business could create and share a Stripe-hosted payment page from the Dashboard without a website or code.
     details:
-      - label: Launch kind
-        value: New no-code payment product
       - label: Initial capabilities
         value: One-time and recurring payments, wallets, coupons, subscriptions, and trials
     organizations:
@@ -560,8 +496,6 @@ events:
     status: invite-only launch
     summary: Stripe launched Treasury for platforms to embed financial accounts, money movement, and cards with regulated bank partners, initially through an invite-only program.
     details:
-      - label: Launch kind
-        value: Embedded financial-services product
       - label: Initial access
         value: Invite only
       - label: Bank partners
@@ -584,8 +518,6 @@ events:
     status: launched
     summary: Stripe launched Climate so businesses could direct a fraction of revenue to a Stripe-selected portfolio of permanent carbon-removal projects, with Stripe taking no fee.
     details:
-      - label: Launch kind
-        value: New climate contribution product
       - label: Fee
         value: No Stripe fee; 100% directed to carbon removal
     organizations:
@@ -604,8 +536,6 @@ events:
     status: launched in the United States
     summary: At Sessions 2019, Stripe launched a no-fee corporate card for US Stripe businesses with instant virtual cards, configurable controls, real-time expense reporting, and category-based rewards.
     details:
-      - label: Launch kind
-        value: New card product
       - label: Initial market
         value: United States
     organizations:
@@ -628,8 +558,6 @@ events:
     status: launched in the United States
     summary: Stripe launched Capital to offer data-driven financing with automated repayment to eligible US businesses and to let Connect platforms extend financing to their users.
     details:
-      - label: Launch kind
-        value: New business financing product
       - label: Initial market
         value: United States
       - label: Funding model
@@ -651,9 +579,6 @@ events:
     confidence: confirmed
     status: launched
     summary: Stripe launched Terminal, extending its programmable payments stack to card-present transactions through certified readers, SDKs, and unified online and in-person reporting.
-    details:
-      - label: Launch kind
-        value: New in-person payments product
     organizations:
       - Stripe
     tags:
@@ -670,8 +595,6 @@ events:
     status: private beta in the United States
     summary: Stripe launched Issuing so businesses could create and manage physical and virtual Visa cards through APIs, beginning with a private US beta.
     details:
-      - label: Launch kind
-        value: New card-issuing product
       - label: Initial access
         value: Private beta
       - label: Initial market
@@ -695,8 +618,6 @@ events:
     status: launched
     summary: Stripe launched Billing as an evolution of Subscriptions, adding hosted invoicing, flexible recurring-business primitives, and machine-learning-assisted revenue recovery.
     details:
-      - label: Launch kind
-        value: New recurring-revenue suite
       - label: Predecessor
         value: Stripe Subscriptions
     organizations:
@@ -714,9 +635,6 @@ events:
     confidence: confirmed
     status: launched
     summary: Stripe launched Elements, hosted and customizable UI components that let developers build checkout forms while keeping sensitive payment details off their servers.
-    details:
-      - label: Launch kind
-        value: New checkout UI toolkit
     organizations:
       - Stripe
     tags:
@@ -732,9 +650,6 @@ events:
     confidence: confirmed
     status: launched
     summary: Stripe launched Sigma, giving businesses a hosted SQL interface for real-time analysis of their Stripe data without building a separate warehouse and pipeline.
-    details:
-      - label: Launch kind
-        value: New analytics product
     organizations:
       - Stripe
     related_events:
@@ -753,8 +668,6 @@ events:
     status: launched
     summary: Stripe launched Radar as a machine-learning fraud system trained across the Stripe network, combining automatic blocking with business-configurable review and rules.
     details:
-      - label: Launch kind
-        value: New fraud-prevention product
       - label: Launch timing
         value: Stripe describes the launch as fall 2016
     metrics:
@@ -778,8 +691,6 @@ events:
     status: private beta
     summary: Stripe announced Atlas in private beta, bundling Delaware incorporation, a US bank account, a Stripe account, and legal, tax, and infrastructure guidance for founders worldwide.
     details:
-      - label: Launch kind
-        value: New company-formation service
       - label: Initial access
         value: Private beta
     organizations:
@@ -802,9 +713,6 @@ events:
     confidence: confirmed
     status: launched
     summary: Stripe debuted an embeddable Checkout for mobile and web that retained card details for subsequent one-click payments while keeping buyers on the merchant's site.
-    details:
-      - label: Launch kind
-        value: New hosted checkout surface
     organizations:
       - Stripe
     tags:
@@ -821,8 +729,6 @@ events:
     status: launched
     summary: Stripe launched Connect so marketplaces and platforms could onboard sellers, route payments, and build on permissioned payment data through APIs.
     details:
-      - label: Launch kind
-        value: New platform payments product
       - label: Early users
         value: Reddit and Skillshare
     organizations:
@@ -843,8 +749,6 @@ events:
     status: public launch
     summary: After a private beta, Stripe opened its developer-focused payments platform to the public, offering customizable payment forms and direct tokenization so card data did not touch merchant servers.
     details:
-      - label: Launch kind
-        value: Initial public product launch
       - label: Initial market
         value: United States
     organizations:

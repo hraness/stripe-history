@@ -305,7 +305,7 @@ events:
     date: 2015-04-28
     date_precision: day
     title: Stripe signs a large lease at 510 Townsend Street
-    summary: Stripe signed a lease for approximately 300,000 square feet at a planned 510 Townsend Street development. The deal gave the fast-growing company a future headquarters large enough to consolidate its expanding San Francisco workforce.
+    summary: Stripe signed a lease for approximately 300,000 square feet at a planned 510 Townsend Street development.
     confidence: confirmed
     status: Headquarters lease signed; later occupied
     locations:

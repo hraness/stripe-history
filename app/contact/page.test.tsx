@@ -19,11 +19,9 @@ describe("hraness.com/stripe contact page", () => {
     expect(html).toContain("https://github.com/hraness/stripe-history/issues");
     expect(html).toContain("private vulnerability reporting");
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
-    expect(html).toContain("There is no Stripe History-owned reader login");
-    expect(html).toContain("general Hraness newsletter and optional support");
-    expect(html).toContain("does not create a new Stripe History mailing subscription");
+    expect(html).toContain('href="https://github.com/hraness/stripe-history/security/advisories/new"');
     expect(html).not.toContain("mailto:");
     expect(html).toContain('aria-label="Appearance: System"');
-    expect(visibleText(html).length).toBeGreaterThan(500);
+    expect(visibleText(html)).toContain("historical mailing consent");
   });
 });

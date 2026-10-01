@@ -59,9 +59,7 @@ events:
     summary: At Sessions 2022, Stripe said businesses in Indonesia and Thailand could begin using Stripe in beta, expanding its platform to two major Southeast Asian markets.
     details:
       - label: Access
-        value: Beta; not equivalent to unrestricted general availability
-      - label: Feature parity
-        value: The announcement did not promise parity with every established Stripe market
+        value: Beta
     metrics:
       - label: Markets served
         value: "47"
@@ -88,8 +86,6 @@ events:
     details:
       - label: Local payment method
         value: Boleto Bancario
-      - label: Scope
-        value: The recap described an expansion; it did not claim the same product availability in every market
     locations:
       - Brazil
     organizations:
@@ -215,8 +211,6 @@ events:
     details:
       - label: Local method
         value: FPX in beta at launch
-      - label: Feature-gap note
-        value: FPX was not represented as generally available in the launch announcement
     locations:
       - Malaysia
     organizations:

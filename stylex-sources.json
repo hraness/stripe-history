@@ -20,6 +20,7 @@
     "app/appearances/page.tsx",
     "app/contact/page.tsx",
     "app/data/page.tsx",
+    "app/editorial-paragraph.tsx",
     "app/error.tsx",
     "app/evidence-snapshot.tsx",
     "app/foil-controller.tsx",

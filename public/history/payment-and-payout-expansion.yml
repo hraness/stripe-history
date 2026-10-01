@@ -16,8 +16,6 @@ events:
         value: Previewed for recipients in more than 100 countries
       - label: Stablecoin reach
         value: Previewed for recipients in 160 countries
-      - label: Availability
-        value: Preview; the country counts describe previewed coverage, not general availability
     metrics:
       - label: Fiat recipient countries
         value: 100+
@@ -100,8 +98,6 @@ events:
         value: Eligible funds become available in the Stripe balance on the next business day
       - label: Exclusion
         value: Direct debits and, in some regions, international card payments remain on standard settlement timing
-      - label: Eligibility
-        value: Availability is eligibility-based rather than universal
     organizations:
       - Stripe
     tags:
