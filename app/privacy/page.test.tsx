@@ -12,7 +12,7 @@ describe("hraness.com/stripe privacy page", () => {
     const html = renderToStaticMarkup(<PrivacyPage />);
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/privacy" },
-      title: "Privacy",
+      title: { absolute: "Stripe History privacy: analytics and data handling" },
     });
     expect(html).toContain('<h1 id="privacy-heading">Privacy</h1>');
     expect(html).toContain("anonymous, cookieless pageview and page-exit events for public pages");

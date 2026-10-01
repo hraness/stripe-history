@@ -86,6 +86,10 @@ async function verifyCombination({ width, theme }) {
     for (const route of routes) {
       const response = await page.goto(origin + route);
       assert.equal(response?.status(), 200, route);
+      if (route === "/stripe") {
+        const htmlBytes = Buffer.byteLength(await response.text());
+        assert.ok(htmlBytes < 2_000_000, `${route}: ${htmlBytes} HTML bytes exceed the crawl budget`);
+      }
       await page.locator("main").waitFor();
       await page.evaluate(() => document.fonts.ready);
       // Full-page captures include portraits below the lazy-loading threshold.
@@ -93,6 +97,7 @@ async function verifyCombination({ width, theme }) {
       await page.locator("img").evaluateAll(images => images.forEach(image => { image.loading = "eager"; }));
       await page.waitForFunction(() => [...document.images].every(image => image.complete && image.naturalWidth > 0), null, { timeout: 10_000 });
       await page.locator("img").evaluateAll(images => Promise.all(images.map(image => image.decode())));
+      await verifyVisibleCategoryGlyphs(page);
       const state = await page.evaluate(() => {
         const footer = document.querySelector("#hraness-site-footer");
         return {
@@ -137,6 +142,22 @@ async function verifyCombination({ width, theme }) {
     }
     await page.setViewportSize({ width, height: width === 360 ? 740 : width === 390 ? 844 : 900 });
     await page.goto(origin + routes[0]);
+    if (width < 600) {
+      // These controls have no desktop layout; prove their glyphs when shown on phones.
+      const controls = page.getByRole("group", { name: "Scale chart", exact: true });
+      for (const [id, label] of [["payment-volume", "annual volume"], ["net-revenue", "net revenue"], ["valuation", "valuation"]]) {
+        await controls.getByRole("button", { name: label, exact: true }).click();
+        await page.waitForFunction(measureId => {
+          const rail = document.querySelector(".history-measure-rail");
+          const card = document.querySelector(`#history-measure-${measureId}`);
+          const control = document.querySelector(`.history-measure-controls button[aria-controls="history-measure-${measureId}"]`);
+          if (!rail || !card || control?.getAttribute("aria-pressed") !== "true") return false;
+          const snapPadding = parseFloat(getComputedStyle(rail).scrollPaddingInlineStart) || 0;
+          return Math.abs(card.getBoundingClientRect().left - rail.getBoundingClientRect().left) <= snapPadding + 1;
+        }, id, { timeout: 5_000 });
+        await verifyVisibleCategoryGlyphs(page);
+      }
+    }
     const themeMenu = page.locator(".hraness-design-palette-menu");
     await page.waitForFunction(() => document.querySelector(".hraness-design-palette-menu")?.dataset.ready === "true");
     await themeMenu.locator(":scope > summary").click();
@@ -149,6 +170,15 @@ async function verifyCombination({ width, theme }) {
     await page.waitForURL(url => url.pathname === "/stripe/data");
     assert.deepEqual(errors, [], `Browser errors after appearance and navigation; responses >= 400: ${JSON.stringify(failedResponses)}`);
   } finally { await context.close(); }
+}
+async function verifyVisibleCategoryGlyphs(page) {
+  await page.waitForFunction(() => [...document.querySelectorAll(".history-category-icon use")]
+    // Check the containing link/button so accidentally hidden SVGs still fail.
+    .filter(glyph => glyph.ownerSVGElement?.parentElement?.getClientRects().length > 0)
+    .every(glyph => {
+      const box = glyph.getBBox();
+      return box.width > 0 && box.height > 0;
+    }), null, { timeout: 10_000 });
 }
 const order = new Map(routes.map((route, index) => [route, index]));
 results.sort((a, b) => a.width - b.width || a.theme.localeCompare(b.theme, "en") || order.get(a.route) - order.get(b.route));

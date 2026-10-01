@@ -9,7 +9,7 @@ describe("Stripe History dataset", () => {
   test("publishes a canonical dataset search result", () => {
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/data" },
-      title: "Stripe History dataset",
+      title: { absolute: "Stripe History dataset: sourced events and financials" },
     });
     expect(metadata.openGraph).toMatchObject({
       url: "https://hraness.com/stripe/data",

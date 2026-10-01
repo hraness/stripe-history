@@ -11,17 +11,17 @@ import { AtAGlance } from "./history/history-answers";
 import { HistoryView } from "./history/history-view";
 import { historyCollectionJsonLd } from "./seo";
 import { absoluteSiteUrl, site, socialMetadata } from "./site";
-import { historyPageTitle } from "./site-copy";
+import { historyMetaTitle, historyPageTitle } from "./site-copy";
 
 export const dynamic = "force-static";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: { absolute: historyPageTitle },
+    title: { absolute: historyMetaTitle },
     description: site.description,
     alternates: { canonical: absoluteSiteUrl("/") },
     robots: INDEXABLE_ROBOTS,
-    ...socialMetadata(historyPageTitle, site.description, "/"),
+    ...socialMetadata(historyMetaTitle, site.description, "/"),
   };
 }
 

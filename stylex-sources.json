@@ -5,6 +5,8 @@
     "app/foil-controller.tsx",
     "app/global-error.tsx",
     "app/history/category-icon.tsx",
+    "app/history/history-event-article.tsx",
+    "app/history/history-event.stylex.ts",
     "app/history/history-measure-rail.tsx",
     "app/history/history-sticky-offset-sync.tsx",
     "app/posthog-analytics.tsx",

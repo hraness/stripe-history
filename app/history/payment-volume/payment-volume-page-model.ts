@@ -5,7 +5,7 @@ import {
 } from "@/lib/content";
 import type { Metadata } from "next";
 
-import { absoluteSiteUrl, site, socialMetadata } from "../../site";
+import { absoluteSiteUrl, socialMetadata } from "../../site";
 
 export const volumeKindLabel: Readonly<
   Record<AnnualVolumePoint["kind"], string>
@@ -170,11 +170,11 @@ export function derivePaymentVolumePageMetadata(
 ): Metadata {
   const seo = derivePaymentVolumePageSeo(history);
   return {
-    title: seo.title,
+    title: { absolute: seo.title },
     description: seo.description,
     alternates: { canonical: absoluteSiteUrl("/history/payment-volume") },
     ...socialMetadata(
-      `${seo.title} | ${site.name}`,
+      seo.title,
       seo.description,
       "/history/payment-volume",
     ),

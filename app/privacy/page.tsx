@@ -11,6 +11,7 @@ import {
   privacyDescription,
   privacySocialTitle,
   privacyTitle,
+  privacyMetaTitle,
 } from "../site-copy";
 import {
   absoluteSiteUrl,
@@ -20,7 +21,7 @@ import {
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: privacyTitle,
+  title: { absolute: privacyMetaTitle },
   description: privacyDescription,
   alternates: { canonical: absoluteSiteUrl("/privacy") },
   ...socialMetadata(privacySocialTitle, privacyDescription, "/privacy"),

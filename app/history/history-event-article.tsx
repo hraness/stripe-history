@@ -1,11 +1,13 @@
+"use client";
+
 import type { CategorizedHistoryEvent } from "@/lib/content";
-import { historyCategoryPath } from "@/lib/history-urls";
 import Link from "next/link";
 import * as stylex from "@stylexjs/stylex";
 
 import { HistoryCategoryIcon } from "./category-icon";
 import { historyEventStyles as styles } from "./history-event.stylex";
 
+/** Keep complete SSR while sending event data once instead of repeating its markup in Flight. */
 export function HistoryEventArticle({
   event,
 }: Readonly<{
@@ -23,7 +25,7 @@ export function HistoryEventArticle({
             data-analytics-event="history filter selected"
             data-analytics-id={event.categoryId}
             data-analytics-kind="history-category"
-            href={`${historyCategoryPath(event.categoryId)}#${event.id}`}
+            href={`/history/${event.categoryId}#${event.id}`}
           >
             <HistoryCategoryIcon className={stylex.props(styles.typeIcon).className} filterId={event.categoryId} />
             <span>{categoryLabel}</span>
