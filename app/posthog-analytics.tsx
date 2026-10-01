@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { getBrowserConsent } from "@hraness/posthog/consent";
 
 import { initializePostHog } from "./posthog";
 
@@ -12,7 +13,10 @@ export function PostHogAnalytics({
   apiKey?: string | undefined;
 }>) {
   useEffect(() => {
-    void initializePostHog({ apiHost, apiKey });
+    const consent = getBrowserConsent();
+    if (consent === undefined) return;
+    const initialize = () => { void initializePostHog({ apiHost, apiKey }); };
+    return consent.subscribe(initialize);
   }, [apiHost, apiKey]);
 
   return null;

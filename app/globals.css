@@ -590,7 +590,7 @@
   color: var(--plain-foreground);
   display: inline-flex;
   gap: 0.35rem;
-  text-decoration: none;
+  text-decoration-line: underline;
 }
 
 /* One page-title role for every non-home page. The plain-page h1 rule is more
@@ -1096,3 +1096,12 @@
 
 /* Decorative topic icons (agent-generated line art, public/icons/). */
 .sh-topic-icon { display: block; flex: none; width: 40px; height: 40px; margin: 0; }
+
+/* Shared studio convention for text links; controls retain their own decoration line. */
+a[href] {
+  text-decoration-style: dotted;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+a[href]:where(:hover, :focus-visible) { text-decoration-color: currentColor; }

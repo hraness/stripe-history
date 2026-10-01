@@ -6,6 +6,7 @@ import { createServer } from "node:net";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright-core";
+import { ownedBrowserOptions, pinnedBrowserExecutable } from "./pinned-browser.ts";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const production = process.argv.includes("--production");
@@ -40,7 +41,9 @@ try {
     }
     assert.ok(ready, `Next did not become ready: ${output}`);
   }
-  browser = await chromium.launch();
+  const executablePath = pinnedBrowserExecutable(chromium.executablePath());
+  browser = await chromium.launch(ownedBrowserOptions(executablePath));
+  console.log(`Browser: ${executablePath} (${browser.version()})`);
   // Each viewport/theme pair has its own context (and so its own stored theme).
   // A small pool keeps the runner's CPU below the page wait timeouts.
   const combos = [360, 390, 1440].flatMap(width => ["light", "dark"].map(theme => ({ width, theme })));
