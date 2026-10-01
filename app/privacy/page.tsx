@@ -60,6 +60,13 @@ export default function PrivacyPage() {
           browser does not save an analytics cookie or identifier.
         </p>
         <p>
+          The shared footer asks Hraness Accounts whether a consent notice applies
+          in your region. If consent is required or the region cannot be determined,
+          analytics stays off until you accept. Your choice is saved in this
+          browser&apos;s local storage. Do Not Track keeps analytics off even after
+          acceptance.
+        </p>
+        <p>
           The PostHog integration does not use autocapture, session replay,
           heatmaps, surveys, feature flags, performance monitoring, or user
           profiles. The site has

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { ownedBrowserOptions, pinnedBrowserExecutable } from "./pinned-browser.ts";
 import { execFile, spawn, type ChildProcess } from "node:child_process";
 import { createHash } from "node:crypto";
 import { lstat, mkdir, mkdtemp, readFile, realpath, writeFile } from "node:fs/promises";
@@ -130,8 +131,7 @@ async function proveClosingBorders(page: Page) {
 }
 
 try {
-  executablePath = process.env.CHROMIUM_EXECUTABLE_PATH;
-  assert.ok(executablePath, "Set CHROMIUM_EXECUTABLE_PATH to the reviewed browser executable");
+  executablePath = pinnedBrowserExecutable(chromium.executablePath(), process.env.CHROMIUM_EXECUTABLE_PATH);
   assert.ok((await lstat(executablePath)).isFile());
   browserExecutableSha256 = hash(await readFile(executablePath));
   const authoredRecipe = await readFile(join(root, recipePath), "utf8");
@@ -210,7 +210,7 @@ try {
     throw new Error(`Timed out waiting for ${kind}; preserve ${evidenceRoot}\n${tail}`);
   }
   stage = "browser-launch";
-  browserServer = await chromium.launchServer({ executablePath, headless: true });
+  browserServer = await chromium.launchServer(ownedBrowserOptions(executablePath));
   const browserPid = browserServer.process().pid;
   if (browserPid !== undefined) knownPids.add(browserPid);
   browser = await chromium.connect(browserServer.wsEndpoint());

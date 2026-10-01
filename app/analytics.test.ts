@@ -125,9 +125,28 @@ describe("Stripe History PostHog boundary", () => {
       person_profiles: "never",
       persistence: "memory",
       rageclick: false,
+      request_batching: false,
       save_campaign_params: false,
       save_referrer: false,
     });
+  });
+
+  test("the capture boundary follows consent changes without retaining the previous decision", () => {
+    let allowed = false;
+    const beforeSend = createPostHogConfig(() => evidence.href, () => "", undefined, () => allowed).before_send;
+    if (typeof beforeSend !== "function") throw new Error("Expected one capture boundary");
+    const capture = pageview({
+      $cookieless_mode: true,
+      distinct_id: POSTHOG_COOKILESS_DISTINCT_ID,
+      token: "phc_publicproject",
+      email: "reader@example.com",
+    });
+    expect(beforeSend(capture)).toBeNull();
+    allowed = true;
+    expect(beforeSend(capture)?.properties.$current_url).toBe("https://hraness.com/stripe/about");
+    expect(beforeSend(capture)?.properties.email).toBeUndefined();
+    allowed = false;
+    expect(beforeSend(capture)).toBeNull();
   });
 
   test("before-send emits only an anonymous, canonical pageview", () => {

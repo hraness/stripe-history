@@ -1,6 +1,7 @@
 "use client";
 
 import type { CaptureResult, PostHogConfig } from "posthog-js";
+import { getBrowserConsent, installConsentTransport } from "@hraness/posthog/consent";
 
 import {
   canonicalAnalyticsUrl,
@@ -98,14 +99,16 @@ export function createPostHogConfig(
   resolveHref: () => string,
   resolveReferrer: () => string,
   apiHost: string = POSTHOG_API_HOST,
+  captureAllowed: () => boolean = () => getBrowserConsent()?.allowed() ?? false,
 ): Partial<PostHogConfig> {
+  const sanitize = createPostHogBeforeSend(resolveHref, resolveReferrer);
   return {
     advanced_disable_feature_flags: true,
     advanced_disable_feature_flags_on_first_load: true,
     advanced_disable_flags: true,
     api_host: apiHost,
     autocapture: false,
-    before_send: createPostHogBeforeSend(resolveHref, resolveReferrer),
+    before_send: (capture) => captureAllowed() ? sanitize(capture) : null,
     capture_dead_clicks: false,
     capture_exceptions: false,
     capture_heatmaps: false,
@@ -128,6 +131,7 @@ export function createPostHogConfig(
     persistence: "memory",
     rageclick: false,
     respect_dnt: true,
+    request_batching: false,
     save_campaign_params: false,
     save_referrer: false,
   };
@@ -136,8 +140,10 @@ export function createPostHogConfig(
 export async function initializePostHog(
   options: PostHogInitializationOptions,
 ): Promise<boolean> {
-  if (initialization !== null) return initialization;
   if (!isPostHogEligible(options)) return false;
+  const consent = getBrowserConsent();
+  if (consent === undefined || !consent.allowed()) return false;
+  if (initialization !== null) return initialization;
 
   const apiHost = acceptedApiHost(options.apiHost);
   const apiKey = options.apiKey;
@@ -147,6 +153,10 @@ export async function initializePostHog(
 
   initialization = import("posthog-js")
     .then(({ default: posthog }) => {
+      if (!consent.allowed() || !installConsentTransport(posthog, consent)) {
+        initialization = null;
+        return false;
+      }
       posthog.init(apiKey, createPostHogConfig(
         () => window.location.href,
         () => document.referrer,
