@@ -5,6 +5,8 @@ import { runStylexNextBuild } from "@hraness/ui/stylex-build/next";
 import { stylexOptions } from "../stylex-config.ts";
 import { assertPatchedNextDelivery } from "./next-template-cache.ts";
 import { withVercelToolbarSource } from "./next-build-sources.ts";
+import { resolvePostHogSourceMapConfig } from "@hraness/posthog/next-config";
+import { packageVerifiedClientMaps } from "./package-source-maps.ts";
 
 assert.equal(process.release.name, "node");
 assert.equal(process.versions.node.split(".")[0], "24", "Compiled builds require genuine Node 24.");
@@ -16,3 +18,6 @@ const record = await runStylexNextBuild({
 });
 assertPatchedNextDelivery(process.cwd(), record);
 console.log(JSON.stringify({ kind: "stripe-history-compiled-build", record }));
+if (resolvePostHogSourceMapConfig({ siteId: "stripe-history" })) {
+  console.log(JSON.stringify(packageVerifiedClientMaps(process.cwd(), record)));
+}

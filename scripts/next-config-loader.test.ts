@@ -35,13 +35,14 @@ test("the production phase resolves the configured production source-map wrapper
     POSTHOG_API_KEY: "phx_test_not_a_real_credential",
     POSTHOG_PROJECT_ID: "543691",
     POSTHOG_UI_HOST: "https://us.posthog.com",
+    WEBPACK: "1",
   });
   const result = spawnSync(process.execPath, ["--eval", `
     import assert from "node:assert/strict";
     import { mock } from "bun:test";
     // The compiler requires a build-attempt lease. Isolate only that unrelated
     // boundary; execute the real PostHog wrapper and production phase callback.
-    mock.module("@hraness/ui/stylex-build/next", () => ({ withStylexNext: (config) => config }));
+    mock.module("@hraness/ui/stylex-build/next", () => ({ withStylexNext: (config) => ({ ...config, distDir: process.env.STRIPE_TEST_DIST_DIR ?? ".next" }) }));
     const { default: configForPhase, createNextConfig } = await import("./next-config.ts");
     const config = await configForPhase("phase-production-build", { defaultConfig: {} });
     assert.equal(typeof config, "object");
@@ -49,7 +50,13 @@ test("the production phase resolves the configured production source-map wrapper
     assert.equal(config.reactStrictMode, true);
     assert.equal(typeof config.webpack, "function");
     assert.notEqual(config.webpack, createNextConfig({}).webpack);
-    assert.equal(typeof config.compiler, "object");
+    const webpack = config.webpack({ plugins: [], resolve: {} }, { isServer: false });
+    const uploader = webpack.plugins.find(plugin => plugin.resolvedConfig?.sourcemaps);
+    assert.ok(uploader, "Delivery retains PostHog debug IDs and upload");
+    assert.equal(uploader.resolvedConfig.sourcemaps.deleteAfterUpload, false, "Maps must survive compiler admission");
+    process.env.STRIPE_TEST_DIST_DIR = ".stylex-next/stripe-fixture/next-discovery";
+    const discovery = await configForPhase("phase-production-build", { defaultConfig: {} });
+    assert.equal(discovery.webpack, createNextConfig({}).webpack, "Discovery must not upload unpublished chunks");
     console.log("configured-source-map-config-ok");
   `], { cwd: process.cwd(), env: environment, encoding: "utf8", timeout: 15_000, maxBuffer: 16_384 });
   expect(result.error).toBeUndefined();

@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
-import { withPostHogSourceMaps } from "@hraness/posthog/next-config";
+import { resolvePostHogSourceMapConfig } from "@hraness/posthog/next-config";
+import { withPostHogConfig } from "@posthog/nextjs-config";
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from "next/constants.js";
 import { withStylexNext } from "@hraness/ui/stylex-build/next";
 import { stylexOptions } from "./stylex-config.ts";
@@ -111,10 +112,14 @@ export default function configForPhase(
   // The delivery wrapper changes headers/env only. Keep the concrete synchronous
   // callback type and reject a future wrapper that silently replaces it.
   if (config.webpack !== nextConfig.webpack) throw new Error("Delivery wrapper replaced the product webpack callback");
-  const sourceMapConfig = withPostHogSourceMaps(
-    withStylexNext({ ...config, webpack: nextConfig.webpack }, stylexOptions(process.cwd())),
-    { siteId: "stripe-history" },
-  ) as NextConfig | ConfigCallback;
+  const compiled = withStylexNext({ ...config, webpack: nextConfig.webpack }, stylexOptions(process.cwd()));
+  const uploads = resolvePostHogSourceMapConfig({ siteId: "stripe-history" });
+  // Discovery is never published. Delivery maps remain until the adapter and
+  // patched-template proofs finish; build-next then packages only verified maps
+  // out of the public static tree, leaving runtime JavaScript byte-identical.
+  const sourceMapConfig = (uploads && compiled.distDir === ".next"
+    ? withPostHogConfig(compiled, { ...uploads, sourcemaps: { ...uploads.sourcemaps, deleteAfterUpload: false } })
+    : compiled) as NextConfig | ConfigCallback;
   // The upstream declaration says NextConfig, but enabled uploads return an
   // async config callback. Next resolves our outer callback only once.
   return typeof sourceMapConfig === "function"
