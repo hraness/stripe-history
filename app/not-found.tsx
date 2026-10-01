@@ -2,6 +2,7 @@ import { NOINDEX_ROBOTS } from "@hraness/web-discovery";
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { PageNotFoundAnalytics } from "./posthog-analytics";
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 import {
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <main className="plain-page stripe-history-main stripe-history-state" id="main-content">
+      <PageNotFoundAnalytics />
       <SiteHeader />
       <section aria-labelledby="not-found-heading" className="stripe-history-section">
         <h1 id="not-found-heading">{notFoundTitle}</h1>

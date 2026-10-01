@@ -50,14 +50,18 @@ export default function PrivacyPage() {
           <h1 id="privacy-heading">{privacyTitle}</h1>
         </div>
         <p>
-          The site sends anonymous, cookieless pageview events for public pages
+          The site sends anonymous, cookieless pageview and page-exit events for public pages
           to PostHog. Each event contains the normalized public page path, its
           page category, a site identifier, an analytics schema version, and
           PostHog&apos;s cookieless marker. It also carries the host name of
           the site that linked to the page, such as google.com, but never the
           full referring address. It excludes query strings, URL fragments,
           account data, and user content. The
-          browser does not save an analytics cookie or identifier.
+          browser does not save an analytics cookie or persistent identifier. Browser
+          and device details support aggregate compatibility checks. Temporary session markers
+          let us measure visits. We also collect page-load performance measurements,
+          missing-page paths and a limited number of errors, with emails, credentials
+          and private URL parameters removed.
         </p>
         <p>
           The shared footer asks Hraness Accounts whether a consent notice applies
@@ -68,7 +72,7 @@ export default function PrivacyPage() {
         </p>
         <p>
           The PostHog integration does not use autocapture, session replay,
-          heatmaps, surveys, feature flags, performance monitoring, or user
+          heatmaps, surveys, feature flags, or user
           profiles. The site has
           no local reader accounts or authentication. Requests are still subject
           to the ordinary logs and security controls of the hosting provider.
