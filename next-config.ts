@@ -94,7 +94,15 @@ export function createNextConfig(
   });
 }
 
-export default function configForPhase(phase: string): NextConfig {
+type ConfigContext = { defaultConfig: NextConfig };
+type ConfigCallback = (phase: string, context: ConfigContext) => NextConfig | Promise<NextConfig>;
+
+export default function configForPhase(phase: typeof PHASE_PRODUCTION_SERVER, context?: ConfigContext): NextConfig;
+export default function configForPhase(phase: string, context?: ConfigContext): NextConfig | Promise<NextConfig>;
+export default function configForPhase(
+  phase: string,
+  context: ConfigContext = { defaultConfig: {} },
+): NextConfig | Promise<NextConfig> {
   const config = createNextConfig();
   if (phase === PHASE_PRODUCTION_SERVER) return config;
   if (phase !== PHASE_PRODUCTION_BUILD) {
@@ -103,8 +111,13 @@ export default function configForPhase(phase: string): NextConfig {
   // The delivery wrapper changes headers/env only. Keep the concrete synchronous
   // callback type and reject a future wrapper that silently replaces it.
   if (config.webpack !== nextConfig.webpack) throw new Error("Delivery wrapper replaced the product webpack callback");
-  return withPostHogSourceMaps(
+  const sourceMapConfig = withPostHogSourceMaps(
     withStylexNext({ ...config, webpack: nextConfig.webpack }, stylexOptions(process.cwd())),
     { siteId: "stripe-history" },
-  );
+  ) as NextConfig | ConfigCallback;
+  // The upstream declaration says NextConfig, but enabled uploads return an
+  // async config callback. Next resolves our outer callback only once.
+  return typeof sourceMapConfig === "function"
+    ? sourceMapConfig(phase, context)
+    : sourceMapConfig;
 }
