@@ -24,10 +24,18 @@ The homepage's “How this record is kept” panel shows how many events, source
 Each category is one YAML file. For example:
 
 ```sh
-curl -O https://hraness.com/stripe/history/acquisitions.yml
+curl --fail --location --output acquisitions.yml https://hraness.com/stripe/history/acquisitions.yml
 ```
 
 All files are listed at https://hraness.com/stripe/data and in [`public/history/`](./public/history/). The data is MIT licensed.
+
+With Bun 1.3.14, read the download without installing this application:
+
+```sh
+bun -e 'import { YAML } from "bun"; const data = YAML.parse(await Bun.file("acquisitions.yml").text()); console.log(data.category.id); for (const event of data.events) console.log(event.id, event.date, event.date_precision, event.confidence, event.status ?? "");'
+```
+
+The output starts with `acquisitions`, followed by one line per event. Keep `date_precision` with `date`: a year or month is not an exact day. `confidence` describes the evidence (`confirmed`, `reported`, or `disputed`); the optional `status` text describes the transaction. A confirmed agreement is not necessarily a completed acquisition. Resolve each event's `source_ids` in [`public/research/sources.yml`](./public/research/sources.yml) before using its claim. The [history schema](./lib/history-schema.ts) defines the fields; [method and limits](https://hraness.com/stripe/about#sources-and-review) explains how the record is maintained.
 
 ## Other Stripe references
 
