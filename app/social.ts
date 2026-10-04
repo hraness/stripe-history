@@ -11,7 +11,7 @@ export const headerMark =
 
 /** The one declaration every Stripe History share image renders from. */
 export const socialSite = defineSocialImageSite({
-  brand: "hraness",
+  brand: "Hraness",
   brandMark: headerMark,
   description: site.tagline,
   domain: SITE_LABEL,

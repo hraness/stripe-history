@@ -13,7 +13,7 @@ import { headerMark, homeSocialPage, socialSite } from "./social";
 describe("share image", () => {
   test("declares the site once from the canonical identity", () => {
     expect(socialSite).toMatchObject({
-      brand: "hraness",
+      brand: "Hraness",
       description: site.tagline,
       domain: SITE_LABEL,
       name: site.name,
