@@ -11,9 +11,9 @@ export function SiteHeader({
   return (
     <MarketingSiteHeader
       ariaLabel="primary navigation"
-      brand={<span>hraness</span>}
+      brand={<span>Hraness</span>}
       brandHref="https://hraness.com"
-      brandLabel="hraness"
+      brandLabel="Hraness"
       brandMark={publicSitePath("/marks/hraness-ra.svg")}
       className="stripe-history-header hraness-material-chrome"
       links={[

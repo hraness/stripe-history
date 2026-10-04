@@ -59,6 +59,6 @@ describe("standalone runtime surfaces", () => {
     expect(notFound).toContain('href="/contact"');
     expect(notFound).toContain('href="/privacy"');
     expect(notFound.match(/data-presentation="menu"/gu)).toHaveLength(1);
-    expect(notFound).toContain('aria-label="hraness"');
+    expect(notFound).toContain('aria-label="Hraness"');
   });
 });
