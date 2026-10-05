@@ -1,4 +1,5 @@
 import { formatEventDate } from "@/lib/event-date";
+import { STRIPE_HISTORY_SCHEMA_VERSION } from "@/lib/history-schema";
 
 import {
   absoluteSiteUrl,
@@ -192,3 +193,75 @@ export const contactParagraphs = [
 
 export const dataIntro =
   "These YAML files hold the data behind the timeline and the valuation, volume, and revenue pages. Each history entry has a date, title, category, summary, confidence level, and at least one source, plus a status where one applies. The research files hold the source catalog, valuation observations, leadership appearances, the definition of each research collection, and the log of research runs.";
+
+/** The /data page's worked example. The page and its Markdown twin render the same parts. */
+export const dataReadExample = {
+  heading: "Read a history file",
+  intro: [
+    "Each file under ", { code: "history/" }, " has a ", { code: "category" }, " record, an ",
+    { code: "events" }, " list with the newest event first, and the schema version ",
+    { code: STRIPE_HISTORY_SCHEMA_VERSION },
+    ". The appearances file has its own layout. Read a history file with a YAML parser that keeps each date as written, such as the ",
+    { text: "yaml package", href: "https://www.npmjs.com/package/yaml" },
+    " this site uses. In Bun 1.3.14, the built-in ", { code: "YAML.parse" },
+    " reads a month-only date such as ", { code: "2025-07" }, " as the number ",
+    { code: "2025" }, ".",
+  ],
+  commands: [
+    `curl --fail --location --output acquisitions.yml ${SITE_ORIGIN}/history/acquisitions.yml`,
+    "bun add yaml",
+    `bun -e 'import { parse } from "yaml"; const data = parse(await Bun.file("acquisitions.yml").text()); console.log(data.category.id); for (const event of data.events) console.log(event.id, event.date, event.date_precision, event.confidence, event.status ?? "");'`,
+  ],
+  output: [
+    "The output starts with ", { code: "acquisitions" },
+    ", then prints one line per event: its ID, date, date precision, confidence, and status. Among them are the Privy completion, dated to the month, the announcement before it, and a reported offer that Airwallex rejected:",
+  ],
+  sampleLines: [
+    "privy-acquisition-completed 2025-07 month confirmed Completed",
+    "privy-acquisition-announced 2025-06-11 day confirmed Agreement announced; completed in July 2025",
+    "airwallex-acquisition-offer-rejected 2018-10 month reported Reported offer rejected; no agreement",
+  ],
+  fields: [
+    [
+      { code: "date" }, " and ", { code: "date_precision" }, ": the date is written as ",
+      { code: "YYYY" }, ", ", { code: "YYYY-MM" }, ", or ", { code: "YYYY-MM-DD" },
+      ", and the precision says which: ", { code: "year" }, ", ", { code: "month" }, ", or ",
+      { code: "day" }, ". A year or month is not an exact day.",
+    ],
+    [
+      { code: "confidence" }, ": ", { code: "confirmed" }, ", ", { code: "reported" }, ", or ",
+      { code: "disputed" },
+      ". It describes the evidence for the event, and the timeline prints it beside every event that is not confirmed.",
+    ],
+    [
+      { code: "status" },
+      ": where present, the state of a deal or launch in words. A confirmed agreement is not a completed acquisition until its status or a later event records the completion.",
+    ],
+    [
+      { code: "source_ids" }, ": each ID matches an ", { code: "id" },
+      " in the source catalog YAML listed above, which gives the source's title, publisher, kind, and URL, and its publication date when known.",
+    ],
+    [
+      { code: "amount" }, ": ", { code: "display" },
+      " keeps the figure's wording, including words such as reported. ", { code: "value" },
+      " is optional, so check for it before adding amounts.",
+    ],
+    [
+      { code: "annual_volume" }, " and ", { code: "annual_revenue" },
+      ": a calendar year, a USD value, and a ", { code: "qualifier" }, " such as ",
+      { code: "lower-bound" }, " or ", { code: "approximate" }, ". Keep the qualifier with the number.",
+    ],
+  ],
+  schema: [
+    "The ", { text: "history schema", href: `${GITHUB_REPOSITORY_URL}/blob/main/lib/history-schema.ts` },
+    " defines every field.",
+  ],
+} as const satisfies Readonly<{
+  heading: string;
+  intro: readonly EditorialPart[];
+  commands: readonly string[];
+  output: readonly EditorialPart[];
+  sampleLines: readonly string[];
+  fields: readonly (readonly EditorialPart[])[];
+  schema: readonly EditorialPart[];
+}>;

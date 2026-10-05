@@ -29,10 +29,11 @@ curl --fail --location --output acquisitions.yml https://hraness.com/stripe/hist
 
 All files are listed at https://hraness.com/stripe/data and in [`public/history/`](./public/history/). The data is MIT licensed.
 
-With Bun 1.3.14, read the download without installing this application:
+With Bun 1.3.14, read the download without installing this application. Use a YAML parser that keeps each date as written, such as the [`yaml`](https://www.npmjs.com/package/yaml) package this site uses; Bun's built-in `YAML.parse` reads a month-only date such as `2025-07` as the number `2025`.
 
 ```sh
-bun -e 'import { YAML } from "bun"; const data = YAML.parse(await Bun.file("acquisitions.yml").text()); console.log(data.category.id); for (const event of data.events) console.log(event.id, event.date, event.date_precision, event.confidence, event.status ?? "");'
+bun add yaml
+bun -e 'import { parse } from "yaml"; const data = parse(await Bun.file("acquisitions.yml").text()); console.log(data.category.id); for (const event of data.events) console.log(event.id, event.date, event.date_precision, event.confidence, event.status ?? "");'
 ```
 
 The output starts with `acquisitions`, followed by one line per event. Keep `date_precision` with `date`: a year or month is not an exact day. `confidence` describes the evidence (`confirmed`, `reported`, or `disputed`); the optional `status` text describes the transaction. A confirmed agreement is not necessarily a completed acquisition. Resolve each event's `source_ids` in [`public/research/sources.yml`](./public/research/sources.yml) before using its claim. The [history schema](./lib/history-schema.ts) defines the fields; [method and limits](https://hraness.com/stripe/about#sources-and-review) explains how the record is maintained.
