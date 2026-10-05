@@ -1,11 +1,58 @@
 import { describe, expect, test } from "bun:test";
+import { copyFileSync, mkdtempSync, rmSync, symlinkSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { loadHistory } from "@/lib/content";
+import { markdownForPath } from "@/lib/page-markdown";
 
-import { dataIntro } from "../site-copy";
+import { dataIntro, dataReadExample } from "../site-copy";
 import DataPage, { metadata } from "./page";
 
+const root = join(import.meta.dir, "..", "..");
+
 describe("Stripe History dataset", () => {
+  test("prints the documented sample lines when the documented command reads the acquisitions file", () => {
+    const script = /^bun -e '(.*)'$/u.exec(dataReadExample.commands.at(-1) ?? "")?.[1];
+    if (script === undefined) throw new Error("The last documented command must be a bun -e script.");
+    const directory = mkdtempSync(join(tmpdir(), "stripe-history-read-example-"));
+    try {
+      copyFileSync(join(root, "public/history/acquisitions.yml"), join(directory, "acquisitions.yml"));
+      symlinkSync(join(root, "node_modules"), join(directory, "node_modules"), "dir");
+      const result = Bun.spawnSync([process.execPath, "-e", script], { cwd: directory });
+      const lines = result.stdout.toString().trim().split("\n");
+
+      expect(result.exitCode).toBe(0);
+      expect(lines[0]).toBe("acquisitions");
+      for (const line of dataReadExample.sampleLines) expect(lines).toContain(line);
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+    expect(dataReadExample.commands.slice(0, 2)).toEqual([
+      "curl --fail --location --output acquisitions.yml https://hraness.com/stripe/history/acquisitions.yml",
+      "bun add yaml",
+    ]);
+  });
+
+  test("renders the reading example on the page and in its Markdown twin", async () => {
+    const html = renderToStaticMarkup(await DataPage());
+    const markdown = (await markdownForPath("/data")).body;
+
+    expect(html).toContain('<h2 id="read-history-file-heading">Read a history file</h2>');
+    expect(markdown).toContain("## Read a history file");
+    for (const command of dataReadExample.commands) {
+      expect(markdown).toContain(command);
+    }
+    for (const line of dataReadExample.sampleLines) {
+      expect(html).toContain(line);
+      expect(markdown).toContain(line);
+    }
+    expect(html).toContain("bun add yaml");
+    expect(html).toContain("<code>date_precision</code>");
+    expect(markdown).toContain("`date_precision`");
+    expect(html).toContain('href="https://github.com/hraness/stripe-history/blob/main/lib/history-schema.ts"');
+  });
+
   test("publishes a canonical dataset search result", () => {
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/data" },

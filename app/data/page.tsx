@@ -3,6 +3,7 @@ import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { EditorialParagraph } from "../editorial-paragraph";
 import { historyDatasetJsonLd, breadcrumbJsonLd } from "../seo";
 import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
@@ -13,7 +14,7 @@ import {
   site,
   socialMetadata,
 } from "../site";
-import { dataIntro, dataMetaTitle, dataTitle } from "../site-copy";
+import { dataIntro, dataMetaTitle, dataReadExample, dataTitle } from "../site-copy";
 
 const dataDescription = site.datasetDescription;
 
@@ -196,6 +197,24 @@ export default async function DataPage() {
             </li>
             <li><a href={publicSitePath("/research/runs.yml")}>research log (YAML)</a></li>
           </ul>
+        </section>
+        <section
+          aria-labelledby="read-history-file-heading"
+          className="stripe-history-data-research stripe-history-data-read"
+        >
+          <h2 id="read-history-file-heading">{dataReadExample.heading}</h2>
+          <EditorialParagraph parts={dataReadExample.intro} />
+          <pre><code>{dataReadExample.commands.join("\n")}</code></pre>
+          <EditorialParagraph parts={dataReadExample.output} />
+          <pre><code>{dataReadExample.sampleLines.join("\n")}</code></pre>
+          <ul>
+            {dataReadExample.fields.map((parts, index) => (
+              <li key={index}>
+                <EditorialParagraph parts={parts} />
+              </li>
+            ))}
+          </ul>
+          <EditorialParagraph parts={dataReadExample.schema} />
         </section>
       </section>
       <SiteFooter path="/data" />
