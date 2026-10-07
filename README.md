@@ -1,5 +1,14 @@
 # Stripe History
 
+> 🦓 Stripe History is an independent record of how Stripe grew, from Patrick
+> Collison's 2005 Young Scientist win to the $1.9 trillion in volume Stripe
+> reported for 2025. Every event is dated and linked to its sources, and
+> reported deals stay separate from completed ones.
+>
+> Read it: https://hraness.com/stripe
+>
+> — Ben Guo
+
 [Stripe History](https://hraness.com/stripe) is an independent record of how Stripe grew, from the Collison brothers' first projects to today. Every event is dated and linked to its sources, and reported deals stay separate from completed ones. It is not affiliated with Stripe, Inc.
 
 The site shows every event on one reverse-chronological timeline and on a page for each category, such as acquisitions, product launches, and fundraising. Separate pages chart Stripe's annual payment and total volume, its revenue, and its private valuation by year. Each event's YAML record keeps its status and any uncertainty, such as whether a deal was reported, announced, or completed.
