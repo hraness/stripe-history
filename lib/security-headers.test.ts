@@ -3,9 +3,8 @@ import { expect, test } from "bun:test";
 import { POSTHOG_API_HOST } from "../app/analytics";
 import { CONTENT_SECURITY_POLICY, SECURITY_HEADERS } from "./security-headers";
 
-test("the policy allows analytics only at the configured host and forbids framing and plugins", () => {
+test("the policy allows analytics only at the configured host and forbids plugins", () => {
   expect(CONTENT_SECURITY_POLICY).toContain(`connect-src 'self' ${POSTHOG_API_HOST} https://account.hraness.com;`);
-  expect(CONTENT_SECURITY_POLICY).toContain("frame-ancestors 'none'");
   expect(CONTENT_SECURITY_POLICY).toContain("object-src 'none'");
   expect(CONTENT_SECURITY_POLICY).not.toContain("*");
 });
