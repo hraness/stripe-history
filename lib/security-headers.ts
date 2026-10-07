@@ -15,7 +15,6 @@ export const CONTENT_SECURITY_POLICY: string = [
   "object-src 'none'",
   "base-uri 'self'",
   `form-action 'self' ${ACCOUNTS_ORIGIN} https://hraness.com`,
-  "frame-ancestors 'none'",
 ].join("; ");
 
 export const SECURITY_HEADERS: ReadonlyArray<Readonly<{ key: string; value: string }>> = [
@@ -26,5 +25,4 @@ export const SECURITY_HEADERS: ReadonlyArray<Readonly<{ key: string; value: stri
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
   },
-  { key: "X-Frame-Options", value: "DENY" },
 ];
