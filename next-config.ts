@@ -4,6 +4,7 @@ import { withPostHogConfig } from "@posthog/nextjs-config";
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from "next/constants.js";
 import { withStylexNext } from "@hraness/ui/stylex-build/next";
 import { stylexOptions } from "./stylex-config.ts";
+import { SECURITY_HEADERS } from "./lib/security-headers.ts";
 import { bindNextTemplateCache } from "./scripts/next-template-cache.ts";
 import {
   type ProductionDeliveryProofEnvironment,
@@ -15,6 +16,8 @@ const nextConfig = {
   async headers() {
     const noindexHeaders = [{ key: "X-Robots-Tag", value: "noindex, follow" }];
     return [
+      { headers: [...SECURITY_HEADERS], source: "/" },
+      { headers: [...SECURITY_HEADERS], source: "/:path*" },
       { headers: noindexHeaders, source: "/history/:category.yml" },
       { headers: noindexHeaders, source: "/research/:path*" },
       { headers: noindexHeaders, source: "/x-markdown" },

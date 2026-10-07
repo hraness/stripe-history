@@ -7,6 +7,7 @@
 - `accept.ts` – Accept parsing and markdown negotiation decisions.
 - `history-urls.ts` – durable category paths and the internal Markdown rewrite.
 - `page-markdown.ts` and `llms-txt.ts` – Markdown representations of existing public pages and the agent index.
+- `security-headers.ts` – the Content-Security-Policy and related response headers applied by `next-config.ts`.
 - `*.test.ts` – schema, ordering, uniqueness, and source-provenance regressions.
 
 # Guidelines
