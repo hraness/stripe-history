@@ -3,7 +3,7 @@
 > 🦓 Stripe History is an independent record of how Stripe grew, from Patrick
 > Collison's 2005 Young Scientist win to the $1.9 trillion in volume Stripe
 > reported for 2025. Every event is dated and linked to its sources, and
-> reported deals stay separate from completed ones.
+> reported deals are listed apart from completed ones.
 >
 > Read it: https://hraness.com/stripe
 >
