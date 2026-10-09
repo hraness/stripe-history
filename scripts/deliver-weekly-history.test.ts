@@ -181,6 +181,34 @@ test("preflight performs no writes and no provider or model calls", async () => 
 });
 
 test.each([
+  ["explicit push false", { push: false }],
+  ["absent permissions", undefined],
+] as const)("preflight accepts job-token merge capability with %s", async (_label, permissions) => {
+  const fixture = new Fixture();
+  fixture.override = (_method, path, value) => {
+    if (path !== "") return value;
+    const repository: Data = { ...(value as Data), permissions };
+    if (permissions === undefined) delete repository.permissions;
+    return repository;
+  };
+  expect((await weeklyDelivery("preflight", fixture.environment, fixture.io)).state).toBe("preflight-passed");
+  expect(fixture.writes).toHaveLength(0);
+});
+
+test.each([
+  ["absent", undefined],
+  ["disabled", false],
+  ["null", null],
+  ["string", "true"],
+] as const)("preflight rejects %s squash capability even when push is true", async (_label, capability) => {
+  const fixture = new Fixture();
+  fixture.override = (_method, path, value) => path === ""
+    ? { ...(value as Data), allow_squash_merge: capability } : value;
+  await expect(weeklyDelivery("preflight", fixture.environment, fixture.io)).rejects.toThrow("contents write capability");
+  expect(fixture.writes).toHaveLength(0);
+});
+
+test.each([
   ["wrong repository", "GITHUB_REPOSITORY", "other/repository"],
   ["non-main dispatch", "GITHUB_REF", "refs/heads/draft"],
   ["malformed SHA", "GITHUB_SHA", "abc123"],

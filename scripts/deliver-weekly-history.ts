@@ -182,8 +182,11 @@ class Delivery {
     assert.equal(repository.full_name, REPOSITORY);
     assert.equal(repository.default_branch, "main");
     assert.equal(repository.archived, false);
-    assert.equal(repository.allow_squash_merge, true, "Squash merging is unavailable");
-    assert.equal(object(repository.permissions).push, true, "The job requires repository contents write permission");
+    // GitHub's repository endpoint exposes merge settings only with contents read/write:
+    // https://docs.github.com/en/rest/repos/repos#get-a-repository
+    // The job token's permissions.push projection can still be false or absent,
+    // so it is not evidence; later protected writes still fail closed.
+    assert.equal(repository.allow_squash_merge, true, "Squash merging or repository contents write capability is unavailable");
     const rules = array(this.api("GET", "rules/branches/main"));
     assert.ok(rules.some(rule => rule.type === "pull_request"), "main must require pull requests");
     assert.ok(!rules.some(rule => rule.type === "merge_queue"), "This coordinator does not own a merge queue");
