@@ -500,8 +500,8 @@ test("queued evidence has one bounded waiter and leaves time for failure reporti
   expect(fixture.calls.some(call => call.argv[1] === "pr")).toBe(false);
 });
 
-test("the workflow keeps validation, issue recovery, artifacts and the existing job ceiling around the helper", () => {
-  const workflow = readFileSync(new URL("../.github/workflows/weekly-news.yml", import.meta.url), "utf8");
+test("the historical workflow preserves validation, issue recovery, artifacts and its job ceiling", () => {
+  const workflow = readFileSync(new URL("../.github/retired-workflows/weekly-news.yml", import.meta.url), "utf8");
   expect(workflow).toContain("permissions:\n  contents: read");
   expect(workflow).toContain("publish:\n    permissions:\n      actions: write\n      checks: read");
   expect(workflow).toContain("timeout-minutes: 45");

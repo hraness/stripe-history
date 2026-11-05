@@ -1,5 +1,9 @@
 # Stripe History
 
+Stripe History is retired. Its source, history data, and research records are preserved in this repository for reference. The public website and automated research publication are discontinued.
+
+The documentation below describes the retired project. Its hosting, installation, publication, and maintenance instructions are historical.
+
 > 🦓 Stripe History is an independent record of how Stripe grew, from Patrick
 > Collison's 2005 Young Scientist win to the $1.9 trillion in volume Stripe
 > reported for 2025. Every event is dated and linked to its sources, and

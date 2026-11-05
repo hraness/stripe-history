@@ -584,9 +584,9 @@ describe("weekly news discovery", () => {
     expect(markdown).toContain("discovery candidates, not accepted historical facts");
   });
 
-  test("keeps the Thursday publisher bounded, validated, and protected by a pull request", async () => {
+  test("preserves the historical Thursday publisher's validation and protected delivery", async () => {
     const workflow = await readFile(
-      join(process.cwd(), ".github", "workflows", "weekly-news.yml"),
+      join(process.cwd(), ".github", "retired-workflows", "weekly-news.yml"),
       "utf8",
     );
     expect(workflow).toContain('cron: "17 9 * * 4"');
@@ -627,9 +627,9 @@ describe("weekly news discovery", () => {
     expect(workflow).not.toContain("codex exec");
   });
 
-  test("keeps the leadership appearance backfill bounded and review-only", async () => {
+  test("preserves the historical leadership appearance backfill's review-only limits", async () => {
     const workflow = await readFile(
-      join(process.cwd(), ".github", "workflows", "appearance-backfill.yml"),
+      join(process.cwd(), ".github", "retired-workflows", "appearance-backfill.yml"),
       "utf8",
     );
     expect(workflow).toContain("workflow_dispatch:");
