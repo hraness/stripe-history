@@ -1,5 +1,7 @@
 # Contributing
 
+Stripe History is retired. The procedures below document its historical development; do not restart hosting, research discovery, or publication. Preservation changes follow the current validation and protected pull-request rules in [`AGENTS.md`](./AGENTS.md).
+
 Corrections, stronger sources, missing events, and focused software improvements are welcome.
 
 For a history change, include the event date, a concise factual claim, its category, the proposed confidence and status, and at least one source URL. Prefer primary sources. If a claim is reported or proposed rather than completed, preserve that uncertainty in both the record and summary.
