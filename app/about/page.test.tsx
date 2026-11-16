@@ -27,7 +27,7 @@ describe("hraness.com/stripe about page", () => {
     expect(html).toContain('<a href="https://sacra.com/c/stripe/">Sacra</a> analyze the business, and Sacra publishes revenue estimates.');
     expect(html).toContain('aria-label="Breadcrumb"');
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
-    expect(html).toContain("The site uses PostHog for visits, selected browser details, performance, and errors.");
+    expect(html).toContain("The site uses PostHog to count visits, with rules that depend on your region.");
     expect(html).toContain('href="/privacy">privacy policy</a>');
     expect(html).not.toContain("feature flags, performance monitoring, or user profiles");
     expect(html).toContain("the founders&#x27; projects outside Stripe");

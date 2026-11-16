@@ -9,15 +9,15 @@ import GlobalError from "./global-error";
 import NotFound from "./not-found";
 
 describe("standalone runtime surfaces", () => {
-  test("loads the privacy-bounded PostHog provider from public environment values", async () => {
+  test("starts the shared Hraness analytics client from the layout without build-time keys", async () => {
     const layoutSource = await readFile(new URL("./layout.tsx", import.meta.url), "utf8");
-    const posthogSource = await readFile(new URL("./posthog.ts", import.meta.url), "utf8");
+    const clientSource = await readFile(new URL("./analytics-client.tsx", import.meta.url), "utf8");
 
-    expect(layoutSource).toContain("PostHogAnalytics");
-    expect(layoutSource).toContain("NEXT_PUBLIC_POSTHOG_KEY");
-    expect(layoutSource).toContain("NEXT_PUBLIC_POSTHOG_HOST");
-    expect(posthogSource).toContain('import("posthog-js")');
-    expect(posthogSource).not.toContain('import posthog from "posthog-js"');
+    expect(layoutSource).toContain("<SiteAnalytics />");
+    expect(layoutSource).not.toContain("NEXT_PUBLIC_POSTHOG");
+    expect(clientSource.startsWith('"use client";')).toBe(true);
+    expect(clientSource).toContain('import("@hraness/analytics/browser")');
+    expect(clientSource).not.toContain('from "@hraness/analytics/browser";\nimport { createAnalytics');
   });
 
   test("renders route and document failures without private telemetry", () => {

@@ -22,6 +22,8 @@ test("keeps Stripe History resources above the canonical Hraness footer", () => 
   expect(html).toContain('href="/stripe/about"');
   expect(html).toContain('href="/stripe/contact"');
   expect(html).toContain('href="/stripe/privacy"');
+  expect(html).toContain('href="/stripe/privacy#choices"');
+  expect(html).toContain(">Your Privacy Choices</a>");
   expect(html).toContain('href="https://github.com/hraness/stripe-history"');
   expect(html).not.toContain("hraness.substack.com/embed");
   expect(html.match(/<form\b/gu)).toHaveLength(1);

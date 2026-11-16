@@ -1,6 +1,4 @@
 import type { NextConfig } from "next";
-import { resolvePostHogSourceMapConfig } from "@hraness/posthog/next-config";
-import { withPostHogConfig } from "@posthog/nextjs-config";
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from "next/constants.js";
 import { withStylexNext } from "@hraness/ui/stylex-build/next";
 import { stylexOptions } from "./stylex-config.ts";
@@ -98,36 +96,14 @@ export function createNextConfig(
   });
 }
 
-type ConfigContext = { defaultConfig: NextConfig };
-type ConfigCallback = (phase: string, context: ConfigContext) => NextConfig | Promise<NextConfig>;
-
-export default function configForPhase(phase: typeof PHASE_PRODUCTION_SERVER, context?: ConfigContext): NextConfig;
-export default function configForPhase(phase: string, context?: ConfigContext): NextConfig | Promise<NextConfig>;
-export default function configForPhase(
-  phase: string,
-  context: ConfigContext = { defaultConfig: {} },
-): NextConfig | Promise<NextConfig> {
+export default function configForPhase(phase: string): NextConfig {
   const config = createNextConfig();
   if (phase === PHASE_PRODUCTION_SERVER) return config;
   if (phase !== PHASE_PRODUCTION_BUILD) {
     throw new Error("Stripe History uses compiled preview: run bun run dev; next dev/HMR is unsupported.");
   }
-  // The delivery wrapper changes headers/env only. Keep the concrete synchronous
-  // callback type and reject a future wrapper that silently replaces it.
+  // The delivery wrapper changes headers/env only. Reject a future wrapper that
+  // silently replaces the product webpack callback.
   if (config.webpack !== nextConfig.webpack) throw new Error("Delivery wrapper replaced the product webpack callback");
-  const compiledConfig = withStylexNext({ ...config, webpack: nextConfig.webpack }, stylexOptions(process.cwd()));
-  const uploadConfig = resolvePostHogSourceMapConfig({ siteId: "stripe-history" });
-  if (!uploadConfig) return compiledConfig;
-  // The adapter always invokes webpack. PostHog otherwise assumes Next 16's
-  // Turbopack default and rewrites files after the compiler has recorded them.
-  if (process.env.WEBPACK !== "1") throw new Error("PostHog must use the compiled webpack path");
-  const sourceMapConfig = withPostHogConfig(compiledConfig, {
-    ...uploadConfig,
-    sourcemaps: { ...uploadConfig.sourcemaps, deleteAfterUpload: false, releaseMode: "symbol-set" },
-  }) as NextConfig | ConfigCallback;
-  // The upstream declaration says NextConfig, but enabled uploads return an
-  // async config callback. Next resolves our outer callback only once.
-  return typeof sourceMapConfig === "function"
-    ? sourceMapConfig(phase, context)
-    : sourceMapConfig;
+  return withStylexNext({ ...config, webpack: nextConfig.webpack }, stylexOptions(process.cwd()));
 }

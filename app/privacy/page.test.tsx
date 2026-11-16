@@ -15,9 +15,15 @@ describe("hraness.com/stripe privacy page", () => {
       title: { absolute: "Stripe History privacy: analytics and data handling" },
     });
     expect(html).toContain('<h1 id="privacy-heading">Privacy</h1>');
-    expect(html).toContain("anonymous, cookieless pageview and page-exit events for public pages");
-    expect(html).toContain("does not save an analytics cookie or persistent identifier");
-    expect(html).toContain("no local reader accounts or authentication");
+    expect(html).toContain('<h2 id="choices">Your Privacy Choices</h2>');
+    expect(html).toContain('href="https://hraness.com/stripe/privacy?ads=off#choices"');
+    expect(html).toContain('href="https://hraness.com/stripe/privacy?analytics=off#choices"');
+    expect(html).toContain('href="https://hraness.com/stripe/privacy?analytics=on#choices"');
+    expect(html).toContain('href="https://hraness.com/stripe/privacy?ads=on#choices"');
+    for (const fact of ["hraness-id", "hraness-choice", "13 months", "Global Privacy Control", "Do Not Track", "European Union", "United Kingdom, Switzerland, and Brazil", "seven years", "30 days", "every input is masked"]) {
+      expect(html).toContain(fact);
+    }
+    expect(html).toContain("does not run ads or advertising pixels");
     expect(html).toContain('href="https://account.hraness.com"');
     expect(html).toContain("the general Hraness newsletter");
     expect(html).toContain("anonymous form presentation and measurement");

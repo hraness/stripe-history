@@ -1,5 +1,8 @@
-/** Response headers sent with every page and asset. The site loads only its own files and contacts the analytics host and Hraness Accounts. */
-const ANALYTICS_ORIGIN = "https://us.i.posthog.com";
+/**
+ * Response headers sent with every page and asset. The site loads only its own
+ * files. Analytics reaches hraness.com's same-origin `/ph` proxy and
+ * `/api/region` endpoint, which `'self'` covers; the footer contacts Hraness Accounts.
+ */
 /** The shared footer checks consent region and posts the newsletter form here. */
 const ACCOUNTS_ORIGIN = "https://account.hraness.com";
 
@@ -10,7 +13,7 @@ export const CONTENT_SECURITY_POLICY: string = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
   "font-src 'self' data:",
-  `connect-src 'self' ${ANALYTICS_ORIGIN} ${ACCOUNTS_ORIGIN}`,
+  `connect-src 'self' ${ACCOUNTS_ORIGIN}`,
   "manifest-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
