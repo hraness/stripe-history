@@ -1,3 +1,11 @@
+# Project status
+
+Stripe History is live at `https://hraness.com/stripe`. It was retired on 2026-11-06 (#122) and revived on 2026-11-16 at the owner's request. The public site, the Thursday weekly publication workflow, and Production browser monitoring are active again.
+
+- Hosting: the Vercel project `stripe-history` (team `hraness`) is Git-connected to this repository, deploys `main` to Production with the `/stripe` base path, and is served at `hraness.com/stripe` through an external rewrite owned by the Hraness site. Do not add a custom Vercel environment, persistent Preview domain, or a second Git-connected project.
+- Publication: `.github/workflows/weekly-news.yml` is the only automatic publisher; follow `docs/weekly-publication.md`. `appearance-backfill.yml` stays manual and review-only.
+- Every event has a durable page at `/stripe/events/<event-id>`; event IDs are permanent once published.
+
 <!-- browser-automation:start -->
 - Ordinary owned automated browser runs use versioned Chrome for Testing or the browser provisioned for the pinned Playwright version. Reject the installed auto-updating Chrome application, including explicit executable overrides and symlinks; never fall back to it when provisioning is missing. Report the resolved executable and browser version, and close owned contexts and browsers gracefully in cleanup. Attaching to an explicitly authorized user-owned browser is a separate operation: preserve its profile and lifetime. Keep regression checks for browser selection in the existing required checks; see [browser automation](https://github.com/hraness/.github/blob/main/BROWSER_AUTOMATION.md).
 - Never start the system Chrome app directly from an agent shell; use the repository's browser tooling and respect its scheduler and browser custody controls. For owned launches, pass `--mute-audio` and merge `PaintHolding,MacAppCodeSignClone` into any existing `--disable-features` value instead of adding a second switch. Finish owned process, context, and profile cleanup before releasing the browser lane. Never signal another holder or manipulate its lease to obtain a slot.
@@ -9,7 +17,7 @@
 
 - `portfolio-messaging.generated.json` and `app/product-messaging.ts` – the checked-in canonical product copy and related-product facts consumed at build time.
 
-- `app/` – the public timeline, category, annual-volume, valuation, data, and methodology pages, plus crawl metadata, social image, and framework shell.
+- `app/` – the public timeline, category, per-event, annual-volume, valuation, data, and methodology pages, plus crawl metadata, social image, and framework shell.
 - `lib/` – strict history and research YAML contracts with validated content loading.
 - `public/history/` – the authored, source-linked Stripe history records.
 - `public/research/` – the canonical source catalog, valuations, founder appearances, collection definitions, research-run ledger, and bounded automatic-publication policy and attestations.
@@ -40,7 +48,7 @@
 - Keep the canonical public identity at `https://hraness.com/stripe`. Deploy the application with the `/stripe` base path behind Hraness, and preserve former hosts only as direct permanent redirects to the matching canonical path.
 - Treat Production as the only durable Vercel environment. Pull requests may use Vercel's built-in disposable Preview target, but do not create a custom environment, persistent Preview domain, provider-authoritative Preview branch, or separate Preview backend.
 - Keep `stripe-history/*` as the stable public schema and prompt-version namespace. Identity changes do not rewrite published data contracts or append-only attestations.
-- Keep history server-rendered, crawlable, and available as reviewable YAML. Preserve durable category, annual-volume, valuation, and data URLs.
+- Keep history server-rendered, crawlable, and available as reviewable YAML. Preserve durable category, event, annual-volume, valuation, and data URLs.
 - Give every ordinary themed page exactly one shared icon-menu appearance control as the final action in its header. Do not put appearance controls in footers, content, or fallback action rows.
 - Require at least one canonical source ID for every event and valuation observation. Prefer primary evidence, preserve uncertainty, and distinguish proposed, reported, announced, and completed events.
 - Parse every provider response and YAML file from `unknown`. Preserve reverse chronology, globally unique IDs, bounded text, and deterministic source provenance.
@@ -80,11 +88,3 @@
 - Content bytes live in the content store; the control plane keeps references and metadata only.
 - Run `bun run check:cost-surfaces` before handoff whenever a data surface changes.
 
-<!-- algal-skills:start -->
-**ALGAL skills**
-
-- Prefer the globally installed `algal-*` skills for bounded git state, diffs, repository survey/search, test and release gates, CI polling, and web fetches instead of repeated raw tool output.
-- At session start, if the `algal` skill is unavailable, install the current skill pack for Claude Code, Codex, and Devin for Terminal with `bunx skills add 0thernet/algal-skills --global --agent claude-code codex devin --skill '*' --copy --yes`.
-- Confirm installation with `bunx skills list --global`. If Bun or network access is unavailable, continue with repository-native tools instead of blocking delivery.
-- Treat ALGAL receipts as execution evidence, not provider attestation, and preserve the repository's normal verification and release gates.
-<!-- algal-skills:end -->

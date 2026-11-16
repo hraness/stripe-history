@@ -173,6 +173,19 @@ test("delivers one generated tree through protected PR CI, a matched squash, fre
   expect(fixture.reports.filter(report => (report.operations as Data[]).at(-1)?.state === "intent")).toHaveLength(7);
 });
 
+test("the deployment lookup accepts the project-qualified Production environment and ignores Preview", async () => {
+  const fixture = new Fixture();
+  fixture.override = (_method, path, value) => path.startsWith("deployments?")
+    ? [
+      { id: 79, sha: INTEGRATED, environment: "Preview – stripe-history", creator: { id: 35613825, login: "vercel[bot]" }, created_at: iso() },
+      { ...(value as Data[])[0], environment: "Production – stripe-history" },
+    ]
+    : value;
+  const result = await fixture.deliver();
+  expect(result.state).toBe("complete");
+  expect(result.deployment).toEqual({ id: 80, status: 81, sha: INTEGRATED, url: "https://stripe-history-fixture-hraness.vercel.app/" });
+});
+
 test("preflight performs no writes and no provider or model calls", async () => {
   const fixture = new Fixture();
   expect((await weeklyDelivery("preflight", fixture.environment, fixture.io)).state).toBe("preflight-passed");

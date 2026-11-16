@@ -6,6 +6,12 @@ const REPOSITORY = "hraness/stripe-history";
 const BRANCH_PREFIX = "automation/weekly-history/";
 const ACTIONS_APP = 15368;
 const VERCEL_BOT = 35613825;
+/**
+ * Vercel names the GitHub deployment environment "Production" while the
+ * `stripe-history` project is the only Vercel project connected to this
+ * repository, and "Production – stripe-history" once another project shares it.
+ */
+export const PRODUCTION_ENVIRONMENTS: ReadonlySet<string> = new Set(["Production", "Production – stripe-history"]);
 const POLL_MS = 15_000;
 const MAX_RESPONSE_BYTES = 8 * 1024 * 1024;
 const ALLOWED = /^(public\/history\/(origins-and-early-company|executives-and-team|acquisitions|product-launches|country-expansion|payment-and-payout-expansion|fundraising|headquarters-and-offices|publishing|company-milestones)\.yml|public\/research\/(sources|automated-decisions|automated-publications)\.yml)$/;
@@ -339,12 +345,13 @@ class Delivery {
   async deployment(commit: string, mergedAt: number): Promise<void> {
     const deployment = await this.poll("wait-production-deployment", () => {
       this.main(commit);
-      const deployments = array(this.api("GET", `deployments?sha=${commit}&environment=Production&per_page=100`));
+      const deployments = array(this.api("GET", `deployments?sha=${commit}&per_page=100`))
+        .filter(value => PRODUCTION_ENVIRONMENTS.has(string(value.environment)));
       assert.ok(deployments.length <= 1, "Ambiguous Production deployment; inspect before recovery");
       if (!deployments[0]) return undefined;
       const value = deployments[0];
       assert.equal(value.sha, commit);
-      assert.equal(value.environment, "Production");
+      assert.ok(PRODUCTION_ENVIRONMENTS.has(string(value.environment)), "Unexpected Production environment");
       assert.equal(object(value.creator).id, VERCEL_BOT);
       assert.equal(object(value.creator).login, "vercel[bot]");
       assert.ok(timestamp(value.created_at) >= mergedAt, "Production deployment predates the merge");
