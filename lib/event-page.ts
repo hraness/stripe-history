@@ -114,10 +114,13 @@ export function historyEventNeighbors(
   const newer = index > 0 ? categoryEvents[index - 1] : undefined;
   const older = categoryEvents[index + 1];
   const byId = new Map(history.events.map((candidate) => [candidate.id, candidate]));
-  const explicit = (event.related_events ?? [])
+  const adjacent = new Set([event.id, newer?.id, older?.id]);
+  const explicit = [...new Set(event.related_events ?? [])]
     .map((id) => byId.get(id))
-    .filter((candidate): candidate is CategorizedHistoryEvent => candidate !== undefined);
-  const seen = new Set([event.id, newer?.id, older?.id, ...explicit.map(({ id }) => id)]);
+    .filter((candidate): candidate is CategorizedHistoryEvent => (
+      candidate !== undefined && !adjacent.has(candidate.id)
+    ));
+  const seen = new Set([...adjacent, ...explicit.map(({ id }) => id)]);
   const nearby = categoryEvents
     .map((candidate, position) => ({ candidate, distance: Math.abs(position - index) }))
     .filter(({ candidate }) => !seen.has(candidate.id))

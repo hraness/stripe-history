@@ -63,7 +63,10 @@ describe("event page helpers", () => {
         expect(neighbors.newer.categoryId).toBe(event.categoryId);
         expect(neighbors.newer.date >= event.date).toBe(true);
       }
-      expect(neighbors.related.map(({ id }) => id)).not.toContain(event.id);
+      const relatedIds = neighbors.related.map(({ id }) => id);
+      for (const excluded of [event.id, neighbors.older?.id, neighbors.newer?.id]) {
+        if (excluded !== undefined) expect(relatedIds).not.toContain(excluded);
+      }
       expect(neighbors.related.length).toBeLessThanOrEqual(5);
       expect(new Set(neighbors.related.map(({ id }) => id)).size).toBe(neighbors.related.length);
     }
