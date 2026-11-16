@@ -6,7 +6,6 @@ import {
   ThemeColorSync,
 } from "@hraness/design-kit/react";
 import type { RouteErrorPageProps } from "./error";
-import { ErrorBoundaryAnalytics } from "./posthog-analytics";
 import "@hraness/ui/compiler-foundation.css";
 import "@hraness/design-kit/compiler-foundation.css";
 import "@hraness/site-footer/compiler-foundation.css";
@@ -14,7 +13,7 @@ import "./globals.css";
 
 const initialPalette = getDesignPaletteTheme("paper", "light");
 
-export default function GlobalError({ error, reset }: RouteErrorPageProps) {
+export default function GlobalError({ reset }: RouteErrorPageProps) {
   return (
     <html
       className={initialPalette.className}
@@ -42,7 +41,6 @@ export default function GlobalError({ error, reset }: RouteErrorPageProps) {
         >
           <ThemeColorSync darkColor="#151515" lightColor="#ffffff" />
           <main className="plain-page stripe-history-main stripe-history-state" id="main-content">
-            <ErrorBoundaryAnalytics error={error} />
             <h1>Stripe History is temporarily unavailable</h1>
             <p>The site could not finish loading.</p>
             <button onClick={reset} type="button">Try again</button>

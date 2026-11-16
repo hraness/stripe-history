@@ -61,7 +61,7 @@ describe("Node markdown corpus handler", () => {
     expect(head.headers.get("content-type")).toBe(MARKDOWN_CONTENT_TYPE);
   });
 
-  test("prebuilds public document paths without per-event routes", async () => {
+  test("prebuilds public document paths and one /events/<id> page per event", async () => {
     const history = await loadHistory();
     const params = await generateStaticParams();
     expect(params).toContainEqual({ path: [] });
@@ -72,20 +72,24 @@ describe("Node markdown corpus handler", () => {
     expect(params).not.toContainEqual({
       path: ["history", "acquisitions", "openrouter-acquisition-talks-reported"],
     });
-    expect(params.length).toBe(9 + history.categories.length);
+    expect(params).toContainEqual({ path: ["events", "openrouter-acquisition-talks-reported"] });
+    expect(params.length).toBe(9 + history.categories.length + history.events.length);
   });
 
   test("never renders unknown Markdown paths on demand", async () => {
     expect(dynamicParams).toBe(false);
-    const params = generateStaticParams();
+    const params = await generateStaticParams();
     for (const { path } of params) {
       const pathname = path.length === 0 ? "/" : `/${path.join("/")}`;
       expect(isKnownMarkdownPath(pathname)).toBe(true);
       expect((await markdownForPath(pathname)).status).toBe(200);
     }
-    for (const pathname of ["/foo", "/history/nope", "/history/acquisitions/kickoff"]) {
+    for (const pathname of ["/foo", "/history/nope", "/history/acquisitions/kickoff", "/events/Bad_ID", "/events/a/b"]) {
       expect(isKnownMarkdownPath(pathname)).toBe(false);
       expect((await markdownForPath(pathname)).status).toBe(404);
     }
+    // Well-formed but unknown event IDs pass the corpus-free proxy check and 404 here.
+    expect(isKnownMarkdownPath("/events/no-such-event")).toBe(true);
+    expect((await markdownForPath("/events/no-such-event")).status).toBe(404);
   });
 });

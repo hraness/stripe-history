@@ -14,8 +14,9 @@ import "@hraness/site-footer/compiler-foundation.css";
 import "./globals.css";
 import "../support/vendor/hraness-forced-colors/marketing-forced-colors.css";
 import "./material.css";
+import "./analytics.css";
 import { FoilController } from "./foil-controller";
-import { PostHogAnalytics } from "./posthog-analytics";
+import { SiteAnalytics } from "./analytics-client";
 import { siteOrganizationJsonLd, websiteJsonLd } from "./seo";
 import { absoluteSiteUrl, SITE_HOST_ORIGIN, site } from "./site";
 
@@ -82,10 +83,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           data={[websiteJsonLd(), siteOrganizationJsonLd()]}
           id="stripe-history-website-structured-data"
         />
-        <PostHogAnalytics
-          apiHost={process.env.NEXT_PUBLIC_POSTHOG_HOST}
-          apiKey={process.env.NEXT_PUBLIC_POSTHOG_KEY}
-        />
+        <SiteAnalytics />
         <DesignPaletteProvider
           defaultPreference={{ palette: "paper", mode: "system" }}
           legacyStorageKey="stripe-history-theme-v1"

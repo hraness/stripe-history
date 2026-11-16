@@ -5,41 +5,105 @@
       "store": "PostHog project543691",
       "kind": "telemetry",
       "retention": "persistent",
-      "owner": "app/posthog.ts",
+      "owner": "app/analytics-client.tsx",
       "maxBytesPerEvent": 32768,
-      "budget": "2 events/second; burst12; exceptions20/minute and2/fingerprint"
+      "budget": "posthog-js default client rate limits; autocapture and replay only where the @hraness/analytics region rules allow"
     },
     "posthog:$pageleave": {
       "store": "PostHog project543691",
       "kind": "telemetry",
       "retention": "persistent",
-      "owner": "app/posthog.ts",
+      "owner": "app/analytics-client.tsx",
       "maxBytesPerEvent": 32768,
-      "budget": "2 events/second; burst12; exceptions20/minute and2/fingerprint"
+      "budget": "posthog-js default client rate limits; autocapture and replay only where the @hraness/analytics region rules allow"
     },
     "posthog:$web_vitals": {
       "store": "PostHog project543691",
       "kind": "telemetry",
       "retention": "persistent",
-      "owner": "app/posthog.ts",
+      "owner": "app/analytics-client.tsx",
       "maxBytesPerEvent": 32768,
-      "budget": "2 events/second; burst12; exceptions20/minute and2/fingerprint"
+      "budget": "posthog-js default client rate limits; autocapture and replay only where the @hraness/analytics region rules allow"
     },
     "posthog:$exception": {
       "store": "PostHog project543691",
       "kind": "telemetry",
       "retention": "persistent",
-      "owner": "app/posthog.ts",
+      "owner": "app/analytics-client.tsx",
       "maxBytesPerEvent": 32768,
-      "budget": "2 events/second; burst12; exceptions20/minute and2/fingerprint"
+      "budget": "posthog-js default client rate limits; autocapture and replay only where the @hraness/analytics region rules allow"
+    },
+    "posthog:$autocapture": {
+      "store": "PostHog project543691",
+      "kind": "telemetry",
+      "retention": "persistent",
+      "owner": "app/analytics-client.tsx",
+      "maxBytesPerEvent": 32768,
+      "budget": "posthog-js default client rate limits; autocapture and replay only where the @hraness/analytics region rules allow"
+    },
+    "posthog:$rageclick": {
+      "store": "PostHog project543691",
+      "kind": "telemetry",
+      "retention": "persistent",
+      "owner": "app/analytics-client.tsx",
+      "maxBytesPerEvent": 32768,
+      "budget": "posthog-js default client rate limits; autocapture and replay only where the @hraness/analytics region rules allow"
+    },
+    "posthog:$snapshot": {
+      "store": "PostHog project543691",
+      "kind": "telemetry",
+      "retention": "persistent",
+      "owner": "app/analytics-client.tsx",
+      "maxBytesPerEvent": 32768,
+      "budget": "posthog-js default client rate limits; autocapture and replay only where the @hraness/analytics region rules allow"
     },
     "posthog:page not found": {
       "store": "PostHog project543691",
       "kind": "telemetry",
       "retention": "persistent",
-      "owner": "app/posthog.ts",
+      "owner": "app/analytics-client.tsx",
       "maxBytesPerEvent": 32768,
-      "budget": "2 events/second; burst12; exceptions20/minute and2/fingerprint"
+      "budget": "posthog-js default client rate limits; autocapture and replay only where the @hraness/analytics region rules allow"
+    },
+    "posthog:history filter selected": {
+      "store": "PostHog project543691",
+      "kind": "telemetry",
+      "retention": "persistent",
+      "owner": "app/analytics-client.tsx",
+      "maxBytesPerEvent": 32768,
+      "budget": "posthog-js default client rate limits; autocapture and replay only where the @hraness/analytics region rules allow"
+    },
+    "posthog:source link opened": {
+      "store": "PostHog project543691",
+      "kind": "telemetry",
+      "retention": "persistent",
+      "owner": "app/analytics-client.tsx",
+      "maxBytesPerEvent": 32768,
+      "budget": "posthog-js default client rate limits; autocapture and replay only where the @hraness/analytics region rules allow"
+    },
+    "posthog:cta clicked": {
+      "store": "PostHog project543691",
+      "kind": "telemetry",
+      "retention": "persistent",
+      "owner": "app/analytics-client.tsx",
+      "maxBytesPerEvent": 32768,
+      "budget": "posthog-js default client rate limits; autocapture and replay only where the @hraness/analytics region rules allow"
+    },
+    "posthog:outbound link opened": {
+      "store": "PostHog project543691",
+      "kind": "telemetry",
+      "retention": "persistent",
+      "owner": "app/analytics-client.tsx",
+      "maxBytesPerEvent": 32768,
+      "budget": "posthog-js default client rate limits; autocapture and replay only where the @hraness/analytics region rules allow"
+    },
+    "posthog:analytics choice made": {
+      "store": "PostHog project543691",
+      "kind": "telemetry",
+      "retention": "persistent",
+      "owner": "app/analytics-client.tsx",
+      "maxBytesPerEvent": 32768,
+      "budget": "posthog-js default client rate limits; autocapture and replay only where the @hraness/analytics region rules allow"
     }
   },
   "exempt": []

@@ -44,7 +44,6 @@ import {
   deriveNetRevenueRecords,
 } from "@/app/history/net-revenue/net-revenue-page-model";
 import {
-  loadHistory,
   loadResearchRuns,
   summarizeHistoryEvidence,
   type CategorizedHistoryEvent,
@@ -57,10 +56,19 @@ import {
 } from "./acquisitions-table";
 import { AT_A_GLANCE_CAPTION, deriveAtAGlance } from "./at-a-glance";
 import { historyCategoryPageCopy } from "./category-page-copy";
+import { formatEventDate } from "./event-date";
+import {
+  confidenceNotes,
+  datePrecisionNote,
+  eventIdFromPath,
+  historyEventNeighbors,
+  historyEventPath,
+} from "./event-page";
 import { timelineCategoryIds, type TimelineCategoryId } from "./history-schema";
 import { isKnownMarkdownPath } from "./history-urls";
 import { type LinkedTextPart, linkedTextHref } from "./linked-text";
 import { llmsTxt } from "./llms-txt";
+import { loadSiteHistory } from "./site-history";
 import { notFoundMarkdown } from "./not-found-markdown";
 import { deriveOriginsLead } from "./origins-lead";
 
@@ -156,7 +164,7 @@ function eventMarkdown(event: CategorizedHistoryEvent): string {
     event.confidence === "confirmed" ? undefined : event.confidence,
   ].filter((value): value is string => value !== undefined).join(" · ");
   return [
-    `### ${event.title}`,
+    `### [${event.title}](${SITE_ORIGIN}${historyEventPath(event.id)})`,
     "",
     status === "" ? event.date : `${event.date} · ${status}`,
     "",
@@ -372,6 +380,60 @@ function categoryMarkdown(
   ].join("\n");
 }
 
+function eventLink(event: CategorizedHistoryEvent): string {
+  return `[${event.title}](${SITE_ORIGIN}${historyEventPath(event.id)}) (${formatEventDate(event.date)})`;
+}
+
+export function eventPageMarkdown(history: HistoryCollection, eventId: string): string | null {
+  const neighbors = historyEventNeighbors(history, eventId);
+  if (neighbors === undefined) return null;
+  const { event } = neighbors;
+  const categoryUrl = `${SITE_ORIGIN}/history/${event.categoryId}`;
+  const facts = [
+    `- Date: ${formatEventDate(event.date)} (${datePrecisionNote(event.date_precision)})`,
+    `- Category: [${event.categoryLabel}](${categoryUrl})`,
+    `- Confidence: ${event.confidence}; ${confidenceNotes[event.confidence]}`,
+    ...(event.status === undefined ? [] : [`- Status: ${event.status}`]),
+    ...(event.amount === undefined ? [] : [`- Amount: ${event.amount.display}`]),
+    ...(event.metrics ?? []).map((metric) => (
+      `- ${metric.label}: ${metric.value}${metric.context === undefined ? "" : ` · ${metric.context}`}`
+    )),
+    ...(event.details ?? []).map((detail) => `- ${detail.label}: ${detail.value}`),
+    ...(event.people === undefined ? [] : [`- People: ${event.people.join(", ")}`]),
+    ...(event.organizations === undefined ? [] : [`- Organizations: ${event.organizations.join(", ")}`]),
+    ...(event.locations === undefined ? [] : [`- Locations: ${event.locations.join(", ")}`]),
+  ];
+  const sources = event.sources.map((source) => {
+    const published = source.published_at === undefined ? "" : `, ${formatEventDate(source.published_at)}`;
+    return `- [${source.title}](${source.url}): ${source.publisher} (${source.kind}${published})`;
+  });
+  return [
+    `# ${event.title}`,
+    "",
+    `> ${formatEventDate(event.date)}. ${event.summary}`,
+    "",
+    "## Facts",
+    "",
+    ...facts,
+    "",
+    "## Sources",
+    "",
+    ...sources,
+    "",
+    `## More ${event.categoryLabel.toLocaleLowerCase("en-US")} history`,
+    "",
+    ...(neighbors.older === undefined ? [] : [`- Earlier: ${eventLink(neighbors.older)}`]),
+    ...(neighbors.newer === undefined ? [] : [`- Later: ${eventLink(neighbors.newer)}`]),
+    ...neighbors.related.map((related) => `- Related: ${eventLink(related)}`),
+    `- [All ${neighbors.categoryEvents.length} ${event.categoryLabel.toLocaleLowerCase("en-US")} events](${categoryUrl})`,
+    "",
+    `Report a correction: ${SITE_ORIGIN}/contact#corrections-and-sources`,
+    "",
+    independenceSentence,
+    "",
+  ].join("\n");
+}
+
 function paymentVolumeMarkdown(history: HistoryCollection): string {
   const seo = derivePaymentVolumePageSeo(history);
   const rows = derivePaymentVolumeRecords(history);
@@ -517,7 +579,7 @@ export async function markdownForPath(pathname: string): Promise<MarkdownDocumen
   // Answer unknown paths before any corpus I/O.
   if (!isKnownMarkdownPath(path)) return { body: notFoundMarkdown(), status: 404 };
 
-  const history = await loadHistory();
+  const history = await loadSiteHistory();
   if (path === "/" || path === "/history") {
     const evidence = summarizeHistoryEvidence(history, await loadResearchRuns());
     return { body: historyIndexMarkdown(history, evidence), status: 200 };
@@ -537,6 +599,11 @@ export async function markdownForPath(pathname: string): Promise<MarkdownDocumen
   }
   if (path === "/history/valuation") {
     return { body: valuationMarkdown(history), status: 200 };
+  }
+  const eventId = eventIdFromPath(path);
+  if (eventId !== null) {
+    const body = eventPageMarkdown(history, eventId);
+    return body === null ? { body: notFoundMarkdown(), status: 404 } : { body, status: 200 };
   }
   if (path.startsWith("/history/")) {
     const categoryId = path.slice("/history/".length);

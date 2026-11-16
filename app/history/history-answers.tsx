@@ -6,6 +6,9 @@ import { AT_A_GLANCE_CAPTION, deriveAtAGlance } from "@/lib/at-a-glance";
 import type { CategorizedHistoryEvent, HistoryCollection } from "@/lib/content";
 import type { LinkedTextPart } from "@/lib/linked-text";
 import { deriveOriginsLead } from "@/lib/origins-lead";
+import { deriveCategoryQuestions } from "@/lib/category-questions";
+import { historyEventPath } from "@/lib/event-page";
+import Link from "next/link";
 import { Fragment } from "react";
 
 import { publicSitePath } from "../site";
@@ -92,5 +95,36 @@ export function AtAGlance({
         </tbody>
       </table>
     </div>
+  );
+}
+
+/** "Questions the history answers": short record-derived answers per category. */
+export function CategoryQuestions({
+  category,
+  events,
+}: Readonly<{
+  category: Readonly<{ id: string; label: string }>;
+  events: readonly CategorizedHistoryEvent[];
+}>) {
+  const questions = deriveCategoryQuestions(category, events);
+  if (questions.length === 0) return null;
+  return (
+    <section aria-labelledby="category-questions" className="history-answer history-category-questions" data-answer="questions">
+      <h2 id="category-questions">Questions the history answers</h2>
+      {questions.map((item) => (
+        <div key={item.id}>
+          <h3>{item.question}</h3>
+          <p>
+            {item.event === undefined ? null : (
+              <>
+                <Link href={historyEventPath(item.event.eventId)}>{item.event.title}</Link>
+                {" "}(<time dateTime={item.event.date}>{item.event.dateLabel}</time>){item.id === "newest" ? ". " : " "}
+              </>
+            )}
+            {item.answer}
+          </p>
+        </div>
+      ))}
+    </section>
   );
 }

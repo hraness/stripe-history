@@ -7,7 +7,7 @@ export function EditorialParagraph({ parts }: Readonly<{ parts: readonly Editori
   return <p>{parts.map((part, index) => {
     if (typeof part === "string") return <Fragment key={index}>{part}</Fragment>;
     if ("code" in part) return <code key={index}>{part.code}</code>;
-    if (part.href.startsWith(SITE_ORIGIN + "/")) {
+    if (part.reload !== true && part.href.startsWith(SITE_ORIGIN + "/")) {
       return <Link href={part.href.slice(SITE_ORIGIN.length)} key={index}>{part.text}</Link>;
     }
     return <a href={part.href} key={index}>{part.text}</a>;

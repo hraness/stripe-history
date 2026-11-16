@@ -173,6 +173,19 @@ test("delivers one generated tree through protected PR CI, a matched squash, fre
   expect(fixture.reports.filter(report => (report.operations as Data[]).at(-1)?.state === "intent")).toHaveLength(7);
 });
 
+test("the deployment lookup accepts the project-qualified Production environment and ignores Preview", async () => {
+  const fixture = new Fixture();
+  fixture.override = (_method, path, value) => path.startsWith("deployments?")
+    ? [
+      { id: 79, sha: INTEGRATED, environment: "Preview – stripe-history", creator: { id: 35613825, login: "vercel[bot]" }, created_at: iso() },
+      { ...(value as Data[])[0], environment: "Production – stripe-history" },
+    ]
+    : value;
+  const result = await fixture.deliver();
+  expect(result.state).toBe("complete");
+  expect(result.deployment).toEqual({ id: 80, status: 81, sha: INTEGRATED, url: "https://stripe-history-fixture-hraness.vercel.app/" });
+});
+
 test("preflight performs no writes and no provider or model calls", async () => {
   const fixture = new Fixture();
   expect((await weeklyDelivery("preflight", fixture.environment, fixture.io)).state).toBe("preflight-passed");
@@ -500,8 +513,8 @@ test("queued evidence has one bounded waiter and leaves time for failure reporti
   expect(fixture.calls.some(call => call.argv[1] === "pr")).toBe(false);
 });
 
-test("the historical workflow preserves validation, issue recovery, artifacts and its job ceiling", () => {
-  const workflow = readFileSync(new URL("../.github/retired-workflows/weekly-news.yml", import.meta.url), "utf8");
+test("the workflow keeps validation, issue recovery, artifacts and the existing job ceiling around the helper", () => {
+  const workflow = readFileSync(new URL("../.github/workflows/weekly-news.yml", import.meta.url), "utf8");
   expect(workflow).toContain("permissions:\n  contents: read");
   expect(workflow).toContain("publish:\n    permissions:\n      actions: write\n      checks: read");
   expect(workflow).toContain("timeout-minutes: 45");

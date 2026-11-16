@@ -2,6 +2,7 @@ import { HranessSiteFooter } from "@hraness/site-footer/react";
 import { AskAiAboutThis } from "@hraness/ui";
 import * as stylex from "@stylexjs/stylex";
 import { footerResourcesStyles as styles } from "./site-footer.stylex";
+import { PrivacyChoicesLink } from "./analytics-client";
 
 import {
   absoluteSiteUrl,
@@ -32,6 +33,7 @@ export function SiteFooter({ path }: SiteFooterProps) {
           <a {...stylex.props(styles.link)} href={publicSitePath("/about")}>about</a>
           <a {...stylex.props(styles.link)} href={publicSitePath("/contact")}>contact</a>
           <a {...stylex.props(styles.link)} href={publicSitePath("/privacy")}>privacy</a>
+          <PrivacyChoicesLink className={stylex.props(styles.link).className ?? ""}>Your Privacy Choices</PrivacyChoicesLink>
           <a {...stylex.props(styles.link)} href={GITHUB_REPOSITORY_URL}>github</a>
         </nav>
         <p className={`stripe-history-footer-resources__note ${stylex.props(styles.label).className}`}>{independenceSentence}</p>

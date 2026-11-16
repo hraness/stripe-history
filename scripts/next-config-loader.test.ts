@@ -24,42 +24,25 @@ test("genuine Node 24 loads the native ESM config and retains the production pol
   expect(result.stdout.trim()).toBe("native-esm-config-ok");
 });
 
-test("the production phase resolves the configured production source-map wrapper into a config object", () => {
+test("the production build phase returns a plain config with no analytics upload wrapper", () => {
   const environment = { ...process.env };
   for (const key of ["VERCEL", "VERCEL_URL", "VERCEL_PROJECT_ID", "VERCEL_DEPLOYMENT_ID", "TURBOPACK"]) delete environment[key];
-  Object.assign(environment, {
-    WEBPACK: "1",
-    VERCEL_ENV: "production",
-    VERCEL_PROJECT_ID: "prj_fixture",
-    VERCEL_DEPLOYMENT_ID: "dpl_fixture",
-    VERCEL_GIT_COMMIT_SHA: "fbe959de6d5bd730d2c2edd9fd78377995bc8870",
-    POSTHOG_API_KEY: "phx_test_not_a_real_credential",
-    POSTHOG_PROJECT_ID: "543691",
-    POSTHOG_RELEASE_MODE: "event",
-    POSTHOG_UI_HOST: "https://us.posthog.com",
-  });
+  Object.assign(environment, { WEBPACK: "1", VERCEL_ENV: "production" });
   const result = spawnSync(process.execPath, ["--eval", `
     import assert from "node:assert/strict";
     import { mock } from "bun:test";
-    // The compiler requires a build-attempt lease. Isolate only that unrelated
-    // boundary; execute the real PostHog wrapper and production phase callback.
+    // The compiler requires a build-attempt lease. Isolate only that unrelated boundary.
     mock.module("@hraness/ui/stylex-build/next", () => ({ withStylexNext: (config) => config }));
-    const { default: configForPhase, createNextConfig } = await import("./next-config.ts");
+    const { default: configForPhase } = await import("./next-config.ts");
     const config = await configForPhase("phase-production-build", { defaultConfig: {} });
     assert.equal(typeof config, "object");
     assert.equal(config.basePath, "/stripe");
     assert.equal(config.reactStrictMode, true);
-    assert.equal(typeof config.webpack, "function");
-    assert.notEqual(config.webpack, createNextConfig({}).webpack);
-    assert.equal(config.compiler?.runAfterProductionCompile, undefined);
     const webpackConfig = config.webpack({ resolve: {}, plugins: [] }, { isServer: false });
-    const plugin = webpackConfig.plugins.find((plugin) => plugin.constructor.name === "PosthogWebpackPlugin");
-    assert.ok(plugin);
-    assert.equal(plugin.resolvedConfig.sourcemaps.deleteAfterUpload, false);
-    assert.equal(plugin.resolvedConfig.sourcemaps.releaseMode, "symbol-set");
-    console.log("configured-source-map-config-ok");
+    assert.equal(webpackConfig.plugins.length, 0);
+    console.log("production-build-config-ok");
   `], { cwd: process.cwd(), env: environment, encoding: "utf8", timeout: 15_000, maxBuffer: 16_384 });
   expect(result.error).toBeUndefined();
   expect(result.status, result.stderr).toBe(0);
-  expect(result.stdout.trim()).toBe("configured-source-map-config-ok");
+  expect(result.stdout.trim()).toBe("production-build-config-ok");
 });

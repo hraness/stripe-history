@@ -9,7 +9,7 @@ test("security.txt names the advisory route and the email fallback", async () =>
   const contacts = [...text.matchAll(/^Contact: (.+)$/gmu)].map((m) => m[1]);
   expect(contacts).toEqual([
     "https://github.com/hraness/stripe-history/security/advisories/new",
-    "mailto:hraness@pm.me",
+    "mailto:ops@xte.industries",
   ]);
   expect(text).toContain(
     "Canonical: https://hraness.com/stripe/.well-known/security.txt",

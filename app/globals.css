@@ -89,20 +89,33 @@
   margin-top: 0.5rem;
 }
 
-/* Site header: the grammar's sticky translucent header, broken out of the
- * page measure so its hairline runs edge to edge. */
+/* Site header: a compact floating bar. The sticky band spans the viewport
+ * but paints nothing; only the inner bar carries a surface, hairline, and
+ * soft shadow, so the page reads through the gutters around it. */
 .stripe-history-header {
+  background: transparent;
+  border: 0;
   inline-size: 100vw;
   margin-inline: calc(50% - 50vw);
+  padding-block-start: 0.5rem;
+  padding-inline: var(--plain-shell-gutter);
+  pointer-events: none;
   position: sticky;
   top: 0;
   z-index: 50;
 }
 
 .stripe-history-header .hraness-marketing-header__inner {
+  backdrop-filter: saturate(1.4) blur(12px);
+  background: color-mix(in srgb, var(--plain-background) 86%, transparent);
+  border: 1px solid color-mix(in srgb, var(--plain-foreground) 12%, transparent);
+  border-radius: 0.875rem;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 5%), 0 10px 28px -16px rgb(0 0 0 / 28%);
+  margin-inline: auto;
   max-width: 64rem;
   min-block-size: 3.5rem;
-  padding-inline: var(--plain-shell-gutter);
+  padding-inline: 0.75rem;
+  pointer-events: auto;
 }
 
 .stripe-history-header .hraness-marketing-header__brand {
@@ -116,7 +129,9 @@
 }
 
 .stripe-history-header .hraness-marketing-header__nav a {
+  align-items: center;
   color: var(--plain-muted);
+  display: inline-flex;
   font-size: 0.9rem;
   font-weight: 500;
   min-block-size: max(2.75rem, var(--plain-link-target-min));
@@ -128,6 +143,48 @@
 .stripe-history-header .hraness-marketing-header__nav a[aria-current="page"] {
   color: var(--plain-foreground);
   text-decoration: none;
+}
+
+.stripe-history-header .hraness-marketing-header__actions {
+  align-items: center;
+  display: flex;
+  gap: 0.25rem;
+}
+
+/* The one quiet call to action: plain muted text, no fill. */
+.stripe-history-header-cta {
+  align-items: center;
+  border-radius: 0.5rem;
+  color: var(--plain-muted);
+  display: inline-flex;
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-block-size: max(2.75rem, var(--plain-link-target-min));
+  min-inline-size: 2.75rem;
+  justify-content: center;
+  padding-inline: 0.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.stripe-history-header-cta:is(:hover, :focus-visible) {
+  color: var(--plain-foreground);
+  text-decoration: none;
+}
+
+@media (forced-colors: active) {
+  .stripe-history-header .hraness-marketing-header__inner {
+    backdrop-filter: none;
+    background: Canvas;
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 30rem) {
+  .stripe-history-header-cta__wide {
+    display: none;
+  }
 }
 
 .stripe-history-section h2:where(:not(.history-year-title)),
@@ -1009,11 +1066,9 @@
   .stripe-history-header .hraness-marketing-header__nav {
     flex-wrap: nowrap;
     gap: 0 1.25rem;
-    margin-inline: calc(-1 * var(--plain-shell-gutter));
+    inline-size: 100%;
     overflow-x: auto;
-    padding-inline: var(--plain-shell-gutter);
     scrollbar-width: none;
-    inline-size: calc(100% + 2 * var(--plain-shell-gutter));
   }
 
   .stripe-history-header .hraness-marketing-header__nav::-webkit-scrollbar {
@@ -1123,4 +1178,128 @@ a[href] {
     text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
   }
   a[href]:where(:hover, :focus-visible) { text-decoration-color: currentColor; }
+}
+
+/* Timeline titles link to their event pages without looking like body links. */
+.history-event-title-link {
+  color: inherit;
+}
+
+/* One event per page: answer first, then facts, sources, and neighbors. */
+.stripe-history-event-page__article > h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+  margin: 0.4rem 0 0;
+  max-width: 40rem;
+  text-wrap: balance;
+}
+
+.stripe-history-event-page__kicker,
+.stripe-history-event-page__muted {
+  color: var(--plain-muted);
+}
+
+.stripe-history-event-page__kicker {
+  font-family: var(--font-heading);
+  font-size: var(--text-caption);
+  margin: 0;
+}
+
+.stripe-history-event-page__answer {
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  max-width: 38rem;
+}
+
+.stripe-history-event-page__article > h2 {
+  border-top: 1px solid var(--plain-line);
+  font-size: 1.05rem;
+  margin-top: 2.25rem;
+  padding-top: 0.75rem;
+}
+
+.stripe-history-event-page__facts {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  max-width: 38rem;
+}
+
+.stripe-history-event-page__facts > div {
+  display: grid;
+  gap: 0.15rem 1rem;
+  grid-template-columns: minmax(7rem, 10rem) 1fr;
+}
+
+.stripe-history-event-page__facts dt {
+  color: var(--plain-muted);
+}
+
+.stripe-history-event-page__facts dd {
+  margin: 0;
+}
+
+.stripe-history-event-page__sources,
+.stripe-history-event-page__related {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 40rem;
+  padding-inline-start: 1.25rem;
+}
+
+.stripe-history-event-page__pager {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  max-width: 40rem;
+}
+
+.stripe-history-event-page__pager p {
+  margin: 0;
+}
+
+.stripe-history-event-page__pager,
+.stripe-history-event-page__related,
+.stripe-history-event-page__article > p:not(.stripe-history-event-page__kicker) {
+  margin-block: 1rem 0;
+}
+
+.stripe-history-event-page__newer {
+  text-align: end;
+}
+
+@media (max-width: 30rem) {
+  .stripe-history-event-page__facts > div,
+  .stripe-history-event-page__pager {
+    grid-template-columns: 1fr;
+  }
+
+  .stripe-history-event-page__newer {
+    text-align: start;
+  }
+}
+
+.history-category-questions {
+  max-width: 42rem;
+}
+
+.history-category-questions > h2 {
+  color: var(--plain-muted);
+  font-family: var(--font-heading);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  margin: 0;
+}
+
+.history-category-questions h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1rem 0 0.25rem;
+}
+
+.history-category-questions p {
+  margin: 0;
 }

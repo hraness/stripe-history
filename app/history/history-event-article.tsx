@@ -6,6 +6,7 @@ import * as stylex from "@stylexjs/stylex";
 
 import { HistoryCategoryIcon } from "./category-icon";
 import { historyEventStyles as styles } from "./history-event.stylex";
+import { historyEventPath } from "@/lib/event-page";
 
 /** Keep complete SSR while sending event data once instead of repeating its markup in Flight. */
 export function HistoryEventArticle({
@@ -39,7 +40,9 @@ export function HistoryEventArticle({
             </span>
           )}
         </p>
-        <h3 className={`history-event-title ${stylex.props(styles.title).className}`}>{event.title}</h3>
+        <h3 className={`history-event-title ${stylex.props(styles.title).className}`}>
+          <Link className="history-event-title-link" href={historyEventPath(event.id)}>{event.title}</Link>
+        </h3>
       </header>
       <p {...stylex.props(styles.summary)}>{event.summary}</p>
       {event.amount === undefined

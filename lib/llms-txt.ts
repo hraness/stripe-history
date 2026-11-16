@@ -1,4 +1,5 @@
-import { loadHistory } from "./content";
+import { historyEventPath } from "./event-page";
+import { loadSiteHistory } from "./site-history";
 import {
   absoluteSiteUrl,
   GITHUB_REPOSITORY_URL,
@@ -7,7 +8,7 @@ import {
 } from "@/app/site";
 
 export async function llmsTxt(): Promise<string> {
-  const history = await loadHistory();
+  const history = await loadSiteHistory();
   const categoryLinks = history.categories.map((category) => {
     const count = history.events.filter(({ categoryId }) => categoryId === category.id).length;
     return `- [Stripe ${category.label.toLocaleLowerCase("en-US")} history](${SITE_ORIGIN}/history/${category.id}): ${count} sourced events. ${category.description}`;
@@ -33,6 +34,9 @@ export async function llmsTxt(): Promise<string> {
     `- [Annual net revenue and revenue](${SITE_ORIGIN}/history/net-revenue): ${history.annualRevenues.length} disclosed years`,
     `- [Private-company valuation history](${SITE_ORIGIN}/history/valuation): ${history.valuations.length} sourced observations`,
     ...categoryLinks,
+    "",
+    "## Event pages",
+    `Every event has its own page at \`${SITE_ORIGIN}/events/<event-id>\` with the exact date and its precision, category, confidence, amount, every source, and earlier, later, and related events in the same category. Event IDs never change once published. Category pages and the sitemap link to all ${history.events.length} of them. For example: [${history.events[0]?.title ?? "the newest event"}](${SITE_ORIGIN}${historyEventPath(history.events[0]?.id ?? "")}).`,
     "",
     "## Optional",
     `- [Sitemap](${SITE_ORIGIN}/sitemap.xml): Canonical HTML URLs`,
