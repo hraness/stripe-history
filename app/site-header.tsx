@@ -35,7 +35,7 @@ export function SiteHeader({
             href={HRANESS_URL}
           >
             <span>More</span>
-            <span className="stripe-history-header-cta__wide"> from Hraness</span>
+            <span className="stripe-history-header-cta__wide">{"\u00a0from Hraness"}</span>
           </a>
           <ThemeMenuButton aria-label="Appearance" />
         </>

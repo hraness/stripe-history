@@ -12,7 +12,7 @@ import { ownedBrowserOptions, pinnedBrowserExecutable } from "./pinned-browser.t
 const root = fileURLToPath(new URL("../", import.meta.url));
 const production = process.argv.includes("--production");
 assert.ok(process.argv.slice(2).every(argument => argument === "--production"), "Unknown argument");
-const routes = ["/stripe", "/stripe/data", "/stripe/about", "/stripe/history/valuation", "/stripe/history/payment-volume", "/stripe/history/net-revenue", "/stripe/history/appearances", "/stripe/contact", "/stripe/privacy"];
+const routes = ["/stripe", "/stripe/data", "/stripe/about", "/stripe/history/valuation", "/stripe/history/payment-volume", "/stripe/history/net-revenue", "/stripe/history/appearances", "/stripe/contact", "/stripe/privacy", "/stripe/history/acquisitions", "/stripe/events/origins-stripe-public-launch"];
 const artifacts = resolve(process.env.SITE_BROWSER_ARTIFACTS ?? "/tmp/stripe-history-site-browser");
 await mkdir(artifacts, { recursive: true });
 let origin = "https://hraness.com";

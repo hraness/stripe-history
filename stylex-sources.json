@@ -12,6 +12,7 @@
     "app/history/history-sticky-offset-sync.tsx",
     "app/product-messaging.ts",
     "app/site.ts",
+    "lib/event-date.ts",
     "lib/event-page.ts",
     "support/theme.tsx"
   ],

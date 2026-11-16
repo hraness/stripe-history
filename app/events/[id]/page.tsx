@@ -18,7 +18,6 @@ import { notFound } from "next/navigation";
 import { breadcrumbJsonLd, historyEventJsonLd } from "../../seo";
 import { SiteFooter } from "../../site-footer";
 import { SiteHeader } from "../../site-header";
-import { independenceSentence } from "../../site-copy";
 import { HRANESS_URL, absoluteSiteUrl, site, socialMetadata } from "../../site";
 
 interface HistoryEventPageProps {
@@ -229,7 +228,7 @@ export default async function HistoryEventPage({ params }: HistoryEventPageProps
           <Link href="/contact#corrections-and-sources">report a correction</Link>
         </p>
         <p className="stripe-history-event-page__muted">
-          {site.name} is published by <a href={HRANESS_URL}>Hraness</a>. {independenceSentence}
+          {site.name} is published by <a href={HRANESS_URL}>Hraness</a>.
         </p>
       </article>
       <SiteFooter path={path} />
