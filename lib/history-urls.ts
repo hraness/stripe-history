@@ -1,3 +1,4 @@
+import { eventIdFromPath } from "./event-page";
 import { timelineCategoryIds, type TimelineCategoryId } from "./history-schema";
 
 export const MARKDOWN_REWRITE_PREFIX = "/x-markdown" as const;
@@ -42,8 +43,12 @@ export const MARKDOWN_PAGE_PATHS: readonly string[] = [
 
 const markdownPagePaths = new Set(MARKDOWN_PAGE_PATHS);
 
-/** True when a public path has a Markdown page. Reads no corpus files. */
+/**
+ * True when a public path has a Markdown page. Reads no corpus files, so any
+ * well-formed `/events/<id>` path passes here; the prerendered Markdown route
+ * answers an unknown event with a 404.
+ */
 export function isKnownMarkdownPath(pathname: string): boolean {
   const path = pathname.length > 1 ? pathname.replace(/\/+$/u, "") : pathname;
-  return markdownPagePaths.has(path === "" ? "/" : path);
+  return markdownPagePaths.has(path === "" ? "/" : path) || eventIdFromPath(path) !== null;
 }

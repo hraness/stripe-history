@@ -9,9 +9,10 @@
 
 [data-hraness-material="lantern"] .stripe-history-header.hraness-material-chrome {
   --surface: var(--plain-background);
-  --hraness-marketing-header-background: var(--plain-background);
+  /* The floating inner bar paints the surface; the sticky band stays clear. */
+  --hraness-marketing-header-background: transparent;
   --hraness-marketing-header-backdrop: none;
-  border-block-end-color: var(--hraness-material-seam);
+  border-block-end-color: transparent;
 }
 
 @media (forced-colors: active) {

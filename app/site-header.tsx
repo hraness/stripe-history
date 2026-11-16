@@ -1,9 +1,14 @@
 import { ThemeMenuButton } from "@/support/theme";
 import { MarketingSiteHeader } from "@hraness/design-kit/react/server";
-import { publicSitePath, site } from "./site";
+import { HRANESS_URL, publicSitePath, site } from "./site";
+
+export const HEADER_CTA_LABEL = "More from Hraness" as const;
 
 /**
- * Shared compiled slots; native anchors use explicit canonical /stripe paths.
+ * A compact floating bar: the Hraness lockup links home to hraness.com, the
+ * section links stay on Stripe History, and one quiet call to action points
+ * to the rest of Hraness before the single appearance control.
+ * Native anchors use explicit canonical /stripe paths.
  */
 export function SiteHeader({
   aboutSelected = false,
@@ -21,7 +26,20 @@ export function SiteHeader({
         { href: publicSitePath("/data"), label: "data" },
         { href: publicSitePath("/about"), label: "about", current: aboutSelected },
       ]}
-      trailing={<ThemeMenuButton aria-label="Appearance" />}
+      trailing={(
+        <>
+          <a
+            aria-label={HEADER_CTA_LABEL}
+            className="stripe-history-header-cta"
+            data-analytics-cta="header-more-from-hraness"
+            href={HRANESS_URL}
+          >
+            <span>More</span>
+            <span className="stripe-history-header-cta__wide"> from Hraness</span>
+          </a>
+          <ThemeMenuButton aria-label="Appearance" />
+        </>
+      )}
     />
   );
 }

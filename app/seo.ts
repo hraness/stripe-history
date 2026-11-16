@@ -1,9 +1,17 @@
-import { APPEARANCES_CATEGORY, type HistoryCollection } from "@/lib/content";
+import {
+  APPEARANCES_CATEGORY,
+  type CategorizedHistoryEvent,
+  type HistoryCollection,
+} from "@/lib/content";
+import { historyEventPath } from "@/lib/event-page";
+import { articleJsonLd, type SearchSite } from "@hraness/web-discovery";
 
 import {
   GITHUB_REPOSITORY_URL,
   HRANESS_URL,
   absoluteSiteUrl,
+  publicSitePath,
+  SITE_HOST_ORIGIN,
   SITE_ORIGIN,
   site,
   type SitePath,
@@ -57,13 +65,79 @@ export function websiteJsonLd() {
   } as const;
 }
 
+/** The shared discovery helpers take a bare origin and full public paths. */
+const searchSite: SearchSite = {
+  description: site.description,
+  language: "en-US",
+  name: site.name,
+  origin: SITE_HOST_ORIGIN,
+  title: site.name,
+};
+
+function ownedPath(path: SitePath): `/${string}` {
+  return publicSitePath(path) as `/${string}`;
+}
+
+/**
+ * An Article about one dated event. The event itself is described as the
+ * article's `about` Event so the record date is never mistaken for a
+ * publication date.
+ */
+export function historyEventJsonLd(
+  event: CategorizedHistoryEvent,
+  description: string,
+  dateModified?: string,
+) {
+  const url = absoluteSiteUrl(historyEventPath(event.id));
+  const article = articleJsonLd(searchSite, {
+    canonicalPath: ownedPath(historyEventPath(event.id)),
+    category: event.categoryLabel,
+    citations: event.sources.map(({ url: sourceUrl }) => sourceUrl as `https://${string}`),
+    description,
+    image: {
+      alt: site.socialImageAlt,
+      contentType: "image/png",
+      height: 630,
+      path: ownedPath("/opengraph-image"),
+      width: 1200,
+    },
+    isAccessibleForFree: true,
+    ...(event.tags === undefined ? {} : { keywords: event.tags }),
+    ...(dateModified === undefined ? {} : { modifiedTime: dateModified }),
+    publisher: { kind: "Organization", name: "Hraness", url: HRANESS_URL },
+    section: event.categoryLabel,
+    title: event.title,
+    type: "Article",
+  });
+  return {
+    ...article,
+    url,
+    inLanguage: "en-US",
+    isPartOf: { "@id": `${absoluteSiteUrl("/")}#website` },
+    about: {
+      "@type": "Event",
+      "@id": `${url}#event`,
+      name: event.title,
+      description: event.summary,
+      startDate: event.date,
+      about: { "@type": "Organization", name: "Stripe", url: "https://stripe.com/" },
+      ...(event.locations === undefined || event.locations.length === 0
+        ? {}
+        : { location: event.locations.map((name) => ({ "@type": "Place", name })) }),
+    },
+  } as const;
+}
+
 export function historyCollectionJsonLd(
   items: readonly Readonly<{
     readonly id: string;
     readonly title: string;
   }>[],
   input: Readonly<{
+    dateModified?: string | undefined;
     description: string;
+    /** List items are timeline events with their own pages. */
+    linkEventPages?: boolean;
     path: SitePath;
     title: string;
   }>,
@@ -76,6 +150,7 @@ export function historyCollectionJsonLd(
     url,
     name: input.title,
     description: input.description,
+    ...(input.dateModified === undefined ? {} : { dateModified: input.dateModified }),
     inLanguage: "en-US",
     isPartOf: { "@id": `${absoluteSiteUrl("/")}#website` },
     publisher: publisherJsonLd,
@@ -91,7 +166,9 @@ export function historyCollectionJsonLd(
         "@type": "ListItem",
         position: index + 1,
         name: item.title,
-        url: `${url}#${item.id}`,
+        url: input.linkEventPages === true
+          ? absoluteSiteUrl(historyEventPath(item.id))
+          : `${url}#${item.id}`,
       })),
     },
   } as const;

@@ -11,7 +11,7 @@
 
 [Stripe History](https://hraness.com/stripe) is an independent record of how Stripe grew, from the Collison brothers' first projects to today. Every event is dated and linked to its sources, and reported deals stay separate from completed ones. It is not affiliated with Stripe, Inc.
 
-The site shows every event on one reverse-chronological timeline and on a page for each category, such as acquisitions, product launches, and fundraising. Separate pages chart Stripe's annual payment and total volume, its revenue, and its private valuation by year. Each event's YAML record keeps its status and any uncertainty, such as whether a deal was reported, announced, or completed.
+The site shows every event on one reverse-chronological timeline, on a page for each category such as acquisitions, product launches, and fundraising, and on its own page at `https://hraness.com/stripe/events/<event-id>`. An event page gives the exact date and how precise it is, the category, confidence, any amount, every source, and earlier, later and related events in the same category. Event IDs never change once published, and every page also answers `Accept: text/markdown` or a `.md` suffix. Separate pages chart Stripe's annual payment and total volume, its revenue, and its private valuation by year. Each event's YAML record keeps its status and any uncertainty, such as whether a deal was reported, announced, or completed.
 
 The homepage's “How this record is kept” panel shows how many events, sources, and source links the timeline has, and the date of the newest entry. It links to the [method and limits](https://hraness.com/stripe/about#sources-and-review), the [YAML downloads](https://hraness.com/stripe/data), and [how to report a correction](https://hraness.com/stripe/contact#corrections-and-sources).
 
@@ -89,24 +89,15 @@ bun install --frozen-lockfile --ignore-scripts
 bun run dev
 ```
 
-Copy `.env.example` to the ignored `.env.local` file only when configuring the
-optional Production analytics values.
-
-Optional analytics uses `@hraness/posthog` for public `/stripe` routes only.
-It preserves the consent gate and referrer-only attribution: campaign parameters,
-search keywords and full referring paths are discarded. Cookieless page views,
-page exits, core web vitals, bounded errors and missing-page events use schema 2.
-Private routes and nonproduction hosts cannot send events, including after
-navigation by an already initialized client. The boundary caps events at 32 KiB;
-errors are limited to 20 per minute and two per fingerprint. The real-SDK
-transport contract is tested in `app/analytics.test.ts`.
-
-Production builds can upload source maps using server-only `POSTHOG_API_KEY`,
-`POSTHOG_PROJECT_ID=543691` and `POSTHOG_UI_HOST=https://us.posthog.com`.
-The key needs only `error_tracking:write` for that project. The shared wrapper
-binds each upload to Vercel's commit SHA and deletes the uploaded map files;
-local, preview and unconfigured builds leave uploads disabled. Never put this
-key in a `NEXT_PUBLIC_` variable or commit an environment file.
+Analytics uses the shared `@hraness/analytics` client, configured in
+`app/analytics.ts` exactly as hraness.com configures its own pages: PostHog
+project 543691 through hraness.com's same-origin `/ph` proxy, the region answer
+from hraness.com's `/api/region`, and one shared `hraness-*` consent cookie for
+the whole host. Visitors in the EU are counted without cookies until they say
+yes; the UK, Switzerland, Brazil, the US and elsewhere are on by default. Global
+Privacy Control turns off session recordings. Every page links to "Your Privacy
+Choices". The site needs no environment variables for analytics, runs no ads,
+and sends events only from hraness.com.
 
 Every rendered page carries one shared Hraness footer with the general Hraness
 newsletter, optional paid support, and social links. Before submission, anonymous
