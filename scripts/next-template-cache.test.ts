@@ -6,7 +6,7 @@ import { dirname, join } from "node:path";
 import { assertPatchedNextDelivery, bindNextTemplateCache } from "./next-template-cache";
 
 const paths = [
-  "patches/next@16.3.3.patch",
+  "patches/next@16.4.6.patch",
   "node_modules/next/dist/build/templates/app-page.js",
   "node_modules/next/dist/esm/build/templates/app-page.js",
   "node_modules/next/dist/build/templates/app-page-runtime.js",
@@ -78,7 +78,7 @@ async function deliveryFixture(options: DeliveryOptions = {}) {
     await writeFile(join(root, ".next", path), source);
   }
   const graph = {
-    attemptId: "fixture", graphId: "node-rsc", mode: "delivery", nextVersion: "16.3.3", outputDirectory: ".next", target: "node-rsc",
+    attemptId: "fixture", graphId: "node-rsc", mode: "delivery", nextVersion: "16.4.6", outputDirectory: ".next", target: "node-rsc",
     entrypoints: [{ name: "app/page", javascript: options.unrelated ? ["server/app/page.js"] : ["server/app/page.js", "server/chunks/runtime.js"] }],
     outputs: [...files].map(([path, source]) => ({ bytes: Buffer.byteLength(source), path, sha256: digest(source) })),
     ...options.graph,
@@ -89,7 +89,7 @@ async function deliveryFixture(options: DeliveryOptions = {}) {
   await writeFile(graphPath, graphBytes);
   const record = {
     attemptId: "fixture", delivery: [{ graphId: "node-rsc", target: "node-rsc", receiptSha256: digest(graphBytes) }],
-    nextVersion: "16.3.3", outputDirectory: ".next", state: "complete", ...options.record,
+    nextVersion: "16.4.6", outputDirectory: ".next", state: "complete", ...options.record,
   } as Parameters<typeof assertPatchedNextDelivery>[1];
   return { root, record, graphPath };
 }

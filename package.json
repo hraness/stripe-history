@@ -65,21 +65,21 @@
     "@ai-sdk/gateway-v4": "npm:@ai-sdk/gateway@^4.0.27",
     "@hraness/analytics": "https://github.com/hraness/posthog/releases/download/v1.0.3/hraness-analytics-1.0.3.tgz",
     "@hraness/site-footer": "https://github.com/hraness/site-footer/releases/download/v0.20.7/hraness-site-footer-0.20.7.tgz",
-    "@hraness/ui": "github:hraness/ui#v0.5.19",
+    "@hraness/ui": "https://github.com/hraness/ui/releases/download/v0.5.26/hraness-ui-0.5.26.tgz",
     "@hraness/vercel-delivery": "github:hraness/vercel-delivery#v0.1.2",
     "@hraness/web-discovery": "github:hraness/web-discovery#v0.14.0",
     "@hugeicons/core-free-icons": "^4.2.2",
     "@hugeicons/react": "^1.1.9",
     "@stylexjs/stylex": "0.19.0",
     "ai-v7": "npm:ai@^7.0.36",
-    "next": "16.3.3",
+    "next": "16.4.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "yaml": "^2.9.0",
     "zod": "^4.4.3"
   },
   "patchedDependencies": {
-    "next@16.3.3": "patches/next@16.3.3.patch"
+    "next@16.4.6": "patches/next@16.4.6.patch"
   },
   "devDependencies": {
     "@babel/core": "7.29.7",
@@ -90,7 +90,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.2",
-    "eslint-config-next": "16.3.8",
+    "eslint-config-next": "16.4.6",
     "lightningcss": "1.33.0",
     "playwright-core": "1.62.0",
     "typescript": "6.0.3"
