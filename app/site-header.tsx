@@ -1,6 +1,6 @@
 import { ThemeMenuButton } from "@/support/theme";
 import { MarketingSiteHeader } from "@hraness/design-kit/react/server";
-import { AskAiAboutThis } from "@hraness/ui";
+import { AskAi } from "./ask-ai";
 import { absoluteSiteUrl, HRANESS_URL, publicSitePath, site, type SitePath } from "./site";
 
 export const HEADER_CTA_LABEL = "More from Hraness" as const;
@@ -8,7 +8,7 @@ export const HEADER_CTA_LABEL = "More from Hraness" as const;
 /**
  * The product-family glass bar: the Stripe History wordmark links home, three
  * quiet section links stay on the site, and one muted link points to the rest
- * of Hraness before the single appearance control. The Hraness Ra lockup lives
+ * of Hraness before the single appearance control. The HRANESS wordmark lives
  * in the footer. Native anchors use explicit canonical /stripe paths.
  */
 export function SiteHeader({
@@ -46,7 +46,7 @@ export function SiteHeader({
         )}
       />
       {askAiPath === undefined ? null : (
-        <AskAiAboutThis className="stripe-history-ask-ai" url={absoluteSiteUrl(askAiPath)} />
+        <AskAi className="stripe-history-ask-ai" url={absoluteSiteUrl(askAiPath)} />
       )}
     </>
   );

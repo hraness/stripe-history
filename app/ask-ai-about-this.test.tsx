@@ -45,7 +45,7 @@ const canonicalPages: readonly Readonly<{
 ];
 
 function askAiNav(html: string): string {
-  const match = /<nav\b[^>]*aria-label="Ask AI about this"[^>]*>[\s\S]*?<\/nav>/u.exec(html);
+  const match = /<nav\b[^>]*aria-label="Ask AI"[^>]*>[\s\S]*?<\/nav>/u.exec(html);
   expect(match).not.toBeNull();
   return match?.[0] ?? "";
 }
@@ -55,7 +55,7 @@ function assertAskAiLinks(html: string, path: SitePath): void {
   const expectedSubject = absoluteSiteUrl(path);
   const anchors = [...nav.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>/gu)];
 
-  expect(nav).toContain(">Ask AI about this<");
+  expect(nav).toContain(">Ask AI<");
   expect(nav).not.toContain("data-analytics-");
   expect(anchors).toHaveLength(providerHosts.length);
 
@@ -91,6 +91,6 @@ test("server-renders exact Ask AI subjects on every canonical HTML page", async 
 test("keeps the Ask AI block off the not-found surface", () => {
   const html = renderToStaticMarkup(<NotFound />);
 
-  expect(html).not.toContain('aria-label="Ask AI about this"');
-  expect(html).not.toContain(">Ask AI about this<");
+  expect(html).not.toContain('aria-label="Ask AI"');
+  expect(html).not.toContain(">Ask AI<");
 });
