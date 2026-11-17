@@ -7,8 +7,8 @@ import { assertPreviewSourcePath, previewSourceInventory, previewSourceKind } fr
 
 test("isolated previews admit and fingerprint the canonical product copy used by the app", async () => {
   const root = join(import.meta.dir, "..");
-  const bytes = await readFile(join(root, "portfolio-messaging.generated.json"));
-  const source = (await previewSourceInventory(root)).find(item => item.path === "portfolio-messaging.generated.json");
+  const bytes = await readFile(join(root, "app/product-messaging.json"));
+  const source = (await previewSourceInventory(root)).find(item => item.path === "app/product-messaging.json");
   expect(source).toMatchObject({
     bytes: bytes.length,
     sha256: createHash("sha256").update(bytes).digest("hex"),

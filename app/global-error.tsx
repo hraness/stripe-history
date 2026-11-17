@@ -1,22 +1,19 @@
 "use client";
 
-import { getDesignPaletteTheme } from "@hraness/design-kit";
-import {
-  DesignPaletteProvider,
-  ThemeColorSync,
-} from "@hraness/design-kit/react";
+import { siteLegacyStorageKey, sitePalettePreference } from "@/support/appearance-config";
+import { designPaletteClassName } from "@/support/hraness/appearance";
+import { DesignPaletteProvider } from "@/support/theme";
 import type { RouteErrorPageProps } from "./error";
 import "@hraness/ui/compiler-foundation.css";
-import "@hraness/design-kit/compiler-foundation.css";
+import "../support/hraness/foundation.css";
 import "@hraness/site-footer/compiler-foundation.css";
 import "./globals.css";
 
-const initialPalette = getDesignPaletteTheme("paper", "light");
 
 export default function GlobalError({ reset }: RouteErrorPageProps) {
   return (
     <html
-      className={initialPalette.className}
+      className={designPaletteClassName}
       data-palette="paper"
       lang="en-US"
       suppressHydrationWarning
@@ -36,10 +33,9 @@ export default function GlobalError({ reset }: RouteErrorPageProps) {
       </head>
       <body className="plain-site">
         <DesignPaletteProvider
-          defaultPreference={{ palette: "paper", mode: "system" }}
-          legacyStorageKey="stripe-history-theme-v1"
+          defaultPreference={sitePalettePreference}
+          legacyStorageKey={siteLegacyStorageKey}
         >
-          <ThemeColorSync darkColor="#141311" lightColor="#f4f1ea" />
           <main className="plain-page stripe-history-main stripe-history-state" id="main-content">
             <h1>Stripe History is temporarily unavailable</h1>
             <p>The site could not finish loading.</p>

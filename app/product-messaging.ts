@@ -1,9 +1,9 @@
-import snapshot from "../portfolio-messaging.generated.json";
+import messaging from "./product-messaging.json";
 
-if (snapshot.contract !== "hraness.product-messaging/v1" || snapshot.productId !== "stripe-history" || snapshot.canonicalUrl !== "https://hraness.com/stripe") {
-  throw new Error("The website needs its canonical Stripe History messaging snapshot.");
+if (messaging.formatVersion !== 1 || messaging.product !== "stripe-history") {
+  throw new Error("The website needs its Stripe History product copy.");
 }
 
-/** Pinned at refresh time; importing this module never fetches or rewrites copy. */
-export const productMessaging = snapshot.messaging;
+/** Repository-owned product copy: names, descriptions, hero, and section headings. */
+export const productMessaging = messaging;
 export const productHeadings = productMessaging.headings;

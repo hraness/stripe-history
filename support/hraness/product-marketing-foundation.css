@@ -1,0 +1,474 @@
+@import "./site-shell.css";
+
+/* Compiler-adopter marketing foundation: public token bindings, arbitrary
+   consumer-content grammar, header capability/media tokens and direct-child layout relationships.
+   Owned React slots are compiled from product-marketing.stylex.ts.
+   The standalone product-marketing.css remains the raw HTML compatibility API. */
+@layer base {
+.hraness-marketing-install {
+  --hraness-marketing-install-inline-size: initial;
+}
+
+:where( .hraness-marketing-page, .hraness-marketing-header, .hraness-marketing-footer, .hraness-marketing-hero, .hraness-marketing-pillars, .hraness-marketing-install, .hraness-marketing-section, .hraness-marketing-primitives, .hraness-marketing-stats, .hraness-marketing-interfaces, .hraness-marketing-trust, .hraness-marketing-quotes, .hraness-marketing-pricing, .hraness-marketing-questions, .hraness-marketing-maker, .hraness-marketing-related, .hraness-marketing-cta, .hraness-marketing-proof-frame ) {
+  --hraness-marketing-ink: var(--foreground, CanvasText);
+  --hraness-marketing-muted: var(--muted, GrayText);
+  --hraness-marketing-background: var(--background, Canvas);
+  --hraness-marketing-surface: var(--surface, Canvas);
+  --hraness-marketing-line: color-mix(in srgb, var(--hraness-marketing-ink) 10%, transparent);
+  --hraness-marketing-line-strong: color-mix(in srgb, var(--hraness-marketing-ink) 22%, transparent);
+  --hraness-marketing-inverse: var(--inverse, CanvasText);
+  --hraness-marketing-inverse-ink: var(--inverse-foreground, Canvas);
+  --hraness-marketing-accent: var(--hraness-site-accent, var(--primary, oklch(0.55 0.21 262)));
+  --hraness-marketing-accent-ink: var(--hraness-site-accent-ink, var(--primary-foreground, white));
+  --hraness-marketing-accent-soft: color-mix(in srgb, var(--hraness-marketing-accent) 10%, transparent);
+  --hraness-marketing-text-font: var(--font-text, ui-sans-serif, system-ui, sans-serif);
+  --hraness-marketing-heading-font: var(--font-heading, var(--hraness-marketing-text-font));
+  --hraness-marketing-mono-font: var(--font-mono, ui-monospace, monospace);
+  --hraness-marketing-measure: 72rem;
+  --hraness-marketing-copy-measure: 54ch;
+  --hraness-marketing-prose-measure: 62ch;
+  --hraness-marketing-gutter: clamp(1.25rem, 4vw, 3rem);
+  --hraness-marketing-radius: 0.75rem;
+  --hraness-marketing-frame-radius: 1.125rem;
+  --hraness-marketing-rule: 1px solid var(--hraness-marketing-line);
+  --hraness-marketing-surface-rule: 1px solid transparent;
+  --hraness-marketing-chrome-rule: 1px solid var(--hraness-marketing-line);
+  --hraness-marketing-surface-shadow: 0 0 0 1px var(--hraness-marketing-line);
+  --hraness-marketing-chrome-shadow: none;
+  --hraness-marketing-shadow: 0 0 0 1px var(--hraness-marketing-line);
+  --hraness-marketing-section-space: clamp(4rem, 9vw, 7.5rem);
+  --hraness-marketing-heading-weight: 550;
+  --hraness-marketing-heading-tracking: -0.03em;
+  --hraness-marketing-action-height: 2.75rem;
+  --hraness-foil-1: light-dark(oklch(0.89 0.065 337), oklch(0.56 0.16 340));
+  --hraness-foil-2: light-dark(oklch(0.875 0.05 277), oklch(0.52 0.15 285));
+  --hraness-foil-3: light-dark(oklch(0.92 0.05 170), oklch(0.66 0.14 175));
+  --hraness-foil-4: light-dark(oklch(0.95 0.045 96), oklch(0.72 0.13 100));
+  --hraness-foil-5: light-dark(oklch(0.9 0.05 55), oklch(0.55 0.15 45));
+  --hraness-foil-6: light-dark(oklch(0.875 0.06 305), oklch(0.62 0.16 305));
+  --hraness-foil-edge: light-dark(black, white);
+}
+
+/* The shared foil spectrum reads the deeper palette under explicit or
+ * media-resolved dark roots; the standalone stylesheet documents the contract. */
+:where([data-theme="dark"], .dark):where(
+  .hraness-marketing-page, .hraness-marketing-header, .hraness-marketing-hero,
+  .hraness-marketing-pillars, .hraness-marketing-install, .hraness-marketing-section,
+  .hraness-marketing-primitives, .hraness-marketing-stats, .hraness-marketing-interfaces,
+  .hraness-marketing-trust, .hraness-marketing-quotes, .hraness-marketing-pricing,
+  .hraness-marketing-questions, .hraness-marketing-maker, .hraness-marketing-related,
+  .hraness-marketing-cta,
+  .hraness-marketing-proof-frame
+),
+:where([data-theme="dark"], .dark) :where(
+  .hraness-marketing-page, .hraness-marketing-header, .hraness-marketing-hero,
+  .hraness-marketing-pillars, .hraness-marketing-install, .hraness-marketing-section,
+  .hraness-marketing-primitives, .hraness-marketing-stats, .hraness-marketing-interfaces,
+  .hraness-marketing-trust, .hraness-marketing-quotes, .hraness-marketing-pricing,
+  .hraness-marketing-questions, .hraness-marketing-maker, .hraness-marketing-related,
+  .hraness-marketing-cta,
+  .hraness-marketing-proof-frame
+) {
+  --hraness-foil-1: oklch(0.56 0.16 340);
+  --hraness-foil-2: oklch(0.52 0.15 285);
+  --hraness-foil-3: oklch(0.66 0.14 175);
+  --hraness-foil-4: oklch(0.72 0.13 100);
+  --hraness-foil-5: oklch(0.55 0.15 45);
+  --hraness-foil-6: oklch(0.62 0.16 305);
+  --hraness-foil-edge: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(:root:not([data-theme="light"]):not(.light)) :where(
+    .hraness-marketing-page, .hraness-marketing-header, .hraness-marketing-hero,
+    .hraness-marketing-pillars, .hraness-marketing-install, .hraness-marketing-section,
+    .hraness-marketing-primitives, .hraness-marketing-stats, .hraness-marketing-interfaces,
+    .hraness-marketing-trust, .hraness-marketing-quotes, .hraness-marketing-pricing,
+    .hraness-marketing-questions, .hraness-marketing-maker, .hraness-marketing-related,
+    .hraness-marketing-cta,
+    .hraness-marketing-proof-frame
+  ) {
+    --hraness-foil-1: oklch(0.56 0.16 340);
+    --hraness-foil-2: oklch(0.52 0.15 285);
+    --hraness-foil-3: oklch(0.66 0.14 175);
+    --hraness-foil-4: oklch(0.72 0.13 100);
+    --hraness-foil-5: oklch(0.55 0.15 45);
+    --hraness-foil-6: oklch(0.62 0.16 305);
+    --hraness-foil-edge: white;
+    }
+}
+
+.hraness-marketing-page :where(p, li, dd) {
+  text-wrap: pretty;
+}
+
+.hraness-marketing-page :where(a) {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+}
+
+
+.hraness-marketing-page :where(p, li, dd, dt, figcaption) a:not([role="button"], [data-emphasis], [data-hraness-marketing], [data-foil]),
+.hraness-marketing-maker__links a {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.hraness-marketing-page :where(p, li, dd, dt, figcaption) a:not([role="button"], [data-emphasis], [data-hraness-marketing], [data-foil]):is(:hover, :focus-visible),
+.hraness-marketing-maker__links a:is(:hover, :focus-visible) {
+  text-decoration-color: currentColor;
+}
+
+.hraness-marketing-page :where(code, kbd, pre) {
+  font-family: var(--hraness-marketing-mono-font);
+}
+
+.hraness-marketing-page :where(pre) {
+  max-inline-size: 100%;
+  margin-block: 0;
+  padding: 1rem 1.15rem;
+  overflow: auto;
+  border-radius: var(--hraness-marketing-radius);
+  background: var(--hraness-marketing-surface);
+  color: var(--hraness-marketing-ink);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  tab-size: 2;
+  white-space: pre;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.hraness-marketing-page :where(:not(pre) > code) {
+  padding: 0.08em 0.38em;
+  border-radius: 0.3em;
+  background: color-mix(in srgb, var(--hraness-marketing-ink) 7%, transparent);
+  font-size: 0.9em;
+}
+
+.hraness-marketing-page > :where( .hraness-marketing-hero, .hraness-marketing-pillars, .hraness-marketing-install, .hraness-marketing-section, .hraness-marketing-primitives, .hraness-marketing-stats, .hraness-marketing-interfaces, .hraness-marketing-trust, .hraness-marketing-quotes, .hraness-marketing-pricing, .hraness-marketing-questions, .hraness-marketing-maker, .hraness-marketing-related, .hraness-marketing-cta, .hraness-marketing-data-table ) {
+  padding-inline: var(--hraness-marketing-gutter);
+}
+
+/* Direct children outside the grammar still honor the measure, gutter, and
+   block rhythm: a product-owned block cannot escape the column or touch the
+   viewport edge. */
+.hraness-marketing-page > :where( :not([data-hraness-marketing], script, style, link, meta, template) ) {
+  inline-size: min(100%, var(--hraness-marketing-measure));
+  min-inline-size: 0;
+  margin-block: clamp(2rem, 5vw, 3.5rem);
+  margin-inline: auto;
+  padding-inline: var(--hraness-marketing-gutter);
+}
+
+/* Evidence-table cells align like prose by default; the numeric and tone
+   consumer hooks adjust presentation without inventing new classes. */
+.hraness-marketing-data-table__table :where( th, td ) {
+  text-align: start;
+}
+
+.hraness-marketing-data-table__table :where( [data-numeric] ) {
+  text-align: end;
+  white-space: nowrap;
+}
+
+.hraness-marketing-data-table__table :where( td[data-tone="positive"] ) {
+  color: var(--success, var(--hraness-marketing-accent));
+}
+
+.hraness-marketing-data-table__table :where( td[data-tone="negative"] ) {
+  color: var(--danger, var(--hraness-marketing-muted));
+}
+
+@media (forced-colors: active) {
+  .hraness-marketing-data-table__scroll,
+  .hraness-marketing-data-table__table tbody :where( th, td ) {
+    border-color: CanvasText;
+  }
+  .hraness-marketing-data-table__table thead :where( th ),
+  .hraness-marketing-data-table__table :where( [data-tone] ),
+  .hraness-marketing-data-table__meta,
+  .hraness-marketing-data-table__note {
+    color: CanvasText;
+  }
+}
+
+/* Section separators are a sibling relationship, not an owned atom: a ruled
+   section draws one boundary above itself, except directly after a framed
+   component whose own border already closes the block. */
+.hraness-marketing-section,
+.hraness-marketing-primitives,
+.hraness-marketing-interfaces,
+.hraness-marketing-trust,
+.hraness-marketing-quotes,
+.hraness-marketing-pricing,
+.hraness-marketing-questions,
+.hraness-marketing-maker,
+.hraness-marketing-related,
+.hraness-marketing-cta {
+  border-block-start: var(--hraness-marketing-rule);
+}
+
+:is(
+  .hraness-marketing-install,
+  .hraness-marketing-proof,
+  .hraness-marketing-proof-frame
+) + :is(
+  .hraness-marketing-section,
+  .hraness-marketing-primitives,
+  .hraness-marketing-interfaces,
+  .hraness-marketing-trust,
+  .hraness-marketing-quotes,
+  .hraness-marketing-pricing,
+  .hraness-marketing-questions,
+  .hraness-marketing-maker,
+  .hraness-marketing-related,
+  .hraness-marketing-cta
+) {
+  border-block-start: 0;
+}
+
+.hraness-marketing-header__brand :where(img, svg) {
+  block-size: 1.25rem;
+  inline-size: auto;
+}
+
+.hraness-marketing-footer__brand :where(img, svg) {
+  block-size: 1.25rem;
+  inline-size: auto;
+}
+
+.hraness-marketing-footer__inner > :where(p) {
+  margin: 0;
+  max-inline-size: 48ch;
+}
+
+.hraness-marketing-hero[data-tone="accent"] {
+  --hraness-marketing-ink: var(--hraness-marketing-accent-ink);
+  --hraness-marketing-muted: color-mix(in srgb, var(--hraness-marketing-accent-ink) 78%, transparent);
+  --hraness-marketing-line: color-mix(in srgb, var(--hraness-marketing-accent-ink) 22%, transparent);
+  --hraness-marketing-line-strong: color-mix(in srgb, var(--hraness-marketing-accent-ink) 40%, transparent);
+  --hraness-marketing-surface: color-mix(in srgb, var(--hraness-marketing-accent-ink) 12%, transparent);
+}
+
+.hraness-marketing-proof-frame__content > :where(img, video) {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+.hraness-marketing-proof-frame__content > :where(pre) {
+  border-radius: 0;
+}
+
+.hraness-marketing-page > .hraness-marketing-install {
+  --hraness-marketing-install-inline-size: min(100% - 2 * var(--hraness-marketing-gutter), var(--hraness-marketing-measure));
+  padding-inline: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.hraness-marketing-section__body > :where(p) {
+  max-inline-size: var(--hraness-marketing-prose-measure);
+  margin: 0;
+}
+
+.hraness-marketing-section__body > :first-child {
+  margin-block-start: 0;
+}
+
+.hraness-marketing-section__body > :last-child {
+  margin-block-end: 0;
+}
+
+.hraness-marketing-primitive p:not(:where(.hraness-marketing-primitive__summary)) {
+  margin: 0;
+  color: var(--hraness-marketing-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.hraness-marketing-primitive > :where(pre, figure) {
+  margin-block-start: 0.5rem;
+}
+
+.hraness-marketing-interface p:not(:where(.hraness-marketing-interface__summary)) {
+  margin: 0;
+}
+
+.hraness-marketing-interface p:not(:where(.hraness-marketing-interface__summary)) {
+  color: var(--hraness-marketing-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.hraness-marketing-interface pre {
+  margin-block-start: 0.5rem;
+}
+
+.hraness-marketing-question__answer > :first-child {
+  margin-block-start: 0;
+}
+
+.hraness-marketing-question__answer > :last-child {
+  margin-block-end: 0;
+}
+
+.hraness-marketing-maker__portrait :where(img, svg) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.hraness-marketing-maker__body > p {
+  max-inline-size: var(--hraness-marketing-prose-measure);
+  margin: 0;
+  color: var(--hraness-marketing-muted);
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.hraness-marketing-cta[data-tone="accent"] {
+  --hraness-marketing-ink: var(--hraness-marketing-accent-ink);
+  --hraness-marketing-muted: color-mix(in srgb, var(--hraness-marketing-accent-ink) 78%, transparent);
+  --hraness-marketing-line-strong: color-mix(in srgb, var(--hraness-marketing-accent-ink) 40%, transparent);
+  --hraness-marketing-surface: transparent;
+}
+
+.hraness-marketing-stats__source :where(strong, span) {
+  display: block;
+}
+.hraness-marketing-stats__source strong {
+  font-family: var(--hraness-marketing-heading-font);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.hraness-marketing-stats__source span {
+  margin-block-start: 0.3rem;
+  color: var(--hraness-marketing-muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+/* Shared header capability/media tokens; paint stays in the owned atoms. */
+/* Keep the browser aliases in separate feature queries: CSS optimizers can
+ * collapse adjacent aliases to the prefixed property and lose Chromium blur. */
+.hraness-marketing-header {
+  --hraness-marketing-header-background: var(--hraness-marketing-background);
+  --hraness-marketing-header-backdrop: none;
+}
+
+@supports (-webkit-backdrop-filter: blur(1px)) {
+  .hraness-marketing-header {
+    --hraness-marketing-header-background: color-mix(in srgb, var(--hraness-marketing-background) 82%, transparent);
+    --hraness-marketing-header-backdrop: blur(14px) saturate(1.4);
+  }
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .hraness-marketing-header {
+    --hraness-marketing-header-background: color-mix(in srgb, var(--hraness-marketing-background) 82%, transparent);
+    --hraness-marketing-header-backdrop: blur(14px) saturate(1.4);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  .hraness-marketing-header {
+    --hraness-marketing-header-background: var(--hraness-marketing-background);
+    --hraness-marketing-header-backdrop: none;
+  }
+}
+
+.hraness-marketing-header:not([data-position="static"]) {
+  --hraness-sticky-offset: calc(var(--hraness-marketing-header-height, 2.75rem) + 1px);
+}
+
+html:has(:is(.hraness-marketing-header, .hraness-marketing-header-surface):not([data-position="static"])),
+.hraness-marketing-page:has(> :is(.hraness-marketing-header, .hraness-marketing-header-surface):not([data-position="static"])) {
+  --hraness-sticky-offset: calc(var(--hraness-marketing-header-height, 2.75rem) + 1px);
+}
+
+html:has(:is(.hraness-marketing-header, .hraness-marketing-header-surface):not([data-position="static"])) {
+  scroll-padding-block-start: var(--hraness-sticky-offset);
+}
+
+.hraness-marketing-main,
+.hraness-marketing-header + :is(main, .hraness-marketing-main) {
+  scroll-margin-block-start: var(--hraness-sticky-offset);
+}
+
+.hraness-marketing-main[data-hraness-clearance="pad"],
+.hraness-marketing-header[data-position="fixed"] + :is(main, .hraness-marketing-main) {
+  padding-block-start: var(--hraness-sticky-offset);
+}
+
+.hraness-sticky-below-chrome,
+[data-hraness-sticky] {
+  position: sticky;
+  inset-block-start: var(--hraness-sticky-offset);
+  z-index: 30;
+}
+
+/* Intrinsic media sizing is shared with raw HTML card icons. */
+.hraness-marketing-card__icon > :is(img, svg) {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: contain;
+}
+
+.hraness-marketing-card-row,
+.hraness-marketing-interface-grid,
+.hraness-marketing-trust-grid,
+.hraness-marketing-quote-grid,
+.hraness-marketing-plan-grid,
+.hraness-marketing-primitives__list {
+  align-items: stretch;
+}
+
+.hraness-marketing-card-row > *,
+.hraness-marketing-interface-grid > *,
+.hraness-marketing-trust-grid > *,
+.hraness-marketing-quote-grid > *,
+.hraness-marketing-plan-grid > *,
+.hraness-marketing-primitives__list > * {
+  min-block-size: 100%;
+  align-self: stretch;
+}
+/* Hero backdrops are retired. Hand-authored markup that still ships the old
+ * backdrop hooks paints nothing and takes no space. */
+.hraness-marketing-hero-backdrop {
+  display: none;
+}
+
+/* Supplemental proof belongs below both columns of a split hero. */
+.hraness-marketing-hero[data-layout="split"] > :where(.hraness-marketing-proof, .hraness-marketing-facts) {
+  grid-column: 1 / -1;
+}
+
+/* Keep all meaningful hero content above the inert decorative backdrop. */
+.hraness-marketing-hero > :where(.hraness-marketing-hero__copy, .hraness-marketing-hero__frame, .hraness-marketing-proof, .hraness-marketing-facts) {
+  position: relative;
+  z-index: 1;
+}
+
+}
+
+/* Product-owned SVG content grammar; the diagram's React frame stays compiled. */
+@layer base {
+.hraness-diagram .hraness-diagram__label { fill: var(--foreground); font-family: var(--font-text); font-size: 20px; font-weight: 500; }
+.hraness-diagram .hraness-diagram__detail { fill: var(--muted); font-family: var(--font-text); font-size: 16px; font-weight: 400; }
+.hraness-diagram .hraness-diagram__node { fill: var(--background); stroke: var(--line); stroke-width: 1; }
+.hraness-diagram .hraness-diagram__connector,
+.hraness-diagram .hraness-diagram__icon { color: var(--primary); fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+@media (forced-colors: active) {
+.hraness-diagram .hraness-diagram__label, .hraness-diagram .hraness-diagram__detail { fill: CanvasText; }
+.hraness-diagram .hraness-diagram__node { fill: Canvas; stroke: CanvasText; }
+.hraness-diagram .hraness-diagram__connector, .hraness-diagram .hraness-diagram__icon { color: CanvasText; }
+}
+}

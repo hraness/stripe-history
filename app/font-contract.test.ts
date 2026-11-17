@@ -20,15 +20,22 @@ function outlinedWordmark(svg: string): string {
   return path;
 }
 
-test("uses the released Nebula Sans default for text and headings while retaining explicit mono roles", () => {
+test("uses the self-hosted Nebula Sans default for text and headings while retaining explicit mono roles", async () => {
+  expect(packageJson.dependencies).not.toHaveProperty("@hraness/design-kit");
   expect(packageJson.dependencies).toMatchObject({
-    "@hraness/design-kit": "github:hraness/design-kit#v0.36.3",
     "@hraness/site-footer": "https://github.com/hraness/site-footer/releases/download/v0.20.7/hraness-site-footer-0.20.7.tgz",
     "@hraness/ui": "github:hraness/ui#v0.5.19",
-    "@hraness/web-discovery": "github:hraness/web-discovery#v0.13.0",
+    "@hraness/web-discovery": "github:hraness/web-discovery#v0.14.0",
   });
   expect(layout).toContain('import "@hraness/ui/compiler-foundation.css";');
-  expect(layout).toContain('import "@hraness/design-kit/compiler-foundation.css";');
+  expect(layout).toContain('import "../support/hraness/foundation.css";');
+  const fonts = await Bun.file(new URL("../support/hraness/fonts.css", import.meta.url)).text();
+  for (const weight of [300, 400, 500, 600, 700, 900]) {
+    expect(fonts).toContain(`font-weight: ${String(weight)};`);
+  }
+  for (const match of fonts.matchAll(/url\("\.\/(fonts\/[^"]+)"\)/gu)) {
+    expect(await Bun.file(new URL(`../support/hraness/${match[1] ?? ""}`, import.meta.url)).exists()).toBe(true);
+  }
   expect(layout).toContain('import "@hraness/site-footer/compiler-foundation.css";');
   expect(globals).not.toMatch(/@hraness\/[^"\n]+\/(?:styles|stylex)\.css/u);
   expect(tokens).toContain("--ui-font-sans: var(--font-text)");

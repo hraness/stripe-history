@@ -34,7 +34,7 @@ describe("hraness.com/stripe privacy page", () => {
     expect(html).toContain("does not delete, cancel, or migrate that record");
     expect(html).not.toContain("Cloudflare Turnstile");
     expect(html).toContain('href="/contact"');
-    expect(html).toContain('aria-label="Appearance: System"');
+    expect(html).toContain('aria-label="Appearance: Paper, System"');
     expect(visibleText(html).length).toBeGreaterThan(500);
   });
 });

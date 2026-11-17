@@ -1,15 +1,15 @@
 import { expect, test } from "bun:test";
-import { DesignPaletteProvider } from "@hraness/design-kit/react";
 import { renderToStaticMarkup } from "react-dom/server";
 
-import { ThemeMenuButton } from "@/support/theme";
+import { siteLegacyStorageKey, sitePalettePreference } from "@/support/appearance-config";
+import { DesignPaletteProvider, ThemeMenuButton } from "@/support/theme";
 import { SiteHeader } from "./site-header";
 
 test("appearance starts with the Paper palette in System mode", () => {
   const html = renderToStaticMarkup(
     <DesignPaletteProvider
-      defaultPreference={{ palette: "paper", mode: "system" }}
-      legacyStorageKey="stripe-history-theme-v1"
+      defaultPreference={sitePalettePreference}
+      legacyStorageKey={siteLegacyStorageKey}
     >
       <ThemeMenuButton />
     </DesignPaletteProvider>,
@@ -31,22 +31,28 @@ test("site chrome keeps the shared appearance menu as its final header action", 
   expect(html.slice(theme, controlsEnd)).not.toContain("<a ");
 });
 
-test("Stripe History does not keep a second theme runtime", async () => {
-  const [source, layout, globalError] = await Promise.all([
+test("Stripe History keeps one palette runtime shared by the bootstrap and the menu", async () => {
+  const [source, bootstrap, layout, globalError] = await Promise.all([
     Bun.file(new URL("../support/theme.tsx", import.meta.url)).text(),
+    Bun.file(new URL("../browser/theme-bootstrap.ts", import.meta.url)).text(),
     Bun.file(new URL("./layout.tsx", import.meta.url)).text(),
     Bun.file(new URL("./global-error.tsx", import.meta.url)).text(),
   ]);
 
-  expect(source).toContain('from "@hraness/design-kit/react"');
+  expect(sitePalettePreference).toEqual({ palette: "paper", mode: "system" });
+  expect(siteLegacyStorageKey).toBe("stripe-history-theme-v1");
+  expect(source).toContain('from "./hraness/appearance-controller"');
   expect(source).not.toContain("localStorage");
   expect(source).not.toContain("MutationObserver");
-  expect(source).not.toContain("useSyncExternalStore");
+  expect(bootstrap).toContain('from "../support/hraness/appearance-controller"');
+  expect(bootstrap).toContain("defaultPreference: sitePalettePreference");
+  expect(bootstrap).toContain("legacyStorageKey: siteLegacyStorageKey");
   for (const page of [layout, globalError]) {
     expect(page).toContain("DesignPaletteProvider");
-    expect(page).toContain('legacyStorageKey="stripe-history-theme-v1"');
+    expect(page).toContain("defaultPreference={sitePalettePreference}");
+    expect(page).toContain("legacyStorageKey={siteLegacyStorageKey}");
     expect(page).toContain('data-palette="paper"');
-    expect(page).not.toContain("DesignThemeProvider");
+    expect(page).not.toContain("@hraness/design-kit");
   }
   // The document is served under the `/stripe` base path behind hraness.com, and
   // Next.js leaves raw script URLs unprefixed. The bare root path resolves to the

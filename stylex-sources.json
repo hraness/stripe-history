@@ -15,6 +15,12 @@
     "app/site.ts",
     "lib/event-date.ts",
     "lib/event-page.ts",
+    "support/appearance-config.ts",
+    "support/hraness/appearance-controller.ts",
+    "support/hraness/appearance-menu.stylex.ts",
+    "support/hraness/appearance.ts",
+    "support/hraness/foil.ts",
+    "support/hraness/theme-color-meta.ts",
     "support/theme.tsx"
   ],
   "edgeRsc": [],
@@ -68,6 +74,7 @@
     "app/site-copy.ts",
     "app/site-footer.stylex.ts",
     "app/site-footer.tsx",
+    "app/site-header.stylex.ts",
     "app/site-header.tsx",
     "app/site.ts",
     "app/sitemap.ts",
@@ -92,7 +99,12 @@
     "lib/research-source-identity.ts",
     "lib/site-history.ts",
     "proxy.ts",
-    "support/design-kit.ts",
+    "support/appearance-config.ts",
+    "support/hraness/appearance-controller.ts",
+    "support/hraness/appearance-menu.stylex.ts",
+    "support/hraness/appearance.ts",
+    "support/hraness/foil.ts",
+    "support/hraness/theme-color-meta.ts",
     "support/theme.tsx"
   ]
 }
