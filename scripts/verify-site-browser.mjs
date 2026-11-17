@@ -124,7 +124,7 @@ async function verifyCombination({ width, theme }) {
       assert.equal(state.screenshotWidth, width, `${route}: capture exceeds viewport`);
       assert.ok(state.heading, `${route}: missing heading`);
       assert.equal(state.theme, theme, `${route}: system appearance`);
-      // The product palette must outrank the design kit's paper defaults.
+      // Paper's tuned product values must outrank the palette system's defaults.
       assert.equal(state.paletteBackground, theme === "light" ? "#f4f1ea" : "#141311", `${route}: palette background`);
       assert.equal(state.canvas, theme === "light" ? "rgb(244, 241, 234)" : "rgb(20, 19, 17)", `${route}: page canvas`);
       assert.ok(state.footerPositions.every(position => position === "static" || position === "relative"), `${route}: footer not in normal flow`);
@@ -173,15 +173,36 @@ async function verifyCombination({ width, theme }) {
       }
     }
     const themeMenu = page.locator(".hraness-design-palette-menu");
-    await page.waitForFunction(() => document.querySelector(".hraness-design-palette-menu")?.dataset.ready === "true");
-    await themeMenu.locator(":scope > summary").click();
+    const openThemeMenu = async () => {
+      await page.waitForFunction(() => document.querySelector(".hraness-design-palette-menu")?.dataset.ready === "true");
+      await themeMenu.locator(":scope > summary").click();
+    };
+    await openThemeMenu();
     const targetTheme = theme === "light" ? "dark" : "light";
     await page.getByRole("radio", { name: new RegExp(`^${targetTheme}$`, "iu") }).check();
     await page.waitForFunction(expected => document.documentElement.dataset.theme === expected, targetTheme);
     await page.reload();
     await page.waitForFunction(expected => document.documentElement.dataset.theme === expected, targetTheme);
+    // hraness.com serves this site at /stripe and reads the same two keys: the
+    // choice, and the light or dark mode on its own.
+    assert.deepEqual(await page.evaluate(() => {
+      let saved = null;
+      try { saved = JSON.parse(localStorage.getItem("hraness-design-palette-v1") ?? "null"); } catch { /* Reported below. */ }
+      return [saved, localStorage.getItem("hraness-theme")];
+    }), [{ palette: "paper", mode: targetTheme }, targetTheme], "appearance storage shared with hraness.com");
+    // The other palettes paint the whole page, not only the menu and the
+    // browser's theme colour.
+    await openThemeMenu();
+    await page.getByRole("radio", { name: "Gruvbox", exact: true }).check();
+    await page.waitForFunction(() => document.documentElement.dataset.palette === "gruvbox");
+    await page.keyboard.press("Escape");
+    await page.waitForFunction(() => document.querySelector(".hraness-design-palette-menu")?.open === false);
+    const gruvbox = targetTheme === "light" ? "rgb(251, 241, 199)" : "rgb(40, 40, 40)";
+    const paint = () => page.evaluate(() => [document.documentElement, document.body].map(element => getComputedStyle(element).backgroundColor));
+    assert.deepEqual(await paint(), [gruvbox, gruvbox], "Gruvbox canvas and page");
     await page.locator("header").getByRole("link", { name: "Data", exact: true }).click();
     await page.waitForURL(url => url.pathname === "/stripe/data");
+    assert.deepEqual(await paint(), [gruvbox, gruvbox], "Gruvbox after navigation");
     assert.deepEqual(errors, [], `Browser errors after appearance and navigation; responses >= 400: ${JSON.stringify(failedResponses)}`);
   } finally { await context.close(); }
 }

@@ -1,4 +1,4 @@
-import { siteLegacyStorageKey, sitePalettePreference } from "@/support/appearance-config";
+import { siteLegacyStorageKey, siteModeMirrorKey, sitePalettePreference } from "@/support/appearance-config";
 import { designPaletteClassName } from "@/support/hraness/appearance";
 import { DesignPaletteProvider, SkipLink } from "@/support/theme";
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
@@ -88,6 +88,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <DesignPaletteProvider
           defaultPreference={sitePalettePreference}
           legacyStorageKey={siteLegacyStorageKey}
+          modeMirrorKey={siteModeMirrorKey}
         >
           <SkipLink href="#main-content">Skip to content</SkipLink>
           {children}

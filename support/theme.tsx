@@ -57,6 +57,7 @@ export interface DesignPaletteProviderProps {
   /** Pass a stable (module-level) value; a new object re-attaches the controller. */
   readonly defaultPreference?: DesignPalettePreference;
   readonly legacyStorageKey?: string | null;
+  readonly modeMirrorKey?: string | null;
 }
 
 /** Appearance boundary. The head bootstrap installs the same controller before hydration. */
@@ -64,6 +65,7 @@ export function DesignPaletteProvider({
   children,
   defaultPreference = sitePalettePreference,
   legacyStorageKey,
+  modeMirrorKey = null,
 }: DesignPaletteProviderProps) {
   const fallback = useMemo(() => parseDesignPalettePreference(defaultPreference) ?? sitePalettePreference, [defaultPreference]);
   const serverSnapshot = useMemo(() => designPaletteSnapshot(fallback, false), [fallback]);
@@ -72,13 +74,14 @@ export function DesignPaletteProvider({
     const current = initDesignPalette({
       defaultPreference: fallback,
       ...(legacyStorageKey === undefined ? {} : { legacyStorageKey }),
+      modeMirrorKey,
     });
     // The controller is an external store that only exists in the browser;
     // adopting it after hydration keeps server and first client render equal.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setController(current);
     return () => { current.dispose(); };
-  }, [fallback, legacyStorageKey]);
+  }, [fallback, legacyStorageKey, modeMirrorKey]);
   const snapshot = useSyncExternalStore(
     controller?.subscribe ?? noSubscribe,
     controller?.getSnapshot ?? (() => serverSnapshot),
@@ -112,6 +115,8 @@ export function DesignPaletteMenuButton({
   const detailsRef = useRef<HTMLDetailsElement>(null);
   const pointerInside = useRef(false);
   const groupId = useId();
+  // The trigger keeps its hover wash while the menu is open, as on rough.day.
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const details = detailsRef.current;
     if (details === null) return;
@@ -179,13 +184,14 @@ export function DesignPaletteMenuButton({
     data-presentation="menu"
     data-ready={ready ? "true" : "false"}
     ref={detailsRef}
+    onToggle={(event) => { setOpen(event.currentTarget.open); }}
     onBlur={(event) => {
       if (!pointerInside.current && isNode(event.relatedTarget)
         && !event.currentTarget.contains(event.relatedTarget)) event.currentTarget.open = false;
     }}
   >
     <summary
-      {...stylex.props(paletteMenuStyles.trigger, size === "default" && paletteMenuStyles.triggerDefault)}
+      {...stylex.props(paletteMenuStyles.trigger, size === "default" && paletteMenuStyles.triggerDefault, open && paletteMenuStyles.triggerOpen)}
       aria-disabled={!ready || undefined}
       aria-label={title}
       onClick={(event) => { if (!ready) event.preventDefault(); }}
