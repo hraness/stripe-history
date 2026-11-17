@@ -47,7 +47,7 @@ export function AcquisitionsAnswer({
     <div className="history-answer" data-answer="acquisitions">
       <p className="history-answer-lead">{summary.lead}</p>
       <div className="history-answer-table-wrap">
-        <table className="history-answer-table">
+        <table className="history-answer-table" data-stack="narrow">
           <caption>{ACQUISITIONS_TABLE_CAPTION}</caption>
           <thead>
             <tr>
@@ -64,8 +64,8 @@ export function AcquisitionsAnswer({
                   <time dateTime={row.date}>{row.dateLabel}</time>
                 </td>
                 <th scope="row"><a href={`#${row.eventId}`}>{row.deal}</a></th>
-                <td>{row.status}</td>
-                <td>{row.price}</td>
+                <td data-label="Status">{row.status}</td>
+                <td data-label="Price">{row.price}</td>
               </tr>
             ))}
           </tbody>

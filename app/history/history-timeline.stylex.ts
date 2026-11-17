@@ -90,7 +90,7 @@ export const historyTimelineStyles = stylex.create({
     backgroundPosition: "0% 0%",
     backgroundRepeat: "repeat",
     backgroundSize: "auto auto",
-    borderColor: { default: "var(--plain-edge)", [forced]: "CanvasText" },
+    borderColor: { default: "transparent", [forced]: "CanvasText" },
     borderImageOutset: 0,
     borderImageRepeat: "stretch",
     borderImageSlice: "100%",
@@ -99,18 +99,18 @@ export const historyTimelineStyles = stylex.create({
     borderStyle: "solid",
     borderWidth: "1px",
     borderRadius: "999px",
-    color: { default: "var(--plain-foreground)", [forced]: "CanvasText" },
+    color: { default: "var(--plain-muted)", [forced]: "CanvasText" },
     display: "inline-flex",
     fontFamily: "var(--font-text)",
     fontSize: "0.8125rem",
     fontWeight: 450,
-    gap: "0.4rem",
+    gap: "0.35rem",
     minHeight: {
       default: "max(2.125rem, var(--plain-link-target-min))",
       [coarse]: "var(--plain-link-target-min, 48px)",
     },
     paddingTop: "0.25rem",
-    paddingRight: "0.8rem",
+    paddingRight: "0.7rem",
     paddingBottom: "0.25rem",
     paddingLeft: "0.7rem",
     overflowWrap: "anywhere",
@@ -123,8 +123,8 @@ export const historyTimelineStyles = stylex.create({
     transitionDuration: "160ms",
     transitionProperty: "background-color, border-color, color",
     ":hover": {
-      backgroundColor: "var(--plain-surface)",
-      borderColor: "var(--plain-muted)",
+      backgroundColor: "var(--plain-wash)",
+      color: "var(--plain-foreground)",
     },
     ":focus-visible": {
       boxShadow: "none",
@@ -137,19 +137,19 @@ export const historyTimelineStyles = stylex.create({
   filterSelected: {
     // Keep the system-color pair intact without opaque browser text backplates.
     forcedColorAdjust: { default: null, [forced]: "none" },
-    backgroundColor: { default: "var(--plain-primary)", [forced]: "Highlight" },
-    borderColor: { default: "var(--plain-primary)", [forced]: "Highlight" },
-    color: { default: "var(--plain-on-primary)", [forced]: "HighlightText" },
+    backgroundColor: { default: "var(--plain-wash)", [forced]: "Highlight" },
+    borderColor: { default: "var(--plain-wash)", [forced]: "Highlight" },
+    color: { default: "var(--plain-foreground)", [forced]: "HighlightText" },
+    fontWeight: 550,
     // The former selected selector followed the equally-specific hover rule.
     ":hover": {
-      backgroundColor: { default: "var(--plain-primary-hover)", [forced]: "Highlight" },
-      borderColor: { default: "var(--plain-primary-hover)", [forced]: "Highlight" },
+      backgroundColor: { default: "var(--plain-wash)", [forced]: "Highlight" },
+      borderColor: { default: "var(--plain-edge)", [forced]: "Highlight" },
     },
     ":focus-visible": {
       outlineColor: { default: "var(--plain-focus)", [forced]: "HighlightText" },
     },
   },
-  filterIcon: { color: "var(--history-category-ink)" },
   filterCount: { color: "var(--plain-muted)", fontVariantNumeric: "tabular-nums" },
   selectedInk: { color: "inherit" },
   description: {

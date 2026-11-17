@@ -42,18 +42,13 @@ export default async function DataPage() {
         data={[
           historyDatasetJsonLd(history),
           breadcrumbJsonLd([
-            { name: "History", path: "/" },
+            { name: "Stripe History", path: "/" },
             { name: "Data", path: "/data" },
           ]),
         ]}
         id="stripe-history-dataset-structured-data"
       />
-      <SiteHeader dataSelected />
-      <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
-        <Link href="/">stripe history</Link>
-        <span aria-hidden="true"> / </span>
-        <span>data</span>
-      </nav>
+      <SiteHeader dataSelected askAiPath="/data" />
       <section aria-labelledby="data-heading" className="stripe-history-section">
         <div className="stripe-history-section-heading">
           <h1 id="data-heading">{dataTitle}</h1>
@@ -217,7 +212,7 @@ export default async function DataPage() {
           <EditorialParagraph parts={dataReadExample.schema} />
         </section>
       </section>
-      <SiteFooter path="/data" />
+      <SiteFooter />
     </main>
   );
 }

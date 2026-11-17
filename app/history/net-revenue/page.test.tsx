@@ -82,12 +82,12 @@ describe("hraness.com/stripe net-revenue history", () => {
     expect(html).not.toContain('class="stripe-history-visually-hidden"');
     expect(html).toContain(seo.lead);
     expect(html).toContain(seo.description);
-    expect(html).toContain("<table>");
-    expect(html).toContain('<th scope="col">year</th>');
-    expect(html).toContain('<th scope="col">amount</th>');
-    expect(html).toContain('<th scope="col">kind</th>');
-    expect(html).toContain('<th scope="col">qualifier</th>');
-    expect(html).toContain('<th scope="col">sources</th>');
+    expect(html).toContain('<table data-stack="narrow">');
+    expect(html).toContain('<th scope="col">Year</th>');
+    expect(html).toContain('<th scope="col">Amount</th>');
+    expect(html).toContain('<th scope="col">Kind</th>');
+    expect(html).toContain('<th scope="col">Qualifier</th>');
+    expect(html).toContain('<th scope="col">Sources</th>');
     expect(html).toContain(`<tr id="${latest.eventId}"`);
     expect(html).toContain(`"numberOfItems":${history.annualRevenues.length}`);
     expect(html).toContain(`https://hraness.com/stripe/history/net-revenue#${latest.eventId}`);
@@ -132,11 +132,11 @@ describe("hraness.com/stripe net-revenue history", () => {
     expect(html.indexOf('data-filter-id="payment-volume"')).toBeLessThan(
       html.indexOf('data-filter-id="net-revenue"'),
     );
-    expect(html.indexOf("yearly disclosures")).toBeLessThan(html.indexOf('id="net-revenue-chart-heading"'));
-    expect(html.indexOf('id="net-revenue-chart-heading"')).toBeLessThan(html.indexOf("disclosures and sources"));
+    expect(html.indexOf("Yearly disclosures")).toBeLessThan(html.indexOf('id="net-revenue-chart-heading"'));
+    expect(html.indexOf('id="net-revenue-chart-heading"')).toBeLessThan(html.indexOf("Disclosures and sources"));
     expect(html).toContain("$5.12 billion");
-    expect(html).not.toContain("<td>$5.12 billion</td>");
-    expect(html).not.toContain("<td>$6.9 billion</td>");
+    expect(html).not.toContain(`<td data-label="Amount">$5.12 billion</td>`);
+    expect(html).not.toContain(`<td data-label="Amount">$6.9 billion</td>`);
     expect(html).not.toContain("the singularity");
     expect(html).not.toContain("The Information reports Stripe Q3 2023 net revenue of roughly $1 billion");
   });

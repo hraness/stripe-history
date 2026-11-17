@@ -354,10 +354,6 @@ export function HistoryFilters({
         href={deselectsToAll ? "/" : href}
         style={historyFilterVisualStyle(filterId)}
       >
-        <HistoryCategoryIcon
-          className={stylex.props(styles.filterIcon, selected && styles.selectedInk).className}
-          filterId={filterId}
-        />
         <span className="history-filter-label">{label}</span>
         <span className={`history-filter-count ${stylex.props(styles.filterCount, selected && styles.selectedInk).className}`}>{count}</span>
       </Link>
@@ -413,8 +409,8 @@ export function HistoryView({
       className="stripe-history-page stripe-history-main stripe-history-history-main"
       id="main-content"
     >
-      <SiteHeader />
-      {orientation ? <HistoryOrientation afterHero={answer} evidence={evidence} /> : null}
+      <SiteHeader askAiPath={path} />
+      {orientation ? <HistoryOrientation afterHero={answer} /> : null}
       <section aria-labelledby="history-heading" className={`stripe-history-section ${stylex.props(styles.section).className}`} id="timeline">
         {orientation ? null : (
           <>
@@ -462,7 +458,7 @@ export function HistoryView({
         </div>
       </section>
       {orientation ? <HistoryClosing /> : null}
-      <SiteFooter path={path} />
+      <SiteFooter />
     </main>
   );
 }

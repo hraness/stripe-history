@@ -38,7 +38,7 @@ test("ink plain-site links carry a hairline underline that firms on interaction"
 
 test("Ask AI links retain control styling inside plain pages", () => {
   expect(globalsCss).toMatch(
-    /\.stripe-history-ask-ai \[data-slot="ask-ai-about-this-link"\]\s*\{[^}]*color:\s*var\(--ui-muted-foreground\);[^}]*text-decoration:\s*none;/u,
+    /\.stripe-history-ask-ai \[data-slot="ask-ai-about-this-link"\]\s*\{[^}]*border:\s*1px solid var\(--plain-line\);[^}]*border-radius:\s*999px;[^}]*color:\s*var\(--plain-muted\);[^}]*text-decoration:\s*none;/u,
   );
   expect(globalsCss).toMatch(
     /\.stripe-history-ask-ai \[data-slot="ask-ai-about-this-link"\]:focus-visible\s*\{[^}]*outline:\s*2px solid var\(--plain-focus\);[^}]*outline-offset:\s*2px;[^}]*text-decoration:\s*none;/u,
@@ -95,21 +95,22 @@ test("history content focus targets clear the measured sticky stack without movi
   );
 });
 
-test("compiled selected chips retain accent on hover and forced-color focus contrast", () => {
+test("compiled chips stay calm text chips with a soft selected wash and forced-color focus contrast", () => {
   const selected = compiledRules(historyTimelineStyles.filterLink, historyTimelineStyles.filterSelected);
   const unselected = compiledRules(historyTimelineStyles.filterLink);
-  expect(selected).toMatch(/:hover\{background-color:var\(--plain-primary-hover\)/u);
-  expect(selected).not.toContain("background-color:var(--plain-surface)");
+  expect(selected).toContain("background-color:var(--plain-wash)");
+  expect(selected).toContain("color:var(--plain-foreground)");
+  expect(selected).not.toContain("var(--plain-primary)");
+  expect(unselected).toContain("color:var(--plain-muted)");
+  expect(unselected).toContain("border-color:transparent");
   expect(selected).not.toContain("border-color:var(--plain-line-strong)");
   expect(selected).toMatch(/@media\s*\(forced-colors:\s*active\).*:hover\{background-color:Highlight/u);
   expect(selected).toMatch(/@media\s*\(forced-colors:\s*active\).*:focus-visible\{outline-color:HighlightText/u);
   expect(selected).toContain("outline-offset:-4px");
   expect(selected).toContain("box-shadow:none");
-  expect(unselected).toContain("background-color:var(--plain-surface)");
+  expect(unselected).toMatch(/:hover\{background-color:var\(--plain-wash\)/u);
   expect(unselected).toContain("outline-color:Highlight");
   expect(unselected).toContain("--history-category-ink:var(--plain-foreground)");
-  expect(compiledRules(historyTimelineStyles.filterIcon)).toContain("color:var(--history-category-ink)");
-  expect(compiledRules(historyTimelineStyles.filterIcon, historyTimelineStyles.selectedInk)).toContain("color:inherit");
   expect(compiledRules(historyTimelineStyles.filterCount, historyTimelineStyles.selectedInk)).not.toContain("color:var(--plain-muted)");
   expect(compiledRules(historyTimelineStyles.filterCount)).toContain("font-variant-numeric:tabular-nums");
   // Keep theme role evaluation on each element with its own closed hue input.
@@ -231,8 +232,6 @@ test("site chrome matches the compact sticky Hraness shell and preserves coarse 
   expect(plainSiteCss).toMatch(
     /@media \(pointer: coarse\)\s*\{[^}]*--plain-link-target-min:\s*var\(--interactive-target-min, 48px\);/u,
   );
-  expect(globalsCss).toMatch(
-    /\.stripe-history-main > \.hraness-site-footer\s*\{[^}]*--hraness-site-footer-measure:\s*64rem;[^}]*inline-size:\s*100vw;[^}]*margin-inline:\s*calc\(50% - 50vw\);/u,
-  );
+  expect(globalsCss).not.toContain(".hraness-site-footer");
   expect(globalsCss).not.toContain(".stripe-history-substack");
 });

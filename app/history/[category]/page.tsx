@@ -91,7 +91,7 @@ export default async function HistoryCategoryPage({
                 title,
               }),
           breadcrumbJsonLd([
-            { name: "History", path: "/" },
+            { name: "Stripe History", path: "/" },
             { name: resolved.category.label, path },
           ]),
         ]}

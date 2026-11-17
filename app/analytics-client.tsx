@@ -26,7 +26,7 @@ function label(value: string | undefined | null): string | undefined {
 }
 
 function placementOf(element: Element): string {
-  if (element.closest("footer, .stripe-history-footer-resources") !== null) return "footer";
+  if (element.closest("footer") !== null) return "footer";
   if (element.closest("header") !== null) return "nav";
   return "inline";
 }

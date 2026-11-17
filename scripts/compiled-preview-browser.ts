@@ -95,9 +95,9 @@ async function proveClosingBorders(page: Page) {
       for (const width of [390, 1280]) {
         await page.setViewportSize({ width, height: 900 });
         const borders = await page.evaluate(() => {
-          return [...document.querySelectorAll<HTMLElement>(".stripe-history-footer-resources, .stripe-history-questions, .stripe-history-maker, .hraness-marketing-question")].map((node) => {
+          return [...document.querySelectorAll<HTMLElement>("#stripe-history-footer, .stripe-history-questions, .hraness-marketing-question")].map((node) => {
             const reference = document.createElement("span");
-            reference.style.borderTop = node.matches(".stripe-history-footer-resources")
+            reference.style.borderTop = node.matches("#stripe-history-footer")
               ? "1px solid var(--plain-line)"
               : "var(--hraness-marketing-rule)";
             node.append(reference);
@@ -112,7 +112,7 @@ async function proveClosingBorders(page: Page) {
             } finally { reference.remove(); }
           });
         });
-        assert.equal(borders.length, 6, "Observe resources, both closing sections and all three questions");
+        assert.equal(borders.length, 5, "Observe the footer, the closing section and all three questions");
         for (const border of borders) {
           assert.equal(border.expectedWidth, "1px");
           assert.equal(border.expectedStyle, "solid");
@@ -240,30 +240,16 @@ try {
   assert.ok(await page.locator(".history-event").count() >= 200, "Real async corpus must render");
   assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://hraness.com/stripe");
   assert.equal(await page.locator('iframe[src="https://hraness.substack.com/embed"]').count(), 0);
-  assert.equal(await page.locator('form[action="https://account.hraness.com/api/mailing/subscribe"]').count(), 1);
-  assert.equal(await page.locator('input[name="audience"]').inputValue(), "hraness");
+  assert.equal(await page.locator('form[action="https://account.hraness.com/api/mailing/subscribe"]').count(), 0);
   assert.equal(await page.locator('.hraness-marketing-header__nav a').nth(1).getAttribute("href"), "/stripe/data");
   assert.equal(await page.locator('.hraness-marketing-header [data-presentation="menu"]').count(), 1);
-  assert.equal(await page.locator('.stripe-history-evidence-strip time[datetime]').count(), 1);
-  const resources = page.locator('.stripe-history-footer-resources');
+  const resources = page.locator('.stripe-history-footer__row');
   assert.equal(await resources.evaluate((node) => getComputedStyle(node).rowGap), "8px");
-  assert.equal(await page.locator('.hraness-marketing-hero__copy').evaluate((node) => getComputedStyle(node).display), "grid");
-  assert.equal(await page.locator('.hraness-marketing-hero__name').count(), 0);
-  assert.equal(await page.locator('.hraness-marketing-hero__eyebrow').textContent(), "Independent company history");
-  assert.equal(await page.locator('.hraness-marketing-hero__copy').evaluate((node) => getComputedStyle(node).textAlign), "start");
-  const sourceDetails = page.locator('.history-source-details');
-  assert.equal(await sourceDetails.evaluate((node) => (node as HTMLDetailsElement).open), false);
-  await sourceDetails.locator('summary').click();
-  assert.equal(await sourceDetails.evaluate((node) => (node as HTMLDetailsElement).open), true);
-  await page.locator("body").evaluate((node) => node.style.setProperty("--hraness-marketing-fact-columns", "1"));
-  assert.equal((await page.locator('.hraness-marketing-stats__list').evaluate((node) => getComputedStyle(node).gridTemplateColumns)).split(" ").length, 4);
-  await page.locator("body").evaluate((node) => node.style.removeProperty("--hraness-marketing-fact-columns"));
-  await page.setViewportSize({ width: 390, height: 844 });
-  assert.equal((await page.locator('.hraness-marketing-stats__list').evaluate((node) => getComputedStyle(node).gridTemplateColumns)).split(" ").length, 2);
-  await sourceDetails.locator('summary').click();
-  assert.equal(await sourceDetails.evaluate((node) => (node as HTMLDetailsElement).open), false);
-  await page.getByRole('link', { name: 'Browse the timeline', exact: true }).click();
-  assert.ok(await page.locator('#timeline').evaluate((node) => node.getBoundingClientRect().top >= document.querySelector('.stripe-history-header')!.getBoundingClientRect().bottom), "Browse target must clear the sticky header");
+  assert.equal(await page.locator('#history-heading').textContent(), "Stripe History");
+  assert.equal(await page.locator('.hraness-marketing-hero__eyebrow').count(), 0);
+  assert.equal(await page.locator('.hraness-marketing-hero .hraness-marketing-action').count(), 0);
+  assert.equal(await page.locator('.history-orientation').evaluate((node) => getComputedStyle(node).textAlign), "start");
+  assert.equal(await page.locator('.stripe-history-ask-ai').count(), 1);
   await page.setViewportSize({ width: 1280, height: 900 });
   stage = "baseline-compiled-timeline";
   timelines.push({ generation: first.generation, observations: await proveCompiledTimeline(page) });

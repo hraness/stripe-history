@@ -87,26 +87,22 @@ export default async function HistoryEventPage({ params }: HistoryEventPageProps
         data={[
           historyEventJsonLd(event, eventMetaDescription(event)),
           breadcrumbJsonLd([
-            { name: "History", path: "/" },
+            { name: "Stripe History", path: "/" },
             { name: event.categoryLabel, path: categoryPath },
             { name: event.title, path },
           ]),
         ]}
         id="stripe-history-event-structured-data"
       />
-      <SiteHeader />
+      <SiteHeader askAiPath={path} />
       <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
-        <Link href="/">stripe history</Link>
+        <Link href="/">Stripe History</Link>
         <span aria-hidden="true"> / </span>
-        <Link href={categoryPath}>{categoryName}</Link>
-        <span aria-hidden="true"> / </span>
-        <span aria-current="page">{event.title}</span>
+        <Link href={categoryPath}>{event.categoryLabel}</Link>
       </nav>
       <article aria-labelledby="event-heading" className="stripe-history-section stripe-history-event-page__article">
         <p className="stripe-history-event-page__kicker">
           <time dateTime={event.date}>{dateLabel}</time>
-          <span aria-hidden="true"> · </span>
-          <Link href={categoryPath}>{categoryName}</Link>
           {event.status === undefined ? null : (
             <>
               <span aria-hidden="true"> · </span>
@@ -231,7 +227,7 @@ export default async function HistoryEventPage({ params }: HistoryEventPageProps
           {site.name} is published by <a href={HRANESS_URL}>Hraness</a>.
         </p>
       </article>
-      <SiteFooter path={path} />
+      <SiteFooter />
     </main>
   );
 }

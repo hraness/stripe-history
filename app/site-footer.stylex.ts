@@ -1,37 +1,31 @@
 import * as stylex from "@stylexjs/stylex";
 
-/** Product-owned resources, distinct from the shared social/consent footer. */
-export const footerResourcesStyles = stylex.create({
+const forced = "@media (forced-colors: active)";
+
+/** The single product footer. */
+export const footerStyles = stylex.create({
   root: {
-    alignItems: "center",
-    borderTopColor: "var(--plain-line)",
+    borderTopColor: { default: "var(--plain-line)", [forced]: "CanvasText" },
     borderTopStyle: "solid",
     borderTopWidth: "1px",
     color: "var(--plain-muted)",
+    marginTop: "5rem",
+    paddingBlock: "1.25rem 2.5rem",
+  },
+  row: {
+    alignItems: "center",
+    columnGap: "1.5rem",
     display: "flex",
     flexWrap: "wrap",
-    columnGap: "1.5rem",
-    rowGap: "0.25rem",
-    minHeight: "2.625rem",
-    marginTop: "4.5rem",
-    paddingBlock: "1.25rem 0.5rem",
-  },
-  afterAskAi: { marginTop: "1.5rem" },
-  label: {
-    color: "var(--plain-foreground)",
-    fontFamily: "var(--font-display)",
-    fontSize: "1.0625rem",
-    fontWeight: 560,
-    letterSpacing: "-0.02em",
-    margin: 0,
+    justifyContent: "space-between",
+    rowGap: "0.5rem",
   },
   links: {
     alignItems: "center",
+    columnGap: "1.25rem",
     display: "flex",
     flexWrap: "wrap",
-    columnGap: "1.25rem",
     rowGap: 0,
-    marginInlineStart: "auto",
   },
   link: {
     alignItems: "center",
@@ -42,12 +36,25 @@ export const footerResourcesStyles = stylex.create({
     minInlineSize: "var(--plain-link-target-min)",
     textDecorationLine: "none",
   },
+  // The hraness.com wordmark: Funnel Display, tracked capitals, muted ink.
+  wordmark: {
+    alignItems: "center",
+    color: { default: "var(--plain-muted)", ":hover": "var(--plain-foreground)" },
+    display: "inline-flex",
+    fontFamily: "var(--font-display)",
+    fontSize: "0.9375rem",
+    fontWeight: 450,
+    letterSpacing: "0.1em",
+    lineHeight: 1,
+    minBlockSize: "var(--plain-link-target-min)",
+    textDecorationLine: "none",
+    textTransform: "uppercase",
+  },
   note: {
     color: "var(--plain-muted)",
-    flexBasis: "100%",
     fontSize: "0.8125rem",
     lineHeight: 1.5,
     margin: 0,
-    paddingBlock: "0.5rem 0",
+    paddingTop: "0.5rem",
   },
 });

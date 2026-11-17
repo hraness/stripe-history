@@ -82,12 +82,12 @@ describe("hraness.com/stripe payment volume history", () => {
     expect(html).not.toContain('class="stripe-history-visually-hidden"');
     expect(html).toContain(seo.lead);
     expect(html).toContain(seo.description);
-    expect(html).toContain("<table>");
-    expect(html).toContain('<th scope="col">year</th>');
-    expect(html).toContain('<th scope="col">volume</th>');
-    expect(html).toContain('<th scope="col">kind</th>');
-    expect(html).toContain('<th scope="col">qualifier</th>');
-    expect(html).toContain('<th scope="col">sources</th>');
+    expect(html).toContain('<table data-stack="narrow">');
+    expect(html).toContain('<th scope="col">Year</th>');
+    expect(html).toContain('<th scope="col">Volume</th>');
+    expect(html).toContain('<th scope="col">Kind</th>');
+    expect(html).toContain('<th scope="col">Qualifier</th>');
+    expect(html).toContain('<th scope="col">Sources</th>');
     expect(html).toContain(`<tr id="${latest.eventId}"`);
     expect(html).toContain(`"numberOfItems":${history.annualVolumes.length}`);
     expect(html).toContain(`https://hraness.com/stripe/history/payment-volume#${latest.eventId}`);
@@ -126,13 +126,13 @@ describe("hraness.com/stripe payment volume history", () => {
     expect(html.indexOf('data-filter-id="all"')).toBeLessThan(
       html.indexOf('data-filter-id="payment-volume"'),
     );
-    expect(html.indexOf('yearly disclosures')).toBeLessThan(html.indexOf('id="payment-volume-chart-heading"'));
-    expect(html.indexOf('id="payment-volume-chart-heading"')).toBeLessThan(html.indexOf("disclosures and sources"));
+    expect(html.indexOf('Yearly disclosures')).toBeLessThan(html.indexOf('id="payment-volume-chart-heading"'));
+    expect(html.indexOf('id="payment-volume-chart-heading"')).toBeLessThan(html.indexOf("Disclosures and sources"));
     expect(html).not.toContain('class="stripe-history-selector"');
     expect(html).toMatch(/class="hraness-marketing-header [^"]*\bstripe-history-header\b[^"]*"/u);
     expect(html).toMatch(/href="\/stripe\/about"[^>]*>About<\/a>/u);
-    expect(html).toContain('aria-label="Stripe History resources"');
-    expect(html).toContain('data-slot="hraness-site-footer"');
+    expect(html).toContain('id="stripe-history-footer"');
+    expect(html).toMatch(/class="[^"]*\bstripe-history-ask-ai\b[^"]*" aria-label="Ask AI about this"/u);
     expect(html).not.toContain('class="stripe-history-breadcrumbs"');
     expect(html).not.toContain('class="stripe-history-section-heading"');
     expect(html).toContain("~$400 billion");
