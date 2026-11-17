@@ -15,7 +15,7 @@
 
 # Guidelines
 
-- Keep the Hraness header shell consistent with `hraness.com` and the human site name `Stripe History`.
+- Keep the shared marketing header shell with the human site name `Stripe History` as its home brand and the Hraness lockup in the footer, matching the other Hraness product sites.
 - Render history as semantic server output. Keep the root timeline and category pages useful without client-side state.
 - Show descriptive source links after every event claim.
 - Build all canonical URLs and structured data from `site.ts`.
@@ -24,4 +24,4 @@
 - Render one shared Hraness footer on every page, with the general `hraness` newsletter audience and optional Hraness support handoff. The owner explicitly selected the general newsletter because this site lives at `hraness.com/stripe`. Do not create a separate Stripe History mailing signup or add a Substack embed. Preserve historical `stripe-history` consent and unsubscribe state in Hraness Accounts without routing new subscriptions there.
 - Measure with the shared `@hraness/analytics` marketing preset exactly as hraness.com does: PostHog project 543691, `site_id` `stripe-history`, storage prefix `hraness`, and hraness.com's root `/ph` proxy and `/api/region` endpoint. Do not add a region handler, PostHog host, or build-time analytics key to this app. The shared region table decides what runs: EU/EEA and unknown regions stay cookieless until consent, UK/CH/BR keep analytics on and ask before recordings, the US and the rest of the world are on, and Global Privacy Control turns off recordings. Do not enable ads or a Meta pixel (`onAds`). Keep the Your Privacy Choices footer link on every page, register every event name in `costs.json`, send only bounded labels (ids, kinds, host names), and keep analytics off outside hraness.com (the client checks the host).
 - Share images come only from the shared `@hraness/web-discovery` social-image template via the single `defineSocialImageSite` declaration in `social.ts`. Pages pass copy only (`headline`, `description`, `eyebrow`); add no per-site drawing code.
-- Keep headings, ordinary proportional text, and the social image on the shared Nebula Sans contract. Reserve monospace for code, dates, and numeric values where alignment needs it.
+- Keep headings on Funnel Display and ordinary proportional text and the social image on the shared Nebula Sans contract. Reserve monospace for code, dates, and numeric values where alignment needs it.

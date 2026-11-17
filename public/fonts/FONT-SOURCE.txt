@@ -1,0 +1,14 @@
+Stripe History heading face (shared with Sponge and Yaptake): Funnel Display (variable, weights 300-700).
+
+Upstream: https://github.com/google/fonts (ofl/funneldisplay), from https://github.com/Dicotype/Funnel
+Revision: f788e4777244983204dfd364d6dca2a1fab7d6b8
+Source: ofl/funneldisplay/FunnelDisplay[wght].ttf
+Source SHA-256: b4151c9c4b7b07eb74320096b4ff4156cca8821f5adfab34af9fd9a2d6c1179d
+License: SIL Open Font License 1.1; see OFL.txt in this directory.
+
+The published file is limited to weights 300-700 and Latin, with fonttools 4.68.0:
+fonttools varLib.instancer 'FunnelDisplay[wght].ttf' wght=300:700 -o FD-lim.ttf
+pyftsubset FD-lim.ttf --unicodes='U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-2193,U+2212,U+2215' --layout-features='*' --flavor=woff2
+
+Published SHA-256: a18ddd522b00cee8b8cfc1e24f7bd8b37e600af760879a5241f305824a1c04a7
+The file name carries the first eight hex digits so it can be cached forever.

@@ -24,12 +24,12 @@ export default function GlobalError({ reset }: RouteErrorPageProps) {
       <head>
         <meta content="light dark" name="color-scheme" />
         <meta
-          content="#ffffff"
+          content="#f4f1ea"
           media="(prefers-color-scheme: light)"
           name="theme-color"
         />
         <meta
-          content="#151515"
+          content="#141311"
           media="(prefers-color-scheme: dark)"
           name="theme-color"
         />
@@ -39,7 +39,7 @@ export default function GlobalError({ reset }: RouteErrorPageProps) {
           defaultPreference={{ palette: "paper", mode: "system" }}
           legacyStorageKey="stripe-history-theme-v1"
         >
-          <ThemeColorSync darkColor="#151515" lightColor="#ffffff" />
+          <ThemeColorSync darkColor="#141311" lightColor="#f4f1ea" />
           <main className="plain-page stripe-history-main stripe-history-state" id="main-content">
             <h1>Stripe History is temporarily unavailable</h1>
             <p>The site could not finish loading.</p>

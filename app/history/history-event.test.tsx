@@ -26,9 +26,9 @@ function css(...recipes: readonly Recipe[]): string {
 }
 
 test("event recipes preserve frame, typography, responsive facts and source targets", () => {
-  expect(css(styles.frame)).toContain("border-inline-start-width:3px");
-  expect(css(styles.frame)).toContain("border-inline-start-color:var(--history-category-ink)");
-  expect(css(styles.frame)).toMatch(/@media\s*\(max-width:\s*34rem\).*padding-left:.7rem/u);
+  expect(css(styles.frame)).toContain("border-top-width:1px");
+  expect(css(styles.frame)).not.toContain("border-inline-start-width");
+  expect(css(styles.frame)).toContain("padding-left:0");
   expect(css(styles.frame)).not.toContain("border-bottom");
   for (const [side, recipe] of [["top", styles.frame], ["bottom", styles.lastFrame]] as const) {
     expect(css(recipe)).toContain(`border-${side}-width:1px`);
@@ -36,16 +36,17 @@ test("event recipes preserve frame, typography, responsive facts and source targ
     expect(css(recipe)).toContain(`border-${side}-color:var(--plain-line)`);
   }
   expect(css(styles.article)).toContain("scroll-margin-top:calc(var(--history-filter-stack-offset) + 1rem)");
-  expect(css(styles.title)).toContain("font-size:1.05rem");
-  expect(css(styles.title)).toContain("font-weight:600");
-  expect(css(styles.title)).toMatch(/@media\s*\(max-width:\s*34rem\).*line-height:1.4/u);
+  expect(css(styles.title)).toContain("font-family:var(--font-display)");
+  expect(css(styles.title)).toContain("font-size:1.25rem");
+  expect(css(styles.title)).toContain("font-weight:500");
+  expect(css(styles.title)).toMatch(/@media\s*\(max-width:\s*34rem\).*line-height:1.3/u);
   expect(css(styles.kicker)).toContain("font-size:var(--text-caption)");
   expect(css(styles.kicker)).toContain("flex-wrap:wrap");
   expect(css(styles.date)).toContain("font-family:var(--font-mono)");
   expect(css(styles.date)).toContain("font-size:.75rem");
   expect(css(styles.date)).toContain("white-space:nowrap");
-  expect(css(styles.summary)).toMatch(/@media\s*\(max-width:\s*34rem\).*line-height:1.5/u);
-  expect(css(styles.facts)).toContain("margin-top:.65rem");
+  expect(css(styles.summary)).toMatch(/@media\s*\(max-width:\s*34rem\).*line-height:1.55/u);
+  expect(css(styles.facts)).toContain("margin-top:.875rem");
   expect(css(styles.factRow)).toContain("grid-template-columns:minmax(5.5rem,.3fr) minmax(0,1fr)");
   expect(css(styles.factRow)).toMatch(/@media\s*\(max-width:\s*34rem\).*display:block/u);
   expect(css(styles.factTerm)).toContain("color:var(--plain-muted)");
@@ -62,13 +63,14 @@ test("plain category and confidence labels retain native focus and forced/coarse
   expect(type).toContain("min-height:1.5rem");
   expect(type).toContain("border-style:none");
   expect(type).toContain("border-width:0");
-  expect(type).toContain(":focus-visible{border-radius:1px");
-  expect(type).toContain("outline-style:dotted");
-  expect(type).toContain("outline-width:1px");
+  expect(type).toContain(":focus-visible{border-radius:.25rem");
+  expect(type).toContain("outline-style:solid");
+  expect(type).toContain("outline-width:2px");
+  expect(type).toContain("outline-color:var(--plain-focus)");
   expect(type).toContain("outline-offset:3px");
   expect(type).toMatch(/@media\s*\(forced-colors:\s*active\).*background-color:Canvas/u);
   expect(type).toMatch(/@media\s*\(forced-colors:\s*active\).*color:CanvasText/u);
-  expect(css(styles.frame)).toMatch(/@media\s*\(forced-colors:\s*active\).*border-inline-start-color:CanvasText/u);
+  expect(css(styles.frame)).toMatch(/@media\s*\(forced-colors:\s*active\).*border-top-color:CanvasText/u);
   for (const recipe of [styles.type, styles.sourceLink]) {
     expect(css(recipe)).toMatch(/@media\s*\(pointer:\s*coarse\).*min-height:var\(--plain-link-target-min,48px\)/u);
   }
@@ -139,8 +141,8 @@ test("only owned event rules leave legacy CSS; theme and metric owners remain", 
     expect(globals).not.toContain(selector);
   }
   expect(globals).toContain(".history-event,");
-  expect(globals).toContain("--history-category-ink: oklch(0.43 0.14 var(--history-category-hue))");
-  expect(globals).toContain("--history-category-ink: oklch(0.8 0.11 var(--history-category-hue))");
+  expect(globals).toContain("--history-category-ink: oklch(0.46 var(--plain-category-chroma, 0.075) var(--history-category-hue))");
+  expect(globals).toContain("--history-category-ink: oklch(0.8 var(--plain-category-chroma, 0.06) var(--history-category-hue))");
   expect(globals).toContain(".history-volume-disclosure-list > li");
   expect(globals).toContain(".history-valuation-observation-list h3");
   expect(plain).toContain("a:not(.history-filter-link, .history-year-link, .history-event-type, .hraness-marketing-action)");

@@ -33,10 +33,10 @@ describe("standalone runtime surfaces", () => {
     expect(document).toContain("Stripe History is temporarily unavailable");
     expect(document).toContain('<meta content="light dark" name="color-scheme"/>');
     expect(document).toContain(
-      '<meta content="#ffffff" media="(prefers-color-scheme: light)" name="theme-color"/>',
+      '<meta content="#f4f1ea" media="(prefers-color-scheme: light)" name="theme-color"/>',
     );
     expect(document).toContain(
-      '<meta content="#151515" media="(prefers-color-scheme: dark)" name="theme-color"/>',
+      '<meta content="#141311" media="(prefers-color-scheme: dark)" name="theme-color"/>',
     );
     expect(`${route}${document}`).not.toContain("hraness-design-theme-toggle");
     expect(`${route}${document}`).not.toContain("PostHog");
@@ -59,6 +59,6 @@ describe("standalone runtime surfaces", () => {
     expect(notFound).toContain('href="/contact"');
     expect(notFound).toContain('href="/privacy"');
     expect(notFound.match(/data-presentation="menu"/gu)).toHaveLength(1);
-    expect(notFound).toContain('aria-label="Hraness"');
+    expect(notFound).toContain('aria-label="Stripe History home"');
   });
 });

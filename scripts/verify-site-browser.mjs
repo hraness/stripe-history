@@ -105,6 +105,8 @@ async function verifyCombination({ width, theme }) {
           overflow: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) > innerWidth,
           heading: document.querySelector("h1")?.textContent?.trim(),
           theme: document.documentElement.dataset.theme,
+          paletteBackground: getComputedStyle(document.documentElement).getPropertyValue("--hraness-palette-background").trim().toLowerCase(),
+          canvas: getComputedStyle(document.documentElement).backgroundColor,
           footerPositions: [footer, footer?.querySelector(".hraness-site-footer__inner")].map(element => element ? getComputedStyle(element).position : null),
           smallHeaderTargets: innerWidth > 600 ? [] : [...document.querySelectorAll(".stripe-history-header a, .stripe-history-header button, .stripe-history-header summary")].filter(element => { const box = element.getBoundingClientRect(); return box.width > 0 && box.height > 0 && (box.width < 43.5 || box.height < 43.5); }).map(element => ({ label: element.textContent?.trim() || element.getAttribute("aria-label"), width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height })),
         };
@@ -120,6 +122,9 @@ async function verifyCombination({ width, theme }) {
       assert.equal(state.screenshotWidth, width, `${route}: capture exceeds viewport`);
       assert.ok(state.heading, `${route}: missing heading`);
       assert.equal(state.theme, theme, `${route}: system appearance`);
+      // The product palette must outrank the design kit's paper defaults.
+      assert.equal(state.paletteBackground, theme === "light" ? "#f4f1ea" : "#141311", `${route}: palette background`);
+      assert.equal(state.canvas, theme === "light" ? "rgb(244, 241, 234)" : "rgb(20, 19, 17)", `${route}: page canvas`);
       assert.ok(state.footerPositions.every(position => position === "static" || position === "relative"), `${route}: footer not in normal flow`);
       assert.deepEqual(state.smallHeaderTargets, [], `${route}: phone targets below 44px`);
       assert.deepEqual(errors, [], `${route}: browser errors; responses >= 400: ${JSON.stringify(failedResponses)}`);
@@ -171,7 +176,7 @@ async function verifyCombination({ width, theme }) {
     await page.waitForFunction(expected => document.documentElement.dataset.theme === expected, targetTheme);
     await page.reload();
     await page.waitForFunction(expected => document.documentElement.dataset.theme === expected, targetTheme);
-    await page.locator("header").getByRole("link", { name: "data", exact: true }).click();
+    await page.locator("header").getByRole("link", { name: "Data", exact: true }).click();
     await page.waitForURL(url => url.pathname === "/stripe/data");
     assert.deepEqual(errors, [], `Browser errors after appearance and navigation; responses >= 400: ${JSON.stringify(failedResponses)}`);
   } finally { await context.close(); }

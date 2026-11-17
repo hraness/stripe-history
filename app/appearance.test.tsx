@@ -60,7 +60,7 @@ test("compiled header native anchors retain /stripe and the selected about route
   const html = renderToStaticMarkup(<SiteHeader aboutSelected />);
   expect(html).toContain('href="/stripe"');
   expect(html).toContain('href="/stripe/data"');
-  expect(html).toMatch(/<a aria-current="page" class="hraness-marketing-header__link [^"]+" href="\/stripe\/about">about<\/a>/u);
+  expect(html).toMatch(/<a aria-current="page" class="hraness-marketing-header__link [^"]+" href="\/stripe\/about">About<\/a>/u);
   expect(html).not.toContain('href="/about"');
   expect(html).not.toContain('href="/data"');
 });

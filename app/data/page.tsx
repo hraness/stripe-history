@@ -48,7 +48,7 @@ export default async function DataPage() {
         ]}
         id="stripe-history-dataset-structured-data"
       />
-      <SiteHeader />
+      <SiteHeader dataSelected />
       <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
         <Link href="/">stripe history</Link>
         <span aria-hidden="true"> / </span>

@@ -5,26 +5,27 @@ import { HRANESS_URL, publicSitePath, site } from "./site";
 export const HEADER_CTA_LABEL = "More from Hraness" as const;
 
 /**
- * A compact floating bar: the Hraness lockup links home to hraness.com, the
- * section links stay on Stripe History, and one quiet call to action points
- * to the rest of Hraness before the single appearance control.
- * Native anchors use explicit canonical /stripe paths.
+ * The product-family glass bar: the Stripe History wordmark links home, three
+ * quiet section links stay on the site, and one muted link points to the rest
+ * of Hraness before the single appearance control. The Hraness Ra lockup lives
+ * in the footer. Native anchors use explicit canonical /stripe paths.
  */
 export function SiteHeader({
   aboutSelected = false,
-}: Readonly<{ aboutSelected?: boolean }>) {
+  dataSelected = false,
+  valuationSelected = false,
+}: Readonly<{ aboutSelected?: boolean; dataSelected?: boolean; valuationSelected?: boolean }>) {
   return (
     <MarketingSiteHeader
       ariaLabel="primary navigation"
-      brand={<span>Hraness</span>}
-      brandHref="https://hraness.com"
-      brandLabel="Hraness"
-      brandMark={publicSitePath("/marks/hraness-ra.svg")}
+      brand={<span>{site.name}</span>}
+      brandHref={publicSitePath("/")}
+      brandLabel={`${site.name} home`}
       className="stripe-history-header hraness-material-chrome"
       links={[
-        { href: publicSitePath("/"), label: site.name },
-        { href: publicSitePath("/data"), label: "data" },
-        { href: publicSitePath("/about"), label: "about", current: aboutSelected },
+        { href: publicSitePath("/history/valuation"), label: "Valuation", current: valuationSelected },
+        { href: publicSitePath("/data"), label: "Data", current: dataSelected },
+        { href: publicSitePath("/about"), label: "About", current: aboutSelected },
       ]}
       trailing={(
         <>
@@ -34,8 +35,8 @@ export function SiteHeader({
             data-analytics-cta="header-more-from-hraness"
             href={HRANESS_URL}
           >
-            <span>More</span>
-            <span className="stripe-history-header-cta__wide">{"\u00a0from Hraness"}</span>
+            <span className="stripe-history-header-cta__wide">More from&nbsp;</span>
+            <span>Hraness</span>
           </a>
           <ThemeMenuButton aria-label="Appearance" />
         </>
