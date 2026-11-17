@@ -99,11 +99,8 @@ describe("agent markdown representations", () => {
     expect(data.body).toContain("[Works in Progress](https://worksinprogress.co/)");
     expect(data.body).toContain("[Cheeky Pint](https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332)");
     const privacy = await markdownForPath("/privacy");
-    expect(privacy.body).toContain("https://account.hraness.com");
-    expect(privacy.body).toContain("the general Hraness newsletter");
-    expect(privacy.body).toContain("Accounts records dated consent");
-    expect(privacy.body).toContain("You are not subscribed until you confirm");
-    expect(privacy.body).toContain("does not create new Stripe History mailing consent");
+    expect(privacy.body).not.toContain("the general Hraness newsletter");
+    expect(privacy.body).toContain("Stripe History no longer offers a mailing signup");
     expect(privacy.body).toContain("previously confirmed membership");
     expect(privacy.body).toContain("newsletter messages through Resend");
     expect(privacy.body).toContain("news.hraness.com");

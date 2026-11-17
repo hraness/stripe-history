@@ -6,43 +6,33 @@ import { orientationStyles } from "./history/history-orientation.stylex";
 import { HistoryClosing } from "./history/history-closing";
 import { closingStyles } from "./history/history-closing.stylex";
 import { SiteFooter } from "./site-footer";
-import { footerResourcesStyles } from "./site-footer.stylex";
+import { footerStyles } from "./site-footer.stylex";
 import { createStylexTransformCollector } from "@hraness/ui/stylex-build";
 import { fileURLToPath } from "node:url";
 
-test("compiled evidence slots bind four columns locally and retain rich Link/time semantics", () => {
-  const html = renderToStaticMarkup(<HistoryOrientation evidence={{
-    eventCount: 201, sourceLinkCount: 302, canonicalSourceCount: 103,
-    newestEventOn: "2026-09-09",
-  }} />);
-  const list = html.match(/<dl class="([^"]+)">/u);
-  expect(list).not.toBeNull();
-  for (const atom of stylex.props(orientationStyles.factColumns4).className!.split(" ")) {
-    expect(list![1]!.split(" ")).toContain(atom);
-  }
-  expect(list![0]).not.toContain("style=");
-  expect(html).toContain('<time dateTime="2026-09-09">');
+test("the root introduction is a plain title, one line, and quiet disclosure lines", () => {
+  const html = renderToStaticMarkup(<HistoryOrientation afterHero={<p id="after">facts</p>} />);
+  expect(html).toContain('id="history-heading">Stripe History</h1>');
+  expect(html).toContain("Every event in Stripe&#x27;s history, dated and sourced.");
+  expect(html).toContain("Drafted with AI assistance.");
+  expect(html).toContain("Not affiliated with, endorsed by, or operated by Stripe, Inc.");
   expect(html).toContain('href="/contact#corrections-and-sources">Report a correction</a>');
-  expect(html).toMatch(/<details class="history-source-details [^"]+"><summary class="[^"]+">How this record is kept<\/summary>/u);
-  expect(html).not.toMatch(/<details[^>]*\bopen(?:[\s=>])/u);
-  expect(html).toContain('href="#timeline">Browse the timeline</a>');
-  expect(html).toContain('href="/data">Download the data</a>');
-  expect(html).toContain('href="/about#sources-and-review">Method and limits</a>');
-  expect(html).toContain("Every event links to at least one source.");
+  expect(html).not.toContain("hraness-marketing-hero__eyebrow");
+  expect(html).not.toContain("hraness-marketing-action");
+  expect(html).not.toContain("<details");
+  expect(html.indexOf('id="after"')).toBeGreaterThan(html.indexOf("Report a correction"));
 });
 
-test("compact orientation and source disclosure use compiled geometry without raw overrides", async () => {
+test("the introduction uses compiled start-aligned geometry without raw overrides", async () => {
   const path = fileURLToPath(new URL("./history/history-orientation.stylex.ts", import.meta.url));
   const { rules } = await createStylexTransformCollector(process.cwd()).transform(await Bun.file(path).text(), path);
   function css(style: (typeof orientationStyles)[keyof typeof orientationStyles]) {
     const classes = new Set(stylex.props(style).className!.split(" "));
     return rules.filter(([name]) => classes.has(name)).map(([, rule]) => rule.ltr).join("\n");
   }
-  expect(css(orientationStyles.hero__copy)).toContain("justify-items:center");
-  expect(css(orientationStyles.hero__copy)).toContain("text-align:center");
-  expect(css(orientationStyles.hero__heading)).toContain("font-size:clamp(2.625rem,7.4vw,4.75rem)");
-  expect(css(orientationStyles.sourceSummary)).toContain("min-height:2.75rem");
-  expect(css(orientationStyles.sourceSummary)).toContain(":focus-visible");
+  expect(css(orientationStyles.hero)).not.toContain("text-align:center");
+  expect(css(orientationStyles.hero__heading)).toContain("font-size:clamp(2.25rem,6vw,3.25rem)");
+  expect(css(orientationStyles.hero__boundary)).toContain("font-size:.8125rem");
   const globals = await Bun.file(new URL("./globals.css", import.meta.url)).text();
   expect(globals).not.toContain(".history-orientation {");
   expect(globals).not.toContain(".stripe-history-main .hraness-marketing-hero__heading {");
@@ -53,13 +43,13 @@ test("closing and resource borders bind supported longhands to the rendered elem
     {
       file: "./history/history-closing.stylex.ts",
       markup: renderToStaticMarkup(<HistoryClosing />),
-      styles: [closingStyles.section, closingStyles.maker, closingStyles.question],
+      styles: [closingStyles.section, closingStyles.question],
       color: "var(--hraness-marketing-line)",
     },
     {
       file: "./site-footer.stylex.ts",
       markup: renderToStaticMarkup(<SiteFooter />),
-      styles: [footerResourcesStyles.root],
+      styles: [footerStyles.root],
       color: "var(--plain-line)",
     },
   ]) {

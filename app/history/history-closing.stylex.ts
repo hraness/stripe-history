@@ -14,19 +14,11 @@ const section = {
 
 export const closingStyles = stylex.create({
   section,
-  maker: {
-    ...section,
-    alignItems: "start",
-    gridTemplateColumns: {
-      default: "minmax(0, 0.8fr) minmax(0, 1.2fr)",
-      "@media (max-width: 48rem)": "minmax(0, 1fr)",
-    },
-  },
   header: { display: "grid", maxInlineSize: "var(--hraness-marketing-copy-measure)", gap: "0.75rem" },
   heading: {
     margin: 0,
     fontFamily: "var(--font-display)",
-    fontSize: "clamp(1.75rem, 3.6vw, 2.25rem)",
+    fontSize: "clamp(1.5rem, 3.4vw, 1.875rem)",
     fontWeight: 460,
     letterSpacing: "-0.035em",
     lineHeight: 1.08,
@@ -50,6 +42,4 @@ export const closingStyles = stylex.create({
   },
   answer: { display: "grid", gap: "1rem", maxInlineSize: "var(--hraness-marketing-prose-measure)", paddingBlock: "0 1.5rem" },
   paragraph: { margin: 0, color: "var(--hraness-marketing-muted)", lineHeight: 1.6 },
-  body: { display: "grid", minInlineSize: 0, gap: "1rem" },
-  links: { display: "flex", flexWrap: "wrap", gap: "0.5rem 1.25rem", margin: 0, padding: 0, listStyle: "none", fontSize: "0.95rem", fontWeight: 500 },
 });

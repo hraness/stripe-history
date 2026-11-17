@@ -912,6 +912,50 @@
   white-space: nowrap;
 }
 
+/* On phones a wide record table becomes one card per row: the date over the
+ * linked title, then labelled facts. Headers stay available to assistive tech. */
+@media (max-width: 34rem) {
+  table[data-stack="narrow"] thead {
+    block-size: 1px;
+    clip-path: inset(50%);
+    inline-size: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+  }
+
+  table[data-stack="narrow"] tbody tr {
+    border-top: 1px solid var(--plain-line);
+    display: grid;
+    gap: 0.125rem;
+    padding-block: 0.75rem;
+  }
+
+  table[data-stack="narrow"] tbody :is(th, td) {
+    border: 0;
+    display: block;
+    padding: 0;
+  }
+
+  .history-answer-table[data-stack="narrow"] tbody td:first-child {
+    color: var(--plain-muted);
+  }
+
+  .history-volume-table-section table[data-stack="narrow"] tbody td {
+    white-space: normal;
+  }
+
+  table[data-stack="narrow"] tbody th {
+    font-size: 0.9375rem;
+    padding-bottom: 0.125rem;
+  }
+
+  table[data-stack="narrow"] tbody td[data-label]::before {
+    color: var(--plain-muted);
+    content: attr(data-label) ": " / "";
+  }
+}
+
 .history-volume-chart figcaption,
 .history-volume-table-section > h2,
 .history-volume-method > h2 {
@@ -1071,48 +1115,59 @@
   white-space: nowrap;
 }
 
-.stripe-history-ask-ai {
-  margin-top: 4.5rem;
+/* The footer's links and wordmark are quiet text; the record's underlined
+ * link treatment stops at the footer. */
+.stripe-history-footer a {
+  color: var(--plain-muted);
+  text-decoration-line: none;
 }
 
-/* The shared Ask AI row keeps its controls but drops the uppercase-tracked
- * monospace label in favor of the sentence-case text face. */
+.stripe-history-footer a:is(:hover, :focus-visible) {
+  color: var(--plain-foreground);
+  text-decoration-line: underline;
+}
+
+.stripe-history-footer .stripe-history-footer__wordmark:is(:hover, :focus-visible) {
+  text-decoration-line: none;
+}
+
+/* Ask AI sits directly under the header as one compact row of quiet chips,
+ * the same treatment as rough.day. */
+.stripe-history-ask-ai {
+  margin-block: 1rem 0;
+}
+
 .stripe-history-ask-ai [data-slot="ask-ai-about-this-label"] {
   color: var(--plain-muted);
   font-family: var(--font-text);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
 }
 
 .stripe-history-ask-ai [data-slot="ask-ai-about-this-link"] {
-  border-radius: 0.5rem;
-  color: var(--ui-muted-foreground);
+  border: 1px solid var(--plain-line);
+  border-radius: 999px;
+  color: var(--plain-muted);
   font-family: var(--font-text);
-  font-size: 0.85rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   overflow-wrap: normal;
   text-decoration: none;
 }
 
 .stripe-history-ask-ai [data-slot="ask-ai-about-this-link"]:hover {
-  color: var(--ui-foreground);
+  background: var(--plain-wash);
+  color: var(--plain-foreground);
   text-decoration: none;
 }
 
 .stripe-history-ask-ai [data-slot="ask-ai-about-this-link"]:focus-visible {
-  color: var(--ui-foreground);
+  color: var(--plain-foreground);
   outline: 2px solid var(--plain-focus);
   outline-offset: 2px;
   text-decoration: none;
-}
-
-.stripe-history-main > .hraness-site-footer {
-  --hraness-site-footer-measure: 64rem;
-
-  inline-size: 100vw;
-  margin-inline: calc(50% - 50vw);
 }
 
 @media (max-width: 54rem) {

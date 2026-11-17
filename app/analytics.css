@@ -40,7 +40,6 @@
 /*
  * The shared footer's own cookie note predates @hraness/analytics. Its banner
  * above is the one consent question on hraness.com, so the older note stays
- * hidden; the footer's newsletter attribution waits for a consent it never
- * gets where a notice is required.
+ * hidden. The footer still mounts it so its region check runs as before.
  */
 [data-slot="hraness-cookie-consent"] { display: none !important; }

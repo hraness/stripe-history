@@ -8,7 +8,7 @@ function visibleText(html: string): string {
 }
 
 describe("hraness.com/stripe privacy page", () => {
-  test("publishes the analytics and general Hraness newsletter policy at /privacy", () => {
+  test("publishes the analytics and historical mailing consent policy at /privacy", () => {
     const html = renderToStaticMarkup(<PrivacyPage />);
     expect(metadata).toMatchObject({
       alternates: { canonical: "https://hraness.com/stripe/privacy" },
@@ -24,13 +24,9 @@ describe("hraness.com/stripe privacy page", () => {
       expect(html).toContain(fact);
     }
     expect(html).toContain("does not run ads or advertising pixels");
-    expect(html).toContain('href="https://account.hraness.com"');
-    expect(html).toContain("the general Hraness newsletter");
-    expect(html).toContain("anonymous form presentation and measurement");
-    expect(html).toContain("omit account credentials and do not send your email address");
-    expect(html).toContain("Accounts records dated consent");
-    expect(html).toContain("You are not subscribed until you confirm");
-    expect(html).toContain("does not create new Stripe History mailing consent");
+    expect(html).not.toContain("the general Hraness newsletter");
+    expect(html).not.toContain("anonymous form presentation and measurement");
+    expect(html).toContain("Stripe History no longer offers a mailing signup");
     expect(html).toContain("previously confirmed membership");
     expect(html).toContain("newsletter messages through Resend");
     expect(html).toContain("news.hraness.com");

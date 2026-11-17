@@ -33,17 +33,12 @@ export default function ContactPage() {
     <main className="plain-page stripe-history-main" id="main-content">
       <JsonLdScript
         data={breadcrumbJsonLd([
-          { name: "History", path: "/" },
+          { name: "Stripe History", path: "/" },
           { name: "Contact", path: "/contact" },
         ])}
         id="stripe-history-contact-structured-data"
       />
-      <SiteHeader />
-      <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
-        <Link href="/">stripe history</Link>
-        <span aria-hidden="true"> / </span>
-        <span>contact</span>
-      </nav>
+      <SiteHeader askAiPath="/contact" />
       <section
         aria-labelledby="contact-heading"
         className="stripe-history-about stripe-history-section"
@@ -67,11 +62,11 @@ export default function ContactPage() {
         <p>Published by <a href={HRANESS_URL}>Hraness</a>. {independenceSentence}</p>
         <p>
           Read <Link href="/about">about</Link> for the editorial method and{" "}
-          <Link href="/privacy">privacy</Link> for analytics, newsletter signup,
-          optional support, and historical mailing consent.
+          <Link href="/privacy">privacy</Link> for analytics and historical
+          mailing consent.
         </p>
       </section>
-      <SiteFooter path="/contact" />
+      <SiteFooter />
     </main>
   );
 }

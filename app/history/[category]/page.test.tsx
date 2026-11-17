@@ -124,8 +124,8 @@ describe("hraness.com/stripe category history", () => {
     expect(html).not.toContain('class="stripe-history-selector"');
     expect(html).toMatch(/class="hraness-marketing-header [^"]*\bstripe-history-header\b[^"]*"/u);
     expect(html).toMatch(/href="\/stripe\/about"[^>]*>About<\/a>/u);
-    expect(html).toContain('aria-label="Stripe History resources"');
-    expect(html).toContain('data-slot="hraness-site-footer"');
+    expect(html).toContain('id="stripe-history-footer"');
+    expect(html).toMatch(/class="[^"]*\bstripe-history-ask-ai\b[^"]*" aria-label="Ask AI about this"/u);
     expect(html).not.toContain('class="stripe-history-breadcrumbs"');
     expect(html).not.toContain('class="stripe-history-section-heading"');
     expect(html).not.toMatch(/\d+ of \d+ events/u);
@@ -161,7 +161,7 @@ describe("hraness.com/stripe category history", () => {
     expect(semanticHtml).toContain('<th scope="col">Date</th><th scope="col">Deal</th><th scope="col">Status</th><th scope="col">Price</th>');
     expect(semanticHtml.match(/<th scope="row"><a href="#[a-z0-9-]+">/gu)).toHaveLength(acquisitions.length);
     expect(semanticHtml).toContain(
-      '<th scope="row"><a href="#kickoff-acquisition-completed">Stripe makes its first acquisition with Kickoff</a></th><td>Talent acquisition completed</td><td>Not disclosed</td>',
+      '<th scope="row"><a href="#kickoff-acquisition-completed">Stripe makes its first acquisition with Kickoff</a></th><td data-label="Status">Talent acquisition completed</td><td data-label="Price">Not disclosed</td>',
     );
     expect(html.indexOf('data-answer="acquisitions"')).toBeLessThan(html.indexOf('data-measure="payment-volume"'));
   });

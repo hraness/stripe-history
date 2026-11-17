@@ -61,18 +61,13 @@ export default async function AboutPage() {
         data={[
           aboutPageJsonLd(),
           breadcrumbJsonLd([
-            { name: "History", path: "/" },
+            { name: "Stripe History", path: "/" },
             { name: "About", path: "/about" },
           ]),
         ]}
         id="stripe-history-about-structured-data"
       />
-      <SiteHeader aboutSelected />
-      <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
-        <Link href="/">stripe history</Link>
-        <span aria-hidden="true"> / </span>
-        <span>about</span>
-      </nav>
+      <SiteHeader aboutSelected askAiPath="/about" />
       <section
         aria-labelledby="about-heading"
         className="stripe-history-about stripe-history-section"
@@ -183,7 +178,7 @@ export default async function AboutPage() {
         </div>
         <EditorialParagraph parts={privacySummary} />
       </section>
-      <SiteFooter path="/about" />
+      <SiteFooter />
     </main>
   );
 }

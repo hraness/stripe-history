@@ -13,7 +13,7 @@
 
 The site shows every event on one reverse-chronological timeline, on a page for each category such as acquisitions, product launches, and fundraising, and on its own page at `https://hraness.com/stripe/events/<event-id>`. An event page gives the exact date and how precise it is, the category, confidence, any amount, every source, and earlier, later and related events in the same category. Event IDs never change once published, and every page also answers `Accept: text/markdown` or a `.md` suffix. Separate pages chart Stripe's annual payment and total volume, its revenue, and its private valuation by year. Each event's YAML record keeps its status and any uncertainty, such as whether a deal was reported, announced, or completed.
 
-The homepage's “How this record is kept” panel shows how many events, sources, and source links the timeline has, and the date of the newest entry. It links to the [method and limits](https://hraness.com/stripe/about#sources-and-review), the [YAML downloads](https://hraness.com/stripe/data), and [how to report a correction](https://hraness.com/stripe/contact#corrections-and-sources).
+The homepage opens with a plain title, a one-line description, the disclosure lines, and a short “Stripe at a glance” table, then the timeline. The [method and limits](https://hraness.com/stripe/about#sources-and-review), the [YAML downloads](https://hraness.com/stripe/data), and [how to report a correction](https://hraness.com/stripe/contact#corrections-and-sources) live on their own pages.
 
 ## Browse the history
 
@@ -99,17 +99,12 @@ Privacy Control turns off session recordings. Every page links to "Your Privacy
 Choices". The site needs no environment variables for analytics, runs no ads,
 and sends events only from hraness.com.
 
-Every rendered page carries one shared Hraness footer with the general Hraness
-newsletter, optional paid support, and social links. Before submission, anonymous
-form presentation and measurement requests send Accounts the list choice, language,
-compact or wide viewport category, and presentation version, then an opaque token
-when the form becomes visible. They omit account credentials and email addresses.
-Submitting the newsletter form sends the email address, `hraness` list choice,
-form source, and any presentation token to Accounts,
-which records dated consent. Resend delivers confirmation and subscribed messages
-from `news.hraness.com`; subscription starts only after inbox confirmation.
-Paid support opens Accounts separately for a human to review and confirm.
-No separate Stripe History newsletter is created. Accounts retains earlier
+Every rendered page carries one minimal footer: the record's own links, the
+HRANESS wordmark linking to hraness.com, the independence note, and the shared
+consent note from `@hraness/site-footer/react` (hidden by `app/analytics.css`;
+the analytics banner and Your Privacy Choices are the consent UI). There is no
+mailing signup, support handoff, or social links.
+Accounts retains earlier
 `stripe-history` subscription records and
 continues to honor their audience-specific unsubscribe state. Confirmed earlier
 memberships may remain active, with Resend delivering any later Stripe History
