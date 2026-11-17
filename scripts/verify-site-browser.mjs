@@ -171,7 +171,7 @@ async function verifyCombination({ width, theme }) {
     await page.waitForFunction(expected => document.documentElement.dataset.theme === expected, targetTheme);
     await page.reload();
     await page.waitForFunction(expected => document.documentElement.dataset.theme === expected, targetTheme);
-    await page.locator("header").getByRole("link", { name: "data", exact: true }).click();
+    await page.locator("header").getByRole("link", { name: "Data", exact: true }).click();
     await page.waitForURL(url => url.pathname === "/stripe/data");
     assert.deepEqual(errors, [], `Browser errors after appearance and navigation; responses >= 400: ${JSON.stringify(failedResponses)}`);
   } finally { await context.close(); }

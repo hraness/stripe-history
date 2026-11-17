@@ -57,7 +57,7 @@ describe("hraness.com/stripe about page", () => {
     expect(html).toContain("href=\"https://stripe.dev/blog\"");
     expect(html).toContain("href=\"https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332\"");
     expect(html).toContain("does not turn every newsletter essay into its own event");
-    expect(html).toMatch(/aria-current="page" class="hraness-marketing-header__link [^"]+" href="\/stripe\/about">about<\/a>/u);
+    expect(html).toMatch(/aria-current="page" class="hraness-marketing-header__link [^"]+" href="\/stripe\/about">About<\/a>/u);
     expect(html).toContain('aria-label="Appearance: System"');
     expect(html).toContain('href="https://hraness.com/"');
     expect(html).toContain('href="https://github.com/hraness/stripe-history"');

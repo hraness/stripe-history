@@ -53,14 +53,12 @@ describe("canonical hraness.com/stripe history", () => {
     expect(eventCount).toBeGreaterThanOrEqual(200);
     expect(html).toContain('class="stripe-history-page stripe-history-main stripe-history-history-main"');
     expect(html).toMatch(/<header class="hraness-marketing-header [^"]*\bstripe-history-header\b[^"]*" data-hraness-marketing="header"[^>]*>/u);
-    expect(html).toMatch(/class="hraness-marketing-header__brand [^"]+" data-foil="" href="https:\/\/hraness\.com" aria-label="Hraness"/u);
-    expect(html).toContain("<span>Hraness</span>");
-    expect(html).toMatch(/<span aria-hidden="true" class="hraness-foil-mark [^"]+" data-foil=""[^>]*><img alt="" class="hraness-foil-mark__image [^"]+"[^>]*src="\/stripe\/marks\/hraness-ra\.svg"[^>]*\/>/u);
-    expect(html).toContain('hraness-foil-mark__paint');
+    expect(html).toMatch(/class="hraness-marketing-header__brand [^"]+" data-foil="" href="\/stripe" aria-label="Stripe History home"><span>Stripe History<\/span><\/a>/u);
+    expect(html).toMatch(/class="stripe-history-header-cta" data-analytics-cta="header-more-from-hraness" href="https:\/\/hraness\.com\/?"/u);
     expect(html).toMatch(/aria-label="primary navigation" class="hraness-marketing-header__nav [^"]+"/u);
     expect(html).toMatch(/<header aria-labelledby="history-heading" class="hraness-marketing-hero history-orientation [^"]+"/u);
     expect(html.match(/<h1 class="hraness-marketing-hero__heading [^"]+" id="history-heading">([^<]*)<\/h1>/u)?.[1]).toBe(renderToStaticMarkup(<>{site.heroHeading}</>));
-    expect(html).toContain('data-align="start"');
+    expect(html).toContain('data-align="center"');
     expect(html).toMatch(/<p class="hraness-marketing-hero__eyebrow [^"]+">Independent company history<\/p>/u);
     expect(html).not.toContain("hraness-marketing-hero__name");
     expect(html).toMatch(/<details class="history-source-details [^"]+"><summary class="[^"]+">How this record is kept<\/summary>/u);

@@ -29,14 +29,14 @@ export function SiteFooter({ path }: SiteFooterProps) {
       <aside aria-label={`${site.name} resources`} className={`stripe-history-footer-resources ${stylex.props(styles.root, path !== undefined && styles.afterAskAi).className}`}>
         <p className={`stripe-history-footer-resources__label ${stylex.props(styles.label).className}`}>{site.name}</p>
         <nav aria-label={`${site.name} links`} className={`stripe-history-footer-resources__links ${stylex.props(styles.links).className}`}>
-          <a {...stylex.props(styles.link)} href={publicSitePath("/data")}>data</a>
-          <a {...stylex.props(styles.link)} href={publicSitePath("/about")}>about</a>
-          <a {...stylex.props(styles.link)} href={publicSitePath("/contact")}>contact</a>
-          <a {...stylex.props(styles.link)} href={publicSitePath("/privacy")}>privacy</a>
+          <a {...stylex.props(styles.link)} href={publicSitePath("/data")}>Data</a>
+          <a {...stylex.props(styles.link)} href={publicSitePath("/about")}>About</a>
+          <a {...stylex.props(styles.link)} href={publicSitePath("/contact")}>Contact</a>
+          <a {...stylex.props(styles.link)} href={publicSitePath("/privacy")}>Privacy</a>
           <PrivacyChoicesLink className={stylex.props(styles.link).className ?? ""}>Your Privacy Choices</PrivacyChoicesLink>
-          <a {...stylex.props(styles.link)} href={GITHUB_REPOSITORY_URL}>github</a>
+          <a {...stylex.props(styles.link)} href={GITHUB_REPOSITORY_URL}>GitHub</a>
         </nav>
-        <p className={`stripe-history-footer-resources__note ${stylex.props(styles.label).className}`}>{independenceSentence}</p>
+        <p className={`stripe-history-footer-resources__note ${stylex.props(styles.note).className}`}>{independenceSentence}</p>
       </aside>
       <HranessSiteFooter
         mailingList={{ kind: "signup", audience: "hraness" }}

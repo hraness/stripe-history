@@ -1,5 +1,5 @@
 :root:has(> body.plain-site) {
-  background: #ffffff;
+  background: #f4f1ea;
   overflow-x: clip;
   scrollbar-gutter: stable;
 }
@@ -8,12 +8,12 @@
   --plain-link-target-min: 0px;
   --plain-shell-measure: 34rem;
   --plain-shell-gutter: 1.25rem;
-  --plain-background: #ffffff;
-  --plain-foreground: #171717;
-  --plain-link: #2457a6;
-  --plain-line: #d8d8d8;
-  --plain-muted: #666666;
-  --plain-surface: #f4f4f4;
+  --plain-background: #f4f1ea;
+  --plain-foreground: #2a2925;
+  --plain-link: #2a2925;
+  --plain-line: #e2ddd2;
+  --plain-muted: #6d6a62;
+  --plain-surface: #f9f7f2;
 
   background: var(--plain-background);
   color: var(--plain-foreground);
@@ -36,17 +36,17 @@ body.plain-site > main {
 }
 
 :root[data-theme="dark"]:has(> body.plain-site) {
-  background: #151515;
+  background: #141311;
 }
 
 :root[data-theme="dark"] .plain-site,
 .plain-site[data-theme="dark"] {
-  --plain-background: #151515;
-  --plain-foreground: #f2f2f2;
-  --plain-link: #8ab4ed;
-  --plain-line: #484848;
-  --plain-muted: #b6b6b6;
-  --plain-surface: #222222;
+  --plain-background: #141311;
+  --plain-foreground: #ece8df;
+  --plain-link: #ece8df;
+  --plain-line: #2c2a26;
+  --plain-muted: #a19c91;
+  --plain-surface: #1b1a17;
 }
 
 .plain-site *,
@@ -61,21 +61,22 @@ body.plain-site > main {
 :where(:is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link, .history-event-type, .hraness-marketing-action), .plain-footer a) {
   color: var(--plain-link);
   overflow-wrap: anywhere;
-  text-decoration: none;
+  text-decoration-line: underline;
+  text-decoration-color: var(--plain-edge, currentColor);
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.15em;
+  text-underline-offset: 0.22em;
 }
 
 :where(
   :is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link, .history-event-type, .hraness-marketing-action):is(:hover, :focus-visible),
   .plain-footer a:is(:hover, :focus-visible)
 ) {
-  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
 .plain-site :where(:is(.plain-page, .stripe-history-page) a:not(.history-filter-link, .history-year-link, .history-event-type, .hraness-marketing-action):focus-visible, .plain-footer a:focus-visible) {
-  border-radius: 1px;
-  outline: 1px dotted currentColor;
+  border-radius: 3px;
+  outline: 2px solid var(--plain-focus, currentColor);
   outline-offset: 3px;
 }
 
@@ -85,7 +86,7 @@ body.plain-site > main {
 }
 
 .plain-site ::selection {
-  background: color-mix(in srgb, var(--plain-link) 20%, transparent);
+  background: var(--plain-select, color-mix(in srgb, var(--plain-link) 20%, transparent));
   color: var(--plain-foreground);
 }
 
@@ -105,8 +106,12 @@ body.plain-site > main {
 }
 
 :is(.plain-page, .stripe-history-page) h1:where(:not(.hraness-marketing-hero__heading)) {
-  font-weight: 700;
-  margin: 0 0 1rem;
+  font-family: var(--font-display, var(--font-text));
+  font-size: clamp(2.25rem, 6vw, 3.25rem);
+  font-weight: 440;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+  margin: 0 0 1.25rem;
 }
 
 /* These two declarations were supplied only by the shared plain-page grammar. */
@@ -120,8 +125,10 @@ body.plain-site > main {
 }
 
 :is(.plain-page, .stripe-history-page) h2:where(:not(.history-year-title, .hraness-marketing-questions__heading, .hraness-marketing-maker__heading)) {
-  font-weight: 700;
-  margin: 0 0 0.3rem;
+  font-family: var(--font-display, var(--font-text));
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  margin: 0 0 0.6rem;
 }
 
 :is(.plain-page, .stripe-history-page) section > p {

@@ -4,14 +4,14 @@
   --hraness-material-plane: var(--plain-surface);
   --hraness-material-ink: var(--plain-foreground);
   --hraness-material-muted: var(--plain-muted);
-  --hraness-material-focus: var(--plain-link);
+  --hraness-material-focus: var(--plain-focus);
 }
 
 [data-hraness-material="lantern"] .stripe-history-header.hraness-material-chrome {
   --surface: var(--plain-background);
-  /* The floating inner bar paints the surface; the sticky band stays clear. */
-  --hraness-marketing-header-background: transparent;
-  --hraness-marketing-header-backdrop: none;
+  /* The sticky band is the glass surface; one hairline sits below it. */
+  --hraness-marketing-header-background: var(--plain-glass);
+  --hraness-marketing-header-backdrop: saturate(1.8) blur(20px);
   border-block-end-color: transparent;
 }
 

@@ -31,7 +31,7 @@ export function HistoryOrientation({
       <header
         aria-labelledby="history-heading"
         className={`hraness-marketing-hero history-orientation ${stylex.props(styles.hero).className}`}
-        data-align="start"
+        data-align="center"
         data-hraness-marketing="hero"
         data-tone="paper"
       >

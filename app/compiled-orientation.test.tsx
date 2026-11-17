@@ -38,9 +38,9 @@ test("compact orientation and source disclosure use compiled geometry without ra
     const classes = new Set(stylex.props(style).className!.split(" "));
     return rules.filter(([name]) => classes.has(name)).map(([, rule]) => rule.ltr).join("\n");
   }
-  expect(css(orientationStyles.hero__copy)).toContain("justify-items:start");
-  expect(css(orientationStyles.hero__copy)).toContain("text-align:start");
-  expect(css(orientationStyles.hero__heading)).toContain("font-size:clamp(1.8rem,4vw,2.6rem)");
+  expect(css(orientationStyles.hero__copy)).toContain("justify-items:center");
+  expect(css(orientationStyles.hero__copy)).toContain("text-align:center");
+  expect(css(orientationStyles.hero__heading)).toContain("font-size:clamp(2.625rem,7.4vw,4.75rem)");
   expect(css(orientationStyles.sourceSummary)).toContain("min-height:2.75rem");
   expect(css(orientationStyles.sourceSummary)).toContain(":focus-visible");
   const globals = await Bun.file(new URL("./globals.css", import.meta.url)).text();

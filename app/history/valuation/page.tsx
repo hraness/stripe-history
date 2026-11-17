@@ -94,7 +94,7 @@ export default async function ValuationPage() {
         className="stripe-history-page stripe-history-main stripe-history-history-main"
         id="main-content"
       >
-        <SiteHeader />
+        <SiteHeader valuationSelected />
         <section
           aria-labelledby="valuation-page-heading"
           className="stripe-history-section history-volume-page"

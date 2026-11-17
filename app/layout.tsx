@@ -48,8 +48,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: "light dark",
   themeColor: [
-    { color: "#ffffff", media: "(prefers-color-scheme: light)" },
-    { color: "#151515", media: "(prefers-color-scheme: dark)" },
+    { color: "#f4f1ea", media: "(prefers-color-scheme: light)" },
+    { color: "#141311", media: "(prefers-color-scheme: dark)" },
   ],
 };
 
@@ -77,6 +77,13 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
             throw and the whole document fall to the global error page. */}
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script src="/stripe/theme-bootstrap.js" />
+        <link
+          as="font"
+          crossOrigin="anonymous"
+          href="/stripe/fonts/FunnelDisplay.a18ddd52.woff2"
+          rel="preload"
+          type="font/woff2"
+        />
       </head>
       <body className={siteThemes.plain.bodyClassName} data-hraness-material="lantern">
         <JsonLdScript
@@ -88,7 +95,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           defaultPreference={{ palette: "paper", mode: "system" }}
           legacyStorageKey="stripe-history-theme-v1"
         >
-          <ThemeColorSync darkColor="#151515" lightColor="#ffffff" />
+          <ThemeColorSync darkColor="#141311" lightColor="#f4f1ea" />
           <SkipLink href="#main-content">Skip to content</SkipLink>
           {children}
           <FoilController />
