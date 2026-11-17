@@ -15,8 +15,9 @@ Stripe History is live at `https://hraness.com/stripe`. It was retired on 2026-1
 <!-- kb:context scopes/repository--cdb4ee2aea69 -->
 # Contents
 
-- `portfolio-messaging.generated.json` and `app/product-messaging.ts` – the checked-in canonical product copy and related-product facts consumed at build time.
+- `app/product-messaging.json` and `app/product-messaging.ts` – the repository-owned product copy consumed at build time.
 
+- `support/hraness/` – the owned palette, type, plain-site, header, and Lantern foundation, with self-hosted fonts.
 - `app/` – the public timeline, category, per-event, annual-volume, valuation, data, and methodology pages, plus crawl metadata, social image, and framework shell.
 - `lib/` – strict history and research YAML contracts with validated content loading.
 - `public/history/` – the authored, source-linked Stripe history records.
@@ -32,7 +33,7 @@ Stripe History is live at `https://hraness.com/stripe`. It was retired on 2026-1
 
 # Guidelines
 
-- Keep shared product names, descriptions, hero copy, and marketing section headings in the canonical Hraness portfolio. Import the pinned `portfolio-messaging.generated.json` through `app/product-messaging.ts`; refresh it explicitly and never fetch or rewrite it during a normal build.
+- Keep product names, descriptions, hero copy, and marketing section headings in `app/product-messaging.json`, read through `app/product-messaging.ts`. Never fetch or rewrite copy during a normal build.
 
 - Use Bun 1.3.14 for installs, scripts, and checks.
 - Follow `WRITING.md` for internal prose and `STYLE.md` for public prose.
@@ -41,8 +42,8 @@ Stripe History is live at `https://hraness.com/stripe`. It was retired on 2026-1
 - Pin Hraness dependencies to reviewed immutable releases or full commits. Never connect repositories with sibling paths, Git submodules, or coordinated `main` assumptions.
 - Use immutable `@hraness/web-discovery` exports for generic metadata and JSON-LD serialization, and `@hraness/vercel-delivery` for the generic Vercel proof and Preview response contract. Keep history semantics, research schemas, redirects, crawl policy, and editorial presentation product-owned.
 - Extract a shared package only after two concrete consumers need the same stable interface. Keep shared packages product-neutral.
-- Use a shared design kit or `@hraness/ui` only for stable, portable primitives and tokens at an immutable version. Keep evidence modeling, timeline composition, methodology, and the local visual contract product-owned.
-- Set page, section, year, and event headings in the self-hosted Funnel Display face (`public/fonts`, shared with Sponge and Yaptake). Keep Nebula Sans from the immutable design-kit release as the ordinary proportional text face across the timeline shell, assets, and social images. Preserve the explicit monospace date and data roles.
+- Use `@hraness/ui` only for stable, portable primitives and tokens at an immutable version. Keep the palette, type, and header foundation in `support/hraness/`, and keep evidence modeling, timeline composition, methodology, and the local visual contract product-owned.
+- Set page, section, year, and event headings in the self-hosted Funnel Display face (`public/fonts`, shared with Sponge and Yaptake). Keep the self-hosted Nebula Sans in `support/hraness/fonts/` as the ordinary proportional text face across the timeline shell, assets, and social images. Preserve the explicit monospace date and data roles.
 - Freeze shared interfaces before parallel lanes begin. Give authored-corpus migrations, manifests, lockfiles, and other convergence surfaces one owner while lanes edit disjoint paths.
 - Keep mandatory rules in the closest `AGENTS.md`, current procedures in `docs/`, executable contracts in types and tests, and pull-based rationale, evidence, synthesis, and plans in `kb/`.
 - Keep the canonical public identity at `https://hraness.com/stripe`. Deploy the application with the `/stripe` base path behind Hraness, and preserve former hosts only as direct permanent redirects to the matching canonical path.
@@ -60,7 +61,7 @@ Stripe History is live at `https://hraness.com/stripe`. It was retired on 2026-1
 <!-- hraness-public-copy:start -->
 - Public copy (websites, READMEs, docs, package and GitHub descriptions, CLI help, `llms.txt`, generated pages) follows `STYLE.md`, synced from hraness/.github. Text a model writes for publication also follows `GENERATION_STYLE.md`.
 - The delivery vocabulary in this file (admission, qualification, custody, receipt, bounded, lane, gate, surface, projection) is internal. Translate it into what the reader gets.
-- Take one-line product and sibling descriptions from the portfolio registry and versions from the release record. Tests pin facts, not prose.
+- Take one-line product descriptions from `app/product-messaging.json` and versions from the release record. Tests pin facts, not prose.
 - Run `bun run check:copy` before handoff when the repository has it.
 <!-- hraness-public-copy:end -->
 

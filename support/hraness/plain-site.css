@@ -1,0 +1,397 @@
+@import "./site-shell.css";
+
+/**
+ * Plain site theme
+ *
+ * An opt-in document grammar for personal sites, open-source project pages,
+ * and quiet documentation. Color appearance remains owned by `data-theme`;
+ * this layer owns measure, typography, spacing, links, and minimal chrome.
+ */
+
+:root:has(> body.plain-site) {
+  background: #ffffff;
+  overflow-x: clip;
+  scrollbar-gutter: stable;
+}
+
+.plain-site {
+  --plain-link-target-min: 0px;
+  --plain-shell-measure: 34rem;
+  --plain-shell-gutter: 1.25rem;
+  --plain-background: #ffffff;
+  --plain-foreground: #171717;
+  --plain-link: #2457a6;
+  --plain-line: #d8d8d8;
+  --plain-muted: #666666;
+  --plain-surface: #f4f4f4;
+  --plain-syntax-keyword: #785f28;
+  --plain-syntax-string: #2d6a42;
+  --plain-syntax-number: #9f3631;
+  --plain-syntax-name: #0d61ac;
+
+  background: var(--plain-background);
+  color: var(--plain-foreground);
+  font-family: var(--font-text, var(--ui-font-sans, ui-sans-serif, system-ui, sans-serif));
+  font-size: 1rem;
+  line-height: var(--hraness-type-reading-leading, 1.7);
+  margin: 0;
+  overflow-x: clip;
+}
+
+:root[data-theme="dark"]:has(> body.plain-site) {
+  background: #151515;
+}
+
+:root[data-theme="dark"] .plain-site,
+.plain-site[data-theme="dark"] {
+  --plain-background: #151515;
+  --plain-foreground: #f2f2f2;
+  --plain-link: #8ab4ed;
+  --plain-line: #484848;
+  --plain-muted: #b6b6b6;
+  --plain-surface: #222222;
+  --plain-syntax-keyword: #c9ad74;
+  --plain-syntax-string: #76b38e;
+  --plain-syntax-number: #e18982;
+  --plain-syntax-name: #6aa9ed;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]):has(> body.plain-site) {
+    background: #151515;
+  }
+
+  :root:not([data-theme]) > .plain-site {
+    --plain-background: #151515;
+    --plain-foreground: #f2f2f2;
+    --plain-link: #8ab4ed;
+    --plain-line: #484848;
+    --plain-muted: #b6b6b6;
+    --plain-surface: #222222;
+    --plain-syntax-keyword: #c9ad74;
+    --plain-syntax-string: #76b38e;
+    --plain-syntax-number: #e18982;
+    --plain-syntax-name: #6aa9ed;
+  }
+}
+
+/* An explicit palette supplies the same semantic colors as application surfaces.
+ * Match the neutral dark and no-script root fallback specificity so this later
+ * bridge owns the aliases. Resolve them on each plain surface so nested palette
+ * boundaries retain their own colors, including forced-color system roles. */
+:root[data-palette]:has(> body.plain-site) {
+  background: var(--background, Canvas);
+}
+[data-palette][data-palette] .plain-site,
+.plain-site[data-palette][data-palette] {
+  --plain-background: var(--background, Canvas);
+  --plain-foreground: var(--foreground, CanvasText);
+  --plain-link: var(--primary, LinkText);
+  --plain-line: color-mix(in oklch, var(--foreground, CanvasText) 14%, var(--background, Canvas));
+  --plain-muted: var(--muted, CanvasText);
+  --plain-surface: var(--surface, Canvas);
+  --plain-syntax-keyword: var(--warning, CanvasText);
+  --plain-syntax-string: var(--success, CanvasText);
+  --plain-syntax-number: var(--danger, CanvasText);
+  --plain-syntax-name: var(--info, CanvasText);
+}
+
+.plain-site .syntax-code {
+  --syntax-comment: var(--plain-muted);
+  --syntax-keyword: var(--plain-syntax-keyword);
+  --syntax-string: var(--plain-syntax-string);
+  --syntax-number: var(--plain-syntax-number);
+  --syntax-name: var(--plain-syntax-name);
+  --syntax-sign: var(--plain-muted);
+}
+
+.plain-site *,
+.plain-site *::before,
+.plain-site *::after {
+  box-sizing: border-box;
+}
+
+:where(.plain-header a, .plain-page a, .plain-footer a) {
+  color: var(--plain-link);
+  overflow-wrap: anywhere;
+  text-decoration: none;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+:where(
+  .plain-header a:is(:hover, :focus-visible),
+  .plain-page a:is(:hover, :focus-visible),
+  .plain-footer a:is(:hover, :focus-visible)
+) {
+  text-decoration: underline;
+}
+
+.plain-site :where(
+  .plain-header a:focus-visible,
+  .plain-page a:focus-visible,
+  .plain-footer a:focus-visible
+) {
+  border-radius: 1px;
+  outline: 1px dotted currentColor;
+  outline-offset: 3px;
+}
+
+.plain-site :where(
+  .plain-header a:focus:not(:focus-visible),
+  .plain-page a:focus:not(:focus-visible),
+  .plain-footer a:focus:not(:focus-visible)
+) {
+  outline: none;
+}
+
+.plain-site ::selection {
+  background: color-mix(in srgb, var(--plain-link) 20%, transparent);
+  color: var(--plain-foreground);
+}
+
+.plain-page {
+  inline-size: 100%;
+  margin: clamp(3.5rem, 12vh, 7rem) auto;
+  max-width: var(--plain-shell-measure);
+  padding-inline: var(--plain-shell-gutter);
+}
+
+.plain-header {
+  border: 0;
+  inline-size: 100%;
+  padding: 0;
+}
+
+.plain-header__inner {
+  --plain-header-block-padding: 1.15rem;
+
+  align-items: center;
+  border-bottom: 1px solid var(--plain-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  inline-size: 100%;
+  justify-content: space-between;
+  margin-inline: auto;
+  max-width: var(--plain-shell-measure);
+  padding-top: max(
+    var(--plain-header-block-padding),
+    env(safe-area-inset-top)
+  );
+  padding-right: max(var(--plain-shell-gutter), env(safe-area-inset-right));
+  padding-bottom: var(--plain-header-block-padding);
+  padding-left: max(var(--plain-shell-gutter), env(safe-area-inset-left));
+}
+
+.plain-wordmark {
+  align-items: center;
+  color: var(--plain-foreground);
+  display: inline-flex;
+  flex: 1 1 auto;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0;
+  min-block-size: var(--plain-link-target-min);
+  min-inline-size: var(--plain-link-target-min);
+  overflow-wrap: anywhere;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.plain-nav,
+.plain-footer__links {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.85rem;
+}
+
+.plain-nav {
+  flex: 0 1 auto;
+  justify-content: flex-end;
+  margin-inline-start: auto;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.plain-nav a,
+.plain-footer__links a {
+  align-items: center;
+  color: var(--plain-muted);
+  display: inline-flex;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  min-block-size: var(--plain-link-target-min);
+  min-inline-size: var(--plain-link-target-min);
+  padding: 0;
+  text-transform: none;
+}
+
+.plain-page :where(h1, h2, h3, p, ul, ol, pre, figure) {
+  font-size: inherit;
+}
+
+.plain-page :where(h1, h2, h3) {
+  font-family: var(--font-heading, var(--font-text, ui-sans-serif, system-ui, sans-serif));
+  line-height: var(--hraness-type-heading-leading, 1.2);
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+.plain-page h1 {
+  font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem);
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.plain-page > p,
+.plain-muted {
+  color: var(--plain-muted);
+}
+
+.plain-page > p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.plain-page section {
+  margin-top: 2rem;
+}
+
+.plain-page h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.3rem;
+}
+
+.plain-page section > p {
+  margin: 0;
+}
+
+.plain-page section > p + p {
+  margin-top: 1rem;
+}
+
+.plain-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.plain-links li {
+  margin: 0.1rem 0;
+}
+
+.plain-links a {
+  display: inline-block;
+  min-height: 1.5rem;
+  min-width: 1.5rem;
+}
+
+.plain-code {
+  color: var(--plain-foreground);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--hraness-type-code-size, .9rem);
+  line-height: 1.55;
+  margin: 0;
+  max-inline-size: 100%;
+  overflow-x: auto;
+  overflow-wrap: normal;
+  padding-block: 0.75rem;
+  tab-size: 2;
+  white-space: pre;
+}
+
+.plain-code code {
+  font: inherit;
+}
+
+.plain-footer {
+  --background: var(--plain-background);
+  --foreground: var(--plain-foreground);
+  --focus: var(--plain-link);
+  --line: var(--plain-line);
+  --muted: var(--plain-muted);
+  --secondary: var(--plain-surface);
+  --secondary-foreground: var(--plain-foreground);
+  --surface: var(--plain-background);
+  --surface-raised: var(--plain-surface);
+
+  align-items: center;
+  border-top: 1px solid var(--plain-line);
+  color: var(--plain-muted);
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 1rem;
+  inline-size: 100%;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: var(--plain-shell-measure);
+  overflow: clip;
+  padding-top: 1.25rem;
+  padding-right: max(var(--plain-shell-gutter), env(safe-area-inset-right));
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+  padding-left: max(var(--plain-shell-gutter), env(safe-area-inset-left));
+}
+
+.plain-site main:has(> .design-gallery[data-design-gallery-nested="true"]) {
+  padding-inline: max(var(--plain-shell-gutter), var(--space-6));
+}
+
+.plain-footer p {
+  margin: 0;
+}
+
+.plain-footer :where(a) {
+  align-items: center;
+  color: inherit;
+  display: inline-flex;
+  min-block-size: var(--plain-link-target-min);
+  min-inline-size: var(--plain-link-target-min);
+}
+
+@media (max-width: 42rem) {
+  .plain-header__inner {
+    --plain-header-block-padding: 0.65rem;
+
+    gap: 0.35rem 0.75rem;
+  }
+
+  .plain-wordmark {
+    flex-basis: min(11rem, 100%);
+  }
+}
+
+@media (pointer: coarse) {
+  .plain-site {
+    --plain-link-target-min: var(--interactive-target-min, 48px);
+  }
+}
+
+:root[data-verification-pointer="coarse"] .plain-site {
+  --plain-link-target-min: var(--interactive-target-min, 48px);
+}
+
+@media (max-width: 420px) {
+  .plain-site {
+    --plain-shell-gutter: 1rem;
+  }
+
+  .plain-page {
+    margin-block: 2.5rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .plain-header__inner {
+    border-bottom: 1px solid CanvasText;
+  }
+
+  .plain-footer {
+    border-top: 1px solid CanvasText;
+  }
+}

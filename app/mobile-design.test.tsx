@@ -181,9 +181,9 @@ test("all compiled timeline/filter producers avoid the shared unlayered page opt
     expect(source).toContain('className="stripe-history-page stripe-history-main stripe-history-history-main"');
     expect(source).not.toMatch(/className="[^"]*\bplain-page\b/u);
   }
-  // The real immutable foundation still contains the old rule. Local exclusions
+  // The shared foundation still contains the old rule. Local exclusions
   // alone cannot cancel it while the shared opt-in class remains on an ancestor.
-  const shared = await Bun.file(new URL("../node_modules/@hraness/design-kit/src/plain-site.css", import.meta.url)).text();
+  const shared = await Bun.file(new URL("../support/hraness/plain-site.css", import.meta.url)).text();
   expect(shared).toMatch(/\.plain-page section\s*\{\s*margin-top:\s*2rem;/u);
   expect(shared).not.toContain(".stripe-history-page");
   expect(plainSiteCss).toMatch(/\.stripe-history-page > p\s*\{\s*color: var\(--plain-muted\);\s*margin: 0;/u);
@@ -205,12 +205,13 @@ test("evidence orientation reflows without hiding actions or shrinking touch tar
   );
 });
 
-test("theme control uses the unmodified shared System-first icon menu", () => {
+test("theme control uses the shared Paper, System-first icon menu", () => {
   const html = renderToStaticMarkup(<ThemeMenuButton />);
 
-  expect(html).toContain('data-theme-value="system"');
+  expect(html).toContain('class="hraness-design-theme-toggle hraness-design-palette-menu ');
   expect(html).toContain('data-presentation="menu"');
-  expect(html).toContain('aria-label="Appearance: System"');
+  expect(html).toContain('data-ready="false"');
+  expect(html).toContain('aria-label="Appearance: Paper, System"');
   expect(html).toContain("<svg");
   expect(html).not.toMatch(/[☀☾]/u);
   expect(html).not.toContain("stripe-history-theme-toggle");

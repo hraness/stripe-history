@@ -21,7 +21,7 @@ describe("hraness.com/stripe contact page", () => {
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
     expect(html).toContain('href="https://github.com/hraness/stripe-history/security/advisories/new"');
     expect(html).not.toContain("mailto:");
-    expect(html).toContain('aria-label="Appearance: System"');
+    expect(html).toContain('aria-label="Appearance: Paper, System"');
     expect(visibleText(html)).toContain("historical mailing consent");
   });
 });
