@@ -243,8 +243,8 @@ try {
   assert.equal(await page.locator('form[action="https://account.hraness.com/api/mailing/subscribe"]').count(), 0);
   assert.equal(await page.locator('.hraness-marketing-header__nav a').nth(1).getAttribute("href"), "/stripe/data");
   assert.equal(await page.locator('.hraness-marketing-header [data-presentation="menu"]').count(), 1);
-  const resources = page.locator('.stripe-history-footer__row');
-  assert.equal(await resources.evaluate((node) => getComputedStyle(node).rowGap), "8px");
+  const resources = page.locator('.stripe-history-footer__inner');
+  assert.equal(await resources.evaluate((node) => getComputedStyle(node).rowGap), "4px");
   assert.equal(await page.locator('#history-heading').textContent(), "Stripe History");
   assert.equal(await page.locator('.hraness-marketing-hero__eyebrow').count(), 0);
   assert.equal(await page.locator('.hraness-marketing-hero .hraness-marketing-action').count(), 0);
