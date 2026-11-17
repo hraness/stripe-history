@@ -1,50 +1,40 @@
-import { HranessSiteFooter } from "@hraness/site-footer/react";
-import { AskAiAboutThis } from "@hraness/ui";
+import { HranessCookieConsent } from "@hraness/site-footer/react";
 import * as stylex from "@stylexjs/stylex";
-import { footerResourcesStyles as styles } from "./site-footer.stylex";
+import { footerStyles as styles } from "./site-footer.stylex";
+import { PrivacyChoicesLink } from "./analytics-client";
 
-import {
-  absoluteSiteUrl,
-  GITHUB_REPOSITORY_URL,
-  publicSitePath,
-  site,
-  type SitePath,
-} from "./site";
+import { GITHUB_REPOSITORY_URL, HRANESS_URL, publicSitePath, site } from "./site";
 import { independenceSentence } from "./site-copy";
 
-interface SiteFooterProps {
-  readonly path?: SitePath;
-}
-
-export function SiteFooter({ path }: SiteFooterProps) {
+/**
+ * One quiet footer: the record's own links, the HRANESS wordmark (set like
+ * the hraness.com wordmark), the independence note, and the shared consent
+ * consent note. The note is the shared package's own component, kept for
+ * parity with the former footer; analytics.css hides it because the
+ * @hraness/analytics banner and Your Privacy Choices are the consent UI.
+ */
+export function SiteFooter() {
   return (
-    <>
-      {path === undefined ? null : (
-        <AskAiAboutThis
-          className="stripe-history-ask-ai"
-          url={absoluteSiteUrl(path)}
-        />
-      )}
-      <aside aria-label={`${site.name} resources`} className={`stripe-history-footer-resources ${stylex.props(styles.root, path !== undefined && styles.afterAskAi).className}`}>
-        <p className={`stripe-history-footer-resources__label ${stylex.props(styles.label).className}`}>{site.name}</p>
-        <nav aria-label={`${site.name} links`} className={`stripe-history-footer-resources__links ${stylex.props(styles.links).className}`}>
-          <a {...stylex.props(styles.link)} href={publicSitePath("/data")}>data</a>
-          <a {...stylex.props(styles.link)} href={publicSitePath("/about")}>about</a>
-          <a {...stylex.props(styles.link)} href={publicSitePath("/contact")}>contact</a>
-          <a {...stylex.props(styles.link)} href={publicSitePath("/privacy")}>privacy</a>
-          <a {...stylex.props(styles.link)} href={GITHUB_REPOSITORY_URL}>github</a>
+    <footer className={`stripe-history-footer ${stylex.props(styles.root).className}`} id="stripe-history-footer">
+      <div className={`stripe-history-footer__row ${stylex.props(styles.row).className}`}>
+        <nav aria-label={`${site.name} links`} className={`stripe-history-footer__links ${stylex.props(styles.links).className}`}>
+          <a {...stylex.props(styles.link)} href={publicSitePath("/data")}>Data</a>
+          <a {...stylex.props(styles.link)} href={publicSitePath("/about")}>About</a>
+          <a {...stylex.props(styles.link)} href={publicSitePath("/contact")}>Contact</a>
+          <a {...stylex.props(styles.link)} href={publicSitePath("/privacy")}>Privacy</a>
+          <PrivacyChoicesLink className={stylex.props(styles.link).className ?? ""}>Your Privacy Choices</PrivacyChoicesLink>
+          <a {...stylex.props(styles.link)} href={GITHUB_REPOSITORY_URL}>GitHub</a>
         </nav>
-        <p className={`stripe-history-footer-resources__note ${stylex.props(styles.label).className}`}>{independenceSentence}</p>
-      </aside>
-      <HranessSiteFooter
-        mailingList={{ kind: "signup", audience: "hraness" }}
-        support={{
-          id: "hraness",
-          name: "Hraness",
-          updates: true,
-          valueProposition: `Support Hraness and the free, open records it publishes, including ${site.name}.`,
-        }}
-      />
-    </>
+        <a
+          className={`stripe-history-footer__wordmark ${stylex.props(styles.wordmark).className}`}
+          data-analytics-cta="footer-hraness"
+          href={HRANESS_URL}
+        >
+          Hraness
+        </a>
+      </div>
+      <p className={`stripe-history-footer__note ${stylex.props(styles.note).className}`}>{independenceSentence}</p>
+      <HranessCookieConsent placement="flow" />
+    </footer>
   );
 }

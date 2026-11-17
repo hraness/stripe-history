@@ -99,20 +99,18 @@ describe("agent markdown representations", () => {
     expect(data.body).toContain("[Works in Progress](https://worksinprogress.co/)");
     expect(data.body).toContain("[Cheeky Pint](https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332)");
     const privacy = await markdownForPath("/privacy");
-    expect(privacy.body).toContain("https://account.hraness.com");
-    expect(privacy.body).toContain("the general Hraness newsletter");
-    expect(privacy.body).toContain("Accounts records dated consent");
-    expect(privacy.body).toContain("You are not subscribed until you confirm");
-    expect(privacy.body).toContain("does not create new Stripe History mailing consent");
+    expect(privacy.body).not.toContain("the general Hraness newsletter");
+    expect(privacy.body).toContain("Stripe History no longer offers a mailing signup");
     expect(privacy.body).toContain("previously confirmed membership");
     expect(privacy.body).toContain("newsletter messages through Resend");
     expect(privacy.body).toContain("news.hraness.com");
     expect(privacy.body).toContain("Stripe-History-specific unsubscribe link");
     expect(privacy.body).toContain("does not delete, cancel, or migrate that record");
     expect(privacy.body).not.toContain("Cloudflare Turnstile");
-    expect(privacy.body).toContain("pageview and page-exit events");
-    expect(privacy.body).toContain("page-load performance measurements");
-    expect(privacy.body).toContain("analytics stays off until you accept");
+    expect(privacy.body).toContain("counts visits with PostHog");
+    expect(privacy.body).toContain("how fast the page loaded");
+    expect(privacy.body).toContain("until you answer yes to the banner");
+    expect(privacy.body).toContain("[Turn off recordings](https://hraness.com/stripe/privacy?ads=off#choices)");
     expect(privacy.body).not.toContain("feature flags, performance monitoring, or user profiles");
     expect(visibleText(privacy.body).length).toBeGreaterThan(500);
 

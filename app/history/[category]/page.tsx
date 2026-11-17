@@ -1,8 +1,7 @@
 import { historyCategoryPageCopy } from "@/lib/category-page-copy";
-import {
-  loadHistory,
-  type CategorizedHistoryEvent,
-} from "@/lib/content";
+import { newestEventDate } from "@/lib/event-page";
+import type { CategorizedHistoryEvent } from "@/lib/content";
+import { loadSiteHistory } from "@/lib/site-history";
 import {
   timelineCategoryIds,
   type TimelineCategoryId,
@@ -17,7 +16,7 @@ import {
   historyCollectionJsonLd,
 } from "../../seo";
 import { absoluteSiteUrl, socialMetadata } from "../../site";
-import { AcquisitionsAnswer, OriginsLead } from "../history-answers";
+import { AcquisitionsAnswer, CategoryQuestions, OriginsLead } from "../history-answers";
 import { HistoryView } from "../history-view";
 
 interface HistoryCategoryPageProps {
@@ -32,7 +31,7 @@ export function generateStaticParams() {
 }
 
 async function resolveCategory(categoryId: string) {
-  const history = await loadHistory();
+  const history = await loadSiteHistory();
   const category = history.categories.find(({ id }) => id === categoryId);
   return category === undefined ? undefined : { category, history };
 }
@@ -85,19 +84,26 @@ export default async function HistoryCategoryPage({
           resolved.category.id === "appearances"
             ? appearanceCollectionJsonLd(resolved.history)
             : historyCollectionJsonLd(visibleEvents, {
+                dateModified: newestEventDate(visibleEvents),
                 description: resolved.category.description,
+                linkEventPages: true,
                 path,
                 title,
               }),
           breadcrumbJsonLd([
-            { name: "History", path: "/" },
+            { name: "Stripe History", path: "/" },
             { name: resolved.category.label, path },
           ]),
         ]}
         id="stripe-history-history-category-structured-data"
       />
       <HistoryView
-        answer={categoryAnswer(resolved.category.id, resolved.history.events)}
+        answer={(
+          <>
+            {categoryAnswer(resolved.category.id, resolved.history.events)}
+            <CategoryQuestions category={resolved.category} events={resolved.history.events} />
+          </>
+        )}
         heading={heading}
         history={resolved.history}
         selectedCategoryId={resolved.category.id as TimelineCategoryId}

@@ -1,3 +1,11 @@
+# Project status
+
+Stripe History is live at `https://hraness.com/stripe`. It was retired on 2026-11-06 (#122) and revived on 2026-11-16 at the owner's request. The public site, the Thursday weekly publication workflow, and Production browser monitoring are active again.
+
+- Hosting: the Vercel project `stripe-history` (team `hraness`) is Git-connected to this repository, deploys `main` to Production with the `/stripe` base path, and is served at `hraness.com/stripe` through an external rewrite owned by the Hraness site. Do not add a custom Vercel environment, persistent Preview domain, or a second Git-connected project.
+- Publication: `.github/workflows/weekly-news.yml` is the only automatic publisher; follow `docs/weekly-publication.md`. `appearance-backfill.yml` stays manual and review-only.
+- Every event has a durable page at `/stripe/events/<event-id>`; event IDs are permanent once published.
+
 <!-- browser-automation:start -->
 - Ordinary owned automated browser runs use versioned Chrome for Testing or the browser provisioned for the pinned Playwright version. Reject the installed auto-updating Chrome application, including explicit executable overrides and symlinks; never fall back to it when provisioning is missing. Report the resolved executable and browser version, and close owned contexts and browsers gracefully in cleanup. Attaching to an explicitly authorized user-owned browser is a separate operation: preserve its profile and lifetime. Keep regression checks for browser selection in the existing required checks; see [browser automation](https://github.com/hraness/.github/blob/main/BROWSER_AUTOMATION.md).
 - Never start the system Chrome app directly from an agent shell; use the repository's browser tooling and respect its scheduler and browser custody controls. For owned launches, pass `--mute-audio` and merge `PaintHolding,MacAppCodeSignClone` into any existing `--disable-features` value instead of adding a second switch. Finish owned process, context, and profile cleanup before releasing the browser lane. Never signal another holder or manipulate its lease to obtain a slot.
@@ -7,9 +15,10 @@
 <!-- kb:context scopes/repository--cdb4ee2aea69 -->
 # Contents
 
-- `portfolio-messaging.generated.json` and `app/product-messaging.ts` – the checked-in canonical product copy and related-product facts consumed at build time.
+- `app/product-messaging.json` and `app/product-messaging.ts` – the repository-owned product copy consumed at build time.
 
-- `app/` – the public timeline, category, annual-volume, valuation, data, and methodology pages, plus crawl metadata, social image, and framework shell.
+- `support/hraness/` – the owned palette, type, plain-site, header, and Lantern foundation, with self-hosted fonts.
+- `app/` – the public timeline, category, per-event, annual-volume, valuation, data, and methodology pages, plus crawl metadata, social image, and framework shell.
 - `lib/` – strict history and research YAML contracts with validated content loading.
 - `public/history/` – the authored, source-linked Stripe history records.
 - `public/research/` – the canonical source catalog, valuations, founder appearances, collection definitions, research-run ledger, and bounded automatic-publication policy and attestations.
@@ -24,7 +33,7 @@
 
 # Guidelines
 
-- Keep shared product names, descriptions, hero copy, and marketing section headings in the canonical Hraness portfolio. Import the pinned `portfolio-messaging.generated.json` through `app/product-messaging.ts`; refresh it explicitly and never fetch or rewrite it during a normal build.
+- Keep product names, descriptions, hero copy, and marketing section headings in `app/product-messaging.json`, read through `app/product-messaging.ts`. Never fetch or rewrite copy during a normal build.
 
 - Use Bun 1.3.14 for installs, scripts, and checks.
 - Follow `WRITING.md` for internal prose and `STYLE.md` for public prose.
@@ -33,15 +42,16 @@
 - Pin Hraness dependencies to reviewed immutable releases or full commits. Never connect repositories with sibling paths, Git submodules, or coordinated `main` assumptions.
 - Use immutable `@hraness/web-discovery` exports for generic metadata and JSON-LD serialization, and `@hraness/vercel-delivery` for the generic Vercel proof and Preview response contract. Keep history semantics, research schemas, redirects, crawl policy, and editorial presentation product-owned.
 - Extract a shared package only after two concrete consumers need the same stable interface. Keep shared packages product-neutral.
-- Use a shared design kit or `@hraness/ui` only for stable, portable primitives and tokens at an immutable version. Keep evidence modeling, timeline composition, methodology, and the local visual contract product-owned.
-- Keep Nebula Sans from the immutable design-kit release as the ordinary proportional face across the timeline shell, assets, and social images. Preserve the explicit monospace heading and data roles.
+- Use `@hraness/ui` only for stable, portable primitives and tokens at an immutable version. Keep the palette, type, and header foundation in `support/hraness/`, and keep evidence modeling, timeline composition, methodology, and the local visual contract product-owned.
+- Set page, section, year, and event headings in the self-hosted Funnel Display face (`public/fonts`, shared with Sponge and Yaptake). Keep the self-hosted Nebula Sans in `support/hraness/fonts/` as the ordinary proportional text face across the timeline shell, assets, and social images. Preserve the explicit monospace date and data roles.
 - Freeze shared interfaces before parallel lanes begin. Give authored-corpus migrations, manifests, lockfiles, and other convergence surfaces one owner while lanes edit disjoint paths.
 - Keep mandatory rules in the closest `AGENTS.md`, current procedures in `docs/`, executable contracts in types and tests, and pull-based rationale, evidence, synthesis, and plans in `kb/`.
 - Keep the canonical public identity at `https://hraness.com/stripe`. Deploy the application with the `/stripe` base path behind Hraness, and preserve former hosts only as direct permanent redirects to the matching canonical path.
 - Treat Production as the only durable Vercel environment. Pull requests may use Vercel's built-in disposable Preview target, but do not create a custom environment, persistent Preview domain, provider-authoritative Preview branch, or separate Preview backend.
 - Keep `stripe-history/*` as the stable public schema and prompt-version namespace. Identity changes do not rewrite published data contracts or append-only attestations.
-- Keep history server-rendered, crawlable, and available as reviewable YAML. Preserve durable category, annual-volume, valuation, and data URLs.
+- Keep history server-rendered, crawlable, and available as reviewable YAML. Preserve durable category, event, annual-volume, valuation, and data URLs.
 - Give every ordinary themed page exactly one shared icon-menu appearance control as the final action in its header. Do not put appearance controls in footers, content, or fallback action rows.
+- Keep appearance storage in step with hraness.com, which shares this origin: `hraness-design-palette-v1` holds `{"palette", "mode"}`, and `hraness-theme` mirrors a light or dark mode and is removed for System. `app/appearance-storage.test.ts` checks both sites read every stored state the same way; change `public/theme.js` in hraness/site in step.
 - Require at least one canonical source ID for every event and valuation observation. Prefer primary evidence, preserve uncertainty, and distinguish proposed, reported, announced, and completed events.
 - Parse every provider response and YAML file from `unknown`. Preserve reverse chronology, globally unique IDs, bounded text, and deterministic source provenance.
 - Keep the site independent of Stripe, Inc. Do not imply endorsement, ownership, or official status.
@@ -52,7 +62,7 @@
 <!-- hraness-public-copy:start -->
 - Public copy (websites, READMEs, docs, package and GitHub descriptions, CLI help, `llms.txt`, generated pages) follows `STYLE.md`, synced from hraness/.github. Text a model writes for publication also follows `GENERATION_STYLE.md`.
 - The delivery vocabulary in this file (admission, qualification, custody, receipt, bounded, lane, gate, surface, projection) is internal. Translate it into what the reader gets.
-- Take one-line product and sibling descriptions from the portfolio registry and versions from the release record. Tests pin facts, not prose.
+- Take one-line product descriptions from `app/product-messaging.json` and versions from the release record. Tests pin facts, not prose.
 - Run `bun run check:copy` before handoff when the repository has it.
 <!-- hraness-public-copy:end -->
 
@@ -80,11 +90,3 @@
 - Content bytes live in the content store; the control plane keeps references and metadata only.
 - Run `bun run check:cost-surfaces` before handoff whenever a data surface changes.
 
-<!-- algal-skills:start -->
-**ALGAL skills**
-
-- Prefer the globally installed `algal-*` skills for bounded git state, diffs, repository survey/search, test and release gates, CI polling, and web fetches instead of repeated raw tool output.
-- At session start, if the `algal` skill is unavailable, install the current skill pack for Claude Code, Codex, and Devin for Terminal with `bunx skills add 0thernet/algal-skills --global --agent claude-code codex devin --skill '*' --copy --yes`.
-- Confirm installation with `bunx skills list --global`. If Bun or network access is unavailable, continue with repository-native tools instead of blocking delivery.
-- Treat ALGAL receipts as execution evidence, not provider attestation, and preserve the repository's normal verification and release gates.
-<!-- algal-skills:end -->

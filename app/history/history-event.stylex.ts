@@ -7,17 +7,15 @@ const forced = "@media (forced-colors: active)";
 /** Finite event presentation shared by the timeline and metric disclosures.
  * Category hue and theme formulas retain their existing renderer/CSS owners. */
 export const historyEventStyles = stylex.create({
+  // A hairline above each entry; the category icon carries the only hue.
   frame: {
-    borderInlineStartColor: { default: "var(--history-category-ink)", [forced]: "CanvasText" },
-    borderInlineStartStyle: "solid",
-    borderInlineStartWidth: "3px",
-    borderTopColor: "var(--plain-line)",
+    borderTopColor: { default: "var(--plain-line)", [forced]: "CanvasText" },
     borderTopStyle: "solid",
     borderTopWidth: "1px",
-    paddingTop: { default: "1rem", [narrow]: "0.8rem" },
+    paddingTop: { default: "1.5rem", [narrow]: "1.125rem" },
     paddingRight: 0,
-    paddingBottom: { default: "1rem", [narrow]: "0.8rem" },
-    paddingLeft: { default: "0.9rem", [narrow]: "0.7rem" },
+    paddingBottom: { default: "1.5rem", [narrow]: "1.125rem" },
+    paddingLeft: 0,
   },
   lastFrame: {
     borderBottomColor: "var(--plain-line)",
@@ -42,11 +40,12 @@ export const historyEventStyles = stylex.create({
     whiteSpace: "nowrap",
   },
   title: {
-    fontSize: { default: "1.05rem", [narrow]: "1rem" },
-    fontWeight: 600,
-    letterSpacing: "-0.01em",
-    lineHeight: { default: 1.35, [narrow]: 1.4 },
-    marginTop: "0.35rem",
+    fontFamily: "var(--font-display)",
+    fontSize: { default: "1.25rem", [narrow]: "1.125rem" },
+    fontWeight: 500,
+    letterSpacing: "-0.022em",
+    lineHeight: { default: 1.25, [narrow]: 1.3 },
+    marginTop: "0.5rem",
     marginRight: 0,
     marginBottom: 0,
     marginLeft: 0,
@@ -76,10 +75,10 @@ export const historyEventStyles = stylex.create({
     textUnderlineOffset: "0.15em",
     // Preserve the product grammar's native focus ring and square focus radius.
     ":focus-visible": {
-      borderRadius: "1px",
-      outlineColor: "currentColor",
-      outlineStyle: "dotted",
-      outlineWidth: "1px",
+      borderRadius: "0.25rem",
+      outlineColor: "var(--plain-focus)",
+      outlineStyle: "solid",
+      outlineWidth: "2px",
       outlineOffset: "3px",
     },
   },
@@ -107,17 +106,19 @@ export const historyEventStyles = stylex.create({
   },
   confidence: { color: "var(--plain-foreground)", fontWeight: 500 },
   summary: {
+    color: "var(--plain-body)",
+    fontSize: { default: "1rem", [narrow]: "0.96875rem" },
     marginTop: "0.5rem",
     marginRight: 0,
     marginBottom: 0,
     marginLeft: 0,
-    lineHeight: { default: "inherit", [narrow]: 1.5 },
+    lineHeight: { default: 1.6, [narrow]: 1.55 },
   },
   facts: {
     display: "grid",
     fontSize: "var(--text-caption)",
-    gap: "0.2rem",
-    marginTop: "0.65rem",
+    gap: "0.25rem",
+    marginTop: "0.875rem",
     marginRight: 0,
     marginBottom: 0,
     marginLeft: 0,

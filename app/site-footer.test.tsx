@@ -3,43 +3,26 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { SiteFooter } from "./site-footer";
 
-const sharedLinkOrder = [
-  "https://substack.com/@hraness",
-  "https://x.com/hraness",
-  "https://www.linkedin.com/company/hraness",
-  "https://github.com/hraness",
-] as const;
-
-test("keeps Stripe History resources above the canonical Hraness footer", () => {
+test("renders one minimal footer: own links, the HRANESS wordmark, the independence note and consent", () => {
   const html = renderToStaticMarkup(<SiteFooter />);
 
   expect(html.match(/<footer\b/gu)).toHaveLength(1);
-  expect(html.match(/data-slot="social-icon"/gu)).toHaveLength(4);
-  expect(html).not.toContain("hraness-site-footer__wordmark");
-  expect(html).not.toContain('aria-label="Ask AI about this"');
-  expect(html).toContain('aside aria-label="Stripe History resources"');
-  expect(html).toContain('href="/stripe/data"');
-  expect(html).toContain('href="/stripe/about"');
-  expect(html).toContain('href="/stripe/contact"');
-  expect(html).toContain('href="/stripe/privacy"');
-  expect(html).toContain('href="https://github.com/hraness/stripe-history"');
-  expect(html).not.toContain("hraness.substack.com/embed");
-  expect(html.match(/<form\b/gu)).toHaveLength(1);
-  expect(html).toContain('action="https://account.hraness.com/api/mailing/subscribe"');
-  expect(html).toContain('name="audience" type="hidden" value="hraness"');
-  expect(html).toContain("https://account.hraness.com/support?product=hraness&amp;source=web#support");
-  expect(html).not.toContain('value="stripe-history"');
-  expect(html).not.toContain("cf-turnstile");
-  expect(html.indexOf('aria-label="Stripe History resources"')).toBeLessThan(
-    html.indexOf('data-slot="hraness-site-footer"'),
-  );
-
-  let previousLinkIndex = -1;
-  for (const href of sharedLinkOrder) {
-    const linkIndex = html.indexOf(`href="${href}"`);
-    expect(linkIndex).toBeGreaterThan(previousLinkIndex);
-    previousLinkIndex = linkIndex;
+  expect(html).toContain('id="stripe-history-footer"');
+  expect(html).toContain('aria-label="Stripe History links"');
+  for (const href of ["/stripe/data", "/stripe/about", "/stripe/contact", "/stripe/privacy", "/stripe/privacy#choices", "https://github.com/hraness/stripe-history"]) {
+    expect(html).toContain(`href="${href}"`);
   }
+  expect(html).toContain(">Your Privacy Choices</a>");
+  expect(html).toMatch(/<a class="stripe-history-footer__wordmark [^"]+" data-analytics-cta="footer-hraness" href="https:\/\/hraness\.com\/?">Hraness<\/a>/u);
+  expect(html).toContain("is not affiliated with, endorsed by, or operated by Stripe, Inc.");
+  // The shared consent note keeps its own region check and preference control.
+  expect(html).toContain("hraness-cookie-consent");
+  // No mailing list, support handoff, social icons, avatar or help chip.
+  expect(html).not.toContain("<form");
+  expect(html).not.toContain("account.hraness.com/support");
+  expect(html).not.toContain('data-slot="social-icon"');
+  expect(html).not.toContain('data-slot="hraness-site-footer"');
+  expect(html).not.toContain("<img");
 });
 
 test("removes the obsolete Stripe History Turnstile configuration", async () => {

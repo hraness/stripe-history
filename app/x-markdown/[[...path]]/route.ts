@@ -4,6 +4,8 @@ import {
   markdownRewritePath,
   publicPathFromMarkdownRewrite,
 } from "@/lib/history-urls";
+import { loadSiteHistory } from "@/lib/site-history";
+import { historyEventPath } from "@/lib/event-page";
 import { markdownForPath, markdownHeaders } from "@/lib/page-markdown";
 
 export const dynamic = "force-static";
@@ -15,8 +17,10 @@ function pathnameFromSegments(path: readonly string[] | undefined): string {
   return path === undefined || path.length === 0 ? "/" : `/${path.join("/")}`;
 }
 
-export function generateStaticParams() {
-  return MARKDOWN_PAGE_PATHS.map((pathname) => {
+export async function generateStaticParams() {
+  const history = await loadSiteHistory();
+  const eventPaths = history.events.map(({ id }) => historyEventPath(id));
+  return [...MARKDOWN_PAGE_PATHS, ...eventPaths].map((pathname) => {
     const rewrite = markdownRewritePath(pathname);
     const publicPath = publicPathFromMarkdownRewrite(rewrite);
     const segments = publicPath === "/"

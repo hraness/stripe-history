@@ -2,7 +2,7 @@ import { NOINDEX_ROBOTS } from "@hraness/web-discovery";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { PageNotFoundAnalytics } from "./posthog-analytics";
+import { PageNotFoundAnalytics } from "./analytics-client";
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 import {

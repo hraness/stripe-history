@@ -21,7 +21,7 @@ export const privacyTitle = "Privacy";
 export const privacyMetaTitle = "Stripe History privacy: analytics and data handling";
 export const privacySocialTitle = privacyMetaTitle;
 export const privacyDescription =
-  `How ${site.name} handles analytics, cookies, the Hraness newsletter, optional support, historical mailing consent, and hosting logs.`;
+  `How ${site.name} counts visits, which cookies it keeps in each region, your privacy choices, earlier mailing consent, and hosting logs.`;
 
 export const contactTitle = "Contact Stripe History: corrections and sources";
 export const contactSocialTitle = contactTitle;
@@ -55,16 +55,6 @@ export const evidenceLabels = {
 
 export const researchRunNote =
   "“Last research run” is the date of the most recent completed research run. Each run covers one research collection, such as founder appearances or valuation history, not the whole timeline.";
-
-export const recordKeepingLabels = {
-  canonicalSourceCount: "Sources",
-  eventCount: "Events",
-  newestEventOn: "Newest entry",
-  sourceLinkCount: "Source links",
-} as const;
-
-export const recordKeepingNote =
-  "Every event links to at least one source. Primary material and filings come first, with contemporaneous reporting where needed. Reported talks, announced agreements, and completed deals keep separate labels, and each figure keeps its source's term, such as payment volume or total volume. Corrections come through public GitHub issues.";
 
 /** Visible byline. Pages are drafted with AI assistance and credited to Hraness, never to a named human author. */
 export const bylineText = "By Hraness · Drafted with AI assistance.";
@@ -157,15 +147,24 @@ export const aboutSections = [
   },
 ] as const;
 
-export type EditorialPart = string | Readonly<{ text: string; href: string }> | Readonly<{ code: string }>;
+/** `reload` links load a full page, for addresses the browser itself must read (privacy choice links). */
+export type EditorialPart = string | Readonly<{ text: string; href: string; reload?: boolean }> | Readonly<{ code: string }>;
+
+const choice = (text: string, query: string): EditorialPart => ({
+  text,
+  href: `${SITE_ORIGIN}/privacy?${query}#choices`,
+  reload: true,
+});
 
 export const privacyContent: readonly (readonly EditorialPart[])[] = [
-  [`The site sends anonymous, cookieless pageview and page-exit events for public pages to PostHog. Each event contains the normalized public page path, its page category, a site identifier, an analytics schema version, and PostHog's cookieless marker. It also carries the host name of the site that linked to the page, such as google.com, but never the full referring address. It excludes query strings, URL fragments, account data, and user content. The browser does not save an analytics cookie or persistent identifier. Browser and device details support aggregate compatibility checks. Temporary session markers let us measure visits. We also collect page-load performance measurements, missing-page paths and a limited number of errors, with emails, credentials and private URL parameters removed.`],
-  [`The shared footer asks Hraness Accounts whether a consent notice applies in your region. If consent is required or the region cannot be determined, analytics stays off until you accept. Your choice is saved in this browser's local storage. Do Not Track keeps analytics off even after acceptance.`],
-  [`The PostHog integration does not use autocapture, session replay, heatmaps, surveys, feature flags, or user profiles. The site has no local reader accounts or authentication. Requests are still subject to the ordinary logs and security controls of the hosting provider.`],
-  [`The footer offers the general Hraness newsletter. Before submission, it may contact `, { text: `Hraness Accounts`, href: `https://account.hraness.com` }, ` for anonymous form presentation and measurement. These requests send the list choice, language, compact or wide viewport category, and presentation version, then an opaque token when the form becomes visible. They omit account credentials and do not send your email address. If you submit the form, your email address, the Hraness list choice, form source, and any presentation token are sent to Accounts. Accounts records dated consent, and Resend sends confirmation and subscribed messages from news.hraness.com. You are not subscribed until you confirm. Each newsletter message has a Hraness-specific unsubscribe link that does not change another product subscription. Optional paid support opens Accounts separately, where you review the plan and price before confirming payment.`],
-  [`This general newsletter signup does not create new Stripe History mailing consent. If you subscribed through the earlier Stripe History form, Hraness Accounts retains that dated record. A previously confirmed membership may remain active, and Hraness Accounts may continue to process it and deliver Stripe History newsletter messages through Resend from news.hraness.com until you use its Stripe-History-specific unsubscribe link. That link does not change another product or general Hraness subscription. Removing the earlier form does not delete, cancel, or migrate that record.`],
-  [`${site.name} does not sell personal data, does not run advertising pixels, and does not keep a reader profile. Appearance preferences stay in the browser. Machine-readable copies of the public pages are available as Markdown when a client sends `, { code: `Accept: text/markdown` }, `, and the authored YAML records remain downloadable from the `, { text: `dataset index`, href: `${SITE_ORIGIN}/data` }, `.`],
+  [`${site.name} counts visits with PostHog so we can see which pages people read. PostHog stores the counts in the United States and acts for Hraness as a processor. The counting code is served from hraness.com, and the counts pass through hraness.com on their way to PostHog, so no other site's code runs on these pages. This site and hraness.com share one setup, so a choice you make on either applies to both.`],
+  [`We record the page you opened, the site that linked you here (its address only, never the page), a link label if the link had one (such as `, { code: "?ref=hn" }, `), your browser and screen size, your country and city as PostHog estimates them from your IP address, how fast the page loaded, missing pages, and errors in our code. Where the rules below allow it, we also record clicks on links and buttons, click and scroll heatmaps, and recordings of how you move through the pages. Recordings never include what you type: every input is masked.`],
+  [`So that a return visit counts as the same visitor, the site keeps a random identifier in a first-party cookie, `, { code: "hraness-id" }, `, for 13 months, renewed on each visit, and keeps how you first arrived in your browser's storage. Your answer to the consent question is kept in `, { code: "hraness-choice" }, ` for 13 months.`],
+  [`Your region comes from your country as hraness.com sees it, or from your time zone when the country is unknown. In the European Union and European Economic Area, and when the region cannot be told, your visit is counted without a cookie or anything stored on your device, and without clicks, heatmaps, or recordings, until you answer yes to the banner. In the United Kingdom, Switzerland, and Brazil, the identifier, clicks, and heatmaps are on, and the banner asks before any recording. In the United States and everywhere else, the identifier, clicks, heatmaps, and recordings are on, and you can turn them off below. Global Privacy Control turns off recordings in every region and changes nothing else. The site does not respond to Do Not Track, which has no agreed meaning.`],
+  [choice("Turn off recordings", "ads=off"), ` in this browser. `, choice("Turn off analytics", "analytics=off"), ` in this browser: the cookie and stored arrival are deleted, and visits are still counted without them. `, choice("Turn analytics back on", "analytics=on"), `, or `, choice("allow recordings", "ads=on"), `. Each choice is kept for 13 months in this browser only. The Your Privacy Choices link in the footer of every page turns off recordings at once.`],
+  [`Events are kept for PostHog's plan default, up to seven years. Recordings are kept for 30 days. Vercel, which serves the site, sees your IP address and the page requested, and keeps request logs for a limited time under its own policy.`],
+  [`${site.name} no longer offers a mailing signup. If you subscribed through the earlier Stripe History form, Hraness Accounts retains that dated record. A previously confirmed membership may remain active, and Hraness Accounts may continue to process it and deliver Stripe History newsletter messages through Resend from news.hraness.com until you use its Stripe-History-specific unsubscribe link. That link does not change another product or general Hraness subscription. Removing the earlier form does not delete, cancel, or migrate that record.`],
+  [`${site.name} does not sell or share what it counts, does not run ads or advertising pixels, and does not ask for your name. Events never carry what you type. Appearance preferences stay in the browser. Machine-readable copies of the public pages are available as Markdown when a client sends `, { code: `Accept: text/markdown` }, `, and the authored YAML records remain downloadable from the `, { text: `dataset index`, href: `${SITE_ORIGIN}/data` }, `.`],
   [`Questions about this policy belong on the `, { text: `contact page`, href: `${SITE_ORIGIN}/contact` }, ` or in the `, { text: `Stripe History repository`, href: `${GITHUB_REPOSITORY_URL}` }, `. The broader sourcing and independence statement lives on the `, { text: `about page`, href: `${SITE_ORIGIN}/about` }, `.`],
 ];
 
@@ -177,10 +176,13 @@ export function editorialMarkdown(parts: readonly EditorialPart[]): string {
 
 export const privacyParagraphs = privacyContent.map(editorialMarkdown);
 
+/** The privacy page's paragraph that holds the choice links, under the "Your Privacy Choices" heading. */
+export const PRIVACY_CHOICES_PARAGRAPH = 4;
+
 export const privacySummary: readonly EditorialPart[] = [
-  "The site uses PostHog for visits, selected browser details, performance, and errors. The ",
+  "The site uses PostHog to count visits, with rules that depend on your region. The ",
   { text: "privacy policy", href: absoluteSiteUrl("/privacy") },
-  " explains analytics preferences, newsletter signup, optional support, and historical mailing consent.",
+  " explains what is recorded, your privacy choices, and historical mailing consent.",
 ];
 
 
@@ -188,7 +190,7 @@ export const contactParagraphs = [
   `Send corrections, missing events, or better sources through the [Stripe History issue tracker](${GITHUB_REPOSITORY_URL}/issues). Include the affected entry, the proposed correction, and a supporting source.`,
   `Report suspected vulnerabilities through [GitHub's private vulnerability reporting](${GITHUB_REPOSITORY_URL}/security/advisories/new). Keep sensitive details out of public issues.`,
   `Published by [Hraness](${HRANESS_URL}). ${independenceSentence}`,
-  `Read [about](${SITE_ORIGIN}/about) for the editorial method and [privacy](${SITE_ORIGIN}/privacy) for analytics, newsletter signup, optional support, and historical mailing consent.`,
+  `Read [about](${SITE_ORIGIN}/about) for the editorial method and [privacy](${SITE_ORIGIN}/privacy) for analytics and historical mailing consent.`,
 ] as const;
 
 export const dataIntro =

@@ -84,7 +84,7 @@ export default async function ValuationPage() {
             },
           ),
           breadcrumbJsonLd([
-            { name: "History", path: "/" },
+            { name: "Stripe History", path: "/" },
             { name: "Valuation", path: "/history/valuation" },
           ]),
         ]}
@@ -94,7 +94,7 @@ export default async function ValuationPage() {
         className="stripe-history-page stripe-history-main stripe-history-history-main"
         id="main-content"
       >
-        <SiteHeader />
+        <SiteHeader valuationSelected askAiPath="/history/valuation" />
         <section
           aria-labelledby="valuation-page-heading"
           className="stripe-history-section history-volume-page"
@@ -112,26 +112,26 @@ export default async function ValuationPage() {
             aria-labelledby="valuation-headlines-heading"
             className="history-volume-table-section"
           >
-            <h2 id="valuation-headlines-heading">yearly headlines</h2>
+            <h2 id="valuation-headlines-heading">Yearly headlines</h2>
             <div className="history-volume-table-wrap">
-              <table>
+              <table data-stack="narrow">
                 <thead>
                   <tr>
-                    <th scope="col">year</th>
-                    <th scope="col">valuation</th>
-                    <th scope="col">basis</th>
-                    <th scope="col">status</th>
-                    <th scope="col">sources</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Valuation</th>
+                    <th scope="col">Basis</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Sources</th>
                   </tr>
                 </thead>
                 <tbody>
                   {headlines.map((row) => (
                     <tr id={row.observationId} key={row.observationId}>
                       <th scope="row">{row.calendarYear}</th>
-                      <td>{row.display}</td>
-                      <td>{row.basisLabel}</td>
-                      <td>{row.statusLabel}</td>
-                      <td>
+                      <td data-label="Valuation">{row.display}</td>
+                      <td data-label="Basis">{row.basisLabel}</td>
+                      <td data-label="Status">{row.statusLabel}</td>
+                      <td data-label="Sources">
                         {row.sources.map((source, index) => (
                           <span key={source.id}>
                             {index === 0 ? null : <span aria-hidden="true"> · </span>}
@@ -159,7 +159,7 @@ export default async function ValuationPage() {
             className="history-valuation-chart history-volume-chart"
           >
             <figcaption>
-              <h2 id="valuation-chart-heading">valuation by year</h2>
+              <h2 id="valuation-chart-heading">Valuation by year</h2>
               <p>
                 {seo.yearRange}, nominal USD. One selected observation per year;
                 bars use a linear scale.
@@ -199,7 +199,7 @@ export default async function ValuationPage() {
             aria-labelledby="valuation-observations-heading"
             className="history-valuation-observations history-volume-table-section"
           >
-            <h2 id="valuation-observations-heading">observations and sources</h2>
+            <h2 id="valuation-observations-heading">Observations and sources</h2>
             <ol className="history-valuation-observation-list" role="list">
               {history.valuations.map((observation) => {
                 const tier = valuationTier(observation);
@@ -315,7 +315,7 @@ export default async function ValuationPage() {
             aria-labelledby="valuation-method-heading"
             className="history-volume-method"
           >
-            <h2 id="valuation-method-heading">method</h2>
+            <h2 id="valuation-method-heading">Method</h2>
             <p>
               Each row is a discrete observation, not an interpolated annual
               estimate. The compact chart selects one point per year by a fixed
@@ -343,7 +343,7 @@ export default async function ValuationPage() {
             </p>
           </section>
         </section>
-        <SiteFooter path="/history/valuation" />
+        <SiteFooter />
       </main>
     </>
   );

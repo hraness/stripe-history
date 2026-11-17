@@ -9,15 +9,15 @@ import GlobalError from "./global-error";
 import NotFound from "./not-found";
 
 describe("standalone runtime surfaces", () => {
-  test("loads the privacy-bounded PostHog provider from public environment values", async () => {
+  test("starts the shared Hraness analytics client from the layout without build-time keys", async () => {
     const layoutSource = await readFile(new URL("./layout.tsx", import.meta.url), "utf8");
-    const posthogSource = await readFile(new URL("./posthog.ts", import.meta.url), "utf8");
+    const clientSource = await readFile(new URL("./analytics-client.tsx", import.meta.url), "utf8");
 
-    expect(layoutSource).toContain("PostHogAnalytics");
-    expect(layoutSource).toContain("NEXT_PUBLIC_POSTHOG_KEY");
-    expect(layoutSource).toContain("NEXT_PUBLIC_POSTHOG_HOST");
-    expect(posthogSource).toContain('import("posthog-js")');
-    expect(posthogSource).not.toContain('import posthog from "posthog-js"');
+    expect(layoutSource).toContain("<SiteAnalytics />");
+    expect(layoutSource).not.toContain("NEXT_PUBLIC_POSTHOG");
+    expect(clientSource.startsWith('"use client";')).toBe(true);
+    expect(clientSource).toContain('import("@hraness/analytics/browser")');
+    expect(clientSource).not.toContain('from "@hraness/analytics/browser";\nimport { createAnalytics');
   });
 
   test("renders route and document failures without private telemetry", () => {
@@ -33,10 +33,10 @@ describe("standalone runtime surfaces", () => {
     expect(document).toContain("Stripe History is temporarily unavailable");
     expect(document).toContain('<meta content="light dark" name="color-scheme"/>');
     expect(document).toContain(
-      '<meta content="#ffffff" media="(prefers-color-scheme: light)" name="theme-color"/>',
+      '<meta content="#f4f1ea" media="(prefers-color-scheme: light)" name="theme-color"/>',
     );
     expect(document).toContain(
-      '<meta content="#151515" media="(prefers-color-scheme: dark)" name="theme-color"/>',
+      '<meta content="#141311" media="(prefers-color-scheme: dark)" name="theme-color"/>',
     );
     expect(`${route}${document}`).not.toContain("hraness-design-theme-toggle");
     expect(`${route}${document}`).not.toContain("PostHog");
@@ -59,6 +59,6 @@ describe("standalone runtime surfaces", () => {
     expect(notFound).toContain('href="/contact"');
     expect(notFound).toContain('href="/privacy"');
     expect(notFound.match(/data-presentation="menu"/gu)).toHaveLength(1);
-    expect(notFound).toContain('aria-label="Hraness"');
+    expect(notFound).toContain('aria-label="Stripe History home"');
   });
 });

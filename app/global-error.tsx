@@ -1,23 +1,19 @@
 "use client";
 
-import { getDesignPaletteTheme } from "@hraness/design-kit";
-import {
-  DesignPaletteProvider,
-  ThemeColorSync,
-} from "@hraness/design-kit/react";
+import { siteLegacyStorageKey, siteModeMirrorKey, sitePalettePreference } from "@/support/appearance-config";
+import { designPaletteClassName } from "@/support/hraness/appearance";
+import { DesignPaletteProvider } from "@/support/theme";
 import type { RouteErrorPageProps } from "./error";
-import { ErrorBoundaryAnalytics } from "./posthog-analytics";
 import "@hraness/ui/compiler-foundation.css";
-import "@hraness/design-kit/compiler-foundation.css";
+import "../support/hraness/foundation.css";
 import "@hraness/site-footer/compiler-foundation.css";
 import "./globals.css";
 
-const initialPalette = getDesignPaletteTheme("paper", "light");
 
-export default function GlobalError({ error, reset }: RouteErrorPageProps) {
+export default function GlobalError({ reset }: RouteErrorPageProps) {
   return (
     <html
-      className={initialPalette.className}
+      className={designPaletteClassName}
       data-palette="paper"
       lang="en-US"
       suppressHydrationWarning
@@ -25,24 +21,23 @@ export default function GlobalError({ error, reset }: RouteErrorPageProps) {
       <head>
         <meta content="light dark" name="color-scheme" />
         <meta
-          content="#ffffff"
+          content="#f4f1ea"
           media="(prefers-color-scheme: light)"
           name="theme-color"
         />
         <meta
-          content="#151515"
+          content="#141311"
           media="(prefers-color-scheme: dark)"
           name="theme-color"
         />
       </head>
       <body className="plain-site">
         <DesignPaletteProvider
-          defaultPreference={{ palette: "paper", mode: "system" }}
-          legacyStorageKey="stripe-history-theme-v1"
+          defaultPreference={sitePalettePreference}
+          legacyStorageKey={siteLegacyStorageKey}
+          modeMirrorKey={siteModeMirrorKey}
         >
-          <ThemeColorSync darkColor="#151515" lightColor="#ffffff" />
           <main className="plain-page stripe-history-main stripe-history-state" id="main-content">
-            <ErrorBoundaryAnalytics error={error} />
             <h1>Stripe History is temporarily unavailable</h1>
             <p>The site could not finish loading.</p>
             <button onClick={reset} type="button">Try again</button>

@@ -153,7 +153,7 @@ describe("hraness.com/stripe structured discovery", () => {
       "https://hraness.com/stripe/history/company-milestones#example-event",
     );
     expect(breadcrumbJsonLd([
-      { name: "History", path: "/" },
+      { name: "Stripe History", path: "/" },
       { name: "Company milestones", path: "/history/company-milestones" },
     ]).itemListElement[1]?.item).toBe(
       "https://hraness.com/stripe/history/company-milestones",

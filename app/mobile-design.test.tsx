@@ -27,21 +27,21 @@ function compiledRules(...styles: readonly TimelineRecipe[]): string {
   return rules.filter(([name]) => classes.has(name)).map(([, rule]) => rule.ltr).join("\n");
 }
 
-test("blue plain-site links stay quiet until interaction", () => {
+test("ink plain-site links carry a hairline underline that firms on interaction", () => {
   expect(plainSiteCss).toMatch(
-    /:where\(:is\(\.plain-page, \.stripe-history-page\) a:not\(\.history-filter-link, \.history-year-link, \.history-event-type, \.hraness-marketing-action\), \.plain-footer a\)\s*\{[^}]*color:\s*var\(--plain-link\);[^}]*text-decoration:\s*none;/su,
+    /:where\(:is\(\.plain-page, \.stripe-history-page\) a:not\(\.history-filter-link, \.history-year-link, \.history-event-type, \.hraness-marketing-action\), \.plain-footer a\)\s*\{[^}]*color:\s*var\(--plain-link\);[^}]*text-decoration-line:\s*underline;[^}]*text-decoration-color:\s*var\(--plain-edge, currentColor\);/su,
   );
   expect(plainSiteCss).toMatch(
-    /:is\(\.plain-page, \.stripe-history-page\) a:not\(\.history-filter-link, \.history-year-link, \.history-event-type, \.hraness-marketing-action\):is\(:hover, :focus-visible\)[\s\S]*?\{[^}]*text-decoration:\s*underline;/u,
+    /:is\(\.plain-page, \.stripe-history-page\) a:not\(\.history-filter-link, \.history-year-link, \.history-event-type, \.hraness-marketing-action\):is\(:hover, :focus-visible\)[\s\S]*?\{[^}]*text-decoration-color:\s*currentColor;/u,
   );
 });
 
 test("Ask AI links retain control styling inside plain pages", () => {
   expect(globalsCss).toMatch(
-    /\.stripe-history-ask-ai \[data-slot="ask-ai-about-this-link"\]\s*\{[^}]*color:\s*var\(--ui-muted-foreground\);[^}]*text-decoration:\s*none;/u,
+    /\.stripe-history-ask-ai \[data-slot="ask-ai-about-this-link"\]\s*\{[^}]*border:\s*1px solid var\(--plain-line\);[^}]*border-radius:\s*999px;[^}]*color:\s*var\(--plain-muted\);[^}]*text-decoration:\s*none;/u,
   );
   expect(globalsCss).toMatch(
-    /\.stripe-history-ask-ai \[data-slot="ask-ai-about-this-link"\]:focus-visible\s*\{[^}]*outline:\s*2px solid var\(--ui-ring\);[^}]*outline-offset:\s*2px;[^}]*text-decoration:\s*none;/u,
+    /\.stripe-history-ask-ai \[data-slot="ask-ai-about-this-link"\]:focus-visible\s*\{[^}]*outline:\s*2px solid var\(--plain-focus\);[^}]*outline-offset:\s*2px;[^}]*text-decoration:\s*none;/u,
   );
 });
 
@@ -95,27 +95,28 @@ test("history content focus targets clear the measured sticky stack without movi
   );
 });
 
-test("compiled selected chips retain accent on hover and forced-color focus contrast", () => {
+test("compiled chips stay calm text chips with a soft selected wash and forced-color focus contrast", () => {
   const selected = compiledRules(historyTimelineStyles.filterLink, historyTimelineStyles.filterSelected);
   const unselected = compiledRules(historyTimelineStyles.filterLink);
-  expect(selected).toMatch(/:hover\{background-color:var\(--hraness-site-accent\)/u);
-  expect(selected).not.toContain("background-color:var(--plain-surface)");
+  expect(selected).toContain("background-color:var(--plain-wash)");
+  expect(selected).toContain("color:var(--plain-foreground)");
+  expect(selected).not.toContain("var(--plain-primary)");
+  expect(unselected).toContain("color:var(--plain-muted)");
+  expect(unselected).toContain("border-color:transparent");
   expect(selected).not.toContain("border-color:var(--plain-line-strong)");
   expect(selected).toMatch(/@media\s*\(forced-colors:\s*active\).*:hover\{background-color:Highlight/u);
   expect(selected).toMatch(/@media\s*\(forced-colors:\s*active\).*:focus-visible\{outline-color:HighlightText/u);
   expect(selected).toContain("outline-offset:-4px");
   expect(selected).toContain("box-shadow:none");
-  expect(unselected).toContain("background-color:var(--plain-surface)");
+  expect(unselected).toMatch(/:hover\{background-color:var\(--plain-wash\)/u);
   expect(unselected).toContain("outline-color:Highlight");
   expect(unselected).toContain("--history-category-ink:var(--plain-foreground)");
-  expect(compiledRules(historyTimelineStyles.filterIcon)).toContain("color:var(--history-category-ink)");
-  expect(compiledRules(historyTimelineStyles.filterIcon, historyTimelineStyles.selectedInk)).toContain("color:inherit");
   expect(compiledRules(historyTimelineStyles.filterCount, historyTimelineStyles.selectedInk)).not.toContain("color:var(--plain-muted)");
   expect(compiledRules(historyTimelineStyles.filterCount)).toContain("font-variant-numeric:tabular-nums");
   // Keep theme role evaluation on each element with its own closed hue input.
   expect(globalsCss).toContain('.history-filters a:not([data-filter-id="all"])');
-  expect(globalsCss).toContain('--history-category-ink: oklch(0.43 0.14 var(--history-category-hue))');
-  expect(globalsCss).toContain('--history-category-ink: oklch(0.8 0.11 var(--history-category-hue))');
+  expect(globalsCss).toContain('--history-category-ink: oklch(0.46 var(--plain-category-chroma, 0.075) var(--history-category-hue))');
+  expect(globalsCss).toContain('--history-category-ink: oklch(0.8 var(--plain-category-chroma, 0.06) var(--history-category-hue))');
 });
 
 test("compiled timeline retains sticky offsets, desktop ordering, responsive years and coarse links", () => {
@@ -126,14 +127,14 @@ test("compiled timeline retains sticky offsets, desktop ordering, responsive yea
   expect(nav).toContain("z-index:40");
   for (const [side, recipe, color] of [
     ["bottom", historyTimelineStyles.filters, "var(--plain-line)"],
-    ["top", historyTimelineStyles.yearHeading, "var(--plain-line-strong)"],
+    ["top", historyTimelineStyles.yearHeading, "var(--plain-line)"],
   ] as const) {
     const borders = compiledRules(recipe);
     expect(borders).toContain(`border-${side}-width:1px`);
     expect(borders).toContain(`border-${side}-style:solid`);
     expect(borders).toContain(`border-${side}-color:${color}`);
   }
-  expect(compiledRules(historyTimelineStyles.filterLink)).toContain("min-height:max(2rem,var(--plain-link-target-min))");
+  expect(compiledRules(historyTimelineStyles.filterLink)).toContain("min-height:max(2.125rem,var(--plain-link-target-min))");
   expect(nav).toContain("background-color:var(--plain-background)");
   expect(nav).not.toContain("backdrop-filter:");
   const layout = compiledRules(historyTimelineStyles.layout);
@@ -143,18 +144,19 @@ test("compiled timeline retains sticky offsets, desktop ordering, responsive yea
   // The released compiler resolves block-start to top for this horizontal layout.
   expect(compiledRules(historyTimelineStyles.firstYear)).toContain("margin-top:0");
   const later = compiledRules(historyTimelineStyles.subsequentYear);
-  expect(later).toContain("margin-top:2.75rem");
-  expect(later).toMatch(/@media\s*\(max-width:\s*34rem\).*margin-top:2rem/u);
+  expect(later).toContain("margin-top:4rem");
+  expect(later).toMatch(/@media\s*\(max-width:\s*34rem\).*margin-top:2.75rem/u);
   expect(compiledRules(historyTimelineStyles.year)).toContain("scroll-margin-top:calc(var(--history-filter-stack-offset) + 1rem)");
   const title = compiledRules(historyTimelineStyles.yearTitle);
-  expect(title).toContain("font-size:1.25rem");
-  expect(title).toContain("font-weight:500");
+  expect(title).toContain("font-family:var(--font-display)");
+  expect(title).toContain("font-size:2.25rem");
+  expect(title).toContain("font-weight:440");
   expect(title).toContain("line-height:inherit");
   for (const style of [historyTimelineStyles.yearLink, historyTimelineStyles.filterLink]) {
     expect(compiledRules(style)).toMatch(/@media\s*\(pointer:\s*coarse\).*min-height:var\(--plain-link-target-min,48px\)/u);
   }
   expect(compiledRules(historyTimelineStyles.yearLink)).toMatch(/@media\s*\(pointer:\s*coarse\).*display:inline-flex/u);
-  expect(compiledRules(historyTimelineStyles.yearLink)).toContain("outline:1px dotted currentColor");
+  expect(compiledRules(historyTimelineStyles.yearLink)).toContain("outline:2px solid var(--plain-focus)");
   const description = compiledRules(historyTimelineStyles.description);
   expect(description).toMatch(/margin(?:-block|-inline)?[^:]*:0/u);
   expect(description).toMatch(/@media\s*\(max-width:\s*34rem\).*font-size:.875rem/u);
@@ -179,9 +181,9 @@ test("all compiled timeline/filter producers avoid the shared unlayered page opt
     expect(source).toContain('className="stripe-history-page stripe-history-main stripe-history-history-main"');
     expect(source).not.toMatch(/className="[^"]*\bplain-page\b/u);
   }
-  // The real immutable foundation still contains the old rule. Local exclusions
+  // The shared foundation still contains the old rule. Local exclusions
   // alone cannot cancel it while the shared opt-in class remains on an ancestor.
-  const shared = await Bun.file(new URL("../node_modules/@hraness/design-kit/src/plain-site.css", import.meta.url)).text();
+  const shared = await Bun.file(new URL("../support/hraness/plain-site.css", import.meta.url)).text();
   expect(shared).toMatch(/\.plain-page section\s*\{\s*margin-top:\s*2rem;/u);
   expect(shared).not.toContain(".stripe-history-page");
   expect(plainSiteCss).toMatch(/\.stripe-history-page > p\s*\{\s*color: var\(--plain-muted\);\s*margin: 0;/u);
@@ -203,12 +205,13 @@ test("evidence orientation reflows without hiding actions or shrinking touch tar
   );
 });
 
-test("theme control uses the unmodified shared System-first icon menu", () => {
+test("theme control uses the shared Paper, System-first icon menu", () => {
   const html = renderToStaticMarkup(<ThemeMenuButton />);
 
-  expect(html).toContain('data-theme-value="system"');
+  expect(html).toContain('class="hraness-design-theme-toggle hraness-design-palette-menu ');
   expect(html).toContain('data-presentation="menu"');
-  expect(html).toContain('aria-label="Appearance: System"');
+  expect(html).toContain('data-ready="false"');
+  expect(html).toContain('aria-label="Appearance: Paper, System"');
   expect(html).toContain("<svg");
   expect(html).not.toMatch(/[☀☾]/u);
   expect(html).not.toContain("stripe-history-theme-toggle");
@@ -230,8 +233,6 @@ test("site chrome matches the compact sticky Hraness shell and preserves coarse 
   expect(plainSiteCss).toMatch(
     /@media \(pointer: coarse\)\s*\{[^}]*--plain-link-target-min:\s*var\(--interactive-target-min, 48px\);/u,
   );
-  expect(globalsCss).toMatch(
-    /\.stripe-history-main > \.hraness-site-footer\s*\{[^}]*--hraness-site-footer-measure:\s*64rem;[^}]*inline-size:\s*100vw;[^}]*margin-inline:\s*calc\(50% - 50vw\);/u,
-  );
+  expect(globalsCss).not.toContain(".hraness-site-footer");
   expect(globalsCss).not.toContain(".stripe-history-substack");
 });

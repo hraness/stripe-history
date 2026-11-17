@@ -6,6 +6,12 @@ const REPOSITORY = "hraness/stripe-history";
 const BRANCH_PREFIX = "automation/weekly-history/";
 const ACTIONS_APP = 15368;
 const VERCEL_BOT = 35613825;
+/**
+ * Vercel names the GitHub deployment environment "Production" while the
+ * `stripe-history` project is the only Vercel project connected to this
+ * repository, and "Production – stripe-history" once another project shares it.
+ */
+export const PRODUCTION_ENVIRONMENTS: ReadonlySet<string> = new Set(["Production", "Production – stripe-history"]);
 const POLL_MS = 15_000;
 const MAX_RESPONSE_BYTES = 8 * 1024 * 1024;
 const ALLOWED = /^(public\/history\/(origins-and-early-company|executives-and-team|acquisitions|product-launches|country-expansion|payment-and-payout-expansion|fundraising|headquarters-and-offices|publishing|company-milestones)\.yml|public\/research\/(sources|automated-decisions|automated-publications)\.yml)$/;
@@ -182,8 +188,11 @@ class Delivery {
     assert.equal(repository.full_name, REPOSITORY);
     assert.equal(repository.default_branch, "main");
     assert.equal(repository.archived, false);
-    assert.equal(repository.allow_squash_merge, true, "Squash merging is unavailable");
-    assert.equal(object(repository.permissions).push, true, "The job requires repository contents write permission");
+    // GitHub's repository endpoint exposes merge settings only with contents read/write:
+    // https://docs.github.com/en/rest/repos/repos#get-a-repository
+    // The job token's permissions.push projection can still be false or absent,
+    // so it is not evidence; later protected writes still fail closed.
+    assert.equal(repository.allow_squash_merge, true, "Squash merging or repository contents write capability is unavailable");
     const rules = array(this.api("GET", "rules/branches/main"));
     assert.ok(rules.some(rule => rule.type === "pull_request"), "main must require pull requests");
     assert.ok(!rules.some(rule => rule.type === "merge_queue"), "This coordinator does not own a merge queue");
@@ -336,12 +345,13 @@ class Delivery {
   async deployment(commit: string, mergedAt: number): Promise<void> {
     const deployment = await this.poll("wait-production-deployment", () => {
       this.main(commit);
-      const deployments = array(this.api("GET", `deployments?sha=${commit}&environment=Production&per_page=100`));
+      const deployments = array(this.api("GET", `deployments?sha=${commit}&per_page=100`))
+        .filter(value => PRODUCTION_ENVIRONMENTS.has(string(value.environment)));
       assert.ok(deployments.length <= 1, "Ambiguous Production deployment; inspect before recovery");
       if (!deployments[0]) return undefined;
       const value = deployments[0];
       assert.equal(value.sha, commit);
-      assert.equal(value.environment, "Production");
+      assert.ok(PRODUCTION_ENVIRONMENTS.has(string(value.environment)), "Unexpected Production environment");
       assert.equal(object(value.creator).id, VERCEL_BOT);
       assert.equal(object(value.creator).login, "vercel[bot]");
       assert.ok(timestamp(value.created_at) >= mergedAt, "Production deployment predates the merge");

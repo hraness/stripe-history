@@ -1,0 +1,30 @@
+{
+  "formatVersion": 1,
+  "product": "stripe-history",
+  "names": {
+    "name": "Stripe History",
+    "formerly": [
+      "Stripe Guide",
+      "Stripedex"
+    ]
+  },
+  "category": "Independent company history",
+  "tagline": "A sourced history of Stripe",
+  "short": "Independent history of Stripe where every event is dated and sourced",
+  "meta": "Stripe History is an independent record of how Stripe grew. Every event is dated and linked to its sources, and the data downloads as open YAML.",
+  "medium": "Stripe History is an independent record of how Stripe grew, from the Collison brothers' first projects to today. Every event is dated and linked to its sources, and reported deals stay separate from completed ones.",
+  "long": "Stripe is private, so its history arrives in pieces: annual letters, tender offers, press reports, podcasts, and blog posts. Stripe History, built by Hraness, gathers those pieces into one dated record, from Patrick Collison's 2005 Young Scientist win and the 2010 prototype built in Buenos Aires cafes to the $1.9 trillion in total volume Stripe reported for 2025. Every event links to its sources, reported talks stay distinct from completed deals, and each valuation keeps its type. Charts follow volume, revenue, and valuation by year, and the whole record downloads as YAML under the MIT License. It is not affiliated with Stripe, Inc.",
+  "hero": {
+    "heading": "Every event in Stripe's history, dated and sourced.",
+    "summary": "An independent, dated record of how Stripe grew, from the 2010 Buenos Aires prototype to the latest reported volume. Open data throughout.",
+    "primaryAction": "Browse the timeline",
+    "secondaryAction": "Download the data"
+  },
+  "headings": {
+    "record-keeping": "How this record is kept"
+  },
+  "status": {
+    "default": "proposed"
+  },
+  "reviewedOn": "2026-10-06"
+}

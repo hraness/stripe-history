@@ -1,3 +1,4 @@
+import { newestEventDate } from "@/lib/event-page";
 import {
   loadHistory,
   loadResearchRuns,
@@ -37,7 +38,9 @@ export default async function Home() {
     <>
       <JsonLdScript
         data={historyCollectionJsonLd(history.events, {
+          dateModified: newestEventDate(history.events),
           description: site.description,
+          linkEventPages: true,
           path: "/",
           title,
         })}

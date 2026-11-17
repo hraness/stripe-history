@@ -6,6 +6,9 @@ import { AT_A_GLANCE_CAPTION, deriveAtAGlance } from "@/lib/at-a-glance";
 import type { CategorizedHistoryEvent, HistoryCollection } from "@/lib/content";
 import type { LinkedTextPart } from "@/lib/linked-text";
 import { deriveOriginsLead } from "@/lib/origins-lead";
+import { deriveCategoryQuestions } from "@/lib/category-questions";
+import { historyEventPath } from "@/lib/event-page";
+import Link from "next/link";
 import { Fragment } from "react";
 
 import { publicSitePath } from "../site";
@@ -44,7 +47,7 @@ export function AcquisitionsAnswer({
     <div className="history-answer" data-answer="acquisitions">
       <p className="history-answer-lead">{summary.lead}</p>
       <div className="history-answer-table-wrap">
-        <table className="history-answer-table">
+        <table className="history-answer-table" data-stack="narrow">
           <caption>{ACQUISITIONS_TABLE_CAPTION}</caption>
           <thead>
             <tr>
@@ -61,8 +64,8 @@ export function AcquisitionsAnswer({
                   <time dateTime={row.date}>{row.dateLabel}</time>
                 </td>
                 <th scope="row"><a href={`#${row.eventId}`}>{row.deal}</a></th>
-                <td>{row.status}</td>
-                <td>{row.price}</td>
+                <td data-label="Status">{row.status}</td>
+                <td data-label="Price">{row.price}</td>
               </tr>
             ))}
           </tbody>
@@ -92,5 +95,36 @@ export function AtAGlance({
         </tbody>
       </table>
     </div>
+  );
+}
+
+/** "Questions the history answers": short record-derived answers per category. */
+export function CategoryQuestions({
+  category,
+  events,
+}: Readonly<{
+  category: Readonly<{ id: string; label: string }>;
+  events: readonly CategorizedHistoryEvent[];
+}>) {
+  const questions = deriveCategoryQuestions(category, events);
+  if (questions.length === 0) return null;
+  return (
+    <section aria-labelledby="category-questions" className="history-answer history-category-questions" data-answer="questions">
+      <h2 id="category-questions">Questions the history answers</h2>
+      {questions.map((item) => (
+        <div key={item.id}>
+          <h3>{item.question}</h3>
+          <p>
+            {item.event === undefined ? null : (
+              <>
+                <Link href={historyEventPath(item.event.eventId)}>{item.event.title}</Link>
+                {" "}(<time dateTime={item.event.date}>{item.event.dateLabel}</time>){item.id === "newest" ? ". " : " "}
+              </>
+            )}
+            {item.answer}
+          </p>
+        </div>
+      ))}
+    </section>
   );
 }

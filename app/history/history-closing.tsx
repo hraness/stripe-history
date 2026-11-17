@@ -2,8 +2,7 @@ import Link from "next/link";
 import * as stylex from "@stylexjs/stylex";
 import { closingStyles as styles } from "./history-closing.stylex";
 
-import { GITHUB_REPOSITORY_URL, HRANESS_URL, publicSitePath } from "../site";
-import { maintainerSentence } from "../site-copy";
+import { GITHUB_REPOSITORY_URL, publicSitePath } from "../site";
 
 export function HistoryClosing() {
   return (
@@ -70,28 +69,6 @@ export function HistoryClosing() {
               </p>
             </div>
           </details>
-        </div>
-      </section>
-      <section
-        aria-labelledby="history-maker-heading"
-        className={`hraness-marketing-maker stripe-history-maker ${stylex.props(styles.maker).className}`}
-        data-hraness-marketing="maker"
-        id="maker"
-      >
-        <header className={`hraness-marketing-maker__header ${stylex.props(styles.header).className}`}>
-          <h2 className={`hraness-marketing-maker__heading ${stylex.props(styles.heading).className}`} id="history-maker-heading">Built by Hraness</h2>
-        </header>
-        <div className={`hraness-marketing-maker__body ${stylex.props(styles.body).className}`}>
-          <p {...stylex.props(styles.paragraph)}>
-            We publish Stripe History as an independent record. Every entry,
-            source, and correction lives in a public repository, so anyone can
-            check our work. {maintainerSentence}
-          </p>
-          <ul className={`hraness-marketing-maker__links ${stylex.props(styles.links).className}`}>
-            <li><a href={HRANESS_URL}>hraness.com</a></li>
-            <li><a href="https://x.com/hraness">@hraness</a></li>
-            <li><a href={GITHUB_REPOSITORY_URL}>Source and data on GitHub</a></li>
-          </ul>
         </div>
       </section>
     </>

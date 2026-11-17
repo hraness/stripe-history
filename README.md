@@ -11,9 +11,9 @@
 
 [Stripe History](https://hraness.com/stripe) is an independent record of how Stripe grew, from the Collison brothers' first projects to today. Every event is dated and linked to its sources, and reported deals stay separate from completed ones. It is not affiliated with Stripe, Inc.
 
-The site shows every event on one reverse-chronological timeline and on a page for each category, such as acquisitions, product launches, and fundraising. Separate pages chart Stripe's annual payment and total volume, its revenue, and its private valuation by year. Each event's YAML record keeps its status and any uncertainty, such as whether a deal was reported, announced, or completed.
+The site shows every event on one reverse-chronological timeline, on a page for each category such as acquisitions, product launches, and fundraising, and on its own page at `https://hraness.com/stripe/events/<event-id>`. An event page gives the exact date and how precise it is, the category, confidence, any amount, every source, and earlier, later and related events in the same category. Event IDs never change once published, and every page also answers `Accept: text/markdown` or a `.md` suffix. Separate pages chart Stripe's annual payment and total volume, its revenue, and its private valuation by year. Each event's YAML record keeps its status and any uncertainty, such as whether a deal was reported, announced, or completed.
 
-The homepage's “How this record is kept” panel shows how many events, sources, and source links the timeline has, and the date of the newest entry. It links to the [method and limits](https://hraness.com/stripe/about#sources-and-review), the [YAML downloads](https://hraness.com/stripe/data), and [how to report a correction](https://hraness.com/stripe/contact#corrections-and-sources).
+The homepage opens with a plain title, a one-line description, the disclosure lines, and a short “Stripe at a glance” table, then the timeline. The [method and limits](https://hraness.com/stripe/about#sources-and-review), the [YAML downloads](https://hraness.com/stripe/data), and [how to report a correction](https://hraness.com/stripe/contact#corrections-and-sources) live on their own pages.
 
 ## Browse the history
 
@@ -89,36 +89,22 @@ bun install --frozen-lockfile --ignore-scripts
 bun run dev
 ```
 
-Copy `.env.example` to the ignored `.env.local` file only when configuring the
-optional Production analytics values.
+Analytics uses the shared `@hraness/analytics` client, configured in
+`app/analytics.ts` exactly as hraness.com configures its own pages: PostHog
+project 543691 through hraness.com's same-origin `/ph` proxy, the region answer
+from hraness.com's `/api/region`, and one shared `hraness-*` consent cookie for
+the whole host. Visitors in the EU are counted without cookies until they say
+yes; the UK, Switzerland, Brazil, the US and elsewhere are on by default. Global
+Privacy Control turns off session recordings. Every page links to "Your Privacy
+Choices". The site needs no environment variables for analytics, runs no ads,
+and sends events only from hraness.com.
 
-Optional analytics uses `@hraness/posthog` for public `/stripe` routes only.
-It preserves the consent gate and referrer-only attribution: campaign parameters,
-search keywords and full referring paths are discarded. Cookieless page views,
-page exits, core web vitals, bounded errors and missing-page events use schema 2.
-Private routes and nonproduction hosts cannot send events, including after
-navigation by an already initialized client. The boundary caps events at 32 KiB;
-errors are limited to 20 per minute and two per fingerprint. The real-SDK
-transport contract is tested in `app/analytics.test.ts`.
-
-Production builds can upload source maps using server-only `POSTHOG_API_KEY`,
-`POSTHOG_PROJECT_ID=543691` and `POSTHOG_UI_HOST=https://us.posthog.com`.
-The key needs only `error_tracking:write` for that project. The shared wrapper
-binds each upload to Vercel's commit SHA and deletes the uploaded map files;
-local, preview and unconfigured builds leave uploads disabled. Never put this
-key in a `NEXT_PUBLIC_` variable or commit an environment file.
-
-Every rendered page carries one shared Hraness footer with the general Hraness
-newsletter, optional paid support, and social links. Before submission, anonymous
-form presentation and measurement requests send Accounts the list choice, language,
-compact or wide viewport category, and presentation version, then an opaque token
-when the form becomes visible. They omit account credentials and email addresses.
-Submitting the newsletter form sends the email address, `hraness` list choice,
-form source, and any presentation token to Accounts,
-which records dated consent. Resend delivers confirmation and subscribed messages
-from `news.hraness.com`; subscription starts only after inbox confirmation.
-Paid support opens Accounts separately for a human to review and confirm.
-No separate Stripe History newsletter is created. Accounts retains earlier
+Every rendered page carries one minimal footer: the record's own links, the
+HRANESS wordmark linking to hraness.com, the independence note, and the shared
+consent note from `@hraness/site-footer/react` (hidden by `app/analytics.css`;
+the analytics banner and Your Privacy Choices are the consent UI). There is no
+mailing signup, support handoff, or social links.
+Accounts retains earlier
 `stripe-history` subscription records and
 continues to honor their audience-specific unsubscribe state. Confirmed earlier
 memberships may remain active, with Resend delivering any later Stripe History
@@ -140,8 +126,8 @@ Outputs and failed-build evidence remain available for inspection after shutdown
 Do not remove a session while its process owns it. Restart the preview session
 after changing dependencies or runner configuration.
 
-The header uses the released compiled design-kit component with native anchors
-and explicit `/stripe` URLs. These header links perform document navigation;
+The header (`app/site-header.tsx`) uses native anchors and explicit `/stripe`
+URLs. These header links perform document navigation;
 they no longer use Next's client navigation or prefetch. Timeline actions retain
 `next/link`, including the rich correction link and semantic review date.
 
@@ -243,16 +229,12 @@ Code and authored history data in this repository are available under the [MIT L
 [![Hraness](./assets/hraness-wordmark-dark.svg#gh-light-mode-only)](https://hraness.com/)
 [![Hraness](./assets/hraness-wordmark-light.svg#gh-dark-mode-only)](https://hraness.com/)
 
-## Shared website copy
+## Website copy
 
-The website imports `portfolio-messaging.generated.json` at build time for its product name, description, hero, and marketing headings. The snapshot records its revision of [the Hraness portfolio](https://hraness.com/portfolio.json), plus canonical facts for related products. Ordinary builds use the checked-in file without a network request.
+The product name, description, hero, and marketing headings live in `app/product-messaging.json`, read through `app/product-messaging.ts`. Edit that file directly, keep `package.json`'s description in step with `meta`, and run `bun run check`. Historical records, research findings, and methodology stay in their own sources.
 
-Change shared copy in the canonical portfolio, refresh the snapshot through the portfolio refresh workflow, review the generated diff, and run `bun run check`. Keep historical records, research findings, and methodology in their repository-owned sources.
+## Appearance and type
 
-From the company repository, include the package projection when refreshing:
+`support/hraness/` holds the palette, type, plain-site, header, and Lantern foundation the site renders, with the self-hosted Nebula Sans and Geist Mono fonts and their licences. It began as a copy of the retired `@hraness/design-kit` v0.36.3 and is maintained here. `support/theme.tsx` and `browser/theme-bootstrap.ts` share one palette controller, so the bootstrap and the appearance menu always agree.
 
-```sh
-bun scripts/sync-product-messaging.ts --product stripe-history --output /path/to/stripe-history/portfolio-messaging.generated.json --package-json /path/to/stripe-history/package.json --write
-```
-
-Replace `--write` with `--check` to verify both files without changing them. During a coordinated unpublished update, add `--portfolio portfolio.public.generated.json` to select the validated local portfolio revision. Package description derives from canonical `messaging.meta`; package identity, version, and other fields stay intact.
+The appearance menu, the last control in the header, offers the Catppuccin, Gruvbox, Rosé Pine, Tokyo Night, and Paper palettes, each in Light, Dark, or System mode. Paper, the default, uses the site's own tuned colours; each other palette recolours the whole page. The choice stays in the browser. hraness.com is served from the same origin and reads the same two keys: `hraness-design-palette-v1` holds the palette and mode, and `hraness-theme` holds the mode alone when it is Light or Dark. A light or dark choice saved under `stripe-history-theme-v1` before palettes existed applies until a newer choice is saved.

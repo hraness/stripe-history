@@ -173,11 +173,52 @@ test("delivers one generated tree through protected PR CI, a matched squash, fre
   expect(fixture.reports.filter(report => (report.operations as Data[]).at(-1)?.state === "intent")).toHaveLength(7);
 });
 
+test("the deployment lookup accepts the project-qualified Production environment and ignores Preview", async () => {
+  const fixture = new Fixture();
+  fixture.override = (_method, path, value) => path.startsWith("deployments?")
+    ? [
+      { id: 79, sha: INTEGRATED, environment: "Preview – stripe-history", creator: { id: 35613825, login: "vercel[bot]" }, created_at: iso() },
+      { ...(value as Data[])[0], environment: "Production – stripe-history" },
+    ]
+    : value;
+  const result = await fixture.deliver();
+  expect(result.state).toBe("complete");
+  expect(result.deployment).toEqual({ id: 80, status: 81, sha: INTEGRATED, url: "https://stripe-history-fixture-hraness.vercel.app/" });
+});
+
 test("preflight performs no writes and no provider or model calls", async () => {
   const fixture = new Fixture();
   expect((await weeklyDelivery("preflight", fixture.environment, fixture.io)).state).toBe("preflight-passed");
   expect(fixture.writes).toHaveLength(0);
   expect(fixture.calls.every(call => ["git", "gh"].includes(call.argv[0]!))).toBe(true);
+});
+
+test.each([
+  ["explicit push false", { push: false }],
+  ["absent permissions", undefined],
+] as const)("preflight accepts job-token merge capability with %s", async (_label, permissions) => {
+  const fixture = new Fixture();
+  fixture.override = (_method, path, value) => {
+    if (path !== "") return value;
+    const repository: Data = { ...(value as Data), permissions };
+    if (permissions === undefined) delete repository.permissions;
+    return repository;
+  };
+  expect((await weeklyDelivery("preflight", fixture.environment, fixture.io)).state).toBe("preflight-passed");
+  expect(fixture.writes).toHaveLength(0);
+});
+
+test.each([
+  ["absent", undefined],
+  ["disabled", false],
+  ["null", null],
+  ["string", "true"],
+] as const)("preflight rejects %s squash capability even when push is true", async (_label, capability) => {
+  const fixture = new Fixture();
+  fixture.override = (_method, path, value) => path === ""
+    ? { ...(value as Data), allow_squash_merge: capability } : value;
+  await expect(weeklyDelivery("preflight", fixture.environment, fixture.io)).rejects.toThrow("contents write capability");
+  expect(fixture.writes).toHaveLength(0);
 });
 
 test.each([

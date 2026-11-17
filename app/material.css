@@ -4,14 +4,15 @@
   --hraness-material-plane: var(--plain-surface);
   --hraness-material-ink: var(--plain-foreground);
   --hraness-material-muted: var(--plain-muted);
-  --hraness-material-focus: var(--plain-link);
+  --hraness-material-focus: var(--plain-focus);
 }
 
 [data-hraness-material="lantern"] .stripe-history-header.hraness-material-chrome {
   --surface: var(--plain-background);
-  --hraness-marketing-header-background: var(--plain-background);
-  --hraness-marketing-header-backdrop: none;
-  border-block-end-color: var(--hraness-material-seam);
+  /* The sticky band is the glass surface; one hairline sits below it. */
+  --hraness-marketing-header-background: var(--plain-glass);
+  --hraness-marketing-header-backdrop: saturate(1.8) blur(20px);
+  border-block-end-color: transparent;
 }
 
 @media (forced-colors: active) {

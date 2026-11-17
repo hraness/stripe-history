@@ -12,7 +12,7 @@ import { ownedBrowserOptions, pinnedBrowserExecutable } from "./pinned-browser.t
 const root = fileURLToPath(new URL("../", import.meta.url));
 const production = process.argv.includes("--production");
 assert.ok(process.argv.slice(2).every(argument => argument === "--production"), "Unknown argument");
-const routes = ["/stripe", "/stripe/data", "/stripe/about", "/stripe/history/valuation", "/stripe/history/payment-volume", "/stripe/history/net-revenue", "/stripe/history/appearances", "/stripe/contact", "/stripe/privacy"];
+const routes = ["/stripe", "/stripe/data", "/stripe/about", "/stripe/history/valuation", "/stripe/history/payment-volume", "/stripe/history/net-revenue", "/stripe/history/appearances", "/stripe/contact", "/stripe/privacy", "/stripe/history/acquisitions", "/stripe/events/origins-stripe-public-launch"];
 const artifacts = resolve(process.env.SITE_BROWSER_ARTIFACTS ?? "/tmp/stripe-history-site-browser");
 await mkdir(artifacts, { recursive: true });
 let origin = "https://hraness.com";
@@ -100,12 +100,16 @@ async function verifyCombination({ width, theme }) {
       await page.locator("img").evaluateAll(images => Promise.all(images.map(image => image.decode())));
       await verifyVisibleCategoryGlyphs(page);
       const state = await page.evaluate(() => {
-        const footer = document.querySelector("#hraness-site-footer");
+        const footer = document.querySelector("#stripe-history-footer");
         return {
           overflow: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) > innerWidth,
           heading: document.querySelector("h1")?.textContent?.trim(),
           theme: document.documentElement.dataset.theme,
-          footerPositions: [footer, footer?.querySelector(".hraness-site-footer__inner")].map(element => element ? getComputedStyle(element).position : null),
+          paletteBackground: getComputedStyle(document.documentElement).getPropertyValue("--hraness-palette-background").trim().toLowerCase(),
+          canvas: getComputedStyle(document.documentElement).backgroundColor,
+          footerPositions: [footer, footer?.querySelector(".stripe-history-footer__links")].map(element => element ? getComputedStyle(element).position : null),
+          askAi: [document.querySelector(".stripe-history-ask-ai")?.getAttribute("aria-label"), document.querySelector(".stripe-history-ask-ai [data-slot='ask-ai-about-this-label']")?.textContent?.trim()],
+          wideTables: [...document.querySelectorAll("table")].filter(table => table.getBoundingClientRect().width > (table.parentElement?.clientWidth ?? innerWidth) + 1).map(table => table.querySelector("caption, th")?.textContent?.trim()),
           smallHeaderTargets: innerWidth > 600 ? [] : [...document.querySelectorAll(".stripe-history-header a, .stripe-history-header button, .stripe-history-header summary")].filter(element => { const box = element.getBoundingClientRect(); return box.width > 0 && box.height > 0 && (box.width < 43.5 || box.height < 43.5); }).map(element => ({ label: element.textContent?.trim() || element.getAttribute("aria-label"), width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height })),
         };
       });
@@ -120,8 +124,13 @@ async function verifyCombination({ width, theme }) {
       assert.equal(state.screenshotWidth, width, `${route}: capture exceeds viewport`);
       assert.ok(state.heading, `${route}: missing heading`);
       assert.equal(state.theme, theme, `${route}: system appearance`);
+      // Paper's tuned product values must outrank the palette system's defaults.
+      assert.equal(state.paletteBackground, theme === "light" ? "#f4f1ea" : "#141311", `${route}: palette background`);
+      assert.equal(state.canvas, theme === "light" ? "rgb(244, 241, 234)" : "rgb(20, 19, 17)", `${route}: page canvas`);
       assert.ok(state.footerPositions.every(position => position === "static" || position === "relative"), `${route}: footer not in normal flow`);
       assert.deepEqual(state.smallHeaderTargets, [], `${route}: phone targets below 44px`);
+      assert.deepEqual(state.askAi, ["Ask AI", "Ask AI"], `${route}: Ask AI row label`);
+      assert.deepEqual(state.wideTables, [], `${route}: tables wider than their column at ${width}`);
       assert.deepEqual(errors, [], `${route}: browser errors; responses >= 400: ${JSON.stringify(failedResponses)}`);
       const links = route === "/stripe/about" ? await verifyPublicationLinks(page, [
         { name: "article", selector: ".stripe-history-about p a[href]:not([href$='/research/sources.yml'])" },
@@ -164,15 +173,36 @@ async function verifyCombination({ width, theme }) {
       }
     }
     const themeMenu = page.locator(".hraness-design-palette-menu");
-    await page.waitForFunction(() => document.querySelector(".hraness-design-palette-menu")?.dataset.ready === "true");
-    await themeMenu.locator(":scope > summary").click();
+    const openThemeMenu = async () => {
+      await page.waitForFunction(() => document.querySelector(".hraness-design-palette-menu")?.dataset.ready === "true");
+      await themeMenu.locator(":scope > summary").click();
+    };
+    await openThemeMenu();
     const targetTheme = theme === "light" ? "dark" : "light";
     await page.getByRole("radio", { name: new RegExp(`^${targetTheme}$`, "iu") }).check();
     await page.waitForFunction(expected => document.documentElement.dataset.theme === expected, targetTheme);
     await page.reload();
     await page.waitForFunction(expected => document.documentElement.dataset.theme === expected, targetTheme);
-    await page.locator("header").getByRole("link", { name: "data", exact: true }).click();
+    // hraness.com serves this site at /stripe and reads the same two keys: the
+    // choice, and the light or dark mode on its own.
+    assert.deepEqual(await page.evaluate(() => {
+      let saved = null;
+      try { saved = JSON.parse(localStorage.getItem("hraness-design-palette-v1") ?? "null"); } catch { /* Reported below. */ }
+      return [saved, localStorage.getItem("hraness-theme")];
+    }), [{ palette: "paper", mode: targetTheme }, targetTheme], "appearance storage shared with hraness.com");
+    // The other palettes paint the whole page, not only the menu and the
+    // browser's theme colour.
+    await openThemeMenu();
+    await page.getByRole("radio", { name: "Gruvbox", exact: true }).check();
+    await page.waitForFunction(() => document.documentElement.dataset.palette === "gruvbox");
+    await page.keyboard.press("Escape");
+    await page.waitForFunction(() => document.querySelector(".hraness-design-palette-menu")?.open === false);
+    const gruvbox = targetTheme === "light" ? "rgb(251, 241, 199)" : "rgb(40, 40, 40)";
+    const paint = () => page.evaluate(() => [document.documentElement, document.body].map(element => getComputedStyle(element).backgroundColor));
+    assert.deepEqual(await paint(), [gruvbox, gruvbox], "Gruvbox canvas and page");
+    await page.locator("header").getByRole("link", { name: "Data", exact: true }).click();
     await page.waitForURL(url => url.pathname === "/stripe/data");
+    assert.deepEqual(await paint(), [gruvbox, gruvbox], "Gruvbox after navigation");
     assert.deepEqual(errors, [], `Browser errors after appearance and navigation; responses >= 400: ${JSON.stringify(failedResponses)}`);
   } finally { await context.close(); }
 }

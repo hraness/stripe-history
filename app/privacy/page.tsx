@@ -1,12 +1,14 @@
 import { JsonLdScript } from "@hraness/web-discovery/json-ld";
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { breadcrumbJsonLd } from "../seo";
 import { EditorialParagraph } from "../editorial-paragraph";
 import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
+import { Fragment } from "react";
+
 import {
+  PRIVACY_CHOICES_PARAGRAPH,
   privacyContent,
   privacyDescription,
   privacySocialTitle,
@@ -32,17 +34,12 @@ export default function PrivacyPage() {
     <main className="plain-page stripe-history-main" id="main-content">
       <JsonLdScript
         data={breadcrumbJsonLd([
-          { name: "History", path: "/" },
+          { name: "Stripe History", path: "/" },
           { name: "Privacy", path: "/privacy" },
         ])}
         id="stripe-history-privacy-structured-data"
       />
-      <SiteHeader />
-      <nav aria-label="Breadcrumb" className="stripe-history-breadcrumbs">
-        <Link href="/">stripe history</Link>
-        <span aria-hidden="true"> / </span>
-        <span>privacy</span>
-      </nav>
+      <SiteHeader askAiPath="/privacy" />
       <section
         aria-labelledby="privacy-heading"
         className="stripe-history-about stripe-history-section"
@@ -50,9 +47,14 @@ export default function PrivacyPage() {
         <div className="stripe-history-section-heading">
           <h1 id="privacy-heading">{privacyTitle}</h1>
         </div>
-        {privacyContent.map((parts, index) => <EditorialParagraph parts={parts} key={index} />)}
+        {privacyContent.map((parts, index) => (
+          <Fragment key={index}>
+            {index === PRIVACY_CHOICES_PARAGRAPH ? <h2 id="choices">Your Privacy Choices</h2> : null}
+            <EditorialParagraph parts={parts} />
+          </Fragment>
+        ))}
       </section>
-      <SiteFooter path="/privacy" />
+      <SiteFooter />
     </main>
   );
 }

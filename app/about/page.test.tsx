@@ -25,9 +25,9 @@ describe("hraness.com/stripe about page", () => {
     expect(html).toContain('<h2 id="other-stripe-references">Other Stripe references</h2>');
     expect(html).toContain('Checked September 28, 2026. <a href="https://en.wikipedia.org/wiki/Stripe,_Inc.">Wikipedia</a> is better for a short overview');
     expect(html).toContain('<a href="https://sacra.com/c/stripe/">Sacra</a> analyze the business, and Sacra publishes revenue estimates.');
-    expect(html).toContain('aria-label="Breadcrumb"');
+    expect(html).not.toContain('aria-label="Breadcrumb"');
     expect(html).toContain("not affiliated with, endorsed by, or operated by");
-    expect(html).toContain("The site uses PostHog for visits, selected browser details, performance, and errors.");
+    expect(html).toContain("The site uses PostHog to count visits, with rules that depend on your region.");
     expect(html).toContain('href="/privacy">privacy policy</a>');
     expect(html).not.toContain("feature flags, performance monitoring, or user profiles");
     expect(html).toContain("the founders&#x27; projects outside Stripe");
@@ -57,8 +57,8 @@ describe("hraness.com/stripe about page", () => {
     expect(html).toContain("href=\"https://stripe.dev/blog\"");
     expect(html).toContain("href=\"https://podcasts.apple.com/us/podcast/cheeky-pint/id1821055332\"");
     expect(html).toContain("does not turn every newsletter essay into its own event");
-    expect(html).toMatch(/aria-current="page" class="hraness-marketing-header__link [^"]+" href="\/stripe\/about">about<\/a>/u);
-    expect(html).toContain('aria-label="Appearance: System"');
+    expect(html).toMatch(/aria-current="page" class="hraness-marketing-header__link [^"]+" href="\/stripe\/about">About<\/a>/u);
+    expect(html).toContain('aria-label="Appearance: Paper, System"');
     expect(html).toContain('href="https://hraness.com/"');
     expect(html).toContain('href="https://github.com/hraness/stripe-history"');
     expect(html).toContain('href="/contact#security"');

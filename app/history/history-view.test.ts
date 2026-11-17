@@ -29,7 +29,7 @@ test("every category and measure filter keeps selection, deselection, hue and co
     expect(attributes).toContain('data-analytics-id="all"');
     expect(attributes).toContain(`class="history-filter-link ${stylex.props(styles.filterLink, styles.filterSelected).className}"`);
     expect(selected![2]).toContain(`class="history-filter-count ${stylex.props(styles.filterCount, styles.selectedInk).className}"`);
-    expect(selected![2]).toContain(`class="stripe-history-icon history-category-icon ${stylex.props(styles.filterIcon, styles.selectedInk).className}"`);
+    expect(selected![2]).not.toContain("history-category-icon");
     if (id === "all") expect(attributes).not.toContain("--history-category-hue");
     else expect(attributes).toContain("selected; activate to show all history");
   }

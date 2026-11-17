@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
-import { loadHistory } from "@/lib/content";
+import { historyEventPath, newestEventDate } from "@/lib/event-page";
+import { loadSiteHistory } from "@/lib/site-history";
 
 import { absoluteSiteUrl } from "./site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const history = await loadHistory();
+  const history = await loadSiteHistory();
 
   return [
     {
@@ -31,8 +32,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: absoluteSiteUrl("/data"),
     },
-    ...history.categories.map(({ id }) => ({
-      url: absoluteSiteUrl(`/history/${id}`),
+    ...history.categories.map(({ id }) => {
+      const lastModified = newestEventDate(history.events.filter(({ categoryId }) => categoryId === id));
+      return {
+        url: absoluteSiteUrl(`/history/${id}`),
+        ...(lastModified === undefined ? {} : { lastModified }),
+      };
+    }),
+    ...history.events.map(({ id }) => ({
+      url: absoluteSiteUrl(historyEventPath(id)),
     })),
   ];
 }

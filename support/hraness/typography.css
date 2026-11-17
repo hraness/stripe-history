@@ -1,0 +1,122 @@
+/* Shared semantic rhythm. The reading scale (sizes, spacing) is consumed by
+ * `.hraness-prose` and the plain-publication article grammar. Site headings
+ * outside those grammars read the same per-level tokens: a heading at level N
+ * takes `--hraness-type-hN-size`, `--hraness-type-hN-font`, and
+ * `--hraness-type-hN-weight` instead of a site-local size and face.
+ *
+ * Legibility rule: the display face (often a condensed serif such as
+ * Instrument Serif) is only used at `--hraness-type-display-min` (1.75rem) or
+ * larger. h1 and h2 are display headings and never scale below that floor;
+ * h3 and h4 use the text face, so a small heading is never set in the display
+ * face. */
+@layer base {
+  :root {
+    /* Shared studio category accents. Text names retain the foreground role. */
+    --hraness-studio-rose: light-dark(#b03a5b, #f39cb5);
+    --hraness-studio-indigo: light-dark(#4a4fbf, #a9adff);
+    --hraness-studio-amber: light-dark(#9a5a00, #f0b659);
+    --hraness-studio-emerald: light-dark(#1d7a55, #71d2a6);
+
+    --hraness-type-reading-size: clamp(1rem, .95rem + .25vw, 1.0625rem);
+    --hraness-type-reading-leading: 1.7;
+    --hraness-type-reading-measure: 70ch;
+    --hraness-type-caption-size: .9375rem;
+    --hraness-type-code-size: .9rem;
+    --hraness-type-heading-leading: 1.2;
+    --hraness-type-display-min: 1.75rem;
+    --hraness-type-h1-size: clamp(2.25rem, 1.8rem + 1.6vw, 3rem);
+    --hraness-type-h2-size: clamp(1.75rem, 1.45rem + .9vw, 2.125rem);
+    --hraness-type-h3-size: clamp(1.25rem, 1.15rem + .4vw, 1.4375rem);
+    --hraness-type-h4-size: 1.0625rem;
+    /* The display face, for h1 and h2 only. */
+    --hraness-type-heading-font: var(--hraness-marketing-display-font, var(--font-heading, var(--font-text, inherit)));
+    --hraness-type-heading-weight: var(--hraness-marketing-display-weight, 600);
+    /* The text face, for h3 and below. */
+    --hraness-type-subheading-font: var(--font-text, inherit);
+    --hraness-type-subheading-weight: 650;
+    --hraness-type-h1-font: var(--hraness-type-heading-font);
+    --hraness-type-h1-weight: var(--hraness-type-heading-weight);
+    --hraness-type-h2-font: var(--hraness-type-heading-font);
+    --hraness-type-h2-weight: var(--hraness-type-heading-weight);
+    --hraness-type-h3-font: var(--hraness-type-subheading-font);
+    --hraness-type-h3-weight: var(--hraness-type-subheading-weight);
+    --hraness-type-h4-font: var(--hraness-type-subheading-font);
+    --hraness-type-h4-weight: var(--hraness-type-subheading-weight);
+    --hraness-type-section-space: clamp(2.75rem, 2rem + 2vw, 4rem);
+    --hraness-type-subsection-space: 2rem;
+  }
+
+  /* Custom properties resolve where they are declared, so a face token set
+   * on :root would keep :root's face inside a scope that changes the display
+   * or text face (the marketing preset, the Paper theme, the serif reading
+   * face). Re-derive the face and weight tokens in those scopes. */
+  :where([data-hraness-marketing-preset], [data-hraness-theme], [data-hraness-reading-face]) {
+    --hraness-type-heading-font: var(--hraness-marketing-display-font, var(--font-heading, var(--font-text, inherit)));
+    --hraness-type-heading-weight: var(--hraness-marketing-display-weight, 600);
+    --hraness-type-subheading-font: var(--font-text, inherit);
+    --hraness-type-h1-font: var(--hraness-type-heading-font);
+    --hraness-type-h1-weight: var(--hraness-type-heading-weight);
+    --hraness-type-h2-font: var(--hraness-type-heading-font);
+    --hraness-type-h2-weight: var(--hraness-type-heading-weight);
+    --hraness-type-h3-font: var(--hraness-type-subheading-font);
+    --hraness-type-h3-weight: var(--hraness-type-subheading-weight);
+    --hraness-type-h4-font: var(--hraness-type-subheading-font);
+    --hraness-type-h4-weight: var(--hraness-type-subheading-weight);
+  }
+}
+
+.hraness-design-text-chrome {
+  background: var(--chrome-text-gradient);
+  background-clip: text;
+  color: var(--chrome-deep);
+  text-shadow: var(--chrome-text-shadow);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .hraness-design-text-chrome {
+    background: none;
+    color: var(--chrome-deep);
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+@media (forced-colors: active) {
+  .hraness-design-text-chrome {
+    background: none;
+    color: CanvasText;
+    text-shadow: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+/* Prose and secondary text actions share a quiet, persistent link affordance. */
+.hraness-text-link,
+.hraness-prose :where(a:not([role="button"], [data-emphasis], [data-foil])),
+:is(.plain-publication__article-body, .plain-publication__sources, .plain-publication__provenance, .hraness-marketing-comparison__note) :where(a:not([role="button"], [data-emphasis], [data-foil])),
+.plain-page :where(p, li, dd, dt, figcaption) a:not([role="button"], [data-emphasis], [data-foil]) {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+@media (forced-colors: none) {
+  .hraness-text-link:is(:hover, :focus-visible),
+  .hraness-prose :where(a:not([role="button"], [data-emphasis], [data-foil])):is(:hover, :focus-visible),
+  :is(.plain-publication__article-body, .plain-publication__sources, .plain-publication__provenance, .hraness-marketing-comparison__note) :where(a:not([role="button"], [data-emphasis], [data-foil])):is(:hover, :focus-visible),
+  .plain-page :where(p, li, dd, dt, figcaption) a:not([role="button"], [data-emphasis], [data-foil]):is(:hover, :focus-visible) {
+    text-decoration-color: currentColor;
+  }
+}
+
+@media (forced-colors: active) {
+  .hraness-text-link,
+  .hraness-prose :where(a:not([role="button"], [data-emphasis], [data-foil])),
+  :is(.plain-publication__article-body, .plain-publication__sources, .plain-publication__provenance, .hraness-marketing-comparison__note) :where(a:not([role="button"], [data-emphasis], [data-foil])),
+  .plain-page :where(p, li, dd, dt, figcaption) a:not([role="button"], [data-emphasis], [data-foil]) {
+    text-decoration-color: LinkText;
+  }
+}

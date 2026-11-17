@@ -1,36 +1,192 @@
 @import "../support/styles.css";
 
-/* Shared Hraness language: light paper by default, dark through the
- * appearance control (System follows prefers-color-scheme), hairlines at
- * about 12% ink, and one accent. The accent is a purple near Stripe's,
- * darkened in light mode and lightened in dark mode so text and buttons pass
- * contrast on both grounds. */
-.plain-site {
-  --hraness-site-accent: #5b54f0;
-  --hraness-site-accent-ink: #ffffff;
-  --plain-background: var(--background, #ffffff);
-  --plain-foreground: var(--foreground, #171717);
-  --plain-link: var(--hraness-site-accent);
-  --plain-line: var(--line, color-mix(in oklch, var(--plain-foreground) 12%, transparent));
-  --plain-line-strong: var(--control-border, color-mix(in oklch, var(--plain-foreground) 22%, transparent));
-  --plain-muted: var(--muted, #666666);
-  --plain-surface: var(--surface, #f6f6f7);
+/* The Hraness product family (Yaptake, Sponge, Textmock): linen paper and sumi
+ * ink, hairline rules, Funnel Display headings, and one graphite primary.
+ * Light is the default; the appearance control sets data-theme (with
+ * JavaScript off the page stays light). Category hues stay,
+ * at low chroma, as the only colour on the page. */
+@font-face {
+  font-display: swap;
+  font-family: "Funnel Display";
+  font-weight: 300 700;
+  src: url("/stripe/fonts/FunnelDisplay.a18ddd52.woff2") format("woff2");
 }
 
+/* A metric-matched fallback so the swap does not move lines. */
+@font-face {
+  ascent-override: 92%;
+  descent-override: 23%;
+  font-family: "Funnel Fallback";
+  size-adjust: 97%;
+  src: local("Helvetica Neue"), local("Arial");
+}
+
+:root {
+  --font-display: "Funnel Display", "Funnel Fallback", var(--font-text), sans-serif;
+}
+
+/* The paper palette bridge maps --plain-* from the design palette at
+ * [data-palette][data-palette] specificity, so the product tokens restate
+ * both: the palette roles (read by the appearance menu, Ask AI and footer)
+ * and the plain roles (read by the record). The palette system's own paper
+ * rules (support/hraness/palette-system.css) reach (0,3,0), so these repeat
+ * :root to outrank them. Without a data-theme (JavaScript off) the page is
+ * light. The other palettes paint from their own roles (below). */
+:root:root:root[data-palette="paper"] {
+  color-scheme: light;
+  --hraness-palette-background: #f4f1ea;
+  --hraness-palette-foreground: #2a2925;
+  --hraness-palette-muted: #67645c;
+  --hraness-palette-faint: #67645c;
+  --hraness-palette-grid: #e2ddd2;
+  --hraness-palette-line: #c9c3b6;
+  --hraness-palette-control-border: #8a8378;
+  --hraness-palette-surface: #f9f7f2;
+  --hraness-palette-surface-raised: #fbfaf6;
+  --hraness-palette-surface-hover: #ebe7de;
+  --hraness-palette-card: #f9f7f2;
+  --hraness-palette-card-foreground: #2a2925;
+  --hraness-palette-popover: #fbfaf6;
+  --hraness-palette-popover-foreground: #2a2925;
+  --hraness-palette-primary: #2a2925;
+  --hraness-palette-primary-foreground: #f7f5f0;
+  --hraness-palette-primary-soft: #ebe7de;
+  --hraness-palette-secondary: #ebe7de;
+  --hraness-palette-secondary-foreground: #2a2925;
+  --hraness-palette-accent: #ebe7de;
+  --hraness-palette-accent-foreground: #2a2925;
+  --hraness-palette-focus: #5f6b60;
+  --hraness-palette-inverse: #2a2925;
+  --hraness-palette-inverse-foreground: #f7f5f0;
+}
+
+:root:root:root[data-palette="paper"][data-theme="dark"] {
+  color-scheme: dark;
+  --hraness-palette-background: #141311;
+  --hraness-palette-foreground: #ece8df;
+  --hraness-palette-muted: #a19c91;
+  --hraness-palette-faint: #a19c91;
+  --hraness-palette-grid: #2c2a26;
+  --hraness-palette-line: #47443d;
+  --hraness-palette-control-border: #6b675e;
+  --hraness-palette-surface: #1b1a17;
+  --hraness-palette-surface-raised: #211f1c;
+  --hraness-palette-surface-hover: #26241f;
+  --hraness-palette-card: #1b1a17;
+  --hraness-palette-card-foreground: #ece8df;
+  --hraness-palette-popover: #211f1c;
+  --hraness-palette-popover-foreground: #ece8df;
+  --hraness-palette-primary: #ece8df;
+  --hraness-palette-primary-foreground: #141311;
+  --hraness-palette-primary-soft: #26241f;
+  --hraness-palette-secondary: #26241f;
+  --hraness-palette-secondary-foreground: #ece8df;
+  --hraness-palette-accent: #26241f;
+  --hraness-palette-accent-foreground: #ece8df;
+  --hraness-palette-focus: #b3b8a8;
+  --hraness-palette-inverse: #ece8df;
+  --hraness-palette-inverse-foreground: #141311;
+}
+
+[data-palette][data-palette] .plain-site,
+.plain-site {
+  --hraness-site-accent: #2a2925;
+  --hraness-site-accent-ink: #f7f5f0;
+  --plain-background: #f4f1ea;
+  --plain-foreground: #2a2925;
+  --plain-body: #4b4943;
+  --plain-link: #2a2925;
+  --plain-line: #e2ddd2;
+  --plain-line-strong: #d3cdc0;
+  --plain-edge: #c9c3b6;
+  --plain-muted: #67645c;
+  --plain-surface: #f9f7f2;
+  --plain-wash: #ebe7de;
+  --plain-select: #e3e4d6;
+  --plain-focus: #5f6b60;
+  --plain-primary: #2a2925;
+  --plain-primary-hover: #3d3b36;
+  --plain-on-primary: #f7f5f0;
+  --plain-glass: rgb(244 241 234 / 0.78);
+  --plain-hairline: rgb(42 41 37 / 0.09);
+  --plain-card-edge: rgb(42 41 37 / 0.085);
+  --plain-category-chroma: 0.075;
+}
+
+[data-palette][data-palette][data-theme="dark"] .plain-site,
 :root[data-theme="dark"] .plain-site,
 .plain-site[data-theme="dark"] {
-  --hraness-site-accent: #a9a4ff;
-  --hraness-site-accent-ink: #14123a;
-  --plain-background: var(--background, #151515);
-  --plain-foreground: var(--foreground, #f2f2f2);
-  --plain-line: var(--line, #484848);
-  --plain-line-strong: var(--control-border, #5c5c5c);
-  --plain-muted: var(--muted, #b6b6b6);
-  --plain-surface: var(--surface, #1e1e1f);
+  --hraness-site-accent: #ece8df;
+  --hraness-site-accent-ink: #141311;
+  --plain-background: #141311;
+  --plain-foreground: #ece8df;
+  --plain-body: #cbc6bb;
+  --plain-link: #ece8df;
+  --plain-line: #2c2a26;
+  --plain-line-strong: #3a3732;
+  --plain-edge: #47443d;
+  --plain-muted: #a19c91;
+  --plain-surface: #1b1a17;
+  --plain-wash: #201e1b;
+  --plain-select: #3a3d30;
+  --plain-focus: #b3b8a8;
+  --plain-primary: #ece8df;
+  --plain-primary-hover: #ffffff;
+  --plain-on-primary: #141311;
+  --plain-glass: rgb(20 19 17 / 0.74);
+  --plain-hairline: rgb(236 232 223 / 0.08);
+  --plain-card-edge: rgb(236 232 223 / 0.075);
+  --plain-category-chroma: 0.06;
+}
+
+/* Catppuccin, Gruvbox, Rosé Pine and Tokyo Night paint the page from their
+ * own roles, as on rough.day; Paper keeps its tuned values above. Three
+ * palette attributes and the :not reach (0,5,0), above both Paper blocks. */
+[data-palette][data-palette][data-palette]:not([data-palette="paper"]) .plain-site {
+  --hraness-site-accent: var(--primary);
+  --hraness-site-accent-ink: var(--primary-foreground);
+  --plain-background: var(--background);
+  --plain-foreground: var(--foreground);
+  --plain-body: color-mix(in oklch, var(--foreground) 80%, var(--background));
+  --plain-link: var(--foreground);
+  --plain-line: var(--grid);
+  --plain-line-strong: color-mix(in oklch, var(--line) 55%, var(--grid));
+  --plain-edge: var(--line);
+  --plain-muted: var(--muted);
+  --plain-surface: var(--surface);
+  --plain-wash: var(--surface-hover);
+  --plain-select: var(--accent);
+  --plain-focus: var(--focus);
+  --plain-primary: var(--primary);
+  --plain-primary-hover: color-mix(in oklch, var(--primary) 88%, var(--background));
+  --plain-on-primary: var(--primary-foreground);
+  --plain-glass: color-mix(in srgb, var(--background) 78%, transparent);
+  --plain-hairline: color-mix(in srgb, var(--foreground) 9%, transparent);
+  --plain-card-edge: color-mix(in srgb, var(--foreground) 8.5%, transparent);
+}
+
+/* The canvas behind the page follows; support/plain-site.css pins Paper's at
+ * (0,5,1) in dark. */
+:root:root:root[data-palette]:not([data-palette="paper"]):has(> body.plain-site) {
+  background: var(--background);
+}
+
+.plain-site {
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.plain-site :where(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+.plain-site :where(p) {
+  text-wrap: pretty;
 }
 
 /* The marketing grammar reads the plain-shell palette through these roles.
- * The bindings sit outside the design-kit cascade layers on purpose: the
+ * The bindings sit outside the foundation's cascade layers on purpose: the
  * plain shell is unlayered, so the values must be too. */
 :where(
   .hraness-marketing-header,
@@ -48,7 +204,13 @@
   --hraness-marketing-inverse: var(--plain-foreground);
   --hraness-marketing-inverse-ink: var(--plain-background);
   --hraness-marketing-text-font: var(--font-text);
-  --hraness-marketing-heading-font: var(--font-text);
+  --hraness-marketing-heading-font: var(--font-display);
+  --hraness-marketing-heading-weight: 440;
+  --hraness-marketing-heading-tracking: -0.045em;
+  --hraness-marketing-accent: var(--plain-primary);
+  --hraness-marketing-accent-ink: var(--plain-on-primary);
+  --hraness-marketing-copy-measure: 34rem;
+  --hraness-marketing-prose-measure: 40rem;
   --hraness-marketing-mono-font: var(--font-mono);
   --hraness-marketing-measure: 64rem;
   --hraness-marketing-gutter: var(--plain-shell-gutter);
@@ -89,9 +251,16 @@
   margin-top: 0.5rem;
 }
 
-/* Site header: the grammar's sticky translucent header, broken out of the
- * page measure so its hairline runs edge to edge. */
+/* Site header: the product-family glass bar. The sticky band spans the
+ * viewport with a translucent linen fill and one hairline; the inner row
+ * carries the Funnel Display wordmark, quiet section links, and the single
+ * appearance control. */
 .stripe-history-header {
+  -webkit-backdrop-filter: saturate(1.8) blur(20px);
+  backdrop-filter: saturate(1.8) blur(20px);
+  background: var(--plain-glass);
+  border: 0;
+  box-shadow: inset 0 -1px 0 var(--plain-hairline);
   inline-size: 100vw;
   margin-inline: calc(50% - 50vw);
   position: sticky;
@@ -100,28 +269,38 @@
 }
 
 .stripe-history-header .hraness-marketing-header__inner {
+  background: transparent;
+  margin-inline: auto;
   max-width: 64rem;
   min-block-size: 3.5rem;
   padding-inline: var(--plain-shell-gutter);
 }
 
 .stripe-history-header .hraness-marketing-header__brand {
+  -webkit-text-fill-color: currentColor;
+  background-image: none;
   color: var(--plain-foreground);
-  font-size: 0.95rem;
-  font-weight: 600;
-  gap: 0.4rem;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-size: 1.1875rem;
+  font-weight: 560;
+  gap: 0.5rem;
+  letter-spacing: -0.025em;
   min-height: 2.75rem;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .stripe-history-header .hraness-marketing-header__nav a {
+  align-items: center;
   color: var(--plain-muted);
-  font-size: 0.9rem;
-  font-weight: 500;
+  display: inline-flex;
+  font-size: 0.875rem;
+  font-weight: 450;
   min-block-size: max(2.75rem, var(--plain-link-target-min));
   min-inline-size: 2.75rem;
+  justify-content: center;
   text-decoration: none;
+  transition: color 160ms ease;
 }
 
 .stripe-history-header .hraness-marketing-header__nav a:is(:hover, :focus-visible),
@@ -130,10 +309,63 @@
   text-decoration: none;
 }
 
+.stripe-history-header :is(a, button):focus-visible {
+  border-radius: 0.5rem;
+  outline: 2px solid var(--plain-focus);
+  outline-offset: 2px;
+}
+
+.stripe-history-header .hraness-marketing-header__actions {
+  align-items: center;
+  display: flex;
+  gap: 0.25rem;
+}
+
+/* One quiet way out to the rest of Hraness: muted text, no fill. */
+.stripe-history-header-cta {
+  align-items: center;
+  border-radius: 0.5rem;
+  color: var(--plain-muted);
+  display: inline-flex;
+  font-size: 0.875rem;
+  font-weight: 450;
+  min-block-size: max(2.75rem, var(--plain-link-target-min));
+  min-inline-size: 2.75rem;
+  justify-content: center;
+  padding-inline: 0.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.stripe-history-header-cta:is(:hover, :focus-visible) {
+  color: var(--plain-foreground);
+  text-decoration: none;
+}
+
+@media (forced-colors: active) {
+  .stripe-history-header {
+    backdrop-filter: none;
+    background: Canvas;
+    border-block-end: 1px solid CanvasText;
+    box-shadow: none;
+  }
+
+  .stripe-history-header .hraness-marketing-header__brand {
+    -webkit-text-fill-color: CanvasText;
+    color: CanvasText;
+  }
+}
+
+@media (max-width: 30rem) {
+  .stripe-history-header-cta__wide {
+    display: none;
+  }
+}
+
 .stripe-history-section h2:where(:not(.history-year-title)),
 .history-volume h2 {
   font-size: inherit;
-  font-weight: 600;
+  font-weight: 520;
   line-height: inherit;
   margin: 0;
 }
@@ -159,11 +391,11 @@
 .stripe-history-section-heading h1,
 .stripe-history-section-heading h2 {
   color: var(--plain-foreground);
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
-  font-weight: 500;
-  letter-spacing: -0.012em;
-  line-height: 1.15;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.4vw, 1.875rem);
+  font-weight: 480;
+  letter-spacing: -0.032em;
+  line-height: 1.1;
 }
 
 .stripe-history-breadcrumbs {
@@ -180,9 +412,14 @@
 .stripe-history-about > h2,
 .stripe-history-about-topic {
   border-top: 1px solid var(--plain-line);
-  font-size: 1.05rem;
-  margin-top: 2.25rem;
-  padding-top: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin-top: 3rem;
+  margin-bottom: 0.75rem;
+  padding-top: 1.25rem;
 }
 
 /* A small topic icon sits beside its heading, below the section rule. */
@@ -195,6 +432,8 @@
 
 .stripe-history-about-topic > h2 {
   font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
   margin: 0;
 }
 
@@ -231,10 +470,11 @@
 }
 
 .stripe-history-evidence dd {
-  font-size: 1.25rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
   font-variant-numeric: tabular-nums;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-weight: 450;
+  letter-spacing: -0.03em;
   line-height: 1.25;
   margin-top: 0.15rem;
 }
@@ -342,13 +582,15 @@
 }
 
 .stripe-history-data-read pre {
-  border: 1px solid var(--plain-line);
-  border-radius: var(--radius-xs);
+  background: var(--plain-surface);
+  border: 0;
+  border-radius: 0.75rem;
+  box-shadow: inset 0 0 0 1px var(--plain-card-edge);
   font-family: var(--font-mono);
   font-size: var(--text-label);
   margin: 0.75rem 0 0;
   overflow-x: auto;
-  padding: 0.75rem;
+  padding: 0.875rem 1rem;
 }
 
 .stripe-history-data-read li > p {
@@ -356,14 +598,15 @@
 }
 
 .stripe-history-state button {
-  background: var(--plain-foreground);
-  border: 1px solid var(--plain-foreground);
-  border-radius: var(--radius-xs);
-  color: var(--plain-background);
+  background: var(--plain-primary);
+  border: 0;
+  border-radius: 999px;
+  color: var(--plain-on-primary);
   cursor: pointer;
   font: inherit;
-  min-block-size: 2.75rem;
-  padding-inline: 1rem;
+  font-weight: 600;
+  min-block-size: 2.875rem;
+  padding-inline: 1.375rem;
 }
 
 /* Shared category-role theme boundary. Hue remains an owned closed-category
@@ -372,10 +615,10 @@
 .history-filters a:not([data-filter-id="all"]),
 .history-event,
 .history-volume figure {
-  --history-category-ink: oklch(0.43 0.14 var(--history-category-hue));
-  --history-category-soft: oklch(0.96 0.035 var(--history-category-hue));
-  --history-category-strong: oklch(0.44 0.15 var(--history-category-hue));
-  --history-category-on-strong: oklch(0.99 0.01 var(--history-category-hue));
+  --history-category-ink: oklch(0.46 var(--plain-category-chroma, 0.075) var(--history-category-hue));
+  --history-category-soft: oklch(0.94 0.018 var(--history-category-hue));
+  --history-category-strong: oklch(0.46 var(--plain-category-chroma, 0.075) var(--history-category-hue));
+  --history-category-on-strong: oklch(0.98 0.008 var(--history-category-hue));
 }
 
 :where([data-theme="dark"], .dark) :is(
@@ -383,10 +626,10 @@
   .history-event,
   .history-volume figure
 ) {
-  --history-category-ink: oklch(0.8 0.11 var(--history-category-hue));
-  --history-category-soft: oklch(0.25 0.035 var(--history-category-hue));
-  --history-category-strong: oklch(0.8 0.11 var(--history-category-hue));
-  --history-category-on-strong: oklch(0.16 0.025 var(--history-category-hue));
+  --history-category-ink: oklch(0.8 var(--plain-category-chroma, 0.06) var(--history-category-hue));
+  --history-category-soft: oklch(0.23 0.014 var(--history-category-hue));
+  --history-category-strong: oklch(0.8 var(--plain-category-chroma, 0.06) var(--history-category-hue));
+  --history-category-on-strong: oklch(0.17 0.01 var(--history-category-hue));
 }
 
 .history-category-icon {
@@ -417,11 +660,12 @@
 }
 
 .history-volume figure {
-  background: var(--plain-background);
-  border: 1px solid var(--plain-line);
-  border-radius: 0.5rem;
+  background: var(--plain-surface);
+  border: 1px solid transparent;
+  border-radius: 1.125rem;
+  box-shadow: inset 0 0 0 1px var(--plain-card-edge);
   margin: 0;
-  padding: 0.9rem;
+  padding: 1.125rem 1.125rem 1rem;
 }
 
 .history-volume figure + figure {
@@ -437,7 +681,10 @@
 }
 
 .history-volume figcaption h2 {
-  font-size: 0.95rem;
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 520;
+  letter-spacing: -0.02em;
 }
 
 .history-volume figcaption h2 .history-category-icon {
@@ -506,7 +753,7 @@
 }
 
 .history-volume-track {
-  background: color-mix(in oklch, var(--plain-foreground) 8%, transparent);
+  background: var(--plain-wash);
   border-radius: 999px;
   display: block;
   grid-area: track;
@@ -516,7 +763,7 @@
 }
 
 .history-volume-fill {
-  background: var(--plain-foreground);
+  background: color-mix(in oklch, var(--plain-foreground) 62%, var(--plain-surface));
   block-size: 100%;
   display: block;
 }
@@ -539,7 +786,7 @@
 
 .history-valuation-badge,
 .history-valuation-basis-badge {
-  border: 1px solid var(--plain-line);
+  border: 1px solid var(--plain-edge);
   border-radius: 999px;
   color: var(--plain-foreground);
   display: inline-flex;
@@ -551,9 +798,9 @@
 }
 
 .history-valuation-badge[data-tier="financing-tender"] {
-  background: var(--plain-foreground);
-  border-color: var(--plain-foreground);
-  color: var(--plain-background);
+  background: var(--plain-wash);
+  border-color: var(--plain-edge);
+  color: var(--plain-foreground);
 }
 
 .history-valuation-badge[data-tier="internal-mark"] {
@@ -611,12 +858,12 @@
  * specific than a single class, so these selectors carry the page root. */
 .stripe-history-page .history-page-title,
 .stripe-history-main .stripe-history-section-heading h1 {
-  font-family: var(--font-text);
-  font-size: clamp(1.75rem, 4.5vw, 2.25rem);
-  font-weight: 550;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 6vw, 3.25rem);
+  font-weight: 440;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  margin: clamp(2.5rem, 7vw, 4.5rem) 0 1.25rem;
   max-width: 42rem;
   text-wrap: balance;
 }
@@ -668,7 +915,10 @@
 }
 
 .history-answer-table caption {
-  font-weight: 550;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
   padding-bottom: 0.4rem;
   text-align: left;
 }
@@ -695,17 +945,65 @@
   white-space: nowrap;
 }
 
+/* On phones a wide record table becomes one card per row: the date over the
+ * linked title, then labelled facts. Headers stay available to assistive tech. */
+@media (max-width: 34rem) {
+  table[data-stack="narrow"] thead {
+    block-size: 1px;
+    clip-path: inset(50%);
+    inline-size: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+  }
+
+  table[data-stack="narrow"] tbody tr {
+    border-top: 1px solid var(--plain-line);
+    display: grid;
+    gap: 0.125rem;
+    padding-block: 0.75rem;
+  }
+
+  table[data-stack="narrow"] tbody :is(th, td) {
+    border: 0;
+    display: block;
+    padding: 0;
+  }
+
+  .history-answer-table[data-stack="narrow"] tbody td:first-child {
+    color: var(--plain-muted);
+  }
+
+  .history-volume-table-section table[data-stack="narrow"] tbody td {
+    white-space: normal;
+  }
+
+  table[data-stack="narrow"] tbody th {
+    font-size: 0.9375rem;
+    padding-bottom: 0.125rem;
+  }
+
+  table[data-stack="narrow"] tbody td[data-label]::before {
+    color: var(--plain-muted);
+    content: attr(data-label) ": " / "";
+  }
+}
+
 .history-volume-chart figcaption,
 .history-volume-table-section > h2,
 .history-volume-method > h2 {
-  border-top: 1px solid var(--plain-line-strong);
-  padding-top: 0.6rem;
+  border-top: 1px solid var(--plain-line);
+  padding-top: 1rem;
 }
 
 .history-volume-chart figcaption h2,
 .history-volume-table-section > h2,
 .history-volume-method > h2 {
-  font-size: 1.05rem;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
   margin: 0;
 }
 
@@ -746,7 +1044,7 @@
 }
 
 .history-valuation-chart li > a > .history-valuation-badge[data-tier="financing-tender"] {
-  color: var(--plain-background);
+  color: var(--plain-foreground);
 }
 
 .history-volume-chart li > a > time {
@@ -754,7 +1052,7 @@
 }
 
 .history-volume-chart-track {
-  background: color-mix(in oklch, var(--plain-foreground) 8%, transparent);
+  background: var(--plain-wash);
   border-radius: 999px;
   block-size: 0.5rem;
   display: block;
@@ -764,7 +1062,7 @@
 }
 
 .history-volume-chart-fill {
-  background: var(--plain-foreground);
+  background: color-mix(in oklch, var(--plain-foreground) 62%, var(--plain-surface));
   block-size: 100%;
   display: block;
 }
@@ -801,7 +1099,10 @@
 
 .history-valuation-observation-list h3,
 .history-volume-disclosure-list h3 {
-  font-size: inherit;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
   margin: 0.25rem 0 0;
 }
 
@@ -847,48 +1148,59 @@
   white-space: nowrap;
 }
 
-.stripe-history-ask-ai {
-  margin-top: 3.5rem;
+/* The footer's links and wordmark are quiet text; the record's underlined
+ * link treatment stops at the footer. */
+.stripe-history-footer a {
+  color: var(--plain-muted);
+  text-decoration-line: none;
 }
 
-/* The shared Ask AI row keeps its controls but drops the uppercase-tracked
- * monospace label in favor of the sentence-case text face. */
+.stripe-history-footer a:is(:hover, :focus-visible) {
+  color: var(--plain-foreground);
+  text-decoration-line: underline;
+}
+
+.stripe-history-footer .stripe-history-footer__wordmark:is(:hover, :focus-visible) {
+  text-decoration-line: none;
+}
+
+/* Ask AI sits directly under the header as one compact row of quiet chips,
+ * the same treatment as rough.day. */
+.stripe-history-ask-ai {
+  margin-block: 1rem 0;
+}
+
 .stripe-history-ask-ai [data-slot="ask-ai-about-this-label"] {
   color: var(--plain-muted);
   font-family: var(--font-text);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
 }
 
 .stripe-history-ask-ai [data-slot="ask-ai-about-this-link"] {
-  border-radius: 0.5rem;
-  color: var(--ui-muted-foreground);
+  border: 1px solid var(--plain-line);
+  border-radius: 999px;
+  color: var(--plain-muted);
   font-family: var(--font-text);
-  font-size: 0.85rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   overflow-wrap: normal;
   text-decoration: none;
 }
 
 .stripe-history-ask-ai [data-slot="ask-ai-about-this-link"]:hover {
-  color: var(--ui-foreground);
+  background: var(--plain-wash);
+  color: var(--plain-foreground);
   text-decoration: none;
 }
 
 .stripe-history-ask-ai [data-slot="ask-ai-about-this-link"]:focus-visible {
-  color: var(--ui-foreground);
-  outline: 2px solid var(--ui-ring);
+  color: var(--plain-foreground);
+  outline: 2px solid var(--plain-focus);
   outline-offset: 2px;
   text-decoration: none;
-}
-
-.stripe-history-main > .hraness-site-footer {
-  --hraness-site-footer-measure: 64rem;
-
-  inline-size: 100vw;
-  margin-inline: calc(50% - 50vw);
 }
 
 @media (max-width: 54rem) {
@@ -928,8 +1240,8 @@
 
   .history-measure-controls button {
     align-items: center;
-    background: var(--plain-background);
-    border: 1px solid var(--plain-line);
+    background: transparent;
+    border: 1px solid var(--plain-edge);
     border-radius: 999px;
     color: var(--plain-muted);
     display: inline-flex;
@@ -944,13 +1256,13 @@
   }
 
   .history-measure-controls button[aria-pressed="true"] {
-    background: var(--hraness-site-accent);
-    border-color: var(--hraness-site-accent);
-    color: var(--hraness-site-accent-ink);
+    background: var(--plain-primary);
+    border-color: var(--plain-primary);
+    color: var(--plain-on-primary);
   }
 
   .history-measure-controls button:focus-visible {
-    outline: 2px solid var(--plain-link);
+    outline: 2px solid var(--plain-focus);
     outline-offset: 2px;
   }
 
@@ -1009,11 +1321,9 @@
   .stripe-history-header .hraness-marketing-header__nav {
     flex-wrap: nowrap;
     gap: 0 1.25rem;
-    margin-inline: calc(-1 * var(--plain-shell-gutter));
+    inline-size: 100%;
     overflow-x: auto;
-    padding-inline: var(--plain-shell-gutter);
     scrollbar-width: none;
-    inline-size: calc(100% + 2 * var(--plain-shell-gutter));
   }
 
   .stripe-history-header .hraness-marketing-header__nav::-webkit-scrollbar {
@@ -1108,19 +1418,163 @@
 
 }
 
-/* Decorative topic icons (agent-generated line art, public/icons/). */
-.sh-topic-icon { display: block; flex: none; width: 40px; height: 40px; margin: 0; }
+/* Decorative topic icons (agent-generated line art, public/icons/), quieted
+ * to the ink tone so the page keeps one colour family. */
+.sh-topic-icon { display: block; flex: none; width: 32px; height: 32px; margin: 0; filter: grayscale(1) contrast(0.9); opacity: 0.72; }
+:root[data-theme="dark"] .sh-topic-icon { filter: grayscale(1) invert(0.86); opacity: 0.8; }
 
 /* Shared studio convention for text links; controls retain their own decoration line. */
 a[href] {
-  text-decoration-style: dotted;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.22em;
 }
 /* Let shared system-color rules own high-contrast source and footer links. */
 @media (forced-colors: none) {
   a[href] {
-    text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+    text-decoration-color: color-mix(in srgb, currentColor 55%, transparent);
   }
   a[href]:where(:hover, :focus-visible) { text-decoration-color: currentColor; }
 }
+
+/* Timeline titles link to their event pages without looking like body links. */
+.history-event-title-link {
+  color: inherit;
+}
+
+@media (forced-colors: none) {
+  .history-event-title-link[href] {
+    text-decoration-color: transparent;
+  }
+
+  .history-event-title-link[href]:is(:hover, :focus-visible) {
+    text-decoration-color: currentColor;
+  }
+}
+
+/* One event per page: answer first, then facts, sources, and neighbors. */
+.stripe-history-event-page__article > h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5.5vw, 2.875rem);
+  font-weight: 440;
+  letter-spacing: -0.042em;
+  line-height: 1.04;
+  margin: 0.75rem 0 0;
+  max-width: 40rem;
+  text-wrap: balance;
+}
+
+.stripe-history-event-page__kicker,
+.stripe-history-event-page__muted {
+  color: var(--plain-muted);
+}
+
+.stripe-history-event-page__kicker {
+  font-family: var(--font-heading);
+  font-size: var(--text-caption);
+  margin: 0;
+}
+
+.stripe-history-event-page__answer {
+  color: var(--plain-body);
+  font-size: 1.1875rem;
+  line-height: 1.55;
+  margin-top: 1.25rem;
+  max-width: 38rem;
+}
+
+.stripe-history-event-page__article > h2 {
+  border-top: 1px solid var(--plain-line);
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-top: 1.25rem;
+}
+
+.stripe-history-event-page__facts {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  max-width: 38rem;
+}
+
+.stripe-history-event-page__facts > div {
+  display: grid;
+  gap: 0.15rem 1rem;
+  grid-template-columns: minmax(7rem, 10rem) 1fr;
+}
+
+.stripe-history-event-page__facts dt {
+  color: var(--plain-muted);
+}
+
+.stripe-history-event-page__facts dd {
+  margin: 0;
+}
+
+.stripe-history-event-page__sources,
+.stripe-history-event-page__related {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 40rem;
+  padding-inline-start: 1.25rem;
+}
+
+.stripe-history-event-page__pager {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  max-width: 40rem;
+}
+
+.stripe-history-event-page__pager p {
+  margin: 0;
+}
+
+.stripe-history-event-page__pager,
+.stripe-history-event-page__related,
+.stripe-history-event-page__article > p:not(.stripe-history-event-page__kicker) {
+  margin-block: 1rem 0;
+}
+
+.stripe-history-event-page__newer {
+  text-align: end;
+}
+
+@media (max-width: 30rem) {
+  .stripe-history-event-page__facts > div,
+  .stripe-history-event-page__pager {
+    grid-template-columns: 1fr;
+  }
+
+  .stripe-history-event-page__newer {
+    text-align: start;
+  }
+}
+
+.history-category-questions {
+  max-width: 42rem;
+}
+
+.history-category-questions > h2 {
+  color: var(--plain-foreground);
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.history-category-questions h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1rem 0 0.25rem;
+}
+
+.history-category-questions p {
+  margin: 0;
+}
+

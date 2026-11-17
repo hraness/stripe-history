@@ -65,7 +65,7 @@ export default async function NetRevenuePage() {
             },
           ),
           breadcrumbJsonLd([
-            { name: "History", path: "/" },
+            { name: "Stripe History", path: "/" },
             { name: "Net revenue", path: "/history/net-revenue" },
           ]),
         ]}
@@ -75,7 +75,7 @@ export default async function NetRevenuePage() {
         className="stripe-history-page stripe-history-main stripe-history-history-main"
         id="main-content"
       >
-        <SiteHeader />
+        <SiteHeader askAiPath="/history/net-revenue" />
         <section
           aria-labelledby="net-revenue-page-heading"
           className="stripe-history-section history-volume-page"
@@ -93,26 +93,26 @@ export default async function NetRevenuePage() {
             aria-labelledby="net-revenue-table-heading"
             className="history-volume-table-section"
           >
-            <h2 id="net-revenue-table-heading">yearly disclosures</h2>
+            <h2 id="net-revenue-table-heading">Yearly disclosures</h2>
             <div className="history-volume-table-wrap">
-              <table>
+              <table data-stack="narrow">
                 <thead>
                   <tr>
-                    <th scope="col">year</th>
-                    <th scope="col">amount</th>
-                    <th scope="col">kind</th>
-                    <th scope="col">qualifier</th>
-                    <th scope="col">sources</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Kind</th>
+                    <th scope="col">Qualifier</th>
+                    <th scope="col">Sources</th>
                   </tr>
                 </thead>
                 <tbody>
                   {records.map(({ event, kindLabel, point, qualifierLabel }) => (
                     <tr id={event.id} key={event.id}>
                       <th scope="row">{point.calendarYear}</th>
-                      <td>{point.display}</td>
-                      <td>{kindLabel}</td>
-                      <td>{qualifierLabel}</td>
-                      <td>
+                      <td data-label="Amount">{point.display}</td>
+                      <td data-label="Kind">{kindLabel}</td>
+                      <td data-label="Qualifier">{qualifierLabel}</td>
+                      <td data-label="Sources">
                         {event.sources.map((source, index) => (
                           <span key={source.url}>
                             {index === 0 ? null : <span aria-hidden="true"> · </span>}
@@ -140,7 +140,7 @@ export default async function NetRevenuePage() {
             className="history-volume-chart"
           >
             <figcaption>
-              <h2 id="net-revenue-chart-heading">revenue by year</h2>
+              <h2 id="net-revenue-chart-heading">Revenue by year</h2>
               <p>
                 {seo.yearRange}, nominal USD. One sourced disclosure per year;
                 bars use a linear scale.
@@ -172,7 +172,7 @@ export default async function NetRevenuePage() {
             aria-labelledby="net-revenue-disclosures-heading"
             className="history-volume-disclosures history-volume-table-section"
           >
-            <h2 id="net-revenue-disclosures-heading">disclosures and sources</h2>
+            <h2 id="net-revenue-disclosures-heading">Disclosures and sources</h2>
             <ol className="history-volume-disclosure-list" role="list">
               {disclosures.map(({ event, kindLabel, point, qualifierLabel }) => {
                 const categoryLabel = event.categoryLabel.toLocaleLowerCase("en-US");
@@ -268,7 +268,7 @@ export default async function NetRevenuePage() {
             aria-labelledby="net-revenue-method-heading"
             className="history-volume-method"
           >
-            <h2 id="net-revenue-method-heading">method</h2>
+            <h2 id="net-revenue-method-heading">Method</h2>
             <p>{seo.method}</p>
             <p>
               Annual payment and total volume remain on the{" "}
@@ -278,7 +278,7 @@ export default async function NetRevenuePage() {
             </p>
           </section>
         </section>
-        <SiteFooter path="/history/net-revenue" />
+        <SiteFooter />
       </main>
     </>
   );
