@@ -6,12 +6,12 @@ import { previewSourceInventory } from "./compiled-preview-snapshot";
 import { stylexOptions } from "../stylex-config";
 
 const sha = (bytes: Uint8Array | string) => createHash("sha256").update(bytes).digest("hex");
-const patchPath = "patches/next@16.3.3.patch";
+const patchPath = "patches/next@16.4.6.patch";
 const originalStatement = "res.setHeader('Vary', varyHeader);";
 const patchedStatement = "res.appendHeader('Vary', varyHeader);";
 const templates = [
-  { path: "dist/build/templates/app-page-runtime.js", before: "379ec94e6493f454cf8f21ead0bf43f366f911ba9f25b5e12e4fde0401dcca6e", after: "a408052bc3b76041c6e2664827f8f3fd35d470007a74d0f51327899f1817dc55", map: "56bfa27a88d9ad9a78da1b09d68a851e8898e1fe86f80f84d5cf01403063d840" },
-  { path: "dist/esm/build/templates/app-page-runtime.js", before: "3d3338d5bbd34a298d14026b385ac782153ef36a5068849bdac96beff0fc4a29", after: "1293c2743fd57a0c50c1223f3f01109ff6e75c6d739d7911d545abbc26506f82", map: "3102b2e451dc90bec43eb47218297e0d5ea81497ac3e084e609de81cd1fa28e5" },
+  { path: "dist/build/templates/app-page-runtime.js", before: "5311e1a3e0dc044295cc4632c0be3458f1f1297a53f248d0f2663d6b5bc941f6", after: "bf0ce002bc7dbe88247312e3102ff6df2e49080c71f7e4f15f3e6a4c489a4814", map: "30a948e89c4dd390289ea6d112a45a0da84d626388d1d988ee0ad1182f79a597" },
+  { path: "dist/esm/build/templates/app-page-runtime.js", before: "14b072ec1b786171a30feba857be770a999d3109fb337eaa4991a74885158076", after: "415103946a17ab629f8b7ad23a352d1790601ee4a3561c7ee50ba7bba4bf8fb4", map: "266e2ed1c7a31a2593a538425aa49a2b5f035fde83ea9978170031cececb876b" },
 ] as const;
 const entries = [
   { path: "dist/build/templates/app-page.js", sha256: "91aed782b425996d1baea340a4b2752ca9397c8de19a8a67d36b3b5aa4fecb04", map: "88d12b97f7a80f93aec503d65f7d7a3ea6a991582fddf6c882a5abe4c4d76e24" },
@@ -21,10 +21,10 @@ const entries = [
 test("the exact installed Next patch changes only the two declared template statements", async () => {
   const manifest = JSON.parse(await readFile("package.json", "utf8"));
   const next = JSON.parse(await readFile("node_modules/next/package.json", "utf8"));
-  expect(manifest.dependencies.next).toBe("16.3.3");
-  expect(next.version).toBe("16.3.3");
+  expect(manifest.dependencies.next).toBe("16.4.6");
+  expect(next.version).toBe("16.4.6");
   expect(stylexOptions(process.cwd()).nextVersion).toBe(next.version);
-  expect(manifest.patchedDependencies).toEqual({ "next@16.3.3": patchPath });
+  expect(manifest.patchedDependencies).toEqual({ "next@16.4.6": patchPath });
   const patch = await readFile(patchPath, "utf8");
   expect(patch.split("\n").filter((line) => line.startsWith("diff --git "))).toEqual(templates.map(({ path }) => `diff --git a/${path} b/${path}`));
   expect(patch.split("\n").filter((line) => line.startsWith("+") && !line.startsWith("+++"))).toEqual(templates.map(() => `+            ${patchedStatement}`));

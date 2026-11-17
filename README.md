@@ -82,7 +82,7 @@ Read the full [methodology and independence statement](https://hraness.com/strip
 ## Run locally
 
 Use [Bun 1.3.14](https://bun.sh/) with genuine Node 24 on `PATH`. The compiled
-adapter is pinned to Next 16.3.3 and webpack 5:
+adapter is pinned to Next 16.4.6 and webpack 5:
 
 ```sh
 bun install --frozen-lockfile --ignore-scripts
@@ -151,8 +151,8 @@ Vercel's build adapter can inject a feedback toolbar.
 when that adapter and feature flag are enabled. The generated source passes
 the same receipt and map checks during discovery and delivery.
 
-The exact Next 16.3.3 dependency has a declared Bun patch at
-`patches/next@16.3.3.patch`. Its two app-page runtime templates append the native RSC
+The exact Next 16.4.6 dependency has a declared Bun patch at
+`patches/next@16.4.6.patch`. Its two app-page runtime templates append the native RSC
 `Vary` fields instead of overwriting the product's existing `Vary: Accept`.
 The patch targets production HTML negotiation, not just the development proxy. Bun
 applies the patch during frozen, lifecycle-disabled installation; keep its

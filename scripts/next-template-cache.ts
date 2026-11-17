@@ -5,7 +5,7 @@ import { closeSync, constants, fstatSync, openSync, readFileSync, realpathSync }
 import { join } from "node:path";
 
 const inputs = [
-  "patches/next@16.3.3.patch",
+  "patches/next@16.4.6.patch",
   "node_modules/next/dist/build/templates/app-page.js",
   "node_modules/next/dist/esm/build/templates/app-page.js",
   "node_modules/next/dist/build/templates/app-page-runtime.js",
@@ -49,7 +49,7 @@ function object(value: unknown): Record<string, unknown> {
  * delegates the handler to a shared runtime instead of expanding it inline. */
 export function assertPatchedNextDelivery(root: string, record: DeliveryBuild): void {
   assert.equal(record.state, "complete");
-  assert.equal(record.nextVersion, "16.3.3");
+  assert.equal(record.nextVersion, "16.4.6");
   assert.equal(record.outputDirectory, ".next");
   assert.match(record.attemptId, /^[a-zA-Z0-9_-]{1,128}$/u);
   const identities = record.delivery.filter(({ target }) => target === "node-rsc");
@@ -115,5 +115,5 @@ export function assertPatchedNextDelivery(root: string, record: DeliveryBuild): 
     }
   }
   assert.equal(runtimes.length, 1, "Exactly one reachable native app-page runtime required");
-  assert.equal(sha(runtimes[0]!), "a408052bc3b76041c6e2664827f8f3fd35d470007a74d0f51327899f1817dc55", "Delivery must contain the exact patched Next runtime");
+  assert.equal(sha(runtimes[0]!), "bf0ce002bc7dbe88247312e3102ff6df2e49080c71f7e4f15f3e6a4c489a4814", "Delivery must contain the exact patched Next runtime");
 }

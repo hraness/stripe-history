@@ -12,7 +12,7 @@ const sha = (text: string) => createHash("sha256").update(text).digest("hex");
 const firstId = "11111111-1111-4111-8111-111111111111";
 const failedId = "22222222-2222-4222-8222-222222222222";
 const plan = (id = failedId) => ({ kind: "hraness-stylex-next-attempt", schemaVersion: 2,
-  adapterVersion: STYLEX_NEXT_ADAPTER_VERSION, compilerSha256, nextVersion: "16.3.3",
+  adapterVersion: STYLEX_NEXT_ADAPTER_VERSION, compilerSha256, nextVersion: "16.4.6",
   attemptId: `preview-${id}`, requiredSources: { "node-rsc": ["app/other.ts", recipe] } });
 const receipt = (path = "app/other.ts") => ({ kind: "hraness-stylex-next-module", schemaVersion: 1,
   adapterVersion: STYLEX_NEXT_ADAPTER_VERSION, compilerSha256, attemptId: `preview-${failedId}`,
