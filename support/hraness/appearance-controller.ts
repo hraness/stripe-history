@@ -17,6 +17,17 @@ import { acquireThemeColorMeta } from "./theme-color-meta";
 export interface AppearanceStorage {
   getItem(key: string): string | null;
   setItem(key: string, value: string): void;
+  removeItem(key: string): void;
+}
+
+/** Where a choice is kept. */
+export interface AppearanceStorageKeys {
+  /** The canonical {"palette", "mode"} record. */
+  readonly storageKey: string;
+  /** A light, dark or system mode saved before palettes existed, read only while the canonical key is absent. */
+  readonly legacyStorageKey: string | null;
+  /** Holds the light or dark mode alongside the canonical record, removed for System, for pages that read only the mode. */
+  readonly modeMirrorKey: string | null;
 }
 
 export interface DesignPaletteSnapshot {
@@ -32,6 +43,7 @@ export interface DesignPaletteOptions {
   readonly storage?: AppearanceStorage | null;
   readonly storageKey?: string;
   readonly legacyStorageKey?: string | null;
+  readonly modeMirrorKey?: string | null;
   readonly defaultPreference?: DesignPalettePreference;
   readonly forcedPreference?: ConcreteDesignPalettePreference;
 }
@@ -75,8 +87,45 @@ function readStorage(storage: AppearanceStorage | null, key: string): unknown {
   try { return storage?.getItem(key); } catch { return undefined; }
 }
 
-function writeStorage(storage: AppearanceStorage | null, key: string, preference: DesignPalettePreference): void {
-  try { storage?.setItem(key, JSON.stringify(preference)); } catch { /* Persistence is optional. */ }
+/**
+ * The saved choice, or the fallback. Without a canonical record, a mode saved
+ * before palettes existed keeps the fallback palette. A record equal to the
+ * fallback cannot be told apart from the default this controller saves on a
+ * first visit, so a light or dark mode chosen on a page that keeps only the
+ * mirror key wins over it.
+ */
+export function readAppearancePreference(
+  storage: AppearanceStorage | null,
+  keys: AppearanceStorageKeys,
+  fallback: DesignPalettePreference,
+): DesignPalettePreference {
+  const raw = readStorage(storage, keys.storageKey);
+  let preference = parseDesignPalettePreference(raw);
+  if (preference === null && (raw === null || raw === undefined) && keys.legacyStorageKey !== null) {
+    const legacy = readStorage(storage, keys.legacyStorageKey);
+    if (isDesignTheme(legacy)) preference = Object.freeze({ palette: fallback.palette, mode: legacy });
+  }
+  preference ??= fallback;
+  if (keys.modeMirrorKey !== null && preference.palette === fallback.palette && preference.mode === fallback.mode) {
+    const mirrored = readStorage(storage, keys.modeMirrorKey);
+    if (mirrored === "light" || mirrored === "dark") return Object.freeze({ palette: fallback.palette, mode: mirrored });
+  }
+  return preference;
+}
+
+/** Saves the choice and keeps the mirror in step: light or dark, removed for System. */
+export function writeAppearancePreference(
+  storage: AppearanceStorage | null,
+  keys: AppearanceStorageKeys,
+  preference: DesignPalettePreference,
+): void {
+  if (storage === null) return;
+  try {
+    storage.setItem(keys.storageKey, JSON.stringify(preference));
+    if (keys.modeMirrorKey === null) return;
+    if (preference.mode === "system") storage.removeItem(keys.modeMirrorKey);
+    else storage.setItem(keys.modeMirrorKey, preference.mode);
+  } catch { /* Persistence is optional. */ }
 }
 
 /** Installs palette selection explicitly; it never injects scripts or inline styles. */
@@ -88,13 +137,17 @@ export function initDesignPalette(options: DesignPaletteOptions = {}): DesignPal
   const view = document.defaultView;
   const storageKey = options.storageKey ?? designPaletteStorageKey;
   const legacyStorageKey = options.legacyStorageKey === undefined ? designThemeStorageKey : options.legacyStorageKey;
-  if (storageKey.trim() === "" || legacyStorageKey?.trim() === "") throw new Error("Appearance storage keys must not be blank.");
+  const modeMirrorKey = options.modeMirrorKey ?? null;
+  if (storageKey.trim() === "" || legacyStorageKey?.trim() === "" || modeMirrorKey?.trim() === "") {
+    throw new Error("Appearance storage keys must not be blank.");
+  }
+  const keys: AppearanceStorageKeys = { storageKey, legacyStorageKey, modeMirrorKey };
   const fallback = parseDesignPalettePreference(options.defaultPreference) ?? defaultPreference;
   const forced = options.forcedPreference === undefined ? null : parseDesignPalettePreference(options.forcedPreference);
   if (options.forcedPreference !== undefined && (forced === null || forced.mode === "system")) {
     throw new Error("A forced palette requires a valid palette and a light or dark mode.");
   }
-  const configuration = JSON.stringify({ storageKey, legacyStorageKey, fallback, forced });
+  const configuration = JSON.stringify({ storageKey, legacyStorageKey, modeMirrorKey, fallback, forced });
   const ownerDocument = document as PaletteDocument;
   const previous = ownerDocument[installationKey];
   if (previous !== undefined) {
@@ -111,17 +164,7 @@ export function initDesignPalette(options: DesignPaletteOptions = {}): DesignPal
   }
   let media: MediaQueryList | null = null;
   try { media = view?.matchMedia?.(darkQuery) ?? null; } catch { /* Explicit modes remain available. */ }
-  const readPreference = (): DesignPalettePreference => {
-    if (forced !== null) return forced;
-    const raw = readStorage(storage, storageKey);
-    const saved = parseDesignPalettePreference(raw);
-    if (saved !== null) return saved;
-    if ((raw === null || raw === undefined) && legacyStorageKey !== null) {
-      const legacy = readStorage(storage, legacyStorageKey);
-      if (isDesignTheme(legacy)) return Object.freeze({ palette: fallback.palette, mode: legacy });
-    }
-    return fallback;
-  };
+  const readPreference = (): DesignPalettePreference => forced ?? readAppearancePreference(storage, keys, fallback);
   let snapshot = designPaletteSnapshot(readPreference(), media?.matches ?? false, forced !== null);
   const listeners = new Set<() => void>();
   const themeColor = acquireThemeColorMeta(document, "theme-color", Symbol("palette-theme-color"), snapshot.background);
@@ -144,13 +187,20 @@ export function initDesignPalette(options: DesignPaletteOptions = {}): DesignPal
   };
   const onMedia = (): void => { update(snapshot.preference); };
   const onStorage = (event: StorageEvent): void => {
-    if (forced !== null || (event.key !== storageKey && event.key !== null)) return;
+    if (forced !== null) return;
+    if (event.key !== null && event.key !== storageKey && event.key !== modeMirrorKey) return;
     if (usesDefaultStorage && event.storageArea !== null && event.storageArea !== undefined && event.storageArea !== storage) return;
     update(readPreference());
   };
+  // A page restored from the back-forward cache missed choices made meanwhile,
+  // for example on hraness.com after following the header's link there.
+  const onPageShow = (event: PageTransitionEvent): void => {
+    if (event.persisted) update(readPreference());
+  };
   if (forced === null) {
-    writeStorage(storage, storageKey, snapshot.preference);
+    writeAppearancePreference(storage, keys, snapshot.preference);
     view?.addEventListener("storage", onStorage);
+    view?.addEventListener("pageshow", onPageShow);
     media?.addEventListener("change", onMedia);
   }
   let owners = 0;
@@ -177,7 +227,7 @@ export function initDesignPalette(options: DesignPaletteOptions = {}): DesignPal
           if (disposed || forced !== null) return false;
           const preference = parseDesignPalettePreference(value);
           if (preference === null) throw new Error("Choose a supported palette and appearance mode.");
-          writeStorage(storage, storageKey, preference);
+          writeAppearancePreference(storage, keys, preference);
           return update(preference);
         },
         dispose: () => {
@@ -188,6 +238,7 @@ export function initDesignPalette(options: DesignPaletteOptions = {}): DesignPal
           owners -= 1;
           if (owners !== 0) return;
           view?.removeEventListener("storage", onStorage);
+          view?.removeEventListener("pageshow", onPageShow);
           media?.removeEventListener("change", onMedia);
           themeColor.release();
           if (ownerDocument[installationKey] === installation) Reflect.deleteProperty(ownerDocument, installationKey);

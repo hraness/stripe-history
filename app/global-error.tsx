@@ -1,6 +1,6 @@
 "use client";
 
-import { siteLegacyStorageKey, sitePalettePreference } from "@/support/appearance-config";
+import { siteLegacyStorageKey, siteModeMirrorKey, sitePalettePreference } from "@/support/appearance-config";
 import { designPaletteClassName } from "@/support/hraness/appearance";
 import { DesignPaletteProvider } from "@/support/theme";
 import type { RouteErrorPageProps } from "./error";
@@ -35,6 +35,7 @@ export default function GlobalError({ reset }: RouteErrorPageProps) {
         <DesignPaletteProvider
           defaultPreference={sitePalettePreference}
           legacyStorageKey={siteLegacyStorageKey}
+          modeMirrorKey={siteModeMirrorKey}
         >
           <main className="plain-page stripe-history-main stripe-history-state" id="main-content">
             <h1>Stripe History is temporarily unavailable</h1>

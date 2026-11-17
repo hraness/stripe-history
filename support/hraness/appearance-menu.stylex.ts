@@ -2,7 +2,10 @@ import * as stylex from "@stylexjs/stylex";
 
 const forcedColors = "@media (forced-colors: active)";
 const reducedMotion = "@media (prefers-reduced-motion: reduce)";
-const pressed = ":is([data-pressed], :active)";
+// The palette's hover wash, and ink in place of the muted icon, as on rough.day
+// and hraness.com.
+const triggerWash = "var(--surface-hover, ButtonFace)";
+const triggerInk = "var(--hraness-material-ink, var(--foreground, CanvasText))";
 
 export const paletteMenuStyles = stylex.create({
   icon: {
@@ -16,45 +19,52 @@ export const paletteMenuStyles = stylex.create({
     position: "relative",
     "min-inline-size": 0,
   },
+  // A borderless round icon button, the same as rough.day's and hraness.com's:
+  // 44px, or 48px on touch screens. The transparent border shows in forced
+  // colors. Lantern tokens exist only inside a data-hraness-material="lantern"
+  // island, so each chain falls through to the palette outside one.
   trigger: {
     alignItems: "center",
-    // Lantern tokens exist only inside a data-hraness-material="lantern"
-    // island, so each chain falls through to the palette outside one.
-    backgroundColor: "var(--hraness-material-plane, var(--background, Canvas))",
+    backgroundColor: {
+      default: "transparent",
+      ":hover": triggerWash,
+    },
     borderColor: {
-      default: "var(--hraness-material-seam, var(--control-border, GrayText))",
+      default: "transparent",
       [forcedColors]: "CanvasText",
     },
-    borderRadius: "var(--radius-md, 0.5rem)",
+    borderRadius: 999,
     borderStyle: "solid",
     borderWidth: 1,
-    boxShadow: {
-      default: "var(--hraness-material-raised, none)",
-      [pressed]: "var(--hraness-material-inset, none)",
-      [forcedColors]: "none",
+    color: {
+      default: "var(--hraness-material-muted, var(--muted, CanvasText))",
+      ":hover": triggerInk,
     },
-    color: "var(--hraness-material-ink, var(--foreground, CanvasText))",
     cursor: "pointer",
     display: "inline-flex",
     justifyContent: "center",
     listStyleType: "none",
-    "min-block-size": "var(--interactive-target-compact, 2.75rem)",
-    "min-inline-size": "var(--interactive-target-compact, 2.75rem)",
+    "min-block-size": "max(2.75rem, var(--interactive-target-compact, 2.75rem))",
+    "min-inline-size": "max(2.75rem, var(--interactive-target-compact, 2.75rem))",
     outlineColor: "var(--hraness-material-focus, var(--focus, Highlight))",
     outlineOffset: 3,
-    paddingBlock: "0.5rem",
-    paddingInline: "0.625rem",
+    paddingBlock: 0,
+    paddingInline: 0,
     transitionDuration: {
-      default: "120ms",
+      default: "140ms",
       [reducedMotion]: "0.01ms",
     },
-    transitionProperty: "box-shadow",
-    transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
+    transitionProperty: "background-color, color",
+    transitionTimingFunction: "ease",
     userSelect: "none",
   },
   triggerDefault: {
     "min-block-size": "var(--interactive-target-min, 3rem)",
     "min-inline-size": "var(--interactive-target-min, 3rem)",
+  },
+  triggerOpen: {
+    backgroundColor: triggerWash,
+    color: triggerInk,
   },
   panel: {
     backgroundColor: "var(--hraness-material-plane, var(--popover, Canvas))",

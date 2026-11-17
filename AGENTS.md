@@ -51,6 +51,7 @@ Stripe History is live at `https://hraness.com/stripe`. It was retired on 2026-1
 - Keep `stripe-history/*` as the stable public schema and prompt-version namespace. Identity changes do not rewrite published data contracts or append-only attestations.
 - Keep history server-rendered, crawlable, and available as reviewable YAML. Preserve durable category, event, annual-volume, valuation, and data URLs.
 - Give every ordinary themed page exactly one shared icon-menu appearance control as the final action in its header. Do not put appearance controls in footers, content, or fallback action rows.
+- Keep appearance storage in step with hraness.com, which shares this origin: `hraness-design-palette-v1` holds `{"palette", "mode"}`, and `hraness-theme` mirrors a light or dark mode and is removed for System. `app/appearance-storage.test.ts` checks both sites read every stored state the same way; change `public/theme.js` in hraness/site in step.
 - Require at least one canonical source ID for every event and valuation observation. Prefer primary evidence, preserve uncertainty, and distinguish proposed, reported, announced, and completed events.
 - Parse every provider response and YAML file from `unknown`. Preserve reverse chronology, globally unique IDs, bounded text, and deterministic source provenance.
 - Keep the site independent of Stripe, Inc. Do not imply endorsement, ownership, or official status.

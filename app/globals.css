@@ -28,9 +28,10 @@
 /* The paper palette bridge maps --plain-* from the design palette at
  * [data-palette][data-palette] specificity, so the product tokens restate
  * both: the palette roles (read by the appearance menu, Ask AI and footer)
- * and the plain roles (read by the record). The design kit's own paper
- * rules (and its compiled html class) reach (0,3,0), so these repeat :root
- * to outrank them. Without a data-theme (JavaScript off) the page is light. */
+ * and the plain roles (read by the record). The palette system's own paper
+ * rules (support/hraness/palette-system.css) reach (0,3,0), so these repeat
+ * :root to outrank them. Without a data-theme (JavaScript off) the page is
+ * light. The other palettes paint from their own roles (below). */
 :root:root:root[data-palette="paper"] {
   color-scheme: light;
   --hraness-palette-background: #f4f1ea;
@@ -136,6 +137,38 @@
   --plain-hairline: rgb(236 232 223 / 0.08);
   --plain-card-edge: rgb(236 232 223 / 0.075);
   --plain-category-chroma: 0.06;
+}
+
+/* Catppuccin, Gruvbox, Rosé Pine and Tokyo Night paint the page from their
+ * own roles, as on rough.day; Paper keeps its tuned values above. Three
+ * palette attributes and the :not reach (0,5,0), above both Paper blocks. */
+[data-palette][data-palette][data-palette]:not([data-palette="paper"]) .plain-site {
+  --hraness-site-accent: var(--primary);
+  --hraness-site-accent-ink: var(--primary-foreground);
+  --plain-background: var(--background);
+  --plain-foreground: var(--foreground);
+  --plain-body: color-mix(in oklch, var(--foreground) 80%, var(--background));
+  --plain-link: var(--foreground);
+  --plain-line: var(--grid);
+  --plain-line-strong: color-mix(in oklch, var(--line) 55%, var(--grid));
+  --plain-edge: var(--line);
+  --plain-muted: var(--muted);
+  --plain-surface: var(--surface);
+  --plain-wash: var(--surface-hover);
+  --plain-select: var(--accent);
+  --plain-focus: var(--focus);
+  --plain-primary: var(--primary);
+  --plain-primary-hover: color-mix(in oklch, var(--primary) 88%, var(--background));
+  --plain-on-primary: var(--primary-foreground);
+  --plain-glass: color-mix(in srgb, var(--background) 78%, transparent);
+  --plain-hairline: color-mix(in srgb, var(--foreground) 9%, transparent);
+  --plain-card-edge: color-mix(in srgb, var(--foreground) 8.5%, transparent);
+}
+
+/* The canvas behind the page follows; support/plain-site.css pins Paper's at
+ * (0,5,1) in dark. */
+:root:root:root[data-palette]:not([data-palette="paper"]):has(> body.plain-site) {
+  background: var(--background);
 }
 
 .plain-site {

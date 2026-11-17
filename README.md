@@ -236,3 +236,5 @@ The product name, description, hero, and marketing headings live in `app/product
 ## Appearance and type
 
 `support/hraness/` holds the palette, type, plain-site, header, and Lantern foundation the site renders, with the self-hosted Nebula Sans and Geist Mono fonts and their licences. It began as a copy of the retired `@hraness/design-kit` v0.36.3 and is maintained here. `support/theme.tsx` and `browser/theme-bootstrap.ts` share one palette controller, so the bootstrap and the appearance menu always agree.
+
+The appearance menu, the last control in the header, offers the Catppuccin, Gruvbox, Rosé Pine, Tokyo Night, and Paper palettes, each in Light, Dark, or System mode. Paper, the default, uses the site's own tuned colours; each other palette recolours the whole page. The choice stays in the browser. hraness.com is served from the same origin and reads the same two keys: `hraness-design-palette-v1` holds the palette and mode, and `hraness-theme` holds the mode alone when it is Light or Dark. A light or dark choice saved under `stripe-history-theme-v1` before palettes existed applies until a newer choice is saved.
