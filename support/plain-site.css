@@ -1,4 +1,4 @@
-:root:has(> body.plain-site) {
+:root:root:root:has(> body.plain-site) {
   background: #f4f1ea;
   overflow-x: clip;
   scrollbar-gutter: stable;
@@ -12,7 +12,7 @@
   --plain-foreground: #2a2925;
   --plain-link: #2a2925;
   --plain-line: #e2ddd2;
-  --plain-muted: #6d6a62;
+  --plain-muted: #67645c;
   --plain-surface: #f9f7f2;
 
   background: var(--plain-background);
@@ -35,7 +35,7 @@ body.plain-site > main {
   flex: 1 0 auto;
 }
 
-:root[data-theme="dark"]:has(> body.plain-site) {
+:root:root:root[data-theme="dark"]:has(> body.plain-site) {
   background: #141311;
 }
 

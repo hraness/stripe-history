@@ -16,6 +16,8 @@ const nextConfig = {
     return [
       { headers: [...SECURITY_HEADERS], source: "/" },
       { headers: [...SECURITY_HEADERS], source: "/:path*" },
+      // Font files carry a content hash in their name.
+      { headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }], source: "/fonts/:file*" },
       { headers: noindexHeaders, source: "/history/:category.yml" },
       { headers: noindexHeaders, source: "/research/:path*" },
       { headers: noindexHeaders, source: "/x-markdown" },

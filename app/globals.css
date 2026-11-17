@@ -28,15 +28,18 @@
 /* The paper palette bridge maps --plain-* from the design palette at
  * [data-palette][data-palette] specificity, so the product tokens restate
  * both: the palette roles (read by the appearance menu, Ask AI and footer)
- * and the plain roles (read by the record). */
-:root[data-palette="paper"] {
+ * and the plain roles (read by the record). The design kit's own paper
+ * rules (and its compiled html class) reach (0,3,0), so these repeat :root
+ * to outrank them. Without a data-theme (JavaScript off) the page is light. */
+:root:root:root[data-palette="paper"] {
+  color-scheme: light;
   --hraness-palette-background: #f4f1ea;
   --hraness-palette-foreground: #2a2925;
-  --hraness-palette-muted: #6d6a62;
-  --hraness-palette-faint: #6d6a62;
+  --hraness-palette-muted: #67645c;
+  --hraness-palette-faint: #67645c;
   --hraness-palette-grid: #e2ddd2;
   --hraness-palette-line: #c9c3b6;
-  --hraness-palette-control-border: #a7a093;
+  --hraness-palette-control-border: #8a8378;
   --hraness-palette-surface: #f9f7f2;
   --hraness-palette-surface-raised: #fbfaf6;
   --hraness-palette-surface-hover: #ebe7de;
@@ -56,7 +59,8 @@
   --hraness-palette-inverse-foreground: #f7f5f0;
 }
 
-:root[data-palette="paper"][data-theme="dark"] {
+:root:root:root[data-palette="paper"][data-theme="dark"] {
+  color-scheme: dark;
   --hraness-palette-background: #141311;
   --hraness-palette-foreground: #ece8df;
   --hraness-palette-muted: #a19c91;
@@ -94,7 +98,7 @@
   --plain-line: #e2ddd2;
   --plain-line-strong: #d3cdc0;
   --plain-edge: #c9c3b6;
-  --plain-muted: #6d6a62;
+  --plain-muted: #67645c;
   --plain-surface: #f9f7f2;
   --plain-wash: #ebe7de;
   --plain-select: #e3e4d6;
@@ -320,7 +324,7 @@
 }
 
 @media (max-width: 30rem) {
-  .stripe-history-header-cta {
+  .stripe-history-header-cta__wide {
     display: none;
   }
 }
@@ -1339,7 +1343,7 @@ a[href] {
 /* Let shared system-color rules own high-contrast source and footer links. */
 @media (forced-colors: none) {
   a[href] {
-    text-decoration-color: color-mix(in srgb, currentColor 32%, transparent);
+    text-decoration-color: color-mix(in srgb, currentColor 55%, transparent);
   }
   a[href]:where(:hover, :focus-visible) { text-decoration-color: currentColor; }
 }
