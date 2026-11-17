@@ -134,7 +134,7 @@ describe("hraness.com/stripe valuation history", () => {
     expect(html).toMatch(/class="hraness-marketing-header [^"]*\bstripe-history-header\b[^"]*"/u);
     expect(html).toMatch(/href="\/stripe\/about"[^>]*>About<\/a>/u);
     expect(html).toContain('id="stripe-history-footer"');
-    expect(html).toMatch(/class="[^"]*\bstripe-history-ask-ai\b[^"]*" aria-label="Ask AI about this"/u);
+    expect(html).toMatch(/class="[^"]*\bstripe-history-ask-ai\b[^"]*" aria-label="Ask AI"/u);
     expect(html).not.toContain('class="stripe-history-breadcrumbs"');
     expect(html).not.toContain('class="stripe-history-section-heading"');
   });

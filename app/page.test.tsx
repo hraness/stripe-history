@@ -63,7 +63,7 @@ describe("canonical hraness.com/stripe history", () => {
     expect(html).not.toContain("hraness-marketing-hero__eyebrow");
     expect(html).not.toContain("hraness-marketing-hero__name");
     expect(html).not.toContain("How this record is kept");
-    expect(html).toMatch(/class="[^"]*\bstripe-history-ask-ai\b[^"]*" aria-label="Ask AI about this"/u);
+    expect(html).toMatch(/class="[^"]*\bstripe-history-ask-ai\b[^"]*" aria-label="Ask AI"/u);
     expect(html).toMatch(/<section aria-labelledby="history-heading" class="stripe-history-section [^"]+" id="timeline">/u);
     const glanceHtml = html.replace(/ class="[^"]*"/gu, "");
     expect(glanceHtml).toContain("<caption>Stripe at a glance</caption>");

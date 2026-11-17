@@ -2,6 +2,7 @@
   "client": [
     "app/analytics-client.tsx",
     "app/analytics.ts",
+    "app/ask-ai.tsx",
     "app/error.tsx",
     "app/foil-controller.tsx",
     "app/global-error.tsx",
@@ -22,6 +23,7 @@
     "app/analytics-client.tsx",
     "app/analytics.ts",
     "app/appearances/page.tsx",
+    "app/ask-ai.tsx",
     "app/contact/page.tsx",
     "app/data/page.tsx",
     "app/editorial-paragraph.tsx",
