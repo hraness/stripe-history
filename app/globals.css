@@ -1157,11 +1157,13 @@
 
 .stripe-history-footer a:is(:hover, :focus-visible) {
   color: var(--plain-foreground);
-  text-decoration-line: underline;
 }
 
-.stripe-history-footer .stripe-history-footer__wordmark:is(:hover, :focus-visible) {
-  text-decoration-line: none;
+/* The non-affiliation note is one small muted line under the row; the plain
+ * shell's unlayered paragraph size would otherwise win over the recipe. */
+.stripe-history-footer .stripe-history-footer__note {
+  font-size: 0.8125rem;
+  line-height: 1.5;
 }
 
 /* Ask AI sits directly under the header as one compact row of quiet chips,
