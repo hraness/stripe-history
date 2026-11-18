@@ -391,17 +391,29 @@ test("strict server policy refuses a base race at merge instead of integrating a
   expect((fixture.report.operations as Data[]).at(-1)?.state).toBe("uncertain");
 });
 
+// Each case names the message of the check it reaches, so a fixture change can't
+// let an earlier check catch it instead. Checks without a message of their own
+// are matched by the value the mutation plants.
 test.each([
-  ["missing Required", "jobs"], ["failed Required", "failed"], ["wrong check SHA", "sha"], ["wrong provider", "provider"],
-  ["wrong check suite", "suite"], ["wrong check name", "name"], ["truncated jobs", "pagination"], ["failed run", "run"],
-  ["unexpected retry", "attempt"], ["foreign repository", "repository"], ["wrong event", "event"],
-] as const)("rejects %s before merging", async (_label, mutation) => {
+  ["missing Required", "jobs", "Missing or unexpected blocking jobs"],
+  ["a missing browser part", "part", "Missing or unexpected blocking jobs"],
+  ["failed Required", "failed", "Blocking job Required did not succeed"],
+  ["wrong check SHA", "sha", SOURCE], ["wrong provider", "provider", "Check came from an unexpected provider"],
+  ["wrong check suite", "suite", "Check belongs to another workflow run"], ["wrong check name", "name", "Unrelated"],
+  ["truncated jobs", "pagination", "API pagination is incomplete"], ["failed run", "run", "Workflow 900 did not succeed"],
+  ["unexpected retry", "attempt", "Unexpected workflow retry"], ["foreign repository", "repository", "fork/stripe-history"],
+  ["wrong event", "event", "pull_request"],
+] as const)("rejects %s before merging", async (_label, mutation, message) => {
   const fixture = new Fixture();
   fixture.override = (_method, path, value) => {
     const result = structuredClone(value) as Data;
     if (path === "actions/runs/900/attempts/1/jobs?per_page=100") {
-      if (mutation === "jobs") { result.jobs = (result.jobs as Data[]).filter(job => job.name !== "Required"); result.total_count = 2; }
-      if (mutation === "failed") (result.jobs as Data[])[2]!.conclusion = "failure";
+      const missing = mutation === "jobs" ? "Required" : mutation === "part" ? "Build and browser layouts (timeline)" : undefined;
+      if (missing) {
+        result.jobs = (result.jobs as Data[]).filter(job => job.name !== missing);
+        result.total_count = (result.jobs as Data[]).length;
+      }
+      if (mutation === "failed") (result.jobs as Data[]).find(job => job.name === "Required")!.conclusion = "failure";
       if (mutation === "pagination") result.total_count = 101;
     }
     if (path === "check-runs/9002") {
@@ -418,7 +430,7 @@ test.each([
     }
     return result;
   };
-  await expect(fixture.deliver()).rejects.toThrow();
+  await expect(fixture.deliver()).rejects.toThrow(message);
   expect(fixture.calls.some(call => call.argv[1] === "pr")).toBe(false);
 });
 
@@ -516,7 +528,10 @@ test("queued evidence has one bounded waiter and leaves time for failure reporti
 
 test("the delivery expects exactly the jobs ci.yml runs", () => {
   const workflow = parse(readFileSync(new URL("../.github/workflows/ci.yml", import.meta.url), "utf8")) as
-    { jobs: Record<string, { name: string; strategy?: { matrix?: Record<string, unknown> } }> };
+    { jobs: Record<string, { name: string; if?: string; strategy?: { matrix?: Record<string, unknown> } }> };
+  // A job that runs only for some events would be missing from the dispatched
+  // runs the delivery checks, and it would then refuse every one of them.
+  for (const job of Object.values(workflow.jobs)) expect([undefined, "always()"]).toContain(job.if);
   const names = Object.values(workflow.jobs).flatMap(job => {
     const matrix = job.strategy?.matrix;
     if (!matrix) return [job.name];

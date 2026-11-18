@@ -63,7 +63,10 @@ jobs:
       # does too. Pull requests only restore it; main saves it.
       - id: chromium
         name: Name the pinned Chromium
-        run: echo "key=site-chromium-$RUNNER_OS-$(node -p 'require("playwright-core/package.json").version')" >> "$GITHUB_OUTPUT"
+        # On a line of its own, so the step fails if node can't read the version.
+        run: |
+          version=$(node -p 'require("playwright-core/package.json").version')
+          echo "key=site-chromium-$RUNNER_OS-$version" >> "$GITHUB_OUTPUT"
       - id: chromium-cache
         name: Restore Chromium
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
@@ -121,17 +124,17 @@ jobs:
           PART: ${{ matrix.part }}
         run: |
           set -euo pipefail
-          timeline="timeline year-jump"
+          timeline=$'timeline\nyear-jump'
           if [ "$PART" = timeline ]; then
-            states=$timeline
+            names=$timeline
           else
-            states=$(node node_modules/@hraness/ra/dist/cli.js states --json | jq -r --arg skip "$timeline" '($skip | split(" ")) as $skip | .[].name | select(IN($skip[]) | not)')
+            names=$(node node_modules/@hraness/ra/dist/cli.js states --json | jq -r --arg skip "$timeline" '($skip | split("\n")) as $skip | .[].name | select(IN($skip[]) | not)')
           fi
-          test -n "$states"
-          echo "States: $(echo $states)"
-          # One word per state name.
-          # shellcheck disable=SC2086
-          bun run ra check $states
+          # With no names, ra would check every state.
+          test -n "$names"
+          mapfile -t states <<<"$names"
+          echo "States: ${states[*]}"
+          bun run ra check "${states[@]}"
       - name: Save public layout evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

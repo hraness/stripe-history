@@ -41,7 +41,10 @@ jobs:
       # The Chromium build follows the installed playwright-core, so the cache key does too.
       - id: chromium
         name: Name the pinned Chromium
-        run: echo "key=site-chromium-$RUNNER_OS-$(node -p 'require("playwright-core/package.json").version')" >> "$GITHUB_OUTPUT"
+        # On a line of its own, so the step fails if node can't read the version.
+        run: |
+          version=$(node -p 'require("playwright-core/package.json").version')
+          echo "key=site-chromium-$RUNNER_OS-$version" >> "$GITHUB_OUTPUT"
       - name: Cache Chromium
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
