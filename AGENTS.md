@@ -96,5 +96,5 @@ Stripe History is live at `https://hraness.com/stripe`. It was retired on 2026-1
 
 - Check: `bun run ra check [state…]`. Look closer: `bun run ra look timeline --at phone`. Pictures land in `.ra/check` and `.ra/look`. On Hraness development machines, run ra through the host scheduler's browser lane.
 - Production, read-only: add `--url https://hraness.com`.
-- CI runs `bun run ra check` in the `Build and browser layouts` job, which `Required` needs, and `site-production.yml` runs it against production after each Production deployment.
+- CI runs ra in two `Build and browser layouts` jobs, which `Required` needs: `timeline` takes the timeline's two states, and `pages` takes every other state. `site-production.yml` runs every state against production after each Production deployment. The weekly delivery names the CI jobs in `CI_JOBS` (`scripts/deliver-weekly-history.ts`); a test keeps it in step with `ci.yml`.
 - Fix what ra finds in the product. Accept a finding only as a recorded owner decision.

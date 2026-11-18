@@ -12,6 +12,8 @@ const VERCEL_BOT = 35613825;
  * repository, and "Production – stripe-history" once another project shares it.
  */
 export const PRODUCTION_ENVIRONMENTS: ReadonlySet<string> = new Set(["Production", "Production – stripe-history"]);
+/** Every job in a ci.yml run; the delivery accepts a run only when exactly these succeeded. */
+export const CI_JOBS: readonly string[] = ["Static checks", "Build and browser layouts (pages)", "Build and browser layouts (timeline)", "Required"];
 const POLL_MS = 15_000;
 const MAX_RESPONSE_BYTES = 8 * 1024 * 1024;
 const ALLOWED = /^(public\/history\/(origins-and-early-company|executives-and-team|acquisitions|product-launches|country-expansion|payment-and-payout-expansion|fundraising|headquarters-and-offices|publishing|company-milestones)\.yml|public\/research\/(sources|automated-decisions|automated-publications)\.yml)$/;
@@ -339,7 +341,7 @@ class Delivery {
     const id = integer(run.id);
     this.report[branch === "main" ? "mainCI" : "candidateCI"] = { id, sha: commit };
     this.save();
-    await this.verifyRun(id, this.ci, branch, commit, "workflow_dispatch", since, guard, ["Static checks", "Build and browser layouts", "Required"]);
+    await this.verifyRun(id, this.ci, branch, commit, "workflow_dispatch", since, guard, [...CI_JOBS]);
     return id;
   }
   async deployment(commit: string, mergedAt: number): Promise<void> {

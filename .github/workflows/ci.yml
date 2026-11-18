@@ -38,9 +38,16 @@ jobs:
       - run: git diff --exit-code
 
   site:
-    name: Build and browser layouts
+    # The timeline is far longer than any other page, and its two states take as
+    # long as all the others together, so they get a job of their own.
+    # scripts/deliver-weekly-history.ts names these jobs too.
+    name: Build and browser layouts (${{ matrix.part }})
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        part: [pages, timeline]
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -100,20 +107,36 @@ jobs:
           cat "$RUNNER_TEMP/chromium-install.log"
           test "$(cat "$RUNNER_TEMP/chromium-install.rc")" = 0
       - name: Save Chromium from main
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && steps.chromium-cache.outputs.cache-hit != 'true'
+        if: matrix.part == 'pages' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && steps.chromium-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.cache/ms-playwright
           key: ${{ steps.chromium.outputs.key }}
-      # ra looks at each state in ra.config.ts through `next start`, in the Chromium
-      # build playwright-core pins, and keeps its pictures in .ra/check.
+      # ra looks at states in ra.config.ts through `next start`, in the Chromium
+      # build playwright-core pins, and keeps its pictures in .ra/check. The
+      # timeline job takes the timeline's two states and the pages job every other
+      # state, so a new state is checked here without a change to this file.
       - name: Check public layouts
-        run: bun run ra check
+        env:
+          PART: ${{ matrix.part }}
+        run: |
+          set -euo pipefail
+          timeline="timeline year-jump"
+          if [ "$PART" = timeline ]; then
+            states=$timeline
+          else
+            states=$(node node_modules/@hraness/ra/dist/cli.js states --json | jq -r --arg skip "$timeline" '($skip | split(" ")) as $skip | .[].name | select(IN($skip[]) | not)')
+          fi
+          test -n "$states"
+          echo "States: $(echo $states)"
+          # One word per state name.
+          # shellcheck disable=SC2086
+          bun run ra check $states
       - name: Save public layout evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: site-browser
+          name: site-browser-${{ matrix.part }}
           path: .ra/check
           include-hidden-files: true
           retention-days: 7

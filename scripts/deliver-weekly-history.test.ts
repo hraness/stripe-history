@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
-import { generatedPaths, weeklyDelivery, type DeliveryIO } from "./deliver-weekly-history";
+import { parse } from "yaml";
+import { CI_JOBS, generatedPaths, weeklyDelivery, type DeliveryIO } from "./deliver-weekly-history";
 
 const SOURCE = "1".repeat(40);
 const CANDIDATE = "2".repeat(40);
@@ -78,7 +79,7 @@ class Fixture {
       run_attempt: 1, created_at: iso(this.time), status: "completed", conclusion: "success", check_suite_id: id + 1000 };
   }
   jobs(id: number): Data[] {
-    const names = id === 902 ? ["browser", "Production browser"] : ["Static checks", "Build and browser layouts", "Required"];
+    const names = id === 902 ? ["browser", "Production browser"] : [...CI_JOBS];
     return names.map((name, index) => ({ name, head_sha: id === 900 ? CANDIDATE : INTEGRATED, status: "completed", conclusion: "success",
       check_run_url: `https://api.github.com/repos/${REPO}/check-runs/${id * 10 + index}` }));
   }
@@ -511,6 +512,21 @@ test("queued evidence has one bounded waiter and leaves time for failure reporti
   expect(fixture.time).toBe(BASE_TIME + 42 * 60_000);
   expect(fixture.calls.filter(call => call.argv[6] === `repos/${REPO}/actions/runs/900`).length).toBeLessThanOrEqual(8);
   expect(fixture.calls.some(call => call.argv[1] === "pr")).toBe(false);
+});
+
+test("the delivery expects exactly the jobs ci.yml runs", () => {
+  const workflow = parse(readFileSync(new URL("../.github/workflows/ci.yml", import.meta.url), "utf8")) as
+    { jobs: Record<string, { name: string; strategy?: { matrix?: Record<string, unknown> } }> };
+  const names = Object.values(workflow.jobs).flatMap(job => {
+    const matrix = job.strategy?.matrix;
+    if (!matrix) return [job.name];
+    const [key, ...others] = Object.keys(matrix);
+    expect(others).toEqual([]);
+    const values = matrix[key!];
+    expect(Array.isArray(values)).toBe(true);
+    return (values as string[]).map(value => job.name.replace(`\${{ matrix.${key} }}`, value));
+  });
+  expect(names.sort()).toEqual([...CI_JOBS].sort());
 });
 
 test("the workflow keeps validation, issue recovery, artifacts and the existing job ceiling around the helper", () => {
