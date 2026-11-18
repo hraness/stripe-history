@@ -10,7 +10,7 @@ import {
   notFoundTitle,
   recoveryLinks,
 } from "./site-copy";
-import { appPathFromPublicSitePath } from "./site";
+import { appPathFromPublicSitePath, isFilePath } from "./site";
 
 export const metadata: Metadata = {
   title: notFoundTitle,
@@ -32,9 +32,8 @@ export default function NotFound() {
             const path = new URL(link.href).pathname;
             return (
               <li key={link.href}>
-                {/* llms.txt and the sitemap are files, not pages. A plain link fetches them directly; the
-                    router would first ask production for their page data, which it answers with an error. */}
-                {/\.[a-z]+$/u.test(path) ? (
+                {/* llms.txt and the sitemap are files, not pages (isFilePath). */}
+                {isFilePath(path) ? (
                   <a href={path}>{link.label}</a>
                 ) : (
                   <Link href={appPathFromPublicSitePath(path) ?? "/"}>{link.label}</Link>

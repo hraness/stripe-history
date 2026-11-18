@@ -26,6 +26,17 @@ export function absoluteSiteUrl(path: SitePath): string {
   return path === "/" ? SITE_ORIGIN : `${SITE_ORIGIN}${path}`;
 }
 
+/**
+ * Whether a path names a file (llms.txt, the sitemap, a dataset) rather than a page. Link to a
+ * file with a plain `<a>`, never the router's `<Link>`: the router first asks for the address's
+ * page data, which production serves from a `<path>.rsc` file that only pages have, so for a file
+ * it answers with an error (500 for llms.txt, 404 for the others). `next start` serves the file
+ * itself, so only a check against production sees it.
+ */
+export function isFilePath(pathname: string): boolean {
+  return /\.[a-z]+$/u.test(pathname);
+}
+
 const { names, category, meta, hero, long, tagline } = productMessaging;
 
 export const site = {
