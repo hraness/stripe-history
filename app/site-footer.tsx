@@ -1,4 +1,3 @@
-import { HranessCookieConsent } from "@hraness/site-footer/react";
 import * as stylex from "@stylexjs/stylex";
 import { footerStyles as styles } from "./site-footer.stylex";
 import { PrivacyChoicesLink } from "./analytics-client";
@@ -10,9 +9,7 @@ import { independenceSentence } from "./site-copy";
  * One quiet footer row, the shared Hraness product footer: the record's own
  * links on the left, then Your Privacy Choices and the HRANESS wordmark (set
  * like the hraness.com wordmark) on the right, with the independence note as
- * one small muted line under the row. The shared consent note is the
- * package's own component, kept for parity; analytics.css hides it because
- * the @hraness/analytics banner and Your Privacy Choices are the consent UI.
+ * one small muted line under the row.
  */
 export function SiteFooter() {
   return (
@@ -37,7 +34,6 @@ export function SiteFooter() {
         </div>
       </div>
       <p className={`stripe-history-footer__note ${stylex.props(styles.note).className}`}>{independenceSentence}</p>
-      <HranessCookieConsent placement="flow" />
     </footer>
   );
 }

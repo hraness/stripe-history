@@ -6,7 +6,6 @@ import { DesignPaletteProvider } from "@/support/theme";
 import type { RouteErrorPageProps } from "./error";
 import "@hraness/ui/compiler-foundation.css";
 import "../support/hraness/foundation.css";
-import "@hraness/site-footer/compiler-foundation.css";
 import "./globals.css";
 
 
