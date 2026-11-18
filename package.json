@@ -69,15 +69,15 @@
     "@hraness/ui": "https://github.com/hraness/ui/releases/download/v0.5.26/hraness-ui-0.5.26.tgz",
     "@hraness/vercel-delivery": "github:hraness/vercel-delivery#v0.1.2",
     "@hraness/web-discovery": "github:hraness/web-discovery#v0.14.0",
-    "@hugeicons/core-free-icons": "^4.2.2",
-    "@hugeicons/react": "^1.1.9",
+    "@hugeicons/core-free-icons": "^4.3.5",
+    "@hugeicons/react": "^1.1.10",
     "@stylexjs/stylex": "0.19.0",
     "ai-v7": "npm:ai@^7.0.36",
     "next": "16.4.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "yaml": "^2.9.0",
-    "zod": "^4.4.3"
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.5"
   },
   "patchedDependencies": {
     "next@16.4.6": "patches/next@16.4.6.patch"
@@ -87,14 +87,14 @@
     "@hraness/ra": "https://github.com/hraness/ra/releases/download/v0.1.3/hraness-ra-0.1.3.tgz",
     "@stylexjs/babel-plugin": "0.19.0",
     "@types/babel__core": "7.20.5",
-    "@types/bun": "1.3.14",
-    "@types/node": "^24.10.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
+    "@types/bun": "1.4.2",
+    "@types/node": "^24.19.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "eslint": "^9.39.2",
     "eslint-config-next": "16.4.6",
     "lightningcss": "1.33.0",
-    "playwright-core": "1.62.0",
+    "playwright-core": "1.63.0",
     "typescript": "6.0.3"
   },
   "overrides": {

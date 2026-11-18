@@ -33,7 +33,7 @@ function pinnedDefaultArgs(): string[] {
   const installed = JSON.parse(readFileSync(join(core, 'package.json'), 'utf8')) as { version: string };
   const consumer = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as { devDependencies: Record<string, string> };
   assert.equal(installed.version, consumer.devDependencies['playwright-core'], 'Install the authored Playwright pin before browser verification');
-  assert.ok(['1.61.1', '1.62.0'].includes(installed.version), 'Reconcile this Playwright version before browser verification');
+  assert.ok(['1.61.1', '1.62.0', '1.63.0'].includes(installed.version), 'Reconcile this Playwright version before browser verification');
   const runtime = require(join(core, 'lib/coreBundle.js')) as {
     server: { createPlaywright(options: { sdkLanguage: string }): { chromium: { _innerDefaultArgs(options: { headless: boolean }): unknown } } };
   };
