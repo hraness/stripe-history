@@ -50,6 +50,7 @@
     "history:appearances:summarize": "bun run scripts/summarize-appearance.ts",
     "history:publish:auto": "bun run scripts/auto-publish-history.ts",
     "lint": "eslint .",
+    "ra": "node node_modules/@hraness/ra/dist/cli.js",
     "search:indexnow": "bun run scripts/submit-indexnow.ts",
     "start": "next start",
     "test": "bun test --preload ./scripts/register-stylex-test-transform.ts ./app ./lib ./scripts ./proxy.test.ts",
@@ -83,6 +84,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.29.7",
+    "@hraness/ra": "https://github.com/hraness/ra/releases/download/v0.1.1/hraness-ra-0.1.1.tgz",
     "@stylexjs/babel-plugin": "0.19.0",
     "@types/babel__core": "7.20.5",
     "@types/bun": "1.3.14",

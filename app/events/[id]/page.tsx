@@ -216,7 +216,7 @@ export default async function HistoryEventPage({ params }: HistoryEventPageProps
             ))}
           </ul>
         )}
-        <p>
+        <p className="stripe-history-event-page__links">
           <Link href={categoryPath}>All {categoryEvents.length} {categoryName} events</Link>
           {" · "}
           <Link href="/">the full timeline</Link>

@@ -1047,6 +1047,18 @@
   color: var(--plain-foreground);
 }
 
+/* Narrow phones: the basis badge moves under the value, as in the scale chart's
+ * valuation card, instead of running off the page beside a long value. */
+@media (max-width: 22.5rem) {
+  .history-valuation-chart li > a {
+    grid-template-columns: 4rem minmax(0, 1fr);
+  }
+
+  .history-valuation-chart li > a > .history-valuation-badge {
+    grid-column: 2;
+  }
+}
+
 .history-volume-chart li > a > time {
   font-variant-numeric: tabular-nums;
 }
@@ -1554,6 +1566,18 @@ a[href] {
 
   .stripe-history-event-page__newer {
     text-align: start;
+  }
+}
+
+/* Touch: the closing links keep their running line, but each line is a full
+ * target tall, so a tap cannot land on the link above or below. */
+@media (pointer: coarse) {
+  .stripe-history-event-page__links {
+    line-height: var(--plain-link-target-min, 48px);
+  }
+
+  .stripe-history-event-page__links a {
+    padding-block: 0.75rem;
   }
 }
 
