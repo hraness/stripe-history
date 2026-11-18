@@ -20,8 +20,8 @@ test("renders one minimal footer: own links, the HRANESS wordmark, the independe
   expect(end).toMatch(/>Your Privacy Choices<\/a><a class="stripe-history-footer__wordmark /u);
   expect(html).toMatch(/<a class="stripe-history-footer__wordmark [^"]+" data-analytics-cta="footer-hraness" href="https:\/\/hraness\.com\/?">Hraness<\/a>/u);
   expect(html).toContain("is not affiliated with, endorsed by, or operated by Stripe, Inc.");
-  // The shared consent note keeps its own region check and preference control.
-  expect(html).toContain("hraness-cookie-consent");
+  // @hraness/analytics owns the consent banner and Your Privacy Choices link.
+  expect(html).not.toContain("hraness-cookie-consent");
   // No mailing list, support handoff, social icons, avatar or help chip.
   expect(html).not.toContain("<form");
   expect(html).not.toContain("account.hraness.com/support");

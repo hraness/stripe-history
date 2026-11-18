@@ -6,7 +6,6 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "@hraness/ui/compiler-foundation.css";
 import "../support/hraness/foundation.css";
-import "@hraness/site-footer/compiler-foundation.css";
 import "./globals.css";
 import "../support/vendor/hraness-forced-colors/marketing-forced-colors.css";
 import "./material.css";

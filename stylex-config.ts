@@ -6,7 +6,6 @@ export function stylexOptions(rootDirectory: string): StylexNextConfigOptions {
     nextVersion: "16.4.6",
     rootDirectory,
     packageManifests: [
-      "node_modules/@hraness/site-footer/dist/stylex-manifest.json",
       "node_modules/@hraness/ui/dist/stylex-manifest.json",
     ],
   };

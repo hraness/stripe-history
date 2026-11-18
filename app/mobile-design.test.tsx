@@ -219,7 +219,7 @@ test("theme control uses the shared Paper, System-first icon menu", () => {
 });
 
 test("site chrome matches the compact sticky Hraness shell and preserves coarse hit targets", () => {
-  expect(layoutSource).toContain('import "@hraness/site-footer/compiler-foundation.css";');
+  expect(layoutSource).not.toContain("@hraness/site-footer");
   expect(globalsCss).not.toContain('@import "@hraness/site-footer/styles.css";');
   expect(globalsCss).toMatch(
     /\.stripe-history-main\s*\{[^}]*margin-block:\s*0;/u,

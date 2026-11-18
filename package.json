@@ -55,17 +55,11 @@
     "start": "next start",
     "test": "bun test --preload ./scripts/register-stylex-test-transform.ts ./app ./lib ./scripts ./proxy.test.ts",
     "typecheck": "tsc --noEmit",
-    "kb:refresh": "bunx --bun --package https://github.com/hraness/wordcell/releases/download/v0.24.0/hraness-wordcell-0.24.0.tgz wordcell refresh --root kb",
-    "kb:check:lane": "bunx --bun --package https://github.com/hraness/wordcell/releases/download/v0.24.0/hraness-wordcell-0.24.0.tgz wordcell check --root kb --no-catalog",
-    "kb:check": "bunx --bun --package https://github.com/hraness/wordcell/releases/download/v0.24.0/hraness-wordcell-0.24.0.tgz wordcell check --root kb && bunx --bun --package https://github.com/hraness/wordcell/releases/download/v0.24.0/hraness-wordcell-0.24.0.tgz wordcell agents check --root kb --repo .",
-    "kb:catalog": "bunx --bun --package https://github.com/hraness/wordcell/releases/download/v0.24.0/hraness-wordcell-0.24.0.tgz wordcell catalog --root kb",
-    "kb:search": "bunx --bun --package https://github.com/hraness/wordcell/releases/download/v0.24.0/hraness-wordcell-0.24.0.tgz wordcell search --root kb --mode exact --selected-passage",
     "sync:category-icons": "bun run ./scripts/sync-category-icons.ts"
   },
   "dependencies": {
     "@ai-sdk/gateway-v4": "npm:@ai-sdk/gateway@^4.0.27",
     "@hraness/analytics": "https://github.com/hraness/posthog/releases/download/v1.0.3/hraness-analytics-1.0.3.tgz",
-    "@hraness/site-footer": "https://github.com/hraness/site-footer/releases/download/v0.20.7/hraness-site-footer-0.20.7.tgz",
     "@hraness/ui": "https://github.com/hraness/ui/releases/download/v0.5.26/hraness-ui-0.5.26.tgz",
     "@hraness/vercel-delivery": "github:hraness/vercel-delivery#v0.1.2",
     "@hraness/web-discovery": "github:hraness/web-discovery#v0.14.0",
