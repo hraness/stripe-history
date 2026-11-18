@@ -5,6 +5,8 @@ export interface PublicationLinkGroup {
   selector: string;
   /** False when the group's links keep their text colour as underline ink at rest. */
   mutedRest?: boolean;
+  /** False when the page may have no visible link in this group; the group is then skipped. */
+  required?: boolean;
 }
 
 export declare const publicationLinkGroups: PublicationLinkGroup[];

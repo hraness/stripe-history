@@ -52,11 +52,17 @@ jobs:
         with:
           bun-version: "1.3.14"
       - run: bun install --frozen-lockfile --ignore-scripts
-      - name: Cache Chromium
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      # The Chromium build follows the installed playwright-core, so the cache key
+      # does too. Pull requests only restore it; main saves it.
+      - id: chromium
+        name: Name the pinned Chromium
+        run: echo "key=site-chromium-$RUNNER_OS-$(node -p 'require("playwright-core/package.json").version')" >> "$GITHUB_OUTPUT"
+      - id: chromium-cache
+        name: Restore Chromium
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.cache/ms-playwright
-          key: site-chromium-${{ runner.os }}-1.62.0
+          key: ${{ steps.chromium.outputs.key }}
       # Only the layout check needs Chromium. Install it (apt deps plus the
       # browser download) while Next builds, and check its exit status before use.
       - name: Start the Chromium install in the background
@@ -93,6 +99,12 @@ jobs:
           echo "Waited $((SECONDS - started)) s for the background install."
           cat "$RUNNER_TEMP/chromium-install.log"
           test "$(cat "$RUNNER_TEMP/chromium-install.rc")" = 0
+      - name: Save Chromium from main
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && steps.chromium-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ steps.chromium.outputs.key }}
       # ra looks at each state in ra.config.ts through `next start`, in the Chromium
       # build playwright-core pins, and keeps its pictures in .ra/check.
       - name: Check public layouts

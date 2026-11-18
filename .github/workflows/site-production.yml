@@ -38,11 +38,15 @@ jobs:
           key: bun-site-${{ runner.os }}-${{ hashFiles('bun.lock') }}
           restore-keys: bun-site-${{ runner.os }}-
       - run: bun install --frozen-lockfile --ignore-scripts
+      # The Chromium build follows the installed playwright-core, so the cache key does too.
+      - id: chromium
+        name: Name the pinned Chromium
+        run: echo "key=site-chromium-$RUNNER_OS-$(node -p 'require("playwright-core/package.json").version')" >> "$GITHUB_OUTPUT"
       - name: Cache Chromium
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.cache/ms-playwright
-          key: site-chromium-${{ runner.os }}-1.62.0
+          key: ${{ steps.chromium.outputs.key }}
       - name: Install Chromium
         timeout-minutes: 5
         shell: bash
