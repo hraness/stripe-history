@@ -53,8 +53,10 @@ describe("standalone runtime surfaces", () => {
 
     expect(notFound).toContain("Page not found");
     expect(notFound).toContain('href="/"');
-    expect(notFound).toContain('href="/llms.txt"');
-    expect(notFound).toContain('href="/sitemap.xml"');
+    // Files are plain links with their public path, since production has no page data
+    // for them; the router adds the base path to the pages' links itself.
+    expect(notFound).toContain('href="/stripe/llms.txt"');
+    expect(notFound).toContain('href="/stripe/sitemap.xml"');
     expect(notFound).toContain('href="/about"');
     expect(notFound).toContain('href="/contact"');
     expect(notFound).toContain('href="/privacy"');

@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
-import { generatedPaths, weeklyDelivery, type DeliveryIO } from "./deliver-weekly-history";
+import { parse } from "yaml";
+import { CI_JOBS, generatedPaths, weeklyDelivery, type DeliveryIO } from "./deliver-weekly-history";
 
 const SOURCE = "1".repeat(40);
 const CANDIDATE = "2".repeat(40);
@@ -78,7 +79,7 @@ class Fixture {
       run_attempt: 1, created_at: iso(this.time), status: "completed", conclusion: "success", check_suite_id: id + 1000 };
   }
   jobs(id: number): Data[] {
-    const names = id === 902 ? ["browser", "Production browser"] : ["Static checks", "Build and browser layouts", "Required"];
+    const names = id === 902 ? ["browser", "Production browser"] : [...CI_JOBS];
     return names.map((name, index) => ({ name, head_sha: id === 900 ? CANDIDATE : INTEGRATED, status: "completed", conclusion: "success",
       check_run_url: `https://api.github.com/repos/${REPO}/check-runs/${id * 10 + index}` }));
   }
@@ -390,17 +391,29 @@ test("strict server policy refuses a base race at merge instead of integrating a
   expect((fixture.report.operations as Data[]).at(-1)?.state).toBe("uncertain");
 });
 
+// Each case names the message of the check it reaches, so a fixture change can't
+// let an earlier check catch it instead. Checks without a message of their own
+// are matched by the value the mutation plants.
 test.each([
-  ["missing Required", "jobs"], ["failed Required", "failed"], ["wrong check SHA", "sha"], ["wrong provider", "provider"],
-  ["wrong check suite", "suite"], ["wrong check name", "name"], ["truncated jobs", "pagination"], ["failed run", "run"],
-  ["unexpected retry", "attempt"], ["foreign repository", "repository"], ["wrong event", "event"],
-] as const)("rejects %s before merging", async (_label, mutation) => {
+  ["missing Required", "jobs", "Missing or unexpected blocking jobs"],
+  ["a missing browser part", "part", "Missing or unexpected blocking jobs"],
+  ["failed Required", "failed", "Blocking job Required did not succeed"],
+  ["wrong check SHA", "sha", SOURCE], ["wrong provider", "provider", "Check came from an unexpected provider"],
+  ["wrong check suite", "suite", "Check belongs to another workflow run"], ["wrong check name", "name", "Unrelated"],
+  ["truncated jobs", "pagination", "API pagination is incomplete"], ["failed run", "run", "Workflow 900 did not succeed"],
+  ["unexpected retry", "attempt", "Unexpected workflow retry"], ["foreign repository", "repository", "fork/stripe-history"],
+  ["wrong event", "event", "pull_request"],
+] as const)("rejects %s before merging", async (_label, mutation, message) => {
   const fixture = new Fixture();
   fixture.override = (_method, path, value) => {
     const result = structuredClone(value) as Data;
     if (path === "actions/runs/900/attempts/1/jobs?per_page=100") {
-      if (mutation === "jobs") { result.jobs = (result.jobs as Data[]).filter(job => job.name !== "Required"); result.total_count = 2; }
-      if (mutation === "failed") (result.jobs as Data[])[2]!.conclusion = "failure";
+      const missing = mutation === "jobs" ? "Required" : mutation === "part" ? "Build and browser layouts (timeline)" : undefined;
+      if (missing) {
+        result.jobs = (result.jobs as Data[]).filter(job => job.name !== missing);
+        result.total_count = (result.jobs as Data[]).length;
+      }
+      if (mutation === "failed") (result.jobs as Data[]).find(job => job.name === "Required")!.conclusion = "failure";
       if (mutation === "pagination") result.total_count = 101;
     }
     if (path === "check-runs/9002") {
@@ -417,7 +430,7 @@ test.each([
     }
     return result;
   };
-  await expect(fixture.deliver()).rejects.toThrow();
+  await expect(fixture.deliver()).rejects.toThrow(message);
   expect(fixture.calls.some(call => call.argv[1] === "pr")).toBe(false);
 });
 
@@ -511,6 +524,24 @@ test("queued evidence has one bounded waiter and leaves time for failure reporti
   expect(fixture.time).toBe(BASE_TIME + 42 * 60_000);
   expect(fixture.calls.filter(call => call.argv[6] === `repos/${REPO}/actions/runs/900`).length).toBeLessThanOrEqual(8);
   expect(fixture.calls.some(call => call.argv[1] === "pr")).toBe(false);
+});
+
+test("the delivery expects exactly the jobs ci.yml runs", () => {
+  const workflow = parse(readFileSync(new URL("../.github/workflows/ci.yml", import.meta.url), "utf8")) as
+    { jobs: Record<string, { name: string; if?: string; strategy?: { matrix?: Record<string, unknown> } }> };
+  // A job that runs only for some events would be missing from the dispatched
+  // runs the delivery checks, and it would then refuse every one of them.
+  for (const job of Object.values(workflow.jobs)) expect([undefined, "always()"]).toContain(job.if);
+  const names = Object.values(workflow.jobs).flatMap(job => {
+    const matrix = job.strategy?.matrix;
+    if (!matrix) return [job.name];
+    const [key, ...others] = Object.keys(matrix);
+    expect(others).toEqual([]);
+    const values = matrix[key!];
+    expect(Array.isArray(values)).toBe(true);
+    return (values as string[]).map(value => job.name.replace(`\${{ matrix.${key} }}`, value));
+  });
+  expect(names.sort()).toEqual([...CI_JOBS].sort());
 });
 
 test("the workflow keeps validation, issue recovery, artifacts and the existing job ceiling around the helper", () => {

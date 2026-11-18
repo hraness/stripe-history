@@ -38,9 +38,16 @@ jobs:
       - run: git diff --exit-code
 
   site:
-    name: Build and browser layouts
+    # The timeline is far longer than any other page, and its two states take as
+    # long as all the others together, so they get a job of their own.
+    # scripts/deliver-weekly-history.ts names these jobs too.
+    name: Build and browser layouts (${{ matrix.part }})
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        part: [pages, timeline]
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -52,6 +59,20 @@ jobs:
         with:
           bun-version: "1.3.14"
       - run: bun install --frozen-lockfile --ignore-scripts
+      # The Chromium build follows the installed playwright-core, so the cache key
+      # does too. Pull requests only restore it; main saves it.
+      - id: chromium
+        name: Name the pinned Chromium
+        # On a line of its own, so the step fails if node can't read the version.
+        run: |
+          version=$(node -p 'require("playwright-core/package.json").version')
+          echo "key=site-chromium-$RUNNER_OS-$version" >> "$GITHUB_OUTPUT"
+      - id: chromium-cache
+        name: Restore Chromium
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ steps.chromium.outputs.key }}
       # Only the layout check needs Chromium. Install it (apt deps plus the
       # browser download) while Next builds, and check its exit status before use.
       - name: Start the Chromium install in the background
@@ -88,16 +109,39 @@ jobs:
           echo "Waited $((SECONDS - started)) s for the background install."
           cat "$RUNNER_TEMP/chromium-install.log"
           test "$(cat "$RUNNER_TEMP/chromium-install.rc")" = 0
+      - name: Save Chromium from main
+        if: matrix.part == 'pages' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && steps.chromium-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ steps.chromium.outputs.key }}
+      # ra looks at states in ra.config.ts through `next start`, in the Chromium
+      # build playwright-core pins, and keeps its pictures in .ra/check. The
+      # timeline job takes the timeline's two states and the pages job every other
+      # state, so a new state is checked here without a change to this file.
       - name: Check public layouts
         env:
-          SITE_BROWSER_ARTIFACTS: ${{ runner.temp }}/site-browser
-        run: node scripts/verify-site-browser.mjs
+          PART: ${{ matrix.part }}
+        run: |
+          set -euo pipefail
+          timeline=$'timeline\nyear-jump'
+          if [ "$PART" = timeline ]; then
+            names=$timeline
+          else
+            names=$(node node_modules/@hraness/ra/dist/cli.js states --json | jq -r --arg skip "$timeline" '($skip | split("\n")) as $skip | .[].name | select(IN($skip[]) | not)')
+          fi
+          # With no names, ra would check every state.
+          test -n "$names"
+          mapfile -t states <<<"$names"
+          echo "States: ${states[*]}"
+          bun run ra check "${states[@]}"
       - name: Save public layout evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: site-browser
-          path: ${{ runner.temp }}/site-browser
+          name: site-browser-${{ matrix.part }}
+          path: .ra/check
+          include-hidden-files: true
           retention-days: 7
       - run: git diff --exit-code
 

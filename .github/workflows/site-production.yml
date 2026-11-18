@@ -20,7 +20,7 @@ jobs:
     # here and in the aggregate so this workflow never reports on a PR head.
     if: github.event_name == 'workflow_dispatch' || (github.event.deployment_status.state == 'success' && contains(fromJSON('["Production","Production – stripe-history"]'), github.event.deployment.environment))
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -38,11 +38,18 @@ jobs:
           key: bun-site-${{ runner.os }}-${{ hashFiles('bun.lock') }}
           restore-keys: bun-site-${{ runner.os }}-
       - run: bun install --frozen-lockfile --ignore-scripts
+      # The Chromium build follows the installed playwright-core, so the cache key does too.
+      - id: chromium
+        name: Name the pinned Chromium
+        # On a line of its own, so the step fails if node can't read the version.
+        run: |
+          version=$(node -p 'require("playwright-core/package.json").version')
+          echo "key=site-chromium-$RUNNER_OS-$version" >> "$GITHUB_OUTPUT"
       - name: Cache Chromium
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.cache/ms-playwright
-          key: site-chromium-${{ runner.os }}-1.62.0
+          key: ${{ steps.chromium.outputs.key }}
       - name: Install Chromium
         timeout-minutes: 5
         shell: bash
@@ -57,16 +64,17 @@ jobs:
           APT
           sudo apt-config shell HRANESS_APT_HTTP_TIMEOUT Acquire::http::Timeout HRANESS_APT_HTTPS_TIMEOUT Acquire::https::Timeout HRANESS_APT_RETRIES Acquire::Retries
           node node_modules/playwright-core/cli.js install --with-deps chromium
+      # Every state in ra.config.ts, against hraness.com/stripe itself, with
+      # analytics blocked as in the local check.
       - name: Check public pages in a browser
-        env:
-          SITE_BROWSER_ARTIFACTS: ${{ runner.temp }}/site-browser
-        run: node scripts/verify-site-browser.mjs --production
+        run: bun run ra check --url https://hraness.com
       - name: Save public page screenshots
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: production-site-browser
-          path: ${{ runner.temp }}/site-browser
+          path: .ra/check
+          include-hidden-files: true
           retention-days: 7
 
   production-browser:

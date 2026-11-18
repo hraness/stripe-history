@@ -28,13 +28,20 @@ export default function NotFound() {
         <p>{notFoundDescription}</p>
         <p>Continue from:</p>
         <ul>
-          {recoveryLinks.map((link) => (
-            <li key={link.href}>
-              <Link href={appPathFromPublicSitePath(new URL(link.href).pathname) ?? "/"}>
-                {link.label}
-              </Link>
-            </li>
-          ))}
+          {recoveryLinks.map((link) => {
+            const path = new URL(link.href).pathname;
+            return (
+              <li key={link.href}>
+                {/* llms.txt and the sitemap are files, not pages. A plain link fetches them directly; the
+                    router would first ask production for their page data, which it answers with an error. */}
+                {/\.[a-z]+$/u.test(path) ? (
+                  <a href={path}>{link.label}</a>
+                ) : (
+                  <Link href={appPathFromPublicSitePath(path) ?? "/"}>{link.label}</Link>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </section>
       <SiteFooter />
