@@ -1,4 +1,75 @@
 runs:
+  - candidate_digest_sha256: de97b89a3a4414295ef577b243dc9f2825962d050d4442d0ea5de9d347e1b2b0
+    decided_on: 2026-10-15
+    decisions:
+      - basis: automatic-policy
+        candidate_url: https://share.transistor.fm/s/92078ce3
+        outcome: needs-review
+        reason: Outside automatic policy because its date, monitor, or research area requires manual review.
+        title: The company building underwater drones for $50,000
+      - basis: automatic-policy
+        candidate_url: https://share.transistor.fm/s/bb7b9a51
+        outcome: needs-review
+        reason: Outside automatic policy because its date, monitor, or research area requires manual review.
+        title: "Muse Wonder: Zuckerberg and Wang's $100B AI"
+      - basis: automatic-policy
+        candidate_url: https://stripe.com/blog/economics-of-ai-monetization
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: The “alien” economics of AI monetization
+      - basis: compiler
+        candidate_url: https://stripe.com/blog/real-time-stripe-data-postgres
+        outcome: infrastructure-error
+        proposal_sha256: 2218ccaa2efc88feb0bf55c22dcfef1c756047754ca343de9a12133a9b3e9d04
+        reason: Model evidence quotes must be unique exact substrings of the source
+        title: Sync real-time Stripe data to Postgres with Stripe Data Pipeline
+      - basis: automatic-policy
+        candidate_url: https://stripe.dev/blog/run-recurring-jobs-on-stripe-workflows
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Run recurring jobs on Stripe without a cron server
+      - basis: automatic-policy
+        candidate_url: https://stripe.dev/blog/training-llms-for-risk-assessment
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Fine-tuning LLMs for risk assessment
+      - basis: automatic-policy
+        candidate_url: https://worksinprogress.co/issue/chinas-growth-machine
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: China’s growth machines
+      - basis: proposal
+        candidate_url: https://worksinprogress.co/issue/everything-rhymes-with-porcelain
+        outcome: rejected
+        proposal_sha256: 0db7abea138536d9eca90de061f3635905a3ed34d8c4f77792273979a1cef810
+        reason: Works in Progress published Charles C. Mann’s essay about porcelain and materials science on October 14, 2026. It is an individual magazine article and does not establish a consequential Stripe publishing event.
+        title: Everything rhymes with porcelain
+      - basis: automatic-policy
+        candidate_url: https://www.stripeeconomics.com/p/a-nobel-prize-for-thinking-ahead
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: A Nobel Prize for thinking ahead
+      - basis: automatic-policy
+        candidate_url: https://www.stripeeconomics.com/p/an-empirical-agenda-for-ai
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: An empirical agenda for AI
+      - basis: proposal
+        candidate_url: https://www.worksinprogress.news/p/how-china-became-rich
+        outcome: rejected
+        proposal_sha256: edef20212e3cf1b5048687443ed0d41f1e5cef08514f6567feeae30d9e5d018c
+        reason: Works in Progress published an analysis of Chinese local government and industrial growth as the fourth article from Issue 26. It does not document a consequential Stripe event or a new Works in Progress publishing program.
+        title: How China became rich
+      - basis: automatic-policy
+        candidate_url: https://www.worksinprogress.news/p/why-were-victorian-elites-so-effective
+        outcome: deferred
+        reason: Deferred after the bounded 3-candidate model limit.
+        title: Victorian elites stayed in bed until the afternoon
+    id: decision-run-4c19e0229c5dfda12fea
+    model: openai/gpt-5.6-sol
+    proposal_prompt_version: stripe-history/weekly-proposal/v7
+    reasoning_effort: max
+    review_prompt_version: stripe-history/weekly-review/v1
   - candidate_digest_sha256: 54d5df7e8bc3433ad2dcaedf2795d93f03666fc8ffd464ec0af8aefef523e7dd
     decided_on: 2026-09-24
     decisions:
