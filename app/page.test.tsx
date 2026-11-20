@@ -22,8 +22,9 @@ describe("canonical hraness.com/stripe history", () => {
       title: { absolute: expectedTitle },
     });
     expect(metadata.openGraph).toMatchObject({
+      videos: [{ url: "https://hraness.com/stripe/share/preview.mp4", type: "video/mp4", width: 1200, height: 630 }],
       images: [{
-        url: "https://hraness.com/stripe/opengraph-image",
+        url: "https://hraness.com/stripe/share/poster.jpg",
       }],
       title: expectedTitle,
       url: "https://hraness.com/stripe",
@@ -31,7 +32,7 @@ describe("canonical hraness.com/stripe history", () => {
     expect(metadata.twitter).toMatchObject({
       card: "summary_large_image",
       images: [{
-        url: "https://hraness.com/stripe/opengraph-image",
+        url: "https://hraness.com/stripe/share/poster.jpg",
       }],
       title: expectedTitle,
     });
