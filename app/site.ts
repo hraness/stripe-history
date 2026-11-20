@@ -64,8 +64,8 @@ export function socialMetadata(
     path?: SitePath;
   }> = {},
 ): Pick<Metadata, "openGraph" | "twitter"> {
-  const imageAlt = image.alt ?? site.socialImageAlt;
-  const imagePath = image.path ?? "/opengraph-image";
+  const imageAlt = image.alt ?? (url === "/" ? "The Stripe History timeline and company statistics." : site.socialImageAlt);
+  const imagePath = image.path ?? (url === "/" ? "/share/poster.jpg" : "/opengraph-image");
   return {
     openGraph: {
       type: "website" as const,
@@ -74,6 +74,9 @@ export function socialMetadata(
       siteName: site.name,
       title,
       description,
+      ...(url === "/" && {
+        videos: [{ url: absoluteSiteUrl("/share/preview.mp4"), secureUrl: absoluteSiteUrl("/share/preview.mp4"), width: 1200, height: 630, type: "video/mp4" }],
+      }),
       images: [{
         alt: imageAlt,
         height: 630,
