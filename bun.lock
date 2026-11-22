@@ -6,7 +6,7 @@
       "name": "@hraness/stripe-history",
       "dependencies": {
         "@ai-sdk/gateway-v4": "npm:@ai-sdk/gateway@^4.0.27",
-        "@hraness/analytics": "https://github.com/hraness/posthog/releases/download/v1.0.3/hraness-analytics-1.0.3.tgz",
+        "@hraness/analytics": "https://github.com/hraness/posthog/releases/download/v1.2.1/hraness-analytics-1.2.1.tgz",
         "@hraness/ui": "https://github.com/hraness/ui/releases/download/v0.5.26/hraness-ui-0.5.26.tgz",
         "@hraness/vercel-delivery": "github:hraness/vercel-delivery#v0.1.2",
         "@hraness/web-discovery": "github:hraness/web-discovery#v0.14.0",
@@ -111,7 +111,7 @@
 
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.4.1", "", { "dependencies": { "@eslint/core": "^0.17.0", "levn": "^0.4.1" } }, "sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA=="],
 
-    "@hraness/analytics": ["@hraness/analytics@https://github.com/hraness/posthog/releases/download/v1.0.3/hraness-analytics-1.0.3.tgz", { "dependencies": { "posthog-js": "1.449.1" } }, "sha512-Uj4FOgBc5WT2vGegXmF4KBHpdiXjn7LOEmtft+qP8QGCqmNG7AzCdlGoK8bdG88HPwPAc0OKRDaqmF7ZTcQsDw=="],
+    "@hraness/analytics": ["@hraness/analytics@https://github.com/hraness/posthog/releases/download/v1.2.1/hraness-analytics-1.2.1.tgz", { "dependencies": { "posthog-js": "1.449.1" } }, "sha512-O71uChVSca4IlG0E2sYU+Tm0QNJTO3EHppH4i5k5xJ3f3rRIWGG0qujTGgZ0hzK/u21NB6tooxBj1yKohdKAhw=="],
 
     "@hraness/ra": ["@hraness/ra@https://github.com/hraness/ra/releases/download/v0.1.6/hraness-ra-0.1.6.tgz", { "peerDependencies": { "playwright-core": ">=1.58" }, "optionalPeers": ["playwright-core"], "bin": { "ra": "./dist/cli.js" } }, "sha512-VxXK4xeIt7Z4GHL7qvT+x6/PxHI6ya2yuho3STFmC8L00G4LAQo/aSCmedR+lZrO5iQyG4h3uHfvX8CKv7TsYA=="],
 
