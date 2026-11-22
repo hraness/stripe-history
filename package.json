@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "@ai-sdk/gateway-v4": "npm:@ai-sdk/gateway@^4.0.27",
-    "@hraness/analytics": "https://github.com/hraness/posthog/releases/download/v1.0.3/hraness-analytics-1.0.3.tgz",
+    "@hraness/analytics": "https://github.com/hraness/posthog/releases/download/v1.2.1/hraness-analytics-1.2.1.tgz",
     "@hraness/ui": "https://github.com/hraness/ui/releases/download/v0.5.26/hraness-ui-0.5.26.tgz",
     "@hraness/vercel-delivery": "github:hraness/vercel-delivery#v0.1.2",
     "@hraness/web-discovery": "github:hraness/web-discovery#v0.14.0",
