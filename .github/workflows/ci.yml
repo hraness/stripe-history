@@ -18,7 +18,7 @@ concurrency:
 jobs:
   static:
     name: Static checks
-    runs-on: hraness-cf
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -42,7 +42,7 @@ jobs:
     # long as all the others together, so they get a job of their own.
     # scripts/deliver-weekly-history.ts names these jobs too.
     name: Build and browser layouts (${{ matrix.part }})
-    runs-on: hraness-cf
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     strategy:
       fail-fast: false
@@ -149,7 +149,7 @@ jobs:
     name: Required
     if: always()
     needs: [static, site]
-    runs-on: hraness-cf
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - name: Require every blocking job
